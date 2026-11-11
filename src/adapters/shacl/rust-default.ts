@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {Document,Diagnostic,ExtensionPackage,Json} from '../../model/types';
-import type {RdfNode,RdfQuad} from '../rdf';
-import type {ShaclPath,inspectShaclDocument,importShaclTurtle,exportShaclTurtle,getShaclQuads,proposeShaclQuadEdit,getShaclPropertyPath,evaluateShaclPropertyPath,getShaclTargetNodes} from './index';
-import type {ShaclShapeMetadata,getShaclShapeMetadata} from './metadata';
-import type {ShaclEngineReport,proposeShaclEngineValidation} from './engine';
-export type NativeShaclEngineReport=Omit<ShaclEngineReport,'engine'> & {engine:'umf-shacl-native-subset/2'};
-import {Registry} from '../../registry/registry';
+import type {Document,Diagnostic,ExtensionPackage,Json,Validation} from '../../model/types';
+import type {RdfNode,RdfLiteral,RdfQuad} from '../rdf';
+import type {ShaclPath} from './path-types';
+import type {ShaclShapeMetadata} from './metadata-types';
+import type {ShaclEngineReport,ShaclEngineValidationOptions} from './engine-types';
+export type NativeShaclEngineReport=ShaclEngineReport;
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import manifest from '../../../spec/extensions/shacl/package.json';
 
@@ -29,7 +29,7 @@ const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCE
 const FAMILY_CODES=['SHACL_','RDF_','TURTLE_','NATIVE_TURTLE_'];
 
 /** Preserve the existing synchronous SHACL facade over the closed native family dispatcher. */
-export function createShaclRustDefault(engine:ShaclNativeFamilyEngine,isNativeUmfCoreError:NativeErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createShaclRustDefault(engine:ShaclNativeFamilyEngine,isNativeUmfCoreError:NativeErrorGuard=()=>false,createRegistry:()=>Registry){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -43,16 +43,16 @@ export function createShaclRustDefault(engine:ShaclNativeFamilyEngine,isNativeUm
  };
  const api={
   shaclRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.shacl.inspectPayload({payload})));},
-  inspectShaclDocument(document:Parameters<typeof inspectShaclDocument>[0]):ReturnType<typeof inspectShaclDocument>{return call(()=>engine.shacl.inspect({document}) as ReturnType<typeof inspectShaclDocument>);},
-  importShaclTurtle(text:string,options:Parameters<typeof importShaclTurtle>[1]):ReturnType<typeof importShaclTurtle>{return call(()=>engine.shacl.import({source:text,id:options.id,baseIRI:options.baseIRI,...(options.blankNodeScope===undefined?{}:{blankNodeScope:options.blankNodeScope})}) as ReturnType<typeof importShaclTurtle>);},
-  exportShaclTurtle(document:Parameters<typeof exportShaclTurtle>[0]):ReturnType<typeof exportShaclTurtle>{return call(()=>engine.shacl.export({document}) as ReturnType<typeof exportShaclTurtle>);},
-  getShaclQuads(document:Parameters<typeof getShaclQuads>[0]):ReturnType<typeof getShaclQuads>{return call(()=>engine.shacl.getQuads({document}) as ReturnType<typeof getShaclQuads>);},
-  proposeShaclQuadEdit(document:Parameters<typeof proposeShaclQuadEdit>[0],index:Parameters<typeof proposeShaclQuadEdit>[1],replacement:Parameters<typeof proposeShaclQuadEdit>[2]):ReturnType<typeof proposeShaclQuadEdit>{return call(()=>engine.shacl.editQuad({document,index,replacement}) as ReturnType<typeof proposeShaclQuadEdit>);},
-  getShaclPropertyPath(document:Parameters<typeof getShaclPropertyPath>[0],shape:Parameters<typeof getShaclPropertyPath>[1]):ShaclPath{return call(()=>engine.shacl.getPropertyPath({document,shape}) as ShaclPath);},
-  evaluateShaclPropertyPath(shapes:Parameters<typeof evaluateShaclPropertyPath>[0],shape:Parameters<typeof evaluateShaclPropertyPath>[1],data:Parameters<typeof evaluateShaclPropertyPath>[2],focus:Parameters<typeof evaluateShaclPropertyPath>[3]):ReturnType<typeof evaluateShaclPropertyPath>{return call(()=>engine.shacl.evaluatePropertyPath({shapes,shape,data,focus}) as ReturnType<typeof evaluateShaclPropertyPath>);},
-  getShaclTargetNodes(shapes:Parameters<typeof getShaclTargetNodes>[0],shape:Parameters<typeof getShaclTargetNodes>[1],data:Parameters<typeof getShaclTargetNodes>[2]):ReturnType<typeof getShaclTargetNodes>{return call(()=>engine.shacl.getTargetNodes({shapes,shape,data}) as ReturnType<typeof getShaclTargetNodes>);},
-  getShaclShapeMetadata(document:Parameters<typeof getShaclShapeMetadata>[0],shape:Parameters<typeof getShaclShapeMetadata>[1]):ShaclShapeMetadata{return call(()=>engine.shacl.getShapeMetadata({document,shape}) as ShaclShapeMetadata);},
-  proposeShaclEngineValidation(shapes:Parameters<typeof proposeShaclEngineValidation>[0],data:Parameters<typeof proposeShaclEngineValidation>[1],options:Parameters<typeof proposeShaclEngineValidation>[2]):Promise<NativeShaclEngineReport>{return Promise.resolve().then(()=>call(()=>engine.shacl.validate({shapes,data,id:options.id,blankNodePolicy:options.blankNodePolicy}) as NativeShaclEngineReport));},
+  inspectShaclDocument(document:Document):Validation{return call(()=>engine.shacl.inspect({document}) as Validation);},
+  importShaclTurtle(text:string,options:{id:string;baseIRI:string;blankNodeScope?:string}):Document{return call(()=>engine.shacl.import({source:text,id:options.id,baseIRI:options.baseIRI,...(options.blankNodeScope===undefined?{}:{blankNodeScope:options.blankNodeScope})}) as Document);},
+  exportShaclTurtle(document:Document):string{return call(()=>engine.shacl.export({document}) as string);},
+  getShaclQuads(document:Document):RdfQuad[]{return call(()=>engine.shacl.getQuads({document}) as RdfQuad[]);},
+  proposeShaclQuadEdit(document:Document,index:number,replacement:RdfQuad):{document:Document;validation:Validation}{return call(()=>engine.shacl.editQuad({document,index,replacement}) as {document:Document;validation:Validation});},
+  getShaclPropertyPath(document:Document,shape:RdfNode):ShaclPath{return call(()=>engine.shacl.getPropertyPath({document,shape}) as ShaclPath);},
+  evaluateShaclPropertyPath(shapes:Document,shape:RdfNode,data:Document,focus:RdfNode|RdfLiteral):(RdfNode|RdfLiteral)[]{return call(()=>engine.shacl.evaluatePropertyPath({shapes,shape,data,focus}) as (RdfNode|RdfLiteral)[]);},
+  getShaclTargetNodes(shapes:Document,shape:RdfNode,data:Document):(RdfNode|RdfLiteral)[]{return call(()=>engine.shacl.getTargetNodes({shapes,shape,data}) as (RdfNode|RdfLiteral)[]);},
+  getShaclShapeMetadata(document:Document,shape:RdfNode):ShaclShapeMetadata{return call(()=>engine.shacl.getShapeMetadata({document,shape}) as ShaclShapeMetadata);},
+  proposeShaclEngineValidation(shapes:Document,data:Document,options:ShaclEngineValidationOptions):Promise<NativeShaclEngineReport>{return Promise.resolve().then(()=>call(()=>engine.shacl.validate({shapes,data,id:options.id,blankNodePolicy:options.blankNodePolicy}) as NativeShaclEngineReport));},
  };
  return Object.freeze(api);
 }

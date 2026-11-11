@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureArrowIpc,exportArrowIpcCapture,observeArrowIpcCapture,inspectArrowIpcCapture,readDocument,writeDocument,ARROW_IPC_MAX_BYTES} from '../../src';
+import {captureArrowIpc,exportArrowIpcCapture,observeArrowIpcCapture,inspectArrowIpcCapture,readDocument,writeDocument,ARROW_IPC_MAX_BYTES} from '../../src/index-node-v4';
 import {observationBackend} from '../../native/arrow/runtime';
 const manifest=await Bun.file('fixtures/arrow/ipc-inputs/manifest.json').json();
 test('US-016-AC5: every native IPC fixture survives both serializations, including unsupported types',async()=>{

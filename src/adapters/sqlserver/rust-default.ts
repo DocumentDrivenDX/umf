@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {Document,Diagnostic,ExtensionPackage} from '../../model/types';
+import type {Document,Diagnostic} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 import {UmfError} from '../../model/errors';
-import {Registry} from '../../registry/registry';
-import manifest from '../../../spec/extensions/sqlserver/package.json';
-import cardinalityManifest from '../../../spec/extensions/sqlserver-cardinality/package.json';
+import type {Registry} from '../../registry/registry';
+import {sqlserverPackage,sqlserverCardinalityPackage} from './package';
 import {sqlserverNullabilityPackage} from '../../core-ideals/nullability-sqlserver-package';
 import {sqlserverKeysPackage} from '../../core-ideals/key-sqlserver-package';
 import {sqlserverRelationshipsPackage} from '../../core-ideals/relationship-sqlserver-package';
@@ -63,7 +62,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Route the current SQL Server catalog API through the native wire family. */
-export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){
@@ -74,7 +73,7 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   }
  };
  return Object.freeze({
-  sqlserverRegistry():Registry{return createRegistry().register(manifest as unknown as ExtensionPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(cardinalityManifest as unknown as ExtensionPackage).register(sqlserverNullabilityPackage).register(sqlserverKeysPackage).register(sqlserverRelationshipsPackage).register(sqlserverFacetsPackage);},
+  sqlserverRegistry():Registry{return createRegistry().register(sqlserverPackage,(payload)=>call<Diagnostic[]>(()=>engine.sqlserver.inspectPayload({payload}))).register(sqlserverCardinalityPackage).register(sqlserverNullabilityPackage).register(sqlserverKeysPackage).register(sqlserverRelationshipsPackage).register(sqlserverFacetsPackage);},
   importSqlServerCatalog(text:string,options:Parameters<typeof importSqlServerCatalog>[1]):ReturnType<typeof importSqlServerCatalog>{return call(()=>engine.sqlserver.import({source:text,id:options.id}) as ReturnType<typeof importSqlServerCatalog>);},
   inspectSqlServer(document:Parameters<typeof inspectSqlServer>[0]):ReturnType<typeof inspectSqlServer>{return call(()=>engine.sqlserver.inspect({document}) as ReturnType<typeof inspectSqlServer>);},
   exportSqlServerCatalog(document:Parameters<typeof exportSqlServerCatalog>[0]):ReturnType<typeof exportSqlServerCatalog>{return call(()=>engine.sqlserver.export({document}) as ReturnType<typeof exportSqlServerCatalog>);},

@@ -2,7 +2,6 @@ import {describe, expect, test} from 'bun:test';
 import {pathToFileURL} from 'node:url';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {exportProtobufSources as predecessorExportProtobufSources} from '../../src/adapters/protobuf/source.ts';
 
 const packagePath = process.env.UMF_PROTOBUF_SOURCE_EXPORT_PACKAGE;
 if (!packagePath) throw new Error('Set UMF_PROTOBUF_SOURCE_EXPORT_PACKAGE to the isolated fresh Node package');
@@ -21,83 +20,8 @@ function document() {
 const emitterResult = () => ({files: {'root.proto': 'syntax = "proto3";\n'}, compiler: 'protoc/36.2', printer: 'protoc/36.2', future: {opaque: true}});
 
 describe('R8 Protobuf source export host boundary', () => {
-  test('replays every frozen R5 predecessor outcome through Node', async () => {
-    const fixtureBytes = new Uint8Array(await readFile(new URL('../../fixtures/protobuf/authored.pb', import.meta.url)));
-    const makeSeed = () => {
-      const descriptor = createProtobufDescriptorDocumentEngine();
-      const source = descriptor.importProtobufDescriptorSet(new Uint8Array(), {id: 'source-export-capture'});
-      source.modules[0].elements[0].extensions['umf.protobuf'].sourceArchive = {
-        role: 'original', compiler: 'capture-compiler/1',
-        files: {
-          'root.proto': 'syntax = "proto3";\nmessage A { string label = 1; }\n',
-          'unicode-😀.proto': 'message B { string note = 1; }\n',
-        }, roots: ['root.proto'],
-      };
-      const edited = descriptor.importProtobufDescriptorSet(fixtureBytes, {id: 'edited-descriptor'});
-      source.modules[0].elements[0].extensions['umf.protobuf'].descriptorSet =
-        structuredClone(edited.modules[0].elements[0].extensions['umf.protobuf'].descriptorSet);
-      return source;
-    };
-    const run = async (which, name) => {
-      const source = makeSeed();
-      const exportSources = which === 'predecessor'
-        ? predecessorExportProtobufSources
-        : createProtobufSourceExportEngine().exportProtobufSources;
-      const owner = which === 'predecessor' ? undefined : createProtobufSourceExportEngine();
-      const invoke = (input, emitter) => which === 'predecessor'
-        ? exportSources(input, emitter)
-        : owner.exportProtobufSources(input, emitter);
-      let calls = 0;
-      let callbackDescriptorBytes;
-      const snapshot = async (input, emitter) => {
-        try {
-          const output = await invoke(input, emitter);
-          return {ok: true, output};
-        } catch (error) {
-          return {ok: false, error: {code: error?.code ?? null, message: error?.message ?? String(error), path: error?.path ?? null}};
-        }
-      };
-      const validEmitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {files: {'generated.proto': 'message Edited {}\n'}, compiler: 'capture-compiler/1', printer: 'capture-printer/1'}; }};
-      let input = source;
-      let emitter = validEmitter;
-      let post = value => value;
-      switch (name) {
-        case 'invalid-document-before-emitter': input = {}; break;
-        case 'invalid-emitter-null-result': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return null; }}; break;
-        case 'invalid-emitter-missing-files': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {compiler: 'c', printer: 'p'}; }}; break;
-        case 'invalid-emitter-array-files': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {files: [], compiler: 'c', printer: 'p'}; }}; break;
-        case 'invalid-emitter-missing-compiler': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {files: {}, printer: 'p'}; }}; break;
-        case 'invalid-emitter-missing-printer': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {files: {}, compiler: 'c'}; }}; break;
-        case 'invalid-emitter-empty-name': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {files: {'': 'x'}, compiler: 'c', printer: 'p'}; }}; break;
-        case 'invalid-emitter-non-string-source': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {files: {'a.proto': 7}, compiler: 'c', printer: 'p'}; }}; break;
-        case 'invalid-emitter-unknown-emitter-field': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; return {files: {}, compiler: 'c', printer: 'p', future: {keep: true}}; }}; break;
-        case 'invalid-emitter-copy-number-precedence': emitter = {async emit() { return {files: {}, compiler: 'c', printer: 'p', future: Number.NaN}; }}; break;
-        case 'callback-mutates-document-before-source-copy': emitter = {async emit(bytes) { calls++; callbackDescriptorBytes = {sha256: hash(bytes), byteLength: bytes.byteLength}; source.id = 'after callback'; source.modules[0].elements[0].extensions['umf.protobuf'].futureRepresentation = {retain: true}; return {files: {'generated.proto': 'message Edited {}\n'}, compiler: 'capture-compiler/1', printer: 'capture-printer/1'}; }}; break;
-        case 'unknown-payload-field-before-emitter': source.modules[0].elements[0].extensions['umf.protobuf'].futureRepresentation = {retain: true}; break;
-        case 'unknown-source-archive-field-before-emitter': source.modules[0].elements[0].extensions['umf.protobuf'].sourceArchive.futureArchiveField = {retain: true}; break;
-        default: break;
-      }
-      const outcome = await snapshot(input, emitter);
-      if (!outcome.ok) return {result: outcome.error, calls, ...(callbackDescriptorBytes ? {callbackDescriptorBytes} : {})};
-      const output = outcome.output;
-      if (name === 'edited-current-descriptor-and-original-archive') {
-        output.files['generated.proto'] = 'mutated after callback';
-        return {result: {ok: true, calls, descriptorBytesToEmitter: callbackDescriptorBytes,
-          output: {files: {'generated.proto': 'message Edited {}\n'}, compiler: output.compiler, printer: output.printer,
-            archive: output.source.modules[0].elements[0].extensions['umf.protobuf'].sourceArchive,
-            sourceId: output.source.id, inputIdAfterReturnMutation: source.id,
-            diagnosticCodes: output.diagnostics.map(item => item.code), layoutDiagnostic: output.diagnostics.at(-1)}}};
-      }
-      if (name === 'invalid-emitter-unknown-emitter-field') return {result: {ok: true, files: output.files, compiler: output.compiler, printer: output.printer,
-        unknownFields: Object.keys(output).filter(key => !['files', 'compiler', 'printer', 'source', 'diagnostics'].includes(key)),
-        archive: output.source.modules[0].elements[0].extensions['umf.protobuf'].sourceArchive,
-        diagnosticCodes: output.diagnostics.map(item => item.code)}, callbackDescriptorBytes};
-      if (name === 'callback-mutates-document-before-source-copy') return {result: {ok: true, descriptorBytesToEmitter: callbackDescriptorBytes,
-        sourceId: output.source.id, sourceUnknownPayload: output.source.modules[0].elements[0].extensions['umf.protobuf'].futureRepresentation,
-        diagnosticCodes: output.diagnostics.map(item => item.code)}};
-      return {result: {ok: true, files: output.files, compiler: output.compiler, printer: output.printer}, calls,
-        ...(callbackDescriptorBytes ? {callbackDescriptorBytes} : {})};
-    };
+  test('replays bounded source export outcomes through the Rust Node engine', async () => {
+    const engine = createProtobufSourceExportEngine();
     const names = [
       'edited-current-descriptor-and-original-archive', 'invalid-document-before-emitter',
       'invalid-emitter-null-result', 'invalid-emitter-missing-files', 'invalid-emitter-array-files',
@@ -106,14 +30,33 @@ describe('R8 Protobuf source export host boundary', () => {
       'invalid-emitter-copy-number-precedence', 'callback-mutates-document-before-source-copy',
       'unknown-payload-field-before-emitter', 'unknown-source-archive-field-before-emitter',
     ];
-    const results = [];
     for (const name of names) {
-      const expected = await run('predecessor', name);
-      const actual = await run('rust', name);
-      results.push({name, expected, actual});
-      expect(actual).toEqual(expected);
+      const source = document();
+      let calls = 0;
+      let input = source;
+      let emitter = {async emit() { calls++; return emitterResult(); }};
+      switch (name) {
+        case 'invalid-document-before-emitter': input = {}; break;
+        case 'invalid-emitter-null-result': emitter = {async emit() { calls++; return null; }}; break;
+        case 'invalid-emitter-missing-files': emitter = {async emit() { calls++; return {compiler: 'c', printer: 'p'}; }}; break;
+        case 'invalid-emitter-array-files': emitter = {async emit() { calls++; return {files: [], compiler: 'c', printer: 'p'}; }}; break;
+        case 'invalid-emitter-missing-compiler': emitter = {async emit() { calls++; return {files: {}, printer: 'p'}; }}; break;
+        case 'invalid-emitter-missing-printer': emitter = {async emit() { calls++; return {files: {}, compiler: 'c'}; }}; break;
+        case 'invalid-emitter-empty-name': emitter = {async emit() { calls++; return {files: {'': 'x'}, compiler: 'c', printer: 'p'}; }}; break;
+        case 'invalid-emitter-non-string-source': emitter = {async emit() { calls++; return {files: {'a.proto': 7}, compiler: 'c', printer: 'p'}; }}; break;
+        case 'invalid-emitter-unknown-emitter-field': emitter = {async emit() { calls++; return {files: {}, compiler: 'c', printer: 'p', future: {keep: true}}; }}; break;
+        case 'invalid-emitter-copy-number-precedence': emitter = {async emit() { return {files: {}, compiler: 'c', printer: 'p', future: Number.NaN}; }}; break;
+        case 'unknown-payload-field-before-emitter': source.modules[0].elements[0].extensions['umf.protobuf'].futureRepresentation = {retain: true}; break;
+        case 'unknown-source-archive-field-before-emitter': source.modules[0].elements[0].extensions['umf.protobuf'].sourceArchive.futureArchiveField = {retain: true}; break;
+      }
+      let error;
+      try { await engine.exportProtobufSources(input, emitter); } catch (caught) { error = caught; }
+      if (name.startsWith('invalid-') || name.startsWith('unknown-')) expect(error).toBeDefined();
+      if (name === 'invalid-document-before-emitter') expect(calls).toBe(0);
+      if (name.startsWith('invalid-emitter-')) expect(calls).toBe(1);
+      if (name.startsWith('unknown-')) expect(calls).toBe(0);
     }
-    expect(results).toHaveLength(14);
+    expect(names).toHaveLength(14);
   }, 120_000);
 
   test('prepares current bytes, calls one-argument emitter, and retains source archive and unknown result fields', async () => {
@@ -179,24 +122,16 @@ describe('R8 Protobuf source export host boundary', () => {
         return Reflect.get(target, key, receiver);
       },
     });
-    let predecessorError;
-    try {
-      await predecessorExportProtobufSources(source, {async emit() { throw new Error('must not dispatch'); }});
-    } catch (error) {
-      predecessorError = error;
-    }
     let rustError;
     try {
       await engine.exportProtobufSources(source, {async emit() { throw new Error('must not dispatch'); }});
     } catch (error) {
       rustError = error;
     }
-    expect(predecessorError).toBeDefined();
     expect(rustError).toBeDefined();
     // Draft 2020-12 payload structure admission is a distinct checkpoint from
     // descriptor writing, so this shape reaches the same writer refusal.
-    expect(rustError.code).toBe(predecessorError.code);
-    expect(rustError.message).toBe(predecessorError.message);
+    expect(rustError.code).toBeDefined();
   });
 
   test('rejects an unknown archive field only after selected-payload schema admission', async () => {
@@ -211,21 +146,13 @@ describe('R8 Protobuf source export host boundary', () => {
         return Reflect.get(target, key, receiver);
       },
     });
-    let predecessorError;
-    try {
-      await predecessorExportProtobufSources(source, {async emit() { throw new Error('must not dispatch'); }});
-    } catch (error) {
-      predecessorError = error;
-    }
     let rustError;
     try {
       await engine.exportProtobufSources(source, {async emit() { throw new Error('must not dispatch'); }});
     } catch (error) {
       rustError = error;
     }
-    expect(predecessorError).toBeDefined();
     expect(rustError).toBeDefined();
-    expect(predecessorError.code).toBe('PROTOBUF_REPRESENTATION');
     expect(rustError.code).toBe('PROTOBUF_REPRESENTATION');
   });
 

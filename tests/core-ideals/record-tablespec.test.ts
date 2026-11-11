@@ -4,7 +4,7 @@ import {classifyTableSpecRecord, verifyTableSpecRecordClassification} from '../.
 import {declareCoreElementKind} from '../../src/model/field-kind';
 
 import {importTableSpec, importTableSpecBundle, exportTableSpec, exportTableSpecBundle} from '../../src/adapters/tablespec';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {copyJson} from '../../src/model/json';
 import {readDocument, writeDocument} from '../../src/model/document';
 import {type Document} from '../../src/model/types';

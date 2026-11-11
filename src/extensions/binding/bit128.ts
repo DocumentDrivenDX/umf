@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {resolveBit128ModelLayout} from './bit128-layout';
-import manifest from '../../../spec/extensions/binding-128/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
-import {UmfError,pointer,type Document,type ExtensionPackage,type Validation,type Diagnostic} from '../../model/types';
+import {UmfError,pointer,type Document,type Validation,type Diagnostic} from '../../model/types';
 import {validateCoreFieldValue} from '../../model/schema-properties';
 import {parseBits128,bits128FromWords,bits128ToWords,type Bit128Value} from '../../model/bit128';
 import {parseUuid,uuidToBits128,uuidFromBits128} from '../../model/uuid';
 import type {CoreLiteral} from '../../model/schema-literals';
-export const bit128BindingPackage=manifest as unknown as ExtensionPackage;
+import {bit128BindingPackage} from './package';
+export {bit128BindingPackage} from './package';
 const carrierRegistry=new Registry().register(bit128BindingPackage);
 export type Bit128Carrier={kind:'native-uuid'|'bytes16'|'uuid-text'|'hex128-text';column:string}|{kind:'words64';highColumn:string;lowColumn:string;signed:boolean};
 export interface Bit128FieldBinding {module:string;element:string;storage:'scalar-carrier';carrier:Bit128Carrier}

@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {exportParquetCapture} from '../adapters/parquet';
 import {getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
 import schema from '../../spec/core/parquet-relationship-classification.schema.json';
-import manifest from '../../spec/extensions/parquet-relationships/package.json';
-export const PARQUET_RELATIONSHIPS_EXTENSION='umf.parquet.relationships';
-export const parquetRelationshipsPackage=manifest as unknown as ExtensionPackage;
+import {PARQUET_RELATIONSHIPS_EXTENSION} from './relationship-parquet-package';
+export {PARQUET_RELATIONSHIPS_EXTENSION,parquetRelationshipsPackage} from './relationship-parquet-package';
 export {default as parquetRelationshipClassificationSchema} from '../../spec/core/parquet-relationship-classification.schema.json';
 export interface ParquetRelationshipRequest {mode:'strict'|'report';profile:'file-schema'}
 export interface ParquetRelationshipObservation {nativePath:string;index:number;path:string[];kind:'physical-leaf'|'physical-group';definitionLevel:number;repetitionLevel:number;nativeField:Json;enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'file-schema'}

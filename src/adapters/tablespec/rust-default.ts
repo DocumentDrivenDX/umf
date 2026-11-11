@@ -2,7 +2,7 @@
 import type {Diagnostic,Document,ExtensionPackage} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 import {UmfError} from '../../model/errors';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/tablespec/package.json';
 import type {importTableSpec,exportTableSpec,getTableSpecColumn,getTableSpecTable,editTableSpecColumn,editTableSpecTable,importTableSpecBundle,exportTableSpecBundle} from './index';
 import type {TableSpecFieldClassification,TableSpecFieldRequest} from '../../core-ideals/tablespec-field';
@@ -73,7 +73,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Preserve TableSpec's synchronous public API while routing its semantics through Rust. */
-export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createTableSpecRustDefault(engine:TableSpecNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){

@@ -9,6 +9,8 @@ pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
     #[cfg(feature = "codegen")]
     "pack-tools",
+    "bulk-actions",
+    "lakeview-legacy-projection",
     "field-record-parquet-projection",
     "core-ideal-reports",
     "medical-projection",
@@ -86,6 +88,22 @@ pub fn metadata_wire(family: &str) -> String {
     let (profile, operations): (&str, &[&str]) = match family {
         #[cfg(feature = "codegen")]
         "pack-tools" => (crate::pack_tools_binding::PROFILE, &["generatePackTools"]),
+        "bulk-actions" => (
+            crate::bulk_actions_binding::PROFILE,
+            &[
+                "applyBulkEvent",
+                "bulkDecisionOrder",
+                "nextBulkFence",
+                "bulkItemToken",
+                "parseBulkItemToken",
+                "isReservedBulkKey",
+                "checkBulkKeyUse",
+            ],
+        ),
+        "lakeview-legacy-projection" => (
+            crate::lakeview_legacy_projection_binding::PROFILE,
+            &["projectLakeviewToLegacyDashboard"],
+        ),
         "cardinality-sqlserver-projection" => (
             crate::cardinality_sqlserver_projection_binding::PROFILE,
             &[
@@ -389,6 +407,7 @@ pub fn metadata_wire(family: &str) -> String {
             crate::binding_public_binding::PROFILE,
             &[
                 "inspectBinding",
+                "inspectRawTableBinding",
                 "getBinding",
                 "readBindingDocument",
                 "writeBindingDocument",
@@ -866,16 +885,32 @@ pub fn metadata_wire(family: &str) -> String {
     let operations = operations
         .iter()
         .map(|operation| {
-            let wire_operation = if family == "field-record-sqlserver-projection"
-                || family == "field-record-parquet-projection"
-                || family == "field-record-avro-projection"
-                || family == "cardinality-sqlserver-projection"
-                || family == "avro-cardinality"
-                || family == "avro-classification"
-                || family == "record-type"
-            {
-                (*operation).to_owned()
-            } else if family == "tablespec" {
+            let wire_operation = if matches!(
+                family,
+                "avro-cardinality"
+                    | "avro-classification"
+                    | "avro-relationship-projection"
+                    | "binding-public"
+                    | "cardinality-sqlserver-projection"
+                    | "core-ideal-reports"
+                    | "dashboard-public"
+                    | "facets-avro-projection"
+                    | "field-record-avro-projection"
+                    | "field-record-parquet-projection"
+                    | "field-record-sqlserver-projection"
+                    | "key-avro-projection"
+                    | "key-sqlserver-projection"
+                    | "medical-projection"
+                    | "nullability-avro-projection"
+                    | "nullability-sqlserver-projection"
+                    | "record-type"
+                    | "relationship-extra-projection"
+                    | "relationship-parquet-projection"
+                    | "relationship-postgresql-projection"
+                    | "relationship-sqlserver-projection"
+                    | "tablespec"
+                    | "tablespec-relationship-projection"
+            ) {
                 (*operation).to_owned()
             } else if family == "iceberg-table" {
                 format!("iceberg.table.{operation}")
@@ -914,6 +949,10 @@ pub fn execute_wire_with_control(
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
     match family {
+        "bulk-actions" => crate::bulk_actions_binding::execute_wire_with_control(wire, control),
+        "lakeview-legacy-projection" => {
+            crate::lakeview_legacy_projection_binding::execute_wire_with_control(wire, control)
+        }
         #[cfg(feature = "codegen")]
         "pack-tools" => crate::pack_tools_binding::execute_wire_with_control(wire, control),
         "cardinality-sqlserver-projection" => {
@@ -1148,5 +1187,28 @@ mod tests {
         let response: Json = serde_json::from_str(&execute_wire("graphql", "{}")).unwrap();
         assert_eq!(response["status"], "error");
         assert_eq!(response["code"], "REQUEST");
+    }
+
+    #[test]
+    fn public_binding_metadata_names_are_accepted_by_the_binding_executor() {
+        let metadata: Json = serde_json::from_str(&metadata_wire("binding-public")).unwrap();
+        let body = crate::decode(
+            metadata["wire"].as_str().unwrap(),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let profile = crate::field(&body, "profile").and_then(crate::as_utf16).unwrap().to_utf8().unwrap();
+        let operations = crate::field(&body, "operations").unwrap();
+        let operation = crate::field(operations, "inspectRawTableBinding")
+            .and_then(crate::as_utf16)
+            .unwrap()
+            .to_utf8()
+            .unwrap();
+        let wire = request(&profile, &operation, &[]);
+        let response: Json = serde_json::from_str(&execute_wire("binding-public", &wire)).unwrap();
+        assert_eq!(response["status"], "error");
+        assert_eq!(response["code"], "REQUEST");
+        let units: Vec<u16> = serde_json::from_value(response["messageUnits"].clone()).unwrap();
+        assert_eq!(String::from_utf16(&units).unwrap(), "binding is required");
     }
 }

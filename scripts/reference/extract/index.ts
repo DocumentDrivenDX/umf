@@ -6,7 +6,7 @@ import {root,source,read,paths,text} from '../io';
 import {apiGuides,apiTask} from '../reader-content';
 import type {ApiReader,ReaderRow} from '../../../docs/helix/05-deploy/reference/model';
 export const apiDocumentation=new Map<string,ApiReader>();
-import {parseNativeJson} from '../../../src/index';
+import {parseNativeJson} from '../../../src/index-node-v4';
 export async function schemas(profiles:any):Promise<Entry[]>{
  const entries:Entry[]=[];
  for(const path of (await Promise.all(['spec/core/**/*.json','spec/extensions/**/*.json','spec/projections/**/*.json'].map(paths))).flat().sort()){
@@ -42,7 +42,7 @@ export async function extensions(profiles:any,schemaEntries:Entry[],apiEntries:E
 }
 export async function exportsInventory():Promise<Entry[]>{
  const pkg=await read('package.json');const configs=ts.readConfigFile(resolve(root,'tsconfig.json'),ts.sys.readFile);const parsed=ts.parseJsonConfigFileContent(configs.config,ts.sys,root);
- const sourceMap:Record<string,string>={'.':'src/index.ts','./loader-contract':'src/domain-packs/loader-contract.ts','./runtime/wasm':'bindings/core/wasm/index.d.ts'};
+ const sourceMap:Record<string,string>={'.':'src/index-node-v4.ts','./loader-contract':'src/domain-packs/loader-contract.ts','./runtime/wasm':'bindings/core/wasm/index.d.ts'};
  // These source-only conditions are migration probes, not published SDK API.
  const internalEntrypoints=new Set(['./reference','./rust-codegen-candidate/v2','./rust-codegen-candidate/v3','./rust-codegen-candidate/v4']);
  const declared=Object.keys(pkg.exports);
@@ -54,17 +54,19 @@ export async function exportsInventory():Promise<Entry[]>{
    const symbol=exported.flags&ts.SymbolFlags.Alias?checker.getAliasedSymbol(exported):exported;const decls=symbol.getDeclarations()??[];if(!decls.length)throw Error('REFERENCE_LINK unresolved export '+exported.name);
    const sources=[];for(const d of decls){const path=relative(root,d.getSourceFile().fileName).replaceAll('\\','/');if(path.startsWith('..')||path.includes('node_modules'))continue;const s=await source(path);sources.push({...s,line:d.getSourceFile().getLineAndCharacterOfPosition(d.getStart()).line+1});}
    if(!sources.length)throw Error('REFERENCE_LINK external export '+exported.name);
-   const type=checker.getTypeOfSymbolAtLocation(symbol,decls[0]!);const signatures=type.getCallSignatures().map(s=>checker.signatureToString(s,undefined,ts.TypeFormatFlags.NoTruncation));
+   const type=checker.getTypeOfSymbolAtLocation(symbol,decls[0]!);const constructors=type.getConstructSignatures();
+   const signatures=type.getCallSignatures().map(s=>checker.signatureToString(s,undefined,ts.TypeFormatFlags.NoTruncation));
+   if(!signatures.length)signatures.push(...constructors.map(s=>checker.signatureToString(s,undefined,ts.TypeFormatFlags.NoTruncation,ts.SignatureKind.Construct)));
    const isType=!(symbol.flags&ts.SymbolFlags.Value);const fallback=decls.map(d=>d.getText().slice(0,20000));
    const summary=ts.displayPartsToString(symbol.getDocumentationComment(checker)).slice(0,220)||`${isType?'Type declaration':'Public export'} · ${sources[0]!.path}`;
    entries.push({id:identity('api',entrypoint,exported.name),kind:'api',title:exported.name,summary,sources,links:[],data:{entrypoint,exportName:exported.name,declarations:sources,signatureText:signatures.length?signatures:fallback,runtime:isType?'type-only':'unassessed'}});
    const flags=ts.TypeFormatFlags.NoTruncation|ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope;
-   const declared=isType||decls.some(ts.isClassDeclaration)?checker.getDeclaredTypeOfSymbol(symbol):type;
+   const declared=isType||decls.some(ts.isClassDeclaration)?checker.getDeclaredTypeOfSymbol(symbol):constructors[0]?.getReturnType()??type;
    const typeText=checker.typeToString(declared,decls[0],flags);
    const guide=apiGuides[exported.name];
-   const kind=signatures.length?'Function':decls.some(ts.isInterfaceDeclaration)?'Interface':decls.some(ts.isTypeAliasDeclaration)?'Type alias':decls.some(ts.isClassDeclaration)?'Class':decls.some(ts.isEnumDeclaration)?'Enum':/Schema$/.test(exported.name)?'Schema':/Package$/.test(exported.name)?'Package':'Constant';
+   const kind=constructors.length||decls.some(ts.isClassDeclaration)?'Class':signatures.length?'Function':decls.some(ts.isInterfaceDeclaration)?'Interface':decls.some(ts.isTypeAliasDeclaration)?'Type alias':decls.some(ts.isEnumDeclaration)?'Enum':/Schema$/.test(exported.name)?'Schema':/Package$/.test(exported.name)?'Package':'Constant';
    const row=(member:ts.Symbol):ReaderRow=>{const declaration=member.valueDeclaration??member.declarations?.[0]??decls[0]!;return {name:member.name,type:checker.typeToString(checker.getTypeOfSymbolAtLocation(member,declaration),declaration,flags),optional:!!(member.flags&ts.SymbolFlags.Optional)||!!(declaration as any).questionToken||!!(declaration as any).initializer,description:[ts.displayPartsToString(member.getDocumentationComment(checker)),(declaration as any).initializer?'Default: '+(declaration as any).initializer.getText()+'.':''].filter(Boolean).join(' '),links:[]};};
-   const calls=type.getCallSignatures();const parameters=calls.flatMap((call,i)=>call.getParameters().map(p=>({...row(p),name:calls.length>1?'Overload '+(i+1)+' · '+p.name:p.name})));
+   const calls=kind==='Class'?constructors:type.getCallSignatures();const parameters=calls.flatMap((call,i)=>call.getParameters().map(p=>({...row(p),name:calls.length>1?'Overload '+(i+1)+' · '+p.name:p.name})));
    const members=['Interface','Class','Type alias'].includes(kind)&&!(declared.flags&ts.TypeFlags.Union)?checker.getPropertiesOfType(declared).filter(p=>!p.name.startsWith('#')&&!p.declarations?.some(d=>ts.canHaveModifiers(d)&&ts.getModifiers(d)?.some(m=>m.kind===ts.SyntaxKind.PrivateKeyword||m.kind===ts.SyntaxKind.ProtectedKeyword))).map(row):[];
    const returns=calls.map(call=>checker.typeToString(call.getReturnType(),decls[0],flags)).join(' | ');
    const comment=ts.displayPartsToString(symbol.getDocumentationComment(checker));

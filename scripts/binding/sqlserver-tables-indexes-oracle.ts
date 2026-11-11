@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingTablesAndIndexesFromPlanToSqlServer,type Document} from '../../src';
+import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingTablesAndIndexesFromPlanToSqlServer,type Document} from '../../src/index-node-v4';
 
 const directory='fixtures/binding/sqlserver-tables-indexes';
 const fixture=await Bun.file(`${directory}/case.json`).json();
@@ -41,7 +41,7 @@ try{
   assert.equal(indexes.find((x:any)=>x.name==='UX_Items_Email')?.unique,true);
   observed={indexes};
 }finally{if(created)await run(['docker','rm','-f','-v',name]);}
-const files=[`${directory}/case.json`,`${directory}/generated.sql`,`${directory}/catalog.json`,'fixtures/binding/sqlserver-tables/catalog.json','src/projections/binding-sqlserver/tables-indexes.ts','src/projections/binding-sqlserver/indexes.ts','native/sqlserver/catalog-v2.sql'];
+const files=[`${directory}/case.json`,`${directory}/generated.sql`,`${directory}/catalog.json`,'fixtures/binding/sqlserver-tables/catalog.json','src/projections/binding-sqlserver-types.ts','crates/umf-core/src/binding_sqlserver_tables.rs','crates/umf-core/src/binding_sqlserver_planned_indexes.rs','crates/umf-core/src/binding_index_projection.rs','native/sqlserver/catalog-v2.sql'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 await Bun.write(`${directory}/oracle.json`,JSON.stringify({scope:'Isolated SQL Server 2022 execution of catalog-free DDD-derived tables plus three physical rowstore indexes; other index kinds and relationships remain residual',image,serverVersion:capturedVersion,observed,nativeRecovery:{optionalInputCatalogRetained:true,outputCatalogRetained:true,adapterExport:'structurally equal JSON; escaped slash spelling may normalize'},residuals:report.residuals,sha256},null,2)+'\n');
 console.log(JSON.stringify({indexes:(observed as any).indexes.length,residuals:report.residuals.length}));

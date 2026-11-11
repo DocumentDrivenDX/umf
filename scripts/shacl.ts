@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importShaclTurtle,exportShaclTurtle,getShaclQuads,getShaclPropertyPath,evaluateShaclPropertyPath,proposeShaclQuadEdit,importRdfTurtle,writeDocument,readDocument} from '../src';
+import {importShaclTurtle,exportShaclTurtle,getShaclQuads,getShaclPropertyPath,evaluateShaclPropertyPath,proposeShaclQuadEdit,importRdfTurtle,writeDocument,readDocument} from '../src/index-node-v4';
 const source=await Bun.file('native/shacl/paths.ttl').text(),dataSource=await Bun.file('native/shacl/data.ttl').text(),baseIRI='https://example.org/';
 const d=importShaclTurtle(source,{id:'shapes',baseIRI}),data=importRdfTurtle(dataSource,{id:'data',baseIRI}),results=[];
 for(const name of ['predicate','inverse','sequence','alternative','star','plus','optional','inverseSequence','nested','doubleInverse','inverseStar','nullablePlus','sequenceWithAnnotation'])for(const focusName of ['a','b','d','missing']){

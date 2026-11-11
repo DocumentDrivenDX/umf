@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {generateAccessPackage} from '../src/compilation/index';
+import {generateAccessPackage} from '../src/node-access-compilation';
 import {profile,request} from '../tests/compilation/access-fixtures';
 if(!process.argv[2])throw new Error('explicit output directory required');
 const original=await Bun.file(process.env.UMF_BULK_LIST_REQUEST??'fixtures/access/native-bulk-list/request.json').json();

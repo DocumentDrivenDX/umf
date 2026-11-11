@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Diagnostic,Json} from './model/types';
+import {createBulkActionsRustDefault} from './extensions/actions/bulk-state';
+import {createLakeviewLegacyProjectionRustDefault} from './adapters/lakeview/project-rust-default';
 import {createCoreIdealReportsRustDefault} from './core-ideals/reports-rust-default';
 import {assertPythonClientRustPlatformV4,initializePythonClientRustDefaultV4} from './access/rust-default-v4';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
@@ -43,9 +45,7 @@ import {createDashboardRustDefault} from './extensions/dashboard/rust-default';
 import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
 import {createProtobufDescriptorDocumentRustDefault,createProtobufRegistryRustDefault} from './adapters/protobuf/rust-default';
 import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rust-default';
-import {arrowPackage} from './adapters/arrow';
-import {arrowIpcPackage} from './adapters/arrow/capture';
-import {arrowFlatbufferPackage} from './adapters/arrow/flatbuffer-model';
+import {arrowPackage,arrowIpcPackage,arrowFlatbufferPackage} from './adapters/arrow/package';
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import {bindDbtRust,createDbtRegistriesRustDefault} from './adapters/dbt/rust-default';
@@ -164,11 +164,11 @@ const protobufRegistries=createProtobufRegistryRustDefault(protobufDescriptorDoc
 const {protobufRegistry}=protobufRegistries;
 const graphql=createGraphqlRustDefault(createGraphqlEngine(),isNativeUmfCoreError,()=>new Registry());
 const actionPlanSession=createActionPlanSessionEngine();
-const actionPlan=createActionPlanRustDefault(actionPlanSession,isNativeUmfCoreError);
+const actionPlan=createActionPlanRustDefault(actionPlanSession,isNativeUmfCoreError,(document,registrations)=>validateRegistrations(document,registrations));
 const actionManifest=createActionManifestRustDefault(actionPlanSession,actionPlan,isNativeUmfCoreError);
 const {constructActionManifest,inspectActionManifest,assessActionManifest}=actionManifest;
 const {prepareActionPlanModel,inspectActionPlan,assessActionPlan}=actionPlan;
-const actionAuthoring=createActionAuthoringRustDefault(()=>createCodegenEngine(CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const actionAuthoring=createActionAuthoringRustDefault(()=>createCodegenEngine(CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error),(document,registrations)=>validateRegistrations(document,registrations));
 const actionRegistry=createActionRegistryRustDefault(()=>createCodegenEngine(CODEGEN_RESOURCES),isNativeUmfCoreError);
 const {inspectActions,declareAction,editAction,assessAction}=actionAuthoring;
 const {registerActions}=actionRegistry;
@@ -178,6 +178,10 @@ const rdf=createRdfRustDefault(createRdfEngine(),isNativeUmfCoreError,()=>new Re
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle,projectGraphqlInputToJsonSchema}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher();
+const {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse}=
+  createBulkActionsRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectLakeviewToLegacyDashboard}=createLakeviewLegacyProjectionRustDefault(nativeFamilyDispatcher);
+export {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse,projectLakeviewToLegacyDashboard};
 const packTools=createPackToolsRustDefault({generatePackTools:request=>nativeFamilyDispatcher['pack-tools'].generatePackTools({request})},isNativeUmfCoreError);
 const {generatePackTools}=packTools;
 const medical=createMedicalRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
@@ -368,7 +372,7 @@ const {editExtension}=createEditExtensionRustDefault(model,isNativeUmfCoreError)
 const dashboardPublic=createDashboardRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry(),editExtension);
 const {dashboardRegistry,registerDashboard,inspectDashboard,readDashboardDocument,writeDashboardDocument,getDashboardDefinition,editDashboardDefinition}=dashboardPublic;
 const {declareCoreBit128Field}=bindCoreBit128FieldRust(createCoreBit128FieldEngine(CORE_MODEL_RESOURCES),isCoreBit128FieldBindingError);
-const {Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
+const {Registry,validateDocument,validateRegistrations,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
 const ownedExtensionRegistries=createExtensionRegistriesRustDefault(
  ()=>new Registry(),securityPolicySource,model,
  createCodegenEngine(CODEGEN_RESOURCES),
@@ -413,7 +417,7 @@ const {copyJson,readJsonValue,writeJsonValue,readProtectionSource,writeProtectio
 const {parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant}=temporal;
 const {validateCsvBooleanLexical,verifyCsvBooleanLexical}=bindCsvBooleanLexicalRust(model,isWireAdmissionError,isNativeUmfCoreError);
 const {inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks}=bindCoreInspectorsRust(model,isWireAdmissionError,isNativeUmfCoreError);
-const inspectRawTableBinding=createRawTableBindingInspector(inspectCoreRecordMembers);
+const inspectRawTableBinding=createRawTableBindingInspector(bindingPublic);
 const javascriptNumeric=bindJavascriptNumericRust(()=>createJavascriptNumericEngine(CORE_MODEL_RESOURCES));
 const {exactDecimal,integerFromBigInt,integerToBigInt,admitJavascriptNumber,numericToNumberLossless}=javascriptNumeric;
 const {inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault}=bindCoreSchemaPropertiesRust(model);
@@ -610,7 +614,7 @@ export {compileActionRule,compileActionSelector,admitActionInputs,selectActionId
 export {inspectSagas,declareSaga,editSaga,assessSaga};
 
 export {AVRO_FACETS_EXTENSION,avroFacetsPackage} from './core-ideals/avro-facets-package';
-export type {RelationshipAvroProjection,RelationshipAvroRequest} from './core-ideals/relationship-avro-projection-factory';
+export type {RelationshipAvroProjection,RelationshipAvroRequest} from './core-ideals/relationship-avro-projection-types';
 
 export type {DeltaCommit,DeltaReconciliation} from './adapters/delta/reconcile';
 

@@ -3,7 +3,7 @@ import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {relationshipExtraCases} from './relationship-extras-cases';
-import {projectRelationshipToExtra, importRelationshipExtraArchive, type RelationshipExtraArchive} from '../../src';
+import {projectRelationshipToExtra, importRelationshipExtraArchive, type RelationshipExtraArchive} from '../../src/index-node-v4';
 const cases=relationshipExtraCases().map(c=>({...c,expectedResult:projectRelationshipToExtra(c.source,c.author,c.request)}));
 const native=[
  {system:'graphql',archive:{format:'graphql-sdl',text:'# retained comment\ndirective @future on FIELD_DEFINITION\ntype Query { customer: Customer @future }\ntype Customer { id: ID }\n'}},

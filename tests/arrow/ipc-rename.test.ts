@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureArrowIpc,exportArrowIpcCapture,renameArrowIpcField,inspectArrowIpcLayout,coreSchema,arrowIpcLayoutSchema,arrowIpcConsistencySchema,arrowIpcRenameSchema} from '../../src';
+import {captureArrowIpc,exportArrowIpcCapture,renameArrowIpcField,inspectArrowIpcLayout,coreSchema,arrowIpcLayoutSchema,arrowIpcConsistencySchema,arrowIpcRenameSchema} from '../../src/index-node-v4';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';
 import {createValidator} from '../../src/validation/schema';
 const validator=createValidator();for(const schema of [coreSchema,arrowIpcLayoutSchema,arrowIpcConsistencySchema])validator.addSchema(schema);const check=validator.compile(arrowIpcRenameSchema);

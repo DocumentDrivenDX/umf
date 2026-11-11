@@ -3,7 +3,7 @@ import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {parse as parseYaml} from 'yaml';
 import {test,expect} from 'bun:test';
 import {generateDownload,targets} from '../../docs/helix/05-deploy/microsite/download-model';
-import {parseEntry,type Entry} from '../../docs/helix/05-deploy/microsite/explorer-model';
+import {parseEntry,type Entry} from '../../docs/helix/05-deploy/microsite/explorer-node';
 import {parse} from 'graphql';
 import avsc from 'avsc';
 import Ajv from 'ajv/dist/2020';

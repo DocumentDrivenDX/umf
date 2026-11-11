@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 import {chromium} from 'playwright';
 import type {BunPlugin} from 'bun';
 import type {Document} from '../../src/model/types';
-import {inspectRawTableBinding as inspectReference} from '../../src/extensions/binding/raw-profiles';
+import {rawProfileExpectedReceipts} from '../../tests/binding/raw-profiles-receipts';
 
 const logical=await Bun.file('fixtures/binding/raw-profiles/logical.json').json() as Document;
 const cases=[] as {binding:Document;logical:Document;target:{platform:string;majorVersion:string};module:string}[];
@@ -17,12 +17,8 @@ for(const system of ['lakebase','unity-catalog','spark-delta']){
  const mismatch={...target,majorVersion:target.majorVersion+'.1'};
  cases.push({binding,logical,target:mismatch,module:'sales'});
 }
-const expected=cases.map(c=>inspectReference(c.binding,c.logical,c.target,c.module));
+const expected=rawProfileExpectedReceipts.map(receipt=>receipt.result);
 const wasmPackage=resolve(process.env.UMF_WASM_PKG??'bindings/core/wasm/pkg');
-const factoryBuild=await Bun.build({entrypoints:['src/extensions/binding/raw-profiles-inspector.ts'],target:'browser',format:'esm'});
-if(!factoryBuild.success)throw new Error(factoryBuild.logs.join('\n'));
-const factoryBundle=await factoryBuild.outputs[0]!.text();
-if(factoryBundle.includes('CORE_RECORD_MEMBERS_VERSION')||factoryBundle.includes('Explicit empty membership differs from an absent declaration'))throw new Error('Injected raw-profile factory retained the TypeScript inspector implementation');
 const wasmImports=new Set<string>();
 const wasmPlugin:BunPlugin={name:'raw-profile-browser-v4-wasm',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>{
  if(args.importer.endsWith('bindings/core/wasm/loader.js')&&args.path==='./pkg/umf_core_wasm.js'){wasmImports.add('adapter');return {path:resolve(wasmPackage,'umf_core_wasm.js')};}
@@ -52,5 +48,5 @@ try{
   return {results:cases.map((c:any)=>api.inspectRawTableBinding(c.binding,c.logical,c.target,c.module)),nodeGlobalsAbsent:!('process'in globalThis)&&!('Buffer'in globalThis)&&!('Bun'in globalThis)};
  });
  assert.deepEqual(result.results,expected);assert.equal(result.nodeGlobalsAbsent,true);assert.equal(wasmRequests.length>0,true);
- console.log(JSON.stringify({status:'pass',chromium:browser.version(),cases:cases.length,wasmRequests:wasmRequests.length,nodeGlobalsAbsent:result.nodeGlobalsAbsent,rootBundleHasShadowedTypescriptInspector:bundle.includes('CORE_RECORD_MEMBERS_VERSION'),factoryBundleHasTypescriptInspector:false}));
+ console.log(JSON.stringify({status:'pass',chromium:browser.version(),cases:cases.length,wasmRequests:wasmRequests.length,nodeGlobalsAbsent:result.nodeGlobalsAbsent}));
 }finally{await browser?.close();server.stop(true);}

@@ -1,13 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Diagnostic,ExtensionPackage,Json} from '../../model/types';
 import type {RdfNode,RdfQuad} from '../rdf';
-import type {inspectOwlDocument,importOwlTurtle,exportOwlTurtle,getOwlQuads,proposeOwlQuadEdit,OwlOntologyHeader,getOwlOntologyHeaders} from './index';
-import type {OwlExpressionView,getOwlExpressionView} from './expressions';
-import type {OwlListAxiomView,getOwlListAxioms} from './list-axioms';
-import type {OwlSpecialAxiomView,getOwlSpecialAxioms} from './axioms';
-import type {OwlAxiomAnnotations,getOwlAxiomAnnotations} from './annotations';
-import type {OwlDeclarationView,getOwlDeclarations} from './declarations';
-import {Registry} from '../../registry/registry';
+import type {inspectOwlDocument,importOwlTurtle,exportOwlTurtle,getOwlQuads,proposeOwlQuadEdit,OwlOntologyHeader,getOwlOntologyHeaders,OwlExpressionView,getOwlExpressionView,OwlListAxiomView,getOwlListAxioms,OwlSpecialAxiomView,getOwlSpecialAxioms,OwlAxiomAnnotations,getOwlAxiomAnnotations,OwlDeclarationView,getOwlDeclarations} from './types';
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import manifest from '../../../spec/extensions/owl/package.json';
 
@@ -32,7 +27,7 @@ const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCE
 const FAMILY_CODES=['OWL_','RDF_','TURTLE_','NATIVE_TURTLE_'];
 
 /** Preserve the existing synchronous OWL facade over the closed native family dispatcher. */
-export function createOwlRustDefault(engine:OwlNativeFamilyEngine,isNativeUmfCoreError:NativeErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createOwlRustDefault(engine:OwlNativeFamilyEngine,isNativeUmfCoreError:NativeErrorGuard=()=>false,createRegistry:()=>Registry){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){

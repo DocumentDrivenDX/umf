@@ -12,7 +12,7 @@ import type {
   proposePostgresqlNodeEdit,
   validatePostgresqlAst,
 } from './index';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {postgresqlPackage} from './package';
 
 type ParserRequest = {
@@ -74,7 +74,7 @@ function assertRequest(request:ParserRequest,work:ParserRequest['work']):void {
 export function createPostgresqlRustDefault(
   engine:PostgresqlParserSessionEngine,
   isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,
-  createRegistry:()=>Registry=()=>new Registry(),
+  createRegistry:()=>Registry,
 ) {
   return Object.freeze({
     postgresqlRegistry():ReturnType<typeof postgresqlRegistry> {

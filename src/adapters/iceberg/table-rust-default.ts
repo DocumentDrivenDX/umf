@@ -7,7 +7,7 @@ import type {proposeIcebergTableRename, IcebergTableRenameReport} from './table-
 import type {proposeIcebergTablePromotion, IcebergTablePromotionReport} from './table-promotion';
 import type {Diagnostic, Document, ExtensionPackage, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import {icebergTablePackage} from './table-package';
 
@@ -32,7 +32,7 @@ const CONTROL_CODES = new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CAN
 export function createIcebergTableRustDefault(
   engine: IcebergTableNativeEngine,
   isNativeError: NativeErrorGuard = () => false,
-  createRegistry: () => Registry = () => new Registry(),
+  createRegistry: () => Registry,
 ) {
   const call = <T>(operation: () => T): T => {
     try { return operation(); }

@@ -3,7 +3,7 @@ import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {expect,test} from 'bun:test';
 import {validateCoreFieldValue} from '../../src/model/schema-properties';
 import type {Document} from '../../src/model/types';
-import {generateAccessPackage} from '../../src/compilation/index';
+import {generateAccessPackage} from '../../src/node-access-compilation';
 import {request,profile} from './access-fixtures';
 const presence=[{missing:false,null:false},{missing:false,null:true},{missing:true,null:false},{missing:true,null:true}];
 const bits=(p:{missing:boolean;null:boolean})=>`${+p.missing}${+p.null}`;

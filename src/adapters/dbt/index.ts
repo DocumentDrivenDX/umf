@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/dbt-manifest/package.json';
 import grammar from '../../../spec/extensions/dbt-manifest/native-schema.json';
 import {Registry} from '../../registry/registry';
+import {DBT_MANIFEST_EXTENSION,dbtManifestPackage} from './package';
 import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const DBT_MANIFEST_EXTENSION='umf.dbt.manifest';
-export const dbtManifestPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+export {DBT_MANIFEST_EXTENSION,dbtManifestPackage} from './package';
 type Payload={profile:'dbt-manifest-json';root:NativeJson};
 let check:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;
 function inspect(value:Json):Diagnostic[]{

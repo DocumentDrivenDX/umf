@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {copyJson,generatePythonClient,inspectTableLifecycle,readDocument,writeDocument,tableLifecycleRegistry,type Document} from '../../src';
+import {copyJson,generatePythonClient,inspectTableLifecycle,readDocument,writeDocument,tableLifecycleRegistry,type Document} from '../../src/index-node-v4';
 import schema from '../../spec/extensions/tables/schema.json';
 import manifest from '../../spec/extensions/tables/package.json';
 import noteFixture from './fixtures/table-lifecycle-note.json';

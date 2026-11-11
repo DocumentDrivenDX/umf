@@ -3,7 +3,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
-import { generateAccessPackage } from '../src/compilation/index';
+import { generateAccessPackage } from '../src/node-access-compilation';
 import { validateDocument } from '../src/validation/document';
 import { profile } from '../tests/compilation/access-fixtures';
 

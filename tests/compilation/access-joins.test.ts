@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {generateAccessPackage} from '../../src/compilation/index';
+import {generateAccessPackage} from '../../src/node-access-compilation';
 import {profile,request,mutateSource} from './access-fixtures';
 export function joinedRequest(){
  const req=request();req.records.push({module:'commerce',element:'Customer'});

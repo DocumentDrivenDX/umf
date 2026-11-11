@@ -4,7 +4,7 @@ import {CURRENT_CORE_VERSION,UmfError, type Document, type Element} from '../mod
 import {admitAction} from '../extensions/actions/structure';
 import {analyzeAction} from '../extensions/actions/analysis';
 import type {Action} from '../extensions/actions/types';
-import {sha256Text} from '../compilation/bundle/index';
+import {sha256Text} from '../compilation/bundle/hash';
 import {pythonRuntime} from './python-runtime';
 import {tableRuntime} from './table-runtime';
 import {tableClients} from './table-client';

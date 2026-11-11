@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingIndexesToSqlServer,type Document} from '../../src';
+import {exportSqlServerCatalog,importSqlServerCatalog,projectBindingIndexesToSqlServer,type Document} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-indexes/case.json').json();
 const source=await Bun.file(fixture.native).text();

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/arrow/runtime';
-import {importArrowSchema,exportArrowSchemaIpc,proposeArrowNodeEdit,exportArrowSchema} from '../../src';
+import {importArrowSchema,exportArrowSchemaIpc,proposeArrowNodeEdit,exportArrowSchema} from '../../src/index-node-v4';
 import {RecordBatchReader} from 'apache-arrow';
 const cases=await Bun.file('fixtures/arrow/schema-cases.json').json();
 test('US-016-AC4: guarded native schema IPC preserves known fields and blocks known native losses',()=>{

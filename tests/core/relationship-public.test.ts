@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {relationshipCandidate} from '../../scripts/core-relationship-cases';
 
 // @covers US-045-AC1 @covers US-045-AC2 (public core validation/serialization)
@@ -25,7 +26,7 @@ test('current core operations use current receipts and refuse edits invalidating
 });
 // @covers US-045-AC1 (retained relationship metadata in element selection)
 test('0.10.0 element selection retains full relationship context and the explicitly declared element traversal scope',()=>{
- const d=relationshipCandidate(),r=u.selectCoreElements(d,{references:'transitive',identities:[{module:'m',element:'Order'}]});
+ const d=relationshipCandidate(),r=selectCoreElements(d,{references:'transitive',identities:[{module:'m',element:'Order'}]});
  expect(r.selection.map(e=>e.element.id)).toEqual(['Order','Order.id']);expect(r.source.modules[0]!.relationships).toEqual(d.modules[0].relationships);
 
 });

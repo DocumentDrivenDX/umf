@@ -2,7 +2,7 @@
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {cardinalitySelectionCases} from './cardinality-selection-cases';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 const rows=cardinalitySelectionCases().map(c=>({...c,result:selectCoreElements(c.source,c.query)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(rows);return new Response('<!doctype html><html><body>Nullability selection</body></html>',{headers:{'content-type':'text/html'}});}});
 let browser;
@@ -25,5 +25,5 @@ try{
   }
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {cases:rows.length,recoveries,refusals,legacySelected:true};
  });
- if(external.length)throw Error('External requests');const paths=['scripts/core-ideals/cardinality-selection-browser.ts','scripts/core-ideals/cardinality-selection-cases.ts','src/model/selection.ts','src/model/selection-schemas.ts','spec/core/cardinality-selection.schema.json','dist/umf.js'];const fingerprints=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));await Bun.write('fixtures/validation/cardinality-selection-browser.json',JSON.stringify({scope:'0.4.0 cardinality filtering, item/generic reference traversal and copied metadata results; older item/cardinality fields remain opaque',browser:browser.version(),checks,externalRequests:external,fingerprints},null,2)+'\n');console.log(JSON.stringify(checks));
+ if(external.length)throw Error('External requests');const paths=['scripts/core-ideals/cardinality-selection-browser.ts','scripts/core-ideals/cardinality-selection-cases.ts','src/model/selection-types.ts','src/model/selection-schemas.ts','spec/core/cardinality-selection.schema.json','dist/umf.js'];const fingerprints=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));await Bun.write('fixtures/validation/cardinality-selection-browser.json',JSON.stringify({scope:'0.4.0 cardinality filtering, item/generic reference traversal and copied metadata results; older item/cardinality fields remain opaque',browser:browser.version(),checks,externalRequests:external,fingerprints},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage} from '../model/types';
+import {UmfError,pointer,type Document,type Json,type Diagnostic,type Cardinality} from '../model/types';
 import {type NativeJson} from '../model/native-json';
 import {verifyCoreCardinalityDeclaration,type CoreCardinalityDeclaration} from '../model/cardinality';
 import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,TABLESPEC_EXTENSION} from '../adapters/tablespec';
@@ -12,9 +12,8 @@ import core from '../../spec/core/schema.json';
 import authorSchema from '../../spec/core/cardinality-operation-v4.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/tablespec-cardinality-classification.schema.json';
-import manifest from '../../spec/extensions/tablespec-cardinality/package.json';
-export const TABLESPEC_CARDINALITY_EXTENSION='umf.tablespec.cardinality';
-export const tableSpecCardinalityPackage=manifest as unknown as ExtensionPackage;
+import {TABLESPEC_CARDINALITY_EXTENSION} from './cardinality-tablespec-package';
+export {TABLESPEC_CARDINALITY_EXTENSION,tableSpecCardinalityPackage} from './cardinality-tablespec-package';
 export {default as tableSpecCardinalityClassificationSchema} from '../../spec/core/tablespec-cardinality-classification.schema.json';
 export interface TableSpecCardinalityRequest {
  column:number;mode:'strict'|'report';profile:'runtime-model'|'checked-schema'|'unresolved';author?:CoreCardinalityDeclaration;

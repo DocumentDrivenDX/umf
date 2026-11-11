@@ -8,8 +8,7 @@ type PostgresqlHostAdapter = {
  importPostgresqlSql(source:string,backend:PostgresqlBackend,options:{id:string}):Promise<PostgresqlDocument>;
  exportPostgresqlSql(document:PostgresqlDocument,backend:PostgresqlBackend):Promise<string>;
 };
-import type {DddPostgresqlPolicy,DddPostgresqlProjection} from './ddd-postgresql/index';
-import type {DddPostgresqlTablePolicy,DddPostgresqlTableProjection} from './ddd-postgresql/tables';
+import type {DddPostgresqlPolicy,DddPostgresqlProjection,DddPostgresqlTablePolicy,DddPostgresqlTableProjection} from './ddd-postgresql-types';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 export interface DddPostgresqlNativeFamily {

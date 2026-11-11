@@ -1,5 +1,5 @@
 import {avroAvailabilitySource} from '../../../../scripts/core-ideals/nullability-avro-cases';
-import {classifyAvroCardinality,recoverAvroCardinalityBundle} from '../../../../src/core-ideals/cardinality-avro';
+import {classifyAvroCardinality,recoverAvroCardinalityBundle} from '../../../../src/index-node-v4';
 import fixture from '../../../../fixtures/avro/cardinality-cases.json';
 const outcomes:any={};
 for(const row of fixture.cases){

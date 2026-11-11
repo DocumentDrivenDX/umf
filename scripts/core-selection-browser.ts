@@ -1,8 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
+import {buildBindingBrowserRuntime} from './binding/browser-runtime';
 const mixed=await Bun.file('fixtures/validation/core-selection.json').json(),adapters=await Bun.file('fixtures/validation/core-selection-adapters.json').json();
-const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/core-selection-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/core-selection-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Core metadata selection</title>');}});
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){
+ const path=new URL(req.url).pathname;
+ if(path==='/umf.js')return new Response(browserJs,{headers:{'Content-Type':'text/javascript'}});
+ if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'Content-Type':'application/wasm'}});
+ return new Response('<!doctype html><title>Core metadata selection</title>',{headers:{'Content-Type':'text/html'}});
+}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>{if(!r.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return r.abort();}return r.continue();});await page.goto('http://127.0.0.1:'+server.port);

@@ -14,7 +14,7 @@ import type {
 } from './index';
 import type {Diagnostic, Document, ExtensionPackage, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../json-schema/tree';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import {AVRO_EXTENSION, avroPackage} from './package';
 
@@ -50,7 +50,7 @@ function avroPayload(document: Document): AvroPayload {
 export function createAvroRustDefault(
   engine: AvroNativeFamilyEngine,
   isNativeUmfCoreError: NativeErrorGuard = () => false,
-  createRegistry: () => Registry = () => new Registry(),
+  createRegistry: () => Registry,
 ) {
   const call = <T>(operation: () => unknown): T => {
     try {

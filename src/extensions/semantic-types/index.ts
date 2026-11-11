@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import manifest from '../../../spec/extensions/semantic-types/package.json';
-import {semanticTypesPackage} from './package';
+import {SEMANTIC_TYPES_EXTENSION,semanticTypesPackage} from './package';
 import {Registry} from '../../registry/registry';
 import {copyJson} from '../../model/json';
 import {validateDocument} from '../../validation/document';
 import {snapshotSchema} from '../../validation/internal-schema';
 import {UmfError, pointer, type Document, type Json, type JsonObject, type ExtensionPackage, type Diagnostic, type CoreSemanticTypeReference} from '../../model/types';
 
-export const SEMANTIC_TYPES_EXTENSION='umf.semantic-types';
-export {semanticTypesPackage};
+export {SEMANTIC_TYPES_EXTENSION,semanticTypesPackage};
 const originalPackage=snapshotSchema(manifest) as unknown as ExtensionPackage;
 export interface SemanticTypeReference extends CoreSemanticTypeReference {}
 export interface SemanticTypeAnnotation {types:SemanticTypeReference[];[key:string]:unknown}

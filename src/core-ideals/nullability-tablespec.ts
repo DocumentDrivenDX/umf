@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type Nullability,type ExtensionPackage} from '../model/types';
+import {UmfError,pointer,type Document,type Json,type Diagnostic,type Nullability} from '../model/types';
 import {type NativeJson} from '../model/native-json';
 import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '../model/nullability';
 import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,TABLESPEC_EXTENSION} from '../adapters/tablespec';
@@ -12,9 +12,8 @@ import core from '../../spec/core/schema.json';
 import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/tablespec-nullability-classification.schema.json';
-import manifest from '../../spec/extensions/tablespec-nullability/package.json';
-export const TABLESPEC_NULLABILITY_EXTENSION='umf.tablespec.nullability';
-export const tableSpecNullabilityPackage=manifest as unknown as ExtensionPackage;
+import {TABLESPEC_NULLABILITY_EXTENSION} from './nullability-tablespec-package';
+export {TABLESPEC_NULLABILITY_EXTENSION,tableSpecNullabilityPackage} from './nullability-tablespec-package';
 export {default as tableSpecNullabilityClassificationSchema} from '../../spec/core/tablespec-nullability-classification.schema.json';
 export interface TableSpecNullabilityRequest {
  column:number;mode:'strict'|'report';profile:'runtime-model'|'checked-schema'|'unresolved';context:string|null;carrier:'null-value'|'unresolved';author?:CoreNullabilityDeclaration;

@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/arrow/package.json';
 import schema from '../../../spec/extensions/arrow/integration-schema.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const ARROW_EXTENSION='umf.arrow';
-export const arrowPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+import {ARROW_EXTENSION,arrowPackage} from './package';
+export {ARROW_EXTENSION,arrowPackage} from './package';
 type Payload={profile:'arrow-integration-schema';root:NativeJson};
 const known=new Map((schema.$defs.type.anyOf as any[]).filter(t=>t.properties.name.const).map(t=>[t.properties.name.const,t]));
 let check:ReturnType<ReturnType<typeof createValidator>['compile']>|undefined;

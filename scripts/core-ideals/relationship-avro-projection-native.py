@@ -40,7 +40,7 @@ for case in json.loads(Path(fixture).read_text())['cases']:
             assert actual == values and source.tell() == len(stream.getvalue())
             row['reads'][reader] = {'values': portable(actual), 'bytesConsumed': source.tell()}
         rows.append(row)
-paths = [fixture, 'scripts/core-ideals/relationship-avro-projection-native.py', 'scripts/core-ideals/relationship-avro-projection-cases.ts', 'src/core-ideals/relationship-avro-projection.ts', 'src/core-ideals/relationship-avro-carrier.ts', 'spec/core/relationship-avro-projection.schema.json']
+paths = [fixture, 'scripts/core-ideals/relationship-avro-projection-native.py', 'scripts/core-ideals/relationship-avro-projection-cases.ts', 'src/core-ideals/relationship-avro-projection-types.ts', 'src/core-ideals/relationship-avro-carrier.ts', 'spec/core/relationship-avro-projection.schema.json']
 proof = {'scope': 'Authored target-key-record carrier acceptance and value probes; no referential enforcement or full binding acceptance', 'versions': {'apache': avro.__version__, 'fastavro': fastavro.__version__}, 'cases': rows, 'sha256': {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths}}
 Path('fixtures/validation/relationship-avro-projection-native.json').write_text(json.dumps(proof, indent=2)+'\n')
 print(json.dumps({'carriers': len(rows)//2, 'writerRuns': len(rows), 'crossReads': sum(len(r['reads']) for r in rows)}))

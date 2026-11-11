@@ -33,7 +33,7 @@ test('@covers US-060-AC3 @covers US-060-AC7 invalid target, profile, inclusion a
  for(const mutate of [(p:any)=>p.execution_profile.version='2.0.0',(p:any)=>p.execution_profile.code='execute',(p:any)=>p.execution_profile.targets.graph=['orders'],(p:any)=>p.execution_profile.scales.large=10001,(p:any)=>p.execution_profile.include_sources=['missing'],(p:any)=>p.source_bindings[0].source_id='missing',(p:any)=>p.schemas.push(p.schemas[0])]){const p=structuredClone(original);mutate(p);expect(inspectDomainPack(p).valid).toBe(false);}
  expect(inspectDomainPack(original).valid).toBe(true);
 });
-import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-model';
+import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-node';
 import {stringify} from 'yaml';
 test('JSON and YAML profile admission agree and malformed present profiles refuse',async()=>{
  const text=await Bun.file('spec/domain-packs/commerce/pack.json').text(),pack=JSON.parse(text);

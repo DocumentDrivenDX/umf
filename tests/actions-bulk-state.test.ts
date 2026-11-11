@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // US-907 red tests (STP-907). They fail until src/extensions/actions/bulk-state.ts exists and is
-// exported from src/index. Expectations come ONLY from the owner fixture, which is hand-authored
+// exported from the Node V4 root. Expectations come ONLY from the owner fixture, which is hand-authored
 // from CONTRACT-904 and never derived from the implementation under test.
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 
 const fx=JSON.parse(readFileSync(new URL('../docs/helix/03-test/fixtures/bulk-update/transitions.json',import.meta.url),'utf8'));
 const model=api as unknown as {
@@ -62,6 +62,32 @@ test('@covers US-907-AC6 token_and_ref_grammar: reserved keys refuse outside the
  const t=fx.tokens;
  for(const k of t.reserved){expect(model.isReservedBulkKey(k)).toBe(true);expect(model.checkBulkKeyUse(k,false).ok).toBe(false);expect(model.checkBulkKeyUse(k,true).ok).toBe(true);}
  for(const k of t.notReserved){expect(model.isReservedBulkKey(k)).toBe(false);expect(model.checkBulkKeyUse(k,false).ok).toBe(true);}
+});
+test('bulk Rust facade preserves UTF-16 fences, opaque state numbers, and optional result ownership',()=>{
+ const state={status:'running',batchCount:1,nextBatch:0,committedBatches:0,fence:'0',claim:{batch:0,fence:'\uD800',effectAdmitted:false},cancelRequested:false,stop:null};
+ const mismatch=model.applyBulkEvent(state,{kind:'execute',batch:0,fence:'\uD801'});
+ expect(mismatch).toMatchObject({ok:false,code:'PAP_FENCE'});
+ const opaque={status:'queued',batchCount:1,nextBatch:0,committedBatches:0,fence:'0',claim:null,cancelRequested:false,stop:null,unknown:{negativeZero:-0,nan:NaN,infinity:Infinity,unsafe:9007199254740992}};
+ const cancelled=model.applyBulkEvent(opaque,{kind:'cancel'});
+ expect(cancelled.ok).toBe(true);
+ expect(Object.is((cancelled as any).state.unknown.negativeZero,-0)).toBe(true);
+ expect(Number.isNaN((cancelled as any).state.unknown.nan)).toBe(true);
+ expect((cancelled as any).state.unknown.infinity).toBe(Infinity);
+ expect((cancelled as any).state.unknown.unsafe).toBe(9007199254740992);
+ const omitted=model.bulkDecisionOrder({delegation:'valid',guards:'pass',tx1:{decision:'conflict'}} as any);
+ expect(Object.prototype.hasOwnProperty.call(omitted,'code')).toBe(true);
+ expect(Object.prototype.hasOwnProperty.call(omitted,'item')).toBe(true);
+ expect(omitted.code).toBeUndefined();expect(omitted.item).toBeUndefined();
+ const guardUndefined=model.bulkDecisionOrder({delegation:'valid',guards:'changed',guardItem:undefined,tx1:null} as any);
+ expect(guardUndefined).toMatchObject({status:'conflict',code:'PAP_GUARD'});
+ expect(Object.prototype.hasOwnProperty.call(guardUndefined,'item')).toBe(false);
+ const explicitNull=model.bulkDecisionOrder({delegation:'valid',guards:'pass',tx1:{decision:'rejected',code:null,item:null}} as any);
+ expect(explicitNull.code).toBeNull();expect(explicitNull.item).toBeNull();
+});
+test('bulk decision optional normalization rejects getters without invoking them',()=>{
+ let invoked=0;const tx1:any={decision:'conflict'};Object.defineProperty(tx1,'code',{enumerable:true,get(){invoked++;return 'EXPECTED_VERSION';}});
+ expect(()=>model.bulkDecisionOrder({delegation:'valid',guards:'pass',tx1} as any)).toThrow();
+ expect(invoked).toBe(0);
 });
 test('@covers US-907-AC7 formal_correspondence: fixture covers every table row and each broken-mechanism control fails',()=>{
  const rows=new Set(fx.transitions.filter((c:any)=>c.expect.ok).map((c:any)=>c.row));

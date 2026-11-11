@@ -1,3 +1,4 @@
+import {Registry} from '../../src/registry/registry';
 import {describe,expect,it} from 'bun:test';
 import {createPostgresqlRustDefault as bindPostgresqlRustDefault} from '../../src/adapters/postgresql/rust-default';
 import {UmfError} from '../../src/model/errors';
@@ -8,12 +9,12 @@ const document:Document={umf:'0.10.0',id:'pg',vocabularies:{},modules:[]};
 const editedDocument:Document={...document,id:'pg-edited'};
 type ParserEngine=Parameters<typeof bindPostgresqlRustDefault>[0];
 type ParserRequest=ReturnType<ParserEngine['prepareImport']>;
-const createPostgresqlRustDefault=(engine:Partial<ParserEngine>,...args:Parameters<typeof bindPostgresqlRustDefault> extends [unknown, ...infer R] ? R : never)=>bindPostgresqlRustDefault({
+const createPostgresqlRustDefault=(engine:Partial<ParserEngine>,isNative:Parameters<typeof bindPostgresqlRustDefault>[1]=undefined,createRegistry=()=>new Registry())=>bindPostgresqlRustDefault({
  prepareImport(){throw new Error('unexpected prepareImport');},cancel(){return false;},completeImport(){throw new Error('unexpected completeImport');},
  prepareExport(){throw new Error('unexpected prepareExport');},completeExport(){throw new Error('unexpected completeExport');},editNode(){throw new Error('unexpected editNode');},
  inspect(){throw new Error('unexpected inspect');},getSource(){throw new Error('unexpected getSource');},getNode(){throw new Error('unexpected getNode');},
  inspectPayload(){return [];},validateAst(){throw new Error('unexpected validateAst');},...engine,
-},...args);
+},isNative,createRegistry);
 
 describe('PostgreSQL Rust parser-session facade',()=>{
  it('uses the caller-supplied backend for import and the complete export sequence',async()=>{

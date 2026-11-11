@@ -20,7 +20,7 @@ try{
   }
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {cases:cases.length,classified,blocked,recoveries,forgedRefusals};
  });if(external.length)throw Error('External requests');
- const paths=[fixture,'dist/umf.js','scripts/core-ideals/nullability-avro-browser.ts','src/adapters/avro/index.ts','src/core-ideals/nullability-avro.ts','src/core-ideals/avro-availability-type.ts','scripts/core-ideals/nullability-avro-cases.ts','spec/core/avro-nullability-classification.schema.json','spec/extensions/avro-nullability/schema.json','spec/extensions/avro-nullability/package.json'];
+ const paths=[fixture,'dist/umf.js','scripts/core-ideals/nullability-avro-browser.ts','src/adapters/avro/index.ts','src/core-ideals/nullability-avro-types.ts','src/core-ideals/avro-availability-type.ts','scripts/core-ideals/nullability-avro-cases.ts','spec/core/avro-nullability-classification.schema.json','spec/extensions/avro-nullability/schema.json','spec/extensions/avro-nullability/package.json'];
  const fingerprints=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/nullability-avro-browser.json',JSON.stringify({scope:'Scoped underlying-field-value Nullability classification and exact source recovery; authored projection remains unfinished',browser:browser.version(),checks,externalRequests:external,fingerprints},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

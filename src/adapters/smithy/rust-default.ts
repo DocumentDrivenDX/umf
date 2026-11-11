@@ -4,7 +4,7 @@ import type {NativeJson} from '../../model/native-json';
 import type {SmithyAssemblyBackend,SmithyAssemblyResult} from './assembly';
 import type {SmithySelectionBackend,SmithySelectionResult} from './selection';
 import {UmfError} from '../../model/errors';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {smithyPackage} from './package';
 
 export interface SmithyNativeOperations {
@@ -25,7 +25,7 @@ type NativeGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Same public Smithy API and backend callback contract, with Rust owning document semantics. */
-export function createSmithyRustDefault(engine:SmithyNativeOperations,isNativeUmfCoreError:NativeGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createSmithyRustDefault(engine:SmithyNativeOperations,isNativeUmfCoreError:NativeGuard=()=>false,createRegistry:()=>Registry){
   const mapError=(error:unknown):never=>{
     if(!isNativeUmfCoreError(error)||CONTROL_CODES.has((error as {code?:string})?.code??''))throw error;
     const native=error as {code?:unknown;message?:unknown;path?:unknown};

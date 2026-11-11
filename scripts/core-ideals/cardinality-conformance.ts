@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {isAbsolute,relative,resolve,sep} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
 import * as u from '../../src';
+import {classifyAvroCardinality,recoverAvroCardinalityBundle} from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {cardinalityTableSpecCases,tableSpecCardinalitySource} from './cardinality-tablespec-cases';
 import {cardinalityTableSpecProjectionCases} from './cardinality-tablespec-projection-cases';
@@ -175,7 +176,7 @@ export async function verifyCardinalityRoundTrips(){
   native('sqlserver',sqlSource,s=>u.classifySqlServerCardinality(s,{column:column.path,nativeSource:sql.nativeSource,identity:{module:'logical',element:'value'},constraint:profile==='native-scalar'?null:check?.members?.name?.value??null,profile,mode}),r=>u.recoverSqlServerCardinalitySource(r,r.target),sql.nativeSource,mode);
  }
  for(const row of (await Bun.file('fixtures/avro/cardinality-cases.json').json()).cases){const initial=avroAvailabilitySource(row.schema,[],'cardinality.Example'),source=initial.source;
-  for(const profile of ['present-non-null-schema','unresolved'] as const)for(const mode of ['strict','report'] as const)native('avro',source,s=>u.classifyAvroCardinality(s,{column:initial.column,nativeSource:row.schema,identity:{module:'logical',element:'value'},profile,mode}),r=>u.recoverAvroCardinalityBundle(r,r.target),{schema:row.schema,dependencies:[]},mode);
+  for(const profile of ['present-non-null-schema','unresolved'] as const)for(const mode of ['strict','report'] as const)native('avro',source,s=>classifyAvroCardinality(s,{column:initial.column,nativeSource:row.schema,identity:{module:'logical',element:'value'},profile,mode}),r=>recoverAvroCardinalityBundle(r,r.target),{schema:row.schema,dependencies:[]},mode);
  }
  for(const row of (await Bun.file(file('cardinality-parquet-profile-native')).json()).cases){const bytes=await read(row.path);assert.equal(digest(bytes),row.sha256);const source=upgrade(u.importParquetSchema(bytes,{id:'gate'}));
   for(const profile of ['present-value-schema','unresolved'] as const)for(const mode of ['strict','report'] as const)native('parquet',source,s=>u.classifyParquetCardinality(s,{index:1,identity:{module:'logical',element:'value'},profile,mode}),r=>u.recoverParquetCardinalityBytes(r,r.target),bytes,mode);

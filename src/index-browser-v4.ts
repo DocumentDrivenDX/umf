@@ -3,6 +3,8 @@ import {createMedicalRustDefault} from './domain-packs/medical-rust-default';
 import {createPackToolsRustDefault} from './domain-packs/pack-tools-rust';
 import {createDashboardRustDefault} from './extensions/dashboard/rust-default';
 import type {Document,Diagnostic,Json} from './model/types';
+import {createBulkActionsRustDefault} from './extensions/actions/bulk-state';
+import {createLakeviewLegacyProjectionRustDefault} from './adapters/lakeview/project-rust-default';
 import {createCoreIdealReportsRustDefault} from './core-ideals/reports-rust-default';
 import {createSecurityAuthorityGuardRustDefault} from './extensions/security/authority-guard-rust-default';
 import {createPythonClientRustCandidateV4} from './browser-v4';
@@ -48,9 +50,7 @@ import {createSecProjectionRustOperations} from './domain-packs/sec-projection-r
 import {createReadDescriptorSetRustCandidate} from './adapters/protobuf/descriptor-rust-candidate';
 import {createProtobufDescriptorDocumentRustDefault,createProtobufRegistryRustDefault} from './adapters/protobuf/rust-default';
 import type {ProtobufDescriptorDocumentRustEngine} from './adapters/protobuf/rust-default';
-import {arrowPackage} from './adapters/arrow';
-import {arrowIpcPackage} from './adapters/arrow/capture';
-import {arrowFlatbufferPackage} from './adapters/arrow/flatbuffer-model';
+import {arrowPackage,arrowIpcPackage,arrowFlatbufferPackage} from './adapters/arrow/package';
 import {bindArrowSchemaRust} from './adapters/arrow/rust-default';
 import {bindArrowIpcRust} from './adapters/arrow/rust-ipc-default';
 import {bindDbtRust,createDbtRegistriesRustDefault} from './adapters/dbt/rust-default';
@@ -155,11 +155,11 @@ const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createP
 const wasmModule=await import('../bindings/core/wasm/pkg/umf_core_wasm.js');
 const graphql=createGraphqlRustDefault(createGraphqlEngine(wasmModule),isNativeUmfCoreError,()=>new Registry());
 const actionPlanSession=createActionPlanSessionEngine(wasmModule);
-const actionPlan=createActionPlanRustDefault(actionPlanSession,isNativeUmfCoreError);
+const actionPlan=createActionPlanRustDefault(actionPlanSession,isNativeUmfCoreError,(document,registrations)=>validateRegistrations(document,registrations));
 const actionManifest=createActionManifestRustDefault(actionPlanSession,actionPlan,isNativeUmfCoreError);
 const {constructActionManifest,inspectActionManifest,assessActionManifest}=actionManifest;
 const {prepareActionPlanModel,inspectActionPlan,assessActionPlan}=actionPlan;
-const actionAuthoring=createActionAuthoringRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const actionAuthoring=createActionAuthoringRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error),(document,registrations)=>validateRegistrations(document,registrations));
 const actionRegistry=createActionRegistryRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),isNativeUmfCoreError);
 const {inspectActions,declareAction,editAction,assessAction}=actionAuthoring;
 const {registerActions}=actionRegistry;
@@ -169,6 +169,10 @@ const rdf=createRdfRustDefault(createRdfEngine(wasmModule),isNativeUmfCoreError,
 const {rdfRegistry,inspectRdfDocument,importRdfNQuads,getRdfQuads,exportRdfNQuads,proposeRdfQuadEdit,proposeRdfIriRename,importRdfTurtle,exportRdfTurtle,getRdfNamedGraphs,importRdfTriG,exportRdfTriG,proposeRdfDatasetMerge,generalizedRdfRegistry,inspectGeneralizedRdfDocument,importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit}=rdf;
 const {graphqlRegistry,importGraphqlSchema,inspectGraphql,exportGraphqlSchema,getGraphqlAst,editGraphqlAst,exportGraphqlBundle,projectGraphqlInputToJsonSchema}=graphql;
 const nativeFamilyDispatcher=createNativeFamilyDispatcher(wasmModule);
+const {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse}=
+  createBulkActionsRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
+const {projectLakeviewToLegacyDashboard}=createLakeviewLegacyProjectionRustDefault(nativeFamilyDispatcher);
+export {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse,projectLakeviewToLegacyDashboard};
 const packTools=createPackToolsRustDefault({generatePackTools:request=>nativeFamilyDispatcher['pack-tools'].generatePackTools({request})},isNativeUmfCoreError);
 const {generatePackTools}=packTools;
 const medical=createMedicalRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError);
@@ -364,7 +368,7 @@ const {editExtension}=createEditExtensionRustDefault(model,isNativeUmfCoreError)
 const dashboardPublic=createDashboardRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry(),editExtension);
 const {dashboardRegistry,registerDashboard,inspectDashboard,readDashboardDocument,writeDashboardDocument,getDashboardDefinition,editDashboardDefinition}=dashboardPublic;
 const {declareCoreBit128Field}=bindCoreBit128FieldRust(await initializeCoreBit128FieldWasm(CORE_MODEL_RESOURCES,async()=>wasmModule),isCoreBit128FieldBindingError);
-const {Registry,validateDocument,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
+const {Registry,validateDocument,validateRegistrations,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
 const ownedExtensionRegistries=createExtensionRegistriesRustDefault(
  ()=>new Registry(),securityPolicySource,model,
  createCodegenEngine(wasmModule,CODEGEN_RESOURCES),
@@ -422,7 +426,7 @@ const temporal=await initializeTemporalWasm();
 const {parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant}=temporal;
 const {validateCsvBooleanLexical,verifyCsvBooleanLexical}=bindCsvBooleanLexicalRust(model,isWireAdmissionError,isNativeUmfCoreError);
 const {inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks}=bindCoreInspectorsRust(model,isWireAdmissionError,isNativeUmfCoreError);
-const inspectRawTableBinding=createRawTableBindingInspector(inspectCoreRecordMembers);
+const inspectRawTableBinding=createRawTableBindingInspector(bindingPublic);
 const {inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault}=bindCoreSchemaPropertiesRust(model);
 const cardinality=bindCoreCardinalityRust(createCoreCardinalityHostInputEngine(wasmModule,CORE_MODEL_RESOURCES),isHostJsonResponseError);
 const {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration}=cardinality;
@@ -617,7 +621,7 @@ export {compileActionRule,compileActionSelector,admitActionInputs,selectActionId
 export {inspectSagas,declareSaga,editSaga,assessSaga};
 
 export {AVRO_FACETS_EXTENSION,avroFacetsPackage} from './core-ideals/avro-facets-package';
-export type {RelationshipAvroProjection,RelationshipAvroRequest} from './core-ideals/relationship-avro-projection-factory';
+export type {RelationshipAvroProjection,RelationshipAvroRequest} from './core-ideals/relationship-avro-projection-types';
 
 export type {DeltaCommit,DeltaReconciliation} from './adapters/delta/reconcile';
 

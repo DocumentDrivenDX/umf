@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {projectSqlServerToDdl,importSqlServerCatalog,exportSqlServerCatalog,proposeSqlServerCatalogEdit,readDocument,writeDocument,type SqlServerDdlPolicy,coreSchema} from '../../src';
+import {importSqlServerCatalog,exportSqlServerCatalog,proposeSqlServerCatalogEdit,readDocument,writeDocument,type SqlServerDdlPolicy,coreSchema} from '../../src';
+import {projectSqlServerToDdl} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/projections/sqlserver-ddl.schema.json';
 const policy:SqlServerDdlPolicy={aliases:'base-type',physicalLayout:'default-rowstore',nativeExpressions:'verbatim',sourceState:'captured-only',lossPolicy:'allow-reported-loss'};
@@ -16,7 +17,6 @@ test('CONTRACT-037 native captures lower deterministically with explicit source-
  const types=cases[0]!.result;expect(types.nativeSource).toContain('IDENTITY(9007199254740993,1)');expect(types.issues.some(i=>i.code==='ALIAS_TO_BASE_TYPE')).toBe(true);expect(types.issues.some(i=>i.code==='COMPUTED_PERSISTENCE_UNAVAILABLE')).toBe(true);
  const indexes=cases[2]!.result;expect(indexes.issues.some(i=>i.code==='PARTITION_LAYOUT_LOWERED')).toBe(true);expect(indexes.issues.some(i=>i.code==='INDEX_LAYOUT_OMITTED')).toBe(true);
  expect(indexes.nativeSource).not.toContain('FILLFACTOR=0');expect(indexes.nativeSource).toContain('FILLFACTOR=80');expect(types.nativeSource).toContain('COLLATE Latin1_General_100_BIN2');
- await Bun.write('fixtures/sqlserver/ddl-projections.json',JSON.stringify({policy,cases},null,2)+'\n');
 });
 test('CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy',async()=>{
  const raw=await Bun.file('fixtures/sqlserver/indexes-catalog.json').json(),source=importSqlServerCatalog(JSON.stringify(raw),{id:'indexes'});

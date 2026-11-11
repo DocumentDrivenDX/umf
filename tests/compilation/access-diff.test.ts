@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {generateAccessPackage,diffAccessPackages} from '../../src/compilation/index';
+import {generateAccessPackage,diffAccessPackages} from '../../src/node-access-compilation';
 import {request,profile,mutateSource} from './access-fixtures';
 // @covers US-080-AC6
  test('manifest diff classifies rename/retype as breaking and optional Create additions as source-compatible',()=>{

@@ -3,7 +3,7 @@ import {boundedJsonBytes} from '../../model/internal/json-byte-budget';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Element} from '../../model/types';
 import {checkSchemaLiteral} from '../../model/schema-literals';
-import {Registry} from '../../registry/registry';
+import {RegistryBase} from '../../registry/base';
 import {inspectActions,assessAction} from './index';
 import {knownActionModel} from './known-model';
 import {compileActionSelector} from './selector';
@@ -25,7 +25,7 @@ export function resolveActionPlanContext(modelInput:ActionPlanModelPin,actionInp
  for(const text of [model.documentId,model.revision,action.identity.module,action.identity.action,action.invocation.id,action.invocation.version])if(text.length>256)planError('PAP_INVALID','UTF-16 pin identity limit');
  const local=profile(action.invocation,localActionProfiles.invocation);
  if((!profile(action.invocation,'umf.actions.tx')&&!local)||action.documentSha256!==model.sha256)planError('PAP_PROFILE','Exact action/model/invocation pins required');
- const registry=data<Registry>(context,'registry');if(!(registry instanceof Registry))planError('PAP_INVALID','Explicit original Registry required');
+ const registry=data<RegistryBase>(context,'registry');if(!(registry instanceof RegistryBase))planError('PAP_INVALID','Explicit original Registry required');
  const models=data<ActionPlanInspectionContext['models']>(context,'models'),actions=data<ActionPlanInspectionContext['actions']>(context,'actions');
  if(!Array.isArray(models)||!Array.isArray(actions)||models.length+actions.length>2||models.length!==1||actions.length!==1)planError('PAP_LIMIT','One original model and action snapshot required');
  const retainedModels=collection(models).map((e,i)=>({pin:copy(data<ActionPlanModelPin>(e,'pin')),artifact:readPlanArtifact(data<ActionPlanArtifact>(e,'artifact'))}));

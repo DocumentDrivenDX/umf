@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Diagnostic,ExtensionPackage} from '../../model/types';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import rdfManifest from '../../../spec/extensions/rdf/package.json';
 import generalizedManifest from '../../../spec/extensions/generalized-rdf/package.json';
@@ -15,7 +15,7 @@ type NativeErrorGuard=(error:unknown)=>boolean;
 type Engine=object
 const CODES=['RDF_','GENERALIZED_RDF_','NATIVE_TURTLE_'];
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
-export function createRdfRustDefault(engine:Engine,isNativeUmfCoreError:NativeErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()) {
+export function createRdfRustDefault(engine:Engine,isNativeUmfCoreError:NativeErrorGuard=()=>false,createRegistry:()=>Registry) {
  const call=<T>(fn:()=>unknown):T=>{try{return fn() as T;}catch(error){if(!isNativeUmfCoreError(error))throw error;const e=error as {code?:unknown;message?:unknown;path?:unknown};if(typeof e.code!=='string'||CONTROL.has(e.code))throw error;const code=e.code;if(code==='REQUEST'||code==='JSON_SCHEMA_SYNTAX'||CODES.some(prefix=>code.startsWith(prefix)))throw new UmfError(code,String(e.message??''),typeof e.path==='string'?e.path:'');throw error;}};
  const run=<T>(method:string,...args:unknown[])=>call<T>(()=>{const target=Reflect.get(engine,method);if(typeof target!=='function')throw new Error('RDF_NATIVE_OPERATION_MISSING');return target.apply(engine,args);});
  return Object.freeze({

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,projectBindingToDelta,type Document} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,type Document} from '../../src/index-node-v4';
+import {projectBindingToDelta} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/delta/case.json').json();
 const source=await Bun.file(fixture.native).text();

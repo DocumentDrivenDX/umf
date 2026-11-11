@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,importParquetSchema,exportParquetCapture,projectParquetToAvro,readDocument,writeDocument,exportAvroSchema,decodeParquetFooter,encodeParquetWire,coreSchema,type ParquetAvroPolicy} from '../../src';
+import {captureParquet,importParquetSchema,exportParquetCapture,readDocument,writeDocument,exportAvroSchema,decodeParquetFooter,encodeParquetWire,coreSchema} from '../../src';
+import {projectParquetToAvro,type ParquetAvroPolicy} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/projections/parquet-avro.schema.json';
 const policy:ParquetAvroPolicy={id:'avro',recordName:'ParquetRecord',namespace:'example.parquet',fieldNames:{},maps:'entry-arrays',lossPolicy:'allow-reported-loss'};

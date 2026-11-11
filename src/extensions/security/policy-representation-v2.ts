@@ -3,10 +3,10 @@
 import manifest from '../../../spec/extensions/security-v0.2/package.json';
 import originalSchema from '../../../spec/extensions/security/schema.json';
 import {copyJson} from '../../model/json';
-import {UmfError,pointer,type Json,type Diagnostic,type ExtensionPackage,type Validation} from '../../model/types';
+import {UmfError,pointer,type Json,type Diagnostic,type Validation} from '../../model/types';
 import {createValidator} from '../../validation/schema';
 
-export const securityV2Package=copyJson(manifest) as unknown as ExtensionPackage;
+export {securityV2Package} from './policy-package';
 const schema:any=copyJson(manifest.schema),legacy:any=copyJson(originalSchema);
 const validator=createValidator(),check=validator.compile(schema),oldCheck=validator.compile(legacy);
 const variants=new WeakMap<object,ReturnType<typeof validator.compile>>();

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
 import {exportParquetCapture} from '../adapters/parquet';
 import {inspectParquetMetadata} from '../adapters/parquet/metadata';
@@ -11,9 +11,8 @@ import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';
 import schema from '../../spec/core/parquet-facet-classification.schema.json';
-import manifest from '../../spec/extensions/parquet-facets/package.json';
-export const PARQUET_FACETS_EXTENSION='umf.parquet.facets';
-export const parquetFacetsPackage=manifest as unknown as ExtensionPackage;
+import {PARQUET_FACETS_EXTENSION} from './parquet-facets-package';
+export {PARQUET_FACETS_EXTENSION,parquetFacetsPackage} from './parquet-facets-package';
 export {default as parquetFacetClassificationSchema} from '../../spec/core/parquet-facet-classification.schema.json';
 export interface ParquetFacetRequest {location:{index:number;scope:'present-non-null-leaf'};identity:{module:string;element:string};mode:'strict'|'report';profile:'declared-schema'|'pyarrow-safe-array-input'|'unresolved';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration;}
 type Outcome='exact'|'approximated'|'not-expressible'|'unknown';

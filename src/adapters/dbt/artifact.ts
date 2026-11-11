@@ -1,17 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/dbt-artifact/package.json';
 import runResultsGrammar from '../../../spec/extensions/dbt-artifact/run-results-v6-schema.json';
 import freshnessGrammar from '../../../spec/extensions/dbt-artifact/sources-v3-schema.json';
 import catalogGrammar from '../../../spec/extensions/dbt-artifact/catalog-v1-schema.json';
 import {Registry} from '../../registry/registry';
+import {DBT_ARTIFACT_EXTENSION,dbtArtifactPackage} from './package';
 import {validateDocument} from '../../validation/document';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
 import {parseNativeJson,renderTree,nativePointer,treeChild,type NativeJson} from '../../model/native-json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const DBT_ARTIFACT_EXTENSION='umf.dbt.artifact';
-export const dbtArtifactPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+export {DBT_ARTIFACT_EXTENSION,dbtArtifactPackage} from './package';
 type Payload={profile:'dbt-artifact-json';root:NativeJson};
 const checks=new Map<string,ReturnType<ReturnType<typeof createValidator>['compile']>>();
 const grammars:Record<string,object>={'https://schemas.getdbt.com/dbt/run-results/v6.json':runResultsGrammar,'https://schemas.getdbt.com/dbt/catalog/v1.json':catalogGrammar,'https://schemas.getdbt.com/dbt/sources/v3.json':freshnessGrammar};

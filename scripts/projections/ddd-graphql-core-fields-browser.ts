@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {projectDddEntitiesToGraphql,type Document} from '../../src';
+import {projectDddEntitiesToGraphql,type Document} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/projections/ddd-graphql-core-fields/case.json').json();
 const expected=projectDddEntitiesToGraphql(fixture.logical as Document,fixture.policy,'report');

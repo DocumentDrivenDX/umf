@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document, Diagnostic, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import {deltaPackage, deltaTablePackage, deltaLogPackage, deltaDefinitionPackage} from './package';
 
@@ -27,7 +27,7 @@ export interface DeltaNativeEngine {
   reconcileParquetCheckpoint(checkpoint:DeltaCommit,commits:DeltaCommit[],spec:'v1'|'v2',sidecars:DeltaSidecar[]):DeltaParquetCheckpointRecovery;
 }
 const CONTROL_CODES = new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
-export function createDeltaRustDefault(engine:DeltaNativeEngine,isNativeError:NativeErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()) {
+export function createDeltaRustDefault(engine:DeltaNativeEngine,isNativeError:NativeErrorGuard=()=>false,createRegistry:()=>Registry) {
   const call=<T>(fn:()=>T):T=>{try{return fn();}catch(error){if(!isNativeError(error))throw error;const e=error as {code?:unknown;message?:unknown;path?:unknown};if(typeof e.code!=='string'||CONTROL_CODES.has(e.code))throw error;const code=e.code;if(code==='REQUEST'||code==='JSON_SCHEMA_SYNTAX'||code.startsWith('DELTA_')||code.startsWith('PARQUET_'))throw new UmfError(code,String(e.message??''),typeof e.path==='string'?e.path:'');throw error;}};
   const schemaInspectPayload=(p:Json)=>call(()=>engine.inspectSchemaPayload(p));
   const tableInspectPayload=(p:Json)=>call(()=>engine.inspectTablePayload(p));

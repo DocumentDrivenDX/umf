@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifyAvroRelationships, recoverAvroRelationshipSource, verifyAvroRelationshipClassification} from '../../src/core-ideals/relationship-avro';
+import {classifyAvroRelationships, recoverAvroRelationshipSource, verifyAvroRelationshipClassification} from '../../src/index-node-v4';
 import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const cases=(await Bun.file('fixtures/avro/relationship-discovery-cases.json').json()).cases as {id:string;schemaText:string}[];
@@ -51,7 +51,7 @@ test('conflicting vocabulary and dependency archive changes block; input accesso
  let reads=0;const hostile={...source,get id(){reads++;return 'hostile';}};expect(()=>classifyAvroRelationships(hostile,request)).toThrow();expect(reads).toBe(0);
 });
 test('published extension package validates observations and rejects malformed node payloads',async()=>{
- const {Registry}=await import('../../src/registry/registry');const {avroRelationshipsPackage}=await import('../../src/core-ideals/relationship-avro');
+ const {Registry,avroRelationshipsPackage}=await import('../../src/index-node-v4');
  const registry=new Registry().register(avroRelationshipsPackage),entry=registry.get('umf.avro.relationships','1.0.0')!;
  const nativeSource={schema:cases[0]!.schemaText,dependencies:[]},r=classifyAvroRelationships(importAvroSchema(nativeSource.schema,{id:'package'}),{nativeSource,mode:'report',profile:'schema-structure'});
  const payload=r.target!.extensions!['umf.avro.relationships'];expect(entry.structure(payload)).toBe(true);

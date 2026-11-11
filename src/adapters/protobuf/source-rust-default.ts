@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
+import type {Document} from '../../model/types';
 import type {
   ProtobufSourceCompiler,
   ProtobufSourceEmitter,
   ProtobufSourceRequest,
-  importProtobufSources as importProtobufSourcesType,
-  exportProtobufSources as exportProtobufSourcesType,
-} from './source';
+  ProtobufSourceExportResult,
+} from './source-types';
 
 type NativeErrorGuard = (error: unknown) => boolean;
 export interface ProtobufSourceImportNativeEngine {
@@ -37,10 +37,10 @@ export function createProtobufSourceRustDefault(
 ) {
   return Object.freeze({
     async importProtobufSources(
-      input: Parameters<typeof importProtobufSourcesType>[0],
+      input: ProtobufSourceRequest,
       compiler: ProtobufSourceCompiler,
-      options: Parameters<typeof importProtobufSourcesType>[2],
-    ): ReturnType<typeof importProtobufSourcesType> {
+      options: {id:string},
+    ): Promise<Document> {
       let callbackFailure: unknown;
       const trackedCompiler: ProtobufSourceCompiler = {
         async compile(request) {
@@ -53,16 +53,16 @@ export function createProtobufSourceRustDefault(
         },
       };
       try {
-        return await importEngine.importProtobufSources(input, trackedCompiler, options) as Awaited<ReturnType<typeof importProtobufSourcesType>>;
+        return await importEngine.importProtobufSources(input, trackedCompiler, options) as Document;
       } catch (error) {
         if (error === callbackFailure) throw error;
         return nativeFailure(error, isNativeUmfCoreError);
       }
     },
     async exportProtobufSources(
-      document: Parameters<typeof exportProtobufSourcesType>[0],
+      document: Document,
       emitter: ProtobufSourceEmitter,
-    ): ReturnType<typeof exportProtobufSourcesType> {
+    ): Promise<ProtobufSourceExportResult> {
       let callbackFailure: unknown;
       const trackedEmitter: ProtobufSourceEmitter = {
         async emit(descriptorSet) {
@@ -75,7 +75,7 @@ export function createProtobufSourceRustDefault(
         },
       };
       try {
-        return await exportEngine.exportProtobufSources(document, trackedEmitter) as Awaited<ReturnType<typeof exportProtobufSourcesType>>;
+        return await exportEngine.exportProtobufSources(document, trackedEmitter) as ProtobufSourceExportResult;
       } catch (error) {
         if (error === callbackFailure) throw error;
         return nativeFailure(error, isNativeUmfCoreError);

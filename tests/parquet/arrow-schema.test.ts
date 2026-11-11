@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,getParquetArrowSchema,exportArrowFlatbufferModel,appendParquetKeyValueMetadata,decodeParquetFooter,coreSchema,readDocument,writeDocument} from '../../src';
+import {captureParquet,exportParquetCapture,getParquetArrowSchema,exportArrowFlatbufferModel,appendParquetKeyValueMetadata,decodeParquetFooter,coreSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 import {rewriteParquetFooter} from '../../src/adapters/parquet/rewrite';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/parquet/arrow-schema.schema.json';
-import {encodeArrowFlatbuffer,proposeArrowFlatbufferEdit} from '../../src';
+import {encodeArrowFlatbuffer,proposeArrowFlatbufferEdit} from '../../src/index-node-v4';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(schema);
 const load=async(path:string)=>captureParquet(new Uint8Array(await Bun.file(path).arrayBuffer()),{id:path});
@@ -31,7 +31,7 @@ test('CONTRACT-019 embedded schema rejects ambiguity and malformed framing witho
  const controls:[string,string|undefined][]=[['missing',undefined],['empty',''],['invalid','!!!'],['whitespace',encoded+'\n'],['unpadded',encoded.replace(/=+$/,'')],['truncated',truncated.toString('base64')],['trailing',trailing.toString('base64')],['negative-length',badLength.toString('base64')],['no-message',Buffer.alloc(8).toString('base64')]];
  const originalMessage=getParquetArrowSchema(await load('fixtures/parquet/arrow-schema/stored.parquet')).message!;
  const bodyModel=JSON.parse(exportArrowFlatbufferModel(originalMessage));bodyModel.value.bodyLength='1';
- const {importArrowFlatbufferModel}=await import('../../src');
+ const {importArrowFlatbufferModel}=await import('../../src/index-node-v4');
  const badBodyMetadata=encodeArrowFlatbuffer(importArrowFlatbufferModel(JSON.stringify(bodyModel),{id:'bad-body'}),flatbufferBackend),bodyFrame=Buffer.alloc(8+Math.ceil(badBodyMetadata.length/8)*8);bodyFrame.writeInt32LE(-1,0);bodyFrame.writeInt32LE(bodyFrame.length-8,4);bodyFrame.set(badBodyMetadata,8);controls.push(['body-bearing-schema',bodyFrame.toString('base64')]);
  const cases=[];
  for(const [id,value] of controls){if(id==='unpadded'&&value===encoded)continue;const source=embedded(value),result=getParquetArrowSchema(source);expect(check(result)).toBe(true);expect(result.status).toBe('blocked');expect(result.schema).toBeUndefined();expect(result.source).toEqual(source);cases.push({id,source,result});}

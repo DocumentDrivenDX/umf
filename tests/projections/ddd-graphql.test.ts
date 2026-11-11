@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {parse,print,buildASTSchema,validateSchema} from 'graphql';
-import {projectDddToGraphql,recoverDddFromGraphql,recoverDddGraphqlNative,verifyDddGraphqlProjection,importGraphqlSchema,exportGraphqlSchema,readJsonValue,writeJsonValue,type Document,type DddGraphqlProjection} from '../../src';
+import {importGraphqlSchema,exportGraphqlSchema,readJsonValue,writeJsonValue,type Document,type DddGraphqlProjection} from '../../src';
+import {projectDddToGraphql,recoverDddFromGraphql,recoverDddGraphqlNative,verifyDddGraphqlProjection} from '../../src/index-node-v4';
 import {graphqlCases} from '../../scripts/projections/ddd-graphql-cases';
 const base=()=>graphqlCases()[0]!;
 const project=(f=base(),loss:'strict'|'report'='report')=>projectDddToGraphql(f.logical,f.policy,loss);
@@ -87,7 +88,7 @@ test('@covers US-049-AC4 @covers US-049-AC7: complete result schema rejects part
 });
 
 test('@covers US-049-AC4: explicit names reject trailing line terminators instead of parser normalization',async()=>{
- const {projectDddEntitiesToGraphql}=await import('../../src');
+ const {projectDddEntitiesToGraphql}=await import('../../src/index-node-v4');
  const older=await Bun.file('fixtures/projections/ddd-graphql-core-fields/case.json').json();
  for(const ending of ['\n','\r','\u2028','\u2029']){
   const f=base();f.policy.relationships[0]!.forwardName+=''+ending;expect(()=>project(f)).toThrow();

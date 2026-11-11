@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {classifyAvroKeys,recoverAvroKeySource} from '../../src/index-node-v4';
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual,assertNativeRepresentationEqual} from './json-data-assert';
 import * as u from '../../src';
@@ -31,7 +32,7 @@ export async function verifyKeyNativeRoundTrips() {
  for (const row of [...avro.cases, ...generatedAvro.cases.map((r:any)=>({...r,id:'projected-'+r.name}))]) {
   const archive={schema:row.schemaText,dependencies:[]};
   rows.push({system:'avro',name:row.id,source:u.importAvroSchema(archive.schema,{id:row.id}),native:archive,
-   classify:(d,mode)=>u.classifyAvroKeys(d,{nativeSource:archive,mode,profile:'schema-declarations'}),recover:u.recoverAvroKeySource});
+   classify:(d,mode)=>classifyAvroKeys(d,{nativeSource:archive,mode,profile:'schema-declarations'}),recover:recoverAvroKeySource});
  }
  const parquet = await Bun.file('fixtures/validation/key-parquet-discovery-native.json').json();
  const generatedParquet = await Bun.file('fixtures/validation/key-parquet-projection-corpus.json').json();

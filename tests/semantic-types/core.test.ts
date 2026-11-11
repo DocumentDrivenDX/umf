@@ -4,7 +4,7 @@ import {copyJson} from '../../src/model/json';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {validateDocument} from '../../src/validation/document';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {Registry} from '../../src/registry/registry';
 import {SemanticTypeRegistry} from '../../src/extensions/semantic-types';
 import {inspectCoreSemanticTypes,getCoreSemanticTypes,declareCoreSemanticTypes,verifyCoreSemanticTypeDeclaration,validateCoreSemanticTypeValue} from '../../src/model/semantic-types';

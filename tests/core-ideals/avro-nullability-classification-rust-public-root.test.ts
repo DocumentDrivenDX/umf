@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import * as u from '../../src/index-node-v4';
-import type {AvroNullabilityRequest} from '../../src/core-ideals/nullability-avro';
+import type {AvroNullabilityRequest} from '../../src/core-ideals/nullability-avro-types';
 
 function input() {
   const nativeSource='{"type":"record","name":"Example","fields":[{"name":"id","type":["null","string"]}]}';

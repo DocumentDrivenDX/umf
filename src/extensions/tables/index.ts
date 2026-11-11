@@ -13,7 +13,8 @@ import {inspectSeeds} from './seeds';
 import {inspectOperations} from './operations';
 import type {TableLifecyclePayload} from './types';
 export * from './types';
-export const TABLES_EXTENSION='umf.tables';
+import {TABLES_EXTENSION} from './package';
+export {TABLES_EXTENSION} from './package';
 export {tableLifecyclePackage};
 export interface TableLifecycleInspection extends Validation {
  source?:Json;

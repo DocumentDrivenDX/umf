@@ -4,9 +4,9 @@ import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {readDocument,writeDocument,editExtension} from '../../model/document';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const DDD_EXTENSION='umf.ddd';
-export const dddPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+import {DDD_EXTENSION,dddPackage} from './package';
+export {DDD_EXTENSION,dddPackage} from './package';
 export interface DddReference {module:string;element:string;}
 export interface DddField {type:{kind:'scalar';name:'string'|'boolean'|'integer'|'decimal'|'date-time'|'bytes'}|{kind:'concept';target:DddReference};cardinality:'one'|'optional'|'many';description?:string;}
 export interface DddInvariant {id:string;scope:'definition'|'aggregate';language:string;version:string;expression:string;references:DddReference[];}

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
-import {projectRelationshipToTableSpec} from '../../src/core-ideals/relationship-tablespec-projection';
+import {projectRelationshipToTableSpec} from '../../src/index-node-v4';
 import {getTableSpecTable, exportTableSpec, exportTableSpecBundle} from '../../src/adapters/tablespec';
 import {renderTree} from '../../src/model/native-json';
 import {lookupCoreRelationship} from '../../src/model/relationships';

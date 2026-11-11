@@ -122,6 +122,122 @@ other explicit host interop. Remove a shared semantic helper when its last live
 consumer has been removed or moved to Rust. Keep each cut reviewable and advance
 independent ready deletions without an exhaustive inventory gate.
 
+## Current-main completion slices
+
+Lakeview and bulk action coordination now run through shared Rust dispatch on
+the Node and browser SDK roots. Their TypeScript semantic implementations have
+been removed. The hosts still construct JavaScript maps, preserve JavaScript
+value shapes, and present errors from the bindings.
+
+| Slice | Dependencies and scope | Local acceptance |
+| --- | --- | --- |
+| Lakeview legacy dashboard projection | CONTRACT-083. Preserve the projection signature, ordered module and element maps, and loss diagnostics. Keep the native import and export routes. | Use `tests/lakeview/legacy-projection.test.ts`, `tests/lakeview/interchange.test.ts` and `scripts/lakeview-browser.ts` for ordinary projection, unsupported native meaning and exact native round trip. |
+| Bulk action coordination | CONTRACT-904 and STP-907. Move the transition, decision, fence and token operations together. Preserve receipt shape, refusal precedence and exact decimal fences. | Use `tests/actions-bulk-state.test.ts` and `scripts/actions-bulk-state-browser.ts` for submission, claim, authorization and guard refusal, stale fences, reconciliation and token handling. |
+| Raw table binding inspection | Both V4 roots use Rust for profile validation, membership and diagnostics. The TypeScript host presents binding errors and exports the profile data and public types. | Use `tests/binding/raw-profiles-rust-route.test.ts` and `scripts/binding/raw-profiles-rust-browser.ts` for acceptance and refusal. Route the retained cases through the public owners before deleting the predecessor inspector. |
+
+Start the projection removals after Lakeview and bulk action work starts.
+These cuts reuse existing Rust owners and can proceed independently of raw
+table binding.
+
+1. Extract the live contracts from `src/projections/arrow-spark.ts` and
+   `src/projections/spark-arrow.ts`. Update `arrow-spark-rust-default.ts` and
+   `src/index.ts` before removing both engines. Use
+   `tests/rust-core/arrow-spark-projection-public-root.test.ts`.
+2. Extract the contracts from `src/projections/avro-tablespec.ts`,
+   `tablespec-avro.ts`, `parquet-avro.ts`, `postgresql-avro.ts` and
+   `sqlserver-avro.ts`. Redirect the corresponding Rust wrappers and public
+   type imports, including the direct PostgreSQL policy import in the
+   TableSpec chain test. Remove `tablespec-via-avro.ts` after moving its
+   public contracts and routing its operation to the Rust wrapper. Then
+   remove the five stage engines. Use
+   `tests/rust-core/{avro-tablespec-projection,tablespec-via-avro,parquet-avro,postgresql-avro,sqlserver-avro}-public-root.test.ts`.
+
+DDD JSON Schema, PostgreSQL row JSON Schema and SQL Server DDL are further
+independent projection removals with existing Rust public-root tests.
+Extract the shared projection diagnostic contract from
+`src/projections/json-schema-protobuf.ts` before removing that engine.
+Continue by family through classifiers, adapters, actions, binding,
+security, table lifecycle, model and validation. Follow both V4 roots,
+the reference barrel and direct imports in wrappers, tests, scripts and the
+microsite. Update purposeful consumers before removing their engines and
+delete obsolete predecessor drivers. Keep host wrappers, static package
+data, live declarations, examples, development tooling and explicit
+TypeSpec and Smithy interop.
+
+### Local verification on the completion branch
+
+- Lakeview passed the projection and interchange baseline, a 37-case comparison
+  with the predecessor, and direct, JSON and YAML native-source round trips in
+  Chromium. Stock Node verified the returned map order and a projected field.
+- Bulk action coordination passed the transition baseline, 158 matching browser
+  cases and a stock Node receipt check. Raw table binding passed nine exact
+  Browser WASM cases for the three supported profiles and the Bun binding
+  baseline. Python and the standalone Rust CLI matched for Lakeview projection,
+  bulk submission and claim, stale-fence refusal, and raw table binding
+  acceptance and refusal.
+- Arrow and Spark, Avro and TableSpec, Parquet and Avro, PostgreSQL and Avro,
+  SQL Server and Avro, DDD JSON Schema, and the three binding projections for
+  Parquet, Delta and Iceberg passed their focused public baselines. The
+  PostgreSQL binding index and DDD table and relationship family passed eight
+  additional public tests.
+- Private typed Access compilation now uses the Rust code generator. Its
+  exercised cases cover package output, search, diff and structured refusal,
+  including the failed admission case corrected on this branch.
+- SQL Server binding and physical projection, the Avro cardinality classifier,
+  JSON Schema to Protobuf, DDD GraphQL, Arrow IPC and FlatBuffers, and Core
+  Evolution passed their public baselines after the predecessor deletions.
+- The reference workbench initializes Rust WASM in its worker. Chromium passed
+  SDK-profile validation, pinned Protobuf source compilation, and JSON Schema
+  projection with both reported loss and strict refusal under the deployed
+  content security policy. The playground passed UUID recovery, retained
+  unknown extensions and refused an invalid core version in Chromium. The full
+  reference site built locally, and Chromium downloaded the projected
+  Protobuf source. The separate schema explorer built and recovered Arrow IPC,
+  canonical Protobuf descriptors, and the exact OWL and SHACL source bytes.
+- Neither public SDK bundle emits UMF's legacy TypeScript document validator,
+  constraint interpreter, literal kernel, or registry admission. The TypeSpec
+  compiler retains its third-party AJV dependency. Source-only engines remain
+  until their own consumers have moved.
+- The SHACL engine deletion exposed native gaps in mixed numeric promotion,
+  conversion limits, embedded reports, and untyped or recursive shapes. Mixed
+  float/double and decimal/float promotion, binary32 conversion refusal,
+  disconnected shape recursion and executable-rule refusal passed. The W3C
+  closed-shape example with an inverse property path matched its expected
+  validation result and retained its source. Derived integer bounds passed
+  the `xsd:byte` acceptance and refusal cases.
+
+### Current-main parity gate
+
+Compare the exported names, types, signatures and runtime results with the
+current public surface on Node/Bun and browser. Trace callable operations
+through the binding to Rust and verify that direct consumers no longer
+invoke retired engines. Regenerate the V4 facade and affected source
+inventories. Run both TypeScript configurations, facade freshness and
+the affected boundary checks.
+
+Exercise a representative ordinary workflow and refusal for each changed
+capability, plus recovery where the API supports it. Verify result and
+diagnostic shape and order, native meaning, unknown extension content and
+caller controls at the affected public entry points. Use local Chromium for
+changed browser workflows. Reuse passing results whose inputs and
+dependencies are unchanged.
+
+### Remaining source closure
+
+- Retire the source-only Actions analysis, evaluation and plan engines after
+  routing their remaining callers through the Rust Action API. Keep transport
+  callbacks, public types and the independent execution examples.
+- Remove the TypeScript row-scope engine and the obsolete codegen bridge.
+  Extract the migration and inventory contracts together because inventory
+  calls the old migration renderer. Remove the deployment implementation
+  after the callers of that renderer have moved.
+- Remove remaining TypeScript model authoring and validation engines as the
+  adapters and tooling that still call them move to Rust. Then remove the
+  source-only registry admission, document constraint and literal engines.
+- Finish removing source-only classifiers, adapter implementations and their
+  old projector factories. Keep schema and package data, explicit compiler
+  interop and independent native oracles.
+
 ## Completed verification
 
 Focused Rust capability baselines and the affected public integration workflows

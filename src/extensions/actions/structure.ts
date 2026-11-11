@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import schema from '../../../spec/extensions/actions/schema.json';
-import manifest from '../../../spec/extensions/actions/package.json';
 import {createValidator} from '../../validation/schema';
 import {copyJson} from '../../model/json';
-import {UmfError,type ExtensionPackage} from '../../model/types';
+import {UmfError} from '../../model/types';
 import type {Action} from './types';
-function freezePackage(value:any):any{if(value&&typeof value==='object'){Object.values(value).forEach(freezePackage);Object.freeze(value);}return value;}
-/** Original metadata cannot be widened before a later registry consumer loads. */
-export const actionsPackage=freezePackage(copyJson(manifest)) as unknown as ExtensionPackage;
+export {actionsPackage} from './package';
 const compiler=createValidator();
 export const checkActionsStructure=compiler.compile(schema);
 export const checkActionLiteral=compiler.compile({$defs:{literal:schema.$defs.literal},$ref:'#/$defs/literal'});

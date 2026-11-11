@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage} from '../model/types';
+import {UmfError,pointer,type Document,type Json,type Diagnostic,type Cardinality} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
 import {verifyCoreCardinalityDeclaration,type CoreCardinalityDeclaration} from '../model/cardinality';
 import {exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../adapters/postgresql/catalog';
@@ -13,9 +13,8 @@ import core from '../../spec/core/schema.json';
 import authorSchema from '../../spec/core/cardinality-operation-v4.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/postgresql-cardinality-classification.schema.json';
-import manifest from '../../spec/extensions/postgresql-cardinality/package.json';
-export const POSTGRESQL_CARDINALITY_EXTENSION='umf.postgresql.cardinality';
-export const postgresqlCardinalityPackage=manifest as unknown as ExtensionPackage;
+import {POSTGRESQL_CARDINALITY_EXTENSION} from './cardinality-postgresql-package';
+export {POSTGRESQL_CARDINALITY_EXTENSION,postgresqlCardinalityPackage} from './cardinality-postgresql-package';
 export {default as postgresqlCardinalityClassificationSchema} from '../../spec/core/postgresql-cardinality-classification.schema.json';
 export interface PostgresqlCardinalityRequest {
  column:string;nativeSource:string;supplement:string;mode:'strict'|'report';profile:'stored-value'|'unresolved';author?:CoreCardinalityDeclaration;

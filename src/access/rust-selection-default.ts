@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {CoreElementQuery,CoreElementSelection} from '../model/selection';
+import type {CoreElementQuery,CoreElementSelection} from '../model/selection-types';
 import type {Document} from '../model/types';
 import type {Registry} from '../registry/registry';
 

@@ -5,3 +5,5 @@ import type {ExtensionPackage} from '../../model/types';
 
 /** Inert package metadata for Rust-owned semantic type registry admission. */
 export const semanticTypesPackage = copyJson(manifest) as unknown as ExtensionPackage;
+
+export const SEMANTIC_TYPES_EXTENSION='umf.semantic-types';

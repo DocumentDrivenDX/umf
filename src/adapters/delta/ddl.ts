@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import manifest from '../../../spec/extensions/delta-definition/package.json';
 import {deltaRegistry, exportDeltaSchema, importDeltaSchema} from './index';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
-import {UmfError, type Document, type ExtensionPackage, type Json} from '../../model/types';
+import {UmfError, type Document, type Json} from '../../model/types';
 import {hashCanonical,sha256Text} from '../../compilation/bundle/hash';
 
-export const DELTA_DEFINITION_EXTENSION='umf.delta.definition';
-export const deltaDefinitionPackage=manifest as unknown as ExtensionPackage;
+import {DELTA_DEFINITION_EXTENSION,deltaDefinitionPackage} from './package';
+export {DELTA_DEFINITION_EXTENSION,deltaDefinitionPackage} from './package';
 export interface DeltaDefinition {
   profile:'databricks-managed-delta/0.1';
   name:string[];

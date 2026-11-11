@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {getShaclShapeMetadata,importShaclTurtle} from '../src';
+import {getShaclShapeMetadata,importShaclTurtle} from '../src/index-node-v4';
 const raw=await Bun.file('native/shacl/metadata.ttl').text();
 await Bun.write('fixtures/shacl/metadata.json',JSON.stringify(getShaclShapeMetadata(importShaclTurtle(raw,{id:'order',baseIRI:'https://example.org/',blankNodeScope:'orders'}),{kind:'iri',value:'https://example.org/Order'}),null,2)+'\n');
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/shacl-metadata-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await Bun.build({entrypoints:['src/index-browser-v4.ts'],outdir:'.cache/shacl-metadata-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/shacl-metadata-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>SHACL metadata</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',route=>{if(!route.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return route.abort();}return route.continue();});await page.goto('http://127.0.0.1:'+server.port);
 const result=await page.evaluate(async raw=>{const path='/umf.js',u=await import(path),root={kind:'iri',value:'https://example.org/Order'},doc=u.importShaclTurtle(raw,{id:'order',baseIRI:'https://example.org/',blankNodeScope:'orders'});let recoveries=0,edits=0;

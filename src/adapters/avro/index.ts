@@ -3,7 +3,6 @@ import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {Type} from 'avsc/etc/browser/avsc-types';
 import {deriveAvroFields} from './metadata';
 export type {AvroFieldMetadata} from './metadata';
-import manifest from '../../../spec/extensions/avro/package.json';
 import {AVRO_EXTENSION, avroPackage} from './package';
 export {AVRO_EXTENSION, avroPackage, avroNativeSchema} from './package';
 import {createValidator} from '../../validation/schema';
@@ -15,7 +14,7 @@ import {editExtension} from '../../model/document';
 import {UmfError,pointer,type Document,type Json,type Diagnostic,type Validation} from '../../model/types';
 import {parseNativeJson,renderTree,treeChild,nativePointer,cloneTree,type NativeJson} from '../json-schema/tree';
 export interface AvroPayload {version:'1.12.0';root:NativeJson;dependencies?:{id:string;root:NativeJson}[];}
-const structure=createValidator().compile(manifest.schema);
+const structure=createValidator().compile(avroPackage.schema);
 function representation(node:NativeJson,path:string,out:Diagnostic[]){
  const keys=node.kind==='object'?['kind','members']:node.kind==='array'?['kind','items']:node.kind==='null'?['kind']:['kind','value'];
  for(const key of Object.keys(node))if(!keys.includes(key))out.push({code:'AVRO_REPRESENTATION',path:path+'/'+pointer(key),severity:'warning',message:'Unknown representation field has no native destination'});

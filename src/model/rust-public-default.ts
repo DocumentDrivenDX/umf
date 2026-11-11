@@ -3,11 +3,15 @@ import {UmfError} from './errors';
 import type {Registry} from '../registry/registry';
 import type {ExtensionKindRuntime} from '../registry/kind-runtime';
 import type {Document} from './types';
-import type {CoreElementQuery,CoreElementSelection} from './selection';
-import type {CoreRelationshipQuery,CoreRelationshipSelection} from './relationship-selection';
+import type {CoreElementQuery,CoreElementSelection} from './selection-types';
+import type {CoreRelationshipQuery,CoreRelationshipSelection} from './relationship-selection-types';
+import type {CoreEvolutionPolicy} from './evolution-types';
 
 type DatasetMethods=Pick<typeof import('./dataset-values'),'validateCoreDatasetValues'|'verifyCoreDatasetValues'>;
-type EvolutionMethods=Pick<typeof import('./evolution'),'inspectCoreEvolution'|'verifyCoreEvolution'>;
+type EvolutionMethods={
+ inspectCoreEvolution(before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;
+ verifyCoreEvolution(receipt:unknown,before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;
+};
 type KeyMethods=Pick<typeof import('./key-tuple'),'encodeCoreKeyTuple'|'verifyCoreKeyTuple'>;
 type Direct=DatasetMethods & EvolutionMethods;
 type EngineMethods<T>={[K in keyof T]:T[K] extends (...args:infer A)=>unknown ? (...args:A)=>unknown : never};

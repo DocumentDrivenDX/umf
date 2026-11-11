@@ -4,7 +4,7 @@ import {nullabilityFieldOperationsCases} from '../../scripts/core-ideals/nullabi
 import {declareCoreElementKind, inspectCoreElementKind, verifyCoreKindDeclaration} from '../../src/model/field-kind';
 import {declareCoreRecordType, verifyCoreRecordTypeDeclaration} from '../../src/model/record-type';
 import {declareCoreNullability} from '../../src/model/nullability';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 

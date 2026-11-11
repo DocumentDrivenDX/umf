@@ -2,7 +2,8 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {captureParquet,exportParquetCapture,projectBindingToParquet,type Document} from '../../src';
+import {captureParquet,exportParquetCapture,type Document} from '../../src';
+import {projectBindingToParquet} from '../../src/index-node-v4';
 
 const candidates=[process.env.UMF_PYTHON,'.venv/bin/python','../umf/.venv/bin/python'].filter((x):x is string=>!!x);
 const python=candidates.find(existsSync);
@@ -18,7 +19,7 @@ const report=projectBindingToParquet(fixture.logical as Document,fixture.binding
 assert.equal(report.status,'reported');
 assert.equal(report.residuals.filter(x=>x.path.includes('/indexes/')).length,8);
 assert.deepEqual(exportParquetCapture(report.nativeArchive!),bytes);
-const sha256=Object.fromEntries(await Promise.all([caseFile,fixture.native,'src/projections/binding-parquet/index.ts','scripts/binding/parquet-native.py'].map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
+const sha256=Object.fromEntries(await Promise.all([caseFile,fixture.native,'crates/umf-core-wire/src/binding_parquet_projection_binding.rs','crates/umf-core/src/binding_sqlserver_planned_indexes.rs','scripts/binding/parquet-native.py'].map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 const evidence={scope:'Parquet physical binding residuals and source recovery; no generated Parquet candidate or native index-enforcement claim',target:{system:'parquet',version:'2.9',subset:'file-schema'},native:proof,residuals:report.residuals.length,sha256};
 await Bun.write('fixtures/binding/parquet/oracle.json',JSON.stringify(evidence,null,2)+'\n');
 console.log(JSON.stringify({residuals:evidence.residuals,nativeRuntime:proof.runtime}));

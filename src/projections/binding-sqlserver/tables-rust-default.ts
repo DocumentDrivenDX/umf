@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../../model/types';
-import type {SqlServerTablePolicy,SqlServerTableProjection} from './tables';
+import type {SqlServerTablePolicy,SqlServerTableProjection} from '../binding-sqlserver-types';
 type Engine={['binding-sqlserver-tables']:Record<'projectBindingTablesToSqlServer'|'projectBindingTablesAndIndexesFromPlanToSqlServer'|'projectBindingTablesAndIndexesToSqlServer',(fields?:Record<string,unknown>)=>unknown>};
 export function createBindingSqlServerTablesRustDefault(engine:Engine){
  return Object.freeze({

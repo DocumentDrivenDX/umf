@@ -4,6 +4,7 @@ import fixture from '../../fixtures/actions/approve.json';
 import supportedFixture from '../../docs/helix/03-test/fixtures/bulk-update/model.json';
 import {createUmfRegistry,validateDocument,inspectActions,declareAction,editAction,assessAction,actionsPackage} from '../../src/index-node-v4';
 import type {Document,Action,ActionExecutorProfile} from '../../src/index-node-v4';
+import {Registry as UnboundRegistry} from '../../src/registry/registry';
 
 test('Node V4 action authoring routes declaration, inspection, editing and assessment through Rust',()=>{
  const source=structuredClone(supportedFixture) as unknown as Document;
@@ -44,6 +45,19 @@ test('Node V4 action authoring preserves a caller validator registered for the s
  action.id='new-action';action.name='New action';
  expect(()=>declareAction(source,'sales',action,registry)).toThrow('Caller policy rejected this declaration');
  expect(calls).toBeGreaterThan(0);
+},60_000);
+
+test('Node V4 action authoring keeps caller callbacks when a bare registry uses Rust validation',()=>{
+ const source=structuredClone(fixture) as unknown as Document;
+ const registry=new UnboundRegistry();
+ const calls:string[]=[];
+ registry.register(actionsPackage,(_payload,{path})=>{
+  calls.push(path);
+  return [{code:'CALLER_ACTION_POLICY',path:'/caller',message:'Caller policy rejected this declaration',severity:'error'}];
+ });
+ const result=inspectActions(source,registry);
+ expect(result.validation.diagnostics.some(item=>item.code==='CALLER_ACTION_POLICY')).toBe(true);
+ expect(calls).toEqual(['/modules/0/extensions/umf.actions']);
 },60_000);
 
 test('Node V4 ordinary document validation runs the Rust Action semantic callback',()=>{

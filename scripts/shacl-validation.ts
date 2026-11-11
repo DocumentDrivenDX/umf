@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads,readDocument,writeDocument} from '../src';
+import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads,readDocument,writeDocument} from '../src/index-node-v4';
 const input=await Bun.file('fixtures/shacl/validation-inputs.json').json(),results=[];
 for(const [index,c] of input.cases.entries()){
  const shapes=importShaclTurtle(await Bun.file(c.shapes).text(),{id:c.shapes,baseIRI:c.shapesBase}),data=importRdfTurtle(await Bun.file(c.data).text(),{id:c.data,baseIRI:c.dataBase}),r=await proposeShaclEngineValidation(shapes,data,{id:c.id+'/report',blankNodePolicy:c.shapes===c.data?'shared-scope':'disjoint-inputs'}),reportPath='fixtures/shacl/validation/'+index+'.nq';

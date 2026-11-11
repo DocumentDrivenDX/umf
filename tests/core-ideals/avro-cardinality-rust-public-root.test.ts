@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,classifyAvroRecordType,recoverAvroRecordTypeBundle,classifyParquetRecordType,recoverParquetRecordTypeBytes,type AvroCardinalityRequest} from '../../src/index-node-v4';
+import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,classifyAvroRecordType,recoverAvroRecordTypeBundle,classifyParquetRecordType,recoverParquetRecordTypeBytes} from '../../src/index-node-v4';
+import type {AvroCardinalityRequest} from '../../src/core-ideals/avro-cardinality-types';
 import {avroAvailabilitySource} from '../../scripts/core-ideals/nullability-avro-cases';
 import {avroRecordTypeCases} from '../../scripts/core-ideals/avro-record-type-cases';
 import {importAvroSchema,getAvroFieldMetadata} from '../../src/adapters/avro';

@@ -3,7 +3,7 @@
 import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
-import {generateAccessPackage} from '../src/compilation';
+import {generateAccessPackage} from '../src/node-access-compilation';
 import {request,profile} from '../tests/compilation/access-fixtures';
 const options=new Map<string,string>();for(let i=2;i<process.argv.length;i+=2)options.set(process.argv[i]!,process.argv[i+1]!);
 const python=options.get('--python'),version=options.get('--pydantic'),wheel=options.get('--wheel'),report=options.get('--report');

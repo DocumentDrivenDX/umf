@@ -2,7 +2,7 @@
 import type {Document,Diagnostic,ExtensionPackage,Json} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 import {UmfError} from '../../model/errors';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/openapi/package.json';
 import type {
  exportOpenapiBundle,exportOpenapiDocument,getOpenapiNode,importOpenapiDocument,inspectOpenapi,lookupOpenapiResource,proposeOpenapiEdit,
@@ -34,7 +34,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Keep the existing synchronous OpenAPI operation signatures on the Rust default path. */
-export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){

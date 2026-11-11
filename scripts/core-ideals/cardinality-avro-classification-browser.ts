@@ -4,7 +4,8 @@ import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {avroAvailabilitySource} from './nullability-avro-cases';
 
-import {classifyAvroCardinality, type AvroCardinalityRequest, type AvroCardinalityClassification} from '../../src/core-ideals/cardinality-avro';
+import {classifyAvroCardinality,type AvroCardinalityRequest,type AvroCardinalityClassification} from '../../src/index-node-v4';
+import {buildBindingBrowserRuntime} from '../binding/browser-runtime';
 const fixture='fixtures/avro/cardinality-cases.json',cases:{source:AvroCardinalityClassification['source'];request:AvroCardinalityRequest;expected:AvroCardinalityClassification}[]=[];
 for(const row of (await Bun.file(fixture).json()).cases){
  const initial=avroAvailabilitySource(row.schema,[],'cardinality.Example'),source=initial.source;
@@ -13,7 +14,8 @@ for(const row of (await Bun.file(fixture).json()).cases){
   cases.push({source,request,expected:classifyAvroCardinality(source,request)});
  }
 }
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(cases);return new Response('<!doctype html><html><body>Avro Cardinality classification</body></html>',{headers:{'content-type':'text/html'}});}});
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});if(path==='/cases')return Response.json(cases);return new Response('<!doctype html><html><body>Avro Cardinality classification</body></html>',{headers:{'content-type':'text/html'}});}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage(),external:string[]=[];
@@ -30,7 +32,7 @@ try{
   }
   if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {cases:cases.length,classified,blocked,recoveries,forgedRefusals};
  });assert.equal(external.length,0);
- const paths=[fixture,'scripts/core-ideals/cardinality-avro-classification-browser.ts','scripts/core-ideals/cardinality-avro-schema.ts','src/core-ideals/cardinality-avro.ts','src/core-ideals/avro-cardinality-type.ts','src/adapters/avro/metadata.ts','src/index.ts','spec/core/avro-cardinality-classification.schema.json','spec/extensions/avro-cardinality/schema.json','spec/extensions/avro-cardinality/package.json','dist/umf.js'];
+ const paths=[fixture,'scripts/core-ideals/cardinality-avro-classification-browser.ts','scripts/core-ideals/cardinality-avro-schema.ts','src/core-ideals/avro-cardinality-types.ts','src/core-ideals/avro-cardinality-type.ts','crates/umf-core/src/avro_cardinality.rs','crates/umf-core-wire/src/avro_cardinality_binding.rs','src/adapters/avro/metadata.ts','src/index.ts','spec/core/avro-cardinality-classification.schema.json','spec/extensions/avro-cardinality/schema.json','spec/extensions/avro-cardinality/package.json'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/cardinality-avro-classification-browser.json',JSON.stringify({scope:'Declared present non-null schema shape and native-source receipt recovery; authored projection and binding acceptance remain unfinished',browser:browser.version(),checks,externalRequests:external,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

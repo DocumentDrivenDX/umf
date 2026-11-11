@@ -5,7 +5,8 @@ import type {Document,Diagnostic} from '../../model/types';
 export type ParquetRowValue=null|{kind:'record';fields:{index:number;name:string;value:ParquetRowValue}[]}|{kind:'repeated';items:ParquetRowValue[]}|{kind:'physical';value:ParquetPhysicalValue};
 export interface ParquetRows {source:Document;status:'assembled'|'blocked';complete:false;diagnostics:Diagnostic[];rows?:ParquetRowValue[]}
 type Slot={kind:'record';fields:Map<number,Slot>}|{kind:'repeated';items:Slot[];empty:boolean}|{kind:'null'}|{kind:'physical';value:ParquetPhysicalValue};
-export const PARQUET_ROW_NODE_LIMIT=100000;
+import {PARQUET_ROW_NODE_LIMIT} from './package';
+export {PARQUET_ROW_NODE_LIMIT} from './package';
 /** Reconstruct physical records by schema identity; logical LIST/MAP lowering is separate. */
 export function assembleParquetRows(source:Document):ParquetRows {
  const physical=decodeParquetPhysical(source),r:ParquetRows={source:physical.source,status:'blocked',complete:false,diagnostics:[...physical.diagnostics]};if(physical.status!=='decoded')return r;

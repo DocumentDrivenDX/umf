@@ -5,7 +5,7 @@ import {sagaPackage} from './saga-package';
 import type {Document, Diagnostic, Validation, ExtensionPackage} from '../../model/types';
 import {UmfError} from '../../model/types';
 import {Registry, type Registration} from '../../registry/registry';
-import {canonicalSchemaJson} from '../../model/schema-literals';
+import {canonicalSchemaJson} from '../../model/canonical-schema-json';
 import type {ActionParameter} from './types';
 export {sagaPackage};
 export interface SagaIdentity {module:string; saga:string}

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Native-backed Action package registration for the V4 shared runtime. */
 import {UmfError} from '../../model/errors';
-import {canonicalSchemaJson} from '../../model/schema-literals';
+import {canonicalSchemaJson} from '../../model/canonical-schema-json';
 import type {Diagnostic,Document} from '../../model/types';
 import type {Registry,SemanticValidator} from '../../registry/registry';
-import {actionsPackage} from './structure';
+import {actionsPackage} from './package';
 import {actionSemanticParts,composeRustOwnedActionSemanticValidator} from './native-semantic-owner';
 
 interface ActionValidationEngine {inspectActions(source:unknown):unknown}

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {copyJson,inspectBinding,projectBindingIndexes,type Document} from '../../src';
+import {copyJson,inspectBinding,projectBindingIndexes,type Document} from '../../src/index-node-v4';
 
 const logical:Document={
   umf:'0.10.0',id:'order-model',vocabularies:{'umf.ddd':{version:'0.1.0'}},

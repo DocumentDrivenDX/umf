@@ -34,9 +34,8 @@ import type {inspectParquetContainers} from './containers';
 import type {getParquetFieldMetadata} from './field-metadata';
 import type {appendParquetKeyValueMetadata} from './transform';
 import type {renameParquetField} from './rename';
-import type {getParquetArrowSchema} from './arrow-schema';
-import type {renameParquetFieldWithArrowSchema,ParquetArrowRenamePolicy} from './arrow-rename';
-import type {ArrowFlatbufferEncodingBackend} from '../arrow/flatbuffer-encode';
+import type {ParquetArrowSchema,ParquetArrowRenamePolicy,ParquetArrowRenameResult} from './arrow-types';
+import type {ArrowFlatbufferEncodingBackend} from '../arrow/api-types';
 
 type ErrorGuard=(error:unknown)=>boolean;
 
@@ -99,11 +98,11 @@ export function bindParquetCaptureRust(
   inspectParquetFraming(document:Document):ReturnType<typeof inspectParquetFraming>{return call(()=>engine.inspectParquetFraming(document)) as ParquetFraming;},
   decodeParquetFooter(document:Document):ReturnType<typeof decodeParquetFooter>{return call(()=>engine.decodeParquetFooter(document)) as ParquetFooterDecode;},
   inspectParquetMetadata(document:Document):ReturnType<typeof inspectParquetMetadata>{return call(()=>engine.inspectParquetMetadata(document)) as ParquetMetadataInspection;},
-  getParquetArrowSchema(document:Document):ReturnType<typeof getParquetArrowSchema>{return call(()=>engine.getParquetArrowSchema(document)) as ReturnType<typeof getParquetArrowSchema>;},
-  renameParquetFieldWithArrowSchema(document:Document,policy:ParquetArrowRenamePolicy,backend?:ArrowFlatbufferEncodingBackend):ReturnType<typeof renameParquetFieldWithArrowSchema>{
-   if(backend===undefined)return call(()=>engine.renameParquetFieldWithArrowSchema(document,policy)) as ReturnType<typeof renameParquetFieldWithArrowSchema>;
-   const prepared=call(()=>engine.prepareRenameParquetFieldWithArrowSchema(document,policy)) as ReturnType<typeof renameParquetFieldWithArrowSchema> & {schemaModel?:unknown};
-   if(typeof prepared.schemaModel!=='string')return prepared as ReturnType<typeof renameParquetFieldWithArrowSchema>;
+  getParquetArrowSchema(document:Document):ParquetArrowSchema{return call(()=>engine.getParquetArrowSchema(document)) as ParquetArrowSchema;},
+  renameParquetFieldWithArrowSchema(document:Document,policy:ParquetArrowRenamePolicy,backend?:ArrowFlatbufferEncodingBackend):ParquetArrowRenameResult{
+   if(backend===undefined)return call(()=>engine.renameParquetFieldWithArrowSchema(document,policy)) as ParquetArrowRenameResult;
+   const prepared=call(()=>engine.prepareRenameParquetFieldWithArrowSchema(document,policy)) as ParquetArrowRenameResult & {schemaModel?:unknown};
+   if(typeof prepared.schemaModel!=='string')return prepared as ParquetArrowRenameResult;
    let bytes:Uint8Array;
    try{
     if(backend?.identity!=='flatbuffers@25.9.23'||typeof backend.encode!=='function')throw new UmfError('ARROW_BACKEND','Expected explicit pinned FlatBuffers backend');
@@ -114,10 +113,10 @@ export function bindParquetCaptureRust(
     const code=(error as {code?:unknown}|null)?.code;
     if(typeof code==='string'&&new Set(['LIMIT','CAPACITY','RESOURCE_LIMIT','CANCELLED','DEADLINE','DEADLINE_EXCEEDED','WORK_LIMIT','CONTROL','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED']).has(code))throw error;
     const message=error instanceof Error?error.message:String(error);
-    return call(()=>engine.completeRenameParquetFieldWithArrowSchema(document,policy,'',message)) as ReturnType<typeof renameParquetFieldWithArrowSchema>;
+    return call(()=>engine.completeRenameParquetFieldWithArrowSchema(document,policy,'',message)) as ParquetArrowRenameResult;
    }
    let flatbufferHex='';for(const byte of bytes)flatbufferHex+=byte.toString(16).padStart(2,'0');
-   return call(()=>engine.completeRenameParquetFieldWithArrowSchema(document,policy,flatbufferHex)) as ReturnType<typeof renameParquetFieldWithArrowSchema>;
+   return call(()=>engine.completeRenameParquetFieldWithArrowSchema(document,policy,flatbufferHex)) as ParquetArrowRenameResult;
   },
   inspectParquetSchema(document:Document):ReturnType<typeof inspectParquetSchema>{return call(()=>engine.inspectParquetSchema(document)) as ParquetSchemaInspection;},
   inspectParquetPages(document:Document):ReturnType<typeof inspectParquetPages>{return call(()=>engine.inspectParquetPages(document)) as ParquetPageInspection;},

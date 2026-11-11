@@ -3,17 +3,17 @@ export * from './model/types';
 export * from './model/nullability';
 export * from './adapters/tablespec';
 export * from './adapters/sqlserver';
-export * from './projections/sqlserver-avro';
-export * from './projections/sqlserver-ddl';
-export * from './projections/tablespec-avro';
-export * from './projections/avro-tablespec';
-export * from './projections/tablespec-via-avro';
-export * from './projections/postgresql-avro';
-export * from './projections/parquet-avro';
+export type * from './projections/sqlserver-avro-types';
+export type * from './projections/sqlserver-ddl-types';
+export type * from './projections/tablespec-avro-types';
+export type * from './projections/avro-tablespec-types';
+export type * from './projections/tablespec-via-avro-types';
+export type * from './projections/postgresql-avro-types';
+export type * from './projections/parquet-avro-types';
 export {copyJson,LIMITS} from './model/json';
 export * from './model/serialization';
 export * from './model/document';
-export * from './model/selection';
+export type {CoreElementQuery,CoreElementSelection,CoreElementSelectionEntry} from './model/selection-types';
 export * from './registry/registry';
 export {createUmfRegistry} from './registry/builtins';
 export {validateDocument} from './validation/document';
@@ -21,28 +21,28 @@ export { default as coreSchema } from '../spec/core/schema.json';
 export { default as extensionPackageSchema } from '../spec/core/extension-package.schema.json';
 export * from './adapters/json-schema';
 export * from './adapters/protobuf';
-export * from './projections/json-schema-protobuf';
+export type * from './projections/json-schema-protobuf-types';
+export type {ProjectionIssue} from './projections/projection-types';
 export { default as jsonSchemaProtobufProjectionSchema } from '../spec/projections/json-schema-protobuf.schema.json';
 export * from './extensions/ddd';
 export * from './extensions/dashboard';
 export * from './model/extension-kinds';
 export * from './extensions/binding';
-export * from './projections/binding-parquet';
-export * from './projections/binding-delta';
-export * from './projections/binding-iceberg';
-export * from './projections/binding-postgresql/indexes';
-export * from './projections/binding-sqlserver/indexes';
-export * from './projections/binding-sqlserver/tables';
-export * from './projections/binding-sqlserver/tables-indexes';
-export * from './projections/ddd-postgresql/tables';
-export * from './projections/ddd-postgresql/tables-indexes';
-export {projectDddEntitiesToGraphql,type DddGraphqlEntityName,type DddGraphqlFieldName,type DddGraphqlEntityPolicy,type DddGraphqlEntityResidual,type DddGraphqlEntityMapping,type DddGraphqlEntityProjection} from './projections/ddd-graphql/entities';
-export * from './projections/ddd-graphql';
-export * from './projections/ddd-json-schema';
+export type * from './projections/binding-parquet-types';
+export type * from './projections/binding-delta-types';
+export type * from './projections/binding-iceberg-types';
+export type * from './projections/binding-postgresql/indexes-types';
+export type * from './projections/binding-sqlserver-types';
+export {default as sqlserverPhysicalBindingSchema} from '../spec/projections/sqlserver-physical-binding.schema.json';
+export type * from './projections/ddd-postgresql-types';
+export {default as dddPostgresqlPolicySchema} from '../spec/projections/ddd-postgresql-policy.schema.json';
+export {default as dddPostgresqlProjectionSchema} from '../spec/projections/ddd-postgresql-projection.schema.json';
+export type * from './projections/ddd-graphql-types';
+export * from './projections/ddd-graphql-schema';
+export type * from './projections/ddd-json-schema-types';
 export { default as dddJsonSchemaProjectionSchema } from '../spec/projections/ddd-json-schema.schema.json';
 export * from './adapters/avro';
-export * from './adapters/parquet/arrow-schema';
-export * from './adapters/parquet/arrow-rename';
+export type * from './adapters/parquet/arrow-types';
 
 export type {AvroDocumentBindings,AvroDocumentProjection} from './projections/avro-json-schema-types';
 export { default as avroJsonSchemaProjectionSchema } from '../spec/projections/avro-json-schema.schema.json';
@@ -94,23 +94,20 @@ export {default as postgresqlNativeAstSchema} from '../spec/extensions/postgresq
 export * from './adapters/postgresql/catalog';
 export {default as postgresqlCatalogSchema} from '../spec/extensions/postgresql-catalog/schema.json';
 export {default as postgresqlCatalogCaptureSchema} from '../spec/extensions/postgresql-catalog/capture.schema.json';
-export * from './projections/postgresql-json-schema';
+export type * from './projections/postgresql-json-schema-types';
 
 export {default as postgresqlRowProjectionSchema} from '../spec/projections/postgresql-row-json-schema.schema.json';
 export * from './adapters/arrow';
+export {ARROW_IPC_EXTENSION,ARROW_IPC_MAX_BYTES,arrowIpcPackage,ARROW_FLATBUFFER_EXTENSION,arrowFlatbufferPackage} from './adapters/arrow/package';
+export type {
+ ArrowFlatbufferEncodingBackend,ArrowFlatbufferRoot,ArrowIpcConsistency,ArrowIpcFrame,ArrowIpcLayout,
+ ArrowIpcObservationBackend,ArrowIpcRenameResult,ArrowSchemaIpcBackend,
+} from './adapters/arrow/api-types';
 export {default as arrowSchema} from '../spec/extensions/arrow/schema.json';
 export {default as arrowIntegrationSchema} from '../spec/extensions/arrow/integration-schema.json';
-export * from './adapters/arrow/ipc';
-export * from './adapters/arrow/capture';
-export * from './adapters/arrow/flatbuffer-model';
 export {default as arrowFlatbufferModelSchema} from '../spec/extensions/arrow/flatbuffer-model.schema.json';
-export * from './adapters/arrow/flatbuffer-decode';
-export * from './adapters/arrow/flatbuffer-encode';
-export * from './adapters/arrow/ipc-layout';
 export {default as arrowIpcLayoutSchema} from '../spec/extensions/arrow-ipc/layout-result.schema.json';
-export * from './adapters/arrow/ipc-consistency';
 export {default as arrowIpcConsistencySchema} from '../spec/extensions/arrow-ipc/consistency-result.schema.json';
-export * from './adapters/arrow/ipc-rename';
 export {default as arrowIpcRenameSchema} from '../spec/extensions/arrow-ipc/rename-result.schema.json';
 export * from './adapters/spark';
 export {default as sparkDataTypeSchema} from '../spec/extensions/spark/datatype-schema.json';
@@ -118,11 +115,11 @@ export * from './adapters/spark/rename';
 
 export {default as sparkRenameSchema} from '../spec/extensions/spark/rename-result.schema.json';
 
-export * from "./projections/spark-arrow";
+export type * from "./projections/spark-arrow-types";
 
 export {default as sparkArrowProjectionSchema} from "../spec/projections/spark-arrow.schema.json";
 
-export * from "./projections/arrow-spark";
+export type * from "./projections/arrow-spark-types";
 
 export {default as arrowSparkProjectionSchema} from "../spec/projections/arrow-spark.schema.json";
 
@@ -228,20 +225,19 @@ export * from './adapters/rdf';
 export * from "./adapters/jsonld";
 export * from './adapters/generalized-rdf';
 
+export {OWL_EXTENSION,owlPackage} from './adapters/owl/package';
+export type {
+ OwlAnnotationRecord,OwlAxiomAnnotations,OwlDeclaration,OwlDeclarationView,OwlEntityKind,OwlExpressionDescription,OwlExpressionView,
+ OwlListAxiom,OwlListAxiomKind,OwlListAxiomView,OwlMalformedListAxiom,OwlOntologyHeader,OwlSpecialAxiom,OwlSpecialAxiomView,
+} from './adapters/owl/types';
 export * from "./adapters/shacl";
+export type {NativeShaclEngineReport as ShaclEngineReport} from './adapters/shacl/rust-default';
 
-export * from "./adapters/shacl/engine";
 
-export * from "./adapters/shacl/metadata";
+export type {ShaclMetadataField,ShaclShapeMetadata,ShaclShapeMetadataNode} from "./adapters/shacl/metadata-types";
 
-export * from "./adapters/owl";
 
-export * from "./adapters/owl/expressions";
 
-export * from "./adapters/owl/annotations";
-export * from "./adapters/owl/axioms";
-export * from './adapters/owl/declarations';
-export * from './adapters/owl/list-axioms';
 export * from './model/field-kind';
 export * from './core-ideals/tablespec-field';
 export * from './core-ideals/field-tablespec-projection';
@@ -277,7 +273,9 @@ export * from './core-ideals/nullability-postgresql';
 export * from './core-ideals/nullability-postgresql-projection';
 export * from './core-ideals/nullability-sqlserver';
 export * from './core-ideals/nullability-sqlserver-projection';
-export * from './core-ideals/nullability-avro';
+export {AVRO_NULLABILITY_EXTENSION,avroNullabilityPackage} from './core-ideals/nullability-avro-package';
+export type {AvroNullabilityClassification,AvroNullabilityRequest} from './core-ideals/nullability-avro-types';
+export {default as avroNullabilityClassificationSchema} from '../spec/core/avro-nullability-classification.schema.json';
 export * from './core-ideals/nullability-avro-projection';
 export * from './core-ideals/nullability-parquet';
 export * from './core-ideals/nullability-parquet-projection';
@@ -293,7 +291,8 @@ export * from './core-ideals/cardinality-postgresql-projection';
 export * from './core-ideals/cardinality-sqlserver';
 export * from './core-ideals/cardinality-sqlserver-projection';
 
-export * from './core-ideals/cardinality-avro';
+export type * from './core-ideals/avro-cardinality-types';
+export {AVRO_CARDINALITY_EXTENSION,avroCardinalityPackage,avroCardinalityClassificationSchema} from './core-ideals/avro-cardinality-package';
 export * from './core-ideals/cardinality-parquet';
 export * from './core-ideals/cardinality-parquet-projection';
 export * from './core-ideals/cardinality-avro-projection';
@@ -336,7 +335,9 @@ export * from './core-ideals/key-postgresql';
 export * from './core-ideals/key-postgresql-projection';
 export * from './core-ideals/key-sqlserver';
 export * from './core-ideals/key-sqlserver-projection';
-export * from './core-ideals/key-avro';
+export {AVRO_KEYS_EXTENSION,avroKeysPackage} from './core-ideals/key-avro-package';
+export type {AvroKeyArchive,AvroKeyClassification,AvroKeyObservation,AvroKeyRequest} from './core-ideals/key-avro-types';
+export {default as avroKeyClassificationSchema} from '../spec/core/avro-key-classification.schema.json';
 export * from './core-ideals/key-avro-projection';
 export * from './core-ideals/key-parquet';
 export * from './core-ideals/key-parquet-projection';
@@ -347,23 +348,25 @@ export {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,
 export type {CoreRelationshipRequest,CoreRelationshipIdentity,RelationshipModuleIdentity,CoreRelationshipOperation,CoreRelationshipDeclaration,CoreRelationshipInspection,CoreRelationshipLookup,CoreRelationshipMeaning} from './model/relationships';
 export {default as coreRelationshipOperationSchema} from '../spec/core/relationship-operation.schema.json';
 export {default as coreKeyOperationV2Schema} from '../spec/core/key-operation-v2.schema.json';
-export {selectCoreRelationships} from './model/relationship-selection';
-export type {CoreRelationshipQuery,CoreRelationshipSelection,CoreRelationshipSelectionEntry} from './model/relationship-selection';
+export type {CoreRelationshipQuery,CoreRelationshipSelection,CoreRelationshipSelectionEntry} from './model/relationship-selection-types';
 export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/relationship-metadata-selection-v2.schema.json';
 export * from './core-ideals/relationship-tablespec';
-export * from './core-ideals/relationship-tablespec-projection';
-export * from './core-ideals/relationship-avro';
-export * from './core-ideals/relationship-avro-projection';
+export type {RelationshipTableSpecRequest,RelationshipTableSpecProjection} from './core-ideals/relationship-tablespec-projection-types';
+export {default as relationshipTableSpecProjectionSchema} from '../spec/core/relationship-tablespec-projection.schema.json';
+export {AVRO_RELATIONSHIPS_EXTENSION,avroRelationshipsPackage} from './core-ideals/relationship-avro-package';
+export type {AvroRelationshipClassification,AvroRelationshipObservation,AvroRelationshipRequest,AvroRelationshipArchive} from './core-ideals/relationship-avro-types';
+export {default as avroRelationshipClassificationSchema} from '../spec/core/avro-relationship-classification.schema.json';
+export type {RelationshipAvroRequest,RelationshipAvroProjection} from './core-ideals/relationship-avro-projection-types';
+export {default as relationshipAvroProjectionSchema} from '../spec/core/relationship-avro-projection.schema.json';
 export * from './core-ideals/relationship-parquet';
-export * from './core-ideals/relationship-parquet-projection';
+export type {RelationshipParquetRequest,RelationshipParquetProjection} from './core-ideals/relationship-parquet-projection-types';
+export {default as relationshipParquetProjectionSchema} from '../spec/core/relationship-parquet-projection.schema.json';
 export * from './projections/ddd-postgresql/relationship-layout';
 export * from './core-ideals/relationship-sqlserver';
-export * from './core-ideals/relationship-sqlserver-projection';
+export type {RelationshipSqlServerRequest,RelationshipSqlServerProjection,SqlServerRelationshipKey} from './core-ideals/relationship-sqlserver-projection-types';
+export {default as relationshipSqlServerProjectionSchema} from '../spec/core/relationship-sqlserver-projection.schema.json';
 export * from './core-ideals/relationship-postgresql';
 export * from './core-ideals/relationship-extras';
-export * from './projections/binding-sqlserver';
-export * from './projections/binding-sqlserver/relationship-layout';
-export * from './projections/ddd-postgresql';
 
 export * from './model/schema-properties';
 export * from './adapters/javascript-numeric';
@@ -406,7 +409,9 @@ export {generateDomainPackLoaderSchema,inspectDomainPackLoader} from './domain-p
 export {generateLoaderInventorySchema} from './domain-packs/loader-inventory';
 
 export {generateArtifactCollectionSchema} from './domain-packs/artifacts';
-export {inspectCoreEvolution,verifyCoreEvolution,coreEvolutionPolicySchema,coreEvolutionOperationSchema,type CoreEvolutionPolicy} from './model/evolution';
+export type {CoreEvolutionPolicy} from './model/evolution-types';
+export {default as coreEvolutionOperationSchema} from '../spec/core/evolution-operation.schema.json';
+export {default as coreEvolutionPolicySchema} from '../spec/core/evolution-policy.schema.json';
 export {securityNot,securityAnd,securityOr,composeSecurityRules} from './extensions/security/logic';
 export type {SecurityTruth,SecurityDecision,SecurityDisposition,EvaluatedSecurityRule,SecurityComposition} from './extensions/security/logic';
 export * from './extensions/security/types';
@@ -454,7 +459,6 @@ export type {SecurityActionPurpose,SecurityActionPurposeDeclaration} from './ext
 export {inspectProtectionObligations,type ProtectionDeclarationInspection,type ProtectionDeclarationObligation,type ProtectionDeclarationObligationKind} from './extensions/security/protection/obligations';
 
 export {inspectActionPlan,assessActionPlan,prepareActionPlanModel} from './extensions/actions/plans';
-export {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse} from './extensions/actions/bulk-state';
 export type {BulkJobStatus,BulkClaim,BulkJobState,BulkReconcileEvidence,BulkEvent,BulkTransitionResult,BulkDecisionInput,BulkDecision} from './extensions/actions/bulk-state';
 export type {ActionPlanArtifact,ActionPlanModelPin,PortableActionPin,PortableActionPlan,ActionPlanDiagnostic,ActionPlanSelectionInspector,ActionPlanInspectionContext,ActionPlanInspection,ActionPlanCapability,ActionPlanCapabilities,ActionPlanAssessment,PreparedActionPlanModel} from './extensions/actions/plan-types';
 
@@ -469,7 +473,7 @@ export type {SelectedActionRow,ActionManifestConstruction,ConstructedActionManif
 
 export type {PreparedActionIdentities} from './extensions/actions/selector';
 export * from './adapters/access-temporal';
-export { RAW_TABLE_BINDING_SUBSET, rawTableBindingProfiles, inspectRawTableBinding } from './extensions/binding/raw-profiles';
+export { RAW_TABLE_BINDING_SUBSET, rawTableBindingProfiles } from './extensions/binding/raw-profiles';
 export type { RawTableBindingTarget } from './extensions/binding/raw-profiles';
 export * from './model/bit128';
 export * from './model/uuid';

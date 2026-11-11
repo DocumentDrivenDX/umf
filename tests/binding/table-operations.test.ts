@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {generatePythonClient,inspectTableLifecycle,readDocument,writeDocument} from '../../src';
+import {generatePythonClient,inspectTableLifecycle,readDocument,writeDocument} from '../../src/index-node-v4';
 import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
 import {rowExpressionInputRefs} from '../../src/extensions/tables/row-expressions';
 import {tableOperationSource} from '../unified/table-operation-fixture';

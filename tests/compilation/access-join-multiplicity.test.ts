@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {generateAccessPackage} from '../../src/compilation/index';
+import {generateAccessPackage} from '../../src/node-access-compilation';
 import {profile,request,mutateSource} from './access-fixtures';
 
 test('generated required and optional to-one descriptors retain authored multiplicity',()=>{

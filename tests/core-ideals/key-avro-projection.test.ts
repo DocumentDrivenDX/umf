@@ -38,7 +38,7 @@ test('generated native proof preserves duplicates and the boolean null coercion 
  const generated=await Bun.file('fixtures/avro/key-projection-generated.json').json();for(const item of generated.cases){const c=avroKeyProjectionCases().find(c=>c.name===item.name)!,r=projectKeysToAvro(c.source,c.authors,c.request);expect(exportAvroSchema(r.target!)).toBe(item.schemaText);expect(r.mappings).toEqual(item.keyMappings);}
 });
 test('reimport without retained authors cannot reconstruct core identity',async()=>{
- const {classifyAvroKeys,recoverAvroKeySource}=await import('../../src/core-ideals/key-avro'),c=avroKeyAuthors(),r=projectKeysToAvro(c.source,c.authors,c.request),schema=exportAvroSchema(r.target!),nativeSource={schema,dependencies:[]};
+ const {classifyAvroKeys,recoverAvroKeySource}=await import('../../src/index-node-v4'),c=avroKeyAuthors(),r=projectKeysToAvro(c.source,c.authors,c.request),schema=exportAvroSchema(r.target!),nativeSource={schema,dependencies:[]};
  const observation=classifyAvroKeys(importAvroSchema(schema,{id:'native-only'}),{mode:'report',profile:'schema-declarations',nativeSource});expect(observation.observations.every(o=>o.authorIntent==='unknown'&&o.enforcement==='not-expressible')).toBe(true);expect(observation.target!.modules.every(m=>m.elements.every(e=>e.keys===undefined))).toBe(true);expect(recoverAvroKeySource(observation,observation.target!)).toEqual(nativeSource);
 });
 test('cross-record ownership, changed stable key IDs and duplicate physical mappings refuse',()=>{

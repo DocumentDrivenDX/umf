@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads} from '../src';
+import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads} from '../src/index-node-v4';
 const prefix='@prefix ex: <https://example.org/> . @prefix sh: <http://www.w3.org/ns/shacl#> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . ',cases:any[]=[];
 const pairs:[string,string,string,string,string,number][]=[
  ['large-adjacent','9007199254740992','integer','9007199254740993','integer',-1],['large-reversed','9007199254740993','integer','9007199254740992','integer',1],['negative','-9007199254740993','integer','-9007199254740992','integer',-1],['fraction','0.10000000000000000001','decimal','0.1','decimal',1],['spelling','+0001.000','decimal','1','integer',0],['zero','-0.000','decimal','+0','integer',0],['overflow','1'+'0'.repeat(350),'integer','9'.repeat(350),'integer',1],['underflow','0.'+'0'.repeat(400)+'1','decimal','0','integer',1],['long','9223372036854775807','long','9223372036854775806','integer',1],['whitespace','  +42  ','integer','42.0','decimal',0]];

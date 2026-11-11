@@ -5,7 +5,7 @@ import {
  validateDocument,
 } from '../../src/index-node-v4';
 import {dbtManifestPackage} from '../../src/adapters/dbt/index';
-import {protobufPackage} from '../../src/adapters/protobuf/index';
+import {protobufPackage} from '../../src/adapters/protobuf/package';
 
 const manifestText=JSON.stringify({
  metadata:{dbt_schema_version:'https://schemas.getdbt.com/dbt/manifest/v12.json'},

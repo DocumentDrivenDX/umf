@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {decodeArrowFlatbuffer,encodeArrowFlatbuffer,importArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit,type ArrowFlatbufferRoot} from '../src';
+import {decodeArrowFlatbuffer,encodeArrowFlatbuffer,importArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit,type ArrowFlatbufferRoot} from '../src/index-node-v4';
 import {flatbufferBackend} from '../native/arrow/flatbuffer-runtime';
 const base='fixtures/arrow/metadata/';const manifest=await Bun.file(base+'manifest.json').json();
 for(const c of manifest.cases){const result=decodeArrowFlatbuffer(new Uint8Array(await Bun.file(base+c.file).arrayBuffer()),{id:c.file,rootType:c.rootType as ArrowFlatbufferRoot});if(!result.model)throw Error('Decode failed');

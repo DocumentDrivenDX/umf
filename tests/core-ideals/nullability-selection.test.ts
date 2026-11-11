@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {nullabilitySelectionCases} from '../../scripts/core-ideals/nullability-selection-cases';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {coreNullabilitySelectionSchema} from '../../src/model/selection-schemas';
 import {inspectCoreNullability} from '../../src/model/nullability';
 import {copyJson} from '../../src/model/json';

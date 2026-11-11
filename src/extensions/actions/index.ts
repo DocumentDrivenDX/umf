@@ -120,7 +120,6 @@ export type {ActionManifest,ActionManifestInspection} from './manifest-types';
 
 export {validateBulkOutcome} from './bulk';
 export type {BulkOutcomeValidation} from './bulk';
-export {applyBulkEvent,bulkDecisionOrder,nextBulkFence,bulkItemToken,parseBulkItemToken,isReservedBulkKey,checkBulkKeyUse} from './bulk-state';
 export type {BulkJobStatus,BulkClaim,BulkJobState,BulkReconcileEvidence,BulkEvent,BulkTransitionResult,BulkDecisionInput,BulkDecision} from './bulk-state';
 
 export {constructActionManifest} from './manifest-construction';

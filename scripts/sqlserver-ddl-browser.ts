@@ -1,8 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixtures={...await Bun.file('fixtures/sqlserver/ddl-projections.json').json(),nativeCases:(await Bun.file('fixtures/sqlserver/ddl-oracle.json').json()).cases};
-const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/sqlserver-ddl-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/sqlserver-ddl-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>SQL Server DDL generation</title>',{headers:{'content-type':'text/html'}});}});
+const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
+if(!built.success)throw Error(String(built.logs));
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){
+ const path=new URL(req.url).pathname;
+ if(path==='/umf.js')return new Response(built.outputs[0],{headers:{'content-type':'text/javascript'}});
+ if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file('bindings/core/wasm/pkg/umf_core_wasm_bg.wasm'),{headers:{'content-type':'application/wasm'}});
+ return new Response('<!doctype html><title>SQL Server DDL generation</title>',{headers:{'content-type':'text/html'}});
+}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>{if(!r.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return r.abort();}return r.continue();});await page.goto('http://127.0.0.1:'+server.port);

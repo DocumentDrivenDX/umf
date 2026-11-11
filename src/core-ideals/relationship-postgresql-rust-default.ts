@@ -3,7 +3,7 @@ import {UmfError,type Document,type Json} from '../model/types';
 import {copyJson} from '../model/json';
 import type {PostgresqlBackend} from '../adapters/postgresql';
 import type {CoreRelationshipDeclaration} from '../model/relationships';
-import type {RelationshipPostgresqlRequest,RelationshipPostgresqlProjection} from './relationship-postgresql-factory';
+import type {RelationshipPostgresqlRequest,RelationshipPostgresqlProjection} from './relationship-postgresql-types';
 
 type PostgreSqlHost={importPostgresqlSql(source:string,backend:PostgresqlBackend,options:{id:string}):Promise<Document>;exportPostgresqlSql(document:Document,backend:PostgresqlBackend):Promise<string>};
 type Guard=(error:unknown)=>boolean;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import type {NativeJson} from '../model/native-json';
 import {exportTableSpec,exportTableSpecBundle,getTableSpecTable,TABLESPEC_EXTENSION} from '../adapters/tablespec';
 import {validateDocument} from '../validation/document';
@@ -8,9 +8,8 @@ import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
 
 import schema from '../../spec/core/tablespec-relationship-classification.schema.json';
-import manifest from '../../spec/extensions/tablespec-relationships/package.json';
-export const TABLESPEC_RELATIONSHIPS_EXTENSION='umf.tablespec.relationships';
-export const tableSpecRelationshipsPackage=manifest as unknown as ExtensionPackage;
+import {TABLESPEC_RELATIONSHIPS_EXTENSION} from './relationship-tablespec-package';
+export {TABLESPEC_RELATIONSHIPS_EXTENSION,tableSpecRelationshipsPackage} from './relationship-tablespec-package';
 export {default as tableSpecRelationshipClassificationSchema} from '../../spec/core/tablespec-relationship-classification.schema.json';
 export interface TableSpecRelationshipRequest {mode:'strict'|'report';profile:'declared-metadata'}
 export interface TableSpecRelationshipObservation {

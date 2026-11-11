@@ -1,5 +1,6 @@
 import {avroAvailabilitySource} from '../../../../scripts/core-ideals/nullability-avro-cases';
-import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle,type AvroCardinalityRequest} from '../../../../src/core-ideals/cardinality-avro';
+import {classifyAvroCardinality,verifyAvroCardinalityClassification,recoverAvroCardinalityBundle} from '../../../../src/index-node-v4';
+import type {AvroCardinalityRequest} from '../../../../src/core-ideals/avro-cardinality-types';
 import packet from './typescript-predecessor.json';
 const base=(packet.outcomes as any)['empty-array/present-non-null-schema/strict'];
 const clone=structuredClone;

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Regression coverage for CONTRACT-083's explicit legacy compatibility view. */
 import {expect,test} from 'bun:test';
-import {projectLakeviewToLegacyDashboard} from '../../src/adapters/lakeview';
-import {elementKey} from '../../src/adapters/lakeview/project';
+import {projectLakeviewToLegacyDashboard} from '../../src/index-node-v4';
+import {elementKey} from '../../src/adapters/lakeview/projection-types';
 
 import {legacyIds as ids,legacyFixture as fixture,legacyNumericFixture as numericFixture,legacyMixedDefaults,legacySelectionFixture,legacyUnknownWidgetTypes,legacyUnknownFormats,legacyUnknownChannels,legacyFormatFixture,legacyChannelFixture} from './legacy-fixture';
 

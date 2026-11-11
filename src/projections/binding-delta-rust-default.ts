@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../model/types';
-import type {DeltaBindingProjection} from './binding-delta/index';
+import type {DeltaBindingProjection} from './binding-delta-types';
 type Engine={['binding-delta-projection']:Record<'projectBindingToDelta',(fields?:Record<string,unknown>)=>unknown>};
 export function createBindingDeltaRustDefault(engine:Engine){
  return Object.freeze({

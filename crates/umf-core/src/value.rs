@@ -402,6 +402,21 @@ fn validate_number(value: f64, path: Utf16) -> Result<(), EngineError> {
 /// Validate and copy one JSON tree without collapsing ordered members or UTF-16
 /// strings. Value-count limits apply to this tree; caller meters remain cumulative.
 pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    copy_json_with_numbers(value, ctx, true)
+}
+
+/// Copy a tagged host value without reinterpreting its IEEE 754 bits as core
+/// document numbers. The same tree limits and object-key checks apply.
+#[doc(hidden)]
+pub fn copy_host_value(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    copy_json_with_numbers(value, ctx, false)
+}
+
+fn copy_json_with_numbers(
+    value: &Value,
+    ctx: &mut Context<'_>,
+    require_core_numbers: bool,
+) -> Result<Value, EngineError> {
     ctx.with_work_phase("native-core-copy", |ctx| {
     fn visit(
         value: &Value,
@@ -409,6 +424,7 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
         path: &Utf16,
         depth: usize,
         tree_values: &mut usize,
+        require_core_numbers: bool,
     ) -> Result<Value, EngineError> {
         ctx.charge_work(1, path.clone())?;
         *tree_values = tree_values
@@ -426,7 +442,9 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
             Value::Null => Ok(Value::Null),
             Value::Bool(value) => Ok(Value::Bool(*value)),
             Value::Number(value) => {
-                validate_number(*value, path.clone())?;
+                if require_core_numbers {
+                    validate_number(*value, path.clone())?;
+                }
                 Ok(Value::Number(*value))
             }
             Value::String(value) => {
@@ -450,6 +468,7 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
                         &append_path(path, &Utf16::from(index.to_string())),
                         depth + 1,
                         tree_values,
+                        require_core_numbers,
                     )?);
                 }
                 Ok(Value::Array(copy))
@@ -476,7 +495,7 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
                     }
                     copy.push((
                         key.clone(),
-                        visit(item, ctx, &append_path(path, key), depth + 1, tree_values)?,
+                        visit(item, ctx, &append_path(path, key), depth + 1, tree_values, require_core_numbers)?,
                     ));
                 }
                 Ok(Value::Object(copy))
@@ -485,7 +504,7 @@ pub fn copy_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
     }
 
     let mut tree_values = 0;
-    visit(value, ctx, &Utf16::default(), 0, &mut tree_values)
+    visit(value, ctx, &Utf16::default(), 0, &mut tree_values, require_core_numbers)
 
     })
 }

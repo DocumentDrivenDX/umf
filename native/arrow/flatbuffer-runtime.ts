@@ -1,6 +1,6 @@
 // Optional inventory-driven encoder; the public API performs preservation checks.
 import {Builder} from 'flatbuffers';
-import {declarations,layout,shortName} from '../../src/adapters/arrow/flatbuffer-layout';
+import {declarations,layout,shortName} from './flatbuffer-inventory';
 export const flatbufferBackend={identity:'flatbuffers@25.9.23' as const,encode(input:any):Uint8Array{
  const b=new Builder(1024);b.forceDefaults(true);
  function scalar(type:string,value:any):[string,any]{type=shortName(type);const d=declarations.get(type);if(d?.kind==='enum')return [d.base!,d.members!.find(m=>m.name===value)!.value];return [type,type==='long'?BigInt(value):type==='bool'?Number(value):value];}

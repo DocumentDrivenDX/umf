@@ -3,7 +3,7 @@
 import sales from '../../fixtures/ddd/sales.json';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {importTableSpec,exportTableSpec,getTableSpecColumn} from '../../src/adapters/tablespec';
 import {importOpenapiDocument,exportOpenapiDocument,getOpenapiNode} from '../../src/adapters/openapi';
 import {getDddDefinition,inspectDdd} from '../../src/extensions/ddd';

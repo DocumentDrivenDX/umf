@@ -2,7 +2,8 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import {dddPostgresqlCases} from '../../scripts/projections/ddd-postgresql-cases';
-import {projectDddToPostgresql,recoverDddPostgresqlIdeal,recoverDddPostgresqlNative,importPostgresqlSql,exportPostgresqlSql, getPostgresqlSource,migrateBindingRelationships,rollbackBindingRelationships} from '../../src';
+import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource,migrateBindingRelationships,rollbackBindingRelationships} from '../../src';
+import {projectDddToPostgresql,recoverDddPostgresqlIdeal,recoverDddPostgresqlNative} from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import proposal from '../../fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json';
 const at=(source:any,path:string):any=>path===''?source:path.slice(1).split('/').reduce((v,k)=>v[k.replace(/~1/g,'/').replace(/~0/g,'~')],source);

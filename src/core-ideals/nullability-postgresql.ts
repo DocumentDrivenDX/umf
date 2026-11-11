@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type Nullability,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic,type Nullability} from '../model/types';
 import {type NativeJson,parseNativeJson,renderTree} from '../model/native-json';
 import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '../model/nullability';
 import {exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,getPostgresqlCatalogNode} from '../adapters/postgresql/catalog';
@@ -12,9 +12,8 @@ import core from '../../spec/core/schema.json';
 import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/postgresql-nullability-classification.schema.json';
-import manifest from '../../spec/extensions/postgresql-nullability/package.json';
-export const POSTGRESQL_NULLABILITY_EXTENSION='umf.postgresql.nullability';
-export const postgresqlNullabilityPackage=manifest as unknown as ExtensionPackage;
+import {POSTGRESQL_NULLABILITY_EXTENSION} from './nullability-postgresql-package';
+export {POSTGRESQL_NULLABILITY_EXTENSION,postgresqlNullabilityPackage} from './nullability-postgresql-package';
 export {default as postgresqlNullabilityClassificationSchema} from '../../spec/core/postgresql-nullability-classification.schema.json';
 export interface PostgresqlNullabilityRequest {
  column:string;nativeSource:string;mode:'strict'|'report';scope:'stored-relation'|'query-result'|'write-input'|'unresolved';carrier:'sql-null'|'unresolved';author?:CoreNullabilityDeclaration;

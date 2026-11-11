@@ -2,7 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {readJsonValue} from '../model/serialization';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {type NativeJson} from '../model/native-json';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
 import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,getTableSpecTable,TABLESPEC_EXTENSION} from '../adapters/tablespec';
@@ -11,9 +11,8 @@ import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/tablespec-facet-classification.schema.json';
-import manifest from '../../spec/extensions/tablespec-facets/package.json';
-export const TABLESPEC_FACETS_EXTENSION='umf.tablespec.facets';
-export const tableSpecFacetsPackage=manifest as unknown as ExtensionPackage;
+import {TABLESPEC_FACETS_EXTENSION} from './facets-tablespec-package';
+export {TABLESPEC_FACETS_EXTENSION,tableSpecFacetsPackage} from './facets-tablespec-package';
 export {default as tableSpecFacetClassificationSchema} from '../../spec/core/tablespec-facet-classification.schema.json';
 export type TableSpecFacetProfile='declared-metadata'|'json-schema'|'pyspark-schema'|'gx-spark'|'gx-suite-spark'|'ingest-cast'|'unresolved';
 export interface TableSpecFacetRequest {column:number;mode:'strict'|'report';profile:TableSpecFacetProfile;input:'raw'|'model-normalized';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration}

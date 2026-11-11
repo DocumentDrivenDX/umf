@@ -2,7 +2,7 @@
 import type {Document,Diagnostic,ExtensionPackage,Json} from '../model/types';
 import type {NativeJson} from '../model/native-json';
 import {UmfError} from '../model/errors';
-import {Registry} from '../registry/registry';
+import type {Registry} from '../registry/registry';
 import linkmlManifest from '../../spec/extensions/linkml/package.json';
 import odcsManifest from '../../spec/extensions/odcs/package.json';
 import type {importLinkmlDocument,inspectLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit} from './linkml';
@@ -39,7 +39,7 @@ type NativeCoreErrorGuard=(error:unknown)=>boolean;
 const CONTROL_CODES=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE']);
 
 /** Preserve the established synchronous LinkML and ODCS APIs on the Rust wire path. */
-export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry=()=>new Registry()){
+export function createLinkmlOdcsRustDefault(engine:LinkmlOdcsNativeFamilyEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false,createRegistry:()=>Registry){
  const call=<T>(operation:()=>unknown):T=>{
   try{return operation() as T;}
   catch(error){

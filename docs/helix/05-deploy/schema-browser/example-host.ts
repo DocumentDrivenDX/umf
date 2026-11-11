@@ -1,31 +1,45 @@
 /** Generic executable consumer fixture, served with strict CSP and no inline code. */
 import {join,resolve} from 'node:path';
-import {importJsonSchema} from '../../../../src/adapters/json-schema';
+import * as sdk from '../../../../src/index-node-v4';
+import type {Document} from '../../../../src/model/types';
 export async function exampleHost(packageRoot:string){
  const root=resolve(packageRoot),table=await Bun.file('spec/domain-packs/medical-carrier/umf/claims.json').text(),ontology=await Bun.file('spec/domain-packs/commerce/ontology.json').text();
  const current=JSON.parse(table);const old={...current,description:'Historical source',columns:current.columns.map((c:any,i:number)=>i?c:{...c,description:'Earlier field'})};
- const entries=[{id:'table',title:'Claims',category:'live',path:'claims.json',format:'json',text:table,schemaFormat:'tablespec',revisions:[{id:'current',format:'json',text:JSON.stringify(old)}]},{id:'ontology',title:'Commerce',category:'live',path:'ontology.json',format:'json',text:ontology,schemaFormat:'umf'},{id:'lazy',title:'Lazy model',category:'live',path:'lazy.json',format:'json',url:'/source.json',schemaFormat:'tablespec'},{id:'slow',title:'Slow model',category:'live',path:'slow.json',format:'json',url:'/slow.json',schemaFormat:'tablespec'},{id:'native',title:'Native JSON Schema',category:'live',path:'native.json',format:'json',text:JSON.stringify(importJsonSchema('{"type":"string"}',{id:'urn:example',baseUri:'https://example.invalid/schema'})),schemaFormat:'umf'}];
- const {writeDocument}=await import('../../../../src/model/document');const nativeEntries=[];const expectedNative:Record<string,Record<string,string>>={};let expectedAvro:any;
- const cases:[string,string,string,string,string?][]=[
- ['delta','delta/index','importDeltaSchema','{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}'],
- ['iceberg','iceberg/index','importIcebergSchema',await Bun.file('fixtures/iceberg/nested.json').text()],
- ['arrow','arrow/index','importArrowSchema',JSON.stringify((await Bun.file('fixtures/arrow/schema-cases.json').json())[0].input)],
- ['sqlserver','sqlserver/index','importSqlServerCatalog',await Bun.file('fixtures/sqlserver/catalog.json').text()],
- ['postgresql','postgresql/catalog','importPostgresqlCatalogCapture',await Bun.file('fixtures/postgresql/catalog-capture.json').text()],
- ['dbt','dbt/index','importDbtManifest',await Bun.file('fixtures/dbt/manifest.json').text()],
- ['odcs','odcs/index','importOdcsDocument',await Bun.file((await Bun.file('fixtures/odcs/results.json').json()).results[0].path).text(),'yaml'],
- ['linkml','linkml/index','importLinkmlDocument',await Bun.file((await Bun.file('fixtures/linkml/results.json').json()).results[0].path).text(),'yaml'],
- ['avro','avro/index','importAvroSchema','{"type":"record","name":"R","fields":[{"name":"id","type":"int","default":1}]}'],
- ['graphql','graphql/index','importGraphqlSchema','type Query { hello: String }'],
- ['smithy','smithy/index','importSmithyJson',await Bun.file('fixtures/smithy/domain.json').text()],
- ['spark','spark/index','importSparkSchema','{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}'],
- ['generalized-rdf','generalized-rdf/index','importGeneralizedRdfDataset','[{"subject":{"termType":"NamedNode","value":"urn:s"},"predicate":{"termType":"BlankNode","value":"p"},"object":{"termType":"NamedNode","value":"urn:o"},"graph":{"termType":"DefaultGraph","value":""}}]'],
- ['jsonld','jsonld/index','importJsonLdDocument','{"@id":"urn:s","urn:p":{"@id":"urn:o"}}'],
- ['rdf','rdf/index','importRdfNQuads',await Bun.file('native/rdf/examples/schema.nq').text()],
- ['owl','owl/index','importOwlTurtle',await Bun.file('native/owl/authored.ttl').text()],
- ['shacl','shacl/index','importShaclTurtle',await Bun.file('native/shacl/metadata.ttl').text()],
- ['openapi','openapi/index','importOpenapiDocument','{"openapi":"3.1.0","info":{"title":"X","version":"1"},"paths":{}}','json']];
- for(const [id,path,fn,text,format] of cases){const adapter=await import('../../../../src/adapters/'+path+'.ts');nativeEntries.push({id:'native-'+id,title:id,category:'live',path:id+'.json',format:'json',schemaFormat:'umf',text:writeDocument(adapter[fn](text,{id:'urn:fixture:'+id,baseIRI:'https://example.org/',...(format?{format}:{})}),'json')});}const {nativeDownloads}=await import('../microsite/download-native');const {parseEntry}=await import('../microsite/explorer-model');for(const entry of nativeEntries){const files=await nativeDownloads(parseEntry(entry as any));if(files.some(file=>file.name.endsWith('export-error.txt')))throw Error('Normal native fixture export refused: '+entry.id);if(entry.id==='native-avro')expectedAvro=JSON.parse(files.find(f=>f.name==='avro-bundle.json')!.content as string);expectedNative[entry.id]=Object.fromEntries(files.map(file=>[file.name,new Bun.CryptoHasher('sha256').update(file.content).digest('hex')]));}entries.push(...nativeEntries as any);
+ const entries=[{id:'table',title:'Claims',category:'live',path:'claims.json',format:'json',text:table,schemaFormat:'tablespec',revisions:[{id:'current',format:'json',text:JSON.stringify(old)}]},{id:'ontology',title:'Commerce',category:'live',path:'ontology.json',format:'json',text:ontology,schemaFormat:'umf'},{id:'lazy',title:'Lazy model',category:'live',path:'lazy.json',format:'json',url:'/source.json',schemaFormat:'tablespec'},{id:'slow',title:'Slow model',category:'live',path:'slow.json',format:'json',url:'/slow.json',schemaFormat:'tablespec'},{id:'native',title:'Native JSON Schema',category:'live',path:'native.json',format:'json',text:JSON.stringify(sdk.importJsonSchema('{"type":"string"}',{id:'urn:example',baseUri:'https://example.invalid/schema'})),schemaFormat:'umf'}];
+ const nativeEntries=[];const expectedNative:Record<string,Record<string,string>>={};let expectedAvro:any;
+ const cases:[string,string,string,('yaml'|'json')?][]=[
+ ['delta','importDeltaSchema','{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}'],
+ ['iceberg','importIcebergSchema',await Bun.file('fixtures/iceberg/nested.json').text()],
+ ['arrow','importArrowSchema',JSON.stringify((await Bun.file('fixtures/arrow/schema-cases.json').json())[0].input)],
+ ['sqlserver','importSqlServerCatalog',await Bun.file('fixtures/sqlserver/catalog.json').text()],
+ ['postgresql','importPostgresqlCatalogCapture',await Bun.file('fixtures/postgresql/catalog-capture.json').text()],
+ ['dbt','importDbtManifest',await Bun.file('fixtures/dbt/manifest.json').text()],
+ ['odcs','importOdcsDocument',await Bun.file((await Bun.file('fixtures/odcs/results.json').json()).results[0].path).text(),'yaml'],
+ ['linkml','importLinkmlDocument',await Bun.file((await Bun.file('fixtures/linkml/results.json').json()).results[0].path).text(),'yaml'],
+ ['avro','importAvroSchema','{"type":"record","name":"R","fields":[{"name":"id","type":"int","default":1}]}'],
+ ['graphql','importGraphqlSchema','type Query { hello: String }'],
+ ['smithy','importSmithyJson',await Bun.file('fixtures/smithy/domain.json').text()],
+ ['spark','importSparkSchema','{"type":"struct","fields":[{"name":"id","type":"long","nullable":false,"metadata":{}}]}'],
+ ['generalized-rdf','importGeneralizedRdfDataset','[{"subject":{"termType":"NamedNode","value":"urn:s"},"predicate":{"termType":"BlankNode","value":"p"},"object":{"termType":"NamedNode","value":"urn:o"},"graph":{"termType":"DefaultGraph","value":""}}]'],
+ ['jsonld','importJsonLdDocument','{"@id":"urn:s","urn:p":{"@id":"urn:o"}}'],
+ ['rdf','importRdfNQuads',await Bun.file('native/rdf/examples/schema.nq').text()],
+ ['owl','importOwlTurtle',await Bun.file('native/owl/authored.ttl').text()],
+ ['shacl','importShaclTurtle',await Bun.file('native/shacl/metadata.ttl').text()],
+ ['openapi','importOpenapiDocument','{"openapi":"3.1.0","info":{"title":"X","version":"1"},"paths":{}}','json']];
+ const imports=sdk as unknown as Record<string,(source:string,options:{id:string;baseIRI:string;format?:'yaml'|'json'})=>Document>;
+ for(const [id,fn,text,format] of cases){
+  const document=imports[fn]!(text,{id:'urn:fixture:'+id,baseIRI:'https://example.org/',...(format?{format}:{})});
+  nativeEntries.push({id:'native-'+id,title:id,category:'live',path:id+'.json',format:'json',schemaFormat:'umf',text:sdk.writeDocument(document,'json')});
+ }
+ const {nativeDownloads}=await import('../microsite/download-native');
+ const {parseEntry}=await import('../microsite/explorer-node');
+ for(const entry of nativeEntries){
+  const files=await nativeDownloads(parseEntry(entry as any),sdk);
+  if(files.some(file=>file.name.endsWith('export-error.txt')))throw Error('Normal native fixture export refused: '+entry.id);
+  if(entry.id==='native-avro')expectedAvro=JSON.parse(files.find(f=>f.name==='avro-bundle.json')!.content as string);
+  expectedNative[entry.id]=Object.fromEntries(files.map(file=>[file.name,new Bun.CryptoHasher('sha256').update(file.content).digest('hex')]));
+ }
+ entries.push(...nativeEntries as any);
  const html='<!doctype html><html><head><meta charset="utf-8"><title>Schema browser embedding qualification</title><link rel="stylesheet" href="/assets/components.css"></head><body><h1>Generic schema browser host</h1><button id="run" disabled>Run integration checks</button><button id="select" disabled>Select ontology from host</button><pre id="results" role="status"></pre><div id="one"></div><div id="two"></div><div id="direct"></div><div id="unrelated" data-status="created">Unrelated host content</div><script type="module" src="/host.js"></script></body></html>';
  let origin='',crossOrigin='';
  const host=()=>`import {mount,renderPropertyTable,renderRecordMap,renderDocumentDiff} from '/index.js';const expectedAvro=${JSON.stringify(expectedAvro)};const expectedNative=${JSON.stringify(expectedNative)};const entries=${JSON.stringify(entries)},output=document.getElementById('results'),log=s=>output.textContent+=s+'\\n';let checks=0;const assert=(ok,message)=>{if(!ok)throw Error(message);checks++;log('PASS '+message);};const missingStage=document.createElement('div');document.body.append(missingStage);const missing=mount(missingStage,{assetsUrl:'/missing/',entries:[entries[0]]});const missingFailed=missing.ready.then(()=>false,()=>true);const events=[];const a=mount(document.getElementById('one'),{assetsUrl:'/assets/',entries,categories:[{id:'live',label:'Registered models'}],selection:{schema:'table'},readOnlyLocalFiles:true,hideHero:true,theme:'dark',themeVariables:{'--accent':'#aaccee'},onNavigate:x=>events.push(x)});const b=mount(document.getElementById('two'),{assetsUrl:'/assets/',entries,selection:{schema:'ontology'},height:'500'});await Promise.all([a.ready,b.ready]);await a.select({schema:'table'});document.getElementById('run').disabled=false;document.getElementById('select').disabled=false;document.getElementById('select').onclick=()=>a.select({schema:'ontology'});document.getElementById('run').onclick=async()=>{output.textContent='';try{

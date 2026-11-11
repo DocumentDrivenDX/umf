@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic,type Cardinality} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
 import {exportSqlServerCatalog,getSqlServerColumnMetadata,getSqlServerConstraintMetadata} from '../adapters/sqlserver';
 import {validateDocument} from '../validation/document';
@@ -10,9 +10,8 @@ import {createValidator} from '../validation/schema';
 import core from '../../spec/core/schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/sqlserver-cardinality-classification.schema.json';
-import manifest from '../../spec/extensions/sqlserver-cardinality/package.json';
-export const SQLSERVER_CARDINALITY_EXTENSION='umf.sqlserver.cardinality';
-export const sqlserverCardinalityPackage=manifest as unknown as ExtensionPackage;
+import {SQLSERVER_CARDINALITY_EXTENSION} from './cardinality-sqlserver-package';
+export {SQLSERVER_CARDINALITY_EXTENSION,sqlserverCardinalityPackage} from './cardinality-sqlserver-package';
 export {default as sqlserverCardinalityClassificationSchema} from '../../spec/core/sqlserver-cardinality-classification.schema.json';
 export interface SqlServerCardinalityRequest {column:string;nativeSource:string;mode:'strict'|'report';profile:'native-scalar'|'json-array'|'json-object'|'unresolved';identity:{module:string;element:string};constraint:string|null;}
 const binding=schema.properties.binding.const;

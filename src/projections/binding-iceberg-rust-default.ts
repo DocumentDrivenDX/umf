@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../model/types';
-import type {IcebergBindingProjection} from './binding-iceberg/index';
+import type {IcebergBindingProjection} from './binding-iceberg-types';
 type Engine={['binding-iceberg-projection']:Record<'projectBindingToIceberg',(fields?:Record<string,unknown>)=>unknown>};
 export function createBindingIcebergRustDefault(engine:Engine){
  return Object.freeze({

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {getBinding,inspectBinding,projectBindingIndexes,migrateBindingRelationships,rollbackBindingRelationships,readJsonValue,writeJsonValue,type Document} from '../../src';
+import {getBinding,inspectBinding,projectBindingIndexes,migrateBindingRelationships,rollbackBindingRelationships,readJsonValue,writeJsonValue,type Document} from '../../src/index-node-v4';
 import {bindingMigrationCase} from '../../scripts/binding/stable-ids-cases';
 const payload=(d:Document)=>d.extensions!['umf.binding'] as any;
 function indexedCase(){

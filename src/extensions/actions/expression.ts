@@ -13,7 +13,8 @@ export type ActionRulePhase='pre'|'post';
 export type ActionExpression = {literal:CoreLiteral}|{input:string}|{output:string}|{state:ActionRulePhase;frame:string;field:ActionReference}|{exists:{state:ActionRulePhase;frame:string}}|{linked:{state:ActionRulePhase;relationship:{module:string;relationship:string};sourceFrame:string;targetFrame:string}}|{op:'present'|'eq'|'lt'|'le'|'gt'|'ge'|'add'|'sub'|'and'|'or'|'not';args:ActionExpression[]};
 export interface CompiledActionRule {language:'umf.actions.rules';version:'1';phase:ActionRulePhase;expression:string;ast:ActionExpression;type:'boolean';dependencies:ActionRule['references']}
 export interface ActionExpressionType {family:'boolean'|'integer'|'string'|'null';nullable:boolean}
-export const actionExpressionLimits={depth:32,nodes:512,text:65536} as const;
+import {actionExpressionLimits} from './expression-limits';
+export {actionExpressionLimits} from './expression-limits';
 export function actionExpressionError(code:string,message:string,path=''):never {throw new UmfError(code,message,path);}
 export const sameActionReference=(a:ActionReference,b:ActionReference)=>a.module===b.module&&a.element===b.element;
 export function actionModelField(document:Document,reference:ActionReference):Element {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importOwlTurtle,exportOwlTurtle,getOwlListAxioms,getOwlQuads,proposeOwlQuadEdit,readDocument,writeDocument} from '../src';
+import {importOwlTurtle,exportOwlTurtle,getOwlListAxioms,getOwlQuads,proposeOwlQuadEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const cases=[];
 for(const file of ['list-axioms.ttl','authored.ttl','primer-corrected.ttl']){
  const input=await Bun.file('native/owl/'+file).text(),original=importOwlTurtle(input,{id:file,baseIRI:'https://example.org/',blankNodeScope:'lists'}),v=getOwlListAxioms(original);

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
-import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
+import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import type {NativeJson} from '../model/native-json';
 import {exportTableSpec,exportTableSpecBundle,getTableSpecTable,TABLESPEC_EXTENSION} from '../adapters/tablespec';
 import {validateDocument} from '../validation/document';
@@ -8,9 +8,8 @@ import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
 
 import schema from '../../spec/core/tablespec-key-classification.schema.json';
-import manifest from '../../spec/extensions/tablespec-keys/package.json';
-export const TABLESPEC_KEYS_EXTENSION='umf.tablespec.keys';
-export const tableSpecKeysPackage=manifest as unknown as ExtensionPackage;
+import {TABLESPEC_KEYS_EXTENSION} from './key-tablespec-package';
+export {TABLESPEC_KEYS_EXTENSION,tableSpecKeysPackage} from './key-tablespec-package';
 export {default as tableSpecKeyClassificationSchema} from '../../spec/core/tablespec-key-classification.schema.json';
 export interface TableSpecKeyRequest {mode:'strict'|'report';profile:'declared-metadata'}
 export interface TableSpecKeyObservation {

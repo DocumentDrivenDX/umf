@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureParquet,getParquetArrowSchema,proposeArrowFlatbufferEdit,encodeArrowFlatbuffer} from '../src';
+import {captureParquet,getParquetArrowSchema,proposeArrowFlatbufferEdit,encodeArrowFlatbuffer} from '../src/index-node-v4';
 import {flatbufferBackend} from '../native/arrow/flatbuffer-runtime';
 const base='fixtures/parquet/arrow-nested/',source=captureParquet(new Uint8Array(await Bun.file(base+'nested.parquet').arrayBuffer()),{id:'map-label-probe'}),observed=getParquetArrowSchema(source),cases=[];
 for(const [index,role] of ['key','value'].entries()){

@@ -820,10 +820,12 @@ export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
  readonly ['pack-tools']: Readonly<Record<'generatePackTools', NativeFamilyOperation>>;
+ readonly ['bulk-actions']: Readonly<Record<'applyBulkEvent'|'bulkDecisionOrder'|'nextBulkFence'|'bulkItemToken'|'parseBulkItemToken'|'isReservedBulkKey'|'checkBulkKeyUse', NativeFamilyOperation>>;
+ readonly ['lakeview-legacy-projection']: Readonly<Record<'projectLakeviewToLegacyDashboard', NativeFamilyOperation>>;
  readonly ['delta-log']: Readonly<Record<'capture'|'export'|'inspect'|'inspectActions'|'reconcileCommits'|'reconcileCheckpoint'|'reconcileCheckpointSidecars', NativeFamilyOperation>>;
  readonly ['core-ideal-reports']: Readonly<Record<'inspectFieldClassification'|'verifyFieldClassificationInspection'|'inspectFieldProjection'|'verifyFieldProjectionInspection'|'inspectRecordProjection'|'verifyRecordProjectionInspection'|'inspectStructuredClassification'|'verifyStructuredClassificationInspection', NativeFamilyOperation>>;
   readonly ['field-record-parquet-projection']: Readonly<Record<'projectFieldToParquet'|'recoverFieldFromParquet'|'projectRecordToParquet'|'recoverRecordFromParquet', NativeFamilyOperation>>;
- readonly ['binding-public']: Readonly<Record<'inspectBinding'|'getBinding'|'readBindingDocument'|'writeBindingDocument'|'projectBindingIndexes'|'migrateBindingRelationships'|'rollbackBindingRelationships'|'validateBindingSemantics'|'validateBit128Dataset', NativeFamilyOperation>>;
+ readonly ['binding-public']: Readonly<Record<'inspectBinding'|'inspectRawTableBinding'|'getBinding'|'readBindingDocument'|'writeBindingDocument'|'projectBindingIndexes'|'migrateBindingRelationships'|'rollbackBindingRelationships'|'validateBindingSemantics'|'validateBit128Dataset', NativeFamilyOperation>>;
  readonly ['dashboard-public']: Readonly<Record<'inspectDashboard'|'readDashboardDocument'|'writeDashboardDocument'|'getDashboardDefinition'|'validateDashboardSemantics', NativeFamilyOperation>>;
  readonly ['medical-projection']: Readonly<Record<'projectMedicalFhir'|'projectCdcMortality'|'projectDicomMetadata'|'lookupMedicalTerminology', NativeFamilyOperation>>;
  readonly ['relationship-extra-projection']: Readonly<Record<'importRelationshipExtraArchive'|'prepareRelationshipToExtra'|'completeRelationshipToExtra'|'classifyRelationshipExtra'|'verifyRelationshipExtra'|'recoverRelationshipExtraIdeal'|'recoverRelationshipExtraNative', NativeFamilyOperation>>;

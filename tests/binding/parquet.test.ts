@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {captureParquet,copyJson,exportParquetCapture,projectBindingToParquet,readBindingDocument,writeBindingDocument,type Document} from '../../src';
+import {captureParquet,copyJson,exportParquetCapture,readBindingDocument,writeBindingDocument,type Document} from '../../src/index-node-v4';
+import {projectBindingToParquet} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/parquet/case.json').json();
 const logical=fixture.logical as Document,binding=fixture.binding as Document;

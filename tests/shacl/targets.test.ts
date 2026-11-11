@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import schema from '../../spec/extensions/shacl/target-nodes-schema.json';
-import {importShaclTurtle,importRdfTurtle,importRdfTriG,getShaclTargetNodes,getShaclQuads,getRdfQuads,proposeShaclQuadEdit,exportShaclTurtle,readDocument,writeDocument} from '../../src';
+import {importShaclTurtle,importRdfTurtle,importRdfTriG,getShaclTargetNodes,getShaclQuads,getRdfQuads,proposeShaclQuadEdit,exportShaclTurtle,readDocument,writeDocument} from '../../src/index-node-v4';
 const baseIRI='https://example.org/',iri=(name:string)=>({kind:'iri' as const,value:baseIRI+name}),options={id:'shapes',baseIRI};
 const prefix='@prefix ex: <https://example.org/> . @prefix sh: <http://www.w3.org/ns/shacl#> . @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . ';
 test('US-028 Core target sets match native SPARQL across official and authored graphs',async()=>{

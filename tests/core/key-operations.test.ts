@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
+import {selectCoreElements} from '../../src/index-node-v4';
 const record={module:'m',element:'record'},field={module:'m',element:'id'};
 const source=():u.Document=>({umf:'0.10.0',id:'keys',vocabularies:{},modules:[{id:'m',namespace:'sales',elements:[{id:'record',kind:'record',extensions:{}},{id:'id',kind:'field',scalarType:'integer',nullability:'required',cardinality:'one',extensions:{}}]}]});
 const authored=()=>u.declareCoreKey(u.declareCoreRecordMembers(source(),record,[field]).target,record,{id:'pk',name:'ID',fields:[field],primary:true});
@@ -68,8 +69,8 @@ test('0.6.0 core operations use new receipts and refuse changes invalidating key
 });
 test('Key selection reports explicit member/component boundaries and traverses by identity',()=>{
  const doc=authored().target;doc.modules[0]!.elements[0]!.references=[];
- const direct=u.selectCoreElements(doc,{references:'none',identities:[record]});expect(direct.referenceScope).toBe('explicit-core-references-item-types-members-and-keys');expect(direct.selection).toHaveLength(1);expect(direct.boundaryMembers).toHaveLength(1);expect(direct.boundaryKeyFields?.[0]?.key).toBe('pk');
- const transitive=u.selectCoreElements(doc,{references:'transitive',identities:[record]});expect(transitive.selection).toHaveLength(2);expect(transitive.boundaryMembers).toEqual([]);expect(transitive.boundaryKeyFields).toEqual([]);
+ const direct=selectCoreElements(doc,{references:'none',identities:[record]});expect(direct.referenceScope).toBe('explicit-core-references-item-types-members-and-keys');expect(direct.selection).toHaveLength(1);expect(direct.boundaryMembers).toHaveLength(1);expect(direct.boundaryKeyFields?.[0]?.key).toBe('pk');
+ const transitive=selectCoreElements(doc,{references:'transitive',identities:[record]});expect(transitive.selection).toHaveLength(2);expect(transitive.boundaryMembers).toEqual([]);expect(transitive.boundaryKeyFields).toEqual([]);
  for(const selection of [direct,transitive])for(const format of ['json','yaml'] as const){const saved=u.readJsonValue(u.writeJsonValue(selection,format),format);expect(saved as any).toEqual(selection);}
 });
 
@@ -82,12 +83,12 @@ test('current-core extension validators receive the actual key-bearing document 
  const registry=new u.Registry().register(manifest,(_,context)=>{calls++;expect(context.document.umf).toBe('0.10.0');expect((context.document.modules[0]!.elements[0]!.keys as any[])[0].id).toBe('pk');context.document.id='private copy';return [];});
  const result=u.validateDocument(doc,registry);expect(result.valid).toBe(true);expect(result.diagnostics.some(d=>d.code==='UNKNOWN_EXTENSION')).toBe(false);expect(calls).toBe(2);expect(u.copyJson(doc)).toEqual(original);expect(before.modules[0]!.elements[0]!.keys).toEqual(doc.modules[0]!.elements[0]!.keys);
  const rejecting=new u.Registry().register(manifest,()=>[{code:'PROBE_REJECT',path:'/extensions/future',message:'Synthetic rejection',severity:'error'}]);
- expect(u.validateDocument(doc,rejecting).valid).toBe(false);expect(()=>u.selectCoreElements(doc,{references:'none'},rejecting)).toThrow('PROBE_REJECT');
+ expect(u.validateDocument(doc,rejecting).valid).toBe(false);expect(()=>selectCoreElements(doc,{references:'none'},rejecting)).toThrow('PROBE_REJECT');
 });
 
 test('member traversal terminates on cycles and component order cannot change under a stable key ID',()=>{
  const doc=authored().target;doc.modules[0]!.elements[1]!.references=[{role:'owner-link',...record}];
- expect(u.selectCoreElements(doc,{references:'transitive',identities:[record]}).selection).toHaveLength(2);
+ expect(selectCoreElements(doc,{references:'transitive',identities:[record]}).selection).toHaveLength(2);
  const pair=source();pair.modules[0]!.elements.push({id:'b',kind:'field',scalarType:'integer',nullability:'required',cardinality:'one',extensions:{}});
  const refs=[field,{module:'m',element:'b'}],members=u.declareCoreRecordMembers(pair,record,refs);
  const key=u.declareCoreKey(members.target,record,{id:'both',name:'Both',fields:refs});

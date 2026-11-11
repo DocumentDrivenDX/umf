@@ -4,9 +4,9 @@ import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
 import {readDocument,writeDocument,editExtension} from '../../model/document';
-import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../../model/types';
-export const DASHBOARD_EXTENSION='umf.dashboard';
-export const dashboardPackage=manifest as unknown as ExtensionPackage;
+import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
+import {DASHBOARD_EXTENSION,dashboardPackage} from './package';
+export {DASHBOARD_EXTENSION,dashboardPackage} from './package';
 export interface DashboardReference {module:string;element:string;}
 export interface DashboardExpression {language:string;version?:string;text:string;}
 export interface DashboardPosition {x:number;y:number;width:number;height:number;}

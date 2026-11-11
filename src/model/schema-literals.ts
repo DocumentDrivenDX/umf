@@ -5,8 +5,7 @@ import {assertLiteral,assertLiteralTracked,assertIdentity,coefficient} from '../
 import {UmfError,type Document,type Element} from './types';
 export type {Literal as CoreLiteral} from '../generated/core-model';
 export const schemaPropertyNames=Object.freeze([...domainPolicy.schemaPropertyNames]);
-/** Public exact-JSON spelling remains distinct from internal equality keys. */
-export const canonicalSchemaJson=(value:unknown):string=>Array.isArray(value)?'['+value.map(canonicalSchemaJson).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonicalSchemaJson((value as Record<string,unknown>)[k])).join(',')+'}':JSON.stringify(value);
+export {canonicalSchemaJson} from './canonical-schema-json';
 export function schemaError(message:string,path=''):never{throw new UmfError('CORE_SCHEMA_PROPERTIES',message,path);}
 export function knownSchemaMembers(value:unknown,keys:readonly string[],path:string):void{if(!value||typeof value!=='object'||Array.isArray(value))schemaError('Expected object',path);for(const key of Object.keys(value))if(!keys.includes(key))throw new UmfError('CORE_SCHEMA_PROPERTY_UNKNOWN','Unknown relevant qualifier: '+key,path+'/'+key);}
 export const schemaCoefficient=(token:string,scale:number,precision?:number):bigint=>coefficient(token,scale,precision,domainPolicy.literal);

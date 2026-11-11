@@ -2,17 +2,14 @@
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {inspectBit128Binding} from './bit128';
 export * from './bit128';
-import stableManifest from '../../../spec/extensions/binding-stable/package.json';
-import manifest from '../../../spec/extensions/binding/package.json';
+import {BINDING_EXTENSION,stableBindingPackage,bindingPackage} from './package';
+export {BINDING_EXTENSION,stableBindingPackage,bindingPackage} from './package';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
 import {readDocument,writeDocument} from '../../model/document';
 import {copyJson} from '../../model/json';
-import {pointer,UmfError,type Diagnostic,type Document,type ExtensionPackage,type Json,type Validation} from '../../model/types';
+import {pointer,UmfError,type Diagnostic,type Document,type Json,type Validation} from '../../model/types';
 
-export const BINDING_EXTENSION='umf.binding';
-export const stableBindingPackage=stableManifest as unknown as ExtensionPackage;
-export const bindingPackage=manifest as unknown as ExtensionPackage;
 
 export interface BindingElementRef {module:string;element:string}
 export interface BindingFieldRef extends BindingElementRef {field?:string}

@@ -5,7 +5,8 @@ import {decodeCompactStruct} from './compact';
 import {mapParquetIdl} from './idl-map';
 import {unsafeParquetMetadata} from './rewrite';
 import type {Document,Diagnostic,Json} from '../../model/types';
-export const PARQUET_PAGE_LIMITS={headerBytes:65536,pages:10000,pageBytes:8*1024*1024,totalBytes:64*1024*1024,pageValues:100000,totalValues:1000000,rows:10000} as const;
+import {PARQUET_PAGE_LIMITS} from './package';
+export {PARQUET_PAGE_LIMITS} from './package';
 export interface ParquetPage {rowGroup:number;column:number;offset:number;headerBytes:number;bodyOffset:number;bodyBytes:number;header:Json}
 export interface ParquetPageInspection {source:Document;status:'checked'|'blocked';complete:false;diagnostics:Diagnostic[];pages?:ParquetPage[];declaredUncompressedBytes?:number;declaredValues?:number}
 /** Validates declared page boundaries/budgets without decompressing or decoding data. */

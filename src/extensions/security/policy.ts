@@ -6,15 +6,15 @@ import {Registry} from '../../registry/registry';
 import {createValidator} from '../../validation/schema';
 import {validateDocument} from '../../validation/document';
 import {copyJson} from '../../model/json';
-import {securityPackage} from './policy-package';
+import {SECURITY_EXTENSION,securityPackage} from './policy-package';
 import {readJsonValue,writeJsonValue} from '../../model/serialization';
 import {canonicalSchemaJson,checkSchemaLiteral,type CoreLiteral} from '../../model/schema-literals';
 import {UmfError,pointer,type Diagnostic,type Element,type Document,type ExtensionPackage,type Json,type Validation} from '../../model/types';
 import {securityRefIdentity as id,type SecurityPolicy,type SecurityRef,type SecurityResolution,type SecurityEntity,type SecurityAssociation,type SecurityExpr,type SecurityTerm} from './types';
 
-export const SECURITY_EXTENSION='umf.security';
+
 // Public package metadata is a copy; editing it cannot replace built-in meaning.
-export {securityPackage};
+export {SECURITY_EXTENSION,securityPackage};
 const validator=createValidator(),checkPolicy=validator.compile(manifest.schema),checkOntology=validator.compile(ontologySchema);
 export interface SecurityInspection extends Validation {source:Json;resolution?:Json}
 

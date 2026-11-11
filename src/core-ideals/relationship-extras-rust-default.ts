@@ -2,7 +2,7 @@
 import {UmfError,type Document} from '../model/types';
 import {copyJson} from '../model/json';
 import type {CoreRelationshipDeclaration} from '../model/relationships';
-import type {RelationshipExtraArchive,RelationshipExtraClassification,RelationshipExtraClassificationRequest,RelationshipExtraProjection,RelationshipExtraRequest} from './relationship-extras-factory';
+import type {RelationshipExtraArchive,RelationshipExtraClassification,RelationshipExtraClassificationRequest,RelationshipExtraProjection,RelationshipExtraRequest} from './relationship-extras-types';
 
 type Engine={['relationship-extra-projection']:{
  prepareRelationshipToExtra(fields:{source:Document;author:CoreRelationshipDeclaration;request:RelationshipExtraRequest}):unknown;

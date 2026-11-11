@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {generateAccessPackage} from '../../src/compilation/index';
+import {generateAccessPackage} from '../../src/node-access-compilation';
 import {profile,request} from './access-fixtures';
 import model from '../../fixtures/access/search/model.json';
 function candidate(change?:(value:typeof model)=>void){const doc=structuredClone(model);change?.(doc);const req=request();req.sources=[{id:'logical',format:'json',text:JSON.stringify(doc)}];req.records=[{module:'search',element:'Doc'}];req.package='search_docs';return {req,result:generateAccessPackage(req,profile())};}

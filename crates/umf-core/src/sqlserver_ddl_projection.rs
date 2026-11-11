@@ -269,6 +269,20 @@ fn projection(source: &Value, input: &Value, ctx: &mut Context<'_>) -> Result<Va
         return Err(err("SQLSERVER_DDL_SOURCE", "Invalid source capture"));
     }
     let mut issues = Vec::new();
+    if let Some(Value::Object(vocabularies)) = get(&source, "vocabularies") {
+        for (id, _) in vocabularies {
+            let path = ptr(&ascii("/vocabularies"), id);
+            ctx.charge_work(id.len().saturating_add(1), path.clone())?;
+            if id != &k(sqlserver_adapter::EXTENSION) {
+                issues.push(issue(
+                    path,
+                    "UNKNOWN_EXTENSION",
+                    "Exact extension version unavailable; content retained",
+                    "not-enforced",
+                ));
+            }
+        }
+    }
     let mut fatal = false;
     let mut regular = Vec::new();
     let mut deferred = Vec::new();

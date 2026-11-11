@@ -8,7 +8,7 @@ import type {
 } from './index';
 import type {Diagnostic, Document, ExtensionPackage, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import {ICEBERG_EXTENSION, icebergPackage} from './package';
 
@@ -32,7 +32,7 @@ const CONTROL_CODES = new Set([
 export function createIcebergSchemaRustDefault(
   engine: IcebergSchemaNativeEngine,
   isNativeError: NativeErrorGuard = () => false,
-  createRegistry: () => Registry = () => new Registry(),
+  createRegistry: () => Registry,
 ) {
   const call = <T>(operation: () => unknown): T => {
     try {

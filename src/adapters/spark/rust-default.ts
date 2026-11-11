@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Diagnostic, Document, ExtensionPackage, Json, Validation} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import {UmfError} from '../../model/errors';
 import type {renameSparkField} from './rename';
 import {sparkPackage} from './package';
@@ -20,7 +20,7 @@ export interface SparkNativeEngine {
   };
 }
 /** Default-root wrappers over the closed native family dispatcher. */
-export function createSparkRustDefault(engine:SparkNativeEngine,isNativeError:Guard=()=>false,createRegistry:()=>Registry=()=>new Registry()) {
+export function createSparkRustDefault(engine:SparkNativeEngine,isNativeError:Guard=()=>false,createRegistry:()=>Registry) {
   const call=<T>(run:()=>T):T=>{try{return run();}catch(error){if(!isNativeError(error))throw error;const native=error as {code?:unknown;message?:unknown;path?:unknown};if(typeof native.code!=='string'||CONTROL_CODES.has(native.code))throw error;const code=native.code;if(code==='REQUEST'||code.startsWith('SPARK_'))throw new UmfError(code,String(native.message??''),typeof native.path==='string'?native.path:'');throw error;}};
   return Object.freeze({
     sparkRegistry():Registry{return createRegistry().register(sparkPackage as unknown as ExtensionPackage,payload=>call(()=>engine.spark.inspectPayload({payload}) as Diagnostic[]));},
