@@ -33,7 +33,7 @@ await writeFile(join(tempRoot,'umf_core_wasm_bg.wasm'),wasmBytes);
 
 const build=await Bun.build({
  entrypoints:[join(repo,'src/index-browser-v4.ts')],outdir:tempRoot,naming:'index-browser-v4.js',target:'browser',format:'esm',
- plugins:[{name:'isolated-csv-boolean-wasm-package',setup(builder){builder.onResolve({filter:/^\.\/pkg\/umf_core_wasm\.js$/},args=>args.importer.endsWith('/bindings/core/wasm/index.js')?{path:packageGlue}:undefined);}}],
+ plugins:[{name:'isolated-csv-boolean-wasm-package',setup(builder){builder.onResolve({filter:/^\.\/pkg\/umf_core_wasm\.js$/},args=>args.importer.endsWith('/bindings/core/wasm/loader.js')?{path:packageGlue}:undefined);}}],
 });
 if(!build.success)throw new Error(`v4 browser build failed: ${build.logs.map(log=>log.message).join('; ')}`);
 

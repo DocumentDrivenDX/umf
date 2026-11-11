@@ -25,7 +25,7 @@ const factoryBundle=await factoryBuild.outputs[0]!.text();
 if(factoryBundle.includes('CORE_RECORD_MEMBERS_VERSION')||factoryBundle.includes('Explicit empty membership differs from an absent declaration'))throw new Error('Injected raw-profile factory retained the TypeScript inspector implementation');
 const wasmImports=new Set<string>();
 const wasmPlugin:BunPlugin={name:'raw-profile-browser-v4-wasm',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>{
- if(args.importer.endsWith('bindings/core/wasm/index.js')&&args.path==='./pkg/umf_core_wasm.js'){wasmImports.add('adapter');return {path:resolve(wasmPackage,'umf_core_wasm.js')};}
+ if(args.importer.endsWith('bindings/core/wasm/loader.js')&&args.path==='./pkg/umf_core_wasm.js'){wasmImports.add('adapter');return {path:resolve(wasmPackage,'umf_core_wasm.js')};}
  if(args.importer.endsWith('src/index-browser-v4.ts')&&args.path==='../bindings/core/wasm/pkg/umf_core_wasm.js'){wasmImports.add('root');return {path:resolve(wasmPackage,'umf_core_wasm.js')};}
  return undefined;
 })}};

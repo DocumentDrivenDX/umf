@@ -2,7 +2,7 @@
 
 UMF's Rust workspace is the implementation behind the native library, CLI, Python extension, Node/Bun addon and browser WASM host. It owns shared document and registry semantics, compiler operations, and the native adapter operations exposed by those hosts. The current UMF document/core version is 0.10.0.
 
-The workspace packages are not published to crates.io. Use the `umf-v0.10.9` release ref for the Rust library and CLI. For local development, use the workspace or a path dependency:
+The workspace packages are not published to crates.io. Use the `umf-v0.10.10` release ref for the Rust library and CLI. For local development, use the workspace or a path dependency:
 
 ```toml
 [dependencies]

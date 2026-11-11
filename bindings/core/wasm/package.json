@@ -1,6 +1,6 @@
 {
   "name": "@umf/core-rust-wasm",
-  "version": "0.10.9",
+  "version": "0.10.10",
   "private": true,
   "type": "module",
   "main": "index.js",
@@ -9,6 +9,8 @@
     "index.js",
     "index.d.ts",
     "copy-json-host-input.js",
+    "loader.js",
+    "loader-node.js",
     "copy-json-host-input.d.ts",
     "src/*.js",
     "src/shared-sources.json",
