@@ -117,7 +117,7 @@ def _wheel_bounds(version: str) -> tuple[int, int, int]:
     # The completed Rust engine includes both a native module and native CLI.
     # Keep historical compact producer/tool limits unchanged. These exact native
     # cohorts use the existing 64 MiB archive/family and 128 MiB expanded profile.
-    if version in {"0.10.7", "0.10.8", "0.10.9"}:
+    if version in {"0.10.7", "0.10.8", "0.10.9", "0.10.10"}:
         return 64 * 1024 * 1024, 128 * 1024 * 1024, 64 * 1024 * 1024
     return MAX_RELEASE_ASSET_BYTES, MAX_RELEASE_ASSET_BYTES, MAX_RELEASE_ASSET_BYTES
 

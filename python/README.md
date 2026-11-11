@@ -1,8 +1,8 @@
 # Official UMF Python support
 
-`umf-core` provides the `umf` import namespace. The current package version is `0.10.9`, and the document/core version is `0.10.0`. The authored metamodel generates packaged JSON Schemas and portable constraint data; Pydantic provides access models. Rust owns shared validation, registry semantics and the native adapter operations exposed through Python. Consumer extension definitions and execution policies remain in consumer repositories.
+`umf-core` provides the `umf` import namespace. The current package version is `0.10.10`, and the document/core version is `0.10.0`. The authored metamodel generates packaged JSON Schemas and portable constraint data; Pydantic provides access models. Rust owns shared validation, registry semantics and the native adapter operations exposed through Python. Consumer extension definitions and execution policies remain in consumer repositories.
 
-Install Core from PyPI with `python -m pip install 'umf-core==0.10.9'`. Install the matching pair from PyPI with `python -m pip install 'umf-codegen==0.10.9'`. Codegen requires exactly `umf-core==0.10.9`; the same [`umf_codegen-0.10.9-py3-none-any.whl`](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.9/umf_codegen-0.10.9-py3-none-any.whl) is also included in the GitHub release.
+Install Core from PyPI with `python -m pip install 'umf-core==0.10.10'`. Install the matching pair from PyPI with `python -m pip install 'umf-codegen==0.10.10'`. Codegen requires exactly `umf-core==0.10.10`; the same [`umf_codegen-0.10.10-py3-none-any.whl`](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.10/umf_codegen-0.10.10-py3-none-any.whl) is also included in the GitHub release.
 
 Build the native Rust extension from source with Rust 1.90.0 and the locked Cargo dependencies:
 
@@ -71,6 +71,6 @@ schema sources, schema/package options and `ddl`, `orm`, `crud` targets. The res
 contains generated files, exact source companions, diagnostics and per-source
 coverage. Unkeyed tables receive DDL without invented ORM identities.
 
-The paired `umf-codegen==0.10.9` wheel asset in the same GitHub release exposes
+The paired `umf-codegen==0.10.10` wheel asset in the same GitHub release exposes
 `umf_codegen.generate_pack_tools(request)`, using the native CLI bundled with
-`umf-core==0.10.9`. Both packages are on PyPI, with the same archives retained in the GitHub release.
+`umf-core==0.10.10`. Both packages are on PyPI, with the same archives retained in the GitHub release.

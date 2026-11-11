@@ -370,12 +370,12 @@ def test_release_wheel_qualifier_keeps_historical_default_and_accepts_explicit_v
         qualifier.select_macos(current, "0.10.4/../../other")
 
 
-@pytest.mark.parametrize("version", ["0.10.3", "0.10.7", "0.10.8", "0.10.9"])
+@pytest.mark.parametrize("version", ["0.10.3", "0.10.7", "0.10.8", "0.10.9", "0.10.10"])
 def test_rust_successor_wheel_limits_preserve_historical_profiles(tmp_path, version):
     qualifier = _release_wheel_qualifier()
     path = _wheel(tmp_path / f"{version}.whl", {}, version=version,
                   tag="cp311-abi3-macosx_11_0_arm64", native=b"R" * (17 * 1024 * 1024))
-    if version in {"0.10.7", "0.10.8", "0.10.9"}:
+    if version in {"0.10.7", "0.10.8", "0.10.9", "0.10.10"}:
         files, tag, root = qualifier.read_wheel(path, version)
         assert len(files[qualifier.NATIVE]) == 17 * 1024 * 1024
         assert tag == "cp311-abi3-macosx_11_0_arm64"
@@ -412,7 +412,7 @@ def test_native_cohort_profile_does_not_enroll_unknown_or_historical_versions(ve
     assert qualifier.MAX_RELEASE_ASSET_BYTES == 16_777_216
     assert qualifier.MAX_REPORT_BYTES == 1_048_576
 
-@pytest.mark.parametrize("version", ["0.10.7", "0.10.8", "0.10.9"])
+@pytest.mark.parametrize("version", ["0.10.7", "0.10.8", "0.10.9", "0.10.10"])
 def test_exact_native_cohort_profile_retains_existing_numeric_bounds(version):
     qualifier = _release_wheel_qualifier()
     assert qualifier._wheel_bounds(version) == (64 * 1024 * 1024, 128 * 1024 * 1024, 64 * 1024 * 1024)

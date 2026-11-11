@@ -46,7 +46,7 @@ class PublicationControllerWorkflowRouteTests(unittest.TestCase):
 
     def test_access_source_dependency_in_s_is_not_rewritten_as_part_of_core_controller_work(self):
         access = ROOT / 'python' / 'umf_access' / 'pyproject.toml'
-        self.assertIn('umf-core==0.10.8', access.read_text(encoding='utf-8'))
+        self.assertIn('umf-core==0.10.10', access.read_text(encoding='utf-8'))
 
     def test_future_candidate_admissions_and_qualification_pins_remain_absent(self):
         self.assertTrue((ROOT / '.github/release-admissions/umf-codegen-0.10.8.json').is_file())
