@@ -1,0 +1,143 @@
+{
+  "coreVersion": "0.10.11",
+  "platforms": {
+    "linux-x86_64": {
+      "buildInput": {
+        "commit": "f402d9a6c9471bde63f0693518745ea036def18a",
+        "tree": "817fff25ba17e69e483f5b106157f71eac61ec02",
+        "treeMatchesMergedIdentity": true
+      },
+      "cliSha256": "3beffee57c275f86519fd022591e700bcb793f59a8d15b250b92e4216442a64b",
+      "cliVersion": "0.10.11",
+      "coreVersion": "0.10.11",
+      "dependencySource": "offline copy of exact pinned Linux dependencies from prior qualified local venv",
+      "generatedFiles": [
+        "README.md",
+        "loader_release_probe/__init__.py",
+        "loader_release_probe/crud.py",
+        "loader_release_probe/models.py",
+        "report.json",
+        "schema.sql",
+        "source-companion.json"
+      ],
+      "glibcCohort": "manylinux_2_34_x86_64",
+      "machine": "x86_64",
+      "pairInstall": "fresh container venv; Core and Codegen wheels installed from local artifacts with pip --no-index",
+      "profile": "umf.python-pair-qualification/1",
+      "pydantic": "2.11.9",
+      "python": "3.11.18",
+      "rawOutput": {
+        "path": "docs/helix/04-build/evidence/release-0.10.11/linux-x86_64-python-pair.json",
+        "sha256": "7dff45ca77c577e7ddbcd59fcc90b82fd91aa05812dffa81afbd5038f3582ec6"
+      },
+      "resourceCount": 10,
+      "resourceManifestSha256": "9339b711b7e1a519e6d59866e378d9f0b5065a4c68c570c8819625bb23e106bc",
+      "resources": {
+        "actions.package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+        "binding.package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+        "core.constraints.json": "6bad84a5d96d57e639938824bd41e7bdbf1cc9bf80a5c12dea39d56ed17e3043",
+        "core.domain-policy.json": "9480257d9e72d2609387926010662a3846f42a4868b10761a23e85cfee3f89cf",
+        "core.package-schema.json": "f8c1ee9bd9e41dab5b068de5448d84bba697331109a8afab036c0bf429c35995",
+        "core.reference-schema.json": "a2ec6fdfbb0cdd5e3a60e1fa3b1006fbb6935ad3e6120b7cabe16652ce8c13f5",
+        "core.schema.json": "a264685ee4e80e956817b9c2b17ffff360cff207ec9c6e28b5a3a2fdd0054ecb",
+        "saga.package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+        "stable-binding.package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+        "tables.package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+      },
+      "resultSha256": "a6d89b01eddca37d281858d49c42509f7e0d561ada2c431ec4b14d124880c8a7",
+      "source": {
+        "commit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+        "tree": "817fff25ba17e69e483f5b106157f71eac61ec02"
+      },
+      "status": "passed",
+      "version": "0.10.11",
+      "wheelArtifacts": {
+        "umf_codegen-0.10.11-py3-none-any.whl": {
+          "bytes": 66261,
+          "sha256": "bee071e0c82adbc4bc5f78e49aaff758bcb0c4c28da5265a4adbfe8e1358567e"
+        },
+        "umf_core-0.10.11-cp311-abi3-manylinux_2_34_x86_64.whl": {
+          "bytes": 34990778,
+          "sha256": "50759f33f0e0b6ee5e167ed79de0411e8d20fc78687f70bfb3eefba8d34c3690"
+        }
+      }
+    },
+    "macos-arm64": {
+      "buildInput": {
+        "commit": "f402d9a6c9471bde63f0693518745ea036def18a",
+        "tree": "817fff25ba17e69e483f5b106157f71eac61ec02",
+        "treeMatchesMergedIdentity": true
+      },
+      "cliSha256": "5e06ca8976ed9b4373b297ff3050396c40da3817016c15ebec2d5abf26097fb5",
+      "cliVersion": "0.10.11",
+      "coreVersion": "0.10.11",
+      "dependencySource": "offline copy of exact pinned macOS dependencies from prior qualified local venv",
+      "generatedFiles": [
+        "README.md",
+        "loader_release_probe/__init__.py",
+        "loader_release_probe/crud.py",
+        "loader_release_probe/models.py",
+        "report.json",
+        "schema.sql",
+        "source-companion.json"
+      ],
+      "machine": "arm64",
+      "pairInstall": "fresh venv; Core and Codegen wheels installed from local artifacts with pip --no-index",
+      "profile": "umf.python-pair-qualification/1",
+      "pydantic": "2.11.9",
+      "python": "3.11.17",
+      "rawOutput": {
+        "path": "docs/helix/04-build/evidence/release-0.10.11/macos-arm64-python-pair.json",
+        "sha256": "c73939b5dcd8178949052e6430089bd9d209f0ac147e92827e764afa79202885"
+      },
+      "resourceCount": 10,
+      "resourceManifestSha256": "9339b711b7e1a519e6d59866e378d9f0b5065a4c68c570c8819625bb23e106bc",
+      "resources": {
+        "actions.package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+        "binding.package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+        "core.constraints.json": "6bad84a5d96d57e639938824bd41e7bdbf1cc9bf80a5c12dea39d56ed17e3043",
+        "core.domain-policy.json": "9480257d9e72d2609387926010662a3846f42a4868b10761a23e85cfee3f89cf",
+        "core.package-schema.json": "f8c1ee9bd9e41dab5b068de5448d84bba697331109a8afab036c0bf429c35995",
+        "core.reference-schema.json": "a2ec6fdfbb0cdd5e3a60e1fa3b1006fbb6935ad3e6120b7cabe16652ce8c13f5",
+        "core.schema.json": "a264685ee4e80e956817b9c2b17ffff360cff207ec9c6e28b5a3a2fdd0054ecb",
+        "saga.package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+        "stable-binding.package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+        "tables.package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+      },
+      "resultSha256": "a6d89b01eddca37d281858d49c42509f7e0d561ada2c431ec4b14d124880c8a7",
+      "source": {
+        "commit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+        "tree": "817fff25ba17e69e483f5b106157f71eac61ec02"
+      },
+      "status": "passed",
+      "version": "0.10.11",
+      "wheelArtifacts": {
+        "umf_codegen-0.10.11-py3-none-any.whl": {
+          "bytes": 66261,
+          "sha256": "bee071e0c82adbc4bc5f78e49aaff758bcb0c4c28da5265a4adbfe8e1358567e"
+        },
+        "umf_core-0.10.11-cp311-abi3-macosx_11_0_arm64.whl": {
+          "bytes": 32175018,
+          "sha256": "29e97061fe82568f90d35fb22c6207bb5d4adcd9aac5ef8dc81d47d92cb480f6"
+        }
+      }
+    }
+  },
+  "profile": "umf.local-python-pair-admission/1",
+  "resourceCount": 10,
+  "resources": {
+    "actions.package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+    "binding.package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+    "core.constraints.json": "6bad84a5d96d57e639938824bd41e7bdbf1cc9bf80a5c12dea39d56ed17e3043",
+    "core.domain-policy.json": "9480257d9e72d2609387926010662a3846f42a4868b10761a23e85cfee3f89cf",
+    "core.package-schema.json": "f8c1ee9bd9e41dab5b068de5448d84bba697331109a8afab036c0bf429c35995",
+    "core.reference-schema.json": "a2ec6fdfbb0cdd5e3a60e1fa3b1006fbb6935ad3e6120b7cabe16652ce8c13f5",
+    "core.schema.json": "a264685ee4e80e956817b9c2b17ffff360cff207ec9c6e28b5a3a2fdd0054ecb",
+    "saga.package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+    "stable-binding.package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+    "tables.package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+  },
+  "resultSha256": "a6d89b01eddca37d281858d49c42509f7e0d561ada2c431ec4b14d124880c8a7",
+  "status": "passed",
+  "version": "0.10.11"
+}

@@ -1,0 +1,22 @@
+{
+  "profile": "umf.linux-wheel-repair-verification/1",
+  "status": "passed",
+  "version": "0.10.11",
+  "rawRepairPayloadEqual": true,
+  "payloadFiles": 72,
+  "auditwheelPlatform": "manylinux_2_34_x86_64",
+  "auditwheelShow": "manylinux_2_34_x86_64; requires GLIBC through 2.34",
+  "nativeObjects": [
+    {
+      "path": "umf/_rust_core.abi3.so",
+      "sha256": "9f4b28ed1633b0f97775dcf0446b892c5f4e441693cff01ac10007f6802168f8",
+      "elf": "ELF64 little-endian x86_64"
+    }
+  ],
+  "rawWheelSha256": "9d3cc840d56dc2aab4dac26a697df11ad8466aefc44918daba70479551e84a54",
+  "repairedWheelSha256": "50759f33f0e0b6ee5e167ed79de0411e8d20fc78687f70bfb3eefba8d34c3690",
+  "cliSha256": "3beffee57c275f86519fd022591e700bcb793f59a8d15b250b92e4216442a64b",
+  "nodeAddonSha256": "30bd1304331e20fed09f8f25ded0a98297fdb1afb7f5dc4e4cc91c2a08fc38f7",
+  "linuxCliSha256": "3beffee57c275f86519fd022591e700bcb793f59a8d15b250b92e4216442a64b",
+  "bundledCliMatchesLinuxExecutable": true
+}

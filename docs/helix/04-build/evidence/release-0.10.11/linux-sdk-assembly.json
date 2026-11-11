@@ -1,0 +1,87 @@
+{
+  "profile": "umf.linux-sdk-native-assembly/1",
+  "status": "packaged",
+  "version": "0.10.11",
+  "releaseSource": {
+    "commit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+    "tree": "817fff25ba17e69e483f5b106157f71eac61ec02"
+  },
+  "nativePackagingSource": {
+    "commit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+    "tree": "817fff25ba17e69e483f5b106157f71eac61ec02"
+  },
+  "nativeSdistSourceJoin": {
+    "profile": "umf.native-sdist-source-join/1",
+    "nativePackagingSource": {
+      "commit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+      "tree": "817fff25ba17e69e483f5b106157f71eac61ec02"
+    },
+    "releaseSource": {
+      "commit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+      "tree": "817fff25ba17e69e483f5b106157f71eac61ec02"
+    },
+    "buildInput": {
+      "commit": "f402d9a6c9471bde63f0693518745ea036def18a",
+      "tree": "817fff25ba17e69e483f5b106157f71eac61ec02",
+      "treeMatchesMergedIdentity": true
+    },
+    "sameGitTree": true,
+    "commonSdist": {
+      "filename": "umf_core-0.10.11.tar.gz",
+      "sha256": "b7b933b8bb973dc90a8907714a16a482b874475772f8c0c1dfd023feb64158b2",
+      "bytes": 8058681,
+      "builtFromGitTree": "817fff25ba17e69e483f5b106157f71eac61ec02",
+      "extractedSourceFileCount": 3045
+    },
+    "sdistSha256": "b7b933b8bb973dc90a8907714a16a482b874475772f8c0c1dfd023feb64158b2",
+    "changedGitPaths": [],
+    "changedGitPath": null,
+    "changedPathAbsentFromSdist": false,
+    "changedPathAbsentFromMetamodelInputs": false
+  },
+  "launchImage": "sha256:c4c5dd267c66fb5d646b0b36610306bd859d687ce7a199f54bb8dfce53aff8ff",
+  "macCanonicalDist": {
+    "path": "/Users/erik/.codex/worktrees/umf-01010-maintenance/umf/dist",
+    "fileCount": 1983,
+    "treeSha256": "07dd430c1e5f82b6ad74a7ed7dbd75b7a6e047d5e7df8b61db8a182c42d0cd79",
+    "unchangedAfterAssembly": true
+  },
+  "sourceClosure": {
+    "liveInputCount": 4602,
+    "externalInputCount": 1,
+    "sha256": "55c4de1e1664b8413a1b54acf688fcf61306522b8e81dee2eb286c6143855c74",
+    "preserved": true
+  },
+  "nativeAddon": {
+    "path": "/private/tmp/umf-01011-release/python/linux/output/node/umf_core_node.node",
+    "bytes": 59566120,
+    "sha256": "30bd1304331e20fed09f8f25ded0a98297fdb1afb7f5dc4e4cc91c2a08fc38f7",
+    "elf": {
+      "format": "ELF64",
+      "endianness": "little",
+      "machine": "x86_64",
+      "eMachine": 62
+    }
+  },
+  "changedAsset": "dist/umf_core_node.node",
+  "unchangedCanonicalAssetCount": 1981,
+  "packageReceipt": {
+    "status": "built",
+    "archive": "/private/tmp/umf-01011-release/linux/assembled-package/umf-sdk.tgz",
+    "sha256": "52145cff0ebf9323d5c29defd7da31cfe30445e74e6b60c7c099b9a17832d7c2",
+    "manifest": "/private/tmp/umf-01011-release/linux/assembled-package/manifest.json",
+    "manifestSha256": "2e9053c99d086d8eae969ebe531067d7e881c2bbb84209705e7320cf75c08fad",
+    "files": 1983,
+    "members": 1989,
+    "sourceTreeSha256": "55c4de1e1664b8413a1b54acf688fcf61306522b8e81dee2eb286c6143855c74",
+    "capturedLiveSourceTreeSha256": "55c4de1e1664b8413a1b54acf688fcf61306522b8e81dee2eb286c6143855c74",
+    "sourceTransformStatus": "fixed-point",
+    "sourceTransformCount": 0
+  },
+  "packageManifestSha256": "2e9053c99d086d8eae969ebe531067d7e881c2bbb84209705e7320cf75c08fad",
+  "archive": {
+    "path": "/private/tmp/umf-01011-release/linux/umf-sdk-0.10.11-linux-x86_64.tgz",
+    "sha256": "52145cff0ebf9323d5c29defd7da31cfe30445e74e6b60c7c099b9a17832d7c2",
+    "bytes": 67309699
+  }
+}

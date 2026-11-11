@@ -1,0 +1,63 @@
+{
+  "controller": {
+    "commit": "765bb27e6db1925ba1f610b811c95fcac5e6267a",
+    "files": {
+      ".github/workflows/publish-codegen-pypi.yml": "2f3ba033ee0b495868814cbd3cfa941f97e8f68ab27b34561cdc907ac9872fb5",
+      ".github/workflows/publish-pypi.yml": "85efda11e3106b24d35f9c9187889014155c5d1118d4f1a3294bcf40f507c31a",
+      "scripts/publish_core_pypi_release.py": "47f96d1662cb0e9e70574c7c6eebbedd3d01d6bed04318ba209a1efa82ba048f",
+      "scripts/publish_local_pypi_01011.py": "3865df4a9b6c84a70b42ee52d4d8d152527c426bdc5dc293a33815a7527bcc87"
+    },
+    "tree": "f13b1602039e0995ad6d203c73607d24fcfd074c"
+  },
+  "core": null,
+  "corePublic": null,
+  "distribution": "umf-core",
+  "files": {
+    "umf_core-0.10.11-cp311-abi3-macosx_11_0_arm64.whl": "29e97061fe82568f90d35fb22c6207bb5d4adcd9aac5ef8dc81d47d92cb480f6",
+    "umf_core-0.10.11-cp311-abi3-manylinux_2_34_x86_64.whl": "50759f33f0e0b6ee5e167ed79de0411e8d20fc78687f70bfb3eefba8d34c3690",
+    "umf_core-0.10.11.tar.gz": "b7b933b8bb973dc90a8907714a16a482b874475772f8c0c1dfd023feb64158b2"
+  },
+  "publisher": {
+    "distribution": "umf-core",
+    "environment": "pypi",
+    "repository": "DocumentDrivenDX/umf",
+    "workflow": ".github/workflows/publish-pypi.yml"
+  },
+  "qualification": {
+    "path": "docs/helix/04-build/evidence/release-0.10.11/qualification.json",
+    "sha256": "8705b12fd1dc47cae187e340496dbf61aee38effa14a85cde2356fe86b5ecbac"
+  },
+  "release_pins_sha256": "0277c4beda92990e3b12fc511382c7859ae1667e15257433de541b1db13d74ee",
+  "repository": "DocumentDrivenDX/umf",
+  "resources": {
+    "files": {
+      "actions.package.json": "5a787363df77b93d22a785fb3bec711e2bf1ecd25e17e2155c2ce6e80ac4e181",
+      "binding.package.json": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+      "core.constraints.json": "6bad84a5d96d57e639938824bd41e7bdbf1cc9bf80a5c12dea39d56ed17e3043",
+      "core.domain-policy.json": "9480257d9e72d2609387926010662a3846f42a4868b10761a23e85cfee3f89cf",
+      "core.package-schema.json": "f8c1ee9bd9e41dab5b068de5448d84bba697331109a8afab036c0bf429c35995",
+      "core.reference-schema.json": "a2ec6fdfbb0cdd5e3a60e1fa3b1006fbb6935ad3e6120b7cabe16652ce8c13f5",
+      "core.schema.json": "a264685ee4e80e956817b9c2b17ffff360cff207ec9c6e28b5a3a2fdd0054ecb",
+      "saga.package.json": "4f42d73efe15041807f74031e12013c6df843d12556105a7aff357a0956a8940",
+      "stable-binding.package.json": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+      "tables.package.json": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d"
+    },
+    "manifest": "9339b711b7e1a519e6d59866e378d9f0b5065a4c68c570c8819625bb23e106bc",
+    "protocols": {
+      "cli": "umf.codegen-cli/1",
+      "engine": "umf-core-r2",
+      "native": "umf-codegen-r3-seven-ops-nine-resources/1",
+      "resources": "umf.codegen-resources/1"
+    },
+    "releaseAuthority": "ed5997995469afa7d5e547da156842aa3d5961ec086e9657ce4f7d8fa2143a6d"
+  },
+  "schema": "umf.local-pypi-admission/1",
+  "source": {
+    "commit": "09bbf7c447d5749fcf07010ea736d133f96264ff",
+    "tree": "817fff25ba17e69e483f5b106157f71eac61ec02"
+  },
+  "status": "qualified",
+  "sums_sha256": "c7397d3a61b56b786645e30fde60b481ca611e6f2b95fb9ede62f8c5bd724d39",
+  "tag": "umf-v0.10.11",
+  "version": "0.10.11"
+}

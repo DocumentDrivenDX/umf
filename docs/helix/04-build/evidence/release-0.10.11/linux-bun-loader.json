@@ -1,0 +1,53 @@
+{
+  "profile": "umf.node-file-loader-installed-probe/1",
+  "status": "passed",
+  "platform": "linux",
+  "arch": "x64",
+  "packageVersion": "0.10.11",
+  "resolvedEntry": "file:///package/dist/runtime/wasm/index-node.js",
+  "fetchCalls": 0,
+  "initializationCalls": 2,
+  "copyJson": {
+    "profile": "umf-node-file-loader/1",
+    "unicode": "\u03bc\ud83d\ude42",
+    "values": [
+      0,
+      false,
+      null
+    ]
+  },
+  "nativeCopyJson": {
+    "profile": "umf-node-file-loader/1",
+    "unicode": "\u03bc\ud83d\ude42",
+    "values": [
+      0,
+      false,
+      null
+    ]
+  },
+  "assets": {
+    "dist/umf-browser.js": "42237cabf9964c292f5717dac91fe61a2993a37cf6be24a8ba8bc5f84f0fb928",
+    "dist/umf_core_wasm_bg.wasm": "333f49d5b649abb5efe2b393459820d6ee93c86577c3ca62245a4bfedcd81e2b",
+    "dist/umf-node.js": "2901fe6abc8eef2027ed6e37119313083def108bd1b005e804a1be97d7005ecd",
+    "dist/umf_core_node.node": "30bd1304331e20fed09f8f25ded0a98297fdb1afb7f5dc4e4cc91c2a08fc38f7",
+    "dist/runtime/wasm/index.js": "887c0ae9aa793cf8dc71b4f330f448fcd9c28035e2e4884e1ac21c08927073dc",
+    "dist/runtime/wasm/index-node.js": "7940d34dbfc51b6131d2a3a8bae5634b4a8201a9490b034766f1d280f44edf0b",
+    "dist/runtime/wasm/loader.js": "cccf6d7d75343011a458584ad0bca8b91cdf04db9d576062a5b4bb2dc41e6515",
+    "dist/runtime/wasm/pkg/umf_core_wasm.js": "59fa9fcf723e5d84a20bec6fe0a33f6c5d31bf1db33426b1fd5cf17610e3af93",
+    "dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm": "333f49d5b649abb5efe2b393459820d6ee93c86577c3ca62245a4bfedcd81e2b"
+  },
+  "archive": {
+    "path": "/private/tmp/umf-01011-release/linux/umf-sdk-0.10.11-linux-x86_64.tgz",
+    "sha256": "52145cff0ebf9323d5c29defd7da31cfe30445e74e6b60c7c099b9a17832d7c2",
+    "bytes": 67309699
+  },
+  "packageRoot": "/private/tmp/umf-01011-release/python/linux/sdk-consumer/package",
+  "packageSelfReference": true,
+  "network": "none",
+  "packageMount": "read-only",
+  "host": "bun",
+  "hostVersion": "1.4.4",
+  "nodeVersion": "26.3.0",
+  "bunVersion": "1.4.4",
+  "image": "sha256:1d22548f177f4ff38e0c15baa3c2c46c6c2060ba2d1bc573bb4720b407548f1d"
+}
