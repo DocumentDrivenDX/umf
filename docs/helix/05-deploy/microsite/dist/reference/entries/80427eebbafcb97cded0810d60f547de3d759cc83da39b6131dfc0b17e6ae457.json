@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8193,
-        "line": 57,
-        "path": "src/model/facets.ts",
-        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+        "bytes": 84809,
+        "line": 427,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "historicalCoreFacetPatch",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreFacetInterpreted): CoreFacetPatch"
+      "(input: CoreFacetInterpreted): { length?: { max: number; unit: \"unicode-scalar\" | \"byte\"; }; precision?: number; scale?: number; integerWidth?: { bits: number; signed: boolean; }; }"
     ]
   },
   "id": "[\"api\",\".\",\"historicalCoreFacetPatch\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8193,
-      "line": 57,
-      "path": "src/model/facets.ts",
-      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+      "bytes": 84809,
+      "line": 427,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Historical projection bridge: refuses newer bounds rather than dropping them.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "historicalCoreFacetPatch"
 }

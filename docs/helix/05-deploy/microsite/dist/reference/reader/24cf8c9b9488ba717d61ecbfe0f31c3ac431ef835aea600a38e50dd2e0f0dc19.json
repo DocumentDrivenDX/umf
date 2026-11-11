@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"assessSaga\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SagaIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "SagaIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SagaCapabilities\"]"
+      ],
+      "name": "capabilities",
+      "optional": false,
+      "type": "SagaCapabilities"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "registry",
+      "optional": true,
+      "type": "RegistryBase | undefined"
+    }
+  ],
+  "purpose": "assessSaga accepts source, identity, capabilities, registry and returns SagaAssessment.",
+  "related": [],
+  "returns": "SagaAssessment",
+  "task": "Other APIs",
+  "type": "(source: Document, identity: SagaIdentity, capabilities: SagaCapabilities, registry?: Registry) => SagaAssessment"
+}

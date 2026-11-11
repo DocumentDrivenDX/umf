@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6938,
-        "line": 23,
-        "path": "src/core-ideals/tablespec-record.ts",
-        "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyTableSpecRecord",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: TableSpecRecordRequest): TableSpecRecordClassification"
+      "(document: Document, request: TableSpecRecordRequest): TableSpecRecordClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyTableSpecRecord\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6938,
-      "line": 23,
-      "path": "src/core-ideals/tablespec-record.ts",
-      "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "One record and its named members; atomic across every column. Physical/context groupings stay native.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyTableSpecRecord"
 }

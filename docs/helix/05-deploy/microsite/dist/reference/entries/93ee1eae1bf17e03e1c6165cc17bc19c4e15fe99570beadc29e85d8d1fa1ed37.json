@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1191,
+        "line": 20,
+        "path": "src/domain-packs/pack-tools-types.ts",
+        "sha256": "46a3c94f0b35d533ae2b4ae7f3aa693641a47e3ea527298ee854e0d4c0ca7dcc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PackToolsDiagnostic",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PackToolsDiagnostic {\n severity:'info'|'warning'|'error';\n code:string;\n source:string;\n path:string;\n message:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PackToolsDiagnostic\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1191,
+      "line": 20,
+      "path": "src/domain-packs/pack-tools-types.ts",
+      "sha256": "46a3c94f0b35d533ae2b4ae7f3aa693641a47e3ea527298ee854e0d4c0ca7dcc"
+    }
+  ],
+  "summary": "Type declaration · src/domain-packs/pack-tools-types.ts",
+  "title": "PackToolsDiagnostic"
+}

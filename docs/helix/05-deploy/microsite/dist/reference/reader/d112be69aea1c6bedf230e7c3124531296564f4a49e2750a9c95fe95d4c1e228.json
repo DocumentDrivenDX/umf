@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableIndex\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "TableRef[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "unique",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "include",
+      "optional": false,
+      "type": "TableRef[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableIndex is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableIndex"
+}

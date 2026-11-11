@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"TableSpecRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "TableSpecRelationshipClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverTableSpecRelationshipSource accepts input, current and returns string | Record<string, string>.",
+  "purpose": "recoverTableSpecRelationshipSource accepts receipt, current and returns string | Record<string, string>.",
   "related": [],
   "returns": "string | Record<string, string>",
   "task": "Import and export",
-  "type": "(input: TableSpecRelationshipClassification, current: Document) => string | Record<string, string>"
+  "type": "(receipt: TableSpecRelationshipClassification, current: Document) => string | Record<string, string>"
 }

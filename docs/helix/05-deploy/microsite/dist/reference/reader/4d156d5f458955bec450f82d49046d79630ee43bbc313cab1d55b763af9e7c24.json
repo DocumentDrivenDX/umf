@@ -1,0 +1,67 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfCoreDefaultResolution\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"resolve-core-default\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreDefaultInput\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "UmfCoreDefaultInput"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreDefaultState\"]"
+      ],
+      "name": "result",
+      "optional": false,
+      "type": "UmfCoreDefaultState"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "applied",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfCoreDefaultResolution is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfCoreDefaultResolution"
+}

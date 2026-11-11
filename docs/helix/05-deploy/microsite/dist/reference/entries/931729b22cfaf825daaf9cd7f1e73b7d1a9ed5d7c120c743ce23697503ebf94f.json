@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5729,
-        "line": 11,
-        "path": "src/adapters/dbt/semantic.ts",
-        "sha256": "18cd4a5aa974b976c088b9d263604e58b116eca4e7f53670f91dbe939721830c"
+        "bytes": 765,
+        "line": 12,
+        "path": "src/adapters/dbt/package.ts",
+        "sha256": "bf46fa8f4935a07b232cf638eb46b055ab96ba8879c23a7bf4717e1c8e2fe5f7"
       }
     ],
     "entrypoint": ".",
     "exportName": "dbtSemanticManifestPackage",
     "runtime": "unassessed",
     "signatureText": [
-      "dbtSemanticManifestPackage=manifest as unknown as ExtensionPackage"
+      "dbtSemanticManifestPackage=semanticManifest as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"dbtSemanticManifestPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5729,
-      "line": 11,
-      "path": "src/adapters/dbt/semantic.ts",
-      "sha256": "18cd4a5aa974b976c088b9d263604e58b116eca4e7f53670f91dbe939721830c"
+      "bytes": 765,
+      "line": 12,
+      "path": "src/adapters/dbt/package.ts",
+      "sha256": "bf46fa8f4935a07b232cf638eb46b055ab96ba8879c23a7bf4717e1c8e2fe5f7"
     }
   ],
-  "summary": "Public export · src/adapters/dbt/semantic.ts",
+  "summary": "Public export · src/adapters/dbt/package.ts",
   "title": "dbtSemanticManifestPackage"
 }

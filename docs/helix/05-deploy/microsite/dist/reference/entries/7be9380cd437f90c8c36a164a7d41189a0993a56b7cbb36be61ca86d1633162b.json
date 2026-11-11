@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10620,
+        "line": 76,
+        "path": "src/table-migration/inventory-types.ts",
+        "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableInventoryExecutionProfile",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableInventoryExecutionProfile {version:'umf.table-inventory-execution/0.1';progressRelation:'umf_lifecycle_inventory_progress';ownerOnly:true;ingressProfile:'umf.table-inventory-generation-ingress/0.1';inventoryProfile:'umf.table-inventory-prefix/0.1';initial:boolean;conversionProfile:string|null;originalsProfile:string|null;retirementProfile:string|null;retiredStoreProfile:string|null}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableInventoryExecutionProfile\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10620,
+      "line": 76,
+      "path": "src/table-migration/inventory-types.ts",
+      "sha256": "402dacd62fe2323740454ac64fc6afcb88c83d633d8bdb04c33f77b1b3a31064"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/inventory-types.ts",
+  "title": "TableInventoryExecutionProfile"
+}

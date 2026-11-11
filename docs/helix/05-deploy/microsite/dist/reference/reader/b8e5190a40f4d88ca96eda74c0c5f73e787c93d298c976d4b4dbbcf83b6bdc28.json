@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\"./runtime/wasm\",\"createProtobufDescriptorDocumentEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "Create the opt-in descriptor/document operation packet; source compiler callbacks remain separate.",
+  "related": [],
+  "returns": "ProtobufDescriptorDocumentEngine",
+  "task": "Author and edit",
+  "type": "(module: any, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }) => ProtobufDescriptorDocumentEngine"
+}

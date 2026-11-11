@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifySqlServerField\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerFieldRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "SqlServerFieldRequest"
     }
   ],
-  "purpose": "Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding.",
+  "purpose": "classifySqlServerField accepts source, request and returns SqlServerFieldClassification.",
   "related": [],
   "returns": "SqlServerFieldClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: SqlServerFieldRequest) => SqlServerFieldClassification"
+  "type": "(source: Document, request: SqlServerFieldRequest) => SqlServerFieldClassification"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"SemanticTypeRegistry\"]",
   "kind": "Class",
   "members": [
@@ -9,11 +9,12 @@
       "links": [
         "[\"api\",\".\",\"SemanticTypeReference\"]",
         "[\"api\",\".\",\"JsonObject\"]",
-        "[\"api\",\".\",\"SemanticTypeValidator\"]"
+        "[\"api\",\".\",\"SemanticValidator\"]",
+        "[\"api\",\"./runtime/wasm\",\"SemanticTypeRegistry\"]"
       ],
       "name": "register",
       "optional": false,
-      "type": "(reference: SemanticTypeReference, definition: JsonObject, validator?: SemanticTypeValidator) => SemanticTypeRegistry"
+      "type": "(reference: SemanticTypeReference, definition: JsonObject, validator?: SemanticValidator) => SemanticTypeRegistry"
     },
     {
       "description": "",
@@ -35,12 +36,24 @@
       "name": "check",
       "optional": false,
       "type": "(reference: SemanticTypeReference, value: Json) => SemanticTypeValueResult"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]",
+        "[\"api\",\".\",\"CoreSemanticTypeIdentity\"]",
+        "[\"api\",\".\",\"Json\"]",
+        "[\"api\",\".\",\"CoreSemanticTypeValueResult\"]"
+      ],
+      "name": "validateCoreSemanticTypeValue",
+      "optional": false,
+      "type": "(source: Document, identity: CoreSemanticTypeIdentity, value: Json) => CoreSemanticTypeValueResult"
     }
   ],
   "parameters": [],
-  "purpose": "No remote lookup or code loading. Callers explicitly install trusted implementations.",
+  "purpose": "SemanticTypeRegistry is a class in Extensions. Its exact structure is documented below.",
   "related": [],
-  "returns": "",
+  "returns": "SemanticTypeRegistry",
   "task": "Extensions",
   "type": "SemanticTypeRegistry"
 }

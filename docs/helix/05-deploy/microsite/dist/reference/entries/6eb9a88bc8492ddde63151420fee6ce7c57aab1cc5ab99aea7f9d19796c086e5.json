@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7379,
+        "line": 13,
+        "path": "src/table-migration/types.ts",
+        "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "G04RecipeKind",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type G04RecipeKind='numeric-exact'|'numeric-rescale'|'text-date'|'date-text'|'text-instant'|'instant-text'|'date-instant'|'instant-date'|'text-uuid'|'uuid-text'|'text-boolean'|'boolean-text';"
+    ]
+  },
+  "id": "[\"api\",\".\",\"G04RecipeKind\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7379,
+      "line": 13,
+      "path": "src/table-migration/types.ts",
+      "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/types.ts",
+  "title": "G04RecipeKind"
+}

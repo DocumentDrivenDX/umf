@@ -1,0 +1,1355 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-plan-step:0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "kind",
+    "sourcePath",
+    "transaction",
+    "sql",
+    "operation",
+    "inventorySubject",
+    "preconditions",
+    "expectedOutcome",
+    "verification",
+    "recovery"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "table",
+        "foreignKey",
+        "index",
+        "policy",
+        "grant",
+        "comment",
+        "backfill",
+        "seed",
+        "conversion",
+        "retirement",
+        "metadata"
+      ]
+    },
+    "sourcePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^/"
+    },
+    "transaction": {
+      "enum": [
+        "required",
+        "forbidden"
+      ]
+    },
+    "sql": {
+      "type": "string"
+    },
+    "operation": {
+      "enum": [
+        "create-table",
+        "remove-table",
+        "enable-rls",
+        "force-rls",
+        "add-column",
+        "drop-column",
+        "target-check",
+        "install-default",
+        "change-default",
+        "tighten-not-null",
+        "relax-not-null",
+        "rename-column",
+        "dependency-drop",
+        "dependency-add",
+        "apply-backfill",
+        "apply-seeds",
+        "capture-originals",
+        "convert-field",
+        "validate-conversion",
+        "capture-retired-values",
+        "retire-field",
+        "restore-field",
+        "validate-restoration",
+        "create-concurrent-index",
+        "add-not-valid",
+        "validate",
+        "set-comment",
+        "prepare-inventory-metadata",
+        "record-inventory-approval",
+        "publish-inventory"
+      ]
+    },
+    "inventorySubject": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/tableSubject"
+        },
+        {
+          "$ref": "#/$defs/fieldSubject"
+        },
+        {
+          "$ref": "#/$defs/dependencySubject"
+        },
+        {
+          "$ref": "#/$defs/schemaGrantSubject"
+        },
+        {
+          "$ref": "#/$defs/seedSubject"
+        },
+        {
+          "$ref": "#/$defs/metadataSubject"
+        }
+      ]
+    },
+    "preconditions": {
+      "$ref": "#/$defs/prefixBinding"
+    },
+    "expectedOutcome": {
+      "$ref": "#/$defs/prefixBinding"
+    },
+    "verification": {
+      "const": "native-catalog-privileges-and-role-scope"
+    },
+    "recovery": {
+      "enum": [
+        "rollback-transaction",
+        "inspect-index"
+      ]
+    },
+    "dataBinding": {
+      "$ref": "#/$defs/dataBinding"
+    },
+    "seedSets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "conversionBinding": {
+      "$ref": "#/$defs/conversionBinding"
+    },
+    "retirementBinding": {
+      "$ref": "#/$defs/retirementBinding"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "create-table",
+              "remove-table",
+              "enable-rls",
+              "force-rls",
+              "add-column",
+              "drop-column",
+              "target-check",
+              "install-default",
+              "change-default",
+              "tighten-not-null",
+              "relax-not-null",
+              "rename-column"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "table"
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "create-table",
+                    "remove-table",
+                    "enable-rls",
+                    "force-rls"
+                  ]
+                }
+              },
+              "required": [
+                "operation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "inventorySubject": {
+                  "$ref": "#/$defs/tableSubject"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "inventorySubject": {
+                  "$ref": "#/$defs/fieldSubject"
+                }
+              }
+            }
+          }
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dataBinding"
+              ]
+            },
+            {
+              "required": [
+                "seedSets"
+              ]
+            },
+            {
+              "required": [
+                "conversionBinding"
+              ]
+            },
+            {
+              "required": [
+                "retirementBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "dependency-drop"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inventorySubject": {
+            "$ref": "#/$defs/dependencySubject"
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dataBinding"
+              ]
+            },
+            {
+              "required": [
+                "seedSets"
+              ]
+            },
+            {
+              "required": [
+                "conversionBinding"
+              ]
+            },
+            {
+              "required": [
+                "retirementBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "dependency-add"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inventorySubject": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/dependencySubject"
+              },
+              {
+                "$ref": "#/$defs/schemaGrantSubject"
+              }
+            ]
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dataBinding"
+              ]
+            },
+            {
+              "required": [
+                "seedSets"
+              ]
+            },
+            {
+              "required": [
+                "conversionBinding"
+              ]
+            },
+            {
+              "required": [
+                "retirementBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "dependency-add"
+          },
+          "inventorySubject": {
+            "properties": {
+              "kind": {
+                "const": "schema-grant"
+              }
+            }
+          }
+        },
+        "required": [
+          "operation",
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "grant"
+          },
+          "inventorySubject": {
+            "$ref": "#/$defs/schemaGrantSubject"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "create-concurrent-index",
+              "add-not-valid",
+              "validate"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "inventorySubject": {
+            "$ref": "#/$defs/dependencySubject"
+          },
+          "sql": {
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "create-concurrent-index"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "index"
+          },
+          "inventorySubject": {
+            "$ref": "#/$defs/dependencySubject"
+          },
+          "transaction": {
+            "const": "forbidden"
+          },
+          "recovery": {
+            "const": "inspect-index"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "add-not-valid",
+              "validate"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "transaction": {
+            "const": "required"
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          },
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "enum": [
+                  "check",
+                  "foreignKey"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "set-comment"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "comment"
+          },
+          "inventorySubject": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/dependencySubject"
+              },
+              {
+                "properties": {
+                  "dependencyKind": {
+                    "const": "comment"
+                  }
+                }
+              }
+            ]
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "const": "check"
+              },
+              "kind": {
+                "const": "dependency"
+              }
+            },
+            "required": [
+              "kind",
+              "dependencyKind"
+            ]
+          }
+        },
+        "required": [
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "table"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "const": "key"
+              },
+              "kind": {
+                "const": "dependency"
+              }
+            },
+            "required": [
+              "kind",
+              "dependencyKind"
+            ]
+          }
+        },
+        "required": [
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "table"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "const": "foreignKey"
+              },
+              "kind": {
+                "const": "dependency"
+              }
+            },
+            "required": [
+              "kind",
+              "dependencyKind"
+            ]
+          }
+        },
+        "required": [
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "foreignKey"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "const": "index"
+              },
+              "kind": {
+                "const": "dependency"
+              }
+            },
+            "required": [
+              "kind",
+              "dependencyKind"
+            ]
+          }
+        },
+        "required": [
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "index"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "const": "policy"
+              },
+              "kind": {
+                "const": "dependency"
+              }
+            },
+            "required": [
+              "kind",
+              "dependencyKind"
+            ]
+          }
+        },
+        "required": [
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "policy"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "const": "grant"
+              },
+              "kind": {
+                "const": "dependency"
+              }
+            },
+            "required": [
+              "kind",
+              "dependencyKind"
+            ]
+          }
+        },
+        "required": [
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "grant"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "inventorySubject": {
+            "properties": {
+              "dependencyKind": {
+                "const": "comment"
+              },
+              "kind": {
+                "const": "dependency"
+              }
+            },
+            "required": [
+              "kind",
+              "dependencyKind"
+            ]
+          }
+        },
+        "required": [
+          "inventorySubject"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "comment"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "apply-backfill"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "backfill"
+          },
+          "inventorySubject": {
+            "$ref": "#/$defs/fieldSubject"
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "const": ""
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          },
+          "dataBinding": {
+            "$ref": "#/$defs/dataBinding"
+          }
+        },
+        "required": [
+          "dataBinding"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "seedSets"
+              ]
+            },
+            {
+              "required": [
+                "conversionBinding"
+              ]
+            },
+            {
+              "required": [
+                "retirementBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "apply-seeds"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "seed"
+          },
+          "inventorySubject": {
+            "$ref": "#/$defs/seedSubject"
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "const": ""
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          }
+        },
+        "required": [
+          "seedSets"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dataBinding"
+              ]
+            },
+            {
+              "required": [
+                "conversionBinding"
+              ]
+            },
+            {
+              "required": [
+                "retirementBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "capture-originals",
+              "convert-field",
+              "validate-conversion"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "conversion"
+          },
+          "inventorySubject": {
+            "$ref": "#/$defs/fieldSubject"
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "const": ""
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          },
+          "conversionBinding": {
+            "$ref": "#/$defs/conversionBinding"
+          }
+        },
+        "required": [
+          "conversionBinding"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dataBinding"
+              ]
+            },
+            {
+              "required": [
+                "seedSets"
+              ]
+            },
+            {
+              "required": [
+                "retirementBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "capture-retired-values",
+              "retire-field",
+              "restore-field",
+              "validate-restoration"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "retirement"
+          },
+          "inventorySubject": {
+            "$ref": "#/$defs/fieldSubject"
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "const": ""
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          },
+          "retirementBinding": {
+            "$ref": "#/$defs/retirementBinding"
+          }
+        },
+        "required": [
+          "retirementBinding"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dataBinding"
+              ]
+            },
+            {
+              "required": [
+                "seedSets"
+              ]
+            },
+            {
+              "required": [
+                "conversionBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "prepare-inventory-metadata",
+              "record-inventory-approval",
+              "publish-inventory"
+            ]
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "kind": {
+            "const": "metadata"
+          },
+          "inventorySubject": {
+            "$ref": "#/$defs/metadataSubject"
+          },
+          "transaction": {
+            "const": "required"
+          },
+          "sql": {
+            "const": ""
+          },
+          "recovery": {
+            "const": "rollback-transaction"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "dataBinding"
+              ]
+            },
+            {
+              "required": [
+                "seedSets"
+              ]
+            },
+            {
+              "required": [
+                "conversionBinding"
+              ]
+            },
+            {
+              "required": [
+                "retirementBinding"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "prepare-inventory-metadata"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sourcePath": {
+            "const": "/inventory/metadata/prepare"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "record-inventory-approval"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sourcePath": {
+            "const": "/inventory/metadata/approval"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "publish-inventory"
+          }
+        },
+        "required": [
+          "operation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sourcePath": {
+            "const": "/inventory/metadata/publication"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "tableSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "table",
+        "record"
+      ],
+      "properties": {
+        "kind": {
+          "const": "table"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "fieldSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "table",
+        "field"
+      ],
+      "properties": {
+        "kind": {
+          "const": "field"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "dependencySubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "table",
+        "dependencyKind",
+        "id",
+        "sourcePath",
+        "meaningDigest"
+      ],
+      "properties": {
+        "kind": {
+          "const": "dependency"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencyKind": {
+          "enum": [
+            "check",
+            "foreignKey",
+            "index",
+            "key",
+            "policy",
+            "grant",
+            "comment"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourcePath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^/"
+        },
+        "meaningDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "schemaGrantSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "schema",
+        "audiences",
+        "privilege"
+      ],
+      "properties": {
+        "kind": {
+          "const": "schema-grant"
+        },
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "audiences": {
+          "const": [
+            "person",
+            "batch"
+          ]
+        },
+        "privilege": {
+          "const": "USAGE"
+        }
+      }
+    },
+    "seedSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "sets"
+      ],
+      "properties": {
+        "kind": {
+          "const": "seed"
+        },
+        "sets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "metadataSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "profile"
+      ],
+      "properties": {
+        "kind": {
+          "const": "metadata"
+        },
+        "profile": {
+          "const": "umf.table-inventory-metadata/0.1"
+        }
+      }
+    },
+    "prefixBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "prefixDigest"
+      ],
+      "properties": {
+        "kind": {
+          "const": "inventory-prefix"
+        },
+        "prefixDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "dataBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "selectionIndex",
+        "operationId",
+        "previousSourceDigest",
+        "nextSourceDigest"
+      ],
+      "properties": {
+        "profile": {
+          "const": "umf.table-inventory-backfill/0.1"
+        },
+        "selectionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "operationId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previousSourceDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "nextSourceDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "conversionBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "selectionIndex",
+        "intentDigest",
+        "beforeDomainDigest",
+        "afterDomainDigest"
+      ],
+      "properties": {
+        "profile": {
+          "const": "umf.field-conversion-step/0.1"
+        },
+        "selectionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "intentDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "beforeDomainDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "afterDomainDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "retirementBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "action",
+        "selectionIndex",
+        "intentDigest",
+        "fieldMeaningDigest"
+      ],
+      "properties": {
+        "profile": {
+          "const": "umf.field-retirement-step/0.1"
+        },
+        "action": {
+          "enum": [
+            "retire",
+            "restore"
+          ]
+        },
+        "selectionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "intentDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "fieldMeaningDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    }
+  }
+}

@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "inspectOwlDocument accepts document and returns Validation.",
+  "purpose": "inspectOwlDocument accepts document and returns { valid: boolean; complete: boolean; diagnostics: unknown[]; }.",
   "related": [],
-  "returns": "Validation",
+  "returns": "{ valid: boolean; complete: boolean; diagnostics: unknown[]; }",
   "task": "Inspect and select",
-  "type": "(document: Document) => Validation"
+  "type": "(document: Parameters<typeof inspectOwlDocument>[0]) => ReturnType<typeof inspectOwlDocument>"
 }

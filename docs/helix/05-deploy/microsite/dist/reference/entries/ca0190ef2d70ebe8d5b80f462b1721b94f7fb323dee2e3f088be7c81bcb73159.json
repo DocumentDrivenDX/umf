@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4654,
-        "line": 19,
-        "path": "src/adapters/arrow/ipc-consistency.ts",
-        "sha256": "7b83af801aece8a9e400261ea36fa8bc71eb566af531b80e93479ff919dce9bc"
+        "bytes": 84809,
+        "line": 445,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectArrowIpcConsistency",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document): ArrowIpcConsistency"
+      "(document: unknown): ArrowIpcConsistency"
     ]
   },
   "id": "[\"api\",\".\",\"inspectArrowIpcConsistency\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4654,
-      "line": 19,
-      "path": "src/adapters/arrow/ipc-consistency.ts",
-      "sha256": "7b83af801aece8a9e400261ea36fa8bc71eb566af531b80e93479ff919dce9bc"
+      "bytes": 84809,
+      "line": 445,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Compares file footer declarations to observed embedded-stream metadata and extents.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectArrowIpcConsistency"
 }

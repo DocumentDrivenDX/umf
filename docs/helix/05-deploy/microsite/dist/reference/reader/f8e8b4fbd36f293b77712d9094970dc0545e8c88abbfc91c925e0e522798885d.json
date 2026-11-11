@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroFacetClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroFacetClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverAvroFacetSource accepts input, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
+  "purpose": "recoverAvroFacetSource accepts receipt, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
   "related": [],
   "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; }",
   "task": "Import and export",
-  "type": "(input: AvroFacetClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
+  "type": "(receipt: AvroFacetClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
 }

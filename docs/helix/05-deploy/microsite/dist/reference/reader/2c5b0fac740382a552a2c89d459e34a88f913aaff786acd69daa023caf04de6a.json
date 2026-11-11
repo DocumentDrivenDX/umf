@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\"./loader-contract\",\"inspectDomainPackLoader\"]",
   "kind": "Function",
   "members": [],
@@ -13,7 +13,7 @@
       "type": "unknown"
     }
   ],
-  "purpose": "Admission only. This function neither invokes nor resolves a companion.",
+  "purpose": "inspectDomainPackLoader accepts input and returns { valid: boolean; complete: boolean; diagnostics: string[]; }.",
   "related": [],
   "returns": "{ valid: boolean; complete: boolean; diagnostics: string[]; }",
   "task": "Inspect and select",

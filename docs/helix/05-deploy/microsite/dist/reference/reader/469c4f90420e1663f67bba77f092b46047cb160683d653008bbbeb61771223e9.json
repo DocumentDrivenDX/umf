@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerRecordRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "SqlServerRecordRequest"
     }
   ],
-  "purpose": "classifySqlServerRecord accepts input, options and returns SqlServerRecordClassification.",
+  "purpose": "classifySqlServerRecord accepts source, request and returns SqlServerRecordClassification.",
   "related": [],
   "returns": "SqlServerRecordClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: SqlServerRecordRequest) => SqlServerRecordClassification"
+  "type": "(source: Document, request: SqlServerRecordRequest) => SqlServerRecordClassification"
 }

@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"NativeFieldClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "NativeFieldClassification"
     }
   ],
-  "purpose": "inspectFieldClassification accepts input and returns FieldClassificationInspection.",
+  "purpose": "inspectFieldClassification accepts receipt and returns FieldClassificationInspection.",
   "related": [],
   "returns": "FieldClassificationInspection",
   "task": "Inspect and select",
-  "type": "(input: NativeFieldClassification) => FieldClassificationInspection"
+  "type": "(receipt: NativeFieldClassification) => FieldClassificationInspection"
 }

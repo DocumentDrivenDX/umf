@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7804,
-        "line": 68,
-        "path": "src/core-ideals/relationship-avro.ts",
-        "sha256": "73b4779b2f6857e371aab23f24c93a48dcff97314b7f34a02d385c68c24f4c4e"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverAvroRelationshipSource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: AvroRelationshipClassification, current: Document): AvroRelationshipArchive"
+      "(receipt: AvroRelationshipClassification, current: Document): AvroRelationshipArchive"
     ]
   },
   "id": "[\"api\",\".\",\"recoverAvroRelationshipSource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7804,
-      "line": 68,
-      "path": "src/core-ideals/relationship-avro.ts",
-      "sha256": "73b4779b2f6857e371aab23f24c93a48dcff97314b7f34a02d385c68c24f4c4e"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/relationship-avro.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverAvroRelationshipSource"
 }

@@ -1,0 +1,16 @@
+{
+  "alternatives": [
+    "{ kind: \"create\"; table: string; record: TableInventoryReference; }",
+    "{ kind: \"remove\"; table: string; record: TableInventoryReference; disposition: { mode: \"irreversible-purge\"; }; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventoryDiscoveryIntent\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "TableInventoryDiscoveryIntent is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventoryDiscoveryIntent"
+}

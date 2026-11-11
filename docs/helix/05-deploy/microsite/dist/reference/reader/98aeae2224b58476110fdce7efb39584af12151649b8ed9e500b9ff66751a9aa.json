@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreCardinalityDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"CardinalityAvroRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "CardinalityAvroRequest"
     }
   ],
-  "purpose": "projectCardinalityToAvro accepts input, options and returns CardinalityAvroProjection.",
+  "purpose": "projectCardinalityToAvro accepts author, request and returns CardinalityAvroProjection.",
   "related": [],
   "returns": "CardinalityAvroProjection",
   "task": "Import and export",
-  "type": "(input: CoreCardinalityDeclaration, options: CardinalityAvroRequest) => CardinalityAvroProjection"
+  "type": "(author: CoreCardinalityDeclaration, request: CardinalityAvroRequest) => CardinalityAvroProjection"
 }

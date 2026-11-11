@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"AvroFieldsEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"AvroFieldMetadata\"]"
+      ],
+      "name": "deriveAvroFields",
+      "optional": false,
+      "type": "(root: unknown, dependencies?: { id: string; root: unknown; }[]) => AvroFieldMetadata[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "AvroFieldsEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AvroFieldsEngine"
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "doc",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -22,9 +22,9 @@
       "type": "\"json\" | \"yaml\""
     }
   ],
-  "purpose": "writeDashboardDocument accepts doc, format and returns string.",
+  "purpose": "writeDashboardDocument accepts document, format and returns string.",
   "related": [],
   "returns": "string",
   "task": "Serialize",
-  "type": "(doc: Document, format?: \"json\" | \"yaml\") => string"
+  "type": "(document: Document, format?: \"json\" | \"yaml\") => string"
 }

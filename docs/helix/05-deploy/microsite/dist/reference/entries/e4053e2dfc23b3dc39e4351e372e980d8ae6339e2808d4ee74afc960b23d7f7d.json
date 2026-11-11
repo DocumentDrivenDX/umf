@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3797,
-        "line": 7,
-        "path": "src/adapters/smithy/worker.ts",
-        "sha256": "370a60a87c8cbd97f2659307635339b200b393cc18b4c67d2eb1fb57debe9939"
+        "bytes": 4540,
+        "line": 17,
+        "path": "src/adapters/smithy/host-backends.ts",
+        "sha256": "18f7cbc1d21086aa074eda17d66fcc31c938fb2811fda18a5c2d51766d844028"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3797,
-      "line": 7,
-      "path": "src/adapters/smithy/worker.ts",
-      "sha256": "370a60a87c8cbd97f2659307635339b200b393cc18b4c67d2eb1fb57debe9939"
+      "bytes": 4540,
+      "line": 17,
+      "path": "src/adapters/smithy/host-backends.ts",
+      "sha256": "18f7cbc1d21086aa074eda17d66fcc31c938fb2811fda18a5c2d51766d844028"
     }
   ],
-  "summary": "One dedicated module worker per native operation; timeout/abort terminates the runtime.",
+  "summary": "Worker backend receives only source files already admitted by the Rust runtime.",
   "title": "createSmithyWorkerBackend"
 }

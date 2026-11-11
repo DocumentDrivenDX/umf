@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"lookupOpenapiResource\"]",
   "kind": "Function",
   "members": [],
@@ -29,9 +29,9 @@
       "type": "string | undefined"
     }
   ],
-  "purpose": "Literal URI + JSON Pointer lookup only; not an OpenAPI/JSON Schema scope resolver.",
+  "purpose": "lookupOpenapiResource accepts document, reference, fromUri and returns { uri: string; pointer: string; node: NativeJson; interpretation: \"literal-document-pointer-only\"; }.",
   "related": [],
   "returns": "{ uri: string; pointer: string; node: NativeJson; interpretation: \"literal-document-pointer-only\"; }",
   "task": "Other APIs",
-  "type": "(document: Document, reference: string, fromUri?: string) => { uri: string; pointer: string; node: NativeJson; interpretation: \"literal-document-pointer-only\"; }"
+  "type": "(document: Parameters<LookupOpenapiResource>[0], reference: Parameters<LookupOpenapiResource>[1], fromUri?: Parameters<LookupOpenapiResource>[2]) => ReturnType<LookupOpenapiResource>"
 }

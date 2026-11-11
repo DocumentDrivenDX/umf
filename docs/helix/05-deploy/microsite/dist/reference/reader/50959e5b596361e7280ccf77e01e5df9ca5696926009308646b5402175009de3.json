@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectSecurityDisclosureV2\"]",
   "kind": "Function",
   "members": [],
@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     },
@@ -34,9 +34,9 @@
       "type": "unknown"
     }
   ],
-  "purpose": "Every check is against detached supplied sources; successful data validation is not admission.",
+  "purpose": "inspectSecurityDisclosureV2 accepts source, policy, catalog, closure and returns SecurityDisclosureInspectionV2.",
   "related": [],
   "returns": "SecurityDisclosureInspectionV2",
   "task": "Inspect and select",
-  "type": "(input: unknown, policy: unknown, catalog: unknown, closure: unknown) => SecurityDisclosureInspectionV2"
+  "type": "(source: unknown, policy: unknown, catalog: unknown, closure: unknown) => SecurityDisclosureInspectionV2"
 }

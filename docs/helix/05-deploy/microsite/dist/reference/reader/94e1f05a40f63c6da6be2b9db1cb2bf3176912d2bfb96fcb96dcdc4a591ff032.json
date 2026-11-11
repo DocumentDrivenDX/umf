@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverTableSpecNullabilitySource\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"TableSpecNullabilityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "TableSpecNullabilityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Recover exact original text or split files, including unclaimed native content.",
+  "purpose": "recoverTableSpecNullabilitySource accepts receipt, current and returns string | Record<string, string>.",
   "related": [],
   "returns": "string | Record<string, string>",
   "task": "Import and export",
-  "type": "(input: TableSpecNullabilityClassification, current: Document) => string | Record<string, string>"
+  "type": "(receipt: TableSpecNullabilityClassification, current: Document) => string | Record<string, string>"
 }

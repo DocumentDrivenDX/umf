@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3265,
-        "line": 16,
-        "path": "src/model/record-members.ts",
-        "sha256": "d30572a4100c80c34662dbe0ba623a13f8cbd4c5391ada7214763d2fc152f9eb"
+        "bytes": 84809,
+        "line": 419,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectCoreRecordMembers",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identityInput: CoreRecordMembersIdentity): CoreRecordMembersInspection"
+      "(source: Document, identity: CoreRecordMembersIdentity): CoreRecordMembersInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectCoreRecordMembers\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3265,
-      "line": 16,
-      "path": "src/model/record-members.ts",
-      "sha256": "d30572a4100c80c34662dbe0ba623a13f8cbd4c5391ada7214763d2fc152f9eb"
+      "bytes": 84809,
+      "line": 419,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Explicit empty membership differs from an absent declaration. Qualifiers stay opaque.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectCoreRecordMembers"
 }

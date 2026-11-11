@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 1889,
-        "line": 18,
-        "path": "src/model/document.ts",
-        "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+        "bytes": 84809,
+        "line": 371,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "editExtension",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, registry: Registry, moduleId: string, elementId: string, extensionId: string, update: (payload: Json) => Json): Document"
+      "(input: Document, registry: RegistryBase, module: string, element: string, extension: string, update: (payload: Json) => Json): Document"
     ]
   },
   "id": "[\"api\",\".\",\"editExtension\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 1889,
-      "line": 18,
-      "path": "src/model/document.ts",
-      "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+      "bytes": 84809,
+      "line": 371,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Atomic update; unknown dependencies conservatively block edits until interpreted.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "editExtension"
 }

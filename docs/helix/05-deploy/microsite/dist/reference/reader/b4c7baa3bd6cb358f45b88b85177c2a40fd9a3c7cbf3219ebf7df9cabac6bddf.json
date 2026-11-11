@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"proposeShaclEngineValidation\"]",
   "kind": "Function",
   "members": [],
@@ -28,12 +28,12 @@
       "links": [],
       "name": "options",
       "optional": false,
-      "type": "{ id: string; blankNodePolicy: \"disjoint-inputs\" | \"shared-scope\"; }"
+      "type": "ShaclEngineValidationOptions"
     }
   ],
-  "purpose": "Engine evidence, NOT a UMF conformance verdict. All input meaning remains recoverable.",
+  "purpose": "proposeShaclEngineValidation accepts shapes, data, options and returns Promise<ShaclEngineReport>.",
   "related": [],
   "returns": "Promise<ShaclEngineReport>",
   "task": "Author and edit",
-  "type": "(shapes: Document, data: Document, options: { id: string; blankNodePolicy: \"disjoint-inputs\" | \"shared-scope\"; }) => Promise<ShaclEngineReport>"
+  "type": "(shapes: Document, data: Document, options: ShaclEngineValidationOptions) => Promise<NativeShaclEngineReport>"
 }

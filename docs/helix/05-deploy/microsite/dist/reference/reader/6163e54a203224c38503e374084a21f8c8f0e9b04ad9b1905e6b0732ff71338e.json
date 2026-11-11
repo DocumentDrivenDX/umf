@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"TableSpecFacetClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "TableSpecFacetClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverTableSpecFacetSource accepts input, current and returns string | Record<string, string>.",
+  "purpose": "recoverTableSpecFacetSource accepts receipt, current and returns string | Record<string, string>.",
   "related": [],
   "returns": "string | Record<string, string>",
   "task": "Import and export",
-  "type": "(input: TableSpecFacetClassification, current: Document) => string | Record<string, string>"
+  "type": "(receipt: TableSpecFacetClassification, current: Document) => string | Record<string, string>"
 }

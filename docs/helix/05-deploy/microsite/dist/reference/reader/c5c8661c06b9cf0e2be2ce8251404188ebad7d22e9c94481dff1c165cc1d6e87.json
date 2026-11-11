@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "documentInput",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Action\"]"
       ],
-      "name": "actionInput",
+      "name": "action",
       "optional": false,
       "type": "Action"
     },
@@ -28,7 +28,7 @@
       "links": [
         "[\"api\",\".\",\"ActionRule\"]"
       ],
-      "name": "ruleInput",
+      "name": "rule",
       "optional": false,
       "type": "ActionRule"
     },
@@ -42,9 +42,9 @@
       "type": "ActionRulePhase"
     }
   ],
-  "purpose": "compileActionRule accepts documentInput, actionInput, ruleInput, phase and returns CompiledActionRule.",
+  "purpose": "compileActionRule accepts document, action, rule, phase and returns CompiledActionRule.",
   "related": [],
   "returns": "CompiledActionRule",
   "task": "Other APIs",
-  "type": "(documentInput: Document, actionInput: Action, ruleInput: ActionRule, phase: ActionRulePhase) => CompiledActionRule"
+  "type": "(document: Document, action: Action, rule: ActionRule, phase: ActionRulePhase) => CompiledActionRule"
 }

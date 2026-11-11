@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7167,
-        "line": 18,
-        "path": "src/adapters/postgresql/cardinality-catalog.ts",
-        "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+        "bytes": 84809,
+        "line": 280,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectPostgresqlCardinalityCatalog",
     "runtime": "unassessed",
     "signatureText": [
-      "(text: string): { nativeSource: string; root: NativeJson; serverVersion: number; qualifiedVersion: boolean; columns: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }[]; types: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }[]; }"
+      "(text: string): CardinalityInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectPostgresqlCardinalityCatalog\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7167,
-      "line": 18,
-      "path": "src/adapters/postgresql/cardinality-catalog.ts",
-      "sha256": "ee5e8f480bb25fe314f9e65e237660d442583aa30f33a09c00d49abe34fce6e9"
+      "bytes": 84809,
+      "line": 280,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Validate the bounded supplement without interpreting unknown native content.\nThe original text and exact-token tree remain authoritative, not the host view.\nThis does not establish correspondence with a separately captur",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectPostgresqlCardinalityCatalog"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6693,
-        "line": 48,
-        "path": "src/model/nullability.ts",
-        "sha256": "2ec3cc469eee2460332fcc99fc0e14fef416180bdeede59b2b34ac19a39e6957"
+        "bytes": 84809,
+        "line": 395,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyCoreNullabilityDeclaration",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreNullabilityDeclaration, current: Document): CoreNullabilityDeclaration"
+      "(receipt: CoreNullabilityDeclaration, current: Document): CoreNullabilityDeclaration"
     ]
   },
   "id": "[\"api\",\".\",\"verifyCoreNullabilityDeclaration\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6693,
-      "line": 48,
-      "path": "src/model/nullability.ts",
-      "sha256": "2ec3cc469eee2460332fcc99fc0e14fef416180bdeede59b2b34ac19a39e6957"
+      "bytes": 84809,
+      "line": 395,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyCoreNullabilityDeclaration"
 }

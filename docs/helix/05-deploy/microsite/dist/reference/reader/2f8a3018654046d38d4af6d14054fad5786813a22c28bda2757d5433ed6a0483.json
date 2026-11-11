@@ -1,0 +1,91 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"IcebergTableEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "importTable",
+      "optional": false,
+      "type": "(source: string, id: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspect",
+      "optional": false,
+      "type": "(document: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectPayload",
+      "optional": false,
+      "type": "(payload: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportTable",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getNode",
+      "optional": false,
+      "type": "(document: unknown, path: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "editNode",
+      "optional": false,
+      "type": "(document: unknown, path: string, replacementJson: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectContext",
+      "optional": false,
+      "type": "(document: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectTransforms",
+      "optional": false,
+      "type": "(document: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectTransformType",
+      "optional": false,
+      "type": "(sourceType: string, transform: string) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeRename",
+      "optional": false,
+      "type": "(document: unknown, fieldId: number, newName: string, nextSchemaId: number) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposePromotion",
+      "optional": false,
+      "type": "(document: unknown, fieldId: number, targetType: string, nextSchemaId: number) => any"
+    }
+  ],
+  "parameters": [],
+  "purpose": "IcebergTableEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "IcebergTableEngine"
+}

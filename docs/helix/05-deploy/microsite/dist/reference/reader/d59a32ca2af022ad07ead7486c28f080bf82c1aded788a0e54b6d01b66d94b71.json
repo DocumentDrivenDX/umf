@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -31,9 +31,9 @@
       "type": "SecurityResolution"
     }
   ],
-  "purpose": "decodeSecurityDisclosure accepts text, policy, resolution and returns SecurityDisclosureBatch.",
+  "purpose": "decodeSecurityDisclosure accepts source, policy, resolution and returns SecurityDisclosureBatch.",
   "related": [],
   "returns": "SecurityDisclosureBatch",
   "task": "Serialize",
-  "type": "(text: string, policy: SecurityPolicy, resolution: SecurityResolution) => SecurityDisclosureBatch"
+  "type": "(source: string, policy: SecurityPolicy, resolution: SecurityResolution) => SecurityDisclosureBatch"
 }

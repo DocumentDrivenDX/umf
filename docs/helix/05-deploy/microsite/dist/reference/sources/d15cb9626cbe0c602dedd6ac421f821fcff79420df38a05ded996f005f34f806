@@ -1,0 +1,387 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-prefix-catalog:0.1",
+  "title": "G10 compiler-derived catalog projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "tables",
+    "columns",
+    "keys",
+    "checks",
+    "foreignKeys",
+    "indexes",
+    "policies",
+    "grants",
+    "comments"
+  ],
+  "properties": {
+    "tables": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tableSubject"
+      }
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/columnSubject"
+      }
+    },
+    "keys": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/keySubject"
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/checkSubject"
+      }
+    },
+    "foreignKeys": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/foreignKeySubject"
+      }
+    },
+    "indexes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/indexSubject"
+      }
+    },
+    "policies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/policySubject"
+      }
+    },
+    "grants": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/grantSubject"
+      }
+    },
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/commentSubject"
+      }
+    }
+  },
+  "$defs": {
+    "json": {},
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "meaning",
+        "state"
+      ],
+      "properties": {
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "table",
+            "subject"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "table": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "subject": {
+              "$ref": "#/$defs/json"
+            }
+          }
+        },
+        "meaning": {
+          "$ref": "#/$defs/json"
+        },
+        "state": {
+          "enum": [
+            "present",
+            "absent"
+          ]
+        },
+        "validation": {
+          "enum": [
+            "not-applicable",
+            "not-validated",
+            "validated"
+          ]
+        },
+        "validity": {
+          "enum": [
+            "not-applicable",
+            "pending",
+            "valid",
+            "invalid"
+          ]
+        }
+      }
+    },
+    "tableSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "table"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "columnSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "column"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "keySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "key"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "check"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "foreignKeySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "foreignKey"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "indexSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "index"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "policySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "policy"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "grantSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "grant"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "commentSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "comment"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tables",
+        "columns",
+        "keys",
+        "checks",
+        "foreignKeys",
+        "indexes",
+        "policies",
+        "grants",
+        "comments"
+      ],
+      "properties": {
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tableSubject"
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/columnSubject"
+          }
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/keySubject"
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/checkSubject"
+          }
+        },
+        "foreignKeys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foreignKeySubject"
+          }
+        },
+        "indexes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/indexSubject"
+          }
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/policySubject"
+          }
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/grantSubject"
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/commentSubject"
+          }
+        }
+      }
+    }
+  }
+}

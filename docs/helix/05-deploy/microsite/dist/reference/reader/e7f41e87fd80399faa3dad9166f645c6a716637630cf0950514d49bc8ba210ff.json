@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"RecordTableSpecRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "RecordTableSpecRequest"
     }
   ],
-  "purpose": "projectRecordToTableSpec accepts input, options and returns RecordTableSpecProjection.",
+  "purpose": "projectRecordToTableSpec accepts author, request and returns RecordTableSpecProjection.",
   "related": [],
   "returns": "RecordTableSpecProjection",
   "task": "Import and export",
-  "type": "(input: CoreKindDeclaration, options: RecordTableSpecRequest) => RecordTableSpecProjection"
+  "type": "(author: CoreKindDeclaration, request: RecordTableSpecRequest) => RecordTableSpecProjection"
 }

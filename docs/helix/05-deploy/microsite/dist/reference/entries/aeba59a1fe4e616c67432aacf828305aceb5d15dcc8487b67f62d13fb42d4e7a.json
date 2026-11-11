@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11092,
-        "line": 76,
-        "path": "src/core-ideals/record-sqlserver-projection.ts",
-        "sha256": "c5175a67454bcf8e947bb16d6e1a242bfa3afcc6826508145b514635fc3cb653"
+        "bytes": 84809,
+        "line": 241,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverRecordFromSqlServer",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: RecordSqlServerProjection, nativeText: string): Document"
+      "(receipt: RecordSqlServerProjection, nativeText: string): Document"
     ]
   },
   "id": "[\"api\",\".\",\"recoverRecordFromSqlServer\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11092,
-      "line": 76,
-      "path": "src/core-ideals/record-sqlserver-projection.ts",
-      "sha256": "c5175a67454bcf8e947bb16d6e1a242bfa3afcc6826508145b514635fc3cb653"
+      "bytes": 84809,
+      "line": 241,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/record-sqlserver-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverRecordFromSqlServer"
 }

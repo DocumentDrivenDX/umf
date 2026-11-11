@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"evaluateShaclPropertyPath\"]",
   "kind": "Function",
   "members": [],
@@ -34,15 +34,18 @@
     },
     {
       "description": "",
-      "links": [],
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]",
+        "[\"api\",\".\",\"RdfLiteral\"]"
+      ],
       "name": "focus",
       "optional": false,
-      "type": "Value"
+      "type": "RdfNode | RdfLiteral"
     }
   ],
-  "purpose": "Focus blank labels are local to data. Named datasets require explicit graph selection before this call.",
+  "purpose": "evaluateShaclPropertyPath accepts shapes, shape, data, focus and returns (RdfNode | RdfLiteral)[].",
   "related": [],
-  "returns": "Value[]",
+  "returns": "(RdfNode | RdfLiteral)[]",
   "task": "Other APIs",
-  "type": "(shapes: Document, shape: RdfNode, data: Document, focus: Value) => Value[]"
+  "type": "(shapes: Document, shape: RdfNode, data: Document, focus: RdfNode | RdfLiteral) => (RdfNode | RdfLiteral)[]"
 }

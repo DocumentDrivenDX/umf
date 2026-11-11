@@ -1,59 +1,49 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"evaluateSecurityAccess\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityPolicy\"]"
-      ],
+      "links": [],
       "name": "policy",
       "optional": false,
-      "type": "SecurityPolicy"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]"
-      ],
+      "links": [],
       "name": "resolution",
       "optional": false,
-      "type": "SecurityResolution"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityFactCut\"]"
-      ],
+      "links": [],
       "name": "cut",
       "optional": false,
-      "type": "SecurityFactCut"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityEvaluationRequest\"]"
-      ],
+      "links": [],
       "name": "request",
       "optional": false,
-      "type": "Omit<SecurityEvaluationRequest, \"resources\">"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityFact\"]"
-      ],
+      "links": [],
       "name": "resource",
       "optional": false,
-      "type": "SecurityFact"
+      "type": "unknown"
     }
   ],
-  "purpose": "Pure semantic evaluation; host admission and native receipt enforcement remain separate.",
+  "purpose": "evaluateSecurityAccess accepts policy, resolution, cut, request, resource and returns SecurityAccessResult.",
   "related": [],
   "returns": "SecurityAccessResult",
   "task": "Other APIs",
-  "type": "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact) => SecurityAccessResult"
+  "type": "(policy: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown) => SecurityAccessResult"
 }

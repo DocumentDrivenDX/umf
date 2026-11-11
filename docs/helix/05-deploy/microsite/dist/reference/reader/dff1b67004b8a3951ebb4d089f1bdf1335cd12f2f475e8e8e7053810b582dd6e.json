@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectJsonSchemaToProtobuf\"]",
   "kind": "Function",
   "members": [],
@@ -19,23 +19,23 @@
       "links": [
         "[\"api\",\".\",\"ProtobufProjectionOptions\"]"
       ],
-      "name": "input",
+      "name": "policy",
       "optional": false,
       "type": "ProtobufProjectionOptions"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"ProtobufSourceCompiler\"]"
+        "[\"api\",\"./runtime/wasm\",\"ProtobufSourceCompiler\"]"
       ],
       "name": "compiler",
       "optional": false,
       "type": "ProtobufSourceCompiler"
     }
   ],
-  "purpose": "Schema projection only. Does not silently claim an instance-data converter.",
+  "purpose": "projectJsonSchemaToProtobuf accepts source, policy, compiler and returns Promise<ProtobufProjection>.",
   "related": [],
   "returns": "Promise<ProtobufProjection>",
   "task": "Import and export",
-  "type": "(source: Document, input: ProtobufProjectionOptions, compiler: ProtobufSourceCompiler) => Promise<ProtobufProjection>"
+  "type": "(source: Document, policy: ProtobufProjectionOptions, compiler: ProtobufSourceCompiler) => Promise<ProtobufProjection>"
 }

@@ -1,8 +1,8 @@
 {
   "alternatives": [
-    "{ field: SecurityRef; disposition: \"withheld\" | \"absent\"; }",
-    "{ field: SecurityRef; disposition: \"original\"; value: CoreLiteral; }",
-    "{ field: SecurityRef; disposition: \"transformed\"; outputType: SecurityRef; value: CoreLiteral; }"
+    "{ field: SecurityTypeRef; disposition: \"withheld\" | \"absent\"; }",
+    "{ field: SecurityTypeRef; disposition: \"original\"; value: CoreLiteral; }",
+    "{ field: SecurityTypeRef; disposition: \"transformed\"; outputType: SecurityTypeRef; value: CoreLiteral; }"
   ],
   "authored": false,
   "id": "[\"api\",\".\",\"SecurityOutput\"]",

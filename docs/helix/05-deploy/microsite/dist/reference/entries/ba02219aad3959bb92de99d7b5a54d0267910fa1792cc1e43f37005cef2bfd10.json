@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3711,
-        "line": 17,
-        "path": "src/projections/bit128-file-values.ts",
-        "sha256": "f04323715303474eb78c9aa1730692c95b85a57c74a925f96f7a33acfe75c8ac"
+        "bytes": 84809,
+        "line": 439,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "encodeBit128FileRecord",
     "runtime": "unassessed",
     "signatureText": [
-      "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, values: Bit128RecordValue[]): Record<string, Json>"
+      "(binding: Document, logical: Document, identity: { module: string; element: string; }, values: Bit128RecordValue[]): Record<string, Json>"
     ]
   },
   "id": "[\"api\",\".\",\"encodeBit128FileRecord\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3711,
-      "line": 17,
-      "path": "src/projections/bit128-file-values.ts",
-      "sha256": "f04323715303474eb78c9aa1730692c95b85a57c74a925f96f7a33acfe75c8ac"
+      "bytes": 84809,
+      "line": 439,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "JSON-safe native datum tokens; driver converts exact decimal/hex tokens to native long/bytes.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "encodeBit128FileRecord"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9112,
-        "line": 5,
-        "path": "src/projections/spark-arrow.ts",
-        "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+        "bytes": 653,
+        "line": 4,
+        "path": "src/projections/spark-arrow-types.ts",
+        "sha256": "0a89e4667ae58942a84902fd2ef32fa0edb823c89ab5d71fe0ec3d65fb41d7c0"
       }
     ],
     "entrypoint": ".",
     "exportName": "SparkArrowPolicy",
     "runtime": "type-only",
     "signatureText": [
-      "export interface SparkArrowPolicy {id:string;timestampUtc:boolean;largeTypes:boolean;rejectNestedDuplicates:boolean;lossPolicy:'strict'|'allow-reported-loss'}"
+      "export interface SparkArrowPolicy {\n  id: string;\n  timestampUtc: boolean;\n  largeTypes: boolean;\n  rejectNestedDuplicates: boolean;\n  lossPolicy: 'strict' | 'allow-reported-loss';\n}"
     ]
   },
   "id": "[\"api\",\".\",\"SparkArrowPolicy\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9112,
-      "line": 5,
-      "path": "src/projections/spark-arrow.ts",
-      "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+      "bytes": 653,
+      "line": 4,
+      "path": "src/projections/spark-arrow-types.ts",
+      "sha256": "0a89e4667ae58942a84902fd2ef32fa0edb823c89ab5d71fe0ec3d65fb41d7c0"
     }
   ],
-  "summary": "Type declaration · src/projections/spark-arrow.ts",
+  "summary": "Type declaration · src/projections/spark-arrow-types.ts",
   "title": "SparkArrowPolicy"
 }

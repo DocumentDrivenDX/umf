@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"AvroNullabilityRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "AvroNullabilityRequest"
     }
   ],
-  "purpose": "classifyAvroNullability accepts input, options and returns AvroNullabilityClassification.",
+  "purpose": "classifyAvroNullability accepts source, request and returns AvroNullabilityClassification.",
   "related": [],
   "returns": "AvroNullabilityClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: AvroNullabilityRequest) => AvroNullabilityClassification"
+  "type": "(source: Document, request: AvroNullabilityRequest) => AvroNullabilityClassification"
 }

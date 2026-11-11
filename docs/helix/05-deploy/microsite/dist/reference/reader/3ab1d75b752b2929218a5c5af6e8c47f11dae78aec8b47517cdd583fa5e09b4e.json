@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"generatePackTools\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PackToolsRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "PackToolsRequest"
+    }
+  ],
+  "purpose": "generatePackTools accepts request and returns PackToolsResult.",
+  "related": [],
+  "returns": "PackToolsResult",
+  "task": "Other APIs",
+  "type": "(request: PackToolsRequest) => PackToolsResult"
+}

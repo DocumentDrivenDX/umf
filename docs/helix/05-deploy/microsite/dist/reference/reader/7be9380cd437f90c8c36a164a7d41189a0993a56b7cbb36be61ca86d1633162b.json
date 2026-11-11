@@ -1,0 +1,84 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventoryExecutionProfile\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"umf.table-inventory-execution/0.1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "progressRelation",
+      "optional": false,
+      "type": "\"umf_lifecycle_inventory_progress\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ownerOnly",
+      "optional": false,
+      "type": "true"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ingressProfile",
+      "optional": false,
+      "type": "\"umf.table-inventory-generation-ingress/0.1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inventoryProfile",
+      "optional": false,
+      "type": "\"umf.table-inventory-prefix/0.1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "initial",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "conversionProfile",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalsProfile",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retirementProfile",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retiredStoreProfile",
+      "optional": false,
+      "type": "string | null"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventoryExecutionProfile is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventoryExecutionProfile"
+}

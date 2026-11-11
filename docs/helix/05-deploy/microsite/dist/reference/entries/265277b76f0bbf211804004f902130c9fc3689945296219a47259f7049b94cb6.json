@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5821,
-        "line": 14,
-        "path": "src/extensions/actions/evaluation.ts",
-        "sha256": "2746e2be663b82819d77e119f189f1dfd6ac6f57e0b4e19e44662ab1ed9ec981"
+        "bytes": 84809,
+        "line": 205,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "evaluateActionRule",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, action: Action, rule: ActionRule, phase: ActionRulePhase, stateInput: ActionRuleState): boolean"
+      "(document: unknown, action: Action, rule: ActionRule, phase: ActionRulePhase, state: ActionRuleState): boolean"
     ]
   },
   "id": "[\"api\",\".\",\"evaluateActionRule\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5821,
-      "line": 14,
-      "path": "src/extensions/actions/evaluation.ts",
-      "sha256": "2746e2be663b82819d77e119f189f1dfd6ac6f57e0b4e19e44662ab1ed9ec981"
+      "bytes": 84809,
+      "line": 205,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recompiles from declaration text before evaluation; callers cannot forge a compiled-plan certificate.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "evaluateActionRule"
 }

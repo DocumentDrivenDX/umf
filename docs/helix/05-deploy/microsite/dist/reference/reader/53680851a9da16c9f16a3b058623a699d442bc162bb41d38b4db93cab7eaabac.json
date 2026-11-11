@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"encodeCoreKeyTuple\"]",
   "kind": "Function",
   "members": [],
@@ -15,32 +15,34 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyIdentity\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyIdentity\"]"
       ],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "CoreKeyIdentity"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleValue\"]"
       ],
-      "name": "valuesInput",
+      "name": "values",
       "optional": false,
       "type": "CoreKeyTupleValue[]"
     },
     {
       "description": "",
-      "links": [],
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleReceipt\"]"
+      ],
       "name": "options",
       "optional": true,
-      "type": "{ profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; } | undefined"
+      "type": "{ profile: CoreKeyTupleReceipt[\"profile\"]; } | undefined"
     }
   ],
-  "purpose": "Exact current-core encoding; no native uniqueness or author provenance is inferred.",
+  "purpose": "encodeCoreKeyTuple accepts input, identity, values, options and returns CoreKeyTupleReceipt.",
   "related": [],
   "returns": "CoreKeyTupleReceipt",
   "task": "Serialize",
-  "type": "(input: unknown, identityInput: CoreKeyIdentity, valuesInput: CoreKeyTupleValue[], options?: { profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; }) => CoreKeyTupleReceipt"
+  "type": "(input: unknown, identity: CoreKeyIdentity, values: CoreKeyTupleValue[], options?: { profile: CoreKeyTupleReceipt[\"profile\"]; }) => CoreKeyTupleReceipt"
 }

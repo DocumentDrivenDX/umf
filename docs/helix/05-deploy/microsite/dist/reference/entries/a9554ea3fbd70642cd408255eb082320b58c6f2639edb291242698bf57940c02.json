@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8331,
-        "line": 13,
-        "path": "src/adapters/delta/table.ts",
-        "sha256": "e366b497d0483651062e199b576783e6660e62f75a4aa2fe1dede3c06bd9ff37"
+        "bytes": 928,
+        "line": 12,
+        "path": "src/adapters/delta/package.ts",
+        "sha256": "14cc8815a3a96a9b12d1b1937f6bc2a9bb3eda1644d4eda721553c672276aa3f"
       }
     ],
     "entrypoint": ".",
     "exportName": "deltaTablePackage",
     "runtime": "unassessed",
     "signatureText": [
-      "deltaTablePackage=manifest as unknown as ExtensionPackage"
+      "deltaTablePackage=tableManifest as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"deltaTablePackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8331,
-      "line": 13,
-      "path": "src/adapters/delta/table.ts",
-      "sha256": "e366b497d0483651062e199b576783e6660e62f75a4aa2fe1dede3c06bd9ff37"
+      "bytes": 928,
+      "line": 12,
+      "path": "src/adapters/delta/package.ts",
+      "sha256": "14cc8815a3a96a9b12d1b1937f6bc2a9bb3eda1644d4eda721553c672276aa3f"
     }
   ],
-  "summary": "Public export · src/adapters/delta/table.ts",
+  "summary": "Public export · src/adapters/delta/package.ts",
   "title": "deltaTablePackage"
 }

@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "value",
       "optional": false,
       "type": "unknown"
     },
@@ -20,9 +20,9 @@
       "type": "\"json\" | \"yaml\""
     }
   ],
-  "purpose": "writeProtectionSource accepts input, format and returns string.",
+  "purpose": "writeProtectionSource accepts value, format and returns string.",
   "related": [],
   "returns": "string",
   "task": "Serialize",
-  "type": "(input: unknown, format?: \"json\" | \"yaml\") => string"
+  "type": "(value: unknown, format?: \"json\" | \"yaml\") => string"
 }

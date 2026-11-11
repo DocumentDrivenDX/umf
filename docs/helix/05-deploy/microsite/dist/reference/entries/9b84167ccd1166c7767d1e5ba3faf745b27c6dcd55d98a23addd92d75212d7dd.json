@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11350,
-        "line": 33,
-        "path": "src/core-ideals/nullability-parquet.ts",
-        "sha256": "39f4953ea29f062592b0bbabb130f68412267563fd5e89b64674caf912ad800b"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyParquetNullability",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: ParquetNullabilityRequest): ParquetNullabilityClassification"
+      "(source: Document, request: ParquetNullabilityRequest): ParquetNullabilityClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyParquetNullability\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11350,
-      "line": 33,
-      "path": "src/core-ideals/nullability-parquet.ts",
-      "sha256": "39f4953ea29f062592b0bbabb130f68412267563fd5e89b64674caf912ad800b"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/nullability-parquet.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyParquetNullability"
 }

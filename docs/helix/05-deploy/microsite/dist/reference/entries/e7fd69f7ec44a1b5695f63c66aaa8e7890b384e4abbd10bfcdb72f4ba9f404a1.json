@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5303,
-        "line": 7,
-        "path": "src/adapters/delta/rename.ts",
-        "sha256": "4eca67d58f7c732a887d5760549e2abb2ac73588706a24deef1ace4f53897dbc"
+        "bytes": 84809,
+        "line": 232,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "renameDeltaMappedField",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, options: { fieldPointer: string; name: string; uninterpretedReferences: \"preserve-and-report\"; }): { source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }"
+      "(document: Document, options: { fieldPointer: string; name: string; uninterpretedReferences: \"preserve-and-report\"; }): { source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }"
     ]
   },
   "id": "[\"api\",\".\",\"renameDeltaMappedField\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5303,
-      "line": 7,
-      "path": "src/adapters/delta/rename.ts",
-      "sha256": "4eca67d58f7c732a887d5760549e2abb2ac73588706a24deef1ace4f53897dbc"
+      "bytes": 84809,
+      "line": 232,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Candidate context edit only; applying it requires a transaction and external-state checks.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "renameDeltaMappedField"
 }

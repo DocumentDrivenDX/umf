@@ -1,0 +1,86 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"GraphqlEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.graphql-wire/1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"GRAPHQL_PROFILE\"]"
+      ],
+      "name": "capabilities",
+      "optional": false,
+      "type": "Readonly<{ profile: typeof GRAPHQL_PROFILE; sdl: true; ast: true; callbackEdits: true; complete: false; }>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importGraphqlSchema",
+      "optional": false,
+      "type": "(source: string, options: { id: string; mode?: \"schema\" | \"fragment\"; }) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectGraphql",
+      "optional": false,
+      "type": "(document: unknown) => { valid: boolean; complete: boolean; diagnostics: any[]; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportGraphqlSchema",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getGraphqlAst",
+      "optional": false,
+      "type": "(document: unknown) => any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "editGraphqlAst",
+      "optional": false,
+      "type": "(document: unknown, edit: (ast: any) => any) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportGraphqlBundle",
+      "optional": false,
+      "type": "(document: unknown) => { schema: string; source: any; diagnostics: any[]; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectGraphqlPayload",
+      "optional": false,
+      "type": "(payload: unknown) => any[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "projectGraphqlInputToJsonSchema",
+      "optional": false,
+      "type": "(document: unknown, bindings: unknown) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "GraphqlEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "GraphqlEngine"
+}

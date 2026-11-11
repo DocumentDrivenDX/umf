@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"getSqlServerIndexMetadata\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Preserve heap and all observed index rows; column ordinals do not imply portable keys.",
+  "purpose": "getSqlServerIndexMetadata accepts document and returns SqlServerIndexMetadata.",
   "related": [],
   "returns": "SqlServerIndexMetadata",
   "task": "Inspect and select",
-  "type": "(document: Document) => SqlServerIndexMetadata"
+  "type": "(document: Parameters<GetSqlServerIndexMetadata>[0]) => SqlServerIndexMetadata"
 }

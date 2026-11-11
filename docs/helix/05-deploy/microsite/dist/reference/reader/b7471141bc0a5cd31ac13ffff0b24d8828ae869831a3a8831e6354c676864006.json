@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\"./runtime/wasm\",\"executeArtifactReferencesBindingWire\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "wireJson",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "controlDispatcher",
+      "optional": true,
+      "type": "Function | undefined"
+    }
+  ],
+  "purpose": "Run artifactReferences/inspect over umf.core-wire/1. The pack must be structurally validated before this call.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(module: any, wireJson: string, controlDispatcher?: Function) => string"
+}

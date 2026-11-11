@@ -1,0 +1,70 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"SecurityProtectionParametersResult\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"refused\" | \"validated-parameters\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "validated",
+      "optional": false,
+      "type": "readonly { readonly path: string; readonly transformIndex: number; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "readonly { readonly code: string; readonly path: string; readonly message: string; readonly severity: \"error\" | \"warning\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityProtectionParametersResult is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityProtectionParametersResult"
+}

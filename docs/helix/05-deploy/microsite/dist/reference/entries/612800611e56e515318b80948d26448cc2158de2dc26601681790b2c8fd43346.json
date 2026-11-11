@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10804,
-        "line": 94,
-        "path": "src/core-ideals/key-tablespec-projection.ts",
-        "sha256": "ac8a77b416798a618aac34ccbcf480c842fae50fbc728d43309cb1cde1a0951d"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverKeysTableSpecIdeal",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: KeyTableSpecProjection, current: Document): Document"
+      "(receipt: KeyTableSpecProjection, current: Document): Document"
     ]
   },
   "id": "[\"api\",\".\",\"recoverKeysTableSpecIdeal\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10804,
-      "line": 94,
-      "path": "src/core-ideals/key-tablespec-projection.ts",
-      "sha256": "ac8a77b416798a618aac34ccbcf480c842fae50fbc728d43309cb1cde1a0951d"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/key-tablespec-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverKeysTableSpecIdeal"
 }

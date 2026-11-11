@@ -1,0 +1,24 @@
+{
+  "resourceType": "CoverageEligibilityRequest",
+  "id": "positive",
+  "status": "active",
+  "purpose": [
+    "validation",
+    "benefits"
+  ],
+  "patient": {
+    "reference": "Patient/member"
+  },
+  "created": "2026-01-02",
+  "servicedDate": "2026-01-03",
+  "insurer": {
+    "reference": "Organization/payer"
+  },
+  "insurance": [
+    {
+      "coverage": {
+        "reference": "Coverage/active"
+      }
+    }
+  ]
+}

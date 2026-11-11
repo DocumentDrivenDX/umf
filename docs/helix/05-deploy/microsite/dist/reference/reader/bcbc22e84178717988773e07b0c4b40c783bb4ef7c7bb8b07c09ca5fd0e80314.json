@@ -10,21 +10,21 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "doc",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [],
-      "name": "module",
+      "name": "moduleId",
       "optional": false,
       "type": "string"
     },
     {
       "description": "",
       "links": [],
-      "name": "element",
+      "name": "elementId",
       "optional": false,
       "type": "string"
     },
@@ -38,9 +38,9 @@
       "type": "(definition: DddDefinition) => DddDefinition"
     }
   ],
-  "purpose": "editDddDefinition accepts doc, module, element, update and returns Document.",
+  "purpose": "editDddDefinition accepts document, moduleId, elementId, update and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(doc: Document, module: string, element: string, update: (definition: DddDefinition) => DddDefinition) => Document"
+  "type": "(document: Document, moduleId: string, elementId: string, update: (definition: DddDefinition) => DddDefinition) => Document"
 }

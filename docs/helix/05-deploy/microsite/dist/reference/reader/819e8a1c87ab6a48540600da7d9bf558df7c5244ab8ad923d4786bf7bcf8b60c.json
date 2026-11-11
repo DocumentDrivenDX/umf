@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipExtraArchive\"]"
       ],
-      "name": "input",
+      "name": "archive",
       "optional": false,
       "type": "RelationshipExtraArchive"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "importRelationshipExtraArchive accepts input, id and returns Document.",
+  "purpose": "importRelationshipExtraArchive accepts archive, id and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RelationshipExtraArchive, id: string) => Document"
+  "type": "(archive: RelationshipExtraArchive, id: string) => Document"
 }

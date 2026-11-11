@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlKeyClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "PostgresqlKeyClassification"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverPostgresqlKeySource accepts input, current, backend and returns Promise<{ nativeSource: string; supplement: string; }>.",
+  "purpose": "recoverPostgresqlKeySource accepts receipt, current, backend and returns Promise<{ nativeSource: string; supplement: string; }>.",
   "related": [],
   "returns": "Promise<{ nativeSource: string; supplement: string; }>",
   "task": "Import and export",
-  "type": "(input: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend) => Promise<{ nativeSource: string; supplement: string; }>"
+  "type": "(receipt: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend) => Promise<{ nativeSource: string; supplement: string; }>"
 }

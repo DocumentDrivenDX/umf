@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreNullabilityDeclaration"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"NullabilityPostgresqlRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "NullabilityPostgresqlRequest"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "projectNullabilityToPostgresql accepts input, options, backend and returns Promise<NullabilityPostgresqlProjection>.",
+  "purpose": "projectNullabilityToPostgresql accepts author, request, backend and returns Promise<NullabilityPostgresqlProjection>.",
   "related": [],
   "returns": "Promise<NullabilityPostgresqlProjection>",
   "task": "Import and export",
-  "type": "(input: CoreNullabilityDeclaration, options: NullabilityPostgresqlRequest, backend: PostgresqlBackend) => Promise<NullabilityPostgresqlProjection>"
+  "type": "(author: CoreNullabilityDeclaration, request: NullabilityPostgresqlRequest, backend: PostgresqlBackend) => Promise<NullabilityPostgresqlProjection>"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8291,
+        "bytes": 1193,
         "line": 6,
-        "path": "src/projections/smithy-json-schema.ts",
-        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+        "path": "src/projections/smithy-json-schema-types.ts",
+        "sha256": "30891b1618a30b6a3ac744ac346eb0c38b91eaf5c7ff72e016dda746398913c6"
       }
     ],
     "entrypoint": ".",
     "exportName": "SmithyJsonSchemaBackend",
     "runtime": "type-only",
     "signatureText": [
-      "export interface SmithyJsonSchemaBackend extends SmithyAssemblyBackend {converterIdentity:string;jsonSchema(modelJson:string,rootShape:string):string|Promise<string>;jsonSchemaForService?(modelJson:string,rootShape:string,serviceContext:string,addRootDefinition:boolean):string|Promise<string>;jsonSchemaWithRootDefinition?(modelJson:string,rootShape:string):string|Promise<string>;}"
+      "export interface SmithyJsonSchemaBackend extends SmithyAssemblyBackend {\n converterIdentity:string;\n jsonSchema(modelJson:string,rootShape:string):string|Promise<string>;\n jsonSchemaForService?(modelJson:string,rootShape:string,serviceContext:string,addRootDefinition:boolean):string|Promise<string>;\n jsonSchemaWithRootDefinition?(modelJson:string,rootShape:string):string|Promise<string>;\n}"
     ]
   },
   "id": "[\"api\",\".\",\"SmithyJsonSchemaBackend\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8291,
+      "bytes": 1193,
       "line": 6,
-      "path": "src/projections/smithy-json-schema.ts",
-      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      "path": "src/projections/smithy-json-schema-types.ts",
+      "sha256": "30891b1618a30b6a3ac744ac346eb0c38b91eaf5c7ff72e016dda746398913c6"
     }
   ],
-  "summary": "Type declaration · src/projections/smithy-json-schema.ts",
+  "summary": "Type declaration · src/projections/smithy-json-schema-types.ts",
   "title": "SmithyJsonSchemaBackend"
 }

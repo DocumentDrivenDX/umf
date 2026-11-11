@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverSqlServerNullabilitySource\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerNullabilityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerNullabilityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Recover exact original capture text, including unclaimed native content.",
+  "purpose": "recoverSqlServerNullabilitySource accepts receipt, current and returns string.",
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(input: SqlServerNullabilityClassification, current: Document) => string"
+  "type": "(receipt: SqlServerNullabilityClassification, current: Document) => string"
 }

@@ -26,5 +26,5 @@
   "related": [],
   "returns": "NativeJson",
   "task": "Inspect and select",
-  "type": "(document: Document, index: number) => NativeJson"
+  "type": "(document: Parameters<GetTableSpecColumn>[0], index: Parameters<GetTableSpecColumn>[1]) => ReturnType<GetTableSpecColumn>"
 }

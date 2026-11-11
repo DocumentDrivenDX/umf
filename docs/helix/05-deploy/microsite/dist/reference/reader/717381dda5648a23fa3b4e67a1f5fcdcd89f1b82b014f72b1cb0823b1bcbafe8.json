@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverCardinalityFromSqlServer\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CardinalitySqlServerProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CardinalitySqlServerProjection"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "purpose": "recoverCardinalityFromSqlServer accepts receipt, nativeText and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: CardinalitySqlServerProjection, nativeText: string) => Document"
+  "type": "(receipt: CardinalitySqlServerProjection, nativeText: string) => Document"
 }

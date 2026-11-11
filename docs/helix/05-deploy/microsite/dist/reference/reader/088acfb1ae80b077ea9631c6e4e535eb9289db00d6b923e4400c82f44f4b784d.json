@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectParquetFraming\"]",
   "kind": "Function",
   "members": [],
@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "doc",
+      "name": "document",
       "optional": false,
       "type": "Document"
     }
   ],
-  "purpose": "Only locates the footer region. PAR1 can contain encrypted columns or a signed footer.",
+  "purpose": "inspectParquetFraming accepts document and returns ParquetFraming.",
   "related": [],
   "returns": "ParquetFraming",
   "task": "Inspect and select",
-  "type": "(doc: Document) => ParquetFraming"
+  "type": "(document: Document) => ReturnType<InspectParquetFraming>"
 }

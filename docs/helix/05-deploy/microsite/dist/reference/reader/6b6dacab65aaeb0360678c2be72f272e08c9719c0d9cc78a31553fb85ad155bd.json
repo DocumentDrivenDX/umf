@@ -41,7 +41,7 @@
       ],
       "name": "mapping",
       "optional": false,
-      "type": "({ origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; dependencyId?: string; nativeFragment: Json; basis: \"checked-record-field-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-native-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-primitive-schema-leaf\"; outcome: \"exact\" | \"unknown\"; }) & { binding: Binding; }"
+      "type": "({ origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; dependencyId?: string; nativeFragment: Json; basis: \"checked-record-field-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-native-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-column-membership\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-primitive-schema-leaf\"; outcome: \"exact\" | \"unknown\"; }) & { binding: FieldBinding; }"
     },
     {
       "description": "",
@@ -50,7 +50,7 @@
       ],
       "name": "residuals",
       "optional": false,
-      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\"; reason: string; binding: Binding; recovery: { strategy: \"retained-source-and-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
+      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\"; reason: string; binding: FieldBinding; recovery: { strategy: \"retained-source-and-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
     },
     {
       "description": "",

@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"initializeCoreKeyTupleWasm\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreResources\"]"
+      ],
+      "name": "resources",
+      "optional": false,
+      "type": "UmfCoreResources"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "loader",
+      "optional": true,
+      "type": "(() => Promise<any>) | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "host",
+      "optional": true,
+      "type": "typeof globalThis | undefined"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; resourceControls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "initializeCoreKeyTupleWasm accepts resources, loader, host, options and returns Promise<Pick<UmfCoreModelEngine, \"encodeCoreKeyTuple\" | \"readCoreKeyTupleBytes\" | \"prepareCoreKeyTuples\" | \"verifyCoreKeyTuple\">>.",
+  "related": [],
+  "returns": "Promise<Pick<UmfCoreModelEngine, \"encodeCoreKeyTuple\" | \"readCoreKeyTupleBytes\" | \"prepareCoreKeyTuples\" | \"verifyCoreKeyTuple\">>",
+  "task": "Other APIs",
+  "type": "(resources: UmfCoreResources, loader?: () => Promise<any>, host?: typeof globalThis, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; resourceControls?: UmfCoreControls; }) => Promise<Pick<UmfCoreModelEngine, \"encodeCoreKeyTuple\" | \"verifyCoreKeyTuple\" | \"readCoreKeyTupleBytes\" | \"prepareCoreKeyTuples\">>"
+}

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectIcebergTableTransforms\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Current selected fields only: no historical spec rebinding or transform execution.",
+  "purpose": "inspectIcebergTableTransforms accepts document and returns IcebergTableTransforms.",
   "related": [],
   "returns": "IcebergTableTransforms",
   "task": "Inspect and select",
-  "type": "(document: Document) => IcebergTableTransforms"
+  "type": "(document: Parameters<InspectIcebergTableTransforms>[0]) => ReturnType<InspectIcebergTableTransforms>"
 }

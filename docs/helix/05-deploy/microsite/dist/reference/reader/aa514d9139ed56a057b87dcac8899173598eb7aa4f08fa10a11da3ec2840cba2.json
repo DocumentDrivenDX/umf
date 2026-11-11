@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyParquetFieldClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"ParquetFieldClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "ParquetFieldClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Recompute the native basis and reject classification receipts after any target edit.",
+  "purpose": "verifyParquetFieldClassification accepts receipt, current and returns ParquetFieldClassification.",
   "related": [],
   "returns": "ParquetFieldClassification",
   "task": "Other APIs",
-  "type": "(input: ParquetFieldClassification, current: Document) => ParquetFieldClassification"
+  "type": "(receipt: ParquetFieldClassification, current: Document) => ParquetFieldClassification"
 }

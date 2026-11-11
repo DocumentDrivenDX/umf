@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"prepareCoreKeyTuples\"]",
   "kind": "Function",
   "members": [],
@@ -8,14 +8,14 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     }
   ],
-  "purpose": "Reuse declaration validation for one immutable source, never authorization.",
+  "purpose": "prepareCoreKeyTuples accepts source and returns PreparedCoreKeyTuples.",
   "related": [],
   "returns": "PreparedCoreKeyTuples",
   "task": "Inspect and select",
-  "type": "(input: unknown) => PreparedCoreKeyTuples"
+  "type": "(source: unknown) => PreparedCoreKeyTuples"
 }

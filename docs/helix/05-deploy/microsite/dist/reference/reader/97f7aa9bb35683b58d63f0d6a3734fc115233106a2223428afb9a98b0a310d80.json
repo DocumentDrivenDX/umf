@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerAvroPolicy\"]"
       ],
-      "name": "input",
+      "name": "policy",
       "optional": false,
       "type": "SqlServerAvroPolicy"
     }
   ],
-  "purpose": "projectSqlServerToAvro accepts source, input and returns SqlServerAvroProjection.",
+  "purpose": "projectSqlServerToAvro accepts source, policy and returns SqlServerAvroProjection.",
   "related": [],
   "returns": "SqlServerAvroProjection",
   "task": "Import and export",
-  "type": "(source: Document, input: SqlServerAvroPolicy) => SqlServerAvroProjection"
+  "type": "(source: Document, policy: SqlServerAvroPolicy) => SqlServerAvroProjection"
 }

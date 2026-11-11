@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4950,
-        "line": 13,
-        "path": "src/adapters/parquet/repair-offsets.ts",
-        "sha256": "70abbf8e005ce9029acdd8fce08046d791978f8e525a0eee34dc5464c966e842"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "repairParquetDictionaryOffsets",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document): ParquetOffsetRepair"
+      "(document: Document): ParquetOffsetRepair"
     ]
   },
   "id": "[\"api\",\".\",\"repairParquetDictionaryOffsets\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4950,
-      "line": 13,
-      "path": "src/adapters/parquet/repair-offsets.ts",
-      "sha256": "70abbf8e005ce9029acdd8fce08046d791978f8e525a0eee34dc5464c966e842"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Explicit correction of a dictionary stored at data_page_offset with no dictionary offset.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "repairParquetDictionaryOffsets"
 }

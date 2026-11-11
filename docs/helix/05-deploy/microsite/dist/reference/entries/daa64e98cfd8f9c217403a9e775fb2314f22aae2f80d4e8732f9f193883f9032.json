@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18719,
-        "line": 20,
-        "path": "src/extensions/security/policy.ts",
-        "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+        "bytes": 84809,
+        "line": 202,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "readSecuritySource",
     "runtime": "unassessed",
     "signatureText": [
-      "(text: string, format?: \"json\" | \"yaml\"): Json"
+      "(source: string, format?: \"json\" | \"yaml\"): Json"
     ]
   },
   "id": "[\"api\",\".\",\"readSecuritySource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18719,
-      "line": 20,
-      "path": "src/extensions/security/policy.ts",
-      "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+      "bytes": 84809,
+      "line": 202,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Preservation is independent of interpretation; unfamiliar policy versions/operators remain data.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "readSecuritySource"
 }

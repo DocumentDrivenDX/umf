@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 16995,
-        "line": 133,
-        "path": "src/core-ideals/key-sqlserver-projection.ts",
-        "sha256": "704dc3248d8af0d98a9a67180bcf880fa35b19e331cc22c4b3abfc93b42ed194"
+        "bytes": 84809,
+        "line": 433,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverKeysSqlServerIdeal",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }): Document"
+      "(receipt: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }): Document"
     ]
   },
   "id": "[\"api\",\".\",\"recoverKeysSqlServerIdeal\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 16995,
-      "line": 133,
-      "path": "src/core-ideals/key-sqlserver-projection.ts",
-      "sha256": "704dc3248d8af0d98a9a67180bcf880fa35b19e331cc22c4b3abfc93b42ed194"
+      "bytes": 84809,
+      "line": 433,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/key-sqlserver-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverKeysSqlServerIdeal"
 }

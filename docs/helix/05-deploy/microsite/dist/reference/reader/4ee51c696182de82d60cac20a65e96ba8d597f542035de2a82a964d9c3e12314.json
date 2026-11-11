@@ -26,5 +26,5 @@
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(document: Document, format?: \"json\" | \"yaml\") => string"
+  "type": "(document: Parameters<ExportLinkmlDocument>[0], format?: Parameters<ExportLinkmlDocument>[1]) => ReturnType<ExportLinkmlDocument>"
 }

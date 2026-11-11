@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"initializeSemanticValueWasm\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "loader",
+      "optional": true,
+      "type": "(() => Promise<any>) | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "host",
+      "optional": true,
+      "type": "typeof globalThis | undefined"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "initializeSemanticValueWasm accepts loader, host, options and returns Promise<SemanticTypeRegistry>.",
+  "related": [],
+  "returns": "Promise<SemanticTypeRegistry>",
+  "task": "Other APIs",
+  "type": "(loader?: () => Promise<any>, host?: typeof globalThis, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }) => Promise<SemanticTypeRegistry>"
+}

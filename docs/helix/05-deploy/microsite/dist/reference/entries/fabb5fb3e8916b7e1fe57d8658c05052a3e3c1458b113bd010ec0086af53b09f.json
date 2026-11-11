@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7873,
-        "line": 8,
-        "path": "src/projections/openapi-json-schema.ts",
-        "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+        "bytes": 612,
+        "line": 5,
+        "path": "src/projections/openapi-json-schema-types.ts",
+        "sha256": "58e71ffe3c2f8d8235a8e4474282529ec201f39d626bcd41418abf20bd68b576"
       }
     ],
     "entrypoint": ".",
     "exportName": "OpenapiJsonSchemaPolicy",
     "runtime": "type-only",
     "signatureText": [
-      "export interface OpenapiJsonSchemaPolicy {id:string;schemaId:string;pointer:string;resourceUri?:string;schemaResources?:string[];usage:'schema-only';lossPolicy:'strict'|'allow-reported-loss';}"
+      "export interface OpenapiJsonSchemaPolicy {\n id:string;schemaId:string;pointer:string;resourceUri?:string;schemaResources?:string[];usage:'schema-only';lossPolicy:'strict'|'allow-reported-loss';\n}"
     ]
   },
   "id": "[\"api\",\".\",\"OpenapiJsonSchemaPolicy\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7873,
-      "line": 8,
-      "path": "src/projections/openapi-json-schema.ts",
-      "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+      "bytes": 612,
+      "line": 5,
+      "path": "src/projections/openapi-json-schema-types.ts",
+      "sha256": "58e71ffe3c2f8d8235a8e4474282529ec201f39d626bcd41418abf20bd68b576"
     }
   ],
-  "summary": "Type declaration · src/projections/openapi-json-schema.ts",
+  "summary": "Type declaration · src/projections/openapi-json-schema-types.ts",
   "title": "OpenapiJsonSchemaPolicy"
 }

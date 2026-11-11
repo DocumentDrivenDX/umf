@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5108,
-        "line": 28,
-        "path": "src/extensions/actions/manifest-construction.ts",
-        "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+        "bytes": 84809,
+        "line": 169,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "constructActionManifest",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: ActionManifestConstruction, context: ActionPlanInspectionContext): ConstructedActionManifest"
+      "(request: ActionManifestConstruction, context: ActionPlanInspectionContext): ConstructedActionManifest"
     ]
   },
   "id": "[\"api\",\".\",\"constructActionManifest\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5108,
-      "line": 28,
-      "path": "src/extensions/actions/manifest-construction.ts",
-      "sha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c"
+      "bytes": 84809,
+      "line": 169,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Constructs portable invocation bytes; native selection, order and sealing remain host-owned.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "constructActionManifest"
 }

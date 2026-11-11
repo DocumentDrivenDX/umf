@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6870,
-        "line": 44,
-        "path": "src/model/semantic-types.ts",
-        "sha256": "cee78fcebbdaeeffc573ad75b6e6aa586603eaa3401fca96f8f1d3dd4bb2962f"
+        "bytes": 84809,
+        "line": 399,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyCoreSemanticTypeDeclaration",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreSemanticTypeDeclaration, current: Document): CoreSemanticTypeDeclaration"
+      "(receipt: CoreSemanticTypeDeclaration, current: Document): CoreSemanticTypeDeclaration"
     ]
   },
   "id": "[\"api\",\".\",\"verifyCoreSemanticTypeDeclaration\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6870,
-      "line": 44,
-      "path": "src/model/semantic-types.ts",
-      "sha256": "cee78fcebbdaeeffc573ad75b6e6aa586603eaa3401fca96f8f1d3dd4bb2962f"
+      "bytes": 84809,
+      "line": 399,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recomputed consistency/provenance check; it cannot authenticate a submitted source.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyCoreSemanticTypeDeclaration"
 }

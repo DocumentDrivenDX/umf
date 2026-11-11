@@ -8,23 +8,21 @@
     {
       "description": "",
       "links": [],
-      "name": "policy",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]"
-      ],
+      "links": [],
       "name": "resolution",
       "optional": false,
-      "type": "SecurityResolution"
+      "type": "unknown"
     }
   ],
-  "purpose": "requireSecurityInterpretation accepts policy, resolution and returns SecurityInspection.",
+  "purpose": "requireSecurityInterpretation accepts source, resolution and returns SecurityInspection.",
   "related": [],
   "returns": "SecurityInspection",
   "task": "Other APIs",
-  "type": "(policy: unknown, resolution: SecurityResolution) => SecurityInspection"
+  "type": "(source: unknown, resolution: unknown) => SecurityInspection"
 }

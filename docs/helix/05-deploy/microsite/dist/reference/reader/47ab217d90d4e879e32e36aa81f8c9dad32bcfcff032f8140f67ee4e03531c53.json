@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"createSmithyJavaScriptBackend\"]",
   "kind": "Function",
   "members": [],
@@ -13,7 +13,7 @@
       "type": "{ assemble(sourcesJson: string): string; }"
     }
   ],
-  "purpose": "Explicit opt-in adapter for the pinned generated JavaScript module, not arbitrary native code discovery.",
+  "purpose": "createSmithyJavaScriptBackend accepts module and returns SmithyAssemblyBackend.",
   "related": [],
   "returns": "SmithyAssemblyBackend",
   "task": "Author and edit",

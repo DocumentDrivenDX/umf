@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifySqlServerNullabilityClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerNullabilityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerNullabilityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "purpose": "verifySqlServerNullabilityClassification accepts receipt, current and returns SqlServerNullabilityClassification.",
   "related": [],
   "returns": "SqlServerNullabilityClassification",
   "task": "Other APIs",
-  "type": "(input: SqlServerNullabilityClassification, current: Document) => SqlServerNullabilityClassification"
+  "type": "(receipt: SqlServerNullabilityClassification, current: Document) => SqlServerNullabilityClassification"
 }

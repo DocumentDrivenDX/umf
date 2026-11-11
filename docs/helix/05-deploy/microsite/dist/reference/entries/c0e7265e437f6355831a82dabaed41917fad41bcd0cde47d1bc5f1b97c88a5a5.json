@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 18045,
-        "line": 28,
-        "path": "src/projections/binding-sqlserver/index.ts",
-        "sha256": "658cb772c1320c12ab2a74e8c5157944fecbc1da536fb2d1d21a3e23d06845b6"
+        "bytes": 84809,
+        "line": 261,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectBindingToSqlServer",
     "runtime": "unassessed",
     "signatureText": [
-      "(logicalInput: Document, bindingInput: Document, policyInput: SqlServerPhysicalPolicy, lossPolicy: \"strict\" | \"report\", nativeSource?: string | undefined): SqlServerPhysicalProjection"
+      "(logical: Document, binding: Document, policy: SqlServerPhysicalPolicy, lossPolicy: \"strict\" | \"report\", nativeSource?: string | undefined): SqlServerPhysicalProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectBindingToSqlServer\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 18045,
-      "line": 28,
-      "path": "src/projections/binding-sqlserver/index.ts",
-      "sha256": "658cb772c1320c12ab2a74e8c5157944fecbc1da536fb2d1d21a3e23d06845b6"
+      "bytes": 84809,
+      "line": 261,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Compose complete qualified table, Key, relationship and index DDL without executing it.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectBindingToSqlServer"
 }

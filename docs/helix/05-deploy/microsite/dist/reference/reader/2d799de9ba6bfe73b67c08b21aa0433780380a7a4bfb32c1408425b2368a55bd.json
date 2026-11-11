@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlFacetClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "PostgresqlFacetClassification"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverPostgresqlFacetSource accepts input, current, backend and returns Promise<{ nativeSource: string; supplement: string; }>.",
+  "purpose": "recoverPostgresqlFacetSource accepts receipt, current, backend and returns Promise<{ nativeSource: string; supplement: string; }>.",
   "related": [],
   "returns": "Promise<{ nativeSource: string; supplement: string; }>",
   "task": "Import and export",
-  "type": "(input: PostgresqlFacetClassification, current: Document, backend: PostgresqlBackend) => Promise<{ nativeSource: string; supplement: string; }>"
+  "type": "(receipt: PostgresqlFacetClassification, current: Document, backend: PostgresqlBackend) => Promise<{ nativeSource: string; supplement: string; }>"
 }

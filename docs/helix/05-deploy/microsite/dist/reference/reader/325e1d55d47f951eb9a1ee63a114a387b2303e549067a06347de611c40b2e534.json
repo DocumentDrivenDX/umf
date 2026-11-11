@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipSqlServerProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipSqlServerProjection"
     },
@@ -22,9 +22,9 @@
       "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
     }
   ],
-  "purpose": "verifyRelationshipSqlServerProjection accepts input, current and returns RelationshipSqlServerProjection.",
+  "purpose": "verifyRelationshipSqlServerProjection accepts receipt, current and returns RelationshipSqlServerProjection.",
   "related": [],
   "returns": "RelationshipSqlServerProjection",
   "task": "Other APIs",
-  "type": "(input: RelationshipSqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }) => RelationshipSqlServerProjection"
+  "type": "(receipt: RelationshipSqlServerProjection, current: NonNullable<RelationshipSqlServerProjection[\"target\"]>) => RelationshipSqlServerProjection"
 }

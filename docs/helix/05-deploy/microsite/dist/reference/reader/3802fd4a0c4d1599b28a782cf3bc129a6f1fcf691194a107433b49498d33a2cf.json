@@ -1,0 +1,17 @@
+{
+  "alternatives": [
+    "{ mode: \"irreversible\"; reviewMarker: string; }",
+    "{ mode: \"retained-originals\"; policy: { id: string; revision: string; }; }",
+    "{ mode: \"round-trip\"; proofProfile: string; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"G04Recovery\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "G04Recovery is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "G04Recovery"
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreNullabilityDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"NullabilityAvroRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "NullabilityAvroRequest"
     }
   ],
-  "purpose": "projectNullabilityToAvro accepts input, options and returns NullabilityAvroProjection & { diagnostics: Diagnostic[]; }.",
+  "purpose": "projectNullabilityToAvro accepts author, request and returns NullabilityAvroProjection.",
   "related": [],
-  "returns": "NullabilityAvroProjection & { diagnostics: Diagnostic[]; }",
+  "returns": "NullabilityAvroProjection",
   "task": "Import and export",
-  "type": "(input: CoreNullabilityDeclaration, options: NullabilityAvroRequest) => NullabilityAvroProjection & { diagnostics: Diagnostic[]; }"
+  "type": "(author: CoreNullabilityDeclaration, request: NullabilityAvroRequest) => NullabilityAvroProjection"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"resolveOdcsReference\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "{ reference: string; usage: \"element\" | \"foreignKey\"; }"
     }
   ],
-  "purpose": "Resolve local ODCS identifiers/names. These are not JSON Pointer array indexes.",
+  "purpose": "resolveOdcsReference accepts document, options and returns OdcsReferenceResult.",
   "related": [],
   "returns": "OdcsReferenceResult",
   "task": "Inspect and select",
-  "type": "(document: Document, options: { reference: string; usage: \"element\" | \"foreignKey\"; }) => OdcsReferenceResult"
+  "type": "(document: Parameters<ResolveOdcsReference>[0], options: Parameters<ResolveOdcsReference>[1]) => OdcsReferenceResult"
 }

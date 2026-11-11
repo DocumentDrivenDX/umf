@@ -1,0 +1,141 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfCoreDocumentEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "importLakeviewDashboard",
+      "optional": false,
+      "type": "(source: string, options: { id: string; title?: string; namespace?: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportLakeviewDashboard",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lakeviewDiagnostics",
+      "optional": false,
+      "type": "(document: unknown) => { code: string; path: string; message: string; severity: \"error\" | \"warning\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "validateExtensionPayload",
+      "optional": false,
+      "type": "(id: string, version: string, payload: unknown, registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "listKinds",
+      "optional": false,
+      "type": "(registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "getKind",
+      "optional": false,
+      "type": "(reference: unknown, registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "inspectExtensionKinds",
+      "optional": false,
+      "type": "(document: unknown, registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]",
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreValidation\"]"
+      ],
+      "name": "validateDocument",
+      "optional": false,
+      "type": "(document: unknown, registry?: UmfCoreRegistration[]) => UmfCoreValidation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "readDocument",
+      "optional": false,
+      "type": "(source: string, format?: \"json\" | \"yaml\", registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "writeDocument",
+      "optional": false,
+      "type": "(document: unknown, format?: \"json\" | \"yaml\", registry?: UmfCoreRegistration[]) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "engineVersion",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "copyJson",
+      "optional": false,
+      "type": "(value: unknown, limits?: { maxDepth?: number; maxValues?: number; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "readValue",
+      "optional": false,
+      "type": "(source: string, format?: \"json\" | \"yaml\") => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "writeValue",
+      "optional": false,
+      "type": "(value: unknown, format?: \"json\" | \"yaml\") => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "readJsonValue",
+      "optional": false,
+      "type": "(source: string, format?: \"json\" | \"yaml\") => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "writeJsonValue",
+      "optional": false,
+      "type": "(value: unknown, format?: \"json\" | \"yaml\") => string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfCoreDocumentEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfCoreDocumentEngine"
+}

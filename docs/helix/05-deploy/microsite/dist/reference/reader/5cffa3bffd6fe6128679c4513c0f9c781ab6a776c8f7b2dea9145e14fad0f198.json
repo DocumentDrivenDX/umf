@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyPostgresqlKeys\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlKeyRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "PostgresqlKeyRequest"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Observe native facts under a fixed stored-value scope, without creating authored keys.",
+  "purpose": "classifyPostgresqlKeys accepts source, request, backend and returns Promise<PostgresqlKeyClassification>.",
   "related": [],
   "returns": "Promise<PostgresqlKeyClassification>",
   "task": "Other APIs",
-  "type": "(input: Document, options: PostgresqlKeyRequest, backend: PostgresqlBackend) => Promise<PostgresqlKeyClassification>"
+  "type": "(source: Document, request: PostgresqlKeyRequest, backend: PostgresqlBackend) => Promise<PostgresqlKeyClassification>"
 }

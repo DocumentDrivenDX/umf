@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6795,
-        "line": 9,
-        "path": "src/core-ideals/structured-report.ts",
-        "sha256": "fbd9d03dadf7f02bfff1cb2de447b2ac5072e61784198513bf3efce2d79d1059"
+        "bytes": 5369,
+        "line": 40,
+        "path": "src/core-ideals/report-types.ts",
+        "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
       }
     ],
     "entrypoint": ".",
     "exportName": "NativeStructuredClassification",
     "runtime": "type-only",
     "signatureText": [
-      "export type NativeStructuredClassification=TableSpecRecordClassification|PostgresqlRecordClassification|SqlServerRecordClassification|AvroRecordClassification|ParquetRecordClassification|AvroRecordTypeClassification|ParquetRecordTypeClassification|PostgresqlCompositeClassification|PostgresqlDdlKinds;"
+      "export type NativeStructuredClassification = TableSpecRecordClassification | PostgresqlRecordClassification | SqlServerRecordClassification | AvroRecordClassification | ParquetRecordClassification | AvroRecordTypeClassification | ParquetRecordTypeClassification | PostgresqlCompositeClassification | PostgresqlDdlKinds;"
     ]
   },
   "id": "[\"api\",\".\",\"NativeStructuredClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6795,
-      "line": 9,
-      "path": "src/core-ideals/structured-report.ts",
-      "sha256": "fbd9d03dadf7f02bfff1cb2de447b2ac5072e61784198513bf3efce2d79d1059"
+      "bytes": 5369,
+      "line": 40,
+      "path": "src/core-ideals/report-types.ts",
+      "sha256": "1f709683a84748990e75dd5b745ec8c894e47571339c1dc57dc7a3a6d67de020"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/structured-report.ts",
+  "summary": "Type declaration · src/core-ideals/report-types.ts",
   "title": "NativeStructuredClassification"
 }

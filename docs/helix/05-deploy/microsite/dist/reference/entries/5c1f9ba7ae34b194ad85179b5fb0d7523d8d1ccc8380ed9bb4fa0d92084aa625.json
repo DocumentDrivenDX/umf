@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2094,
-        "line": 11,
-        "path": "src/adapters/delta/parquet-checkpoint.ts",
-        "sha256": "bd8f0dabf5834d11687a9c9d042a70bae2c77021cc87867703223cc151ab4f7f"
+        "bytes": 84809,
+        "line": 232,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2094,
-      "line": 11,
-      "path": "src/adapters/delta/parquet-checkpoint.ts",
-      "sha256": "bd8f0dabf5834d11687a9c9d042a70bae2c77021cc87867703223cc151ab4f7f"
+      "bytes": 84809,
+      "line": 232,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recover one explicit Parquet checkpoint; naming discovery and multipart assembly are separate.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "reconcileDeltaParquetCheckpoint"
 }

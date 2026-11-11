@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\"./runtime/wasm\",\"createArrowSchemaEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; setupControls?: UmfCoreControls; controls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "Create the opt-in Arrow integration-schema JSON preservation engine; this does not activate a default route.",
+  "related": [],
+  "returns": "ArrowSchemaEngine",
+  "task": "Author and edit",
+  "type": "(module: any, options?: { profile?: \"cooperative\" | \"hard-isolated\"; setupControls?: UmfCoreControls; controls?: UmfCoreControls; }) => ArrowSchemaEngine"
+}

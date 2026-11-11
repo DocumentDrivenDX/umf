@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RecordProjectionInspection\"]"
       ],
-      "name": "input",
+      "name": "report",
       "optional": false,
       "type": "RecordProjectionInspection"
     },
@@ -24,9 +24,9 @@
       "type": "PostgresqlBackend | undefined"
     }
   ],
-  "purpose": "verifyRecordProjectionInspection accepts input, backend and returns Promise<RecordProjectionInspection>.",
+  "purpose": "verifyRecordProjectionInspection accepts report, backend and returns Promise<RecordProjectionInspection>.",
   "related": [],
   "returns": "Promise<RecordProjectionInspection>",
   "task": "Other APIs",
-  "type": "(input: RecordProjectionInspection, backend?: PostgresqlBackend) => Promise<RecordProjectionInspection>"
+  "type": "(report: RecordProjectionInspection, backend?: PostgresqlBackend) => Promise<RecordProjectionInspection>"
 }

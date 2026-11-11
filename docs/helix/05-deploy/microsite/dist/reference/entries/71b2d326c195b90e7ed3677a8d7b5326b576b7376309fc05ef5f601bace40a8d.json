@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2455,
-        "line": 19,
-        "path": "src/extensions/security/policy-v2-legacy-access.ts",
-        "sha256": "7bef6bf2445f79c88da7cd39a2d9a33a3294f245be925054a580a7eb557ef56f"
+        "bytes": 84809,
+        "line": 202,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "evaluateSecurityPolicyV2LegacyAccess",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact): SecurityPolicyV2LegacyAccess"
+      "(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): SecurityPolicyV2LegacyAccess"
     ]
   },
   "id": "[\"api\",\".\",\"evaluateSecurityPolicyV2LegacyAccess\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2455,
-      "line": 19,
-      "path": "src/extensions/security/policy-v2-legacy-access.ts",
-      "sha256": "7bef6bf2445f79c88da7cd39a2d9a33a3294f245be925054a580a7eb557ef56f"
+      "bytes": 84809,
+      "line": 202,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Logical single-resource access evaluation only. Host cuts must name the original0.2 policy revision.\nNo catalog, new relationship grammar, unknown meaning or native authority is admitted.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "evaluateSecurityPolicyV2LegacyAccess"
 }

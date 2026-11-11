@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6215,
+        "line": 28,
+        "path": "src/extensions/tables/types.ts",
+        "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableOperationAssignment",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableOperationAssignment {field:TableRef;value:TableOperationValue}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableOperationAssignment\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6215,
+      "line": 28,
+      "path": "src/extensions/tables/types.ts",
+      "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/tables/types.ts",
+  "title": "TableOperationAssignment"
+}

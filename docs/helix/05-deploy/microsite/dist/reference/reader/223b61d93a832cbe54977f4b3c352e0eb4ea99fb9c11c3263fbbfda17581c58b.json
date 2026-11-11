@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"setSemanticTypes\"]",
   "kind": "Function",
   "members": [],
@@ -38,7 +38,7 @@
       "type": "SemanticTypeAnnotation"
     }
   ],
-  "purpose": "Copy-on-write authoring; preserves native payloads and unfamiliar annotations.",
+  "purpose": "setSemanticTypes accepts document, module, element, annotation and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",

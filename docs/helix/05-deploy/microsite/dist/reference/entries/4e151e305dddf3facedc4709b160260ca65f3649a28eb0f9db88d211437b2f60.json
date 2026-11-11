@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9112,
-        "line": 6,
-        "path": "src/projections/spark-arrow.ts",
-        "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+        "bytes": 653,
+        "line": 12,
+        "path": "src/projections/spark-arrow-types.ts",
+        "sha256": "0a89e4667ae58942a84902fd2ef32fa0edb823c89ab5d71fe0ec3d65fb41d7c0"
       }
     ],
     "entrypoint": ".",
     "exportName": "SparkArrowIssue",
     "runtime": "type-only",
     "signatureText": [
-      "export interface SparkArrowIssue {path:string;code:string;classification:'loss'|'unsupported'|'representation-change';detail:string;retainedInSource:true}"
+      "export interface SparkArrowIssue {\n  path: string;\n  code: string;\n  classification: 'loss' | 'unsupported' | 'representation-change';\n  detail: string;\n  retainedInSource: true;\n}"
     ]
   },
   "id": "[\"api\",\".\",\"SparkArrowIssue\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9112,
-      "line": 6,
-      "path": "src/projections/spark-arrow.ts",
-      "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+      "bytes": 653,
+      "line": 12,
+      "path": "src/projections/spark-arrow-types.ts",
+      "sha256": "0a89e4667ae58942a84902fd2ef32fa0edb823c89ab5d71fe0ec3d65fb41d7c0"
     }
   ],
-  "summary": "Type declaration · src/projections/spark-arrow.ts",
+  "summary": "Type declaration · src/projections/spark-arrow-types.ts",
   "title": "SparkArrowIssue"
 }

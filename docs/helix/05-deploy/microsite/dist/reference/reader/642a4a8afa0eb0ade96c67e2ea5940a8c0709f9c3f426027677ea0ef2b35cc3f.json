@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "sourceInput",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [],
-      "name": "moduleId",
+      "name": "module",
       "optional": false,
       "type": "string"
     },
@@ -26,23 +26,21 @@
       "links": [
         "[\"api\",\".\",\"Action\"]"
       ],
-      "name": "actionInput",
+      "name": "action",
       "optional": false,
       "type": "Action"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "links": [],
       "name": "registry",
       "optional": false,
-      "type": "Registry"
+      "type": "RegistryBase"
     }
   ],
-  "purpose": "declareAction accepts sourceInput, moduleId, actionInput, registry and returns Document.",
+  "purpose": "declareAction accepts source, module, action, registry and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Other APIs",
-  "type": "(sourceInput: Document, moduleId: string, actionInput: Action, registry: Registry) => Document"
+  "type": "(source: Document, module: string, action: Action, registry: RegistryBase) => Document"
 }

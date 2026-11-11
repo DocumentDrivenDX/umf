@@ -19,5 +19,5 @@
   "related": [],
   "returns": "RdfNode[]",
   "task": "Inspect and select",
-  "type": "(document: Document) => RdfNode[]"
+  "type": "(document: Parameters<GetRdfNamedGraphs>[0]) => RdfNode[]"
 }

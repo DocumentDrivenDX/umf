@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"prepareActionIdentities\"]",
   "kind": "Function",
   "members": [],
@@ -24,7 +24,7 @@
       "type": "Action"
     }
   ],
-  "purpose": "Compile selectors against private immutable declarations, without store access.",
+  "purpose": "prepareActionIdentities accepts documentInput, actionInput and returns PreparedActionIdentities.",
   "related": [],
   "returns": "PreparedActionIdentities",
   "task": "Inspect and select",

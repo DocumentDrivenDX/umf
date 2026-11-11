@@ -19,5 +19,5 @@
   "related": [],
   "returns": "SqlServerColumnMetadata[]",
   "task": "Inspect and select",
-  "type": "(document: Document) => SqlServerColumnMetadata[]"
+  "type": "(document: Parameters<GetSqlServerColumnMetadata>[0]) => SqlServerColumnMetadata[]"
 }

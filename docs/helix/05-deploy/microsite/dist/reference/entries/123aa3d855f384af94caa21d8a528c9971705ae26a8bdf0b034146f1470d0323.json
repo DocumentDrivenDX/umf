@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 12556,
-        "line": 59,
-        "path": "src/adapters/tablespec/index.ts",
-        "sha256": "8bfaa3f0ec637beffce4a7fae4a2389656f7829acfabc185105e346ad7e8194f"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 12556,
-      "line": 59,
-      "path": "src/adapters/tablespec/index.ts",
-      "sha256": "8bfaa3f0ec637beffce4a7fae4a2389656f7829acfabc185105e346ad7e8194f"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Copy the captured table view, including unknown native metadata and exact numbers.\nSplit sidecars and shadowed content remain in the document's source archive.\nThis is inspection, not native validation or a flattened spl",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "getTableSpecTable"
 }

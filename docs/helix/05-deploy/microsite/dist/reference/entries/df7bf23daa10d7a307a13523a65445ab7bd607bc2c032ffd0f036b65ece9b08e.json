@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4909,
-        "line": 9,
-        "path": "src/adapters/parquet/rename.ts",
-        "sha256": "1f71d8cfdb5f37165c65379bdb0c8cb188ecb5fa107b5bd531a71aa180270d93"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "renameParquetField",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, index: number, name: string): ParquetRenameResult"
+      "(document: Document, index: number, name: string): ParquetRenameResult"
     ]
   },
   "id": "[\"api\",\".\",\"renameParquetField\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4909,
-      "line": 9,
-      "path": "src/adapters/parquet/rename.ts",
-      "sha256": "1f71d8cfdb5f37165c65379bdb0c8cb188ecb5fa107b5bd531a71aa180270d93"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Rename by stable native schema index, with simultaneous descendant column-path updates.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "renameParquetField"
 }

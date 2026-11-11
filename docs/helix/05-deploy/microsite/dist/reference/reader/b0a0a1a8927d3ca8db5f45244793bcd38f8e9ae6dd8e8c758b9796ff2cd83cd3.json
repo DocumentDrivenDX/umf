@@ -21,12 +21,12 @@
       ],
       "name": "options",
       "optional": false,
-      "type": "Omit<JsonLdFramingOptions, \"embed\"> & { embed?: JsonLdFramingOptions[\"embed\"] | boolean; frame: string; lossPolicy: \"report\" | \"reject\"; }"
+      "type": "Omit<JsonLdFramingOptions, \"embed\"> & { embed?: boolean | \"@once\" | \"@always\" | \"@never\" | \"@first\" | \"@last\" | undefined; frame: string; lossPolicy: \"report\" | \"reject\"; }"
     }
   ],
   "purpose": "proposeJsonLdFraming accepts document, options and returns Promise<JsonLdFramingReport>.",
   "related": [],
   "returns": "Promise<JsonLdFramingReport>",
   "task": "Author and edit",
-  "type": "(document: Document, options: Omit<JsonLdFramingOptions, \"embed\"> & { embed?: JsonLdFramingOptions[\"embed\"] | boolean; frame: string; lossPolicy: \"report\" | \"reject\"; }) => Promise<JsonLdFramingReport>"
+  "type": "(document: Parameters<ProposeJsonLdFraming>[0], options: Parameters<ProposeJsonLdFraming>[1]) => ReturnType<ProposeJsonLdFraming>"
 }

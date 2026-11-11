@@ -2,6 +2,12 @@ name: Deploy locally qualified microsite
 
 on:
   workflow_dispatch:
+    inputs:
+      deploy_exact_0_10_11:
+        description: Verify and deploy the committed, locally qualified UMF 0.10.11 microsite tree
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: read
@@ -36,7 +42,11 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: '1.4.2'
+      - name: Verify the exact 0.10.11 pre-seal microsite manifest
+        if: ${{ inputs.deploy_exact_0_10_11 }}
+        run: python3 scripts/verify_microsite_release_manifest.py
       - name: Assemble the exact locked schema-browser release artifact
+        if: ${{ !inputs.deploy_exact_0_10_11 }}
         run: bun scripts/pack-tools/install-renderer.ts
       - name: Get the existing pinned Innsigle verifier
         uses: actions/checkout@v4

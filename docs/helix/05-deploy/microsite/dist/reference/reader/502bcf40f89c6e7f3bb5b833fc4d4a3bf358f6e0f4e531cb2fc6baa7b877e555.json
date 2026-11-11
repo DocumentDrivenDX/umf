@@ -1,0 +1,74 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TypeSpecJsonSchemaEmission\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"empty\" | \"emitted\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "emitter",
+      "optional": false,
+      "type": "\"@typespec/json-schema@1.16.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "{ options: Record<string, unknown>; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TypeSpecCompilerReport\"]"
+      ],
+      "name": "compilation",
+      "optional": false,
+      "type": "TypeSpecCompilerReport"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "files",
+      "optional": false,
+      "type": "Record<string, string>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "limitations",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TypeSpecJsonSchemaEmission is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TypeSpecJsonSchemaEmission"
+}

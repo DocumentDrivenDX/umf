@@ -1,0 +1,38 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ExtensionKindListResult\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ExtensionKindReference\"]",
+        "[\"api\",\".\",\"ExtensionKindDefinition\"]"
+      ],
+      "name": "definitions",
+      "optional": false,
+      "type": "{ reference: ExtensionKindReference; definition: ExtensionKindDefinition; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "packages",
+      "optional": false,
+      "type": "{ extension: string; version: string; catalog: \"available\" | \"absent\" | \"unsupported\"; diagnostics: (ExtensionKindDiagnostic)[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ExtensionKindListResult is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ExtensionKindListResult"
+}

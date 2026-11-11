@@ -1,0 +1,63 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"SecurityActionPurposeInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"refused\" | \"resolved-purposes\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ontology",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "documents",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "purposes",
+      "optional": false,
+      "type": "readonly { readonly action: string; readonly purposes: readonly (\"read\" | \"field\" | \"original-authorized\" | \"reverse\" | \"vault-write\" | \"other\")[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "readonly { readonly code: string; readonly path: string; readonly message: string; readonly severity: \"error\" | \"warning\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityActionPurposeInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityActionPurposeInspection"
+}

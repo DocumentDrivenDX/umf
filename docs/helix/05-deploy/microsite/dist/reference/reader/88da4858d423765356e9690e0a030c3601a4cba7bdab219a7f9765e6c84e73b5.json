@@ -1,0 +1,77 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"TypeSpecSessionOperations\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectTypeSpec",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "importTypeSpecSources",
+      "optional": false,
+      "type": "(input: unknown, options: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportTypeSpecSources",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proposeTypeSpecSourceEdit",
+      "optional": false,
+      "type": "(document: unknown, path: string, text: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getTypeSpecSyntax",
+      "optional": false,
+      "type": "(document: unknown, path: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectTypeSpecPayload",
+      "optional": false,
+      "type": "(payload: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "compileTypeSpecDocument",
+      "optional": false,
+      "type": "(document: unknown) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getTypeSpecSemanticGraph",
+      "optional": false,
+      "type": "(document: unknown, input: unknown) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "emitTypeSpecJsonSchema",
+      "optional": false,
+      "type": "(document: unknown, input: unknown) => Promise<unknown>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TypeSpecSessionOperations is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TypeSpecSessionOperations"
+}

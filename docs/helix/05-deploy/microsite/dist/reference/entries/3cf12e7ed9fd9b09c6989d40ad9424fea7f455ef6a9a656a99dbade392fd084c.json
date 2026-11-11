@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11495,
-        "line": 83,
-        "path": "src/core-ideals/relationship-parquet-projection.ts",
-        "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+        "bytes": 84809,
+        "line": 435,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyRelationshipParquetProjection",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: RelationshipParquetProjection, current: Document): RelationshipParquetProjection"
+      "(receipt: RelationshipParquetProjection, current: Document): RelationshipParquetProjection"
     ]
   },
   "id": "[\"api\",\".\",\"verifyRelationshipParquetProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11495,
-      "line": 83,
-      "path": "src/core-ideals/relationship-parquet-projection.ts",
-      "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+      "bytes": 84809,
+      "line": 435,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Verify retained consistency against a current or freshly imported native document.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyRelationshipParquetProjection"
 }

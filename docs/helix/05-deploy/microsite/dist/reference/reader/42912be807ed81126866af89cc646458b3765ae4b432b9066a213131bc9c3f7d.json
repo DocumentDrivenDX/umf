@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectBinding\"]",
   "kind": "Function",
   "members": [],
@@ -24,7 +24,7 @@
       "type": "Document"
     }
   ],
-  "purpose": "Validate a separate binding document against an explicitly supplied logical model.",
+  "purpose": "inspectBinding accepts binding, logical and returns Validation.",
   "related": [],
   "returns": "Validation",
   "task": "Inspect and select",

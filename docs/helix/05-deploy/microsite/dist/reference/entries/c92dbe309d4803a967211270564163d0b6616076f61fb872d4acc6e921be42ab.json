@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 19737,
-        "line": 41,
-        "path": "src/adapters/rdf/index.ts",
-        "sha256": "c6f7532ac7f4d89740b650b96773267ad104b76eaa9aebd6df4f0e47d5fe61f4"
+        "bytes": 84809,
+        "line": 178,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "rdfRegistry",
     "runtime": "unassessed",
     "signatureText": [
-      "(): Registry"
+      "(): RegistryBase"
     ]
   },
   "id": "[\"api\",\".\",\"rdfRegistry\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 19737,
-      "line": 41,
-      "path": "src/adapters/rdf/index.ts",
-      "sha256": "c6f7532ac7f4d89740b650b96773267ad104b76eaa9aebd6df4f0e47d5fe61f4"
+      "bytes": 84809,
+      "line": 178,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/rdf/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "rdfRegistry"
 }

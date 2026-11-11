@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverFieldFromPostgresql\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"FieldPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "FieldPostgresqlProjection"
     },
@@ -31,9 +31,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "purpose": "recoverFieldFromPostgresql accepts receipt, nativeText, backend and returns Promise<Document>.",
   "related": [],
   "returns": "Promise<Document>",
   "task": "Import and export",
-  "type": "(input: FieldPostgresqlProjection, nativeText: string, backend: PostgresqlBackend) => Promise<Document>"
+  "type": "(receipt: FieldPostgresqlProjection, nativeText: string, backend: PostgresqlBackend) => Promise<Document>"
 }

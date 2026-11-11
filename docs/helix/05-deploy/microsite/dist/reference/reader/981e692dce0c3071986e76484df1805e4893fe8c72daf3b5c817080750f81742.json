@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlRecordRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "PostgresqlRecordRequest"
     }
   ],
-  "purpose": "classifyPostgresqlRecord accepts input, options and returns PostgresqlRecordClassification.",
+  "purpose": "classifyPostgresqlRecord accepts source, request and returns PostgresqlRecordClassification.",
   "related": [],
   "returns": "PostgresqlRecordClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: PostgresqlRecordRequest) => PostgresqlRecordClassification"
+  "type": "(source: Document, request: PostgresqlRecordRequest) => PostgresqlRecordClassification"
 }

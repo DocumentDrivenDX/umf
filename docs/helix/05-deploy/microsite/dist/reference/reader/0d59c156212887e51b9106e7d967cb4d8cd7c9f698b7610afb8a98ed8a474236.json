@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectSparkToArrow\"]",
   "kind": "Function",
   "members": [],
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SparkArrowPolicy\"]"
       ],
-      "name": "input",
+      "name": "policy",
       "optional": false,
       "type": "SparkArrowPolicy"
     }
   ],
-  "purpose": "Spark 4.0.1 schema lowering to Arrow logical metadata. No record/data conversion.",
+  "purpose": "projectSparkToArrow accepts source, policy and returns SparkArrowProjection.",
   "related": [],
   "returns": "SparkArrowProjection",
   "task": "Import and export",
-  "type": "(source: Document, input: SparkArrowPolicy) => SparkArrowProjection"
+  "type": "(source: Document, policy: SparkArrowPolicy) => SparkArrowProjection"
 }

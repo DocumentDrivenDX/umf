@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverBit128CarrierProjection\"]",
   "kind": "Function",
   "members": [],
@@ -8,23 +8,23 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"Bit128NativeProjection\"]"
+        "[\"api\",\"./runtime/wasm\",\"Bit128NativeProjection\"]"
       ],
-      "name": "input",
+      "name": "report",
       "optional": false,
       "type": "Bit128NativeProjection"
     },
     {
       "description": "",
       "links": [],
-      "name": "nativeText",
+      "name": "text",
       "optional": false,
       "type": "string"
     }
   ],
-  "purpose": "Exact artifact/source recovery; not independent native semantic classification.",
+  "purpose": "recoverBit128CarrierProjection accepts report, text and returns { logical: Document; binding: Document; }.",
   "related": [],
   "returns": "{ logical: Document; binding: Document; }",
   "task": "Import and export",
-  "type": "(input: Bit128NativeProjection, nativeText: string) => { logical: Document; binding: Document; }"
+  "type": "(report: Bit128NativeProjection, text: string) => { logical: Document; binding: Document; }"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 14539,
-        "line": 142,
-        "path": "src/extensions/dashboard/index.ts",
-        "sha256": "401e673b9e75436889d781ed15920f867b9cd2a284f83b616456b0973b927830"
+        "bytes": 84809,
+        "line": 373,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "editDashboardDefinition",
     "runtime": "unassessed",
     "signatureText": [
-      "(doc: Document, module: string, element: string, update: (definition: DashboardDefinition) => DashboardDefinition): Document"
+      "(document: Document, module: string, element: string, update: (definition: DashboardDefinition) => DashboardDefinition): Document"
     ]
   },
   "id": "[\"api\",\".\",\"editDashboardDefinition\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 14539,
-      "line": 142,
-      "path": "src/extensions/dashboard/index.ts",
-      "sha256": "401e673b9e75436889d781ed15920f867b9cd2a284f83b616456b0973b927830"
+      "bytes": 84809,
+      "line": 373,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/dashboard/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "editDashboardDefinition"
 }

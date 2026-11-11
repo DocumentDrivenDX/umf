@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1435,
+        "line": 15,
+        "path": "src/extensions/actions/saga-resources.ts",
+        "sha256": "72c20aee5de34ed68b84390e2c6fddb240561bd2f1a10864f309f6c459635c51"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "createSagaResources",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(): { coreSchema: unknown; referenceSchema: unknown; packageSchema: unknown; constraints: unknown; domainPolicy: unknown; tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage: unknown; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"createSagaResources\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1435,
+      "line": 15,
+      "path": "src/extensions/actions/saga-resources.ts",
+      "sha256": "72c20aee5de34ed68b84390e2c6fddb240561bd2f1a10864f309f6c459635c51"
+    }
+  ],
+  "summary": "The host selects and initializes native/WASM; resource data never loads code.",
+  "title": "createSagaResources"
+}

@@ -59,6 +59,13 @@
       "name": "capabilities",
       "optional": false,
       "type": "{ [key: string]: unknown; validation: \"structural\" | \"semantic\"; directions: (\"import\" | \"export\")[]; evidence: (string)[]; native?: { \"system\": string; \"version\": string; \"subset\": string; [key: string]: unknown; }; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kindCatalog",
+      "optional": true,
+      "type": "unknown"
     }
   ],
   "parameters": [],

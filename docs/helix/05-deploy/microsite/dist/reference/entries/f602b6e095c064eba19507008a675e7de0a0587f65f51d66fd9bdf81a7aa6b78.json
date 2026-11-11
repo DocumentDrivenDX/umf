@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 24250,
-        "line": 54,
-        "path": "src/projections/binding-sqlserver/relationship-layout.ts",
-        "sha256": "e7a6fb7f47e9ada6e7023724c8c4cd463a5403dc6bf2fcf76a471e74da59640e"
+        "bytes": 84809,
+        "line": 263,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateSqlServerRelationshipLayout",
     "runtime": "unassessed",
     "signatureText": [
-      "(logicalInput: Document, bindingInput: Document, policyInput: SqlServerRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\"): SqlServerRelationshipLayoutResult"
+      "(logical: Document, binding: Document, policy: SqlServerRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\"): SqlServerRelationshipLayoutResult"
     ]
   },
   "id": "[\"api\",\".\",\"validateSqlServerRelationshipLayout\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 24250,
-      "line": 54,
-      "path": "src/projections/binding-sqlserver/relationship-layout.ts",
-      "sha256": "e7a6fb7f47e9ada6e7023724c8c4cd463a5403dc6bf2fcf76a471e74da59640e"
+      "bytes": 84809,
+      "line": 263,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Validate retained metadata only. A candidate is a policy, never SQL or native enforcement.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validateSqlServerRelationshipLayout"
 }

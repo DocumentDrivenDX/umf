@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"FieldClassificationInspection\"]"
       ],
-      "name": "input",
+      "name": "report",
       "optional": false,
       "type": "FieldClassificationInspection"
     }
   ],
-  "purpose": "verifyFieldClassificationInspection accepts input and returns FieldClassificationInspection.",
+  "purpose": "verifyFieldClassificationInspection accepts report and returns FieldClassificationInspection.",
   "related": [],
   "returns": "FieldClassificationInspection",
   "task": "Other APIs",
-  "type": "(input: FieldClassificationInspection) => FieldClassificationInspection"
+  "type": "(report: FieldClassificationInspection) => FieldClassificationInspection"
 }

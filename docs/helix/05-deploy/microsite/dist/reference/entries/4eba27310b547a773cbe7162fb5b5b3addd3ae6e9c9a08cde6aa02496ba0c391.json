@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 12646,
-        "line": 23,
-        "path": "src/extensions/actions/selector.ts",
-        "sha256": "5c76f609c8784c105970ae3f83a97ced884287b38f395fccb6785389a864235a"
+        "bytes": 84809,
+        "line": 208,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "admitActionInputs",
     "runtime": "unassessed",
     "signatureText": [
-      "(documentInput: Document, actionInput: Action, inputsInput: ActionInputs, outputs?: boolean): ActionInputs"
+      "(document: Document, action: Action, inputs: ActionInputs, outputs?: boolean): ActionInputs"
     ]
   },
   "id": "[\"api\",\".\",\"admitActionInputs\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 12646,
-      "line": 23,
-      "path": "src/extensions/actions/selector.ts",
-      "sha256": "5c76f609c8784c105970ae3f83a97ced884287b38f395fccb6785389a864235a"
+      "bytes": 84809,
+      "line": 208,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Typed admission, without store lookup or entity existence checks.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "admitActionInputs"
 }

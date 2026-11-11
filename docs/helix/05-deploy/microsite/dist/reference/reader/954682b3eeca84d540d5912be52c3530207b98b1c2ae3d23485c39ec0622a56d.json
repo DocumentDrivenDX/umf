@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -24,9 +24,9 @@
       "type": "CoreSemanticTypeIdentity"
     }
   ],
-  "purpose": "getCoreSemanticTypes accepts input, identity and returns CoreSemanticTypeReference[] | undefined.",
+  "purpose": "getCoreSemanticTypes accepts source, identity and returns CoreSemanticTypeReference[] | undefined.",
   "related": [],
   "returns": "CoreSemanticTypeReference[] | undefined",
   "task": "Inspect and select",
-  "type": "(input: Document, identity: CoreSemanticTypeIdentity) => CoreSemanticTypeReference[] | undefined"
+  "type": "(source: Document, identity: CoreSemanticTypeIdentity) => CoreSemanticTypeReference[] | undefined"
 }

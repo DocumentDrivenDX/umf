@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"proposeAvroNodeEdit\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -36,9 +36,9 @@
       "type": "string | undefined"
     }
   ],
-  "purpose": "Explicit authoring proposal, not a semantic-validity or compatibility certificate.",
+  "purpose": "proposeAvroNodeEdit accepts document, path, text, dependencyId and returns AvroNodeEditProposal.",
   "related": [],
   "returns": "AvroNodeEditProposal",
   "task": "Author and edit",
-  "type": "(input: Document, path: string, text: string, dependencyId?: string) => AvroNodeEditProposal"
+  "type": "(document: Parameters<ProposeAvroNodeEdit>[0], path: Parameters<ProposeAvroNodeEdit>[1], text: Parameters<ProposeAvroNodeEdit>[2], dependencyId?: Parameters<ProposeAvroNodeEdit>[3]) => ReturnType<ProposeAvroNodeEdit>"
 }

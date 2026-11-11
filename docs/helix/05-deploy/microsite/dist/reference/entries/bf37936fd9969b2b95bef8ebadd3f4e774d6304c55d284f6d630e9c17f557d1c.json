@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1713,
+        "line": 33,
+        "path": "src/adapters/delta/ddl.ts",
+        "sha256": "8bd9ed621b4861e08be3931938637b829035619d8b47dee87361ffc7e979eaee"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SparkDelta4TargetBinding",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type SparkDelta4TargetBinding = {\n  /** Existing local relation plus path; useful where a stable catalog relation is available. */\n  kind:'relation';\n  relation:readonly string[];\n  location:string;\n} | {\n  /** Direct Delta path relation avoids creating a metastore binding for local installations. */\n  kind:'delta-path';\n  path:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SparkDelta4TargetBinding\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1713,
+      "line": 33,
+      "path": "src/adapters/delta/ddl.ts",
+      "sha256": "8bd9ed621b4861e08be3931938637b829035619d8b47dee87361ffc7e979eaee"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/ddl.ts",
+  "title": "SparkDelta4TargetBinding"
+}

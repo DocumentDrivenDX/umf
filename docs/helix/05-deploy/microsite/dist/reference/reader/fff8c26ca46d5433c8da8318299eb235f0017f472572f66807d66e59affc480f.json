@@ -1,23 +1,26 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectFacetsToPostgresql\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [],
-      "name": "input",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetDeclaration\"]",
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "author",
       "optional": false,
-      "type": "Author"
+      "type": "CoreFacetDeclaration | CoreKindDeclaration"
     },
     {
       "description": "",
       "links": [
         "[\"api\",\".\",\"FacetsPostgresqlRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "FacetsPostgresqlRequest"
     },
@@ -31,9 +34,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Project verified author intent. Native carrier defaults never become author assertions.",
+  "purpose": "projectFacetsToPostgresql accepts author, request, backend and returns Promise<FacetsPostgresqlProjection>.",
   "related": [],
   "returns": "Promise<FacetsPostgresqlProjection>",
   "task": "Import and export",
-  "type": "(input: Author, options: FacetsPostgresqlRequest, backend: PostgresqlBackend) => Promise<FacetsPostgresqlProjection>"
+  "type": "(author: CoreFacetDeclaration | CoreKindDeclaration, request: FacetsPostgresqlRequest, backend: PostgresqlBackend) => Promise<FacetsPostgresqlProjection>"
 }

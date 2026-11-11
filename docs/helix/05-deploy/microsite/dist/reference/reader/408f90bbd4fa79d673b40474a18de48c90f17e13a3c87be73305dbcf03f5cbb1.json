@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     },
@@ -20,9 +20,9 @@
       "type": "unknown"
     }
   ],
-  "purpose": "downgradeSecurityPolicySource accepts input, revision and returns SecurityPolicySourceMigration.",
+  "purpose": "downgradeSecurityPolicySource accepts source, revision and returns SecurityPolicySourceMigration.",
   "related": [],
   "returns": "SecurityPolicySourceMigration",
   "task": "Other APIs",
-  "type": "(input: unknown, revision: unknown) => SecurityPolicySourceMigration"
+  "type": "(source: unknown, revision: unknown) => SecurityPolicySourceMigration"
 }

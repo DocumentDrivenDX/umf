@@ -40,5 +40,5 @@
   "related": [],
   "returns": "{ document: Document; validation: Validation; }",
   "task": "Author and edit",
-  "type": "(document: Document, path: string, json: string, resourceUri?: string) => { document: Document; validation: Validation; }"
+  "type": "(document: Parameters<ProposeOpenapiEdit>[0], path: Parameters<ProposeOpenapiEdit>[1], json: Parameters<ProposeOpenapiEdit>[2], resourceUri?: Parameters<ProposeOpenapiEdit>[3]) => ReturnType<ProposeOpenapiEdit>"
 }

@@ -26,5 +26,5 @@
   "related": [],
   "returns": "{ source: Document; document: Document; validation: Validation; complete: false; renamedCollationPaths: { from: string; to: string; }[]; diagnostics: Diagnostic[]; }",
   "task": "Other APIs",
-  "type": "(document: Document, options: { fieldPointer: string; name: string; uninterpretedMetadata: \"preserve-and-report\"; }) => { source: Document; document: Document; validation: Validation; complete: false; renamedCollationPaths: { from: string; to: string; }[]; diagnostics: Diagnostic[]; }"
+  "type": "(document: Document, options: Parameters<RenameSparkField>[1]) => ReturnType<RenameSparkField>"
 }

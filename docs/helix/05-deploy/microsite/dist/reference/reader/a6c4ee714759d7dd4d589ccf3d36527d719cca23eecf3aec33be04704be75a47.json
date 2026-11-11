@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventoryMigrationPhase\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"transaction\" | \"seed\" | \"prepare\" | \"approval\" | \"backfill-add\" | \"backfill-tighten\" | \"field-replacement\" | \"field-conversion\" | \"field-retirement\" | \"field-restoration\" | \"concurrent-index\" | \"constraint-add\" | \"constraint-validation\" | \"publication\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "transaction",
+      "optional": false,
+      "type": "\"required\" | \"forbidden\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "steps",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventoryMigrationPhase is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventoryMigrationPhase"
+}

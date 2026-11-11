@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyTableSpecRecordClassification\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"TableSpecRecordClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "TableSpecRecordClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Whole-record receipt verification; native or authored changes require recomputation.",
+  "purpose": "verifyTableSpecRecordClassification accepts receipt, current and returns TableSpecRecordClassification.",
   "related": [],
   "returns": "TableSpecRecordClassification",
   "task": "Other APIs",
-  "type": "(input: TableSpecRecordClassification, current: Document) => TableSpecRecordClassification"
+  "type": "(receipt: TableSpecRecordClassification, current: Document) => TableSpecRecordClassification"
 }

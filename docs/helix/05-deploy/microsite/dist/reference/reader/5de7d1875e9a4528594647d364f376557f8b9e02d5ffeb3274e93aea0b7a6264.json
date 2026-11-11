@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectAvroToJsonSchema\"]",
   "kind": "Function",
   "members": [],
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"AvroDocumentBindings\"]"
       ],
-      "name": "input",
+      "name": "bindings",
       "optional": false,
       "type": "AvroDocumentBindings"
     }
   ],
-  "purpose": "Projects schema shapes; instance encoding is an explicit caller responsibility.",
+  "purpose": "projectAvroToJsonSchema accepts source, bindings and returns AvroDocumentProjection.",
   "related": [],
   "returns": "AvroDocumentProjection",
   "task": "Import and export",
-  "type": "(source: Document, input: AvroDocumentBindings) => AvroDocumentProjection"
+  "type": "(source: Document, bindings: AvroDocumentBindings) => AvroDocumentProjection"
 }

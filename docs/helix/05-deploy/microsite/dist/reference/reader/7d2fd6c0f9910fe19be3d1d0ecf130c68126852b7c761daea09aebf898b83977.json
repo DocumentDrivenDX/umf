@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingToIceberg\"]",
   "kind": "Function",
   "members": [],
@@ -40,7 +40,7 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Maps clustering to a v2/v3 default sort-order hint, with an explicit approximation residual.",
+  "purpose": "projectBindingToIceberg accepts logical, binding, nativeArchive, lossPolicy and returns IcebergBindingProjection.",
   "related": [],
   "returns": "IcebergBindingProjection",
   "task": "Import and export",

@@ -6,17 +6,15 @@
   "members": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityRef\"]"
-      ],
+      "links": [],
       "name": "type",
       "optional": false,
-      "type": "SecurityRef"
+      "type": "SecurityTypeRef"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleValue\"]"
       ],
       "name": "key",
       "optional": false,
@@ -25,21 +23,18 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"SecurityRef\"]",
         "[\"api\",\".\",\"CoreLiteral\"]"
       ],
       "name": "fields",
       "optional": false,
-      "type": "{ field: SecurityRef; value: CoreLiteral; }[]"
+      "type": "{ field: SecurityTypeRef; value: CoreLiteral; }[]"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityRef\"]"
-      ],
+      "links": [],
       "name": "absent",
       "optional": false,
-      "type": "SecurityRef[]"
+      "type": "SecurityTypeRef[]"
     }
   ],
   "parameters": [],

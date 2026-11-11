@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5942,
+        "line": 5,
+        "path": "src/extensions/actions/bulk-state.ts",
+        "sha256": "577ea9f8faa3d3d3dc798fdb7cda349b446f5a771f7bceffadd086b506af0412"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "BulkClaim",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface BulkClaim {batch:number;fence:string;effectAdmitted:boolean}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"BulkClaim\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5942,
+      "line": 5,
+      "path": "src/extensions/actions/bulk-state.ts",
+      "sha256": "577ea9f8faa3d3d3dc798fdb7cda349b446f5a771f7bceffadd086b506af0412"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/bulk-state.ts",
+  "title": "BulkClaim"
+}

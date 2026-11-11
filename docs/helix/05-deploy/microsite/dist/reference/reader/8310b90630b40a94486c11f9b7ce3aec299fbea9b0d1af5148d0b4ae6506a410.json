@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": false,
+  "authored": true,
   "id": "[\"api\",\".\",\"createSmithyJavaScriptJsonSchemaBackend\"]",
   "kind": "Function",
   "members": [],
@@ -13,7 +13,7 @@
       "type": "{ assemble(sourcesJson: string): string; jsonSchema(modelJson: string, rootShape: string): string; jsonSchemaWithRootDefinition?(modelJson: string, rootShape: string): string; jsonSchemaForService?(modelJson: string, rootShape: string, serviceContext: string, addRootDefinition: boolean): string; }"
     }
   ],
-  "purpose": "createSmithyJavaScriptJsonSchemaBackend accepts module and returns SmithyJsonSchemaBackend.",
+  "purpose": "Bind the explicit pinned JSON Schema converter to the already admitted Smithy host backend.",
   "related": [],
   "returns": "SmithyJsonSchemaBackend",
   "task": "Author and edit",

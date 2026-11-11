@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10059,
-        "line": 10,
-        "path": "src/projections/sqlserver-avro.ts",
-        "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+        "bytes": 84809,
+        "line": 253,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectSqlServerToAvro",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, input: SqlServerAvroPolicy): SqlServerAvroProjection"
+      "(source: Document, policy: SqlServerAvroPolicy): SqlServerAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectSqlServerToAvro\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10059,
-      "line": 10,
-      "path": "src/projections/sqlserver-avro.ts",
-      "sha256": "6f4b1935cb141da1c4ba19a02e11252f113c4880d3d4c0376b3fa815a1889078"
+      "bytes": 84809,
+      "line": 253,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/projections/sqlserver-avro.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectSqlServerToAvro"
 }

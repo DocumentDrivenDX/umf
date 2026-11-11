@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"numericToNumberLossless\"]",
   "kind": "Function",
   "members": [],
@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"JavascriptNumericLiteral\"]"
+        "[\"api\",\"./runtime/wasm\",\"JavascriptNumericLiteral\"]"
       ],
       "name": "input",
       "optional": false,
@@ -17,14 +17,14 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"JavascriptNumericContext\"]"
+        "[\"api\",\"./runtime/wasm\",\"JavascriptNumericContext\"]"
       ],
       "name": "context",
       "optional": true,
       "type": "JavascriptNumericContext | undefined"
     }
   ],
-  "purpose": "Lossless value conversion, not lexical recovery. The original carrier is untouched.",
+  "purpose": "numericToNumberLossless accepts input, context and returns number.",
   "related": [],
   "returns": "number",
   "task": "Other APIs",

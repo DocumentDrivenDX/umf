@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverNullabilityFromSqlServer\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"NullabilitySqlServerProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "NullabilitySqlServerProjection"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "purpose": "recoverNullabilityFromSqlServer accepts receipt, nativeText and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: NullabilitySqlServerProjection, nativeText: string) => Document"
+  "type": "(receipt: NullabilitySqlServerProjection, nativeText: string) => Document"
 }

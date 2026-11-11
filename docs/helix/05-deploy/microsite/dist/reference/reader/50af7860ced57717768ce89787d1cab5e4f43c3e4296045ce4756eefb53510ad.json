@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectProtectionObligations\"]",
   "kind": "Function",
   "members": [],
@@ -29,14 +29,14 @@
     {
       "description": "",
       "links": [],
-      "name": "ontologyInput",
+      "name": "ontology",
       "optional": false,
       "type": "unknown"
     }
   ],
-  "purpose": "Source declaration consistency only. Every reported enforcement obligation stays unverified.",
+  "purpose": "inspectProtectionObligations accepts policy, catalog, closure, ontology and returns ProtectionDeclarationInspection.",
   "related": [],
   "returns": "ProtectionDeclarationInspection",
   "task": "Inspect and select",
-  "type": "(policy: unknown, catalog: unknown, closure: unknown, ontologyInput: unknown) => ProtectionDeclarationInspection"
+  "type": "(policy: unknown, catalog: unknown, closure: unknown, ontology: unknown) => ReturnType<typeof import(\"/private/tmp/umf-01011-release/site/worktree/src/extensions/security/protection/obligations\").inspectProtectionObligations>"
 }

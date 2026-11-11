@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"historicalCoreFacetPatch\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "CoreFacetInterpreted"
     }
   ],
-  "purpose": "Historical projection bridge: refuses newer bounds rather than dropping them.",
+  "purpose": "historicalCoreFacetPatch accepts input and returns { length?: { max: number; unit: \"unicode-scalar\" | \"byte\"; }; precision?: number; scale?: number; integerWidth?: { bits: number; signed: boolean; }; }.",
   "related": [],
-  "returns": "CoreFacetPatch",
+  "returns": "{ length?: { max: number; unit: \"unicode-scalar\" | \"byte\"; }; precision?: number; scale?: number; integerWidth?: { bits: number; signed: boolean; }; }",
   "task": "Other APIs",
-  "type": "(input: CoreFacetInterpreted) => CoreFacetPatch"
+  "type": "(input: CoreFacetInterpreted) => { length?: { max: number; unit: \"unicode-scalar\" | \"byte\"; }; precision?: number; scale?: number; integerWidth?: { bits: number; signed: boolean; }; }"
 }

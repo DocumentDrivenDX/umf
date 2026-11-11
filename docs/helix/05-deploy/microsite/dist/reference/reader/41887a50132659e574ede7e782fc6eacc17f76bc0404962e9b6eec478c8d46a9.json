@@ -10,23 +10,23 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordIdentity\"]"
       ],
       "name": "identity",
       "optional": false,
       "type": "CoreRecordIdentity"
     }
   ],
-  "purpose": "inspectCoreKeys accepts input, identity and returns CoreKeyInspection.",
+  "purpose": "inspectCoreKeys accepts source, identity and returns CoreKeyInspection.",
   "related": [],
   "returns": "CoreKeyInspection",
   "task": "Inspect and select",
-  "type": "(input: Document, identity: CoreRecordIdentity) => CoreKeyInspection"
+  "type": "(source: Document, identity: CoreRecordIdentity) => CoreKeyInspection"
 }

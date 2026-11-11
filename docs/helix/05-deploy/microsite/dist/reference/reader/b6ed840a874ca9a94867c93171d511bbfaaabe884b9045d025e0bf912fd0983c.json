@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreDatasetCompactValueCheck\"]"
       ],
-      "name": "receiptInput",
+      "name": "receipt",
       "optional": false,
       "type": "CoreDatasetCompactValueCheck"
     },
@@ -33,9 +33,9 @@
       "type": "CoreDatasetInput"
     }
   ],
-  "purpose": "verifyCoreDatasetValuesCompact accepts receiptInput, current, expectedInput and returns CoreDatasetCompactValueCheck.",
+  "purpose": "verifyCoreDatasetValuesCompact accepts receipt, current, expectedInput and returns CoreDatasetCompactValueCheck.",
   "related": [],
   "returns": "CoreDatasetCompactValueCheck",
   "task": "Other APIs",
-  "type": "(receiptInput: CoreDatasetCompactValueCheck, current: Document, expectedInput: CoreDatasetInput) => CoreDatasetCompactValueCheck"
+  "type": "(receipt: CoreDatasetCompactValueCheck, current: Document, expectedInput: CoreDatasetInput) => CoreDatasetCompactValueCheck"
 }

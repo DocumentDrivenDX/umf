@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 14201,
-        "line": 115,
-        "path": "src/core-ideals/nullability-sqlserver.ts",
-        "sha256": "795e8c6081c8012ff00aa2e8a2fa387102480906fc879c5eae5f62f1e233bde4"
+        "bytes": 84809,
+        "line": 341,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifySqlServerNullabilityClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: SqlServerNullabilityClassification, current: Document): SqlServerNullabilityClassification"
+      "(receipt: SqlServerNullabilityClassification, current: Document): SqlServerNullabilityClassification"
     ]
   },
   "id": "[\"api\",\".\",\"verifySqlServerNullabilityClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 14201,
-      "line": 115,
-      "path": "src/core-ideals/nullability-sqlserver.ts",
-      "sha256": "795e8c6081c8012ff00aa2e8a2fa387102480906fc879c5eae5f62f1e233bde4"
+      "bytes": 84809,
+      "line": 341,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifySqlServerNullabilityClassification"
 }

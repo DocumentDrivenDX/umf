@@ -24,5 +24,5 @@
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(text: string, options: { id: string; dependencies?: { id: string; schema: string; }[]; }) => Document"
+  "type": "(text: Parameters<ImportAvroSchema>[0], options: Parameters<ImportAvroSchema>[1]) => ReturnType<ImportAvroSchema>"
 }

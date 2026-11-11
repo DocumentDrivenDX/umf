@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"selectDbtManifestDependencies\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "{ roots: string[]; includeMacros?: boolean; maxDepth?: number; maxNodes?: number; }"
     }
   ],
-  "purpose": "Upstream context selection. Full source accompanies the bounded view; this is not a runnable manifest subset.",
+  "purpose": "selectDbtManifestDependencies accepts document, options and returns DbtDependencySelection.",
   "related": [],
   "returns": "DbtDependencySelection",
   "task": "Inspect and select",
-  "type": "(document: Document, options: { roots: string[]; includeMacros?: boolean; maxDepth?: number; maxNodes?: number; }) => DbtDependencySelection"
+  "type": "(document: Parameters<SelectDbtManifestDependencies>[0], options: Parameters<SelectDbtManifestDependencies>[1]) => ReturnType<SelectDbtManifestDependencies>"
 }

@@ -8,21 +8,21 @@
     {
       "description": "",
       "links": [],
-      "name": "ontologyInput",
+      "name": "ontology",
       "optional": false,
       "type": "unknown"
     },
     {
       "description": "",
       "links": [],
-      "name": "documentsInput",
+      "name": "documents",
       "optional": false,
       "type": "unknown"
     }
   ],
-  "purpose": "inspectSecurityActionPurposes accepts ontologyInput, documentsInput and returns SecurityActionPurposeInspection.",
+  "purpose": "inspectSecurityActionPurposes accepts ontology, documents and returns SecurityActionPurposeInspection.",
   "related": [],
   "returns": "SecurityActionPurposeInspection",
   "task": "Inspect and select",
-  "type": "(ontologyInput: unknown, documentsInput: unknown) => SecurityActionPurposeInspection"
+  "type": "(ontology: unknown, documents: unknown) => ReturnType<typeof import(\"/private/tmp/umf-01011-release/site/worktree/src/extensions/security/action-purposes\").inspectSecurityActionPurposes>"
 }

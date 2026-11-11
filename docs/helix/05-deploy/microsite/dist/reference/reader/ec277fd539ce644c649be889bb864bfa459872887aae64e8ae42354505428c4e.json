@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"KeyPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "KeyPostgresqlProjection"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverKeysPostgresqlIdeal accepts input, current, backend and returns Promise<Document>.",
+  "purpose": "recoverKeysPostgresqlIdeal accepts receipt, current, backend and returns Promise<Document>.",
   "related": [],
   "returns": "Promise<Document>",
   "task": "Import and export",
-  "type": "(input: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<Document>"
+  "type": "(receipt: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<Document>"
 }

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "bindingInput",
+      "name": "binding",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "sourceInput",
+      "name": "logical",
       "optional": false,
       "type": "Document"
     },
@@ -28,19 +28,19 @@
       "links": [],
       "name": "identity",
       "optional": false,
-      "type": "Bit128Ref"
+      "type": "{ module: string; element: string; }"
     },
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "slots",
       "optional": false,
       "type": "Record<string, string | null>"
     }
   ],
-  "purpose": "decodeBit128Record accepts bindingInput, sourceInput, identity, input and returns Bit128RecordValue[].",
+  "purpose": "decodeBit128Record accepts binding, logical, identity, slots and returns Bit128RecordValue[].",
   "related": [],
   "returns": "Bit128RecordValue[]",
   "task": "Serialize",
-  "type": "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, input: Record<string, string | null>) => Bit128RecordValue[]"
+  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, slots: Record<string, string | null>) => Bit128RecordValue[]"
 }

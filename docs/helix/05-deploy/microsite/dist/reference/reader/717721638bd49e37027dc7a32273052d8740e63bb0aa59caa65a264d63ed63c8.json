@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"validateCoreDatasetValues\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "sourceInput",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"CoreDatasetInput\"]"
       ],
-      "name": "inputInput",
+      "name": "input",
       "optional": false,
       "type": "CoreDatasetInput"
     }
   ],
-  "purpose": "Finite supplied dataset only; no global/native coverage or execution authority.",
+  "purpose": "validateCoreDatasetValues accepts source, input and returns CoreDatasetValueCheck.",
   "related": [],
   "returns": "CoreDatasetValueCheck",
   "task": "Read and validate",
-  "type": "(sourceInput: Document, inputInput: CoreDatasetInput) => CoreDatasetValueCheck"
+  "type": "(source: Document, input: CoreDatasetInput) => CoreDatasetValueCheck"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10034,
-        "line": 24,
-        "path": "src/core-ideals/nullability-avro.ts",
-        "sha256": "dd3b3b867b8f70cdb19fcbc10f559b2444a04cd325f1971c68fe3e857c00b2ce"
+        "bytes": 1597,
+        "line": 8,
+        "path": "src/core-ideals/nullability-avro-types.ts",
+        "sha256": "bfccf063e1488e5498c5978c58727c52ff9c682132a6108e61cc8a4d02021b24"
       }
     ],
     "entrypoint": ".",
     "exportName": "AvroNullabilityClassification",
     "runtime": "type-only",
     "signatureText": [
-      "export interface AvroNullabilityClassification {\n operation:'classify-avro-nullability';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:AvroNullabilityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;dependencyId?:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:AvroNullabilityRequest['scope'];carrier:AvroNullabilityRequest['carrier'];basis:'Underlying field type in a present containing record; not member omission, reader defaults, ancestor availability or logical refinements'};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+      "export interface AvroNullabilityClassification {\n operation:'classify-avro-nullability';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:AvroNullabilityRequest;\n binding:{id:'umf.avro.nullability';version:'1.0.0';nativeVersion:'1.12.0';subset:'Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements'};\n mapping:{origin:'classified';idealPath:string;nativePath:string;dependencyId?:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:AvroNullabilityRequest['scope'];carrier:AvroNullabilityRequest['carrier'];basis:'Underlying field type in a present containing record; not member omission, reader defaults, ancestor availability or logical refinements'};\n residuals:{path:string;value:Json;reason:string;recovery:'Retain the complete source and native archive; unknown native meaning is not replaced by the core label'}[];\n diagnostics:Diagnostic[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"AvroNullabilityClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10034,
-      "line": 24,
-      "path": "src/core-ideals/nullability-avro.ts",
-      "sha256": "dd3b3b867b8f70cdb19fcbc10f559b2444a04cd325f1971c68fe3e857c00b2ce"
+      "bytes": 1597,
+      "line": 8,
+      "path": "src/core-ideals/nullability-avro-types.ts",
+      "sha256": "bfccf063e1488e5498c5978c58727c52ff9c682132a6108e61cc8a4d02021b24"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/nullability-avro.ts",
+  "summary": "Type declaration · src/core-ideals/nullability-avro-types.ts",
   "title": "AvroNullabilityClassification"
 }

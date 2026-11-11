@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"admitActionInputs\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "documentInput",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Action\"]"
       ],
-      "name": "actionInput",
+      "name": "action",
       "optional": false,
       "type": "Action"
     },
@@ -28,7 +28,7 @@
       "links": [
         "[\"api\",\".\",\"ActionInputs\"]"
       ],
-      "name": "inputsInput",
+      "name": "inputs",
       "optional": false,
       "type": "ActionInputs"
     },
@@ -40,9 +40,9 @@
       "type": "boolean"
     }
   ],
-  "purpose": "Typed admission, without store lookup or entity existence checks.",
+  "purpose": "admitActionInputs accepts document, action, inputs, outputs and returns ActionInputs.",
   "related": [],
   "returns": "ActionInputs",
   "task": "Other APIs",
-  "type": "(documentInput: Document, actionInput: Action, inputsInput: ActionInputs, outputs?: boolean) => ActionInputs"
+  "type": "(document: Document, action: Action, inputs: ActionInputs, outputs?: boolean) => ActionInputs"
 }

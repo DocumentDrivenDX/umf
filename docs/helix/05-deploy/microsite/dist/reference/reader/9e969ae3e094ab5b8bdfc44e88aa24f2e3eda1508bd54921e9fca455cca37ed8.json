@@ -1,7 +1,7 @@
 {
   "alternatives": [
-    "{ kind: \"negativePropertyAssertion\"; node: RdfNode; sourceIndividual: RdfNode; assertionProperty: RdfNode; target: Term; targetKind: \"individual\" | \"value\"; quadIndexes: number[]; }",
-    "{ kind: \"allDifferent\" | \"allDisjointClasses\" | \"allDisjointProperties\"; node: RdfNode; members: Term[]; memberPredicate: \"members\" | \"distinctMembers\"; quadIndexes: number[]; }"
+    "{ kind: \"negativePropertyAssertion\"; node: RdfNode; sourceIndividual: RdfNode; assertionProperty: RdfNode; target: OwlValue; targetKind: \"individual\" | \"value\"; quadIndexes: number[]; }",
+    "{ kind: \"allDifferent\" | \"allDisjointClasses\" | \"allDisjointProperties\"; node: RdfNode; members: OwlValue[]; memberPredicate: \"members\" | \"distinctMembers\"; quadIndexes: number[]; }"
   ],
   "authored": false,
   "id": "[\"api\",\".\",\"OwlSpecialAxiom\"]",

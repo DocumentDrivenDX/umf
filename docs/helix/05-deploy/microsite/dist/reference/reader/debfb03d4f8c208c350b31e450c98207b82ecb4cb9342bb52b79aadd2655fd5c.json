@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectKeysToParquet\"]",
   "kind": "Function",
   "members": [],
@@ -10,16 +10,16 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyDeclaration\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyDeclaration\"]"
       ],
-      "name": "authorInput",
+      "name": "authors",
       "optional": false,
       "type": "CoreKeyDeclaration[]"
     },
@@ -28,14 +28,14 @@
       "links": [
         "[\"api\",\".\",\"KeyParquetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "KeyParquetRequest"
     }
   ],
-  "purpose": "Consume verified declarations by stable ID. Native names never supply authored identity.",
+  "purpose": "projectKeysToParquet accepts source, authors, request and returns KeyParquetProjection.",
   "related": [],
   "returns": "KeyParquetProjection",
   "task": "Import and export",
-  "type": "(input: Document, authorInput: CoreKeyDeclaration[], options: KeyParquetRequest) => KeyParquetProjection"
+  "type": "(source: Document, authors: CoreKeyDeclaration[], request: KeyParquetRequest) => KeyParquetProjection"
 }

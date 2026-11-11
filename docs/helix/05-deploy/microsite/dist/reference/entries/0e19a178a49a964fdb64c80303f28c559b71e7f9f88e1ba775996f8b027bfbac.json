@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7048,
-        "line": 8,
-        "path": "src/extensions/security/policy-representation-v2.ts",
-        "sha256": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9"
+        "bytes": 586,
+        "line": 12,
+        "path": "src/extensions/security/policy-package.ts",
+        "sha256": "067e2ea319616c9dafb50454224200b0178364204ef375935607d416f4ae40d1"
       }
     ],
     "entrypoint": ".",
     "exportName": "securityV2Package",
     "runtime": "unassessed",
     "signatureText": [
-      "securityV2Package=copyJson(manifest) as unknown as ExtensionPackage"
+      "securityV2Package=copyJson(v2Manifest) as unknown as ExtensionPackage"
     ]
   },
   "id": "[\"api\",\".\",\"securityV2Package\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7048,
-      "line": 8,
-      "path": "src/extensions/security/policy-representation-v2.ts",
-      "sha256": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9"
+      "bytes": 586,
+      "line": 12,
+      "path": "src/extensions/security/policy-package.ts",
+      "sha256": "067e2ea319616c9dafb50454224200b0178364204ef375935607d416f4ae40d1"
     }
   ],
-  "summary": "Public export · src/extensions/security/policy-representation-v2.ts",
+  "summary": "Public export · src/extensions/security/policy-package.ts",
   "title": "securityV2Package"
 }

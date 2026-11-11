@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8120,
-        "line": 34,
-        "path": "src/adapters/iceberg/index.ts",
-        "sha256": "4b20bd319d228e9b8ee9446f78b6b0bf873d63009e09f879980d0eab1d3de493"
+        "bytes": 84809,
+        "line": 234,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "icebergRegistry",
     "runtime": "unassessed",
     "signatureText": [
-      "(): Registry"
+      "(): RegistryBase"
     ]
   },
   "id": "[\"api\",\".\",\"icebergRegistry\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8120,
-      "line": 34,
-      "path": "src/adapters/iceberg/index.ts",
-      "sha256": "4b20bd319d228e9b8ee9446f78b6b0bf873d63009e09f879980d0eab1d3de493"
+      "bytes": 84809,
+      "line": 234,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/iceberg/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "icebergRegistry"
 }

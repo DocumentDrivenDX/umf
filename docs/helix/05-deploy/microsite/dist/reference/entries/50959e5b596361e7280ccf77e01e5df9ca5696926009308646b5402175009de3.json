@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11528,
-        "line": 62,
-        "path": "src/extensions/security/protection/disclosure.ts",
-        "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+        "bytes": 84809,
+        "line": 198,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectSecurityDisclosureV2",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, policy: unknown, catalog: unknown, closure: unknown): SecurityDisclosureInspectionV2"
+      "(source: unknown, policy: unknown, catalog: unknown, closure: unknown): SecurityDisclosureInspectionV2"
     ]
   },
   "id": "[\"api\",\".\",\"inspectSecurityDisclosureV2\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11528,
-      "line": 62,
-      "path": "src/extensions/security/protection/disclosure.ts",
-      "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+      "bytes": 84809,
+      "line": 198,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Every check is against detached supplied sources; successful data validation is not admission.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectSecurityDisclosureV2"
 }

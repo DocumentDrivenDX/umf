@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroRelationshipClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "verifyAvroRelationshipClassification accepts input, current and returns AvroRelationshipClassification.",
+  "purpose": "verifyAvroRelationshipClassification accepts receipt, current and returns AvroRelationshipClassification.",
   "related": [],
   "returns": "AvroRelationshipClassification",
   "task": "Other APIs",
-  "type": "(input: AvroRelationshipClassification, current: Document) => AvroRelationshipClassification"
+  "type": "(receipt: AvroRelationshipClassification, current: Document) => AvroRelationshipClassification"
 }

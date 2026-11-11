@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 24721,
-        "line": 88,
-        "path": "src/core-ideals/relationship-postgresql.ts",
-        "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+        "bytes": 84809,
+        "line": 289,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverPostgresqlRelationshipSource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend): Promise<string>"
+      "(receipt: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend): Promise<string>"
     ]
   },
   "id": "[\"api\",\".\",\"recoverPostgresqlRelationshipSource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 24721,
-      "line": 88,
-      "path": "src/core-ideals/relationship-postgresql.ts",
-      "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+      "bytes": 84809,
+      "line": 289,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/relationship-postgresql.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverPostgresqlRelationshipSource"
 }

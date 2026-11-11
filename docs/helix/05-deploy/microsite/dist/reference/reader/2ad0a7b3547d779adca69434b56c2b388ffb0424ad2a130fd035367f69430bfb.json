@@ -1,0 +1,52 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SagaRuntime\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"actionsPackage\"]",
+        "[\"api\",\".\",\"sagaPackage\"]"
+      ],
+      "name": "sagaRegistryProfile",
+      "optional": false,
+      "type": "() => { actionsPackage: unknown; sagaPackage: unknown; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectSagas",
+      "optional": false,
+      "type": "(source: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareSaga",
+      "optional": false,
+      "type": "(source: unknown, module: string, definition: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "editSaga",
+      "optional": false,
+      "type": "(source: unknown, identity: unknown, replacement: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "assessSaga",
+      "optional": false,
+      "type": "(source: unknown, identity: unknown, capabilities: unknown) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Implemented by createCodegenEngine with an explicitly installed sagaPackage.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SagaRuntime"
+}

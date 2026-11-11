@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"executeRecordTypeBindingWire\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "wireJson",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "controlDispatcher",
+      "optional": true,
+      "type": "((amount: number) => string | undefined) | undefined"
+    }
+  ],
+  "purpose": "executeRecordTypeBindingWire accepts module, wireJson, controlDispatcher and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(module: any, wireJson: string, controlDispatcher?: (amount: number) => string | undefined) => string"
+}

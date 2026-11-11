@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"declareCoreSemanticTypes\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -28,14 +28,14 @@
       "links": [
         "[\"api\",\".\",\"CoreSemanticTypeReference\"]"
       ],
-      "name": "typesInput",
+      "name": "types",
       "optional": false,
       "type": "CoreSemanticTypeReference[] | null"
     }
   ],
-  "purpose": "Explicit declarations retain the entire previous model; they do not assert native enforcement.",
+  "purpose": "declareCoreSemanticTypes accepts source, identity, types and returns CoreSemanticTypeDeclaration.",
   "related": [],
   "returns": "CoreSemanticTypeDeclaration",
   "task": "Other APIs",
-  "type": "(input: Document, identity: CoreSemanticTypeIdentity, typesInput: CoreSemanticTypeReference[] | null) => CoreSemanticTypeDeclaration"
+  "type": "(source: Document, identity: CoreSemanticTypeIdentity, types: CoreSemanticTypeReference[] | null) => CoreSemanticTypeDeclaration"
 }

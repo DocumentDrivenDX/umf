@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8291,
-        "line": 9,
-        "path": "src/projections/smithy-json-schema.ts",
-        "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+        "bytes": 1323,
+        "line": 7,
+        "path": "src/adapters/smithy/json-schema-host-backend.ts",
+        "sha256": "943a5ded99fa4059f233107bcf7941cc1e9ba2a9dc62c77dcda4bdc2396be3da"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8291,
-      "line": 9,
-      "path": "src/projections/smithy-json-schema.ts",
-      "sha256": "095c1e912cdd8ee314fdae39623a0cc33a6d2fe558c76a271ff456f0e6335526"
+      "bytes": 1323,
+      "line": 7,
+      "path": "src/adapters/smithy/json-schema-host-backend.ts",
+      "sha256": "943a5ded99fa4059f233107bcf7941cc1e9ba2a9dc62c77dcda4bdc2396be3da"
     }
   ],
-  "summary": "Public export · src/projections/smithy-json-schema.ts",
+  "summary": "Bind the explicit pinned JSON Schema converter to the already admitted Smithy host backend.",
   "title": "createSmithyJavaScriptJsonSchemaBackend"
 }

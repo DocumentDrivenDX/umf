@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5657,
+        "line": 23,
+        "path": "src/extensions/actions/saga.ts",
+        "sha256": "64d29da5b0bc3786fe145f8202e05f588ac2540f28ce1aaa7bc3c320ded7e88b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SagaAssessment",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SagaAssessment {valid:boolean;complete:boolean;declarationCompatible:boolean;executionVerified:false;coordination:SagaClaimStatus;outcomes:SagaClaim[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SagaAssessment\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5657,
+      "line": 23,
+      "path": "src/extensions/actions/saga.ts",
+      "sha256": "64d29da5b0bc3786fe145f8202e05f588ac2540f28ce1aaa7bc3c320ded7e88b"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/saga.ts",
+  "title": "SagaAssessment"
+}

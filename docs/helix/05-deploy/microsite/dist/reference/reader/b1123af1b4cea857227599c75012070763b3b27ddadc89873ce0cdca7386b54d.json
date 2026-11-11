@@ -10,19 +10,19 @@
       "links": [],
       "name": "input",
       "optional": false,
-      "type": "{ entrypoint: string; files: Record<string, string>; libraries?: Record<string, string>; }"
+      "type": "TypeSpecSourceInput"
     },
     {
       "description": "",
       "links": [],
       "name": "options",
       "optional": false,
-      "type": "{ id: string; }"
+      "type": "TypeSpecImportOptions"
     }
   ],
   "purpose": "importTypeSpecSources accepts input, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: { entrypoint: string; files: Record<string, string>; libraries?: Record<string, string>; }, options: { id: string; }) => Document"
+  "type": "(input: TypeSpecSourceInput, options: TypeSpecImportOptions) => Document"
 }

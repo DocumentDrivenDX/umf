@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectRelationshipToTableSpec\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
       ],
-      "name": "authorInput",
+      "name": "author",
       "optional": false,
       "type": "CoreRelationshipDeclaration"
     },
@@ -28,7 +28,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "nativeSourceInput",
+      "name": "nativeSource",
       "optional": false,
       "type": "Document"
     },
@@ -37,7 +37,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "nativeTargetInput",
+      "name": "nativeTarget",
       "optional": false,
       "type": "Document"
     },
@@ -46,14 +46,14 @@
       "links": [
         "[\"api\",\".\",\"RelationshipTableSpecRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "RelationshipTableSpecRequest"
     }
   ],
-  "purpose": "Explicit metadata lowering; no native execution or author-intent inference.",
+  "purpose": "projectRelationshipToTableSpec accepts source, author, nativeSource, nativeTarget, request and returns RelationshipTableSpecProjection.",
   "related": [],
   "returns": "RelationshipTableSpecProjection",
   "task": "Import and export",
-  "type": "(input: Document, authorInput: CoreRelationshipDeclaration, nativeSourceInput: Document, nativeTargetInput: Document, options: RelationshipTableSpecRequest) => RelationshipTableSpecProjection"
+  "type": "(source: Document, author: import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").CoreRelationshipDeclaration, nativeSource: Document, nativeTarget: Document, request: RelationshipTableSpecRequest) => RelationshipTableSpecProjection"
 }

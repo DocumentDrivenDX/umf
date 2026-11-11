@@ -16,15 +16,17 @@
     },
     {
       "description": "",
-      "links": [],
+      "links": [
+        "[\"api\",\".\",\"GraphqlPayload\"]"
+      ],
       "name": "edit",
       "optional": false,
-      "type": "(ast: DocumentNode) => DocumentNode"
+      "type": "(ast: GraphqlPayload[\"ast\"]) => GraphqlPayload[\"ast\"]"
     }
   ],
   "purpose": "editGraphqlAst accepts document, edit and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(document: Document, edit: (ast: DocumentNode) => DocumentNode) => Document"
+  "type": "(document: Document, edit: (ast: GraphqlPayload[\"ast\"]) => GraphqlPayload[\"ast\"]) => Document"
 }

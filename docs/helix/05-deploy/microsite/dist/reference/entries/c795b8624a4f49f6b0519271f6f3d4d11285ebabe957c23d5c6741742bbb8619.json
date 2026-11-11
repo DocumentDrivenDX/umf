@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5095,
-        "line": 10,
-        "path": "src/adapters/shacl/engine.ts",
-        "sha256": "92f774a95bc52fe5f68ec13c36c2cb22b69bb64ea7a47a063285b409728733fe"
+        "bytes": 4613,
+        "line": 7,
+        "path": "src/adapters/shacl/rust-default.ts",
+        "sha256": "84c22ad88afdd89e53120d13c651904c2dfe03dc2d1d5a1819517bd2639d9bea"
       }
     ],
     "entrypoint": ".",
     "exportName": "ShaclEngineReport",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ShaclEngineReport {\n stringProfile:'umf-string-1';numericProfile:'umf-numeric-2';engine:'rdf-validate-shacl@0.6.5';blankNodePolicy:'disjoint-inputs'|'shared-scope';status:'evaluated'|'blocked';complete:false;\n shapes:Document;data:Document;engineConforms?:boolean;report?:Document;diagnostics:Diagnostic[];\n}"
+      "export type NativeShaclEngineReport=ShaclEngineReport;"
     ]
   },
   "id": "[\"api\",\".\",\"ShaclEngineReport\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5095,
-      "line": 10,
-      "path": "src/adapters/shacl/engine.ts",
-      "sha256": "92f774a95bc52fe5f68ec13c36c2cb22b69bb64ea7a47a063285b409728733fe"
+      "bytes": 4613,
+      "line": 7,
+      "path": "src/adapters/shacl/rust-default.ts",
+      "sha256": "84c22ad88afdd89e53120d13c651904c2dfe03dc2d1d5a1819517bd2639d9bea"
     }
   ],
-  "summary": "Type declaration · src/adapters/shacl/engine.ts",
+  "summary": "Type declaration · src/adapters/shacl/rust-default.ts",
   "title": "ShaclEngineReport"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"validateBulkOutcome\"]",
   "kind": "Function",
   "members": [],
@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"ActionPlanArtifact\"]"
       ],
-      "name": "input",
+      "name": "artifact",
       "optional": false,
       "type": "ActionPlanArtifact"
     }
   ],
-  "purpose": "Validates result shape only, never verifies original control custody or native execution.",
+  "purpose": "validateBulkOutcome accepts artifact and returns BulkOutcomeValidation.",
   "related": [],
   "returns": "BulkOutcomeValidation",
   "task": "Read and validate",
-  "type": "(input: ActionPlanArtifact) => BulkOutcomeValidation"
+  "type": "(artifact: ActionPlanArtifact) => BulkOutcomeValidation"
 }

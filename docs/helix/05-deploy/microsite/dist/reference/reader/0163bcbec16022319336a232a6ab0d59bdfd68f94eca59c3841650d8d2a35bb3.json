@@ -22,31 +22,26 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityRef\"]"
-      ],
+      "links": [],
       "name": "output",
       "optional": false,
-      "type": "SecurityRef[]"
+      "type": "SecurityTypeRef[]"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityRef\"]"
-      ],
+      "links": [],
       "name": "targets",
       "optional": true,
-      "type": "SecurityRef[]"
+      "type": "SecurityTypeRef[]"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"SecurityRef\"]",
         "[\"api\",\".\",\"SecurityQueryOperator\"]"
       ],
       "name": "queryUses",
       "optional": true,
-      "type": "{ field: SecurityRef; operator: SecurityQueryOperator; originalAction?: string; }[]"
+      "type": "{ field: SecurityTypeRef; operator: SecurityQueryOperator; originalAction?: string; }[]"
     }
   ],
   "parameters": [],

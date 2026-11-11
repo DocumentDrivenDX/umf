@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreCardinalityDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"CardinalityTableSpecRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "CardinalityTableSpecRequest"
     }
   ],
-  "purpose": "projectCardinalityToTableSpec accepts input, options and returns CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }.",
+  "purpose": "projectCardinalityToTableSpec accepts author, request and returns CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }.",
   "related": [],
   "returns": "CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }",
   "task": "Import and export",
-  "type": "(input: CoreCardinalityDeclaration, options: CardinalityTableSpecRequest) => CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }"
+  "type": "(author: CoreCardinalityDeclaration, request: CardinalityTableSpecRequest) => CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }"
 }

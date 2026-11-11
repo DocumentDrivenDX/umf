@@ -8,21 +8,21 @@
     {
       "description": "",
       "links": [],
-      "name": "policyInput",
+      "name": "policy",
       "optional": false,
       "type": "unknown"
     },
     {
       "description": "",
       "links": [],
-      "name": "catalogInput",
+      "name": "catalog",
       "optional": false,
       "type": "unknown"
     }
   ],
-  "purpose": "resolveSecurityProtectionSources accepts policyInput, catalogInput and returns SecurityProtectionSourceResolution.",
+  "purpose": "resolveSecurityProtectionSources accepts policy, catalog and returns SecurityProtectionSourceResolution.",
   "related": [],
   "returns": "SecurityProtectionSourceResolution",
   "task": "Inspect and select",
-  "type": "(policyInput: unknown, catalogInput: unknown) => SecurityProtectionSourceResolution"
+  "type": "(policy: unknown, catalog: unknown) => SecurityProtectionSourceResolution"
 }

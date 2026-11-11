@@ -18,7 +18,7 @@
       "links": [],
       "name": "structure",
       "optional": false,
-      "type": "ValidateFunction<unknown>"
+      "type": "StructureValidator"
     },
     {
       "description": "",
@@ -28,6 +28,20 @@
       "name": "semantics",
       "optional": true,
       "type": "SemanticValidator"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kinds",
+      "optional": true,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeValidator",
+      "optional": true,
+      "type": "string"
     }
   ],
   "parameters": [],

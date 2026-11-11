@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 22247,
-        "line": 166,
-        "path": "src/core-ideals/relationship-extras.ts",
-        "sha256": "c5ea928abc0d9636c63a56a11f96400d74ac5b67b0c9b6b13c1747699e923c7c"
+        "bytes": 84809,
+        "line": 437,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyRelationshipExtra",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: RelationshipExtraClassification | RelationshipExtraProjection, current?: Document | undefined): RelationshipExtraClassification | RelationshipExtraProjection"
+      "(receiptInput: RelationshipExtraClassification | RelationshipExtraProjection, currentInput?: Document | undefined): RelationshipExtraClassification | RelationshipExtraProjection"
     ]
   },
   "id": "[\"api\",\".\",\"verifyRelationshipExtra\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 22247,
-      "line": 166,
-      "path": "src/core-ideals/relationship-extras.ts",
-      "sha256": "c5ea928abc0d9636c63a56a11f96400d74ac5b67b0c9b6b13c1747699e923c7c"
+      "bytes": 84809,
+      "line": 437,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/relationship-extras.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyRelationshipExtra"
 }

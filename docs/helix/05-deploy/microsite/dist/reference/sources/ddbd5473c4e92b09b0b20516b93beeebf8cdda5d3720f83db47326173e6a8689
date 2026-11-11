@@ -1,0 +1,605 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-review:0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "side",
+    "source",
+    "configuration",
+    "table",
+    "record",
+    "meaning",
+    "intent",
+    "effects"
+  ],
+  "properties": {
+    "profile": {
+      "const": "umf.table-inventory-review/0.1"
+    },
+    "side": {
+      "enum": [
+        "previous",
+        "next"
+      ]
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "configuration": {
+      "$ref": "#/$defs/json"
+    },
+    "table": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record": {
+      "$ref": "#/$defs/ref"
+    },
+    "meaning": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/meaning"
+        }
+      ]
+    },
+    "intent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/intent"
+        }
+      ]
+    },
+    "effects": {
+      "oneOf": [
+        {"const": ["new-physical-binding"]},
+        {"const": ["ordinary-access-retired", "stored-rows-irreversibly-purged", "physical-binding-removed"]}
+      ]
+    }
+  },
+  "$defs": {
+    "json": {},
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "meaning",
+        "state"
+      ],
+      "properties": {
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "table",
+            "subject"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "table": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "subject": {
+              "$ref": "#/$defs/json"
+            }
+          }
+        },
+        "meaning": {
+          "$ref": "#/$defs/json"
+        },
+        "state": {
+          "enum": [
+            "present",
+            "absent"
+          ]
+        },
+        "validation": {
+          "enum": [
+            "not-applicable",
+            "not-validated",
+            "validated"
+          ]
+        },
+        "validity": {
+          "enum": [
+            "not-applicable",
+            "pending",
+            "valid",
+            "invalid"
+          ]
+        }
+      }
+    },
+    "tableSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "table"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "columnSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "column"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "keySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "key"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "check"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "foreignKeySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "foreignKey"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "indexSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "index"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "policySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "policy"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "grantSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "grant"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "commentSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "comment"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tables",
+        "columns",
+        "keys",
+        "checks",
+        "foreignKeys",
+        "indexes",
+        "policies",
+        "grants",
+        "comments"
+      ],
+      "properties": {
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tableSubject"
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/columnSubject"
+          }
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/keySubject"
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/checkSubject"
+          }
+        },
+        "foreignKeys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foreignKeySubject"
+          }
+        },
+        "indexes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/indexSubject"
+          }
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/policySubject"
+          }
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/grantSubject"
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/commentSubject"
+          }
+        }
+      }
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "sha256"
+      ],
+      "properties": {
+        "format": {
+          "const": "json"
+        },
+        "sha256": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "pathValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "value"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "value": {
+          "$ref": "#/$defs/json"
+        }
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to",
+        "reason",
+        "sourcePath",
+        "state"
+      ],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/digest"
+        },
+        "to": {
+          "$ref": "#/$defs/digest"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourcePath": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "state": {
+          "enum": [
+            "present",
+            "absent"
+          ]
+        }
+      }
+    },
+    "seed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "definitionDigest",
+        "sourcePath",
+        "definition"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "definitionDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "sourcePath": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "definition": {
+          "$ref": "#/$defs/json"
+        }
+      }
+    },
+    "meaning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "physicalTable",
+        "recordDefinition",
+        "fieldDefinitions",
+        "sourceClosure",
+        "catalog",
+        "dependencies",
+        "operationIds",
+        "seedDefinitions"
+      ],
+      "properties": {
+        "physicalTable": {
+          "$ref": "#/$defs/pathValue"
+        },
+        "recordDefinition": {
+          "$ref": "#/$defs/pathValue"
+        },
+        "fieldDefinitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pathValue"
+          }
+        },
+        "sourceClosure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pathValue"
+          }
+        },
+        "catalog": {
+          "$ref": "#/$defs/catalog"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dependency"
+          }
+        },
+        "operationIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "seedDefinitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/seed"
+          }
+        }
+      }
+    },
+    "intent": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "table",
+            "record"
+          ],
+          "properties": {
+            "kind": {
+              "const": "create"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record": {
+              "$ref": "#/$defs/ref"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "table",
+            "record",
+            "disposition"
+          ],
+          "properties": {
+            "kind": {
+              "const": "remove"
+            },
+            "table": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record": {
+              "$ref": "#/$defs/ref"
+            },
+            "disposition": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "const": "irreversible-purge"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

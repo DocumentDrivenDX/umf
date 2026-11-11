@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createCoreRecordMembersEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreResources\"]"
+      ],
+      "name": "resources",
+      "optional": false,
+      "type": "UmfCoreResources"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; setupControls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "createCoreRecordMembersEngine accepts module, resources, options and returns UmfCoreRecordMembersEngine.",
+  "related": [],
+  "returns": "UmfCoreRecordMembersEngine",
+  "task": "Author and edit",
+  "type": "(module: any, resources: UmfCoreResources, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; setupControls?: UmfCoreControls; }) => UmfCoreRecordMembersEngine"
+}

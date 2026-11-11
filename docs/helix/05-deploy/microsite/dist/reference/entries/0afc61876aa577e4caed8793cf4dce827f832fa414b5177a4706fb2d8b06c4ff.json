@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7247,
-        "line": 50,
-        "path": "src/core-ideals/field-parquet-projection.ts",
-        "sha256": "07d54692d8315fb79d3aee32ab08a69c42e1d8d5ae6bd5b996bd8793e8a01dcf"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverFieldFromParquet",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: FieldParquetProjection, nativeBytes: Uint8Array<ArrayBufferLike>): Document"
+      "(receipt: FieldParquetProjection, nativeBytes: Uint8Array<ArrayBufferLike>): Document"
     ]
   },
   "id": "[\"api\",\".\",\"recoverFieldFromParquet\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7247,
-      "line": 50,
-      "path": "src/core-ideals/field-parquet-projection.ts",
-      "sha256": "07d54692d8315fb79d3aee32ab08a69c42e1d8d5ae6bd5b996bd8793e8a01dcf"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverFieldFromParquet"
 }

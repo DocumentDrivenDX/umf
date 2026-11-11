@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyKeysPostgresqlProjection\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"KeyPostgresqlProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "KeyPostgresqlProjection"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Recompute projection and match current native representation; not source authentication.",
+  "purpose": "verifyKeysPostgresqlProjection accepts receipt, current, backend and returns Promise<KeyPostgresqlProjection>.",
   "related": [],
   "returns": "Promise<KeyPostgresqlProjection>",
   "task": "Other APIs",
-  "type": "(input: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<KeyPostgresqlProjection>"
+  "type": "(receipt: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<KeyPostgresqlProjection>"
 }

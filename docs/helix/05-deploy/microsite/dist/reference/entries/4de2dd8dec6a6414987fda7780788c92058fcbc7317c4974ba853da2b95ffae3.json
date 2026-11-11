@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 95940,
+        "line": 541,
+        "path": "bindings/core/wasm/index.d.ts",
+        "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+      }
+    ],
+    "entrypoint": "./runtime/wasm",
+    "exportName": "IcebergSchemaEngine",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface IcebergSchemaEngine {\n  /** Import standalone Iceberg schema JSON as a tagged UMF extension document. */\n  importSchema(source: string, id: string): unknown;\n  /** Export a validated schema without dropping unknown representation content. */\n  exportSchema(document: unknown): string;\n  /** Inspect the pinned standalone schema subset; completeness remains false. */\n  inspect(document: unknown): IcebergSchemaValidation;\n  /** Inspect an Iceberg payload through the native package validator for Registry use. */\n  inspectPayload(payload: unknown): {code: string; path: string; message: string; severity: 'error' | 'warning'}[];\n  /** Return a copied tagged native JSON node at an RFC 6901 pointer. */\n  getNode(document: unknown, pointer: string): unknown;\n  /** Return a validated candidate document; this does not commit or mutate input. */\n  proposeNodeEdit(document: unknown, pointer: string, replacementJson: string): {document: unknown; validation: IcebergSchemaValidation};\n}"
+    ]
+  },
+  "id": "[\"api\",\"./runtime/wasm\",\"IcebergSchemaEngine\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 95940,
+      "line": 541,
+      "path": "bindings/core/wasm/index.d.ts",
+      "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+    }
+  ],
+  "summary": "Type declaration · bindings/core/wasm/index.d.ts",
+  "title": "IcebergSchemaEngine"
+}

@@ -35,5 +35,5 @@
   "related": [],
   "returns": "{ document: Document; validation: Validation; }",
   "task": "Author and edit",
-  "type": "(document: Document, index: number, replacement: RdfQuad) => { document: Document; validation: Validation; }"
+  "type": "(document: Parameters<ProposeRdfQuadEdit>[0], index: Parameters<ProposeRdfQuadEdit>[1], replacement: Parameters<ProposeRdfQuadEdit>[2]) => ReturnType<ProposeRdfQuadEdit>"
 }

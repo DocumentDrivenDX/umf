@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"reconcileDeltaMultipartCheckpoint\"]",
   "kind": "Function",
   "members": [],
@@ -38,9 +38,9 @@
       "type": "DeltaCommit[]"
     }
   ],
-  "purpose": "Explicit complete multipart checkpoint set, with Spark-style file-key clustering checks.",
+  "purpose": "reconcileDeltaMultipartCheckpoint accepts version, partCount, parts, commits and returns DeltaMultipartRecovery.",
   "related": [],
   "returns": "DeltaMultipartRecovery",
   "task": "Other APIs",
-  "type": "(version: string, partCount: number, parts: DeltaCheckpointPart[], commits: DeltaCommit[]) => DeltaMultipartRecovery"
+  "type": "(version: string, partCount: number, parts: Parameters<ReconcileDeltaMultipartCheckpoint>[2], commits: Parameters<ReconcileDeltaMultipartCheckpoint>[3]) => DeltaMultipartRecovery"
 }

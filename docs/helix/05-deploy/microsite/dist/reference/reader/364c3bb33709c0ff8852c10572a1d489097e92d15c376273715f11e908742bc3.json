@@ -19,5 +19,5 @@
   "related": [],
   "returns": "OwlOntologyHeader[]",
   "task": "Inspect and select",
-  "type": "(document: Document) => OwlOntologyHeader[]"
+  "type": "(document: Parameters<typeof getOwlOntologyHeaders>[0]) => OwlOntologyHeader[]"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4502,
-        "line": 16,
-        "path": "src/adapters/shacl/metadata.ts",
-        "sha256": "5c9d6818a6943c7c58d706fa2d6874ad771d7b705f153ba594116d6c24fb3c17"
+        "bytes": 848,
+        "line": 23,
+        "path": "src/adapters/shacl/metadata-types.ts",
+        "sha256": "47148f852618884d58bc005e7eee52bd41fd6a84b88088668d3d474b66df3044"
       }
     ],
     "entrypoint": ".",
     "exportName": "ShaclShapeMetadata",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ShaclShapeMetadata {\n profile:'shacl-metadata-1';complete:false;source:Document;blankNodeScope:string;shape:ShaclShapeMetadataNode;properties:ShaclShapeMetadataNode[];diagnostics:Diagnostic[];\n}"
+      "export interface ShaclShapeMetadata {\n profile:'shacl-metadata-1';\n complete:false;\n source:Document;\n blankNodeScope:string;\n shape:ShaclShapeMetadataNode;\n properties:ShaclShapeMetadataNode[];\n diagnostics:Diagnostic[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"ShaclShapeMetadata\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4502,
-      "line": 16,
-      "path": "src/adapters/shacl/metadata.ts",
-      "sha256": "5c9d6818a6943c7c58d706fa2d6874ad771d7b705f153ba594116d6c24fb3c17"
+      "bytes": 848,
+      "line": 23,
+      "path": "src/adapters/shacl/metadata-types.ts",
+      "sha256": "47148f852618884d58bc005e7eee52bd41fd6a84b88088668d3d474b66df3044"
     }
   ],
-  "summary": "Type declaration · src/adapters/shacl/metadata.ts",
+  "summary": "Type declaration · src/adapters/shacl/metadata-types.ts",
   "title": "ShaclShapeMetadata"
 }

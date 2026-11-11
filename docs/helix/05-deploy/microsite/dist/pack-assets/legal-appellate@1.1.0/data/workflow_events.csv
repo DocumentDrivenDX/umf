@@ -1,0 +1,31 @@
+event_id,ordinal,window_id,document_id,recipient_id,prompt_version,alert_kind,stage,outcome,retry_of,review_id,lookup_id,detail
+event-01,1,window-1,\N,\N,\N,\N,listing,empty,\N,\N,\N,Fabricated listing/empty
+event-02,2,window-2,\N,\N,\N,\N,listing,failed,\N,\N,\N,Listing unavailable; must not mean no new decisions.
+event-03,3,window-2,\N,\N,\N,\N,listing,succeeded,event-02,\N,\N,Fabricated listing/succeeded
+event-04,4,window-2,castillo,\N,\N,\N,retrieval,failed,\N,\N,\N,Fabricated retrieval/failed
+event-05,5,window-2,castillo,\N,\N,\N,retrieval,succeeded,event-04,\N,\N,Fabricated retrieval/succeeded
+event-06,6,window-2,castillo,\N,\N,\N,extraction,failed,\N,\N,\N,Fabricated extraction/failed
+event-07,7,window-2,castillo,\N,\N,\N,extraction,succeeded,event-06,\N,\N,Fabricated extraction/succeeded
+event-08,8,window-2,castillo,\N,screen-v1,\N,screening,failed,\N,\N,\N,Fabricated screening/failed
+event-09,9,window-2,castillo,\N,screen-v1,\N,screening,flagged,event-08,\N,\N,Fabricated screening/flagged
+event-10,10,window-2,castillo,reviewer-a,screen-v1,decision,delivery_request,simulated_transport_failed,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/failed
+event-11,11,window-2,castillo,reviewer-a,screen-v1,decision,delivery_request,simulated_transport_succeeded,event-10,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/succeeded
+event-12,12,window-2,castillo,reviewer-a,screen-v1,decision,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Duplicate PDF via repeated listing; one successful receipt.
+event-13,13,window-2,castillo,\N,screen-v2,\N,screening,flagged,\N,\N,\N,"Prompt change permits rescreen, not a second decision alert."
+event-14,14,window-2,castillo,reviewer-a,screen-v2,decision,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/succeeded
+event-15,15,window-2,castillo,reviewer-b,screen-v2,decision,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/succeeded
+event-16,16,window-2,cobra-original,\N,screen-v1,\N,screening,flagged,\N,\N,\N,Fabricated screening/flagged
+event-17,17,window-2,cobra-original,reviewer-a,screen-v1,decision,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/succeeded
+event-18,18,window-2,cobra-amended,\N,screen-v1,\N,screening,flagged,\N,\N,\N,Fabricated screening/flagged
+event-19,19,window-2,cobra-amended,reviewer-a,screen-v1,decision,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Amended original has different bytes; new version review. No claim the amendment changes substantive holding.
+event-20,20,window-2,hirschfeld-panel,\N,screen-v1,\N,screening,flagged,\N,\N,\N,Fabricated screening/flagged
+event-21,21,window-2,hirschfeld-panel,reviewer-a,screen-v1,decision,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/succeeded
+event-22,22,window-2,hirschfeld-vacatur,\N,\N,\N,status,vacated,\N,\N,\N,Fabricated status/vacated
+event-23,23,window-2,hirschfeld-vacatur,reviewer-a,screen-v1,status,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/succeeded
+event-24,24,window-2,hirschfeld-vacatur,reviewer-a,screen-v1,status,delivery_request,simulated_transport_succeeded,\N,\N,\N,Delivery request; transport outcome applies only if eligible. Fabricated delivery/succeeded
+event-25,25,window-2,aybar,\N,screen-v1,\N,screening,not_flagged,\N,\N,\N,Fabricated negative: different state statute does not itself establish a split.
+event-26,26,window-2,hirschfeld-vacatur,\N,\N,\N,enrichment,not_attempted,\N,\N,\N,Counsel omitted in order; optional lookup has not happened.
+event-27,27,window-2,\N,\N,\N,\N,enrichment,completed,\N,fictional-review-1,lookup-01,Entirely fictional enrichment lookup-01; update review item without sending an email.
+event-28,28,window-2,tabb,\N,\N,\N,retrieval,failed,\N,\N,\N,Unrecovered retrieval; final coverage dashboard must retain it.
+event-29,29,window-2,brown,\N,screen-v1,\N,screening,failed,\N,\N,\N,Unrecovered processing failure distinct from successful source collection.
+event-30,30,\N,\N,\N,\N,\N,enrichment,lookup_failed,\N,fictional-review-2,lookup-02,Fictional failed lookup leaves counsel unknown; no claim of no counsel.

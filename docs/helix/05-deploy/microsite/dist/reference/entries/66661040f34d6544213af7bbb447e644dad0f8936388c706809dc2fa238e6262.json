@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3855,
-        "line": 17,
-        "path": "src/adapters/parquet/index.ts",
-        "sha256": "652a59f846e8e8d1598c08c428f3e044556ee69c349e8009bc2b1d397ac3222d"
+        "bytes": 84809,
+        "line": 265,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "exportParquetCapture",
     "runtime": "unassessed",
     "signatureText": [
-      "(doc: Document): Uint8Array<ArrayBufferLike>"
+      "(document: Document): Uint8Array<ArrayBufferLike>"
     ]
   },
   "id": "[\"api\",\".\",\"exportParquetCapture\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3855,
-      "line": 17,
-      "path": "src/adapters/parquet/index.ts",
-      "sha256": "652a59f846e8e8d1598c08c428f3e044556ee69c349e8009bc2b1d397ac3222d"
+      "bytes": 84809,
+      "line": 265,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/adapters/parquet/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "exportParquetCapture"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"captureArrowIpc\"]",
   "kind": "Function",
   "members": [],
@@ -20,7 +20,7 @@
       "type": "{ id: string; }"
     }
   ],
-  "purpose": "Accepts even empty or invalid native input so decode failure cannot lose source.",
+  "purpose": "captureArrowIpc accepts bytes, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Other APIs",

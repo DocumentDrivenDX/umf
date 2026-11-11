@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"LakeviewProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "root",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "modules",
+      "optional": false,
+      "type": "Map<string, Json>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "elements",
+      "optional": false,
+      "type": "Map<string, Json>"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProjectionIssue\"]"
+      ],
+      "name": "issues",
+      "optional": false,
+      "type": "ProjectionIssue[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "LakeviewProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "LakeviewProjection"
+}

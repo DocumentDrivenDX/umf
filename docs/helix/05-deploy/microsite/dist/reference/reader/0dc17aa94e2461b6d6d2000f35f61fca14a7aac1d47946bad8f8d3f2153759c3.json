@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerRelationshipClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverSqlServerRelationshipSource accepts input, current and returns string.",
+  "purpose": "recoverSqlServerRelationshipSource accepts receipt, current and returns string.",
   "related": [],
   "returns": "string",
   "task": "Import and export",
-  "type": "(input: SqlServerRelationshipClassification, current: Document) => string"
+  "type": "(receipt: SqlServerRelationshipClassification, current: Document) => string"
 }

@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "table_name": "enrichment_fixtures",
+  "description": "CONTRACT-058 bounded appellate fixture: enrichment_fixtures.",
+  "columns": [
+    {
+      "name": "lookup_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "enrichment_fixtures.lookup_id; preserve source scope and qualification."
+    },
+    {
+      "name": "fictional_case",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "enrichment_fixtures.fictional_case; preserve source scope and qualification."
+    },
+    {
+      "name": "fictional_party",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "enrichment_fixtures.fictional_party; preserve source scope and qualification."
+    },
+    {
+      "name": "counsel_name",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "enrichment_fixtures.counsel_name; preserve source scope and qualification."
+    },
+    {
+      "name": "lookup_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "enrichment_fixtures.lookup_status; preserve source scope and qualification."
+    },
+    {
+      "name": "source_kind",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "enrichment_fixtures.source_kind; preserve source scope and qualification."
+    },
+    {
+      "name": "qualification",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "enrichment_fixtures.qualification; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "lookup_id"
+  ]
+}

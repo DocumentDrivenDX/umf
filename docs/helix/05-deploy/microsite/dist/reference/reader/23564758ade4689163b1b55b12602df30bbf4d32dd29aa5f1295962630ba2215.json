@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyKeysSqlServerProjection\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"KeySqlServerProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "KeySqlServerProjection"
     },
@@ -22,9 +22,9 @@
       "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
     }
   ],
-  "purpose": "Recompute projection and match current native representation; not source authentication.",
+  "purpose": "verifyKeysSqlServerProjection accepts receipt, current and returns KeySqlServerProjection.",
   "related": [],
   "returns": "KeySqlServerProjection",
   "task": "Other APIs",
-  "type": "(input: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }) => KeySqlServerProjection"
+  "type": "(receipt: KeySqlServerProjection, current: NonNullable<KeySqlServerProjection[\"target\"]>) => KeySqlServerProjection"
 }

@@ -1161,9 +1161,18 @@
                                     "version": {
                                       "kind": "object",
                                       "members": {
-                                        "const": {
-                                          "kind": "string",
-                                          "value": "1"
+                                        "enum": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "1"
+                                            },
+                                            {
+                                              "kind": "string",
+                                              "value": "2"
+                                            }
+                                          ],
+                                          "kind": "array"
                                         }
                                       }
                                     }
@@ -3811,9 +3820,9 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10931,
+      "bytes": 10936,
       "path": "spec/extensions/actions/schema.json",
-      "sha256": "0263c21ddd91347bf3afc2b7ab14b2c0943f1da5f5c493658cd105277f6d8d09"
+      "sha256": "41eeb67807fc8a540785ffdd712caaa007bd3627a6a612e1adc2400d0ec5b382"
     }
   ],
   "summary": "spec/extensions/actions/schema.json",

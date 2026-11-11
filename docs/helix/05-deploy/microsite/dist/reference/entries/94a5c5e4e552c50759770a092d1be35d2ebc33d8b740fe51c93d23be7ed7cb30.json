@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 12555,
-        "line": 34,
-        "path": "src/core-ideals/nullability-postgresql.ts",
-        "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+        "bytes": 84809,
+        "line": 290,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyPostgresqlNullability",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: PostgresqlNullabilityRequest): PostgresqlNullabilityClassification"
+      "(source: Document, request: PostgresqlNullabilityRequest): PostgresqlNullabilityClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyPostgresqlNullability\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 12555,
-      "line": 34,
-      "path": "src/core-ideals/nullability-postgresql.ts",
-      "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+      "bytes": 84809,
+      "line": 290,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Native absence is classified only for explicitly scoped stored-relation declarations.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyPostgresqlNullability"
 }

@@ -33,5 +33,5 @@
   "related": [],
   "returns": "NativeJson",
   "task": "Inspect and select",
-  "type": "(document: Document, path: string, dependencyId?: string) => NativeJson"
+  "type": "(document: Parameters<GetAvroNode>[0], path: Parameters<GetAvroNode>[1], dependencyId?: Parameters<GetAvroNode>[2]) => ReturnType<GetAvroNode>"
 }

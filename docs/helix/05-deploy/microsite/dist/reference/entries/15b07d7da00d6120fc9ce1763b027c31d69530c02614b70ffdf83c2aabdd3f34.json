@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 24077,
-        "line": 142,
-        "path": "src/projections/ddd-postgresql/index.ts",
-        "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+        "bytes": 84809,
+        "line": 459,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyDddPostgresqlProjection",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: DddPostgresqlProjection, current: Document, backend: PostgresqlBackend): Promise<DddPostgresqlProjection>"
+      "(receipt: DddPostgresqlProjection, currentTarget: Document, backend: PostgresqlBackend): Promise<DddPostgresqlProjection>"
     ]
   },
   "id": "[\"api\",\".\",\"verifyDddPostgresqlProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 24077,
-      "line": 142,
-      "path": "src/projections/ddd-postgresql/index.ts",
-      "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+      "bytes": 84809,
+      "line": 459,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/projections/ddd-postgresql/index.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyDddPostgresqlProjection"
 }

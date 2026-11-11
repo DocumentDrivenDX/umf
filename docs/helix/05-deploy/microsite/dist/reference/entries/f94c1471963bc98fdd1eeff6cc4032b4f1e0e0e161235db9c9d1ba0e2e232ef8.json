@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4502,
-        "line": 12,
-        "path": "src/adapters/shacl/metadata.ts",
-        "sha256": "5c9d6818a6943c7c58d706fa2d6874ad771d7b705f153ba594116d6c24fb3c17"
+        "bytes": 848,
+        "line": 14,
+        "path": "src/adapters/shacl/metadata-types.ts",
+        "sha256": "47148f852618884d58bc005e7eee52bd41fd6a84b88088668d3d474b66df3044"
       }
     ],
     "entrypoint": ".",
     "exportName": "ShaclShapeMetadataNode",
     "runtime": "type-only",
     "signatureText": [
-      "export interface ShaclShapeMetadataNode {\n node:RdfNode;annotations:ShaclMetadataField[];constraints:ShaclMetadataField[];controls:ShaclMetadataField[];uninterpreted:ShaclMetadataField[];\n path:{status:'absent'}|{status:'compiled';value:ShaclPath}|{status:'invalid';message:string};\n}"
+      "export interface ShaclShapeMetadataNode {\n node:RdfNode;\n annotations:ShaclMetadataField[];\n constraints:ShaclMetadataField[];\n controls:ShaclMetadataField[];\n uninterpreted:ShaclMetadataField[];\n path:{status:'absent'}|{status:'compiled';value:ShaclPath}|{status:'invalid';message:string};\n}"
     ]
   },
   "id": "[\"api\",\".\",\"ShaclShapeMetadataNode\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4502,
-      "line": 12,
-      "path": "src/adapters/shacl/metadata.ts",
-      "sha256": "5c9d6818a6943c7c58d706fa2d6874ad771d7b705f153ba594116d6c24fb3c17"
+      "bytes": 848,
+      "line": 14,
+      "path": "src/adapters/shacl/metadata-types.ts",
+      "sha256": "47148f852618884d58bc005e7eee52bd41fd6a84b88088668d3d474b66df3044"
     }
   ],
-  "summary": "Type declaration · src/adapters/shacl/metadata.ts",
+  "summary": "Type declaration · src/adapters/shacl/metadata-types.ts",
   "title": "ShaclShapeMetadataNode"
 }

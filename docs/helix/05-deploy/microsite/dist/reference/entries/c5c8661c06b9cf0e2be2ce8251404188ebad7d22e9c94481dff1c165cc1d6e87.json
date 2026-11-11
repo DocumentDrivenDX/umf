@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 14292,
-        "line": 44,
-        "path": "src/extensions/actions/expression.ts",
-        "sha256": "d75694336d0a377c13d8f783fd3cf5d7a66a2a8e2b8bc869203af105b2745676"
+        "bytes": 84809,
+        "line": 208,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "compileActionRule",
     "runtime": "unassessed",
     "signatureText": [
-      "(documentInput: Document, actionInput: Action, ruleInput: ActionRule, phase: ActionRulePhase): CompiledActionRule"
+      "(document: Document, action: Action, rule: ActionRule, phase: ActionRulePhase): CompiledActionRule"
     ]
   },
   "id": "[\"api\",\".\",\"compileActionRule\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 14292,
-      "line": 44,
-      "path": "src/extensions/actions/expression.ts",
-      "sha256": "d75694336d0a377c13d8f783fd3cf5d7a66a2a8e2b8bc869203af105b2745676"
+      "bytes": 84809,
+      "line": 208,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/actions/expression.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "compileActionRule"
 }

@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfCoreExtension\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scopes",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schema",
+      "optional": true,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "semantics",
+      "optional": true,
+      "type": "(payload: unknown, context: { document: unknown; path: string; scope: string; }) => { code: string; path: string; message: string; severity: \"error\" | \"warning\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfCoreExtension is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfCoreExtension"
+}

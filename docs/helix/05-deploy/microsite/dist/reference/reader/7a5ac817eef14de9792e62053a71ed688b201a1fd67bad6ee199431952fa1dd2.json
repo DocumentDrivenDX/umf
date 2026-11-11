@@ -62,25 +62,16 @@
     {
       "description": "",
       "links": [],
-      "name": "status",
+      "name": "profile",
       "optional": false,
-      "type": "\"blocked\" | \"reported\" | \"proposed\""
-    },
-    {
-      "description": "",
-      "links": [
-        "[\"api\",\".\",\"Document\"]"
-      ],
-      "name": "logical",
-      "optional": false,
-      "type": "Document"
+      "type": "\"graphql-js-17.0.2-sdl\""
     },
     {
       "description": "",
       "links": [],
-      "name": "profile",
+      "name": "status",
       "optional": false,
-      "type": "\"graphql-js-17.0.2-sdl\""
+      "type": "\"blocked\" | \"reported\" | \"proposed\""
     },
     {
       "description": "",
@@ -99,6 +90,15 @@
       "name": "mappings",
       "optional": false,
       "type": "DddGraphqlEntityMapping[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
     },
     {
       "description": "",

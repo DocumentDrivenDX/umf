@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6757,
-        "line": 23,
-        "path": "src/core-ideals/key-avro.ts",
-        "sha256": "2a613118190de3ee3fe61302b460343e2d7d6bb6a7779706702e49123d348ac6"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyAvroKeys",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: AvroKeyRequest): AvroKeyClassification"
+      "(source: Document, request: AvroKeyRequest): AvroKeyClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyAvroKeys\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6757,
-      "line": 23,
-      "path": "src/core-ideals/key-avro.ts",
-      "sha256": "2a613118190de3ee3fe61302b460343e2d7d6bb6a7779706702e49123d348ac6"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Observe record declarations; unknown metadata, field order and defaults never assert identity.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyAvroKeys"
 }

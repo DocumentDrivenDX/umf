@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"migrateBindingRelationships\"]",
   "kind": "Function",
   "members": [],
@@ -24,7 +24,7 @@
       "type": "Document"
     }
   ],
-  "purpose": "Explicit, atomic name-to-ID migration against the caller's exact paired model.",
+  "purpose": "migrateBindingRelationships accepts binding, logical and returns BindingMigrationResult.",
   "related": [],
   "returns": "BindingMigrationResult",
   "task": "Author and edit",

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3363,
-        "line": 14,
-        "path": "src/model/json.ts",
-        "sha256": "4fa8b66c3c56f8cf231513b98689ca30b192dcec85fffa4d22c9a4fd27c02ab4"
+        "bytes": 84809,
+        "line": 416,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "copyJson",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown): Json"
+      "(value: unknown): Json"
     ]
   },
   "id": "[\"api\",\".\",\"copyJson\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3363,
-      "line": 14,
-      "path": "src/model/json.ts",
-      "sha256": "4fa8b66c3c56f8cf231513b98689ca30b192dcec85fffa4d22c9a4fd27c02ab4"
+      "bytes": 84809,
+      "line": 416,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Copy JSON data without invoking getters, toJSON, or custom prototypes.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "copyJson"
 }

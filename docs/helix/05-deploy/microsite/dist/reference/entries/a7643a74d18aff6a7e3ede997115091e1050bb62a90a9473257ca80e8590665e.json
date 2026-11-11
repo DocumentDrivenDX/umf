@@ -2,10 +2,10 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3526,
-        "line": 25,
-        "path": "src/adapters/protobuf/source.ts",
-        "sha256": "b30928b75d0b74674625d2bb25d6462ee4553b1ae58188c138438b252b4bd004"
+        "bytes": 813,
+        "line": 8,
+        "path": "src/adapters/protobuf/source-types.ts",
+        "sha256": "056e4140e4265cda0082618b2655affc2d6ab40ee82e72940014a5cf13ad3e26"
       }
     ],
     "entrypoint": ".",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3526,
-      "line": 25,
-      "path": "src/adapters/protobuf/source.ts",
-      "sha256": "b30928b75d0b74674625d2bb25d6462ee4553b1ae58188c138438b252b4bd004"
+      "bytes": 813,
+      "line": 8,
+      "path": "src/adapters/protobuf/source-types.ts",
+      "sha256": "056e4140e4265cda0082618b2655affc2d6ab40ee82e72940014a5cf13ad3e26"
     }
   ],
-  "summary": "Type declaration · src/adapters/protobuf/source.ts",
+  "summary": "Explicit source emitter; current descriptor bytes are passed as the sole argument.",
   "title": "ProtobufSourceEmitter"
 }

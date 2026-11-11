@@ -11,7 +11,7 @@
         "[\"api\",\".\",\"RelationshipExtraClassification\"]",
         "[\"api\",\".\",\"RelationshipExtraProjection\"]"
       ],
-      "name": "input",
+      "name": "receiptInput",
       "optional": false,
       "type": "RelationshipExtraClassification | RelationshipExtraProjection"
     },
@@ -20,14 +20,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "current",
+      "name": "currentInput",
       "optional": true,
       "type": "Document | undefined"
     }
   ],
-  "purpose": "verifyRelationshipExtra accepts input, current and returns RelationshipExtraClassification | RelationshipExtraProjection.",
+  "purpose": "verifyRelationshipExtra accepts receiptInput, currentInput and returns RelationshipExtraClassification | RelationshipExtraProjection.",
   "related": [],
   "returns": "RelationshipExtraClassification | RelationshipExtraProjection",
   "task": "Other APIs",
-  "type": "(input: RelationshipExtraProjection | RelationshipExtraClassification, current?: Document) => RelationshipExtraClassification | RelationshipExtraProjection"
+  "type": "(receiptInput: RelationshipExtraProjection | RelationshipExtraClassification, currentInput?: Document) => RelationshipExtraProjection | RelationshipExtraClassification"
 }

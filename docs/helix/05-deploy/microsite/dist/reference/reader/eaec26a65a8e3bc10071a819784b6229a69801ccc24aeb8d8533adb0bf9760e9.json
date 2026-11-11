@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"proposeIcebergTableRename\"]",
   "kind": "Function",
   "members": [],
@@ -22,9 +22,9 @@
       "type": "{ fieldId: number; newName: string; nextSchemaId: number; }"
     }
   ],
-  "purpose": "Appends a reviewable schema version, never commits or rewrites historical schemas.",
+  "purpose": "proposeIcebergTableRename accepts document, options and returns { document: Document; report: IcebergTableRenameReport; }.",
   "related": [],
   "returns": "{ document: Document; report: IcebergTableRenameReport; }",
   "task": "Author and edit",
-  "type": "(document: Document, options: { fieldId: number; newName: string; nextSchemaId: number; }) => { document: Document; report: IcebergTableRenameReport; }"
+  "type": "(document: Parameters<ProposeIcebergTableRename>[0], options: Parameters<ProposeIcebergTableRename>[1]) => ReturnType<ProposeIcebergTableRename>"
 }

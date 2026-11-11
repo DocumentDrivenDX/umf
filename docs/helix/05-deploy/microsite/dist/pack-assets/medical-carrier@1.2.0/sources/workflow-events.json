@@ -1,0 +1,53 @@
+{
+  "qualification": "Fabricated UMF scenario records; not FHIR resources, business-rule simulation or public-source observations.",
+  "events": [
+    {
+      "event_key": "supplement::coordination/1",
+      "event_type": "coordination-of-benefits",
+      "subject_key": "supplement::Patient/member",
+      "claim_key": "supplement::Claim/paid-denied",
+      "prior_event_key": null,
+      "date": "2026-01-03",
+      "status": "primary-processed",
+      "amount": null,
+      "currency": null,
+      "details_json": "{\"coverages\": [{\"order\": 1, \"reference\": \"Coverage/active\"}, {\"order\": 2, \"reference\": \"Coverage/external-secondary\"}], \"secondary_status\": \"unresolved\"}"
+    },
+    {
+      "event_key": "supplement::appeal/1",
+      "event_type": "appeal",
+      "subject_key": "supplement::Patient/member",
+      "claim_key": "supplement::Claim/paid-denied",
+      "prior_event_key": null,
+      "date": "2026-01-05",
+      "status": "submitted",
+      "amount": null,
+      "currency": null,
+      "details_json": "{\"line_sequence\": 2, \"reason\": \"fabricated disputed denial\"}"
+    },
+    {
+      "event_key": "supplement::appeal/2",
+      "event_type": "appeal",
+      "subject_key": "supplement::Patient/member",
+      "claim_key": "supplement::Claim/paid-denied",
+      "prior_event_key": "supplement::appeal/1",
+      "date": "2026-01-06",
+      "status": "upheld",
+      "amount": null,
+      "currency": null,
+      "details_json": "{\"line_sequence\": 2}"
+    },
+    {
+      "event_key": "supplement::adjustment/1",
+      "event_type": "adjustment",
+      "subject_key": "supplement::Patient/member",
+      "claim_key": "supplement::Claim/paid-denied",
+      "prior_event_key": null,
+      "date": "2026-01-07",
+      "status": "recorded",
+      "amount": "-5.00",
+      "currency": "USD",
+      "details_json": "{\"category\": \"fabricated payment adjustment\", \"original_amount\": \"80.00\", \"adjusted_amount\": \"75.00\"}"
+    }
+  ]
+}

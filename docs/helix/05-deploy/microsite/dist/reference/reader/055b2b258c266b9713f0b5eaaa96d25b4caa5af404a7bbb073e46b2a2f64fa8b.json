@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"resolveOpenapiObjectReference\"]",
   "kind": "Function",
   "members": [],
@@ -24,9 +24,9 @@
       "type": "OpenapiReferenceRequest"
     }
   ],
-  "purpose": "Resolve a caller-declared Reference Object role, without inferring Schema Object scope.",
+  "purpose": "resolveOpenapiObjectReference accepts document, input and returns OpenapiReferenceResolution.",
   "related": [],
   "returns": "OpenapiReferenceResolution",
   "task": "Inspect and select",
-  "type": "(document: Document, input: OpenapiReferenceRequest) => OpenapiReferenceResolution"
+  "type": "(document: Parameters<ResolveOpenapiObjectReference>[0], input: Parameters<ResolveOpenapiObjectReference>[1]) => ReturnType<ResolveOpenapiObjectReference>"
 }

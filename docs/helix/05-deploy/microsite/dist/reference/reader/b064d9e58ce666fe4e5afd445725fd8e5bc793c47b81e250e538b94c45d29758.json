@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectSqlServerFacetPredicate\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columnName",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "inspectSqlServerFacetPredicate accepts input, columnName and returns SqlServerFacetPredicateInspection.",
+  "related": [],
+  "returns": "SqlServerFacetPredicateInspection",
+  "task": "Inspect and select",
+  "type": "(input: Parameters<typeof inspectSqlServerFacetPredicate>[0], columnName: Parameters<typeof inspectSqlServerFacetPredicate>[1]) => SqlServerFacetPredicateInspection"
+}

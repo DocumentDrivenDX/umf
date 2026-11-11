@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7048,
-        "line": 86,
-        "path": "src/extensions/security/policy-representation-v2.ts",
-        "sha256": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9"
+        "bytes": 84809,
+        "line": 202,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "upgradeSecurityPolicySource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: unknown, revision: unknown): SecurityPolicySourceMigration"
+      "(source: unknown, revision: unknown): SecurityPolicySourceMigration"
     ]
   },
   "id": "[\"api\",\".\",\"upgradeSecurityPolicySource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7048,
-      "line": 86,
-      "path": "src/extensions/security/policy-representation-v2.ts",
-      "sha256": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9"
+      "bytes": 84809,
+      "line": 202,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/security/policy-representation-v2.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "upgradeSecurityPolicySource"
 }

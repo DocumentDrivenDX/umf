@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectCdcMortality\"]",
   "kind": "Function",
   "members": [],
@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "textSource",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -20,9 +20,9 @@
       "type": "string"
     }
   ],
-  "purpose": "The specific CDC leading-causes dataset has adjusted rates and no row denominators.",
+  "purpose": "projectCdcMortality accepts source, sourceId and returns MedicalRow[].",
   "related": [],
   "returns": "MedicalRow[]",
   "task": "Import and export",
-  "type": "(textSource: string, sourceId: string) => MedicalRow[]"
+  "type": "(source: string, sourceId: string) => MedicalRow[]"
 }

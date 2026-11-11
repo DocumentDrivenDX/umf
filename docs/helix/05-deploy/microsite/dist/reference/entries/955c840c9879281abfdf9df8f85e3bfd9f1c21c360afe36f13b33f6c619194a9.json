@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7884,
-        "line": 10,
-        "path": "src/adapters/postgresql/index.ts",
-        "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+        "bytes": 393,
+        "line": 6,
+        "path": "src/adapters/postgresql/package.ts",
+        "sha256": "dc46b5f383b9a7612b568ac39846d4a6002c852d977cd07f6bb41c7a8e7e4b73"
       }
     ],
     "entrypoint": ".",
     "exportName": "POSTGRESQL_EXTENSION",
     "runtime": "unassessed",
     "signatureText": [
-      "POSTGRESQL_EXTENSION='umf.postgresql'"
+      "POSTGRESQL_EXTENSION = 'umf.postgresql'"
     ]
   },
   "id": "[\"api\",\".\",\"POSTGRESQL_EXTENSION\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7884,
-      "line": 10,
-      "path": "src/adapters/postgresql/index.ts",
-      "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+      "bytes": 393,
+      "line": 6,
+      "path": "src/adapters/postgresql/package.ts",
+      "sha256": "dc46b5f383b9a7612b568ac39846d4a6002c852d977cd07f6bb41c7a8e7e4b73"
     }
   ],
-  "summary": "Public export · src/adapters/postgresql/index.ts",
+  "summary": "Static PostgreSQL package metadata, safe to import from the Rust default barrel.",
   "title": "POSTGRESQL_EXTENSION"
 }

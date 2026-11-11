@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverFieldFromTableSpec\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"FieldTableSpecProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "FieldTableSpecProjection"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "purpose": "recoverFieldFromTableSpec accepts receipt, nativeText and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: FieldTableSpecProjection, nativeText: string) => Document"
+  "type": "(receipt: FieldTableSpecProjection, nativeText: string) => Document"
 }

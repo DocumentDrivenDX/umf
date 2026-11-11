@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9112,
-        "line": 9,
-        "path": "src/projections/spark-arrow.ts",
-        "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+        "bytes": 84809,
+        "line": 247,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectSparkToArrow",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, input: SparkArrowPolicy): SparkArrowProjection"
+      "(source: Document, policy: SparkArrowPolicy): SparkArrowProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectSparkToArrow\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9112,
-      "line": 9,
-      "path": "src/projections/spark-arrow.ts",
-      "sha256": "a8cb6ca2173166e572d03e90a7f2ecd9eb57b234ee8ce9d1e34cb27ffebfb898"
+      "bytes": 84809,
+      "line": 247,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Spark 4.0.1 schema lowering to Arrow logical metadata. No record/data conversion.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectSparkToArrow"
 }

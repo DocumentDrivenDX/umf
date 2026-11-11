@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"AvroRecordRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "AvroRecordRequest"
     }
   ],
-  "purpose": "classifyAvroRecord accepts input, options and returns AvroRecordClassification.",
+  "purpose": "classifyAvroRecord accepts source, request and returns AvroRecordClassification.",
   "related": [],
   "returns": "AvroRecordClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: AvroRecordRequest) => AvroRecordClassification"
+  "type": "(source: Document, request: AvroRecordRequest) => AvroRecordClassification"
 }

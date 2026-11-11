@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"PostgresqlRelationshipClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "PostgresqlRelationshipClassification"
     },
@@ -33,9 +33,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "recoverPostgresqlRelationshipSource accepts input, current, backend and returns Promise<string>.",
+  "purpose": "recoverPostgresqlRelationshipSource accepts receipt, current, backend and returns Promise<string>.",
   "related": [],
   "returns": "Promise<string>",
   "task": "Import and export",
-  "type": "(input: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend) => Promise<string>"
+  "type": "(receipt: PostgresqlRelationshipClassification, current: Document, backend: PostgresqlBackend) => Promise<string>"
 }

@@ -7,12 +7,47 @@
     {
       "description": "",
       "links": [
+        "[\"api\",\".\",\"ExtensionKindRuntime\"]"
+      ],
+      "name": "kindRuntime",
+      "optional": true,
+      "type": "ExtensionKindRuntime | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "registrations",
+      "optional": false,
+      "type": "() => KindRegistration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ExtensionKindListResult\"]"
+      ],
+      "name": "listKinds",
+      "optional": false,
+      "type": "() => ExtensionKindListResult"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ExtensionKindReference\"]",
+        "[\"api\",\".\",\"ExtensionKindDefinition\"]"
+      ],
+      "name": "getKind",
+      "optional": false,
+      "type": "(reference: ExtensionKindReference) => ExtensionKindDefinition | undefined"
+    },
+    {
+      "description": "",
+      "links": [
         "[\"api\",\".\",\"ExtensionPackage\"]",
         "[\"api\",\".\",\"SemanticValidator\"]"
       ],
       "name": "register",
       "optional": false,
-      "type": "(input: ExtensionPackage, semantics?: SemanticValidator) => Registry"
+      "type": "(input: ExtensionPackage, semantics?: SemanticValidator, options?: { kinds?: boolean; replaceActions?: boolean; nativeValidator?: string; }) => RegistryBase"
     },
     {
       "description": "",
@@ -24,13 +59,23 @@
       "type": "(id: string, version: string) => Registration | undefined"
     }
   ],
-  "parameters": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ExtensionKindRuntime\"]"
+      ],
+      "name": "kindRuntime",
+      "optional": true,
+      "type": "ExtensionKindRuntime | undefined"
+    }
+  ],
   "purpose": "A registry of explicitly installed extension packages and their trusted interpretation. Unknown extension payloads remain preserved.",
   "related": [
     "[\"api\",\".\",\"createUmfRegistry\"]",
     "[\"api\",\".\",\"Document\"]"
   ],
-  "returns": "",
+  "returns": "RegistryBase",
   "task": "Extensions",
-  "type": "Registry"
+  "type": "RegistryBase"
 }

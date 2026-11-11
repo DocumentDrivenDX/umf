@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"DocumentComparisonEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"DocumentChange\"]"
+      ],
+      "name": "compareDocuments",
+      "optional": false,
+      "type": "(before: unknown, after: unknown) => DocumentChange[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DocumentComparisonEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DocumentComparisonEngine"
+}

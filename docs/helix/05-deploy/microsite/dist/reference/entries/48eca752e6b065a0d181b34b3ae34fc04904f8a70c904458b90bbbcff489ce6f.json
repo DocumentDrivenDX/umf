@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7183,
-        "line": 65,
-        "path": "src/model/schema-properties.ts",
-        "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+        "bytes": 84809,
+        "line": 423,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "resolveCoreDefault",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, fieldInput: { module: string; element: string; }, stateInput: CoreDefaultInput): { operation: \"resolve-core-default\"; version: \"2.0.0\"; source: Document; identity: Json; input: CoreDefaultInput; result: CoreDefaultInput; applied: boolean; }"
+      "(source: Document, identity: { module: string; element: string; }, state: CoreDefaultInput): CoreDefaultResolution"
     ]
   },
   "id": "[\"api\",\".\",\"resolveCoreDefault\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7183,
-      "line": 65,
-      "path": "src/model/schema-properties.ts",
-      "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+      "bytes": 84809,
+      "line": 423,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/model/schema-properties.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "resolveCoreDefault"
 }

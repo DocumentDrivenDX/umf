@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingToDelta\"]",
   "kind": "Function",
   "members": [],
@@ -40,7 +40,7 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Project an authored liquid-clustering choice against a pinned, existing Delta table log.",
+  "purpose": "projectBindingToDelta accepts logical, binding, nativeArchive, lossPolicy and returns DeltaBindingProjection.",
   "related": [],
   "returns": "DeltaBindingProjection",
   "task": "Import and export",

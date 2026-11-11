@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"LegacyTableMigrationOptions\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"umf.table-migration-options/0.1\" | \"umf.table-migration-options/0.2\" | \"umf.table-migration-options/0.3\" | \"umf.table-migration-options/0.4\" | \"umf.table-migration-options/0.5\" | \"umf.table-migration-options/0.6\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "backfills",
+      "optional": false,
+      "type": "{ table: string; column: TableRef; operation: string; scopedRows: true; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "concurrentIndexes",
+      "optional": false,
+      "type": "{ table: string; index: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ReviewedChangeMarker\"]"
+      ],
+      "name": "reviewedChanges",
+      "optional": true,
+      "type": "ReviewedChangeMarker[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "validations",
+      "optional": true,
+      "type": "{ table: string; constraint: string; kind: \"check\" | \"foreignKey\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "LegacyTableMigrationOptions is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "LegacyTableMigrationOptions"
+}

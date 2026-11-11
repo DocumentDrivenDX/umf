@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 20534,
-        "line": 28,
+        "bytes": 1694,
+        "line": 27,
         "path": "src/extensions/security/evaluate.ts",
-        "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+        "sha256": "3e197923af6845359d4eb606c088eb343c5437e013580ffab26b869337738631"
       }
     ],
     "entrypoint": ".",
     "exportName": "SecurityOutput",
     "runtime": "type-only",
     "signatureText": [
-      "export type SecurityOutput = {field:SecurityRef;disposition:'withheld'|'absent'} |\n  {field:SecurityRef;disposition:'original';value:CoreLiteral} |\n  {field:SecurityRef;disposition:'transformed';outputType:SecurityRef;value:CoreLiteral};"
+      "export type SecurityOutput={field:SecurityTypeRef;disposition:'withheld'|'absent'}|\n {field:SecurityTypeRef;disposition:'original';value:CoreLiteral}|\n {field:SecurityTypeRef;disposition:'transformed';outputType:SecurityTypeRef;value:CoreLiteral};"
     ]
   },
   "id": "[\"api\",\".\",\"SecurityOutput\"]",
@@ -20,10 +20,10 @@
   "links": [],
   "sources": [
     {
-      "bytes": 20534,
-      "line": 28,
+      "bytes": 1694,
+      "line": 27,
       "path": "src/extensions/security/evaluate.ts",
-      "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+      "sha256": "3e197923af6845359d4eb606c088eb343c5437e013580ffab26b869337738631"
     }
   ],
   "summary": "Type declaration · src/extensions/security/evaluate.ts",

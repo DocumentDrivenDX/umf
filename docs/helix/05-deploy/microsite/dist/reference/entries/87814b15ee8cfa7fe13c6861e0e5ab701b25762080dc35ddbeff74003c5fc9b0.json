@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8803,
-        "line": 21,
-        "path": "src/core-ideals/nullability-tablespec-projection.ts",
-        "sha256": "49bf5ea8e0debc912d6472e5034bb1060cfae4f034e48c0c28df176523c92b92"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectNullabilityToTableSpec",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreNullabilityDeclaration, options: NullabilityTableSpecRequest): NullabilityTableSpecProjection & { diagnostics: Diagnostic[]; }"
+      "(author: CoreNullabilityDeclaration, request: NullabilityTableSpecRequest): NullabilityTableSpecProjection & { diagnostics: Diagnostic[]; }"
     ]
   },
   "id": "[\"api\",\".\",\"projectNullabilityToTableSpec\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8803,
-      "line": 21,
-      "path": "src/core-ideals/nullability-tablespec-projection.ts",
-      "sha256": "49bf5ea8e0debc912d6472e5034bb1060cfae4f034e48c0c28df176523c92b92"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/nullability-tablespec-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectNullabilityToTableSpec"
 }

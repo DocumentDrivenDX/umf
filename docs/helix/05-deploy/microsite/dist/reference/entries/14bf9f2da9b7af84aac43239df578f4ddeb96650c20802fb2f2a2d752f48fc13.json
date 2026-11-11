@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 1889,
-        "line": 6,
-        "path": "src/model/document.ts",
-        "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+        "bytes": 84809,
+        "line": 375,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "readDocument",
     "runtime": "unassessed",
     "signatureText": [
-      "(text: string, format?: \"json\" | \"yaml\"): Document"
+      "(source: string, format?: \"json\" | \"yaml\"): Document"
     ]
   },
   "id": "[\"api\",\".\",\"readDocument\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 1889,
-      "line": 6,
-      "path": "src/model/document.ts",
-      "sha256": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f"
+      "bytes": 84809,
+      "line": 375,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/model/document.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "readDocument"
 }

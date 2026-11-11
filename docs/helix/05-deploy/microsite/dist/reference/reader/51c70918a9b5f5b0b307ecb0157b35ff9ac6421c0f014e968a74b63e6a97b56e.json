@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableInventorySeedOutcome\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "definitionDigest",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalSourceDigest",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "execution",
+      "optional": false,
+      "type": "\"confirmed\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "proof",
+      "optional": false,
+      "type": "{ kind: \"atomic-publication\"; entryDigest: string; } | { kind: \"phase\"; phaseId: string; phaseDigest: string; phaseReceiptDigest: string; entryDigest: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableInventorySeedOutcome is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventorySeedOutcome"
+}

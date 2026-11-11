@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createSecurityFunctionsEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    }
+  ],
+  "purpose": "createSecurityFunctionsEngine accepts module and returns UmfSecurityFunctionsEngine.",
+  "related": [],
+  "returns": "UmfSecurityFunctionsEngine",
+  "task": "Author and edit",
+  "type": "(module: any) => UmfSecurityFunctionsEngine"
+}

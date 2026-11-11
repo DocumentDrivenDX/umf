@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectRawTableBinding\"]",
   "kind": "Function",
   "members": [],
@@ -40,7 +40,7 @@
       "type": "string"
     }
   ],
-  "purpose": "Inspect the explicit, direct-column subset; never infer SQL, native types or enforcement.",
+  "purpose": "inspectRawTableBinding accepts binding, logical, target, module and returns Validation.",
   "related": [],
   "returns": "Validation",
   "task": "Inspect and select",

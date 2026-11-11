@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"SecurityAuthorityGuard\"]",
   "kind": "Class",
   "members": [
@@ -26,10 +26,18 @@
       "type": "() => void"
     }
   ],
-  "parameters": [],
-  "purpose": "Single-realm coordination only. Hosts must prove all native writers and final releases participate.",
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "generation",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "SecurityAuthorityGuard is a class in Other APIs. Its exact structure is documented below.",
   "related": [],
-  "returns": "",
+  "returns": "SecurityAuthorityGuard",
   "task": "Other APIs",
   "type": "SecurityAuthorityGuard"
 }

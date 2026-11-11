@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"registerSagas\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "registry",
+      "optional": false,
+      "type": "RegistryBase"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SagaRuntime\"]"
+      ],
+      "name": "engine",
+      "optional": false,
+      "type": "SagaRuntime"
+    }
+  ],
+  "purpose": "Explicit opt-in to the engine-owned action/saga interpretation profile.",
+  "related": [],
+  "returns": "RegistryBase",
+  "task": "Extensions",
+  "type": "(registry: Registry, engine: SagaRuntime) => Registry"
+}

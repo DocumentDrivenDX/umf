@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingTablesToSqlServer\"]",
   "kind": "Function",
   "members": [],
@@ -47,7 +47,7 @@
       "type": "string | undefined"
     }
   ],
-  "purpose": "Relationship-independent SQL Server 2022 table proposal from an authored physical binding.",
+  "purpose": "projectBindingTablesToSqlServer accepts logical, binding, policy, lossPolicy, nativeSource and returns SqlServerTableProjection.",
   "related": [],
   "returns": "SqlServerTableProjection",
   "task": "Import and export",

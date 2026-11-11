@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3373,
-        "line": 27,
-        "path": "src/model/csv-boolean-lexical.ts",
-        "sha256": "b1a40aaeba2c97bc181736bb87ef204240490b25614b3a643ad61b77bd1af2cc"
+        "bytes": 84809,
+        "line": 418,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "validateCsvBooleanLexical",
     "runtime": "unassessed",
     "signatureText": [
-      "(sourceInput: Document, requestInput: CsvBooleanLexicalRequest): CsvBooleanLexicalReceipt"
+      "(source: Document, request: CsvBooleanLexicalRequest): CsvBooleanLexicalReceipt"
     ]
   },
   "id": "[\"api\",\".\",\"validateCsvBooleanLexical\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3373,
-      "line": 27,
-      "path": "src/model/csv-boolean-lexical.ts",
-      "sha256": "b1a40aaeba2c97bc181736bb87ef204240490b25614b3a643ad61b77bd1af2cc"
+      "bytes": 84809,
+      "line": 418,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Explicit source-token conversion only; public Core Field validation owns validity.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "validateCsvBooleanLexical"
 }

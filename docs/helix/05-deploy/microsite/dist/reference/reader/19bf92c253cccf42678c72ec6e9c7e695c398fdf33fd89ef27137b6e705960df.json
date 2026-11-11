@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "exportSmithyBundle accepts document and returns { schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }.",
+  "purpose": "exportSmithyBundle accepts document and returns SmithyBundleExport.",
   "related": [],
-  "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }",
+  "returns": "SmithyBundleExport",
   "task": "Import and export",
-  "type": "(document: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; source: Document; diagnostics: Diagnostic[]; }"
+  "type": "(document: Document) => SmithyBundleExport"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 3356,
-        "line": 12,
-        "path": "src/projections/tablespec-via-avro.ts",
-        "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+        "bytes": 1120,
+        "line": 9,
+        "path": "src/projections/tablespec-via-avro-types.ts",
+        "sha256": "8b6fe4de9967294962cb645137114b47b7d1599af520fe585e3e54d8591805cb"
       }
     ],
     "entrypoint": ".",
     "exportName": "TableSpecViaAvroProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface TableSpecViaAvroProjection {\n status:'blocked'|'projected';source:Document;policy:TableSpecViaAvroPolicy;\n stages:{sourceToAvro:PostgresqlAvroProjection|SqlServerAvroProjection|ParquetAvroProjection;avroToTableSpec?:AvroTableSpecProjection};\n issues:{stage:'sourceToAvro'|'avroToTableSpec';sourceDocumentPath:string;issue:ProjectionIssue}[];\n target?:Document;nativeSchema?:string;\n}"
+      "export interface TableSpecViaAvroProjection {status:'blocked'|'projected';source:Document;policy:TableSpecViaAvroPolicy;stages:{sourceToAvro:PostgresqlAvroProjection|SqlServerAvroProjection|ParquetAvroProjection;avroToTableSpec?:AvroTableSpecProjection};issues:{stage:'sourceToAvro'|'avroToTableSpec';sourceDocumentPath:string;issue:ProjectionIssue}[];target?:Document;nativeSchema?:string;}"
     ]
   },
   "id": "[\"api\",\".\",\"TableSpecViaAvroProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 3356,
-      "line": 12,
-      "path": "src/projections/tablespec-via-avro.ts",
-      "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+      "bytes": 1120,
+      "line": 9,
+      "path": "src/projections/tablespec-via-avro-types.ts",
+      "sha256": "8b6fe4de9967294962cb645137114b47b7d1599af520fe585e3e54d8591805cb"
     }
   ],
-  "summary": "Type declaration · src/projections/tablespec-via-avro.ts",
+  "summary": "Type declaration · src/projections/tablespec-via-avro-types.ts",
   "title": "TableSpecViaAvroProjection"
 }

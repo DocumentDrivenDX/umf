@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 20534,
-        "line": 248,
-        "path": "src/extensions/security/evaluate.ts",
-        "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+        "bytes": 84809,
+        "line": 202,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "evaluateSecurityCollection",
     "runtime": "unassessed",
     "signatureText": [
-      "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: SecurityEvaluationRequest): SecurityCollectionResult"
+      "(policy: unknown, resolution: unknown, cut: unknown, request: unknown): SecurityCollectionResult"
     ]
   },
   "id": "[\"api\",\".\",\"evaluateSecurityCollection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 20534,
-      "line": 248,
-      "path": "src/extensions/security/evaluate.ts",
-      "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+      "bytes": 84809,
+      "line": 202,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/extensions/security/evaluate.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "evaluateSecurityCollection"
 }

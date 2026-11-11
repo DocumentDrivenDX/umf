@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectParquetLogicalTypes\"]",
   "kind": "Function",
   "members": [],
@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     }
   ],
-  "purpose": "Logical schema rules only: never inspects or coerces stored values.",
+  "purpose": "inspectParquetLogicalTypes accepts document and returns ParquetLogicalInspection.",
   "related": [],
   "returns": "ParquetLogicalInspection",
   "task": "Inspect and select",
-  "type": "(source: Document) => ParquetLogicalInspection"
+  "type": "(document: Document) => ReturnType<InspectParquetLogicalTypes>"
 }

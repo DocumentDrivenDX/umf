@@ -1,32 +1,28 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"securityIdentityTransportDependencies\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityPolicy\"]"
-      ],
-      "name": "policyInput",
+      "links": [],
+      "name": "source",
       "optional": false,
-      "type": "SecurityPolicy"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]"
-      ],
-      "name": "resolutionInput",
+      "links": [],
+      "name": "resolution",
       "optional": false,
-      "type": "SecurityResolution"
+      "type": "unknown"
     }
   ],
-  "purpose": "Identity/endpoint reconstruction closure, not complete disclosure or issuer authority.\n\nKey and endpoint component order comes from the validated original model. Native\nproviders must preserve that order; neither row position nor field labels infer\nidentity. Extra property/disclosure/query requirements need separate admission.",
+  "purpose": "securityIdentityTransportDependencies accepts source, resolution and returns SecurityIdentityTransportDependencies.",
   "related": [],
   "returns": "SecurityIdentityTransportDependencies",
   "task": "Other APIs",
-  "type": "(policyInput: SecurityPolicy, resolutionInput: SecurityResolution) => SecurityIdentityTransportDependencies"
+  "type": "(source: unknown, resolution: unknown) => SecurityIdentityTransportDependencies"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4785,
-        "line": 25,
-        "path": "src/core-ideals/classification-report.ts",
-        "sha256": "e22e1509b29546bc1940faa930a984ac96a9c072701711e591f17bbb1fd01ddb"
+        "bytes": 84809,
+        "line": 466,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyFieldClassificationInspection",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: FieldClassificationInspection): FieldClassificationInspection"
+      "(report: FieldClassificationInspection): FieldClassificationInspection"
     ]
   },
   "id": "[\"api\",\".\",\"verifyFieldClassificationInspection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4785,
-      "line": 25,
-      "path": "src/core-ideals/classification-report.ts",
-      "sha256": "e22e1509b29546bc1940faa930a984ac96a9c072701711e591f17bbb1fd01ddb"
+      "bytes": 84809,
+      "line": 466,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/classification-report.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyFieldClassificationInspection"
 }

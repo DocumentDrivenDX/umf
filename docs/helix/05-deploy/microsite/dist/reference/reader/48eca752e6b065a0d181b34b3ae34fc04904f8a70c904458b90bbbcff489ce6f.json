@@ -10,14 +10,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [],
-      "name": "fieldInput",
+      "name": "identity",
       "optional": false,
       "type": "{ module: string; element: string; }"
     },
@@ -26,14 +26,14 @@
       "links": [
         "[\"api\",\".\",\"CoreDefaultInput\"]"
       ],
-      "name": "stateInput",
+      "name": "state",
       "optional": false,
       "type": "CoreDefaultInput"
     }
   ],
-  "purpose": "resolveCoreDefault accepts input, fieldInput, stateInput and returns { operation: \"resolve-core-default\"; version: \"2.0.0\"; source: Document; identity: Json; input: CoreDefaultInput; result: CoreDefaultInput; applied: boolean; }.",
+  "purpose": "resolveCoreDefault accepts source, identity, state and returns CoreDefaultResolution.",
   "related": [],
-  "returns": "{ operation: \"resolve-core-default\"; version: \"2.0.0\"; source: Document; identity: Json; input: CoreDefaultInput; result: CoreDefaultInput; applied: boolean; }",
+  "returns": "CoreDefaultResolution",
   "task": "Inspect and select",
-  "type": "(input: Document, fieldInput: { module: string; element: string; }, stateInput: CoreDefaultInput) => { operation: \"resolve-core-default\"; version: \"2.0.0\"; source: Document; identity: Json; input: CoreDefaultInput; result: CoreDefaultInput; applied: boolean; }"
+  "type": "(source: Document, identity: { module: string; element: string; }, state: CoreDefaultInput) => CoreDefaultResolution"
 }

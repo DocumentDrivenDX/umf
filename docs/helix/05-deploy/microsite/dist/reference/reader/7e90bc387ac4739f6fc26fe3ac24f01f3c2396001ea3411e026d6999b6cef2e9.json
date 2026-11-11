@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"findPostgresqlCatalogRelation\"]",
   "kind": "Function",
   "members": [],
@@ -22,7 +22,7 @@
       "type": "{ schema: string; name: string; }"
     }
   ],
-  "purpose": "Returns native observations, including unknown fields; no entity/table equivalence.",
+  "purpose": "findPostgresqlCatalogRelation accepts document, qualified and returns NativeJson | undefined.",
   "related": [],
   "returns": "NativeJson | undefined",
   "task": "Inspect and select",

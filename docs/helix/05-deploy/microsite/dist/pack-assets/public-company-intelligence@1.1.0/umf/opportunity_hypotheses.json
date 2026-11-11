@@ -1,0 +1,60 @@
+{
+  "version": "1.0",
+  "table_name": "opportunity_hypotheses",
+  "description": "Public-company intelligence opportunity_hypotheses; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "opportunity_hypotheses.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "signal_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "opportunity_hypotheses.signal_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "run_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "opportunity_hypotheses.run_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "interpretation",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "opportunity_hypotheses.interpretation; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "review_status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "opportunity_hypotheses.review_status; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "offering_scope",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "opportunity_hypotheses.offering_scope; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "signal_id",
+        "references_table": "signal_observations",
+        "references_column": "id"
+      },
+      {
+        "column": "run_id",
+        "references_table": "analysis_runs",
+        "references_column": "id"
+      }
+    ]
+  }
+}

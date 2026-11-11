@@ -1,0 +1,17 @@
+{
+  "alternatives": [
+    "{ kind: \"boolean\" | \"text\" | \"int2\" | \"int4\" | \"int8\" | \"float4\" | \"float8\" | \"date\" | \"timestamp\" | \"timestamptz\" | \"uuid\" | \"bytea\"; }",
+    "{ kind: \"varchar\" | \"char\"; length: number; }",
+    "{ kind: \"numeric\"; precision: number; scale: number; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableNativeType\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "TableNativeType is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableNativeType"
+}

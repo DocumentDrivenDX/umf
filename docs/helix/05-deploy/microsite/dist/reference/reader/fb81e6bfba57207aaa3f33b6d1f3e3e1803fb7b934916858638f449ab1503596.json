@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectCoreFacets\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -24,9 +24,9 @@
       "type": "CoreFacetIdentity"
     }
   ],
-  "purpose": "Copies known assertions separately from uninterpreted members; never infers authorship.",
+  "purpose": "inspectCoreFacets accepts source, identity and returns CoreFacetInspection.",
   "related": [],
   "returns": "CoreFacetInspection",
   "task": "Inspect and select",
-  "type": "(input: Document, identity: CoreFacetIdentity) => CoreFacetInspection"
+  "type": "(source: Document, identity: CoreFacetIdentity) => CoreFacetInspection"
 }

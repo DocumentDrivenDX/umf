@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"FieldProjectionInspection\"]"
       ],
-      "name": "input",
+      "name": "report",
       "optional": false,
       "type": "FieldProjectionInspection"
     },
@@ -24,9 +24,9 @@
       "type": "PostgresqlBackend | undefined"
     }
   ],
-  "purpose": "verifyFieldProjectionInspection accepts input, backend and returns Promise<FieldProjectionInspection>.",
+  "purpose": "verifyFieldProjectionInspection accepts report, backend and returns Promise<FieldProjectionInspection>.",
   "related": [],
   "returns": "Promise<FieldProjectionInspection>",
   "task": "Other APIs",
-  "type": "(input: FieldProjectionInspection, backend?: PostgresqlBackend) => Promise<FieldProjectionInspection>"
+  "type": "(report: FieldProjectionInspection, backend?: PostgresqlBackend) => Promise<FieldProjectionInspection>"
 }

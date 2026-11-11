@@ -23,9 +23,9 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyIdentity\"]",
-        "[\"api\",\".\",\"CoreKeyTupleValue\"]",
-        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyIdentity\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleValue\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleReceipt\"]"
       ],
       "name": "encode",
       "optional": false,
@@ -34,7 +34,7 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleReceipt\"]"
       ],
       "name": "verify",
       "optional": false,

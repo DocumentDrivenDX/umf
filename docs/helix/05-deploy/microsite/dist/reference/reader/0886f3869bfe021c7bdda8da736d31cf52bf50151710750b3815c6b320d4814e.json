@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "inspectGraphql accepts document and returns Validation.",
+  "purpose": "inspectGraphql accepts document and returns { valid: boolean; complete: boolean; diagnostics: Diagnostic[]; }.",
   "related": [],
-  "returns": "Validation",
+  "returns": "{ valid: boolean; complete: boolean; diagnostics: Diagnostic[]; }",
   "task": "Inspect and select",
-  "type": "(document: Document) => Validation"
+  "type": "(document: Document) => { valid: boolean; complete: boolean; diagnostics: Diagnostic[]; }"
 }

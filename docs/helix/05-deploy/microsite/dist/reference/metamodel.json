@@ -45,8 +45,16 @@
                       "index": "wei",
                       "op": "map",
                       "value": {
-                        "module": {
-                          "var": "wm"
+                        "moduleId": {
+                          "args": [
+                            {
+                              "var": "wm"
+                            },
+                            [
+                              "id"
+                            ]
+                          ],
+                          "op": "get"
                         },
                         "node": {
                           "var": "we"
@@ -90,8 +98,7 @@
                           "var": "wi"
                         },
                         [
-                          "module",
-                          "id"
+                          "moduleId"
                         ]
                       ],
                       "op": "get"
@@ -6133,6 +6140,31 @@
               "message": "Validator failure",
               "severity": "error"
             },
+            "kindCatalogPolicy": {
+              "activeCoreVersion": "0.10.0",
+              "profile": "1.0.0",
+              "schemaReference": "#/$defs/extensionKindCatalog"
+            },
+            "kindRequired": {
+              "code": "EXTENSION_KIND_REQUIRED",
+              "message": "Expected an own nonempty string kind tag",
+              "severity": "error"
+            },
+            "kindScope": {
+              "code": "EXTENSION_KIND_SCOPE",
+              "message": "Kind is not permitted at this attachment scope",
+              "severity": "error"
+            },
+            "kindUnknown": {
+              "code": "EXTENSION_KIND_UNKNOWN",
+              "message": "Kind is not declared by this exact extension version",
+              "severity": "error"
+            },
+            "kindUnsupported": {
+              "code": "EXTENSION_KIND_CATALOG_UNSUPPORTED",
+              "message": "Kind catalog retained without interpretation",
+              "severity": "warning"
+            },
             "scope": {
               "code": "EXTENSION_SCOPE",
               "message": "Extension not permitted at this scope",
@@ -6642,7 +6674,1255 @@
           "semanticReference": "semanticType",
           "semanticReferenceId": "urn:umf:core:semantic-type-reference:1.0.0",
           "version": "0.10.0"
-        }
+        },
+        "resources": [
+          {
+            "definitions": [
+              {
+                "name": "identity",
+                "shape": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "module",
+                    "element"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "source",
+                "shape": {
+                  "tag": "link",
+                  "target": "urn:umf:core:0.10.0"
+                }
+              },
+              {
+                "name": "bounds",
+                "shape": {
+                  "fields": {
+                    "integerWidth": {
+                      "fields": {
+                        "bits": {
+                          "max": 9007199254740991,
+                          "min": 1,
+                          "tag": "integer"
+                        },
+                        "signed": {
+                          "tag": "boolean"
+                        }
+                      },
+                      "mandatory": [
+                        "bits",
+                        "signed"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "length": {
+                      "fields": {
+                        "max": {
+                          "max": 9007199254740991,
+                          "min": 0,
+                          "tag": "integer"
+                        },
+                        "unit": {
+                          "options": [
+                            {
+                              "tag": "constant",
+                              "value": "unicode-scalar"
+                            },
+                            {
+                              "tag": "constant",
+                              "value": "byte"
+                            }
+                          ],
+                          "tag": "choice"
+                        }
+                      },
+                      "mandatory": [
+                        "max",
+                        "unit"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "precision": {
+                      "max": 9007199254740991,
+                      "min": 1,
+                      "tag": "integer"
+                    },
+                    "scale": {
+                      "max": 9007199254740991,
+                      "min": 0,
+                      "tag": "integer"
+                    }
+                  },
+                  "open": false,
+                  "requires": {
+                    "precision": [
+                      "scale"
+                    ],
+                    "scale": [
+                      "precision"
+                    ]
+                  },
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "request",
+                "shape": {
+                  "fields": {
+                    "integerWidth": {
+                      "fields": {
+                        "bits": {
+                          "max": 9007199254740991,
+                          "min": 1,
+                          "tag": "integer"
+                        },
+                        "signed": {
+                          "tag": "boolean"
+                        }
+                      },
+                      "mandatory": [
+                        "bits",
+                        "signed"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "length": {
+                      "fields": {
+                        "max": {
+                          "max": 9007199254740991,
+                          "min": 0,
+                          "tag": "integer"
+                        },
+                        "unit": {
+                          "options": [
+                            {
+                              "tag": "constant",
+                              "value": "unicode-scalar"
+                            },
+                            {
+                              "tag": "constant",
+                              "value": "byte"
+                            }
+                          ],
+                          "tag": "choice"
+                        }
+                      },
+                      "mandatory": [
+                        "max",
+                        "unit"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "precision": {
+                      "max": 9007199254740991,
+                      "min": 1,
+                      "tag": "integer"
+                    },
+                    "scale": {
+                      "max": 9007199254740991,
+                      "min": 0,
+                      "tag": "integer"
+                    }
+                  },
+                  "minProperties": 1,
+                  "open": false,
+                  "requires": {
+                    "precision": [
+                      "scale"
+                    ],
+                    "scale": [
+                      "precision"
+                    ]
+                  },
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "declaration",
+                "shape": {
+                  "fields": {
+                    "identity": {
+                      "tag": "link",
+                      "target": "identity"
+                    },
+                    "operation": {
+                      "tag": "constant",
+                      "value": "declare-core-facets"
+                    },
+                    "provenance": {
+                      "fields": {
+                        "basis": {
+                          "tag": "constant",
+                          "value": "explicit-author-declaration"
+                        },
+                        "binding": {
+                          "fields": {
+                            "id": {
+                              "tag": "constant",
+                              "value": "umf.core.facets.authoring"
+                            },
+                            "version": {
+                              "tag": "constant",
+                              "value": "3.0.0"
+                            }
+                          },
+                          "mandatory": [
+                            "id",
+                            "version"
+                          ],
+                          "open": false,
+                          "tag": "object"
+                        },
+                        "idealPath": {
+                          "tag": "text"
+                        },
+                        "nativePath": {
+                          "tag": "null"
+                        },
+                        "origin": {
+                          "tag": "constant",
+                          "value": "authored"
+                        }
+                      },
+                      "mandatory": [
+                        "origin",
+                        "idealPath",
+                        "binding",
+                        "basis",
+                        "nativePath"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "request": {
+                      "tag": "link",
+                      "target": "request"
+                    },
+                    "source": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "target": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "version": {
+                      "tag": "constant",
+                      "value": "3.0.0"
+                    }
+                  },
+                  "mandatory": [
+                    "operation",
+                    "version",
+                    "source",
+                    "target",
+                    "identity",
+                    "request",
+                    "provenance"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            ],
+            "externalResourceIds": [
+              "urn:umf:core:0.10.0"
+            ],
+            "id": "urn:umf:core:facet-operation:3.0.0",
+            "path": "spec/core/facet-operation-v3.schema.json",
+            "root": {
+              "options": [
+                {
+                  "tag": "link",
+                  "target": "declaration"
+                }
+              ],
+              "tag": "exclusive-choice"
+            },
+            "title": "Facet inspection and authoring receipts (Key envelope) (Relationship envelope)"
+          },
+          {
+            "definitions": [
+              {
+                "name": "cardinality",
+                "shape": {
+                  "options": [
+                    {
+                      "tag": "constant",
+                      "value": "one"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "array"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "map"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "unspecified"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              },
+              {
+                "name": "identity",
+                "shape": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "module",
+                    "element"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "source",
+                "shape": {
+                  "tag": "link",
+                  "target": "urn:umf:core:0.10.0"
+                }
+              },
+              {
+                "name": "declaration",
+                "shape": {
+                  "fields": {
+                    "identity": {
+                      "tag": "link",
+                      "target": "identity"
+                    },
+                    "operation": {
+                      "tag": "constant",
+                      "value": "declare-core-cardinality"
+                    },
+                    "provenance": {
+                      "fields": {
+                        "basis": {
+                          "tag": "constant",
+                          "value": "explicit-author-declaration"
+                        },
+                        "binding": {
+                          "tag": "constant",
+                          "value": {
+                            "id": "umf.core.cardinality.authoring",
+                            "version": "4.0.0"
+                          }
+                        },
+                        "cardinality": {
+                          "tag": "link",
+                          "target": "cardinality"
+                        },
+                        "idealPath": {
+                          "tag": "text"
+                        },
+                        "nativePath": {
+                          "tag": "null"
+                        },
+                        "origin": {
+                          "tag": "constant",
+                          "value": "authored"
+                        }
+                      },
+                      "mandatory": [
+                        "origin",
+                        "idealPath",
+                        "cardinality",
+                        "binding",
+                        "basis",
+                        "nativePath"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "request": {
+                      "tag": "link",
+                      "target": "request"
+                    },
+                    "source": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "target": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "version": {
+                      "tag": "constant",
+                      "value": "4.0.0"
+                    }
+                  },
+                  "mandatory": [
+                    "operation",
+                    "version",
+                    "source",
+                    "target",
+                    "identity",
+                    "provenance",
+                    "request"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "itemType",
+                "shape": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "module",
+                    "element"
+                  ],
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "request",
+                "shape": {
+                  "conditions": [
+                    {
+                      "condition": {
+                        "properties": {
+                          "itemType": {
+                            "tag": "object"
+                          }
+                        },
+                        "required": [
+                          "itemType"
+                        ],
+                        "tag": "object-fragment"
+                      },
+                      "tag": "conditional",
+                      "yes": {
+                        "properties": {
+                          "cardinality": {
+                            "options": [
+                              {
+                                "tag": "constant",
+                                "value": "array"
+                              },
+                              {
+                                "tag": "constant",
+                                "value": "map"
+                              }
+                            ],
+                            "tag": "choice"
+                          }
+                        },
+                        "tag": "object-fragment"
+                      }
+                    }
+                  ],
+                  "fields": {
+                    "cardinality": {
+                      "tag": "link",
+                      "target": "cardinality"
+                    },
+                    "itemType": {
+                      "options": [
+                        {
+                          "tag": "link",
+                          "target": "itemType"
+                        },
+                        {
+                          "tag": "null"
+                        }
+                      ],
+                      "tag": "exclusive-choice"
+                    }
+                  },
+                  "mandatory": [
+                    "cardinality"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            ],
+            "externalResourceIds": [
+              "urn:umf:core:0.10.0"
+            ],
+            "id": "urn:umf:core:cardinality-operation:4.0.0",
+            "path": "spec/core/cardinality-operation-v4.schema.json",
+            "root": {
+              "options": [
+                {
+                  "tag": "link",
+                  "target": "declaration"
+                }
+              ],
+              "tag": "exclusive-choice"
+            },
+            "title": "Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)"
+          },
+          {
+            "definitions": [
+              {
+                "name": "kind",
+                "shape": {
+                  "options": [
+                    {
+                      "tag": "constant",
+                      "value": "field"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "record"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "group"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              },
+              {
+                "name": "identity",
+                "shape": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "module",
+                    "element"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "declaration",
+                "shape": {
+                  "fields": {
+                    "identity": {
+                      "tag": "link",
+                      "target": "identity"
+                    },
+                    "operation": {
+                      "tag": "constant",
+                      "value": "declare-core-kind"
+                    },
+                    "provenance": {
+                      "fields": {
+                        "basis": {
+                          "tag": "constant",
+                          "value": "explicit-author-declaration"
+                        },
+                        "binding": {
+                          "tag": "constant",
+                          "value": {
+                            "id": "umf.core.kind.authoring",
+                            "version": "6.0.0"
+                          }
+                        },
+                        "idealPath": {
+                          "tag": "text"
+                        },
+                        "kind": {
+                          "tag": "link",
+                          "target": "kind"
+                        },
+                        "nativePath": {
+                          "tag": "null"
+                        },
+                        "origin": {
+                          "tag": "constant",
+                          "value": "authored"
+                        }
+                      },
+                      "mandatory": [
+                        "origin",
+                        "idealPath",
+                        "kind",
+                        "binding",
+                        "basis",
+                        "nativePath"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "source": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "target": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "version": {
+                      "tag": "constant",
+                      "value": "6.0.0"
+                    }
+                  },
+                  "mandatory": [
+                    "operation",
+                    "version",
+                    "source",
+                    "target",
+                    "identity",
+                    "provenance"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            ],
+            "externalResourceIds": [
+              "urn:umf:core:0.10.0"
+            ],
+            "id": "urn:umf:core:kind-operation:6.0.0",
+            "path": "spec/core/kind-operation-v6.schema.json",
+            "root": {
+              "tag": "link",
+              "target": "declaration"
+            },
+            "title": "Core kind author declaration receipt"
+          },
+          {
+            "definitions": [
+              {
+                "name": "nullability",
+                "shape": {
+                  "options": [
+                    {
+                      "tag": "constant",
+                      "value": "required"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "absent-allowed"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "unspecified"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              },
+              {
+                "name": "identity",
+                "shape": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "module",
+                    "element"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "source",
+                "shape": {
+                  "tag": "link",
+                  "target": "urn:umf:core:0.10.0"
+                }
+              },
+              {
+                "name": "declaration",
+                "shape": {
+                  "fields": {
+                    "identity": {
+                      "tag": "link",
+                      "target": "identity"
+                    },
+                    "operation": {
+                      "tag": "constant",
+                      "value": "declare-core-nullability"
+                    },
+                    "provenance": {
+                      "fields": {
+                        "basis": {
+                          "tag": "constant",
+                          "value": "explicit-author-declaration"
+                        },
+                        "binding": {
+                          "tag": "constant",
+                          "value": {
+                            "id": "umf.core.nullability.authoring",
+                            "version": "5.0.0"
+                          }
+                        },
+                        "idealPath": {
+                          "tag": "text"
+                        },
+                        "nativePath": {
+                          "tag": "null"
+                        },
+                        "nullability": {
+                          "tag": "link",
+                          "target": "nullability"
+                        },
+                        "origin": {
+                          "tag": "constant",
+                          "value": "authored"
+                        }
+                      },
+                      "mandatory": [
+                        "origin",
+                        "idealPath",
+                        "nullability",
+                        "binding",
+                        "basis",
+                        "nativePath"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "source": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "target": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "version": {
+                      "tag": "constant",
+                      "value": "5.0.0"
+                    }
+                  },
+                  "mandatory": [
+                    "operation",
+                    "version",
+                    "source",
+                    "target",
+                    "identity",
+                    "provenance"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            ],
+            "externalResourceIds": [
+              "urn:umf:core:0.10.0"
+            ],
+            "id": "urn:umf:core:nullability-operation:5.0.0",
+            "path": "spec/core/nullability-operation-v5.schema.json",
+            "root": {
+              "options": [
+                {
+                  "tag": "link",
+                  "target": "declaration"
+                }
+              ],
+              "tag": "exclusive-choice"
+            },
+            "title": "Core nullability inspection and explicit author declaration results (Key envelope) (Relationship envelope)"
+          },
+          {
+            "definitions": [
+              {
+                "name": "identity",
+                "shape": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "module",
+                    "element"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "keyIdentity",
+                "shape": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "key": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "module",
+                    "element",
+                    "key"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "keyRequest",
+                "shape": {
+                  "fields": {
+                    "fields": {
+                      "item": {
+                        "fields": {
+                          "element": {
+                            "min": 1,
+                            "tag": "text"
+                          },
+                          "module": {
+                            "min": 1,
+                            "tag": "text"
+                          }
+                        },
+                        "mandatory": [
+                          "module",
+                          "element"
+                        ],
+                        "open": false,
+                        "tag": "object"
+                      },
+                      "min": 1,
+                      "tag": "sequence",
+                      "unique": true
+                    },
+                    "id": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "name": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "primary": {
+                      "tag": "boolean"
+                    }
+                  },
+                  "mandatory": [
+                    "id",
+                    "name",
+                    "fields"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "memberRequest",
+                "shape": {
+                  "item": {
+                    "fields": {
+                      "element": {
+                        "min": 1,
+                        "tag": "text"
+                      },
+                      "module": {
+                        "min": 1,
+                        "tag": "text"
+                      }
+                    },
+                    "mandatory": [
+                      "module",
+                      "element"
+                    ],
+                    "open": false,
+                    "tag": "object"
+                  },
+                  "tag": "sequence",
+                  "unique": true
+                }
+              },
+              {
+                "name": "declaration",
+                "shape": {
+                  "fields": {
+                    "identity": {
+                      "fields": {
+                        "element": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "module": {
+                          "min": 1,
+                          "tag": "text"
+                        }
+                      },
+                      "mandatory": [
+                        "module",
+                        "element"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "operation": {
+                      "tag": "constant",
+                      "value": "declare-core-key"
+                    },
+                    "provenance": {
+                      "fields": {
+                        "basis": {
+                          "tag": "constant",
+                          "value": "explicit-author-declaration"
+                        },
+                        "binding": {
+                          "fields": {
+                            "id": {
+                              "tag": "constant",
+                              "value": "umf.core.key.authoring"
+                            },
+                            "version": {
+                              "tag": "constant",
+                              "value": "2.0.0"
+                            }
+                          },
+                          "mandatory": [
+                            "id",
+                            "version"
+                          ],
+                          "open": false,
+                          "tag": "object"
+                        },
+                        "idealPath": {
+                          "tag": "text"
+                        },
+                        "nativePath": {
+                          "tag": "null"
+                        },
+                        "origin": {
+                          "tag": "constant",
+                          "value": "authored"
+                        }
+                      },
+                      "mandatory": [
+                        "origin",
+                        "idealPath",
+                        "basis",
+                        "nativePath",
+                        "binding"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "request": {
+                      "tag": "link",
+                      "target": "keyRequest"
+                    },
+                    "source": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "target": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "version": {
+                      "tag": "constant",
+                      "value": "2.0.0"
+                    }
+                  },
+                  "mandatory": [
+                    "operation",
+                    "version",
+                    "source",
+                    "target",
+                    "identity",
+                    "request",
+                    "provenance"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              },
+              {
+                "name": "membership",
+                "shape": {
+                  "fields": {
+                    "identity": {
+                      "fields": {
+                        "element": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "module": {
+                          "min": 1,
+                          "tag": "text"
+                        }
+                      },
+                      "mandatory": [
+                        "module",
+                        "element"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "operation": {
+                      "tag": "constant",
+                      "value": "declare-core-record-members"
+                    },
+                    "provenance": {
+                      "fields": {
+                        "basis": {
+                          "tag": "constant",
+                          "value": "explicit-author-declaration"
+                        },
+                        "binding": {
+                          "fields": {
+                            "id": {
+                              "tag": "constant",
+                              "value": "umf.core.members.authoring"
+                            },
+                            "version": {
+                              "tag": "constant",
+                              "value": "2.0.0"
+                            }
+                          },
+                          "mandatory": [
+                            "id",
+                            "version"
+                          ],
+                          "open": false,
+                          "tag": "object"
+                        },
+                        "idealPath": {
+                          "tag": "text"
+                        },
+                        "nativePath": {
+                          "tag": "null"
+                        },
+                        "origin": {
+                          "tag": "constant",
+                          "value": "authored"
+                        }
+                      },
+                      "mandatory": [
+                        "origin",
+                        "idealPath",
+                        "basis",
+                        "nativePath",
+                        "binding"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    "request": {
+                      "tag": "link",
+                      "target": "memberRequest"
+                    },
+                    "source": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "target": {
+                      "tag": "link",
+                      "target": "urn:umf:core:0.10.0"
+                    },
+                    "version": {
+                      "tag": "constant",
+                      "value": "2.0.0"
+                    }
+                  },
+                  "mandatory": [
+                    "operation",
+                    "version",
+                    "source",
+                    "target",
+                    "identity",
+                    "request",
+                    "provenance"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            ],
+            "externalResourceIds": [
+              "urn:umf:core:0.10.0"
+            ],
+            "id": "urn:umf:core:key-operation:2.0.0",
+            "path": "spec/core/key-operation-v2.schema.json",
+            "root": {
+              "description": "Structural validation does not prove author intent or native enforcement. Recompute receipts and validate their current source/target context before trusting operation results.",
+              "options": [
+                {
+                  "tag": "link",
+                  "target": "declaration"
+                },
+                {
+                  "tag": "link",
+                  "target": "membership"
+                }
+              ],
+              "tag": "exclusive-choice"
+            },
+            "title": "Core Key and Record membership authoring and inspection receipts (Relationship envelope)"
+          },
+          {
+            "definitions": [],
+            "externalResourceIds": [
+              "urn:umf:core:0.10.0",
+              "urn:umf:core:kind-operation:6.0.0"
+            ],
+            "id": "urn:umf:core:record-type-operation:6.0.0",
+            "path": "spec/core/record-type-operation-v6.schema.json",
+            "root": {
+              "fields": {
+                "fieldAuthor": {
+                  "tag": "link",
+                  "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
+                },
+                "operation": {
+                  "tag": "constant",
+                  "value": "declare-core-record-type"
+                },
+                "provenance": {
+                  "fields": {
+                    "basis": {
+                      "tag": "constant",
+                      "value": "explicit-record-type-declaration"
+                    },
+                    "binding": {
+                      "tag": "constant",
+                      "value": {
+                        "id": "umf.core.record-type.authoring",
+                        "version": "6.0.0"
+                      }
+                    },
+                    "idealPath": {
+                      "tag": "text"
+                    },
+                    "nativePath": {
+                      "tag": "null"
+                    },
+                    "origin": {
+                      "tag": "constant",
+                      "value": "authored"
+                    },
+                    "recordPath": {
+                      "tag": "text"
+                    }
+                  },
+                  "mandatory": [
+                    "origin",
+                    "idealPath",
+                    "recordPath",
+                    "nativePath",
+                    "basis",
+                    "binding"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                },
+                "recordAuthor": {
+                  "tag": "link",
+                  "target": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
+                },
+                "reference": {
+                  "fields": {
+                    "element": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "module": {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    "role": {
+                      "tag": "constant",
+                      "value": "record-type"
+                    }
+                  },
+                  "mandatory": [
+                    "role",
+                    "module",
+                    "element"
+                  ],
+                  "open": false,
+                  "tag": "object"
+                },
+                "source": {
+                  "tag": "link",
+                  "target": "urn:umf:core:0.10.0"
+                },
+                "target": {
+                  "tag": "link",
+                  "target": "urn:umf:core:0.10.0"
+                },
+                "version": {
+                  "tag": "constant",
+                  "value": "6.0.0"
+                }
+              },
+              "mandatory": [
+                "operation",
+                "version",
+                "source",
+                "target",
+                "fieldAuthor",
+                "recordAuthor",
+                "reference",
+                "provenance"
+              ],
+              "open": false,
+              "tag": "object"
+            },
+            "title": "Core record type declaration receipt"
+          }
+        ]
       }
     },
     "id": "urn:umf:metamodel",
@@ -9683,9 +10963,1080 @@
               {
                 "element": "extensionPackage.capabilities",
                 "module": "umf"
+              },
+              {
+                "element": "extensionPackage.kindCatalog",
+                "module": "umf"
               }
             ],
             "name": "extensionPackage"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindDefinition.title",
+            "kind": "field",
+            "name": "title"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindDefinition.description",
+            "kind": "field",
+            "name": "description"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "item": {
+                    "options": [
+                      {
+                        "tag": "constant",
+                        "value": "document"
+                      },
+                      {
+                        "tag": "constant",
+                        "value": "module"
+                      },
+                      {
+                        "tag": "constant",
+                        "value": "element"
+                      }
+                    ],
+                    "tag": "choice"
+                  },
+                  "min": 1,
+                  "tag": "sequence",
+                  "unique": true
+                }
+              }
+            },
+            "id": "extensionKindDefinition.scopes",
+            "kind": "field",
+            "name": "scopes"
+          },
+          {
+            "description": "UMF extension kind extensionKindDefinition",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindDefinition",
+                "shape": {
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindDefinition",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindDefinition.title",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindDefinition.description",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindDefinition.scopes",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindDefinition"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindCatalog.profile",
+            "kind": "field",
+            "name": "profile"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "optional",
+                "shape": {
+                  "tag": "any"
+                }
+              }
+            },
+            "id": "extensionKindCatalog.definitions",
+            "kind": "field",
+            "name": "definitions"
+          },
+          {
+            "description": "UMF extension kind extensionKindCatalog",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindCatalog",
+                "shape": {
+                  "conditions": [
+                    {
+                      "condition": {
+                        "fields": {
+                          "profile": {
+                            "tag": "constant",
+                            "value": "1.0.0"
+                          }
+                        },
+                        "mandatory": [
+                          "profile"
+                        ],
+                        "tag": "object"
+                      },
+                      "tag": "conditional",
+                      "yes": {
+                        "fields": {
+                          "definitions": {
+                            "conditions": [
+                              {
+                                "tag": "not",
+                                "value": {
+                                  "tag": "constant",
+                                  "value": {}
+                                }
+                              }
+                            ],
+                            "key": {
+                              "min": 1,
+                              "tag": "text"
+                            },
+                            "open": {
+                              "tag": "link",
+                              "target": "extensionKindDefinition"
+                            },
+                            "tag": "object"
+                          }
+                        },
+                        "mandatory": [
+                          "definitions"
+                        ],
+                        "tag": "object"
+                      }
+                    }
+                  ],
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindCatalog",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindCatalog.profile",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindCatalog.definitions",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindCatalog"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindReference.extension",
+            "kind": "field",
+            "name": "extension"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindReference.version",
+            "kind": "field",
+            "name": "version"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindReference.kind",
+            "kind": "field",
+            "name": "kind"
+          },
+          {
+            "description": "UMF extension kind extensionKindReference",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindReference",
+                "shape": {
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindReference",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindReference.extension",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindReference.version",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindReference.kind",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindReference"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindDiagnostic.code",
+            "kind": "field",
+            "name": "code"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindDiagnostic.path",
+            "kind": "field",
+            "name": "path"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindDiagnostic.message",
+            "kind": "field",
+            "name": "message"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "options": [
+                    {
+                      "tag": "constant",
+                      "value": "error"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "warning"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              }
+            },
+            "id": "extensionKindDiagnostic.severity",
+            "kind": "field",
+            "name": "severity"
+          },
+          {
+            "description": "UMF extension kind extensionKindDiagnostic",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindDiagnostic",
+                "shape": {
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindDiagnostic",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindDiagnostic.code",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindDiagnostic.path",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindDiagnostic.message",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindDiagnostic.severity",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindDiagnostic"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "boolean"
+                }
+              }
+            },
+            "id": "extensionKindValidation.valid",
+            "kind": "field",
+            "name": "valid"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "boolean"
+                }
+              }
+            },
+            "id": "extensionKindValidation.complete",
+            "kind": "field",
+            "name": "complete"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "item": {
+                    "tag": "link",
+                    "target": "extensionKindDiagnostic"
+                  },
+                  "tag": "sequence"
+                }
+              }
+            },
+            "id": "extensionKindValidation.diagnostics",
+            "kind": "field",
+            "name": "diagnostics"
+          },
+          {
+            "description": "UMF extension kind extensionKindValidation",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindValidation",
+                "shape": {
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindValidation",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindValidation.valid",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindValidation.complete",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindValidation.diagnostics",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindValidation"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "link",
+                  "target": "extensionKindReference"
+                }
+              }
+            },
+            "id": "extensionKindEntry.reference",
+            "kind": "field",
+            "name": "reference"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "options": [
+                    {
+                      "fields": {
+                        "scope": {
+                          "tag": "constant",
+                          "value": "document"
+                        }
+                      },
+                      "mandatory": [
+                        "scope"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    {
+                      "fields": {
+                        "module": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "scope": {
+                          "tag": "constant",
+                          "value": "module"
+                        }
+                      },
+                      "mandatory": [
+                        "scope",
+                        "module"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    {
+                      "fields": {
+                        "element": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "module": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "scope": {
+                          "tag": "constant",
+                          "value": "element"
+                        }
+                      },
+                      "mandatory": [
+                        "scope",
+                        "module",
+                        "element"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    }
+                  ],
+                  "tag": "exclusive-choice"
+                }
+              }
+            },
+            "id": "extensionKindEntry.owner",
+            "kind": "field",
+            "name": "owner"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindEntry.payloadPath",
+            "kind": "field",
+            "name": "payloadPath"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "link",
+                  "target": "extensionKindDefinition"
+                }
+              }
+            },
+            "id": "extensionKindEntry.definition",
+            "kind": "field",
+            "name": "definition"
+          },
+          {
+            "description": "UMF extension kind extensionKindEntry",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindEntry",
+                "shape": {
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindEntry",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindEntry.reference",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindEntry.owner",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindEntry.payloadPath",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindEntry.definition",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindEntry"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "options": [
+                    {
+                      "fields": {
+                        "scope": {
+                          "tag": "constant",
+                          "value": "document"
+                        }
+                      },
+                      "mandatory": [
+                        "scope"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    {
+                      "fields": {
+                        "module": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "scope": {
+                          "tag": "constant",
+                          "value": "module"
+                        }
+                      },
+                      "mandatory": [
+                        "scope",
+                        "module"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    },
+                    {
+                      "fields": {
+                        "element": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "module": {
+                          "min": 1,
+                          "tag": "text"
+                        },
+                        "scope": {
+                          "tag": "constant",
+                          "value": "element"
+                        }
+                      },
+                      "mandatory": [
+                        "scope",
+                        "module",
+                        "element"
+                      ],
+                      "open": false,
+                      "tag": "object"
+                    }
+                  ],
+                  "tag": "exclusive-choice"
+                }
+              }
+            },
+            "id": "extensionKindCoverage.owner",
+            "kind": "field",
+            "name": "owner"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindCoverage.extension",
+            "kind": "field",
+            "name": "extension"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "options": [
+                    {
+                      "min": 1,
+                      "tag": "text"
+                    },
+                    {
+                      "tag": "null"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              }
+            },
+            "id": "extensionKindCoverage.version",
+            "kind": "field",
+            "name": "version"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "min": 1,
+                  "tag": "text"
+                }
+              }
+            },
+            "id": "extensionKindCoverage.payloadPath",
+            "kind": "field",
+            "name": "payloadPath"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "options": [
+                    {
+                      "tag": "constant",
+                      "value": "resolved"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "absent-catalog"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "unavailable"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "unsupported-catalog"
+                    },
+                    {
+                      "tag": "constant",
+                      "value": "invalid"
+                    }
+                  ],
+                  "tag": "choice"
+                }
+              }
+            },
+            "id": "extensionKindCoverage.status",
+            "kind": "field",
+            "name": "status"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "item": {
+                    "tag": "link",
+                    "target": "extensionKindDiagnostic"
+                  },
+                  "tag": "sequence"
+                }
+              }
+            },
+            "id": "extensionKindCoverage.diagnostics",
+            "kind": "field",
+            "name": "diagnostics"
+          },
+          {
+            "description": "UMF extension kind extensionKindCoverage",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindCoverage",
+                "shape": {
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindCoverage",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindCoverage.owner",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindCoverage.extension",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindCoverage.version",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindCoverage.payloadPath",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindCoverage.status",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindCoverage.diagnostics",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindCoverage"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "item": {
+                    "fields": {
+                      "definition": {
+                        "tag": "link",
+                        "target": "extensionKindDefinition"
+                      },
+                      "reference": {
+                        "tag": "link",
+                        "target": "extensionKindReference"
+                      }
+                    },
+                    "mandatory": [
+                      "reference",
+                      "definition"
+                    ],
+                    "open": false,
+                    "tag": "object"
+                  },
+                  "tag": "sequence"
+                }
+              }
+            },
+            "id": "extensionKindListResult.definitions",
+            "kind": "field",
+            "name": "definitions"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "item": {
+                    "fields": {
+                      "catalog": {
+                        "options": [
+                          {
+                            "tag": "constant",
+                            "value": "available"
+                          },
+                          {
+                            "tag": "constant",
+                            "value": "absent"
+                          },
+                          {
+                            "tag": "constant",
+                            "value": "unsupported"
+                          }
+                        ],
+                        "tag": "choice"
+                      },
+                      "diagnostics": {
+                        "item": {
+                          "tag": "link",
+                          "target": "extensionKindDiagnostic"
+                        },
+                        "tag": "sequence"
+                      },
+                      "extension": {
+                        "min": 1,
+                        "tag": "text"
+                      },
+                      "version": {
+                        "min": 1,
+                        "tag": "text"
+                      }
+                    },
+                    "mandatory": [
+                      "extension",
+                      "version",
+                      "catalog",
+                      "diagnostics"
+                    ],
+                    "open": false,
+                    "tag": "object"
+                  },
+                  "tag": "sequence"
+                }
+              }
+            },
+            "id": "extensionKindListResult.packages",
+            "kind": "field",
+            "name": "packages"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "boolean"
+                }
+              }
+            },
+            "id": "extensionKindListResult.complete",
+            "kind": "field",
+            "name": "complete"
+          },
+          {
+            "description": "UMF extension kind extensionKindListResult",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindListResult",
+                "shape": {
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindListResult",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindListResult.definitions",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindListResult.packages",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindListResult.complete",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindListResult"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "any"
+                }
+              }
+            },
+            "id": "extensionKindInspection.source",
+            "kind": "field",
+            "name": "source"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "link",
+                  "target": "extensionKindValidation"
+                }
+              }
+            },
+            "id": "extensionKindInspection.sourceValidation",
+            "kind": "field",
+            "name": "sourceValidation"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "item": {
+                    "tag": "link",
+                    "target": "extensionKindEntry"
+                  },
+                  "tag": "sequence"
+                }
+              }
+            },
+            "id": "extensionKindInspection.entries",
+            "kind": "field",
+            "name": "entries"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "item": {
+                    "tag": "link",
+                    "target": "extensionKindCoverage"
+                  },
+                  "tag": "sequence"
+                }
+              }
+            },
+            "id": "extensionKindInspection.coverage",
+            "kind": "field",
+            "name": "coverage"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "required",
+                "shape": {
+                  "tag": "boolean"
+                }
+              }
+            },
+            "id": "extensionKindInspection.complete",
+            "kind": "field",
+            "name": "complete"
+          },
+          {
+            "description": "UMF extension kind extensionKindInspection",
+            "extensions": {
+              "umf.metamodel": {
+                "definition": "extensionKindInspection",
+                "shape": {
+                  "open": false,
+                  "tag": "object"
+                }
+              }
+            },
+            "id": "extensionKindInspection",
+            "kind": "record",
+            "members": [
+              {
+                "element": "extensionKindInspection.source",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindInspection.sourceValidation",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindInspection.entries",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindInspection.coverage",
+                "module": "umf"
+              },
+              {
+                "element": "extensionKindInspection.complete",
+                "module": "umf"
+              }
+            ],
+            "name": "extensionKindInspection"
+          },
+          {
+            "cardinality": "one",
+            "extensions": {
+              "umf.metamodel": {
+                "presence": "optional",
+                "shape": {
+                  "tag": "any"
+                }
+              }
+            },
+            "id": "extensionPackage.kindCatalog",
+            "kind": "field",
+            "name": "kindCatalog"
           }
         ],
         "id": "umf",
@@ -9696,20 +12047,20 @@
     "umf": "0.10.0",
     "vocabularies": {
       "umf.metamodel": {
-        "version": "1.0.0"
+        "version": "1.3.0"
       }
     }
   },
   "profile": "umf.metamodel/1",
   "provenance": {
-    "compilerSha256": "1ddb4d57783635b76a08e5e07234040297177751abd460ddd752e451b3768354",
-    "modelSha256": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce"
+    "compilerSha256": "fead6d1022a7daf2c670056951f1420e7888722d79882e32a5bdce14fda9eab4",
+    "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f"
   },
   "sources": [
     {
-      "bytes": 179719,
+      "bytes": 214346,
       "path": "spec/metamodel/umf.yaml",
-      "sha256": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce"
+      "sha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f"
     }
   ]
 }

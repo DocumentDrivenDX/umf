@@ -1,0 +1,11 @@
+{
+  "resourceType": "Patient",
+  "id": "member",
+  "active": true,
+  "identifier": [
+    {
+      "system": "urn:umf:synthetic-member",
+      "value": "member-001"
+    }
+  ]
+}

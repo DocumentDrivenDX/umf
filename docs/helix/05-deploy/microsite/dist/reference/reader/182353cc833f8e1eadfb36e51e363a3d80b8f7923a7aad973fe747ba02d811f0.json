@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"FieldAvroRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "FieldAvroRequest"
     }
   ],
-  "purpose": "projectFieldToAvro accepts input, options and returns FieldAvroProjection & { diagnostics: Diagnostic[]; }.",
+  "purpose": "projectFieldToAvro accepts author, request and returns FieldAvroProjection.",
   "related": [],
-  "returns": "FieldAvroProjection & { diagnostics: Diagnostic[]; }",
+  "returns": "FieldAvroProjection",
   "task": "Import and export",
-  "type": "(input: CoreKindDeclaration, options: FieldAvroRequest) => FieldAvroProjection & { diagnostics: Diagnostic[]; }"
+  "type": "(author: CoreKindDeclaration, request: FieldAvroRequest) => FieldAvroProjection"
 }

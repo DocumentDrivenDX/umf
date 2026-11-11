@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 16755,
-        "line": 134,
-        "path": "src/core-ideals/facets-avro.ts",
-        "sha256": "456a3017670289a67602d3ab6961cd22160671e0a03a87013ba563ee07c693ae"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "verifyAvroFacetClassification",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: AvroFacetClassification, current: Document): AvroFacetClassification"
+      "(receipt: AvroFacetClassification, current: Document): AvroFacetClassification"
     ]
   },
   "id": "[\"api\",\".\",\"verifyAvroFacetClassification\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 16755,
-      "line": 134,
-      "path": "src/core-ideals/facets-avro.ts",
-      "sha256": "456a3017670289a67602d3ab6961cd22160671e0a03a87013ba563ee07c693ae"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Verify retained receipt consistency, not source authenticity.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "verifyAvroFacetClassification"
 }

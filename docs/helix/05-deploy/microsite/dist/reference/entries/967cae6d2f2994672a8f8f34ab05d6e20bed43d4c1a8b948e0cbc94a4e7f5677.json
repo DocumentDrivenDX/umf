@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9170,
-        "line": 40,
-        "path": "src/core-ideals/relationship-tablespec.ts",
-        "sha256": "3426ef871291205963d483d6c9c03fcdbcbd54ebac5418031ac985d947ed9a6e"
+        "bytes": 84809,
+        "line": 334,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "classifyTableSpecRelationships",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, options: TableSpecRelationshipRequest): TableSpecRelationshipClassification"
+      "(document: Document, request: TableSpecRelationshipRequest): TableSpecRelationshipClassification"
     ]
   },
   "id": "[\"api\",\".\",\"classifyTableSpecRelationships\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9170,
-      "line": 40,
-      "path": "src/core-ideals/relationship-tablespec.ts",
-      "sha256": "3426ef871291205963d483d6c9c03fcdbcbd54ebac5418031ac985d947ed9a6e"
+      "bytes": 84809,
+      "line": 334,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Observe native declarations without upgrading the envelope or creating authored relationships.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "classifyTableSpecRelationships"
 }

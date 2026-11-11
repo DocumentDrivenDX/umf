@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7379,
+        "line": 18,
+        "path": "src/table-migration/types.ts",
+        "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "G04MigrationOptions",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface G04MigrationOptions {version:'umf.table-migration-options/0.7';backfills:[];concurrentIndexes:[];reviewedChanges:G04ReviewMarker[];validations:[];conversions:G04ConversionSelection[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"G04MigrationOptions\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7379,
+      "line": 18,
+      "path": "src/table-migration/types.ts",
+      "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/types.ts",
+  "title": "G04MigrationOptions"
+}

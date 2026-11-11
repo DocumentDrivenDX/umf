@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"editExtension\"]",
   "kind": "Function",
   "members": [],
@@ -16,31 +16,29 @@
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "links": [],
       "name": "registry",
       "optional": false,
-      "type": "Registry"
+      "type": "RegistryBase"
     },
     {
       "description": "",
       "links": [],
-      "name": "moduleId",
+      "name": "module",
       "optional": false,
       "type": "string"
     },
     {
       "description": "",
       "links": [],
-      "name": "elementId",
+      "name": "element",
       "optional": false,
       "type": "string"
     },
     {
       "description": "",
       "links": [],
-      "name": "extensionId",
+      "name": "extension",
       "optional": false,
       "type": "string"
     },
@@ -54,9 +52,9 @@
       "type": "(payload: Json) => Json"
     }
   ],
-  "purpose": "Atomic update; unknown dependencies conservatively block edits until interpreted.",
+  "purpose": "editExtension accepts input, registry, module, element, extension, update and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(input: Document, registry: Registry, moduleId: string, elementId: string, extensionId: string, update: (payload: Json) => Json) => Document"
+  "type": "(input: Document, registry: Registry, module: string, element: string, extension: string, update: (payload: Json) => Json) => Document"
 }

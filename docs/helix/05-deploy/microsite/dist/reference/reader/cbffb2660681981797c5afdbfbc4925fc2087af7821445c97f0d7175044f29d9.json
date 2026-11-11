@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "sourceInput",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"ActionIdentity\"]"
       ],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "ActionIdentity"
     },
@@ -28,23 +28,21 @@
       "links": [
         "[\"api\",\".\",\"ActionExecutorProfile\"]"
       ],
-      "name": "profileInput",
+      "name": "profile",
       "optional": false,
       "type": "ActionExecutorProfile"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "links": [],
       "name": "registry",
       "optional": false,
-      "type": "Registry"
+      "type": "RegistryBase"
     }
   ],
-  "purpose": "assessAction accepts sourceInput, identityInput, profileInput, registry and returns ActionAssessment.",
+  "purpose": "assessAction accepts source, identity, profile, registry and returns ActionAssessment.",
   "related": [],
   "returns": "ActionAssessment",
   "task": "Other APIs",
-  "type": "(sourceInput: Document, identityInput: ActionIdentity, profileInput: ActionExecutorProfile, registry: Registry) => ActionAssessment"
+  "type": "(source: Document, identity: ActionIdentity, profile: ActionExecutorProfile, registry: RegistryBase) => ActionAssessment"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 10672,
-        "line": 92,
-        "path": "src/core-ideals/cardinality-postgresql.ts",
-        "sha256": "8624729e3e4a4761c06957adb6d1ce137db425877db15d65f3571ca5fbd46727"
+        "bytes": 84809,
+        "line": 290,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverPostgresqlCardinalitySource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: PostgresqlCardinalityClassification, current: Document): { nativeSource: string; supplement: string; }"
+      "(receipt: PostgresqlCardinalityClassification, current: Document): { nativeSource: string; supplement: string; }"
     ]
   },
   "id": "[\"api\",\".\",\"recoverPostgresqlCardinalitySource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 10672,
-      "line": 92,
-      "path": "src/core-ideals/cardinality-postgresql.ts",
-      "sha256": "8624729e3e4a4761c06957adb6d1ce137db425877db15d65f3571ca5fbd46727"
+      "bytes": 84809,
+      "line": 290,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Recover both exact native texts, including unclaimed content.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverPostgresqlCardinalitySource"
 }

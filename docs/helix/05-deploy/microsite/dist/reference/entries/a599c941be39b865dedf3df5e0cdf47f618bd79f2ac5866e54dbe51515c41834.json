@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1220,
+        "line": 11,
+        "path": "src/adapters/typespec/report-types.ts",
+        "sha256": "61704c4830b62b8d990404290198831528cd0a189737ca8db89dbd30a57beb12"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TypeSpecCompilerReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TypeSpecCompilerReport {\n  compiler:'@typespec/compiler@1.16.0';\n  libraries:Record<string,string>;\n  valid:boolean;\n  complete:false;\n  diagnostics:TypeSpecDiagnostic[];\n  limitations:string[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TypeSpecCompilerReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1220,
+      "line": 11,
+      "path": "src/adapters/typespec/report-types.ts",
+      "sha256": "61704c4830b62b8d990404290198831528cd0a189737ca8db89dbd30a57beb12"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/typespec/report-types.ts",
+  "title": "TypeSpecCompilerReport"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5657,
+        "line": 25,
+        "path": "src/extensions/actions/saga.ts",
+        "sha256": "64d29da5b0bc3786fe145f8202e05f588ac2540f28ce1aaa7bc3c320ded7e88b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SagaRuntime",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SagaRuntime {\n sagaRegistryProfile():{actionsPackage:unknown;sagaPackage:unknown};\n inspectSagas(source:unknown):unknown;\n declareSaga(source:unknown,module:string,definition:unknown):unknown;\n editSaga(source:unknown,identity:unknown,replacement:unknown):unknown;\n assessSaga(source:unknown,identity:unknown,capabilities:unknown):unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SagaRuntime\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5657,
+      "line": 25,
+      "path": "src/extensions/actions/saga.ts",
+      "sha256": "64d29da5b0bc3786fe145f8202e05f588ac2540f28ce1aaa7bc3c320ded7e88b"
+    }
+  ],
+  "summary": "Implemented by createCodegenEngine with an explicitly installed sagaPackage.",
+  "title": "SagaRuntime"
+}

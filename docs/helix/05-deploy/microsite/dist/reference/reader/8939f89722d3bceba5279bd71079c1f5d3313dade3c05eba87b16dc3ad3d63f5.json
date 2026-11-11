@@ -10,28 +10,28 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "doc",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
     {
       "description": "",
       "links": [],
-      "name": "module",
+      "name": "moduleId",
       "optional": false,
       "type": "string"
     },
     {
       "description": "",
       "links": [],
-      "name": "element",
+      "name": "elementId",
       "optional": false,
       "type": "string"
     }
   ],
-  "purpose": "getDddDefinition accepts doc, module, element and returns DddDefinition.",
+  "purpose": "getDddDefinition accepts document, moduleId, elementId and returns DddDefinition.",
   "related": [],
   "returns": "DddDefinition",
   "task": "Inspect and select",
-  "type": "(doc: Document, module: string, element: string) => DddDefinition"
+  "type": "(document: Document, moduleId: string, elementId: string) => DddDefinition"
 }

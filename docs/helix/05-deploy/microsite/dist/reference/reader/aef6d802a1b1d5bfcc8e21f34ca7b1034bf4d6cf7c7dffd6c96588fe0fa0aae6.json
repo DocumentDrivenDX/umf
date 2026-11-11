@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ExtensionKindCoverage\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "owner",
+      "optional": false,
+      "type": "{ scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "extension",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "payloadPath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"resolved\" | \"absent-catalog\" | \"unavailable\" | \"unsupported-catalog\" | \"invalid\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "ExtensionKindDiagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ExtensionKindCoverage is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ExtensionKindCoverage"
+}

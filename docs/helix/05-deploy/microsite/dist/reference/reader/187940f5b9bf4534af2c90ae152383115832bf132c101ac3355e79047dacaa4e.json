@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"AvroRecordClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "AvroRecordClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverAvroRecordBundle accepts input, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
+  "purpose": "recoverAvroRecordBundle accepts receipt, current and returns { schema: string; dependencies: { id: string; schema: string; }[]; }.",
   "related": [],
   "returns": "{ schema: string; dependencies: { id: string; schema: string; }[]; }",
   "task": "Import and export",
-  "type": "(input: AvroRecordClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
+  "type": "(receipt: AvroRecordClassification, current: Document) => { schema: string; dependencies: { id: string; schema: string; }[]; }"
 }

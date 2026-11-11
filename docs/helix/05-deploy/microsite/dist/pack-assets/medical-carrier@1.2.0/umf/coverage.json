@@ -1,0 +1,73 @@
+{
+  "version": "1.0",
+  "table_name": "coverage",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "resource_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "resource key"
+    },
+    {
+      "name": "status",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "status"
+    },
+    {
+      "name": "beneficiary_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "beneficiary json"
+    },
+    {
+      "name": "subscriber_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "subscriber json"
+    },
+    {
+      "name": "payors_json",
+      "data_type": "TEXT",
+      "nullable": false,
+      "description": "payors json"
+    },
+    {
+      "name": "classes_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "classes json"
+    },
+    {
+      "name": "period_start",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "period start"
+    },
+    {
+      "name": "period_end",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "period end"
+    },
+    {
+      "name": "benefits_json",
+      "data_type": "TEXT",
+      "nullable": true,
+      "description": "benefits json"
+    }
+  ],
+  "primary_key": [
+    "resource_key"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "resource_key",
+        "references_table": "resources",
+        "references_column": "resource_key"
+      }
+    ]
+  }
+}

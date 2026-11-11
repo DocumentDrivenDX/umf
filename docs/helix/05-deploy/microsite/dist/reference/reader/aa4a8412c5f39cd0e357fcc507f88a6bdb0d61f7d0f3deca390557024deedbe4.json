@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"encodeBit128CarrierValue\"]",
   "kind": "Function",
   "members": [],
@@ -40,9 +40,9 @@
       "type": "CoreLiteral"
     }
   ],
-  "purpose": "Pure carrier values only; does not execute a database or establish constraints.",
+  "purpose": "encodeBit128CarrierValue accepts binding, logical, identity, literal and returns Record<string, string | null>.",
   "related": [],
   "returns": "Record<string, string | null>",
   "task": "Serialize",
-  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, literal: CoreLiteral) => Record<string, string | null>"
+  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, literal: Literal) => Record<string, string | null>"
 }

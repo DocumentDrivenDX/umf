@@ -10,21 +10,23 @@
       "links": [
         "[\"api\",\".\",\"CoreRelationshipOperation\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CoreRelationshipOperation"
     },
     {
       "description": "",
-      "links": [],
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
       "name": "current",
       "optional": false,
-      "type": "Source"
+      "type": "Document"
     }
   ],
-  "purpose": "verifyCoreRelationshipOperation accepts input, current and returns CoreRelationshipOperation.",
+  "purpose": "verifyCoreRelationshipOperation accepts receipt, current and returns CoreRelationshipOperation.",
   "related": [],
   "returns": "CoreRelationshipOperation",
   "task": "Other APIs",
-  "type": "(input: CoreRelationshipOperation, current: Source) => CoreRelationshipOperation"
+  "type": "(receipt: CoreRelationshipOperation, current: Document) => CoreRelationshipOperation"
 }

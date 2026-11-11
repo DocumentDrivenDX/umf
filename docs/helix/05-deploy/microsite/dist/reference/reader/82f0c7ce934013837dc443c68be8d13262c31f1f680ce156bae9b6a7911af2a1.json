@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "doc",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -38,9 +38,9 @@
       "type": "(definition: DashboardDefinition) => DashboardDefinition"
     }
   ],
-  "purpose": "editDashboardDefinition accepts doc, module, element, update and returns Document.",
+  "purpose": "editDashboardDefinition accepts document, module, element, update and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(doc: Document, module: string, element: string, update: (definition: DashboardDefinition) => DashboardDefinition) => Document"
+  "type": "(document: Document, module: string, element: string, update: (definition: DashboardDefinition) => DashboardDefinition) => Document"
 }

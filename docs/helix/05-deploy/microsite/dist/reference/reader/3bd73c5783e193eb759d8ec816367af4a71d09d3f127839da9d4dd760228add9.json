@@ -1,36 +1,32 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"SecurityReadRegistration\"]",
   "kind": "Class",
   "members": [
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]",
         "[\"api\",\".\",\"SecurityReadHandle\"]"
       ],
       "name": "register",
       "optional": false,
-      "type": "(policy: unknown, resolution: SecurityResolution) => SecurityReadHandle"
+      "type": "(policy: unknown, resolution: unknown) => SecurityReadHandle"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"SecurityReadHandle\"]",
-        "[\"api\",\".\",\"SecurityFactCut\"]",
-        "[\"api\",\".\",\"SecurityEvaluationRequest\"]",
         "[\"api\",\".\",\"SecurityCollectionResult\"]"
       ],
       "name": "evaluate",
       "optional": false,
-      "type": "(handle: SecurityReadHandle, cut: SecurityFactCut, request: SecurityEvaluationRequest) => SecurityCollectionResult"
+      "type": "(handle: unknown, cut: unknown, request: unknown) => SecurityCollectionResult"
     }
   ],
   "parameters": [],
-  "purpose": "Trusted host registration boundary. This class does not authenticate its caller or facts.",
+  "purpose": "SecurityReadRegistration is a class in Other APIs. Its exact structure is documented below.",
   "related": [],
-  "returns": "",
+  "returns": "SecurityReadRegistration",
   "task": "Other APIs",
   "type": "SecurityReadRegistration"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectIcebergTableContext\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Checks only retained identities and current selections; never mutates or normalizes metadata.",
+  "purpose": "inspectIcebergTableContext accepts document and returns IcebergTableContext.",
   "related": [],
   "returns": "IcebergTableContext",
   "task": "Inspect and select",
-  "type": "(document: Document) => IcebergTableContext"
+  "type": "(document: Parameters<InspectIcebergTableContext>[0]) => ReturnType<InspectIcebergTableContext>"
 }

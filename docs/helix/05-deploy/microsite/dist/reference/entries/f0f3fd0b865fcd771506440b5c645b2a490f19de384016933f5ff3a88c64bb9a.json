@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7873,
-        "line": 15,
-        "path": "src/projections/openapi-json-schema.ts",
-        "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+        "bytes": 84809,
+        "line": 328,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectOpenapiToJsonSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(source: Document, input: OpenapiJsonSchemaPolicy): OpenapiJsonSchemaProjection"
+      "(source: Document, policy: OpenapiJsonSchemaPolicy): OpenapiJsonSchemaProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectOpenapiToJsonSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7873,
-      "line": 15,
-      "path": "src/projections/openapi-json-schema.ts",
-      "sha256": "f94ba36373478a85602ae20157e2ceee9f1df649a6cfee3af46b9bf2939c33cc"
+      "bytes": 84809,
+      "line": 328,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Project static JSON instance constraints with explicit API/annotation losses.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectOpenapiToJsonSchema"
 }

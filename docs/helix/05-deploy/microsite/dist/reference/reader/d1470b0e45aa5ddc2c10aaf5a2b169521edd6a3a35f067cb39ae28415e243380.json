@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingIndexesAgainstSqlServerPlan\"]",
   "kind": "Function",
   "members": [],
@@ -40,7 +40,7 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Render the same bounded rowstore subset from columns proved by a generated table plan.",
+  "purpose": "projectBindingIndexesAgainstSqlServerPlan accepts logical, binding, plannedColumns, lossPolicy and returns SqlServerPlannedIndexProjection.",
   "related": [],
   "returns": "SqlServerPlannedIndexProjection",
   "task": "Import and export",

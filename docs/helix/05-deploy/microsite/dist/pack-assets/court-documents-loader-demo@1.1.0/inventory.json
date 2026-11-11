@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "id": "court-documents-selection",
+  "allowed_hosts": [
+    "www.ca2.uscourts.gov"
+  ],
+  "request_interval_ms": 1000,
+  "max_bytes": 10485760,
+  "max_total_bytes": 104857600,
+  "max_documents": 100,
+  "timeout_ms": 30000,
+  "retries": 2,
+  "entries": []
+}

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"KeyAvroProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "KeyAvroProjection"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverKeysAvroIdeal accepts input, current and returns Document.",
+  "purpose": "recoverKeysAvroIdeal accepts receipt, current and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: KeyAvroProjection, current: Document) => Document"
+  "type": "(receipt: KeyAvroProjection, current: Document) => Document"
 }

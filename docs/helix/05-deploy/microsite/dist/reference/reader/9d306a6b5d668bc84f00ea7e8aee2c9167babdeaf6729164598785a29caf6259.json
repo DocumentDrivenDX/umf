@@ -1,0 +1,73 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"TableInventoryDiscoverySelector\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"umf.table-inventory-discovery/0.1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryDiscoveryIntent\"]"
+      ],
+      "name": "tableIntents",
+      "optional": false,
+      "type": "TableInventoryDiscoveryIntent[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryDiscoveryConversion\"]"
+      ],
+      "name": "conversions",
+      "optional": false,
+      "type": "TableInventoryDiscoveryConversion[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retiredSeedSets",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryRetirement\"]"
+      ],
+      "name": "retirements",
+      "optional": false,
+      "type": "TableInventoryRetirement[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryRestoration\"]"
+      ],
+      "name": "restorations",
+      "optional": false,
+      "type": "TableInventoryRestoration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableInventoryArchiveSource\"]"
+      ],
+      "name": "archiveSources",
+      "optional": false,
+      "type": "TableInventoryArchiveSource[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Closed discovery-only selector. It deliberately has no review marker strings.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableInventoryDiscoverySelector"
+}

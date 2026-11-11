@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 1991,
-        "line": 3,
-        "path": "src/domain-packs/loader.ts",
-        "sha256": "b979bdc0db0208a7a44d4110e2546c0b1e5e1ef6887200aa61c41a3fd5f7f7c9"
+        "bytes": 84809,
+        "line": 362,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": "./loader-contract",
     "exportName": "generateDomainPackLoaderSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(): { readonly $schema: \"https://json-schema.org/draft/2020-12/schema\"; readonly $id: \"urn:umf:domain-pack-loader:1.0.0\"; readonly type: \"object\"; readonly required: readonly [\"version\", \"id\", \"implementation_version\", \"profile\", \"runtime\", \"entrypoint\", \"configuration_schema\", \"qualification\", \"artifacts\"]; readonly properties: { readonly version: { readonly const: \"1.0.0\"; }; readonly id: { readonly const: \"umf.document-loader\"; }; readonly implementation_version: { readonly const: \"1.0.0\"; }; readonly profile: { readonly enum: readonly [\"court-documents\", \"sec-filings\", \"documents\"]; }; readonly runtime: { readonly const: \"bun\"; }; readonly entrypoint: { readonly const: \"run.ts\"; }; readonly configuration_schema: { readonly const: \"inventory.schema.json\"; }; readonly qualification: { type: string; minLength: number; }; readonly artifacts: { readonly type: \"array\"; readonly minItems: 2; readonly maxItems: 32; readonly items: { readonly type: \"object\"; readonly required: readonly [\"reference\", \"sha256\"]; readonly properties: { readonly reference: { type: string; pattern: string; }; readonly sha256: { readonly type: \"string\"; readonly pattern: \"^[a-f0-9]{64}$\"; }; }; readonly additionalProperties: true; }; }; }; readonly additionalProperties: true; }"
+      "(): { readonly $schema: \"https://json-schema.org/draft/2020-12/schema\"; readonly $id: \"urn:umf:domain-pack-loader:1.0.0\"; readonly type: \"object\"; readonly required: readonly [\"version\", \"id\", \"implementation_version\", \"profile\", \"runtime\", \"entrypoint\", \"configuration_schema\", \"qualification\", \"artifacts\"]; readonly properties: { readonly version: { readonly const: \"1.0.0\"; }; readonly id: { readonly const: \"umf.document-loader\"; }; readonly implementation_version: { readonly const: \"1.0.0\"; }; readonly profile: { readonly enum: readonly [\"court-documents\", \"sec-filings\", \"documents\"]; }; readonly runtime: { readonly const: \"bun\"; }; readonly entrypoint: { readonly const: \"run.ts\"; }; readonly configuration_schema: { readonly const: \"inventory.schema.json\"; }; readonly qualification: { readonly type: \"string\"; readonly minLength: 1; }; readonly artifacts: { readonly type: \"array\"; readonly minItems: 2; readonly maxItems: 32; readonly items: { readonly type: \"object\"; readonly required: readonly [\"reference\", \"sha256\"]; readonly properties: { readonly reference: { readonly type: \"string\"; readonly pattern: \"^(?!/)(?!.*(?:^|/)\\\\.\\\\.?/)[A-Za-z0-9_-]+(?:[./][A-Za-z0-9_-]+)*$\"; }; readonly sha256: { readonly type: \"string\"; readonly pattern: \"^[a-f0-9]{64}$\"; }; }; readonly additionalProperties: true; }; }; }; readonly additionalProperties: true; }"
     ]
   },
   "id": "[\"api\",\"./loader-contract\",\"generateDomainPackLoaderSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 1991,
-      "line": 3,
-      "path": "src/domain-packs/loader.ts",
-      "sha256": "b979bdc0db0208a7a44d4110e2546c0b1e5e1ef6887200aa61c41a3fd5f7f7c9"
+      "bytes": 84809,
+      "line": 362,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/domain-packs/loader.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "generateDomainPackLoaderSchema"
 }

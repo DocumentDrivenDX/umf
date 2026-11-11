@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9533,
-        "line": 69,
-        "path": "src/model/evolution.ts",
-        "sha256": "9aecd37678f89343c6330bd5e075f2ba1dc5da5980948c14f0f0c156cd5e843c"
+        "bytes": 84809,
+        "line": 383,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectCoreEvolution",
     "runtime": "unassessed",
     "signatureText": [
-      "(before: Document, after: Document, policy: CoreEvolutionPolicy): Json"
+      "(before: Document, after: Document, policy: CoreEvolutionPolicy): unknown"
     ]
   },
   "id": "[\"api\",\".\",\"inspectCoreEvolution\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9533,
-      "line": 69,
-      "path": "src/model/evolution.ts",
-      "sha256": "9aecd37678f89343c6330bd5e075f2ba1dc5da5980948c14f0f0c156cd5e843c"
+      "bytes": 84809,
+      "line": 383,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/model/evolution.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectCoreEvolution"
 }

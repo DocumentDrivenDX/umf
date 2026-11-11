@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"registerDashboard\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "registry",
+      "optional": false,
+      "type": "RegistryBase"
+    }
+  ],
+  "purpose": "registerDashboard accepts registry and returns RegistryBase.",
+  "related": [],
+  "returns": "RegistryBase",
+  "task": "Extensions",
+  "type": "(registry: Registry) => Registry"
+}

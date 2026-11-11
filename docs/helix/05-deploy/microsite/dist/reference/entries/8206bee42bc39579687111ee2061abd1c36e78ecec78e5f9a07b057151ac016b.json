@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4716,
-        "line": 8,
-        "path": "src/adapters/owl/expressions.ts",
-        "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+        "bytes": 3944,
+        "line": 10,
+        "path": "src/adapters/owl/types.ts",
+        "sha256": "b5c35c0c1bd629471562cbdb3e794b4752e6c4f17fe9f80a0fac859fcf82eac7"
       }
     ],
     "entrypoint": ".",
     "exportName": "OwlExpressionDescription",
     "runtime": "type-only",
     "signatureText": [
-      "export type OwlExpressionDescription=\n |{kind:'reference';node:RdfNode}\n |{kind:'intersectionOf'|'unionOf'|'oneOf';node:RdfNode;members:Term[]}\n |{kind:'complementOf'|'datatypeComplementOf'|'inverseOf';node:RdfNode;operand:Term}\n |{kind:'restriction';node:RdfNode;properties:Term[];facets:{predicate:string;values:Term[]}[]}\n |{kind:'datatypeRestriction';node:RdfNode;datatype:Term;facets:{node:RdfNode;statements:{predicate:string;values:Term[]}[]}[]}\n |{kind:'unrecognized';node:RdfNode};"
+      "export type OwlExpressionDescription=\n |{kind:'reference';node:RdfNode}\n |{kind:'intersectionOf'|'unionOf'|'oneOf';node:RdfNode;members:OwlValue[]}\n |{kind:'complementOf'|'datatypeComplementOf'|'inverseOf';node:RdfNode;operand:OwlValue}\n |{kind:'restriction';node:RdfNode;properties:OwlValue[];facets:{predicate:string;values:OwlValue[]}[]}\n |{kind:'datatypeRestriction';node:RdfNode;datatype:OwlValue;facets:{node:RdfNode;statements:{predicate:string;values:OwlValue[]}[]}[]}\n |{kind:'unrecognized';node:RdfNode};"
     ]
   },
   "id": "[\"api\",\".\",\"OwlExpressionDescription\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4716,
-      "line": 8,
-      "path": "src/adapters/owl/expressions.ts",
-      "sha256": "0880fd62fb96ff19627a818e50560400fd48ef26534d6bc8ce4ff83f3cd7778b"
+      "bytes": 3944,
+      "line": 10,
+      "path": "src/adapters/owl/types.ts",
+      "sha256": "b5c35c0c1bd629471562cbdb3e794b4752e6c4f17fe9f80a0fac859fcf82eac7"
     }
   ],
-  "summary": "Type declaration · src/adapters/owl/expressions.ts",
+  "summary": "Type declaration · src/adapters/owl/types.ts",
   "title": "OwlExpressionDescription"
 }

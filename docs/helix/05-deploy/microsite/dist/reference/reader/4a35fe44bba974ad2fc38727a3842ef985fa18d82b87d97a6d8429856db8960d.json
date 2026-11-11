@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"copyJson\"]",
   "kind": "Function",
   "members": [],
@@ -8,14 +8,14 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "value",
       "optional": false,
       "type": "unknown"
     }
   ],
-  "purpose": "Copy JSON data without invoking getters, toJSON, or custom prototypes.",
+  "purpose": "copyJson accepts value and returns Json.",
   "related": [],
   "returns": "Json",
   "task": "Other APIs",
-  "type": "(input: unknown) => Json"
+  "type": "(value: unknown) => Json"
 }

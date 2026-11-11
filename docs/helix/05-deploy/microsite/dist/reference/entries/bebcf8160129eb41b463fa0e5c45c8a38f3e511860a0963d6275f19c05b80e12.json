@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11495,
-        "line": 18,
-        "path": "src/core-ideals/relationship-parquet-projection.ts",
-        "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+        "bytes": 1708,
+        "line": 10,
+        "path": "src/core-ideals/relationship-parquet-projection-types.ts",
+        "sha256": "40780dd59275921ba8acaf08984221770d27fa486752fb8eae1f0b794132505a"
       }
     ],
     "entrypoint": ".",
     "exportName": "RelationshipParquetProjection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface RelationshipParquetProjection {\n operation:'project-relationship-parquet';version:'1.0.0';status:'projected'|'blocked';outcome:'approximated'|'not-expressible'|'unknown';\n source:Document;author:CoreRelationshipDeclaration;request:RelationshipParquetRequest;binding:typeof binding;target?:Document;nativeArchive?:{hex:string};\n mappings:{idealPath:string;nativePath:string;outcome:'approximated';targetKey:string;componentPaths:string[]}[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+      "export interface RelationshipParquetProjection {\n operation:'project-relationship-parquet';version:'1.0.0';status:'projected'|'blocked';outcome:'approximated'|'not-expressible'|'unknown';\n source:Document;author:CoreRelationshipDeclaration;request:RelationshipParquetRequest;\n binding:{id:'umf.parquet.relationships';version:'1.0.0';nativeVersion:'PyArrow 21.0.0 / Parquet 2.6';subset:'Empty physical nested target-key reference schema with deterministic field IDs; one, optional one or LIST. ASCII common-profile names only; namespace and keyRecordName retained labels. No graph enforcement or native equivalence.'};\n target?:Document;nativeArchive?:{hex:string};\n mappings:{idealPath:string;nativePath:string;outcome:'approximated';targetKey:string;componentPaths:string[]}[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string;recovery:'Retained receipt recovers authored source and emitted native archive; native-only import does not establish authored intent'}[];\n diagnostics:Diagnostic[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"RelationshipParquetProjection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11495,
-      "line": 18,
-      "path": "src/core-ideals/relationship-parquet-projection.ts",
-      "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+      "bytes": 1708,
+      "line": 10,
+      "path": "src/core-ideals/relationship-parquet-projection-types.ts",
+      "sha256": "40780dd59275921ba8acaf08984221770d27fa486752fb8eae1f0b794132505a"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/relationship-parquet-projection.ts",
+  "summary": "Type declaration · src/core-ideals/relationship-parquet-projection-types.ts",
   "title": "RelationshipParquetProjection"
 }

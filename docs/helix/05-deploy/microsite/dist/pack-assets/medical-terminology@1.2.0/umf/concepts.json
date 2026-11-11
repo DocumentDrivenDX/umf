@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "table_name": "concepts",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 12 native ICD-10-CM FY2026 October 2025 order-file records; six separately identified system/access descriptors.",
+  "columns": [
+    {
+      "name": "concept_key",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "concept key"
+    },
+    {
+      "name": "system",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "system"
+    },
+    {
+      "name": "release",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "release"
+    },
+    {
+      "name": "code",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "code"
+    },
+    {
+      "name": "billable",
+      "data_type": "BOOLEAN",
+      "nullable": false,
+      "description": "billable"
+    },
+    {
+      "name": "short_display",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "short display"
+    },
+    {
+      "name": "display",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "display"
+    },
+    {
+      "name": "effective_start",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "effective start"
+    },
+    {
+      "name": "effective_end",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "effective end"
+    },
+    {
+      "name": "native_line",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native line"
+    }
+  ],
+  "primary_key": [
+    "concept_key"
+  ]
+}

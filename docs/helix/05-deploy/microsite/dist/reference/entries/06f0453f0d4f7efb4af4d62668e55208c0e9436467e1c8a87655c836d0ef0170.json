@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6215,
+        "line": 12,
+        "path": "src/extensions/tables/types.ts",
+        "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableRowRule",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type TableRowRule={kind:'deny'|'allow'}|{kind:'owner'|'memberOf';field:TableRef}|{kind:'memberOfRole';role:string}|{kind:'any'|'all';rules:TableRowRule[]}|{kind:'via';path:TableRelationshipStep[];rule:TableRowRule}|{kind:'related';record:TableRef;matches:{source:TableRef;target:TableRef}[];rule:TableRowRule};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableRowRule\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6215,
+      "line": 12,
+      "path": "src/extensions/tables/types.ts",
+      "sha256": "20232fe31d96d4f2a0c6fcc9d3e9bb146f317fa5631945df8b4c39684acc2428"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/tables/types.ts",
+  "title": "TableRowRule"
+}

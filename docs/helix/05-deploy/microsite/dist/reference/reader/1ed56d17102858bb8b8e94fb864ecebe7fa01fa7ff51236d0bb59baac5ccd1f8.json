@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createCoreKeyTupleEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "any"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreResources\"]"
+      ],
+      "name": "resources",
+      "optional": false,
+      "type": "UmfCoreResources"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; resourceControls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "createCoreKeyTupleEngine accepts module, resources, options and returns Pick<UmfCoreModelEngine, \"encodeCoreKeyTuple\" | \"readCoreKeyTupleBytes\" | \"prepareCoreKeyTuples\" | \"verifyCoreKeyTuple\">.",
+  "related": [],
+  "returns": "Pick<UmfCoreModelEngine, \"encodeCoreKeyTuple\" | \"readCoreKeyTupleBytes\" | \"prepareCoreKeyTuples\" | \"verifyCoreKeyTuple\">",
+  "task": "Author and edit",
+  "type": "(module: any, resources: UmfCoreResources, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; resourceControls?: UmfCoreControls; }) => Pick<UmfCoreModelEngine, \"encodeCoreKeyTuple\" | \"verifyCoreKeyTuple\" | \"readCoreKeyTupleBytes\" | \"prepareCoreKeyTuples\">"
+}

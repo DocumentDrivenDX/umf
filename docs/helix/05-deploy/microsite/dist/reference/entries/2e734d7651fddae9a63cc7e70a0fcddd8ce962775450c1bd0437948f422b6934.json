@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8525,
-        "line": 22,
-        "path": "src/core-ideals/nullability-avro-projection.ts",
-        "sha256": "f6f55a0934e6d3896337640e1d7dcf0c479f1d1deee3ba4c1bd84bb8d76f4218"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectNullabilityToAvro",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreNullabilityDeclaration, options: NullabilityAvroRequest): NullabilityAvroProjection & { diagnostics: Diagnostic[]; }"
+      "(author: CoreNullabilityDeclaration, request: NullabilityAvroRequest): NullabilityAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectNullabilityToAvro\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8525,
-      "line": 22,
-      "path": "src/core-ideals/nullability-avro-projection.ts",
-      "sha256": "f6f55a0934e6d3896337640e1d7dcf0c479f1d1deee3ba4c1bd84bb8d76f4218"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/nullability-avro-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectNullabilityToAvro"
 }

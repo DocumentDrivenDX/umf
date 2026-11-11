@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"ParquetKeyClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "ParquetKeyClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "verifyParquetKeyClassification accepts input, current and returns ParquetKeyClassification.",
+  "purpose": "verifyParquetKeyClassification accepts receipt, current and returns ParquetKeyClassification.",
   "related": [],
   "returns": "ParquetKeyClassification",
   "task": "Other APIs",
-  "type": "(input: ParquetKeyClassification, current: Document) => ParquetKeyClassification"
+  "type": "(receipt: ParquetKeyClassification, current: Document) => ParquetKeyClassification"
 }

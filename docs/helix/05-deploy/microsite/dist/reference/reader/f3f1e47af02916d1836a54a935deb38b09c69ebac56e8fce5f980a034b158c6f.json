@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectSqlServerToDdl\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"SqlServerDdlPolicy\"]"
       ],
-      "name": "options",
+      "name": "policy",
       "optional": false,
       "type": "SqlServerDdlPolicy"
     }
   ],
-  "purpose": "Reviewable lowering to new ordinary tables. Never executes source expressions or generated SQL.",
+  "purpose": "projectSqlServerToDdl accepts source, policy and returns SqlServerDdlProjection.",
   "related": [],
   "returns": "SqlServerDdlProjection",
   "task": "Import and export",
-  "type": "(input: Document, options: SqlServerDdlPolicy) => SqlServerDdlProjection"
+  "type": "(source: Document, policy: SqlServerDdlPolicy) => SqlServerDdlProjection"
 }

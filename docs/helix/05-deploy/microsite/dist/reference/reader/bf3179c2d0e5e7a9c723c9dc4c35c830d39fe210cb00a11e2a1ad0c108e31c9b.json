@@ -23,14 +23,14 @@
       "links": [],
       "name": "status",
       "optional": false,
-      "type": "\"blocked\" | \"projected\""
+      "type": "\"projected\" | \"blocked\""
     },
     {
       "description": "",
       "links": [],
       "name": "outcome",
       "optional": false,
-      "type": "\"unknown\" | \"approximated\" | \"not-expressible\""
+      "type": "\"unknown\" | \"not-expressible\" | \"approximated\""
     },
     {
       "description": "",
@@ -82,7 +82,7 @@
       "links": [],
       "name": "binding",
       "optional": false,
-      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+      "type": "{ id: \"umf.tablespec.relationships\"; version: \"1.0.0\"; nativeVersion: \"647e8e566ad78b864282ec65c0b0b2237aa63084\"; subset: \"Explicit single-source/single-target outgoing metadata with ordered target-Key column pairs; no referential enforcement, lifecycle or authored intent inferred from native import\"; }"
     },
     {
       "description": "",
@@ -107,7 +107,7 @@
       ],
       "name": "residuals",
       "optional": false,
-      "type": "{ path: string; value: Json; outcome: \"unknown\" | \"not-expressible\" | \"approximated\"; reason: string; recovery: typeof recovery; }[]"
+      "type": "{ path: string; value: Json; outcome: \"unknown\" | \"not-expressible\" | \"approximated\"; reason: string; recovery: \"Retained receipt recovers authored meaning and original native sources; native-only import does not establish authored intent\"; }[]"
     },
     {
       "description": "",

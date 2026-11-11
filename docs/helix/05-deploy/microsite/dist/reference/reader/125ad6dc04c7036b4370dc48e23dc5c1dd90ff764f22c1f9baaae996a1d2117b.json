@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"createPostgresqlParserSessionEngine\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreControls\"]"
+      ],
+      "name": "options",
+      "optional": true,
+      "type": "{ profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; } | undefined"
+    }
+  ],
+  "purpose": "createPostgresqlParserSessionEngine accepts module, options and returns PostgresqlParserSessionEngine.",
+  "related": [],
+  "returns": "PostgresqlParserSessionEngine",
+  "task": "Author and edit",
+  "type": "(module: unknown, options?: { profile?: \"cooperative\" | \"hard-isolated\"; controls?: UmfCoreControls; }) => PostgresqlParserSessionEngine"
+}

@@ -1,0 +1,16 @@
+{
+  "alternatives": [
+    "{ ok: true; result: unknown; }",
+    "{ ok: false; error: { code: string; message: string; path?: string; pointer?: string; }; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfCodegenOutcome\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "UmfCodegenOutcome is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfCodegenOutcome"
+}

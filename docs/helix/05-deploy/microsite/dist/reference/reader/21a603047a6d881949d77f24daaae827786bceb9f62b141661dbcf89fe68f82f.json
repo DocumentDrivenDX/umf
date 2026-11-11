@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBit128Model\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "bindingInput",
+      "name": "binding",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "sourceInput",
+      "name": "logical",
       "optional": false,
       "type": "Document"
     },
@@ -31,9 +31,9 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Complete declared128-bit Record models. Unsupported meanings block or remain explicit residuals.",
+  "purpose": "projectBit128Model accepts binding, logical, lossPolicy and returns Bit128ModelProjection.",
   "related": [],
   "returns": "Bit128ModelProjection",
   "task": "Import and export",
-  "type": "(bindingInput: Document, sourceInput: Document, lossPolicy: \"strict\" | \"report\") => Bit128ModelProjection"
+  "type": "(binding: Document, logical: Document, lossPolicy: \"strict\" | \"report\") => Bit128ModelProjection"
 }

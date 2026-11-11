@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11037,
-        "line": 14,
-        "path": "src/core-ideals/relationship-avro-projection.ts",
-        "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+        "bytes": 1663,
+        "line": 6,
+        "path": "src/core-ideals/relationship-avro-projection-types.ts",
+        "sha256": "9c796f23f142dd26080d6f9a1c3d3b515715476539c0238c7f1726ca22d84a6b"
       }
     ],
     "entrypoint": ".",
     "exportName": "RelationshipAvroRequest",
     "runtime": "type-only",
     "signatureText": [
-      "export interface RelationshipAvroRequest extends Omit<AvroRelationshipCarrier,'components'> {id:string;profile:'target-key-record';relationship:CoreRelationshipIdentity;mode:'strict'|'report';components:(AvroRelationshipCarrier['components'][number]&{targetField:RelationshipEndpoint})[]}"
+      "export interface RelationshipAvroRequest extends Omit<AvroRelationshipCarrier,'components'> {\n id:string;profile:'target-key-record';relationship:CoreRelationshipIdentity;mode:'strict'|'report';\n components:(AvroRelationshipCarrier['components'][number]&{targetField:RelationshipEndpoint})[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"RelationshipAvroRequest\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11037,
-      "line": 14,
-      "path": "src/core-ideals/relationship-avro-projection.ts",
-      "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+      "bytes": 1663,
+      "line": 6,
+      "path": "src/core-ideals/relationship-avro-projection-types.ts",
+      "sha256": "9c796f23f142dd26080d6f9a1c3d3b515715476539c0238c7f1726ca22d84a6b"
     }
   ],
-  "summary": "Type declaration · src/core-ideals/relationship-avro-projection.ts",
+  "summary": "Type declaration · src/core-ideals/relationship-avro-projection-types.ts",
   "title": "RelationshipAvroRequest"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectCoreScalarType\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"CoreScalarTypeIdentity\"]"
       ],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "CoreScalarTypeIdentity"
     }
   ],
-  "purpose": "Inspect a value-family label without inferring role, native domain or container item type.",
+  "purpose": "inspectCoreScalarType accepts source, identity and returns CoreScalarTypeInspection.",
   "related": [],
   "returns": "CoreScalarTypeInspection",
   "task": "Inspect and select",
-  "type": "(input: Document, identityInput: CoreScalarTypeIdentity) => CoreScalarTypeInspection"
+  "type": "(source: Document, identity: CoreScalarTypeIdentity) => CoreScalarTypeInspection"
 }

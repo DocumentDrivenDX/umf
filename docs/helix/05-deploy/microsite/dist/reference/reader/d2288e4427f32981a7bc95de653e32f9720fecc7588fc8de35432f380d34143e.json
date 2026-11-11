@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"parseNativeYaml\"]",
   "kind": "Function",
   "members": [],
@@ -13,14 +13,14 @@
       "type": "string"
     },
     {
-      "description": "Default: {}.",
+      "description": "",
       "links": [],
       "name": "options",
       "optional": true,
-      "type": "{ version?: \"1.1\" | \"1.2\"; dateOnly?: \"string\"; booleanLexicon?: \"pyyaml\"; }"
+      "type": "{ version?: \"1.1\" | \"1.2\"; dateOnly?: \"string\"; booleanLexicon?: \"pyyaml\"; } | undefined"
     }
   ],
-  "purpose": "JSON-compatible YAML with explicit scalar profile and exact numeric tokens; aliases/tags are rejected.",
+  "purpose": "parseNativeYaml accepts text, options and returns NativeJson.",
   "related": [],
   "returns": "NativeJson",
   "task": "Read and validate",

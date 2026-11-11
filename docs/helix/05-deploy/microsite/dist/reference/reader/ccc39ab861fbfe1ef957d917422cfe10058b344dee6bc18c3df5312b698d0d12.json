@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingIndexes\"]",
   "kind": "Function",
   "members": [],
@@ -31,7 +31,7 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Qualifies planned index carriers. Native DDL/catalog validation is a separate gate.",
+  "purpose": "projectBindingIndexes accepts binding, logical, lossPolicy and returns BindingIndexProjection.",
   "related": [],
   "returns": "BindingIndexProjection",
   "task": "Import and export",

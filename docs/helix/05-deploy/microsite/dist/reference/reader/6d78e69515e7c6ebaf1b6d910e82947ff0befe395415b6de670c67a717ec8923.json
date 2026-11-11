@@ -31,9 +31,9 @@
       "type": "RdfQuad"
     }
   ],
-  "purpose": "proposeOwlQuadEdit accepts document, index, replacement and returns { document: Document; validation: Validation; }.",
+  "purpose": "proposeOwlQuadEdit accepts document, index, replacement and returns { document: Document; validation: unknown; }.",
   "related": [],
-  "returns": "{ document: Document; validation: Validation; }",
+  "returns": "{ document: Document; validation: unknown; }",
   "task": "Author and edit",
-  "type": "(document: Document, index: number, replacement: RdfQuad) => { document: Document; validation: Validation; }"
+  "type": "(document: Parameters<typeof proposeOwlQuadEdit>[0], index: Parameters<typeof proposeOwlQuadEdit>[1], replacement: Parameters<typeof proposeOwlQuadEdit>[2]) => ReturnType<typeof proposeOwlQuadEdit>"
 }

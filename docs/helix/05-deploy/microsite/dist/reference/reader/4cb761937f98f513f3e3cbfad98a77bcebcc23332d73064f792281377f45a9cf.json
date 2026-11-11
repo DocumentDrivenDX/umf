@@ -23,7 +23,7 @@
       "links": [],
       "name": "status",
       "optional": false,
-      "type": "\"blocked\" | \"projected\""
+      "type": "\"projected\" | \"blocked\""
     },
     {
       "description": "",
@@ -39,7 +39,7 @@
       "links": [],
       "name": "mappings",
       "optional": false,
-      "type": "{ kind: \"record\" | \"field\"; origin: \"authored\"; idealPath: string; nativePath: string; binding: Binding; basis: { kind: \"explicit-native-carrier\"; nativeType: string; } | { kind: \"explicit-record-membership\"; }; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; }[]"
+      "type": "{ kind: \"record\" | \"field\"; origin: \"authored\"; idealPath: string; nativePath: string; binding: RecordProjectionBinding; basis: { kind: \"explicit-native-carrier\"; nativeType: string; } | { kind: \"explicit-record-membership\"; }; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; }[]"
     },
     {
       "description": "",
@@ -48,7 +48,7 @@
       ],
       "name": "residuals",
       "optional": false,
-      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\" | \"not-expressible\"; reason: string; binding: Binding; recovery: { strategy: \"retained-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
+      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\" | \"not-expressible\"; reason: string; binding: RecordProjectionBinding; recovery: { strategy: \"retained-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
     },
     {
       "description": "",

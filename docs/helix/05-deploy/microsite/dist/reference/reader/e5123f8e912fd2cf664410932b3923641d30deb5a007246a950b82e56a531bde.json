@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipParquetProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipParquetProjection"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverRelationshipParquetIdeal accepts input, current and returns Document.",
+  "purpose": "recoverRelationshipParquetIdeal accepts receipt, current and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RelationshipParquetProjection, current: Document) => Document"
+  "type": "(receipt: RelationshipParquetProjection, current: Document) => Document"
 }

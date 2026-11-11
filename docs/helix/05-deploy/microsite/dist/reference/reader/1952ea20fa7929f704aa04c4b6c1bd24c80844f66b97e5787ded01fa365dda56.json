@@ -1,0 +1,564 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfCoreModelEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreValidation\"]"
+      ],
+      "name": "prepareCoreInspection",
+      "optional": false,
+      "type": "(source: unknown) => { source: unknown; validation: UmfCoreValidation; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "coreInspectionView",
+      "optional": false,
+      "type": "(source: unknown, identity: CoreRecordIdentity, view: \"keys\" | \"facets\" | \"schemaProperties\") => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "editExtension",
+      "optional": false,
+      "type": "(source: unknown, module: string, element: string, extension: string, update: (payload: unknown) => unknown, registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyIdentity\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleValue\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "encodeCoreKeyTuple",
+      "optional": false,
+      "type": "(source: unknown, identity: CoreKeyIdentity, values: CoreKeyTupleValue[], options?: { profile: \"umf-key-tuple-v1\" | \"umf-key-tuple-v2\"; }) => CoreKeyTupleReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "verifyCoreKeyTuple",
+      "optional": false,
+      "type": "(receipt: CoreKeyTupleReceipt, current: unknown) => CoreKeyTupleReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "readCoreKeyTupleBytes",
+      "optional": false,
+      "type": "(receipt: CoreKeyTupleReceipt, current: unknown) => Uint8Array"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"PreparedCoreKeyTuples\"]"
+      ],
+      "name": "prepareCoreKeyTuples",
+      "optional": false,
+      "type": "(source: unknown) => PreparedCoreKeyTuples"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordIdentity\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyInspection\"]"
+      ],
+      "name": "inspectCoreKeys",
+      "optional": false,
+      "type": "(source: unknown, identity: CoreRecordIdentity) => CoreKeyInspection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyIdentity\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyLookup\"]"
+      ],
+      "name": "lookupCoreKey",
+      "optional": false,
+      "type": "(source: unknown, identity: CoreKeyIdentity) => CoreKeyLookup"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordIdentity\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordMembersDeclaration\"]"
+      ],
+      "name": "declareCoreRecordMembers",
+      "optional": false,
+      "type": "(source: unknown, identity: CoreRecordIdentity, request: CoreRecordIdentity[]) => CoreRecordMembersDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreRecordIdentity\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyRequest\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreKeyDeclaration\"]"
+      ],
+      "name": "declareCoreKey",
+      "optional": false,
+      "type": "(source: unknown, identity: CoreRecordIdentity, request: CoreKeyRequest) => CoreKeyDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeysOperation\"]"
+      ],
+      "name": "verifyCoreKeyOperation",
+      "optional": false,
+      "type": "(receipt: CoreKeysOperation, current: unknown) => CoreKeysOperation"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "admitCoreKeyIdentity",
+      "optional": false,
+      "type": "(identity: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "admitCoreKeyRequest",
+      "optional": false,
+      "type": "(request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "admitCoreKeyMemberRequest",
+      "optional": false,
+      "type": "(request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareCoreKeyVerification",
+      "optional": false,
+      "type": "(receipt: unknown) => object"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreKeysOperation\"]"
+      ],
+      "name": "finishCoreKeyVerification",
+      "optional": false,
+      "type": "(handle: object, current: unknown) => CoreKeysOperation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactInput\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactReceipt\"]"
+      ],
+      "name": "validateCoreDatasetValuesCompact",
+      "optional": false,
+      "type": "(source: unknown, input: CoreDatasetCompactInput) => CoreDatasetCompactReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactReceipt\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactInput\"]"
+      ],
+      "name": "verifyCoreDatasetValuesCompact",
+      "optional": false,
+      "type": "(receipt: CoreDatasetCompactReceipt, current: unknown, expectedInput: CoreDatasetCompactInput) => CoreDatasetCompactReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactInput\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetValuesReceipt\"]"
+      ],
+      "name": "validateCoreDatasetValues",
+      "optional": false,
+      "type": "(source: unknown, input: CoreDatasetCompactInput) => CoreDatasetValuesReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetValuesReceipt\"]",
+        "[\"api\",\"./runtime/wasm\",\"CoreDatasetCompactInput\"]"
+      ],
+      "name": "verifyCoreDatasetValues",
+      "optional": false,
+      "type": "(receipt: CoreDatasetValuesReceipt, current: unknown, expectedInput: CoreDatasetCompactInput) => CoreDatasetValuesReceipt"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreRelationships",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "selectCoreRelationships",
+      "optional": false,
+      "type": "(source: unknown, query: unknown, registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lookupCoreRelationship",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; id: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreRelationship",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; }, request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verifyCoreRelationshipOperation",
+      "optional": false,
+      "type": "(receipt: unknown, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "admitCoreRelationshipLookupIdentity",
+      "optional": false,
+      "type": "(identity: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "admitCoreRelationshipRequest",
+      "optional": false,
+      "type": "(request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareCoreRelationshipVerification",
+      "optional": false,
+      "type": "(receipt: unknown) => object"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "finishCoreRelationshipVerification",
+      "optional": false,
+      "type": "(handle: object, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreEvolution",
+      "optional": false,
+      "type": "(before: unknown, after: unknown, policy: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verifyCoreEvolution",
+      "optional": false,
+      "type": "(receipt: unknown, before: unknown, after: unknown, policy: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CsvBooleanLexicalRequest\"]",
+        "[\"api\",\"./runtime/wasm\",\"CsvBooleanLexicalReceipt\"]"
+      ],
+      "name": "validateCsvBooleanLexical",
+      "optional": false,
+      "type": "(source: unknown, request: CsvBooleanLexicalRequest) => CsvBooleanLexicalReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"CsvBooleanLexicalReceipt\"]",
+        "[\"api\",\"./runtime/wasm\",\"CsvBooleanLexicalRequest\"]"
+      ],
+      "name": "verifyCsvBooleanLexical",
+      "optional": false,
+      "type": "(receipt: CsvBooleanLexicalReceipt, source: unknown, request: CsvBooleanLexicalRequest) => CsvBooleanLexicalReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreRegistration\"]"
+      ],
+      "name": "selectCoreElements",
+      "optional": false,
+      "type": "(source: unknown, query: unknown, registry?: UmfCoreRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreValidation\"]"
+      ],
+      "name": "validateCoreFieldValue",
+      "optional": false,
+      "type": "(source: unknown, field: { module: string; element: string; }, value: unknown) => UmfCoreValidation"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "validateCoreRecordValues",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }, values: unknown[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreDefaultInput\"]",
+        "[\"api\",\"./runtime/wasm\",\"UmfCoreDefaultResolution\"]"
+      ],
+      "name": "resolveCoreDefault",
+      "optional": false,
+      "type": "(source: unknown, field: { module: string; element: string; }, state: UmfCoreDefaultInput) => UmfCoreDefaultResolution"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreSchemaProperties",
+      "optional": false,
+      "type": "(source: unknown, identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreScalarType",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreRecordMembers",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreReferenceLinks",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreSemanticTypes",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getCoreSemanticTypes",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }) => unknown[] | undefined"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreSemanticTypes",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }, types?: unknown[] | null) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verifyCoreSemanticTypeDeclaration",
+      "optional": false,
+      "type": "(receipt: unknown, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getSemanticTypes",
+      "optional": false,
+      "type": "(document: unknown, module: string, element: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "setSemanticTypes",
+      "optional": false,
+      "type": "(document: unknown, module: string, element: string, annotation?: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreFacets",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreFacets",
+      "optional": false,
+      "type": "(source: unknown, identity: { module: string; element: string; }, request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verifyCoreFacetDeclaration",
+      "optional": false,
+      "type": "(receipt: unknown, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "admitCoreFacetRequest",
+      "optional": false,
+      "type": "(request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareCoreFacetVerification",
+      "optional": false,
+      "type": "(receipt: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "finishCoreFacetVerification",
+      "optional": false,
+      "type": "(handle: unknown, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "historicalCoreFacetPatch",
+      "optional": false,
+      "type": "(input: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreSchemaProperties",
+      "optional": false,
+      "type": "(source: unknown, identity: { scope: \"document\"; } | { scope: \"module\"; module: string; } | { scope: \"element\"; module: string; element: string; }, patch: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreCardinality",
+      "optional": false,
+      "type": "(source: unknown, module: string, element: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreCardinalityIdentity",
+      "optional": false,
+      "type": "(source: unknown, identity: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreCardinality",
+      "optional": false,
+      "type": "(source: unknown, module: string, element: string, request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreCardinalityIdentity",
+      "optional": false,
+      "type": "(source: unknown, identity: unknown, request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verifyCoreCardinalityDeclaration",
+      "optional": false,
+      "type": "(receipt: unknown, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "admitCoreCardinalityRequest",
+      "optional": false,
+      "type": "(request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareCoreCardinalityVerification",
+      "optional": false,
+      "type": "(receipt: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "finishCoreCardinalityVerification",
+      "optional": false,
+      "type": "(handle: unknown, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreKind",
+      "optional": false,
+      "type": "(source: unknown, module: string, element: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreKind",
+      "optional": false,
+      "type": "(source: unknown, module: string, element: string, kind: \"field\" | \"record\" | \"group\") => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verifyCoreKindDeclaration",
+      "optional": false,
+      "type": "(receipt: unknown, current: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectCoreNullability",
+      "optional": false,
+      "type": "(source: unknown, module: string, element: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declareCoreNullability",
+      "optional": false,
+      "type": "(source: unknown, module: string, element: string, nullability: \"required\" | \"absent-allowed\" | \"unspecified\") => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "verifyCoreNullabilityDeclaration",
+      "optional": false,
+      "type": "(receipt: unknown, current: unknown) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfCoreModelEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfCoreModelEngine"
+}

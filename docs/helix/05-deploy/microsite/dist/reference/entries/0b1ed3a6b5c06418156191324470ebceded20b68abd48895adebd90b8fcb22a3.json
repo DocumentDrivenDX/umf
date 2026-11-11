@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 4859,
-        "line": 8,
-        "path": "src/adapters/arrow/ipc-layout.ts",
-        "sha256": "72fd59d43e2902e9e7a33a34c6f6523a732f7e3884480083ca1b6ccb022106f1"
+        "bytes": 84809,
+        "line": 445,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectArrowIpcLayout",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document): ArrowIpcLayout"
+      "(document: unknown): ArrowIpcLayout"
     ]
   },
   "id": "[\"api\",\".\",\"inspectArrowIpcLayout\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 4859,
-      "line": 8,
-      "path": "src/adapters/arrow/ipc-layout.ts",
-      "sha256": "72fd59d43e2902e9e7a33a34c6f6523a732f7e3884480083ca1b6ccb022106f1"
+      "bytes": 84809,
+      "line": 445,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Inspects encapsulated metadata/body boundaries; does not execute array or dictionary semantics.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectArrowIpcLayout"
 }

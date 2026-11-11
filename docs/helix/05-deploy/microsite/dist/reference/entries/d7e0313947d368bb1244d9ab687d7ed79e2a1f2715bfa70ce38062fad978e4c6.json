@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 13360,
-        "line": 120,
-        "path": "src/core-ideals/facets-postgresql-projection.ts",
-        "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+        "bytes": 84809,
+        "line": 275,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverFacetsFromPostgresql",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: FacetsPostgresqlProjection, nativeText: string, backend: PostgresqlBackend): Promise<Document>"
+      "(receipt: FacetsPostgresqlProjection, nativeText: string, backend: PostgresqlBackend): Promise<Document>"
     ]
   },
   "id": "[\"api\",\".\",\"recoverFacetsFromPostgresql\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 13360,
-      "line": 120,
-      "path": "src/core-ideals/facets-postgresql-projection.ts",
-      "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+      "bytes": 84809,
+      "line": 275,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Verify the entire operation and exact native text before recovering retained ideal meaning.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverFacetsFromPostgresql"
 }

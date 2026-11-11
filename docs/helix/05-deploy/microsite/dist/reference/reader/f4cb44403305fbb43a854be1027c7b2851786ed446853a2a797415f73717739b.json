@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerCardinalityClassification\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "SqlServerCardinalityClassification"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "verifySqlServerCardinalityClassification accepts input, current and returns SqlServerCardinalityClassification & { [x: string]: {}; }.",
+  "purpose": "verifySqlServerCardinalityClassification accepts receipt, current and returns SqlServerCardinalityClassification.",
   "related": [],
-  "returns": "SqlServerCardinalityClassification & { [x: string]: {}; }",
+  "returns": "SqlServerCardinalityClassification",
   "task": "Other APIs",
-  "type": "(input: SqlServerCardinalityClassification, current: Document) => SqlServerCardinalityClassification & { [x: string]: {}; }"
+  "type": "(receipt: SqlServerCardinalityClassification, current: Document) => SqlServerCardinalityClassification"
 }

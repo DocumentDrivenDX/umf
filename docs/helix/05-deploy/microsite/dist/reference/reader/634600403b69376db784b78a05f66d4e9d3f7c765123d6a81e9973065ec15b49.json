@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingTablesAndIndexesFromPlanToSqlServer\"]",
   "kind": "Function",
   "members": [],
@@ -47,7 +47,7 @@
       "type": "string | undefined"
     }
   ],
-  "purpose": "Generate relationship-independent SQL Server DDL from authored inputs; catalog evidence is optional.",
+  "purpose": "projectBindingTablesAndIndexesFromPlanToSqlServer accepts logical, binding, policy, lossPolicy, nativeSource and returns SqlServerTableProjection.",
   "related": [],
   "returns": "SqlServerTableProjection",
   "task": "Import and export",

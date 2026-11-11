@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"proposeProtobufDescriptorEdit\"]",
   "kind": "Function",
   "members": [],
@@ -24,7 +24,7 @@
       "type": "(node: DescriptorNode) => void"
     }
   ],
-  "purpose": "Produces an explicit validation candidate; never claims a compiler-validated edit.",
+  "purpose": "proposeProtobufDescriptorEdit accepts document, edit and returns { document: Document; diagnostics: Diagnostic[]; }.",
   "related": [],
   "returns": "{ document: Document; diagnostics: Diagnostic[]; }",
   "task": "Author and edit",

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-review-candidate:0.1",
+  "title": "G10 complete source-derived reviewed change candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "path", "oldDigest", "newDigest", "oldValue", "newValue"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^review-[0-9a-f]{24}$"},
+    "kind": {"enum": ["drop-column", "rename-column", "change-column-type", "tighten-not-null", "relax-not-null", "replace-check", "replace-foreign-key", "replace-index", "replace-primary-key", "change-policy", "change-default", "change-operation", "change-operation-context", "create-table", "remove-table", "table-removal-effects", "retire-seed-history"]},
+    "path": {"type": "string", "pattern": "^/"},
+    "oldDigest": {"$ref": "#/$defs/digest"},
+    "newDigest": {"$ref": "#/$defs/digest"},
+    "oldValue": {"$ref": "#/$defs/reviewValue"},
+    "newValue": {"$ref": "#/$defs/reviewValue"},
+    "oldPath": {"type": ["string", "null"], "pattern": "^/"},
+    "newPath": {"type": ["string", "null"], "pattern": "^/"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"kind": {"const": "create-table"}}, "required": ["kind"]},
+      "then": {
+        "properties": {
+          "oldValue": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/previousCreateTableReview"}]},
+          "newValue": {"$ref": "#/$defs/nextCreateTableReview"},
+          "oldPath": {"const": null},
+          "newPath": {"type": "string", "pattern": "^/"}
+        },
+        "required": ["oldPath", "newPath"]
+      }
+    },
+    {
+      "if": {"properties": {"kind": {"enum": ["remove-table", "table-removal-effects"]}}, "required": ["kind"]},
+      "then": {
+        "properties": {
+          "oldValue": {"$ref": "#/$defs/previousRemoveTableReview"},
+          "newValue": {"$ref": "#/$defs/nextRemoveTableReview"},
+          "oldPath": {"type": "string", "pattern": "^/"},
+          "newPath": {"const": null}
+        },
+        "required": ["oldPath", "newPath"]
+      }
+    },
+    {
+      "if": {"properties": {"kind": {"const": "retire-seed-history"}}, "required": ["kind"]},
+      "then": {
+        "properties": {
+          "oldValue": {"$ref": "#/$defs/previousSeedReview"},
+          "newValue": {"$ref": "#/$defs/nextSeedReview"},
+          "oldPath": {"type": "string", "pattern": "^/"},
+          "newPath": {"const": null}
+        },
+        "required": ["oldPath", "newPath"]
+      }
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reviewValue": {"anyOf": [{"type": "null"}, {"$ref": "urn:umf:table-inventory-review:0.1"}, {"$ref": "urn:umf:table-inventory-seed-retirement-review:0.1"}, {"type": "object"}, {"type": "array"}, {"type": "string"}, {"type": "number"}, {"type": "boolean"}]},
+    "tableReview": {"$ref": "urn:umf:table-inventory-review:0.1"},
+    "createTableReview": {
+      "allOf": [
+        {"$ref": "#/$defs/tableReview"},
+        {"properties": {"intent": {"properties": {"kind": {"const": "create"}}}, "effects": {"const": ["new-physical-binding"]}}}
+      ]
+    },
+    "previousCreateTableReview": {
+      "allOf": [
+        {"$ref": "#/$defs/createTableReview"},
+        {"properties": {"side": {"const": "previous"}, "meaning": {"type": "null"}}}
+      ]
+    },
+    "nextCreateTableReview": {
+      "allOf": [
+        {"$ref": "#/$defs/createTableReview"},
+        {"properties": {"side": {"const": "next"}, "meaning": {"type": "object"}}}
+      ]
+    },
+    "removeTableReview": {
+      "allOf": [
+        {"$ref": "#/$defs/tableReview"},
+        {"properties": {"intent": {"properties": {"kind": {"const": "remove"}}}, "effects": {"const": ["ordinary-access-retired", "stored-rows-irreversibly-purged", "physical-binding-removed"]}}}
+      ]
+    },
+    "previousRemoveTableReview": {
+      "allOf": [
+        {"$ref": "#/$defs/removeTableReview"},
+        {"properties": {"side": {"const": "previous"}, "meaning": {"type": "object"}}}
+      ]
+    },
+    "nextRemoveTableReview": {
+      "allOf": [
+        {"$ref": "#/$defs/removeTableReview"},
+        {"properties": {"side": {"const": "next"}, "meaning": {"type": "null"}}}
+      ]
+    },
+    "seedReview": {"$ref": "urn:umf:table-inventory-seed-retirement-review:0.1"},
+    "previousSeedReview": {
+      "allOf": [
+        {"$ref": "#/$defs/seedReview"},
+        {"properties": {"side": {"const": "previous"}, "retired": {"const": false}, "effects": {"const": []}}}
+      ]
+    },
+    "nextSeedReview": {
+      "allOf": [
+        {"$ref": "#/$defs/seedReview"},
+        {"properties": {"side": {"const": "next"}, "retired": {"const": true}, "effects": {"const": ["original-definition-and-execution-retained-in-history", "no-data-replay"]}}}
+      ]
+    }
+  }
+}

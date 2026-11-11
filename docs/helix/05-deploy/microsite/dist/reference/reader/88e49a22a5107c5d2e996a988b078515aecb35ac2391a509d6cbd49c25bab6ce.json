@@ -19,5 +19,5 @@
   "related": [],
   "returns": "Validation",
   "task": "Inspect and select",
-  "type": "(document: Document) => Validation"
+  "type": "(document: Parameters<InspectIcebergTable>[0]) => ReturnType<InspectIcebergTable>"
 }

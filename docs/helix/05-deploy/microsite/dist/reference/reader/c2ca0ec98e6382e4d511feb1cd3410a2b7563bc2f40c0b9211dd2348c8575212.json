@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"compileTableDeployment\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "request",
+      "optional": false,
+      "type": "TableDeploymentRequest"
+    }
+  ],
+  "purpose": "compileTableDeployment accepts request and returns TableDeploymentResult.",
+  "related": [],
+  "returns": "TableDeploymentResult",
+  "task": "Other APIs",
+  "type": "(request: TableDeploymentRequest) => TableDeploymentResult"
+}

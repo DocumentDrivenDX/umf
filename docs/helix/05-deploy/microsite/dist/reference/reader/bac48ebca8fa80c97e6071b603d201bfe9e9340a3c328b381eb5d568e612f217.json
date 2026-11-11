@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"RecordParquetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "RecordParquetRequest"
     }
   ],
-  "purpose": "projectRecordToParquet accepts input, options and returns RecordParquetProjection.",
+  "purpose": "projectRecordToParquet accepts author, request and returns RecordParquetProjection.",
   "related": [],
   "returns": "RecordParquetProjection",
   "task": "Import and export",
-  "type": "(input: CoreKindDeclaration, options: RecordParquetRequest) => RecordParquetProjection"
+  "type": "(author: CoreKindDeclaration, request: RecordParquetRequest) => RecordParquetProjection"
 }

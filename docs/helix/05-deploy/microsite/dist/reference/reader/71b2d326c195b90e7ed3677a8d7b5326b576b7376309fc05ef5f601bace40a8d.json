@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"evaluateSecurityPolicyV2LegacyAccess\"]",
   "kind": "Function",
   "members": [],
@@ -8,50 +8,42 @@
     {
       "description": "",
       "links": [],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityResolution\"]"
-      ],
+      "links": [],
       "name": "resolution",
       "optional": false,
-      "type": "SecurityResolution"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityFactCut\"]"
-      ],
+      "links": [],
       "name": "cut",
       "optional": false,
-      "type": "SecurityFactCut"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityEvaluationRequest\"]"
-      ],
+      "links": [],
       "name": "request",
       "optional": false,
-      "type": "Omit<SecurityEvaluationRequest, \"resources\">"
+      "type": "unknown"
     },
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"SecurityFact\"]"
-      ],
+      "links": [],
       "name": "resource",
       "optional": false,
-      "type": "SecurityFact"
+      "type": "unknown"
     }
   ],
-  "purpose": "Logical single-resource access evaluation only. Host cuts must name the original0.2 policy revision.\nNo catalog, new relationship grammar, unknown meaning or native authority is admitted.",
+  "purpose": "evaluateSecurityPolicyV2LegacyAccess accepts source, resolution, cut, request, resource and returns SecurityPolicyV2LegacyAccess.",
   "related": [],
   "returns": "SecurityPolicyV2LegacyAccess",
   "task": "Other APIs",
-  "type": "(input: unknown, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact) => SecurityPolicyV2LegacyAccess"
+  "type": "(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown) => SecurityPolicyV2LegacyAccess"
 }

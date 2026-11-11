@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2289,
-        "line": 9,
-        "path": "src/adapters/arrow/flatbuffer-encode.ts",
-        "sha256": "c55de39ddb1522a16e79c64a451081f61072253e7a36acca34e0431af754cc83"
+        "bytes": 84809,
+        "line": 246,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "encodeArrowFlatbuffer",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, backend: ArrowFlatbufferEncodingBackend): Uint8Array<ArrayBufferLike>"
+      "(document: Document, backend?: ArrowFlatbufferEncodingBackend | undefined): Uint8Array<ArrayBufferLike>"
     ]
   },
   "id": "[\"api\",\".\",\"encodeArrowFlatbuffer\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2289,
-      "line": 9,
-      "path": "src/adapters/arrow/flatbuffer-encode.ts",
-      "sha256": "c55de39ddb1522a16e79c64a451081f61072253e7a36acca34e0431af754cc83"
+      "bytes": 84809,
+      "line": 246,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Encodes one logical metadata root. Never rewrites an archived IPC dataset.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "encodeArrowFlatbuffer"
 }

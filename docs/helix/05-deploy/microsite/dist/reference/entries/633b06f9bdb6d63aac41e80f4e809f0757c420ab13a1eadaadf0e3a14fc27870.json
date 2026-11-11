@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 13697,
-        "line": 17,
-        "path": "src/projections/bit128.ts",
-        "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+        "bytes": 84809,
+        "line": 439,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectBit128CarrierSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(bindingInput: Document, logicalInput: Document, identityInput: { module: string; element: string; }, policyInput: Bit128ProjectionPolicy): Bit128NativeProjection"
+      "(binding: Document, logical: Document, identity: { module: string; element: string; }, policy: Bit128ProjectionPolicy): Bit128NativeProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectBit128CarrierSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 13697,
-      "line": 17,
-      "path": "src/projections/bit128.ts",
-      "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+      "bytes": 84809,
+      "line": 439,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Bounded one-Field native schema proposal; native execution/adoption is separately qualified.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectBit128CarrierSchema"
 }

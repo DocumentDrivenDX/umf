@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"createSagaResources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [],
+  "purpose": "The host selects and initializes native/WASM; resource data never loads code.",
+  "related": [],
+  "returns": "{ coreSchema: unknown; referenceSchema: unknown; packageSchema: unknown; constraints: unknown; domainPolicy: unknown; tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage: unknown; }",
+  "task": "Author and edit",
+  "type": "() => { coreSchema: unknown; referenceSchema: unknown; packageSchema: unknown; constraints: unknown; domainPolicy: unknown; tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage: unknown; }"
+}

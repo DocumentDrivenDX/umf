@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "receiptInput",
+      "name": "receipt",
       "optional": false,
       "type": "unknown"
     },
@@ -40,9 +40,9 @@
       "type": "CoreEvolutionPolicy"
     }
   ],
-  "purpose": "verifyCoreEvolution accepts receiptInput, before, after, policy and returns Json.",
+  "purpose": "verifyCoreEvolution accepts receipt, before, after, policy and returns unknown.",
   "related": [],
-  "returns": "Json",
+  "returns": "unknown",
   "task": "Other APIs",
-  "type": "(receiptInput: unknown, before: Document, after: Document, policy: CoreEvolutionPolicy) => Json"
+  "type": "(receipt: unknown, before: Document, after: Document, policy: CoreEvolutionPolicy) => unknown"
 }

@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipExtraProjection\"]"
       ],
-      "name": "input",
+      "name": "receiptInput",
       "optional": false,
       "type": "RelationshipExtraProjection"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "current",
+      "name": "currentInput",
       "optional": false,
       "type": "Document"
     }
   ],
-  "purpose": "recoverRelationshipExtraIdeal accepts input, current and returns Document.",
+  "purpose": "recoverRelationshipExtraIdeal accepts receiptInput, currentInput and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RelationshipExtraProjection, current: Document) => Document"
+  "type": "(receiptInput: RelationshipExtraProjection, currentInput: Document) => Document"
 }

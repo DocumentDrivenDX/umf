@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"rollbackBindingRelationships\"]",
   "kind": "Function",
   "members": [],
@@ -33,9 +33,9 @@
       "type": "BindingMigrationReceipt"
     }
   ],
-  "purpose": "Restore the exact original; retain every later edit explicitly, without name reassociation.",
+  "purpose": "rollbackBindingRelationships accepts current, logical, receipt and returns BindingRollbackResult.",
   "related": [],
   "returns": "BindingRollbackResult",
   "task": "Author and edit",
-  "type": "(current: Document, logical: Document, receipt: BindingMigrationReceipt) => BindingRollbackResult"
+  "type": "(current: Document, logical: Document, receipt: BindingMigrationResult[\"receipt\"]) => BindingRollbackResult"
 }

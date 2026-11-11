@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"requireProtectionInterpretation\"]",
   "kind": "Function",
   "members": [],
@@ -13,7 +13,7 @@
       "type": "unknown"
     }
   ],
-  "purpose": "Fail closed until the complete catalog interpreter is implemented and qualified.",
+  "purpose": "requireProtectionInterpretation accepts input and returns never.",
   "related": [],
   "returns": "never",
   "task": "Other APIs",

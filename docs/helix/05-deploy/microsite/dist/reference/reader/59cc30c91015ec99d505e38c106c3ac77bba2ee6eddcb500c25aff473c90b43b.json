@@ -26,5 +26,5 @@
   "related": [],
   "returns": "Promise<JsonLdExpansionReport>",
   "task": "Author and edit",
-  "type": "(document: Document, options: { lossPolicy: \"report\" | \"reject\"; }) => Promise<JsonLdExpansionReport>"
+  "type": "(document: Parameters<ProposeJsonLdExpansion>[0], options: Parameters<ProposeJsonLdExpansion>[1]) => ReturnType<ProposeJsonLdExpansion>"
 }

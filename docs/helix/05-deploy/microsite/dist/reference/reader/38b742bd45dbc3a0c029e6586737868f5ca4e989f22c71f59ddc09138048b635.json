@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyCoreCardinalityDeclaration\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CoreCardinalityDeclaration"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration.",
+  "purpose": "verifyCoreCardinalityDeclaration accepts receipt, current and returns CoreCardinalityDeclaration.",
   "related": [],
   "returns": "CoreCardinalityDeclaration",
   "task": "Other APIs",
-  "type": "(input: CoreCardinalityDeclaration, current: Document) => CoreCardinalityDeclaration"
+  "type": "(receipt: CoreCardinalityDeclaration, current: Document) => CoreCardinalityDeclaration"
 }

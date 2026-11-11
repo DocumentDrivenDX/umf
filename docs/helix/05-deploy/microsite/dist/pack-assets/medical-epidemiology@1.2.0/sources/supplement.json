@@ -1,0 +1,45 @@
+{
+  "qualification": "Fabricated aggregate edge cases, not CDC observations.",
+  "rows": [
+    {
+      "measure_key": "supplement/zero",
+      "source_id": "supplement",
+      "year": "2026",
+      "geography": "Fabricated County",
+      "geography_vintage": null,
+      "cause": "Fabricated condition",
+      "case_definition": "Authored example definition",
+      "measure": "incidence",
+      "count": "0",
+      "count_status": "reported",
+      "adjusted_rate": null,
+      "rate_status": "not supplied",
+      "rate_unit": null,
+      "adjustment": null,
+      "population_denominator": "1000",
+      "denominator_status": "reported",
+      "uncertainty_json": null,
+      "native_json": "{\"count\":0}"
+    },
+    {
+      "measure_key": "supplement/suppressed",
+      "source_id": "supplement",
+      "year": "2026",
+      "geography": "Fabricated County",
+      "geography_vintage": null,
+      "cause": "Fabricated condition",
+      "case_definition": "Authored example definition",
+      "measure": "incidence",
+      "count": null,
+      "count_status": "suppressed",
+      "adjusted_rate": null,
+      "rate_status": "suppressed",
+      "rate_unit": null,
+      "adjustment": null,
+      "population_denominator": "1000",
+      "denominator_status": "reported",
+      "uncertainty_json": null,
+      "native_json": "{\"count_status\":\"suppressed\"}"
+    }
+  ]
+}

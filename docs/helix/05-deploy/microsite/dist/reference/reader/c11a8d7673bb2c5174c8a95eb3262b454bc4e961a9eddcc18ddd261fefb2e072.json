@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"editTableSpecTable\"]",
   "kind": "Function",
   "members": [],
@@ -24,9 +24,9 @@
       "type": "Record<string, NativeJson>"
     }
   ],
-  "purpose": "Merge explicit table metadata; column ordering/identity requires separate operations.",
+  "purpose": "editTableSpecTable accepts document, changes and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Author and edit",
-  "type": "(document: Document, changes: Record<string, NativeJson>) => Document"
+  "type": "(document: Parameters<EditTableSpecTable>[0], changes: Parameters<EditTableSpecTable>[1]) => ReturnType<EditTableSpecTable>"
 }

@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectRelationshipToParquet\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
       ],
-      "name": "authorInput",
+      "name": "author",
       "optional": false,
       "type": "CoreRelationshipDeclaration"
     },
@@ -28,14 +28,14 @@
       "links": [
         "[\"api\",\".\",\"RelationshipParquetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "RelationshipParquetRequest"
     }
   ],
-  "purpose": "Explicit reference-value lowering with retained authored meaning; no native identity inference.",
+  "purpose": "projectRelationshipToParquet accepts source, author, request and returns RelationshipParquetProjection.",
   "related": [],
   "returns": "RelationshipParquetProjection",
   "task": "Import and export",
-  "type": "(input: Document, authorInput: CoreRelationshipDeclaration, options: RelationshipParquetRequest) => RelationshipParquetProjection"
+  "type": "(source: Document, author: import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").CoreRelationshipDeclaration, request: RelationshipParquetRequest) => RelationshipParquetProjection"
 }

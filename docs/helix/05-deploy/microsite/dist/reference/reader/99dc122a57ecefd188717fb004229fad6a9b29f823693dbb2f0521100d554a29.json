@@ -1,0 +1,76 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableForeignKey\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRef\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "TableRef[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableKeyRef\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "TableKeyRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "onUpdate",
+      "optional": false,
+      "type": "\"restrict\" | \"cascade\" | \"noAction\" | \"setNull\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "onDelete",
+      "optional": false,
+      "type": "\"restrict\" | \"cascade\" | \"noAction\" | \"setNull\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deferrable",
+      "optional": false,
+      "type": "false | \"deferred\" | \"immediate\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableRelationshipRef\"]"
+      ],
+      "name": "relationship",
+      "optional": true,
+      "type": "TableRelationshipRef"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableForeignKey is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableForeignKey"
+}

@@ -44,11 +44,12 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"Json\"]"
+        "[\"api\",\".\",\"Json\"]",
+        "[\"api\",\".\",\"TableSpecRecordMapping\"]"
       ],
       "name": "mappings",
       "optional": false,
-      "type": "((Mapping | (Omit<Mapping, \"kind\" | \"basis\"> & { kind: \"field\" | \"record\" | \"record-type\"; basis: \"checked-record-field-membership\" | \"checked-record-declaration\" | \"qualified-native-record-type\"; }) | Mapping | (Omit<Mapping, \"kind\" | \"basis\"> & { kind: \"field\" | \"record\" | \"record-type\"; basis: \"checked-record-field-membership\" | \"checked-record-declaration\" | \"checked-struct-valued-member\"; }) | { origin: \"classified\"; kind: \"field\" | \"record\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-composite\" | \"checked-catalog-composite-attribute\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\" | \"record\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-raw-column-declaration\" | \"checked-raw-table-declaration\" | \"checked-raw-composite-declaration\"; outcome: \"exact\" | \"unknown\"; } | Mapping | Mapping | Mapping) & { binding: Binding; })[]"
+      "type": "((Mapping | (Omit<Mapping, \"kind\" | \"basis\"> & { kind: \"field\" | \"record\" | \"record-type\"; basis: \"checked-record-field-membership\" | \"checked-record-declaration\" | \"qualified-native-record-type\"; }) | Mapping | (Omit<Mapping, \"kind\" | \"basis\"> & { kind: \"field\" | \"record\" | \"record-type\"; basis: \"checked-record-field-membership\" | \"checked-record-declaration\" | \"checked-struct-valued-member\"; }) | { origin: \"classified\"; kind: \"field\" | \"record\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-catalog-composite\" | \"checked-catalog-composite-attribute\"; outcome: \"exact\" | \"unknown\"; } | { origin: \"classified\"; kind: \"field\" | \"record\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-raw-column-declaration\" | \"checked-raw-table-declaration\" | \"checked-raw-composite-declaration\"; outcome: \"exact\" | \"unknown\"; } | Mapping | Mapping | TableSpecRecordMapping) & { binding: StructuredClassificationBinding; })[]"
     },
     {
       "description": "",
@@ -57,7 +58,7 @@
       ],
       "name": "residuals",
       "optional": false,
-      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\"; reason: string; binding: Binding; recovery: { strategy: \"retained-source-and-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
+      "type": "{ sourcePath: string; sourceValue: Json; targetPath: null; outcome: \"unknown\"; reason: string; binding: StructuredClassificationBinding; recovery: { strategy: \"retained-source-and-receipt\"; receiptPath: \"/receipt/source\"; instruction: string; }; }[]"
     },
     {
       "description": "",

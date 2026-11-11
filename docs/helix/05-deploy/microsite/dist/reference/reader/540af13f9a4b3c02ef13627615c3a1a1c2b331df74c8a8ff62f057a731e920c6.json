@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectSecSubmissions\"]",
   "kind": "Function",
   "members": [],
@@ -20,7 +20,7 @@
       "type": "string"
     }
   ],
-  "purpose": "Local supplied recent arrays only; original JSON remains the source authority.",
+  "purpose": "projectSecSubmissions accepts input, sourceId and returns { companies: PublicCompanyRow[]; identifiers: PublicCompanyRow[]; filings: PublicCompanyRow[]; }.",
   "related": [],
   "returns": "{ companies: PublicCompanyRow[]; identifiers: PublicCompanyRow[]; filings: PublicCompanyRow[]; }",
   "task": "Import and export",

@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "table_name": "cases",
+  "description": "CONTRACT-058 bounded appellate fixture: cases.",
+  "columns": [
+    {
+      "name": "case_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "cases.case_id; preserve source scope and qualification."
+    },
+    {
+      "name": "case_name",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "cases.case_name; preserve source scope and qualification."
+    },
+    {
+      "name": "docket_number",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "cases.docket_number; preserve source scope and qualification."
+    },
+    {
+      "name": "court_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "cases.court_id; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "case_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "court_id",
+        "references_table": "courts",
+        "references_column": "court_id"
+      }
+    ]
+  }
+}

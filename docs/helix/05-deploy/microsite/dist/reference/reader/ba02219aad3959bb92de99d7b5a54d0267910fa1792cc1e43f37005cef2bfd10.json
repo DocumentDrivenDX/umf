@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"encodeBit128FileRecord\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "bindingInput",
+      "name": "binding",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "sourceInput",
+      "name": "logical",
       "optional": false,
       "type": "Document"
     },
@@ -28,21 +28,21 @@
       "links": [],
       "name": "identity",
       "optional": false,
-      "type": "Bit128Ref"
+      "type": "{ module: string; element: string; }"
     },
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"Bit128RecordValue\"]"
+        "[\"api\",\"./runtime/wasm\",\"Bit128RecordValue\"]"
       ],
       "name": "values",
       "optional": false,
       "type": "Bit128RecordValue[]"
     }
   ],
-  "purpose": "JSON-safe native datum tokens; driver converts exact decimal/hex tokens to native long/bytes.",
+  "purpose": "encodeBit128FileRecord accepts binding, logical, identity, values and returns Record<string, Json>.",
   "related": [],
   "returns": "Record<string, Json>",
   "task": "Serialize",
-  "type": "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, values: Bit128RecordValue[]) => Record<string, Json>"
+  "type": "(binding: Document, logical: Document, identity: { module: string; element: string; }, values: Bit128RecordValue[]) => Record<string, Json>"
 }

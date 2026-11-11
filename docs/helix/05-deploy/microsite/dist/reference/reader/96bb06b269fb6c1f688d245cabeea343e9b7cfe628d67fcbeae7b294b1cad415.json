@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectBindingIndexesToPostgresql\"]",
   "kind": "Function",
   "members": [],
@@ -49,7 +49,7 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Emit PostgreSQL 17 index DDL only against exact columns in a retained CREATE TABLE source.",
+  "purpose": "projectBindingIndexesToPostgresql accepts logical, binding, nativeArchive, backend, lossPolicy and returns Promise<PostgresqlIndexProjection>.",
   "related": [],
   "returns": "Promise<PostgresqlIndexProjection>",
   "task": "Import and export",

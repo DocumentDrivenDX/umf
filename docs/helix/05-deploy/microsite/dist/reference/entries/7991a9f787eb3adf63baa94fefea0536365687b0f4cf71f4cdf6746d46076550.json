@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7379,
+        "line": 61,
+        "path": "src/table-migration/types.ts",
+        "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableMigrationRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableMigrationRequest {\n id:string;predecessor:{id:string;digest:string}|null;\n previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options?:TableMigrationOptions;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableMigrationRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7379,
+      "line": 61,
+      "path": "src/table-migration/types.ts",
+      "sha256": "30639e4666690c5b25b069454bfb2d8822106220a87f1a61e7439011d5cab161"
+    }
+  ],
+  "summary": "Type declaration · src/table-migration/types.ts",
+  "title": "TableMigrationRequest"
+}

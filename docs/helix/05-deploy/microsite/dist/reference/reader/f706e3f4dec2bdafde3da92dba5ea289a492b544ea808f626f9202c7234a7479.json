@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"ActionPlanArtifact\"]"
       ],
-      "name": "input",
+      "name": "artifact",
       "optional": false,
       "type": "ActionPlanArtifact"
     },
@@ -24,9 +24,9 @@
       "type": "ActionPlanInspectionContext"
     }
   ],
-  "purpose": "inspectActionPlan accepts input, context and returns ActionPlanInspection.",
+  "purpose": "inspectActionPlan accepts artifact, context and returns ActionPlanInspection.",
   "related": [],
   "returns": "ActionPlanInspection",
   "task": "Inspect and select",
-  "type": "(input: ActionPlanArtifact, context: ActionPlanInspectionContext) => ActionPlanInspection"
+  "type": "(artifact: ActionPlanArtifact, context: ActionPlanInspectionContext) => ActionPlanInspection"
 }

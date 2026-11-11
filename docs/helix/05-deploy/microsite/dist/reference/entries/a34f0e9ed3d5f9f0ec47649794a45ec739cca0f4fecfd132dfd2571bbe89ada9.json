@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7201,
-        "line": 8,
-        "path": "src/model/selection.ts",
-        "sha256": "27b1fe936fc1ddaf5fdb3f57226950c303984e1de67100d2e223e6db60711a00"
+        "bytes": 1296,
+        "line": 5,
+        "path": "src/model/selection-types.ts",
+        "sha256": "ab04acba6f77bda1d9ea11f8a97950d0c924b4e96b5099e89b5c175f9fbc8a9b"
       }
     ],
     "entrypoint": ".",
     "exportName": "CoreElementSelection",
     "runtime": "type-only",
     "signatureText": [
-      "export interface CoreElementSelection {scope:'core-elements';referenceScope:'explicit-core-references'|'explicit-core-references-and-item-types'|'explicit-core-references-item-types-members-and-keys';source:Document;query:CoreElementQuery;sourceValidation:Validation;selection:CoreElementSelectionEntry[];boundaryReferences:{from:{module:string;element:string};reference:NonNullable<Element['references']>[number];targetPath:string}[];boundaryMembers?:{from:{module:string;element:string};reference:CoreItemTypeReference;path:string;targetPath:string}[];boundaryKeyFields?:{from:{module:string;element:string};key:string;reference:CoreItemTypeReference;path:string;targetPath:string}[];boundaryItemTypes?:{from:{module:string;element:string};reference:CoreItemTypeReference;path:string;targetPath:string}[];}"
+      "export interface CoreElementSelection {\n scope:'core-elements';referenceScope:'explicit-core-references'|'explicit-core-references-and-item-types'|'explicit-core-references-item-types-members-and-keys';source:Document;query:CoreElementQuery;sourceValidation:Validation;selection:CoreElementSelectionEntry[];\n boundaryReferences:{from:{module:string;element:string};reference:NonNullable<Element['references']>[number];targetPath:string}[];\n boundaryMembers?:{from:{module:string;element:string};reference:CoreItemTypeReference;path:string;targetPath:string}[];\n boundaryKeyFields?:{from:{module:string;element:string};key:string;reference:CoreItemTypeReference;path:string;targetPath:string}[];\n boundaryItemTypes?:{from:{module:string;element:string};reference:CoreItemTypeReference;path:string;targetPath:string}[];\n}"
     ]
   },
   "id": "[\"api\",\".\",\"CoreElementSelection\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7201,
-      "line": 8,
-      "path": "src/model/selection.ts",
-      "sha256": "27b1fe936fc1ddaf5fdb3f57226950c303984e1de67100d2e223e6db60711a00"
+      "bytes": 1296,
+      "line": 5,
+      "path": "src/model/selection-types.ts",
+      "sha256": "ab04acba6f77bda1d9ea11f8a97950d0c924b4e96b5099e89b5c175f9fbc8a9b"
     }
   ],
-  "summary": "Type declaration · src/model/selection.ts",
+  "summary": "Type declaration · src/model/selection-types.ts",
   "title": "CoreElementSelection"
 }

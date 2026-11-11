@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreNullabilityDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"NullabilityParquetRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "NullabilityParquetRequest"
     }
   ],
-  "purpose": "projectNullabilityToParquet accepts input, options and returns NullabilityParquetProjection & { diagnostics: Diagnostic[]; }.",
+  "purpose": "projectNullabilityToParquet accepts author, request and returns NullabilityParquetProjection.",
   "related": [],
-  "returns": "NullabilityParquetProjection & { diagnostics: Diagnostic[]; }",
+  "returns": "NullabilityParquetProjection",
   "task": "Import and export",
-  "type": "(input: CoreNullabilityDeclaration, options: NullabilityParquetRequest) => NullabilityParquetProjection & { diagnostics: Diagnostic[]; }"
+  "type": "(author: CoreNullabilityDeclaration, request: NullabilityParquetRequest) => NullabilityParquetProjection"
 }

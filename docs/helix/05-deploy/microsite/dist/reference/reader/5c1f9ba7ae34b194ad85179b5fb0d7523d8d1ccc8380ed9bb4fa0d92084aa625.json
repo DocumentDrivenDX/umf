@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"reconcileDeltaParquetCheckpoint\"]",
   "kind": "Function",
   "members": [],
@@ -40,7 +40,7 @@
       "type": "DeltaSidecar[]"
     }
   ],
-  "purpose": "Recover one explicit Parquet checkpoint; naming discovery and multipart assembly are separate.",
+  "purpose": "reconcileDeltaParquetCheckpoint accepts checkpoint, commits, spec, sidecars and returns DeltaParquetCheckpointRecovery.",
   "related": [],
   "returns": "DeltaParquetCheckpointRecovery",
   "task": "Other APIs",

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 1944,
-        "line": 9,
-        "path": "src/extensions/actions/structure.ts",
-        "sha256": "6f2e4d007d013ced701ba9517eb34178091237789386a182f12899390892ef90"
+        "bytes": 596,
+        "line": 16,
+        "path": "src/extensions/actions/package.ts",
+        "sha256": "71e4f5930f57e2d0478d6938c4f32b5bd04f6ba772efe5f8df68119e00d40e51"
       }
     ],
     "entrypoint": ".",
     "exportName": "actionsPackage",
     "runtime": "unassessed",
     "signatureText": [
-      "actionsPackage=freezePackage(copyJson(manifest)) as unknown as ExtensionPackage"
+      "actionsPackage=packageValue"
     ]
   },
   "id": "[\"api\",\".\",\"actionsPackage\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 1944,
-      "line": 9,
-      "path": "src/extensions/actions/structure.ts",
-      "sha256": "6f2e4d007d013ced701ba9517eb34178091237789386a182f12899390892ef90"
+      "bytes": 596,
+      "line": 16,
+      "path": "src/extensions/actions/package.ts",
+      "sha256": "71e4f5930f57e2d0478d6938c4f32b5bd04f6ba772efe5f8df68119e00d40e51"
     }
   ],
-  "summary": "Original metadata cannot be widened before a later registry consumer loads.",
+  "summary": "Public export · src/extensions/actions/package.ts",
   "title": "actionsPackage"
 }

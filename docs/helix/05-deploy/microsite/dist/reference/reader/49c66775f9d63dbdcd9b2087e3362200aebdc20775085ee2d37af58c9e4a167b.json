@@ -1,0 +1,78 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"LakeviewRuntime\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"LakeviewOptions\"]"
+      ],
+      "name": "importLakeviewDashboard",
+      "optional": false,
+      "type": "(source: string, options: LakeviewOptions) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportLakeviewDashboard",
+      "optional": false,
+      "type": "(document: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "lakeviewDiagnostics",
+      "optional": false,
+      "type": "(document: unknown) => Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ExtensionPackage\"]"
+      ],
+      "name": "validatePackagePayload",
+      "optional": true,
+      "type": "(manifest: ExtensionPackage, payload: unknown) => ErrorObject[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "listKinds",
+      "optional": false,
+      "type": "(registry?: KindRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "getKind",
+      "optional": false,
+      "type": "(reference: unknown, registry?: KindRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectExtensionKinds",
+      "optional": false,
+      "type": "(document: unknown, registry?: KindRegistration[]) => unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "validateDocument",
+      "optional": false,
+      "type": "(document: unknown, registry?: KindRegistration[]) => Validation"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Host capability only: all native retention and data-shape semantics run in Rust.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "LakeviewRuntime"
+}

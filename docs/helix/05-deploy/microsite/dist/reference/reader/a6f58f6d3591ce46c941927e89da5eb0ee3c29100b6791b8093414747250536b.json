@@ -47,10 +47,32 @@
       "type": "unknown"
     }
   ],
-  "parameters": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "code",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "message",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Default: ''.",
+      "links": [],
+      "name": "path",
+      "optional": true,
+      "type": "string"
+    }
+  ],
   "purpose": "Generic errors have no generated/core-language dependency.",
   "related": [],
-  "returns": "",
+  "returns": "UmfError",
   "task": "Other APIs",
   "type": "UmfError"
 }

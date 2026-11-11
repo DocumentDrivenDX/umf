@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "inspectTypeSpec accepts document and returns Validation.",
+  "purpose": "inspectTypeSpec accepts document and returns TypeSpecValidation.",
   "related": [],
-  "returns": "Validation",
+  "returns": "TypeSpecValidation",
   "task": "Inspect and select",
-  "type": "(document: Document) => Validation"
+  "type": "(document: Document) => TypeSpecValidation"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 20534,
-        "line": 243,
-        "path": "src/extensions/security/evaluate.ts",
-        "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+        "bytes": 84809,
+        "line": 202,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "evaluateSecurityAccess",
     "runtime": "unassessed",
     "signatureText": [
-      "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact): SecurityAccessResult"
+      "(policy: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown): SecurityAccessResult"
     ]
   },
   "id": "[\"api\",\".\",\"evaluateSecurityAccess\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 20534,
-      "line": 243,
-      "path": "src/extensions/security/evaluate.ts",
-      "sha256": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+      "bytes": 84809,
+      "line": 202,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Pure semantic evaluation; host admission and native receipt enforcement remain separate.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "evaluateSecurityAccess"
 }

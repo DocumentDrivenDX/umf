@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreKindDeclaration\"]"
       ],
-      "name": "input",
+      "name": "author",
       "optional": false,
       "type": "CoreKindDeclaration"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"FieldTableSpecRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "FieldTableSpecRequest"
     }
   ],
-  "purpose": "projectFieldToTableSpec accepts input, options and returns FieldTableSpecProjection & { diagnostics: Diagnostic[]; }.",
+  "purpose": "projectFieldToTableSpec accepts author, request and returns FieldTableSpecProjection & { diagnostics: Diagnostic[]; }.",
   "related": [],
   "returns": "FieldTableSpecProjection & { diagnostics: Diagnostic[]; }",
   "task": "Import and export",
-  "type": "(input: CoreKindDeclaration, options: FieldTableSpecRequest) => FieldTableSpecProjection & { diagnostics: Diagnostic[]; }"
+  "type": "(author: CoreKindDeclaration, request: FieldTableSpecRequest) => FieldTableSpecProjection & { diagnostics: Diagnostic[]; }"
 }

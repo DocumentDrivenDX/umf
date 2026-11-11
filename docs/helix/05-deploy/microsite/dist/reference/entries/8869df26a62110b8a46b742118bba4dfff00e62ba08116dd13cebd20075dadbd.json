@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 518,
+        "line": 6,
+        "path": "src/adapters/lakeview/projection-types.ts",
+        "sha256": "6f001e3bca0ab5ecbd14bdf695eba7eff5347c130b1958d89dddd1b25edc1c60"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LakeviewIds",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface LakeviewIds {data:string;datasets:string[];pages:{id:string;items:string[]}[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LakeviewIds\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 518,
+      "line": 6,
+      "path": "src/adapters/lakeview/projection-types.ts",
+      "sha256": "6f001e3bca0ab5ecbd14bdf695eba7eff5347c130b1958d89dddd1b25edc1c60"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/lakeview/projection-types.ts",
+  "title": "LakeviewIds"
+}

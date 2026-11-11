@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8516,
-        "line": 58,
-        "path": "src/core-ideals/sqlserver-record.ts",
-        "sha256": "9f2801c32316478aa602119c8e37ed0f02e653bcc96717b8fd5b2a37fb52c340"
+        "bytes": 84809,
+        "line": 341,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverSqlServerRecordCapture",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: SqlServerRecordClassification, current: Document): string"
+      "(receipt: SqlServerRecordClassification, current: Document): string"
     ]
   },
   "id": "[\"api\",\".\",\"recoverSqlServerRecordCapture\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8516,
-      "line": 58,
-      "path": "src/core-ideals/sqlserver-record.ts",
-      "sha256": "9f2801c32316478aa602119c8e37ed0f02e653bcc96717b8fd5b2a37fb52c340"
+      "bytes": 84809,
+      "line": 341,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/sqlserver-record.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverSqlServerRecordCapture"
 }

@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 2577,
-        "line": 6,
-        "path": "src/adapters/typespec/emission.ts",
-        "sha256": "d8800e76dbc37880c5ab71d99237bfe78462670e8ac4966d902c6b2bd55d96c8"
+        "bytes": 84809,
+        "line": 305,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "emitTypeSpecJsonSchema",
     "runtime": "unassessed",
     "signatureText": [
-      "(document: Document, input: { options: JsonObject; }): Promise<{ status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }>"
+      "(document: Document, input: { options: Record<string, unknown>; }): Promise<TypeSpecJsonSchemaEmission>"
     ]
   },
   "id": "[\"api\",\".\",\"emitTypeSpecJsonSchema\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 2577,
-      "line": 6,
-      "path": "src/adapters/typespec/emission.ts",
-      "sha256": "d8800e76dbc37880c5ab71d99237bfe78462670e8ac4966d902c6b2bd55d96c8"
+      "bytes": 84809,
+      "line": 305,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Native emitter output is evidence for a projection, not a lossless type-model conversion.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "emitTypeSpecJsonSchema"
 }

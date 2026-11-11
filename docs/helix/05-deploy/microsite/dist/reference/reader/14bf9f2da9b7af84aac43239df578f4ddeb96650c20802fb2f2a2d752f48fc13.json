@@ -9,7 +9,7 @@
     {
       "description": "",
       "links": [],
-      "name": "text",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -30,5 +30,5 @@
   ],
   "returns": "Document",
   "task": "Read and validate",
-  "type": "(text: string, format?: \"json\" | \"yaml\") => Document"
+  "type": "(source: string, format?: \"json\" | \"yaml\") => Document"
 }

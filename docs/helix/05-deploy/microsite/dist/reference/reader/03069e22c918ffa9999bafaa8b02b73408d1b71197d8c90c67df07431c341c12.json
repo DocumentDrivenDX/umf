@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RelationshipParquetProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RelationshipParquetProjection"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "recoverRelationshipParquetNative accepts input, current and returns { hex: string; }.",
+  "purpose": "recoverRelationshipParquetNative accepts receipt, current and returns { hex: string; }.",
   "related": [],
   "returns": "{ hex: string; }",
   "task": "Import and export",
-  "type": "(input: RelationshipParquetProjection, current: Document) => { hex: string; }"
+  "type": "(receipt: RelationshipParquetProjection, current: Document) => { hex: string; }"
 }

@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "exportTypeSpecSources accepts document and returns { libraries?: Record<string, string>; entrypoint: string; files: Record<string, string>; }.",
+  "purpose": "exportTypeSpecSources accepts document and returns TypeSpecSourceInput.",
   "related": [],
-  "returns": "{ libraries?: Record<string, string>; entrypoint: string; files: Record<string, string>; }",
+  "returns": "TypeSpecSourceInput",
   "task": "Import and export",
-  "type": "(document: Document) => { libraries?: Record<string, string>; entrypoint: string; files: Record<string, string>; }"
+  "type": "(document: Document) => TypeSpecSourceInput"
 }

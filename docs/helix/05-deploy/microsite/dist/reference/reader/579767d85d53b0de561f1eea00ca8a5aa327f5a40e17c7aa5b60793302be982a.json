@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"GraphqlInputBindings\"]"
       ],
-      "name": "input",
+      "name": "bindings",
       "optional": false,
       "type": "GraphqlInputBindings"
     }
   ],
-  "purpose": "projectGraphqlInputToJsonSchema accepts source, input and returns GraphqlInputProjection.",
+  "purpose": "projectGraphqlInputToJsonSchema accepts document, bindings and returns GraphqlInputProjection.",
   "related": [],
   "returns": "GraphqlInputProjection",
   "task": "Import and export",
-  "type": "(source: Document, input: GraphqlInputBindings) => GraphqlInputProjection"
+  "type": "(document: Document, bindings: GraphqlInputBindings) => GraphqlInputProjection"
 }

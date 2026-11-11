@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"defineDeltaTable\"]",
   "kind": "Function",
   "members": [],
@@ -8,7 +8,7 @@
     {
       "description": "",
       "links": [],
-      "name": "schemaText",
+      "name": "source",
       "optional": false,
       "type": "string"
     },
@@ -29,9 +29,9 @@
       "type": "{ id: string; }"
     }
   ],
-  "purpose": "Author a definition using the existing exact Delta schema profile. No native UUID is invented.",
+  "purpose": "defineDeltaTable accepts source, definition, options and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Other APIs",
-  "type": "(schemaText: string, definition: DeltaDefinition, options: { id: string; }) => Document"
+  "type": "(source: string, definition: DeltaDefinition, options: { id: string; }) => Document"
 }

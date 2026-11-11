@@ -8,23 +8,23 @@
     {
       "description": "",
       "links": [
-        "[\"api\",\".\",\"Bit128ModelProjection\"]"
+        "[\"api\",\"./runtime/wasm\",\"Bit128ModelProjection\"]"
       ],
-      "name": "input",
+      "name": "report",
       "optional": false,
       "type": "Bit128ModelProjection"
     },
     {
       "description": "",
       "links": [],
-      "name": "current",
+      "name": "text",
       "optional": false,
       "type": "string"
     }
   ],
-  "purpose": "recoverBit128ModelProjection accepts input, current and returns { logical: Document; binding: Document; }.",
+  "purpose": "recoverBit128ModelProjection accepts report, text and returns { logical: Document; binding: Document; }.",
   "related": [],
   "returns": "{ logical: Document; binding: Document; }",
   "task": "Import and export",
-  "type": "(input: Bit128ModelProjection, current: string) => { logical: Document; binding: Document; }"
+  "type": "(report: Bit128ModelProjection, text: string) => { logical: Document; binding: Document; }"
 }

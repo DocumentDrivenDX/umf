@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"renameParquetField\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -29,9 +29,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Rename by stable native schema index, with simultaneous descendant column-path updates.",
+  "purpose": "renameParquetField accepts document, index, name and returns ParquetRenameResult.",
   "related": [],
   "returns": "ParquetRenameResult",
   "task": "Other APIs",
-  "type": "(source: Document, index: number, name: string) => ParquetRenameResult"
+  "type": "(document: Document, index: number, name: string) => ReturnType<RenameParquetField>"
 }

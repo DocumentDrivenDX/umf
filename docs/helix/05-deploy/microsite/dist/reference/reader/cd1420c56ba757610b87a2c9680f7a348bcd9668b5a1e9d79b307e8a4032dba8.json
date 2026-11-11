@@ -26,5 +26,5 @@
   "related": [],
   "returns": "NativeJson",
   "task": "Inspect and select",
-  "type": "(document: Document, path: string) => NativeJson"
+  "type": "(document: Parameters<GetOdcsDocumentNode>[0], path: Parameters<GetOdcsDocumentNode>[1]) => ReturnType<GetOdcsDocumentNode>"
 }

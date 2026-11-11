@@ -13,7 +13,7 @@
       "type": "{ workerUrl: string | URL; timeoutMs?: number; }"
     }
   ],
-  "purpose": "One dedicated module worker per native operation; timeout/abort terminates the runtime.",
+  "purpose": "Worker backend receives only source files already admitted by the Rust runtime.",
   "related": [],
   "returns": "SmithySelectionBackend",
   "task": "Author and edit",

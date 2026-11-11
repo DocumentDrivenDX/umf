@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 397,
+        "line": 4,
+        "path": "src/adapters/postgresql/cardinality-catalog.ts",
+        "sha256": "02aed755826ab1280f2451a2dab8f9634da3d8e410b53ac9815d15b937a800c5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ObservedType",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ObservedType {identity:PostgresqlTypeIdentity;kind:string;category:string;element:PostgresqlTypeIdentity|null;base:PostgresqlTypeIdentity|null;standardArray:boolean;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ObservedType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 397,
+      "line": 4,
+      "path": "src/adapters/postgresql/cardinality-catalog.ts",
+      "sha256": "02aed755826ab1280f2451a2dab8f9634da3d8e410b53ac9815d15b937a800c5"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/postgresql/cardinality-catalog.ts",
+  "title": "ObservedType"
+}

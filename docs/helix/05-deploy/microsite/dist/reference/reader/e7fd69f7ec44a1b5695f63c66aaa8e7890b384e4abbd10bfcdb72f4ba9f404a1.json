@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"renameDeltaMappedField\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "source",
+      "name": "document",
       "optional": false,
       "type": "Document"
     },
@@ -22,9 +22,9 @@
       "type": "{ fieldPointer: string; name: string; uninterpretedReferences: \"preserve-and-report\"; }"
     }
   ],
-  "purpose": "Candidate context edit only; applying it requires a transaction and external-state checks.",
+  "purpose": "renameDeltaMappedField accepts document, options and returns { source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }.",
   "related": [],
   "returns": "{ source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }",
   "task": "Other APIs",
-  "type": "(source: Document, options: { fieldPointer: string; name: string; uninterpretedReferences: \"preserve-and-report\"; }) => { source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }"
+  "type": "(document: Document, options: Parameters<RenameDeltaMappedField>[1]) => { source: Document; document: Document; complete: false; partitionUpdates: { index: number; from: string; to: string; }[]; validation: Validation; diagnostics: Diagnostic[]; }"
 }

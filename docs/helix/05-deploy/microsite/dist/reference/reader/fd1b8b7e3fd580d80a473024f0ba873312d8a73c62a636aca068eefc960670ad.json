@@ -1,0 +1,172 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfSecurityPolicySourceEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityActionPurposeInspection\"]"
+      ],
+      "name": "inspectSecurityActionPurposes",
+      "optional": false,
+      "type": "(ontology: unknown, documents: unknown) => SecurityActionPurposeInspection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"ProtectionDeclarationInspection\"]"
+      ],
+      "name": "inspectProtectionObligations",
+      "optional": false,
+      "type": "(policy: unknown, catalog: unknown, closure: unknown, ontology: unknown) => ProtectionDeclarationInspection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "validateSecurityDisclosure",
+      "optional": false,
+      "type": "(batch: unknown, policy: unknown, resolution: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "encodeSecurityDisclosure",
+      "optional": false,
+      "type": "(batch: unknown, policy: unknown, resolution: unknown) => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "decodeSecurityDisclosure",
+      "optional": false,
+      "type": "(source: string, policy: unknown, resolution: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectSecurityDisclosureV2",
+      "optional": false,
+      "type": "(source: unknown, policy: unknown, catalog: unknown, closure: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "encodeSecurityDisclosureV2",
+      "optional": false,
+      "type": "(source: unknown, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "decodeSecurityDisclosureV2",
+      "optional": false,
+      "type": "(source: string, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectSecurityPolicy",
+      "optional": false,
+      "type": "(source: unknown, resolution?: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectSecurityPolicyPayload",
+      "optional": false,
+      "type": "(payload: unknown, path: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "requireSecurityInterpretation",
+      "optional": false,
+      "type": "(source: unknown, resolution: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "securityPolicyDependencies",
+      "optional": false,
+      "type": "(source: unknown, resolution: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "securityIdentityTransportDependencies",
+      "optional": false,
+      "type": "(source: unknown, resolution: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "evaluateSecurityAccess",
+      "optional": false,
+      "type": "(policy: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "evaluateSecurityCollection",
+      "optional": false,
+      "type": "(policy: unknown, resolution: unknown, cut: unknown, request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "evaluateSecurityWrite",
+      "optional": false,
+      "type": "(policy: unknown, resolution: unknown, writeProfile: unknown, request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "evaluateSecurityPolicyV2LegacyAccess",
+      "optional": false,
+      "type": "(source: unknown, resolution: unknown, cut: unknown, request: unknown, resource: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectSecurityPolicyV2Source",
+      "optional": false,
+      "type": "(source: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "upgradeSecurityPolicySource",
+      "optional": false,
+      "type": "(source: unknown, revision: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "downgradeSecurityPolicySource",
+      "optional": false,
+      "type": "(source: unknown, revision: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "readSecuritySource",
+      "optional": false,
+      "type": "(source: string, format?: \"json\" | \"yaml\") => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "writeSecuritySource",
+      "optional": false,
+      "type": "(value: unknown, format?: \"json\" | \"yaml\") => string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfSecurityPolicySourceEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfSecurityPolicySourceEngine"
+}

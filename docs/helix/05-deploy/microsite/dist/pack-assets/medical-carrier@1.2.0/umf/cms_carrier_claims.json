@@ -1,0 +1,883 @@
+{
+  "version": "1.0",
+  "table_name": "cms_carrier_claims",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "DESYNPUF_ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "DESYNPUF ID"
+    },
+    {
+      "name": "CLM_ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM ID"
+    },
+    {
+      "name": "CLM_FROM_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM FROM DT"
+    },
+    {
+      "name": "CLM_THRU_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "CLM THRU DT"
+    },
+    {
+      "name": "ICD9_DGNS_CD_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 1"
+    },
+    {
+      "name": "ICD9_DGNS_CD_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 2"
+    },
+    {
+      "name": "ICD9_DGNS_CD_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 3"
+    },
+    {
+      "name": "ICD9_DGNS_CD_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 4"
+    },
+    {
+      "name": "ICD9_DGNS_CD_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 5"
+    },
+    {
+      "name": "ICD9_DGNS_CD_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 6"
+    },
+    {
+      "name": "ICD9_DGNS_CD_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 7"
+    },
+    {
+      "name": "ICD9_DGNS_CD_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "ICD9 DGNS CD 8"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 1"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 2"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 3"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 4"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 5"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 6"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 7"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 8"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 9"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 10"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 11"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 12"
+    },
+    {
+      "name": "PRF_PHYSN_NPI_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PRF PHYSN NPI 13"
+    },
+    {
+      "name": "TAX_NUM_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 1"
+    },
+    {
+      "name": "TAX_NUM_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 2"
+    },
+    {
+      "name": "TAX_NUM_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 3"
+    },
+    {
+      "name": "TAX_NUM_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 4"
+    },
+    {
+      "name": "TAX_NUM_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 5"
+    },
+    {
+      "name": "TAX_NUM_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 6"
+    },
+    {
+      "name": "TAX_NUM_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 7"
+    },
+    {
+      "name": "TAX_NUM_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 8"
+    },
+    {
+      "name": "TAX_NUM_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 9"
+    },
+    {
+      "name": "TAX_NUM_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 10"
+    },
+    {
+      "name": "TAX_NUM_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 11"
+    },
+    {
+      "name": "TAX_NUM_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 12"
+    },
+    {
+      "name": "TAX_NUM_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "TAX NUM 13"
+    },
+    {
+      "name": "HCPCS_CD_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 1"
+    },
+    {
+      "name": "HCPCS_CD_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 2"
+    },
+    {
+      "name": "HCPCS_CD_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 3"
+    },
+    {
+      "name": "HCPCS_CD_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 4"
+    },
+    {
+      "name": "HCPCS_CD_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 5"
+    },
+    {
+      "name": "HCPCS_CD_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 6"
+    },
+    {
+      "name": "HCPCS_CD_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 7"
+    },
+    {
+      "name": "HCPCS_CD_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 8"
+    },
+    {
+      "name": "HCPCS_CD_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 9"
+    },
+    {
+      "name": "HCPCS_CD_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 10"
+    },
+    {
+      "name": "HCPCS_CD_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 11"
+    },
+    {
+      "name": "HCPCS_CD_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 12"
+    },
+    {
+      "name": "HCPCS_CD_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "HCPCS CD 13"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 1"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 2"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 3"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 4"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 5"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 6"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 7"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 8"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 9"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 10"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 11"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 12"
+    },
+    {
+      "name": "LINE_NCH_PMT_AMT_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE NCH PMT AMT 13"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 1"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 2"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 3"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 4"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 5"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 6"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 7"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 8"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 9"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 10"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 11"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 12"
+    },
+    {
+      "name": "LINE_BENE_PTB_DDCTBL_AMT_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PTB DDCTBL AMT 13"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 1"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 2"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 3"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 4"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 5"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 6"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 7"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 8"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 9"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 10"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 11"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 12"
+    },
+    {
+      "name": "LINE_BENE_PRMRY_PYR_PD_AMT_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE BENE PRMRY PYR PD AMT 13"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 1"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 2"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 3"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 4"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 5"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 6"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 7"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 8"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 9"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 10"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 11"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 12"
+    },
+    {
+      "name": "LINE_COINSRNC_AMT_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE COINSRNC AMT 13"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 1"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 2"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 3"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 4"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 5"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 6"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 7"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 8"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 9"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 10"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 11"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 12"
+    },
+    {
+      "name": "LINE_ALOWD_CHRG_AMT_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ALOWD CHRG AMT 13"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 1"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 2"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 3"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 4"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 5"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 6"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 7"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 8"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 9"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 10"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 11"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 12"
+    },
+    {
+      "name": "LINE_PRCSG_IND_CD_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE PRCSG IND CD 13"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_1",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 1"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_2",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 2"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_3",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 3"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_4",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 4"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_5",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 5"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_6",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 6"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_7",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 7"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_8",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 8"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_9",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 9"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_10",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 10"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_11",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 11"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_12",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 12"
+    },
+    {
+      "name": "LINE_ICD9_DGNS_CD_13",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "LINE ICD9 DGNS CD 13"
+    },
+    {
+      "name": "native_record_number",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native record number"
+    },
+    {
+      "name": "native_csv_record",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native csv record"
+    }
+  ],
+  "primary_key": [
+    "CLM_ID"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "DESYNPUF_ID",
+        "references_table": "cms_beneficiaries",
+        "references_column": "DESYNPUF_ID"
+      }
+    ]
+  }
+}

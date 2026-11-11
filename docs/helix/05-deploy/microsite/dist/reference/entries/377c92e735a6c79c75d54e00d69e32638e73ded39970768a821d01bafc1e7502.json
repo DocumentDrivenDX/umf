@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 6252,
-        "line": 41,
-        "path": "src/core-ideals/sqlserver-field.ts",
-        "sha256": "262111d80c56a8f09e9ea6a380826e7176614841d15eb20c0d4989aed372e607"
+        "bytes": 84809,
+        "line": 341,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverSqlServerFieldCapture",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: SqlServerFieldClassification, current: Document): string"
+      "(receipt: SqlServerFieldClassification, current: Document): string"
     ]
   },
   "id": "[\"api\",\".\",\"recoverSqlServerFieldCapture\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 6252,
-      "line": 41,
-      "path": "src/core-ideals/sqlserver-field.ts",
-      "sha256": "262111d80c56a8f09e9ea6a380826e7176614841d15eb20c0d4989aed372e607"
+      "bytes": 84809,
+      "line": 341,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/sqlserver-field.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverSqlServerFieldCapture"
 }

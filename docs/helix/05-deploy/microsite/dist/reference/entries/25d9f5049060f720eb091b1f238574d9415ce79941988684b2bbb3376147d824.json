@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 11185,
-        "line": 29,
-        "path": "src/core-ideals/facets-parquet-projection.ts",
-        "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectFacetsToParquet",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Author, options: FacetsParquetRequest): FacetsParquetProjection"
+      "(author: CoreFacetDeclaration | CoreKindDeclaration, request: FacetsParquetRequest): FacetsParquetProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectFacetsToParquet\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 11185,
-      "line": 29,
-      "path": "src/core-ideals/facets-parquet-projection.ts",
-      "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Project verified ideal assertions; custom metadata never becomes an implicit validator.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectFacetsToParquet"
 }

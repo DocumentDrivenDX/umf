@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"proposeLinkmlImportMerge\"]",
   "kind": "Function",
   "members": [],
@@ -22,7 +22,7 @@
       "type": "{ mode: \"view\" | \"merge-imports\"; }"
     }
   ],
-  "purpose": "Materialize supplied declarations using an explicitly selected native precedence policy.",
+  "purpose": "proposeLinkmlImportMerge accepts input, options and returns LinkmlImportMergeReport.",
   "related": [],
   "returns": "LinkmlImportMergeReport",
   "task": "Author and edit",

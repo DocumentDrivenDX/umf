@@ -1,0 +1,31 @@
+expectation_id,event_id,expected_action,notification_key,open_failure_count,affected_document_id,expected_review_status,expected_actionable,expected_enrichment_status,expected_counsel_name,detail
+expected-01,event-01,coverage_complete_empty,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-02,event-02,failure_opened,\N,1,\N,\N,\N,\N,\N,Listing unavailable; must not mean no new decisions.
+expected-03,event-03,coverage_recovered,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-04,event-04,failure_opened,\N,1,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-05,event-05,stage_recovered,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-06,event-06,failure_opened,\N,1,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-07,event-07,stage_recovered,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-08,event-08,failure_opened,\N,1,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-09,event-09,review_created,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-10,event-10,delivery_retry_eligible,"[""reviewer-a"",""4ac55069b34a20fa8f18603f3b6a8f5daae2a8126923af0e683a02b40929196a"",""decision""]",1,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-11,event-11,notification_sent,"[""reviewer-a"",""4ac55069b34a20fa8f18603f3b6a8f5daae2a8126923af0e683a02b40929196a"",""decision""]",0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-12,event-12,suppressed_duplicate,"[""reviewer-a"",""4ac55069b34a20fa8f18603f3b6a8f5daae2a8126923af0e683a02b40929196a"",""decision""]",0,\N,\N,\N,\N,\N,Duplicate PDF via repeated listing; one successful receipt.
+expected-13,event-13,review_updated,\N,0,\N,\N,\N,\N,\N,"Prompt change permits rescreen, not a second decision alert."
+expected-14,event-14,suppressed_duplicate,"[""reviewer-a"",""4ac55069b34a20fa8f18603f3b6a8f5daae2a8126923af0e683a02b40929196a"",""decision""]",0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-15,event-15,notification_sent,"[""reviewer-b"",""4ac55069b34a20fa8f18603f3b6a8f5daae2a8126923af0e683a02b40929196a"",""decision""]",0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-16,event-16,review_created,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-17,event-17,notification_sent,"[""reviewer-a"",""f9d9369286682c1c78791798a1572bfa8cd72438ac92b3f60641ee07ac9e2c7a"",""decision""]",0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-18,event-18,review_created,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-19,event-19,notification_sent,"[""reviewer-a"",""14b40a92ac24d11079a5feb5cc20ef1e96ef5da72c488e04b87fcd1846830405"",""decision""]",0,\N,\N,\N,\N,\N,Amended original has different bytes; new version review. No claim the amendment changes substantive holding.
+expected-20,event-20,review_created,\N,0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-21,event-21,notification_sent,"[""reviewer-a"",""24baec571773440a5cb8bec0a9ac6cd79f2756a95c5e720289b06a4505f7085a"",""decision""]",0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-22,event-22,review_status_updated,\N,0,hirschfeld-panel,vacated,False,\N,\N,Independently authored expectation; fixture policy only.
+expected-23,event-23,notification_sent,"[""reviewer-a"",""ffb4c9fb3b5ddb0d3119c67804756f13765c3ff809abb7ffc660fc9688936366"",""status""]",0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-24,event-24,suppressed_duplicate,"[""reviewer-a"",""ffb4c9fb3b5ddb0d3119c67804756f13765c3ff809abb7ffc660fc9688936366"",""status""]",0,\N,\N,\N,\N,\N,Independently authored expectation; fixture policy only.
+expected-25,event-25,no_alert,\N,0,\N,\N,\N,\N,\N,Fabricated negative: different state statute does not itself establish a split.
+expected-26,event-26,enrichment_unknown,\N,0,\N,\N,\N,\N,\N,Counsel omitted in order; optional lookup has not happened.
+expected-27,event-27,review_enrichment_updated,\N,0,\N,\N,\N,found,Fictional Counsel Alpha,Entirely fictional enrichment lookup-01; update review item without sending an email.
+expected-28,event-28,failure_opened,\N,1,\N,\N,\N,\N,\N,Unrecovered retrieval; final coverage dashboard must retain it.
+expected-29,event-29,failure_opened,\N,2,\N,\N,\N,\N,\N,Unrecovered processing failure distinct from successful source collection.
+expected-30,event-30,review_enrichment_unknown,\N,2,\N,\N,\N,lookup_failed,\N,Failed optional lookup retains unknown counsel.

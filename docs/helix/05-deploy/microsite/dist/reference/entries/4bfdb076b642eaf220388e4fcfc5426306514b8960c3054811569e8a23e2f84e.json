@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 9748,
-        "line": 81,
-        "path": "src/core-ideals/cardinality-sqlserver.ts",
-        "sha256": "cc6691a8283e8cf9701ab7d39b3de8a92de6976e29c1ff6f97f99cef1eb44f98"
+        "bytes": 84809,
+        "line": 341,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "recoverSqlServerCardinalitySource",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: SqlServerCardinalityClassification, current: Document): string"
+      "(receipt: SqlServerCardinalityClassification, current: Document): string"
     ]
   },
   "id": "[\"api\",\".\",\"recoverSqlServerCardinalitySource\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 9748,
-      "line": 81,
-      "path": "src/core-ideals/cardinality-sqlserver.ts",
-      "sha256": "cc6691a8283e8cf9701ab7d39b3de8a92de6976e29c1ff6f97f99cef1eb44f98"
+      "bytes": 84809,
+      "line": 341,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/cardinality-sqlserver.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "recoverSqlServerCardinalitySource"
 }

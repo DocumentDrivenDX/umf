@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"validateSqlServerRelationshipLayout\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "logicalInput",
+      "name": "logical",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "bindingInput",
+      "name": "binding",
       "optional": false,
       "type": "Document"
     },
@@ -28,7 +28,7 @@
       "links": [
         "[\"api\",\".\",\"SqlServerRelationshipLayoutPolicy\"]"
       ],
-      "name": "policyInput",
+      "name": "policy",
       "optional": false,
       "type": "SqlServerRelationshipLayoutPolicy"
     },
@@ -40,9 +40,9 @@
       "type": "\"strict\" | \"report\""
     }
   ],
-  "purpose": "Validate retained metadata only. A candidate is a policy, never SQL or native enforcement.",
+  "purpose": "validateSqlServerRelationshipLayout accepts logical, binding, policy, lossPolicy and returns SqlServerRelationshipLayoutResult.",
   "related": [],
   "returns": "SqlServerRelationshipLayoutResult",
   "task": "Read and validate",
-  "type": "(logicalInput: Document, bindingInput: Document, policyInput: SqlServerRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\") => SqlServerRelationshipLayoutResult"
+  "type": "(logical: Document, binding: Document, policy: import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").SqlServerRelationshipLayoutPolicy, lossPolicy: \"strict\" | \"report\") => import(\"/private/tmp/umf-01011-release/site/worktree/src/index-v4-default\").SqlServerRelationshipLayoutResult"
 }

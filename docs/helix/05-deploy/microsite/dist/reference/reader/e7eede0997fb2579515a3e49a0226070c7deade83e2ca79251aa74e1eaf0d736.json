@@ -57,6 +57,13 @@
     {
       "description": "",
       "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"supplied-dataset-only\""
+    },
+    {
+      "description": "",
+      "links": [],
       "name": "provenance",
       "optional": false,
       "type": "\"unverified\""
@@ -69,13 +76,6 @@
       "name": "residuals",
       "optional": false,
       "type": "{ path: string; value: Json; reason: string; }[]"
-    },
-    {
-      "description": "",
-      "links": [],
-      "name": "scope",
-      "optional": false,
-      "type": "\"supplied-dataset-only\""
     },
     {
       "description": "",

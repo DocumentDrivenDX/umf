@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 7091,
-        "line": 21,
-        "path": "src/core-ideals/field-avro-projection.ts",
-        "sha256": "83de6efaae0196007e2f79cd29e3fd5d186a4c44d755c4bac72a3c713ebde07b"
+        "bytes": 84809,
+        "line": 242,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "projectFieldToAvro",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: CoreKindDeclaration, options: FieldAvroRequest): FieldAvroProjection & { diagnostics: Diagnostic[]; }"
+      "(author: CoreKindDeclaration, request: FieldAvroRequest): FieldAvroProjection"
     ]
   },
   "id": "[\"api\",\".\",\"projectFieldToAvro\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 7091,
-      "line": 21,
-      "path": "src/core-ideals/field-avro-projection.ts",
-      "sha256": "83de6efaae0196007e2f79cd29e3fd5d186a4c44d755c4bac72a3c713ebde07b"
+      "bytes": 84809,
+      "line": 242,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Public export · src/core-ideals/field-avro-projection.ts",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "projectFieldToAvro"
 }

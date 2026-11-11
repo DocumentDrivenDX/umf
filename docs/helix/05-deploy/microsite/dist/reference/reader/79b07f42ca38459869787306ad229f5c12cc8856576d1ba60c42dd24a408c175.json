@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"verifyCoreSemanticTypeDeclaration\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"CoreSemanticTypeDeclaration\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "CoreSemanticTypeDeclaration"
     },
@@ -24,9 +24,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Recomputed consistency/provenance check; it cannot authenticate a submitted source.",
+  "purpose": "verifyCoreSemanticTypeDeclaration accepts receipt, current and returns CoreSemanticTypeDeclaration.",
   "related": [],
   "returns": "CoreSemanticTypeDeclaration",
   "task": "Other APIs",
-  "type": "(input: CoreSemanticTypeDeclaration, current: Document) => CoreSemanticTypeDeclaration"
+  "type": "(receipt: CoreSemanticTypeDeclaration, current: Document) => CoreSemanticTypeDeclaration"
 }

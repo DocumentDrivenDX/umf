@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"inspectDbtManifestGraph\"]",
   "kind": "Function",
   "members": [],
@@ -15,9 +15,9 @@
       "type": "Document"
     }
   ],
-  "purpose": "Explicit manifest references only; edges point from dependent to dependency.",
+  "purpose": "inspectDbtManifestGraph accepts document and returns DbtManifestGraph.",
   "related": [],
   "returns": "DbtManifestGraph",
   "task": "Inspect and select",
-  "type": "(document: Document) => DbtManifestGraph"
+  "type": "(document: Parameters<InspectDbtManifestGraph>[0]) => ReturnType<InspectDbtManifestGraph>"
 }

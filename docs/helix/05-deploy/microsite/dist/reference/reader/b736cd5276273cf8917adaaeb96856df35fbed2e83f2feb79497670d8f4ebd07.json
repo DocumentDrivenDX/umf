@@ -14,13 +14,6 @@
     {
       "description": "",
       "links": [],
-      "name": "recordModule",
-      "optional": false,
-      "type": "string"
-    },
-    {
-      "description": "",
-      "links": [],
       "name": "recordId",
       "optional": false,
       "type": "string"
@@ -35,9 +28,9 @@
     {
       "description": "",
       "links": [],
-      "name": "dependencies",
-      "optional": true,
-      "type": "{ id: string; schema: string; }[]"
+      "name": "recordModule",
+      "optional": false,
+      "type": "string"
     },
     {
       "description": "",
@@ -47,6 +40,13 @@
       "name": "authors",
       "optional": true,
       "type": "CoreKindDeclaration[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dependencies",
+      "optional": true,
+      "type": "{ id: string; schema: string; }[]"
     },
     {
       "description": "",

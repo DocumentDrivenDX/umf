@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2796,
+        "line": 10,
+        "path": "src/adapters/lakeview/index.ts",
+        "sha256": "ec12be1a004a4118db5f420cd47df2bdd84c328db97294ea17f34482b9e78407"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LakeviewOptions",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface LakeviewOptions {id:string;title?:string;namespace?:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LakeviewOptions\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2796,
+      "line": 10,
+      "path": "src/adapters/lakeview/index.ts",
+      "sha256": "ec12be1a004a4118db5f420cd47df2bdd84c328db97294ea17f34482b9e78407"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/lakeview/index.ts",
+  "title": "LakeviewOptions"
+}

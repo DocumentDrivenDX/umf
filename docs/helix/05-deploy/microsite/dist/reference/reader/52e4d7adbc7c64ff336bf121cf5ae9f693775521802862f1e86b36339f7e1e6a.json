@@ -1,23 +1,21 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"declareCoreBit128Field\"]",
   "kind": "Function",
   "members": [],
   "parameters": [
     {
       "description": "",
-      "links": [
-        "[\"api\",\".\",\"Document\"]"
-      ],
-      "name": "input",
+      "links": [],
+      "name": "source",
       "optional": false,
-      "type": "Document"
+      "type": "unknown"
     },
     {
       "description": "",
       "links": [],
-      "name": "identityInput",
+      "name": "identity",
       "optional": false,
       "type": "{ module: string; element: string; }"
     },
@@ -29,9 +27,9 @@
       "type": "\"bits128\" | \"uuid\""
     }
   ],
-  "purpose": "Explicit copied metadata declaration; never converts stored values or issues a receipt.",
+  "purpose": "declareCoreBit128Field accepts source, identity, scalarType and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Other APIs",
-  "type": "(input: Document, identityInput: { module: string; element: string; }, scalarType: \"bits128\" | \"uuid\") => Document"
+  "type": "(source: unknown, identity: { module: string; element: string; }, scalarType: \"bits128\" | \"uuid\") => Document"
 }

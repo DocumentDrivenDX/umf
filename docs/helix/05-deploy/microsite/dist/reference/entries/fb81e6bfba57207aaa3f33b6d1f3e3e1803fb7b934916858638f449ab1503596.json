@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 8193,
-        "line": 33,
-        "path": "src/model/facets.ts",
-        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+        "bytes": 84809,
+        "line": 427,
+        "path": "src/index-node-v4.ts",
+        "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
       }
     ],
     "entrypoint": ".",
     "exportName": "inspectCoreFacets",
     "runtime": "unassessed",
     "signatureText": [
-      "(input: Document, identity: CoreFacetIdentity): CoreFacetInspection"
+      "(source: Document, identity: CoreFacetIdentity): CoreFacetInspection"
     ]
   },
   "id": "[\"api\",\".\",\"inspectCoreFacets\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 8193,
-      "line": 33,
-      "path": "src/model/facets.ts",
-      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+      "bytes": 84809,
+      "line": 427,
+      "path": "src/index-node-v4.ts",
+      "sha256": "e0e28f07d5acbbe7596ca95c24d3d6e1482da0d15e1d1c7af17d535ddd661914"
     }
   ],
-  "summary": "Copies known assertions separately from uninterpreted members; never infers authorship.",
+  "summary": "Public export · src/index-node-v4.ts",
   "title": "inspectCoreFacets"
 }

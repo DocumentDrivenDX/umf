@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 95940,
+        "line": 861,
+        "path": "bindings/core/wasm/index.d.ts",
+        "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+      }
+    ],
+    "entrypoint": "./runtime/wasm",
+    "exportName": "JsonLdOperations",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface JsonLdOperations {\n readonly profile: typeof JSONLD_PROFILE;\n readonly capabilities: Readonly<{profile: typeof JSONLD_PROFILE; source: true; transformations: true; complete: false}>;\n importJsonLdDocument(source: string, options: Record<string, unknown>): unknown;\n inspectJsonLdDocument(document: unknown): unknown;\n exportJsonLdDocument(document: unknown): string;\n getJsonLdNode(document: unknown, path: string): unknown;\n proposeJsonLdNodeEdit(document: unknown, path: string, replacementJson: string): unknown;\n proposeJsonLdExpansion(document: unknown, options: Record<string, unknown>): Promise<unknown>;\n proposeJsonLdFlatten(document: unknown, options: Record<string, unknown>): Promise<unknown>;\n proposeJsonLdCompaction(document: unknown, options: Record<string, unknown>): Promise<unknown>;\n proposeJsonLdFraming(document: unknown, options: Record<string, unknown>): Promise<unknown>;\n proposeJsonLdToRdf(document: unknown, options: Record<string, unknown>): Promise<unknown>;\n proposeRdfToJsonLd(document: unknown, options: Record<string, unknown>): Promise<unknown>;\n proposeGeneralizedRdfToJsonLd(document: unknown, options: Record<string, unknown>): Promise<unknown>;\n}"
+    ]
+  },
+  "id": "[\"api\",\"./runtime/wasm\",\"JsonLdOperations\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 95940,
+      "line": 861,
+      "path": "bindings/core/wasm/index.d.ts",
+      "sha256": "e7737635d4b9296783fac947a38f3b1361a6502a66af0a85946413570ef348d0"
+    }
+  ],
+  "summary": "Type declaration · bindings/core/wasm/index.d.ts",
+  "title": "JsonLdOperations"
+}

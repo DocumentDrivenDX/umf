@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectSecSubmissionsRustCandidate\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceId",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "projectSecSubmissionsRustCandidate accepts input, sourceId and returns { companies: PublicCompanyRow[]; identifiers: PublicCompanyRow[]; filings: PublicCompanyRow[]; }.",
+  "related": [],
+  "returns": "{ companies: PublicCompanyRow[]; identifiers: PublicCompanyRow[]; filings: PublicCompanyRow[]; }",
+  "task": "Import and export",
+  "type": "(input: string, sourceId: string) => { companies: PublicCompanyRow[]; identifiers: PublicCompanyRow[]; filings: PublicCompanyRow[]; }"
+}

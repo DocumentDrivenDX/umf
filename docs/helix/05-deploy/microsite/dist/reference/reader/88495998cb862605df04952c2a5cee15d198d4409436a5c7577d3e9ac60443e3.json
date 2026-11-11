@@ -1,0 +1,20 @@
+{
+  "alternatives": [
+    "{ op: \"field\"; field: TableRef; }",
+    "{ op: \"literal\"; value: CoreLiteral; }",
+    "{ op: \"eq\" | \"ne\" | \"lt\" | \"le\" | \"gt\" | \"ge\"; left: TableExpression; right: TableExpression; }",
+    "{ op: \"and\" | \"or\"; args: TableExpression[]; }",
+    "{ op: \"not\" | \"isNull\"; arg: TableExpression; }",
+    "{ op: \"in\"; arg: TableExpression; values: CoreLiteral[]; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableExpression\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "TableExpression is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableExpression"
+}

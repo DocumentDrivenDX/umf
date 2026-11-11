@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"classifyAvroField\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -19,14 +19,14 @@
       "links": [
         "[\"api\",\".\",\"AvroFieldRequest\"]"
       ],
-      "name": "options",
+      "name": "request",
       "optional": false,
       "type": "AvroFieldRequest"
     }
   ],
-  "purpose": "Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding.",
+  "purpose": "classifyAvroField accepts source, request and returns AvroFieldClassification.",
   "related": [],
   "returns": "AvroFieldClassification",
   "task": "Other APIs",
-  "type": "(input: Document, options: AvroFieldRequest) => AvroFieldClassification"
+  "type": "(source: Document, request: AvroFieldRequest) => AvroFieldClassification"
 }

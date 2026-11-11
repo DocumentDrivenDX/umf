@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"resolvePostgresqlCardinalityType\"]",
   "kind": "Function",
   "members": [],
@@ -20,9 +20,9 @@
       "type": "{ schema: string; relation: string; name: string; }"
     }
   ],
-  "purpose": "Resolve domain bases only. Category A and formatted names never imply arrays.\nThe result describes native relationships, not ideal admission or enforcement.",
+  "purpose": "resolvePostgresqlCardinalityType accepts text, column and returns CardinalityResolution.",
   "related": [],
-  "returns": "{ nativeSource: string; root: NativeJson; qualifiedVersion: boolean; column: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }; domains: ObservedType[]; native: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }; element: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; } | null; standardArray: boolean; }",
+  "returns": "CardinalityResolution",
   "task": "Inspect and select",
-  "type": "(text: string, column: { schema: string; relation: string; name: string; }) => { nativeSource: string; root: NativeJson; qualifiedVersion: boolean; column: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }; domains: ObservedType[]; native: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }; element: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; } | null; standardArray: boolean; }"
+  "type": "(text: string, column: { schema: string; relation: string; name: string; }) => CardinalityResolution"
 }

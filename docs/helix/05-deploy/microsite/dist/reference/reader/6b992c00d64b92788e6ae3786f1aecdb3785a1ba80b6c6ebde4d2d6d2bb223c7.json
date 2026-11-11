@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"RecordTableSpecProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "RecordTableSpecProjection"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "recoverRecordFromTableSpec accepts input, nativeText and returns Document.",
+  "purpose": "recoverRecordFromTableSpec accepts receipt, nativeText and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: RecordTableSpecProjection, nativeText: string) => Document"
+  "type": "(receipt: RecordTableSpecProjection, nativeText: string) => Document"
 }

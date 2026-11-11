@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"projectDddToPostgresql\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "logicalInput",
+      "name": "logical",
       "optional": false,
       "type": "Document"
     },
@@ -19,7 +19,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "bindingInput",
+      "name": "binding",
       "optional": false,
       "type": "Document"
     },
@@ -28,7 +28,7 @@
       "links": [
         "[\"api\",\".\",\"DddPostgresqlPolicy\"]"
       ],
-      "name": "policyInput",
+      "name": "policy",
       "optional": false,
       "type": "DddPostgresqlPolicy"
     },
@@ -42,9 +42,9 @@
       "type": "PostgresqlBackend"
     }
   ],
-  "purpose": "Whole authored graph projection; portable library never deploys or queries a database.",
+  "purpose": "projectDddToPostgresql accepts logical, binding, policy, backend and returns Promise<DddPostgresqlProjection>.",
   "related": [],
   "returns": "Promise<DddPostgresqlProjection>",
   "task": "Import and export",
-  "type": "(logicalInput: Document, bindingInput: Document, policyInput: DddPostgresqlPolicy, backend: PostgresqlBackend) => Promise<DddPostgresqlProjection>"
+  "type": "(logical: Document, binding: Document, policy: DddPostgresqlPolicy, backend: PostgresqlBackend) => Promise<DddPostgresqlProjection>"
 }

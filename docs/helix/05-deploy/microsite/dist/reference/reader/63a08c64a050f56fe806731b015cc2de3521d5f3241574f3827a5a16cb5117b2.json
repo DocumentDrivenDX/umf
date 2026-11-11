@@ -1,0 +1,128 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"ArrowIpcEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-r8-arrow-ipc/0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"ARROW_IPC_PROFILE\"]"
+      ],
+      "name": "capabilities",
+      "optional": false,
+      "type": "Readonly<{ profile: typeof ARROW_IPC_PROFILE; maxBytes: 1000000; exactSource: true; complete: false; }>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "captureArrowIpc",
+      "optional": false,
+      "type": "(bytes: Uint8Array, options: { id: string; }) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportArrowIpcCapture",
+      "optional": false,
+      "type": "(document: unknown) => Uint8Array"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectArrowIpcCapture",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareArrowIpcObservation",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "completeArrowIpcObservation",
+      "optional": false,
+      "type": "(prepared: unknown, outcome: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectArrowIpcLayout",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "inspectArrowIpcConsistency",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "exportArrowSchemaIpcNative",
+      "optional": false,
+      "type": "(document: unknown) => Uint8Array"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareArrowSchemaIpc",
+      "optional": false,
+      "type": "(document: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "completeArrowSchemaIpc",
+      "optional": false,
+      "type": "(document: unknown, beforeJson: string, afterJson: string, bytesHex: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareArrowIpcRename",
+      "optional": false,
+      "type": "(document: unknown, request: unknown) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "prepareArrowIpcRenameFooter",
+      "optional": false,
+      "type": "(document: unknown, request: unknown, schemaHex: string) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "completeArrowIpcRename",
+      "optional": false,
+      "type": "(document: unknown, request: unknown, schemaHex: string, footerHex: string | null) => unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "renameArrowIpcFieldNative",
+      "optional": false,
+      "type": "(document: unknown, request: unknown) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ArrowIpcEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ArrowIpcEngine"
+}

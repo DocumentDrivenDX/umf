@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"validateRelationshipCandidate\"]",
   "kind": "Function",
   "members": [],
@@ -14,12 +14,10 @@
     },
     {
       "description": "Default: new Registry().",
-      "links": [
-        "[\"api\",\".\",\"Registry\"]"
-      ],
+      "links": [],
       "name": "registry",
       "optional": true,
-      "type": "Registry"
+      "type": "BaseRegistry"
     },
     {
       "description": "",
@@ -29,9 +27,9 @@
       "type": "ConstraintMeter | undefined"
     }
   ],
-  "purpose": "Current structural admission followed by the authored ordered rule program.",
+  "purpose": "validateRelationshipCandidate accepts input, registry, meter and returns Validation.",
   "related": [],
   "returns": "Validation",
   "task": "Read and validate",
-  "type": "(input: unknown, registry?: Registry, meter?: ConstraintMeter) => Validation"
+  "type": "(input: unknown, registry?: RegistryBase, meter?: ConstraintMeter) => Validation"
 }

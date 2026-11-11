@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"recoverFacetsFromAvro\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"FacetsAvroProjection\"]"
       ],
-      "name": "input",
+      "name": "receipt",
       "optional": false,
       "type": "FacetsAvroProjection"
     },
@@ -22,9 +22,9 @@
       "type": "string"
     }
   ],
-  "purpose": "Recompute the complete author projection and compare exact emitted text.",
+  "purpose": "recoverFacetsFromAvro accepts receipt, nativeText and returns Document.",
   "related": [],
   "returns": "Document",
   "task": "Import and export",
-  "type": "(input: FacetsAvroProjection, nativeText: string) => Document"
+  "type": "(receipt: FacetsAvroProjection, nativeText: string) => Document"
 }

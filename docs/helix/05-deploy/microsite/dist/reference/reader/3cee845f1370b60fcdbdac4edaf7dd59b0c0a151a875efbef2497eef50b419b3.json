@@ -1,6 +1,6 @@
 {
   "alternatives": [],
-  "authored": true,
+  "authored": false,
   "id": "[\"api\",\".\",\"declareCoreNullability\"]",
   "kind": "Function",
   "members": [],
@@ -10,7 +10,7 @@
       "links": [
         "[\"api\",\".\",\"Document\"]"
       ],
-      "name": "input",
+      "name": "source",
       "optional": false,
       "type": "Document"
     },
@@ -31,9 +31,9 @@
       "type": "\"required\" | \"absent-allowed\" | \"unspecified\""
     }
   ],
-  "purpose": "Explicit author action; archives previous meaning and makes no native classification claim.",
+  "purpose": "declareCoreNullability accepts source, identity, nullability and returns CoreNullabilityDeclaration.",
   "related": [],
   "returns": "CoreNullabilityDeclaration",
   "task": "Other APIs",
-  "type": "(input: Document, identity: CoreNullabilityIdentity, nullability: Nullability) => CoreNullabilityDeclaration"
+  "type": "(source: Document, identity: CoreNullabilityIdentity, nullability: Nullability) => CoreNullabilityDeclaration"
 }

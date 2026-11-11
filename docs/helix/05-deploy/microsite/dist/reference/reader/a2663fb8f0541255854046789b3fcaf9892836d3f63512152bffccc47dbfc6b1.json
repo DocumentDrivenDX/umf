@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./runtime/wasm\",\"UmfSecurityLogicEngine\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityTruth\"]"
+      ],
+      "name": "securityNot",
+      "optional": false,
+      "type": "(value: SecurityTruth) => SecurityTruth"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityTruth\"]"
+      ],
+      "name": "securityAnd",
+      "optional": false,
+      "type": "(values: readonly SecurityTruth[]) => SecurityTruth"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"SecurityTruth\"]"
+      ],
+      "name": "securityOr",
+      "optional": false,
+      "type": "(values: readonly SecurityTruth[]) => SecurityTruth"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\"./runtime/wasm\",\"EvaluatedSecurityRule\"]",
+        "[\"api\",\"./runtime/wasm\",\"SecurityComposition\"]"
+      ],
+      "name": "composeSecurityRules",
+      "optional": false,
+      "type": "(rules: readonly EvaluatedSecurityRule[], protectedFields?: readonly string[]) => SecurityComposition"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "securityRefIdentity",
+      "optional": false,
+      "type": "(ref: { documentId: string; moduleId: string; elementId: string; }) => string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UmfSecurityLogicEngine is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UmfSecurityLogicEngine"
+}

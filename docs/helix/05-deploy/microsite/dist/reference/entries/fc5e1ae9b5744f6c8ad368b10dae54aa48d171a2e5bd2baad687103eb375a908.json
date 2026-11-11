@@ -2,17 +2,17 @@
   "data": {
     "declarations": [
       {
-        "bytes": 5497,
-        "line": 15,
-        "path": "src/adapters/owl/axioms.ts",
-        "sha256": "d9d9b33772d673a2ba8d65f0bcea40199d6faf2c2a4821be5f6f0d4cd980e7ee"
+        "bytes": 3944,
+        "line": 21,
+        "path": "src/adapters/owl/types.ts",
+        "sha256": "b5c35c0c1bd629471562cbdb3e794b4752e6c4f17fe9f80a0fac859fcf82eac7"
       }
     ],
     "entrypoint": ".",
     "exportName": "OwlSpecialAxiomView",
     "runtime": "type-only",
     "signatureText": [
-      "export interface OwlSpecialAxiomView {\n profile:'owl-special-axioms-1'; complete:false; source:Document; blankNodeScope:string;\n axioms:OwlSpecialAxiom[]; malformed:RdfNode[];\n}"
+      "export interface OwlSpecialAxiomView {profile:'owl-special-axioms-1';complete:false;source:Document;blankNodeScope:string;axioms:OwlSpecialAxiom[];malformed:RdfNode[]}"
     ]
   },
   "id": "[\"api\",\".\",\"OwlSpecialAxiomView\"]",
@@ -20,12 +20,12 @@
   "links": [],
   "sources": [
     {
-      "bytes": 5497,
-      "line": 15,
-      "path": "src/adapters/owl/axioms.ts",
-      "sha256": "d9d9b33772d673a2ba8d65f0bcea40199d6faf2c2a4821be5f6f0d4cd980e7ee"
+      "bytes": 3944,
+      "line": 21,
+      "path": "src/adapters/owl/types.ts",
+      "sha256": "b5c35c0c1bd629471562cbdb3e794b4752e6c4f17fe9f80a0fac859fcf82eac7"
     }
   ],
-  "summary": "Type declaration · src/adapters/owl/axioms.ts",
+  "summary": "Type declaration · src/adapters/owl/types.ts",
   "title": "OwlSpecialAxiomView"
 }
