@@ -58,4 +58,44 @@ let exported = export_rdf_nquads(&runtime, &document, Some(true), &mut context)
 assert_eq!(exported.to_utf8().expect("UTF-8 source"), source);
 ```
 
+## Using the codegen engine from another crate
+
+`umf-codegen` is not published to crates.io. Depend on it, and on `umf-core`, by the UMF release tag (the `umf-v0.10.9` ref named above, or a later release) rather than a branch:
+
+```toml
+[dependencies]
+umf-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9", default-features = false, features = ["full-core"] }
+umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+```
+
+UMF owns the fixed resource cohort the engine compiles against, so the caller supplies no resource files. `CodegenResources::release` builds the engine resources from the exact bytes embedded in this UMF source, including the saga package:
+
+```rust
+use umf_codegen::{release_manifest_sha256, release_resource_digests, CodegenEngine, CodegenResources};
+use umf_core::Context;
+
+let mut ctx = Context::catalog();
+let resources = CodegenResources::release(&mut ctx).expect("UMF's fixed resources");
+let engine = CodegenEngine::new(&resources);
+// Record exactly which cohort this build compiled with.
+let cohort = release_manifest_sha256();
+let files = release_resource_digests(); // (name, sha256) for all ten resources
+```
+
+The cohort is ten resources: nine source resources (`core.schema.json`, `core.reference-schema.json`, `core.package-schema.json`, `core.constraints.json`, `core.domain-policy.json`, and the `tables`, `actions`, `binding` and `stable-binding` `*.package.json` files) plus `saga.package.json`. `umf_codegen::release_resources()` returns them as named raw bytes (`ReleaseResource { name, source_path, bytes }`, with `sha256()`), and `release_manifest_json()` is the canonical manifest whose SHA-256 is `release_manifest_sha256()`. These names and digests are the same ones reported by `umf codegen --version` and the Python `umf_codegen` wheel manifest. The accessor uses no filesystem, clock or thread.
+
+UMF builds against patched copies of `hashbrown` 0.12 and 0.13, `json-ld-core`, `json-ld-syntax`, `json-syntax` and `xsd-types`, applied through the `[patch.crates-io]` table in the repository's root `Cargo.toml` (sources under `crates/umf-core/vendor`; see `VENDOR-NOTES.md` there). Cargo does not apply a dependency's `[patch]` table transitively, so a downstream workspace must repeat that table, pointing at the same UMF release tag:
+
+```toml
+[patch.crates-io]
+hashbrown-012 = { package = "hashbrown", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+hashbrown-013 = { package = "hashbrown", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+json-ld-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+json-ld-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+json-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+xsd-types = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.9" }
+```
+
+The two `hashbrown` entries must resolve to the 0.12.3 and 0.13.2 copies respectively. A git source with a single `package` name cannot distinguish two versions of one repository path, so if Cargo reports an ambiguity, vendor those two directories or use a `path` patch pointing at a checkout of the same tag.
+
 The public support boundary is expressed by each operation's API and capability checks. Callers provide explicit external parser/compiler callbacks where required; Rust owns UMF validation, admission, projection, receipt and recovery decisions. See the [host binding guide](../bindings/core/README.md) for Python, Node/Bun, WASM and CLI entry points.
