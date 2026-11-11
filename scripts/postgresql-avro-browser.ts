@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/postgresql/avro-projection.json').json();
-const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/postgresql-avro-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/postgresql-avro-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/postgresql-avro-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>PostgreSQL to Avro</title>');}});
 let browser;
 try{

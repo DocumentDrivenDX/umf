@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {createPlanCorpusFixture,corpusCapabilities} from './actions-plan-corpus';
 import {createHash} from 'node:crypto';
 const artifact=(value:unknown)=>{const utf8=typeof value==='string'?value:JSON.stringify(value);return {mediaType:'application/json',utf8,sha256:createHash('sha256').update(utf8).digest('hex')};};

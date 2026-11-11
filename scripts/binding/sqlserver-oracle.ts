@@ -3,10 +3,10 @@ import {assertJsonDataEqual} from '../core-ideals/json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {sqlServerPhysicalCases} from './sqlserver-cases';
-import {projectBindingToSqlServer,recoverBindingSqlServerSources,recoverBindingSqlServerNative} from '../../src/projections/binding-sqlserver';
+import {projectBindingToSqlServer,recoverBindingSqlServerSources,recoverBindingSqlServerNative} from '../../src/index-node-v4';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
-import {classifySqlServerRelationships} from '../../src/core-ideals/relationship-sqlserver';
-import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
+import {classifySqlServerRelationships} from "../../src/index-node-v4";
+import {importSqlServerCatalog} from "../../src/index-node-v4";
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-full-physical-'+randomUUID(),password='Umf!'+randomUUID()+'A9';
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [stdout,stderr,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,stderr||stdout);return {stdout,stderr};}
@@ -44,6 +44,6 @@ try{
   const retained=projectBindingToSqlServer(c.logical,c.binding,c.policy,'report',nativeSource);assert.equal(retained.candidate,r.candidate);for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(retained,format),format) as unknown as typeof retained;assertJsonDataEqual(recoverBindingSqlServerSources(saved,saved.candidate!),{logical:c.logical,binding:c.binding,policy:c.policy});assert.equal(recoverBindingSqlServerNative(saved,saved.candidate!).catalog,nativeSource);}
   captures.push({case:c.id,tables:capture.tables.length,foreignKeys:observed.observations.length,catalog:'fixtures/binding/sqlserver/'+c.id+'-catalog.json',sql:'fixtures/binding/sqlserver/'+c.id+'.sql'});
  }
- const paths=['scripts/binding/sqlserver-oracle.ts','scripts/binding/sqlserver-cases.ts','src/projections/binding-sqlserver/index.ts','src/projections/binding-sqlserver/relationship-layout.ts','src/projections/binding-sqlserver/tables.ts','src/projections/binding-sqlserver/indexes.ts','spec/projections/sqlserver-relationship-layout.schema.json','spec/projections/sqlserver-physical-binding.schema.json','fixtures/binding/sqlserver/cases.json',...captures.flatMap(c=>[c.catalog,c.sql])];const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
+ const paths=['scripts/binding/sqlserver-oracle.ts','scripts/binding/sqlserver-cases.ts','src/projections/binding-sqlserver-types.ts','crates/umf-core/src/binding_sqlserver_physical.rs','crates/umf-core/src/binding_sqlserver_tables.rs','crates/umf-core/src/binding_sqlserver_planned_indexes.rs','crates/umf-core/src/binding_index_projection.rs','crates/umf-core/src/sqlserver_relationship_layout.rs','spec/projections/sqlserver-relationship-layout.schema.json','spec/projections/sqlserver-physical-binding.schema.json','fixtures/binding/sqlserver/cases.json',...captures.flatMap(c=>[c.catalog,c.sql])];const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/binding/sqlserver/oracle.json',JSON.stringify({scope:'Complete qualified tables/columns/JSON carriers/Keys/relationships and rowstore indexes from shared keyed DDD graph; no native equivalence',image,serverVersion:'16.0.4295.3',cases:captures,rows,sha256},null,2)+'\n');console.log(JSON.stringify({cases:captures.length,probes:rows.length}));
 }finally{if(created)await run(['docker','rm','-f','-v',name]);}

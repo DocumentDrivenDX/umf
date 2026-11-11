@@ -2,7 +2,7 @@
 import {chromium} from 'playwright';
 const matrix={results:[] as any[]};
 for(const c of (await Bun.file('fixtures/shacl/float-results.json').json()).cases)matrix.results.push({id:c.id,shapes:c.shapesPath,data:c.dataPath,shapesBase:'https://example.org/',dataBase:'https://example.org/',expectedConforms:c.expected,raw:await Bun.file(c.shapesPath).text(),dataRaw:await Bun.file(c.dataPath).text(),reportText:await Bun.file(c.reportPath).text()});
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/shacl-float-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await Bun.build({entrypoints:['src/index-browser-v4.ts'],outdir:'.cache/shacl-float-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/shacl-float-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>SHACL validation</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',route=>{if(!route.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return route.abort();}return route.continue();});await page.goto('http://127.0.0.1:'+server.port);
 const result=await page.evaluate(async matrix=>{const path='/umf.js',u=await import(path);let sources=0,evaluations=0,reports=0;

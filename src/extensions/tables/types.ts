@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {CoreLiteral} from '../../model/schema-literals';
+import type {Json,Validation} from '../../model/types';
 export interface TableRef {module:string;element:string}
 export interface TableKeyRef {record:TableRef;key:string}
 export type TableNativeType={kind:'boolean'|'text'|'int2'|'int4'|'int8'|'float4'|'float8'|'date'|'timestamp'|'timestamptz'|'uuid'|'bytea'}|{kind:'varchar'|'char';length:number}|{kind:'numeric';precision:number;scale:number};
@@ -55,3 +56,9 @@ export interface RowExpressionOperation {
  body:{kind:'update';table:string;values:[RowExpressionAssignment];where:{op:'isNull';field:TableRef};returning:[];maxRows:number};
 }
 export type TableOperation=TableOperationV1|RowExpressionOperation;
+
+export interface TableLifecycleInspection extends Validation {
+ source?:Json;
+ modules:{module:string;payload:TableLifecyclePayload}[];
+ nativeQualified:false;
+}

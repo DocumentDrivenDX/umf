@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {decodeBit128Record} from '../../src/extensions/binding/bit128-record';
+import {decodeBit128Record} from "../../src/index-node-v4";
 import assert from 'node:assert/strict';
-import {decodeBit128FileRecord} from '../../src/projections/bit128-file-values';
-import {validateBit128Dataset} from '../../src/extensions/binding/model-dataset';
+import {decodeBit128FileRecord} from "../../src/index-node-v4";
+import {validateBit128Dataset} from "../../src/index-node-v4";
 import {canonicalSchemaJson} from '../../src/model/schema-literals';
 const artifacts=await Bun.file('fixtures/validation/uuid/composition-artifacts.json').json();let rows=0,refusals=0,nativeInvalidRefusals=0;
 for(const target of ['postgresql','sqlserver','files','tablespec']){

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importJsonLdDocument,proposeJsonLdNodeEdit,proposeJsonLdToRdf,getJsonLdNode,getRdfQuads} from '../../src';
+import {importJsonLdDocument,proposeJsonLdNodeEdit,proposeJsonLdToRdf,getJsonLdNode,getRdfQuads} from '../../src/index-node-v4';
 test('US-026-AC17: edited exact tokens remain archived while binary64 projections disclose rounding',async()=>{
  const source=importJsonLdDocument('{"@id":"urn:s","urn:p":9007199254740993}',{id:'edit',baseIRI:'https://example.org/'}),edited=proposeJsonLdNodeEdit(source,'/urn:p','9007199254740995').document;
  const report=await proposeJsonLdToRdf(edited,{id:'rounded',numericPolicy:'binary64',lossPolicy:'report'});expect(report.status).toBe('candidate');expect((getRdfQuads(report.candidate!)[0]!.object as any).value).toBe('9007199254740996');expect(getJsonLdNode(report.source,'/urn:p')).toEqual({kind:'number',value:'9007199254740995'});expect(getJsonLdNode(source,'/urn:p')).toEqual({kind:'number',value:'9007199254740993'});expect(report.diagnostics.some(d=>d.code==='JSONLD_RDF_NUMBER_LOSS'&&d.path==='/0/urn:p/0/@value')).toBe(true);

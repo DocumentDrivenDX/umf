@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import test from 'node:test';
+import {test} from 'bun:test';
 import ts from 'typescript-api';
 import { generateFacade } from './v4-default-facade.mjs';
 
@@ -10,6 +10,34 @@ const root = path.resolve(import.meta.dirname, '../../..');
 const abs = file => path.resolve(root, file);
 const relative = file => path.relative(root, file).split(path.sep).join('/');
 const entries = ['src/index.ts', 'src/index-node-v4.ts', 'src/index-browser-v4.ts'];
+const portedOperations = [
+  'applyBulkEvent', 'bulkDecisionOrder', 'nextBulkFence', 'bulkItemToken',
+  'parseBulkItemToken', 'isReservedBulkKey', 'checkBulkKeyUse',
+  'projectLakeviewToLegacyDashboard',
+  'projectArrowToSpark', 'projectSparkToArrow',
+  'projectDddToJsonSchema', 'dddFieldBinding',
+  'projectPostgresqlRowToJsonSchema', 'projectSqlServerToDdl',
+  'projectAvroToTableSpec', 'projectTableSpecToAvro', 'projectToTableSpecViaAvro',
+  'projectParquetToAvro', 'projectPostgresqlToAvro', 'projectSqlServerToAvro',
+  'projectBindingToParquet', 'projectBindingToDelta', 'projectBindingToIceberg',
+  'inspectRawTableBinding',
+  'projectBindingIndexesToPostgresql',
+  'projectDddToPostgresql', 'verifyDddPostgresqlProjection',
+  'recoverDddPostgresqlIdeal', 'recoverDddPostgresqlNative',
+  'projectDddTablesToPostgresql', 'projectDddTablesAndIndexesToPostgresql',
+  'projectBindingIndexesToSqlServer', 'projectBindingTablesToSqlServer',
+  'projectBindingTablesAndIndexesFromPlanToSqlServer', 'projectBindingToSqlServer',
+  'projectJsonSchemaToProtobuf', 'projectDddEntitiesToGraphql', 'projectDddToGraphql',
+  'classifyAvroKeys', 'classifyAvroNullability', 'classifyAvroRelationships',
+  'selectCoreElements', 'selectCoreRelationships', 'inspectCoreEvolution', 'verifyCoreEvolution',
+  'importProtobufSources', 'exportProtobufSources', 'readDescriptorSet', 'writeDescriptorSet',
+  'captureArrowIpc', 'inspectArrowIpcLayout', 'inspectArrowFlatbufferModel',
+  'importShaclTurtle', 'getShaclShapeMetadata', 'proposeShaclEngineValidation',
+  'importOwlTurtle', 'getOwlDeclarations', 'getOwlOntologyHeaders',
+  'projectRelationshipToAvro', 'projectRelationshipToTableSpec',
+  'projectRelationshipToParquet', 'projectRelationshipToSqlServer',
+  'projectRelationshipToExtra', 'projectRelationshipsToPostgresql',
+];
 
 function programForEntries() {
   const config = ts.readConfigFile(abs('tsconfig.json'), ts.sys.readFile);
@@ -35,21 +63,23 @@ function exportFacets(program, entry) {
   }));
 }
 
-test('V4 facade preserves the complete checker-resolved API and all 1,120 runtime names', () => {
+test('V4 facade exposes the same common API on both hosts', () => {
   const program = programForEntries();
-  const reference = exportFacets(program, 'src/index.ts');
-  assert.equal(reference.size, 1886);
-  assert.equal([...reference.values()].filter(facet => facet.value).length, 1120);
-  assert.equal([...reference.values()].filter(facet => facet.type).length, 771);
-  for (const entry of entries.slice(1)) {
-    assert.deepEqual(exportFacets(program, entry), reference, `${entry} differs from ./reference in name/type/value facets`);
+  const node = exportFacets(program, entries[1]);
+  const browser = exportFacets(program, entries[2]);
+  assert.deepEqual(exportFacets(program, 'src/index.ts'), node);
+  assert.deepEqual(node.get('createPostgresqlSqlEngine'), { type: false, value: true });
+  node.delete('createPostgresqlSqlEngine');
+  assert.deepEqual(node, browser, 'public roots differ in common name/type/value facets');
+  for (const name of portedOperations) {
+    assert.deepEqual(browser.get(name), { type: false, value: true }, `missing runtime operation ${name}`);
   }
 });
 
 test('generated facade is deterministic, excludes local overrides, and has no broad runtime origins', () => {
   const program = programForEntries();
   const generated = generateFacade(program);
-  assert.equal(generated.localOverrides.length, 92);
+  for (const name of portedOperations) assert.ok(generated.localOverrides.includes(name), `${name} must be a host runtime export`);
   assert.ok(generated.localOverrides.includes('generateDomainPackSchema'));
   assert.ok(generated.localOverrides.includes('generateDatasetSourceSchema'));
   assert.ok(generated.localOverrides.includes('generateDomainPackLoaderSchema'));
@@ -75,9 +105,10 @@ test('generated facade is deterministic, excludes local overrides, and has no br
     assert.ok(!forbiddenRuntimeSources.has(`src/${binding.specifier.replace(/^\.\//, '')}.ts`), `${binding.name} points to a shadowed TS body`);
   }
   for (const facet of generated.facets.filter(item => item.type && item.value)) {
+    if (generated.localOverrides.includes(facet.name)) continue;
     const reference = exportFacets(program, 'src/index.ts').get(facet.name);
     assert.deepEqual(reference, { type: true, value: true }, `${facet.name} merged type/value facet was not retained`);
-    assert.ok(generated.localOverrides.includes(facet.name) || generated.bindings.some(binding => binding.name === facet.name && binding.kind === 'value'), `${facet.name} merged type/value export is missing its runtime binding`);
+    assert.ok(generated.bindings.some(binding => binding.name === facet.name && binding.kind === 'value'), `${facet.name} merged type/value export is missing its runtime binding`);
   }
 });
 
@@ -108,11 +139,25 @@ test('Node and browser runtime bundles exclude all shadowed TypeScript bodies', 
     'src/core-ideals/relationship-avro-projection.ts', 'src/core-ideals/relationship-tablespec-projection.ts',
     'src/core-ideals/relationship-parquet-projection.ts', 'src/core-ideals/relationship-sqlserver-projection.ts',
     'src/core-ideals/relationship-extras.ts', 'src/core-ideals/relationship-postgresql.ts',
-  ];
-  const factories = [
     'src/core-ideals/relationship-avro-projection-factory.ts', 'src/core-ideals/relationship-tablespec-projection-factory.ts',
     'src/core-ideals/relationship-parquet-projection-factory.ts', 'src/core-ideals/relationship-sqlserver-projection-factory.ts',
     'src/core-ideals/relationship-extras-factory.ts', 'src/core-ideals/relationship-postgresql-factory.ts',
+  ];
+  const factories = [
+    'src/core-ideals/avro-cardinality-rust-default.ts',
+    'src/core-ideals/relationship-extras-rust-default.ts',
+    'src/core-ideals/relationship-postgresql-rust-default.ts',
+    'src/adapters/lakeview/project-rust-default.ts',
+    'src/extensions/actions/bulk-rust-default.ts',
+  ];
+  const legacyValidation = [
+    'src/registry/registry.ts',
+    'src/validation/document.ts',
+    'src/validation/schema.ts',
+    'src/validation/constraint-kernel.ts',
+    'src/validation/constraint-language.ts',
+    'src/validation/literal-kernel.ts',
+    'src/validation/literal-policy.ts',
   ];
   for (const [entry, target, hostInput] of [
     ['src/index-node-v4.ts', 'node', 'bindings/core/node/index.js'],
@@ -136,8 +181,12 @@ test('Node and browser runtime bundles exclude all shadowed TypeScript bodies', 
       format: 'esm', metafile: true,
     });
     assert.equal(result.success, true, result.logs.map(log => log.message).join('\n'));
-    const inputs = Object.keys(result.metafile.inputs).map(input => input.replace(`${root}/`, ''));
+    const metafile = typeof result.metafile === 'string' ? JSON.parse(result.metafile) : result.metafile;
+    const inputs = Object.keys(metafile.inputs).map(input => input.replace(`${root}/`, ''));
+    const emitted = new Set(Object.values(metafile.outputs).flatMap(output =>
+      Object.entries(output.inputs).filter(([, input]) => input.bytesInOutput > 0).map(([input]) => input.replace(`${root}/`, ''))));
     for (const source of forbidden) assert.ok(!inputs.includes(source), `${entry} runtime bundle still includes ${source}`);
+    for (const source of legacyValidation) assert.ok(!emitted.has(source), `${entry} runtime bundle still emits ${source}`);
     for (const source of factories) assert.ok(inputs.includes(source), `${entry} runtime bundle lost factory ${source}`);
     assert.ok(inputs.includes(hostInput), `${entry} runtime bundle lost its ${target} host binding`);
   }

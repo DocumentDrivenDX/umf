@@ -15,6 +15,8 @@ export interface ProtectionFunctionResult extends Omit<ProtectionParameterValida
  status:FunctionStatus;selection:Json;input:Json;value:Json;
  inputDomain:Json;outputDomain:Json;valueProfile:string|null;
 }
+export type ProtectionFunctionInspector=(policy:unknown,catalog:unknown,closure:unknown,selection:unknown)=>ProtectionFunctionResult;
+export type ProtectionValueEvaluator=ProtectionFunctionInspector;
 const signatures:Record<string,readonly string[]>={
  'mask/constant':['value'],'mask/null-out':[],
  'mask/partial':['prefix','suffix','padding','unit'],
@@ -150,9 +152,9 @@ function inspect(policy:unknown,catalog:unknown,closure:unknown,requestInput:unk
  }
 }
 /** Signature/domain applicability only; output validity may still depend on input. */
-export function inspectProtectionFunction(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):ProtectionFunctionResult{return inspect(policy,catalog,closure,selection,false);}
 /** Present typed input only; no row authorization or canonical mutation. */
-export function evaluateProtectionValue(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):ProtectionFunctionResult{return inspect(policy,catalog,closure,selection,true);}
+// Evaluation and public inspection are owned by the Rust V4 roots. The
+// private reference checker below remains only for candidate catalog tooling.
 
 /** Private compiler path. Inspect actual definitions, including unused ones, without invented rules.
  * Non-pure declarations are retained for separate custody/authority checks and never executed here. */

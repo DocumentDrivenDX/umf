@@ -3,12 +3,24 @@ import {UmfError} from './errors';
 import type {Registry} from '../registry/registry';
 import type {ExtensionKindRuntime} from '../registry/kind-runtime';
 import type {Document} from './types';
-import type {CoreElementQuery,CoreElementSelection} from './selection';
-import type {CoreRelationshipQuery,CoreRelationshipSelection} from './relationship-selection';
+import type {CoreElementQuery,CoreElementSelection} from './selection-types';
+import type {CoreRelationshipQuery,CoreRelationshipSelection} from './relationship-selection-types';
+import type {CoreEvolutionPolicy} from './evolution-types';
 
-type DatasetMethods=Pick<typeof import('./dataset-values'),'validateCoreDatasetValues'|'verifyCoreDatasetValues'>;
-type EvolutionMethods=Pick<typeof import('./evolution'),'inspectCoreEvolution'|'verifyCoreEvolution'>;
-type KeyMethods=Pick<typeof import('./key-tuple'),'encodeCoreKeyTuple'|'verifyCoreKeyTuple'>;
+import type {CoreDatasetInput,CoreDatasetValueCheck} from './dataset-values-types';
+import type {CoreKeyIdentity,CoreKeyTupleReceipt,CoreKeyTupleValue} from './key-tuple';
+type DatasetMethods={
+ validateCoreDatasetValues(source:Document,input:CoreDatasetInput):CoreDatasetValueCheck;
+ verifyCoreDatasetValues(receipt:CoreDatasetValueCheck,current:Document,expectedInput:CoreDatasetInput):CoreDatasetValueCheck;
+};
+type EvolutionMethods={
+ inspectCoreEvolution(before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;
+ verifyCoreEvolution(receipt:unknown,before:Document,after:Document,policy:CoreEvolutionPolicy):unknown;
+};
+type KeyMethods={
+ encodeCoreKeyTuple(input:unknown,identity:CoreKeyIdentity,values:CoreKeyTupleValue[],options?:{profile:CoreKeyTupleReceipt['profile']}):CoreKeyTupleReceipt;
+ verifyCoreKeyTuple(input:CoreKeyTupleReceipt,current:unknown):CoreKeyTupleReceipt;
+};
 type Direct=DatasetMethods & EvolutionMethods;
 type EngineMethods<T>={[K in keyof T]:T[K] extends (...args:infer A)=>unknown ? (...args:A)=>unknown : never};
 type Registrations=Parameters<ExtensionKindRuntime['listKinds']>[0];

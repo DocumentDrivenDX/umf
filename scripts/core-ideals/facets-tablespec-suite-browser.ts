@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {tableSpecFacetSource} from './facets-tablespec-cases';
-import {classifyTableSpecFacets} from '../../src';
+import {classifyTableSpecFacets} from '../../src/index-node-v4';
 import evidence from '../../fixtures/validation/facets-tablespec-suite-native.json';
 const rows=evidence.cases.flatMap(row=>(['raw','model-normalized'] as const).flatMap(input=>(['value-domain','exact-input'] as const).flatMap(obligation=>(['strict','report'] as const).map(mode=>{
  const text=JSON.stringify(input==='raw'?row.source:row.normalized),source=tableSpecFacetSource(text),request={column:0,profile:'gx-suite-spark' as const,input,obligation,mode};

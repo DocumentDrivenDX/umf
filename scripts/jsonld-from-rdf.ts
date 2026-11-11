@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {equalJsonLdText} from './jsonld-compare';
-import {importRdfNQuads,exportRdfNQuads,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../src';
+import {importRdfNQuads,exportRdfNQuads,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../src/index-node-v4';
 const manifest=await Bun.file('native/jsonld/sources/fromRdf-manifest.jsonld').json(),cases=[];
 for(const c of manifest.sequence){
  const id=c['@id'].slice(1),path='native/jsonld/sources/'+c.input,raw=await Bun.file(path).text(),options={id:id+'-jsonld',baseIRI:manifest.baseIri+c.input,lossPolicy:'report' as const,processingMode:c.option?.processingMode??c.option?.specVersion??'json-ld-1.1',useNativeTypes:c.option?.useNativeTypes??false,useRdfType:c.option?.useRdfType??false,rdfDirection:c.option?.rdfDirection??null},d=importRdfNQuads(raw,{id}),r=await proposeRdfToJsonLd(d,options),exports=[];

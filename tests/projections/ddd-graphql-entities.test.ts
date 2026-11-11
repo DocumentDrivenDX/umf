@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {exportGraphqlSchema,projectDddEntitiesToGraphql,type Document} from '../../src';
+import {exportGraphqlSchema,type Document} from '../../src/index-node-v4';
+import {projectDddEntitiesToGraphql} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/projections/ddd-graphql-entities/case.json').json();
 const project=(logical=fixture.logical,policy=fixture.policy,loss:'strict'|'report'='report')=>projectDddEntitiesToGraphql(logical as Document,policy,loss);

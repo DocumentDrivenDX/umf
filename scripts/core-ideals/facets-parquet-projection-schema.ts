@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import classification from '../../spec/core/parquet-facet-classification.schema.json';
-import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
+import {parquetCarriers} from './parquet-carriers';
 const text={type:'string',minLength:1},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',additionalProperties:false,required,properties});
 const n={type:'integer',minimum:0,maximum:9007199254740991},positive={...n,minimum:1};
 const carrier={oneOf:[object({kind:{const:'primitive'},nativeType:{enum:Object.keys(parquetCarriers)}}),object({kind:{const:'integer'},bits:{enum:[8,16,32,64]},signed:{type:'boolean'}}),object({kind:{const:'fixed'},bytes:n}),{...object({kind:{const:'decimal'},carrier:{enum:['int32','int64','bytes','fixed']},precision:positive,scale:n,bytes:n},['kind','carrier','precision','scale']),allOf:[{if:{properties:{carrier:{const:'fixed'}}},then:{required:['bytes'],properties:{bytes:true}},else:{properties:{bytes:false}}}]}]};

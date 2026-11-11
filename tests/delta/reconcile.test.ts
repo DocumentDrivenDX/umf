@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureDeltaLog,reconcileDeltaCommits,coreSchema} from '../../src';
+import {captureDeltaLog,reconcileDeltaCommits,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/delta-log/reconciliation.schema.json';
 import {renderTree} from '../../src/model/native-json';

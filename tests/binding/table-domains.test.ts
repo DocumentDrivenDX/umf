@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration} from '../../src/table-migration';
-import {generatePythonClient} from '../../src/access';
-import {inspectTableLifecycle} from '../../src/extensions/tables';
+import {compileTableDeployment,verifyTableDeployment,compileTableMigration,generatePythonClient,inspectTableLifecycle} from '../../src/index-node-v4';
 import {domainSource} from '../unified/table-domain-fixture';
 import {legalDomainAuthoringSource} from '../unified/legal-domain-authoring-fixture';
 const configuration={module:'demo',schema:'demo_schema',ownerRole:'demo_owner',personRole:'demo_person',batchRole:'demo_batch',groupRoles:{}};

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql,getPostgresqlDdlDeclarations,getPostgresqlNode,exportPostgresqlSql,proposePostgresqlNodeEdit,readDocument,writeDocument} from '../../src';
+import {importPostgresqlSql,getPostgresqlDdlDeclarations,getPostgresqlNode,exportPostgresqlSql,proposePostgresqlNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/postgresql/ddl-declarations.schema.json';
 const text=await Bun.file('fixtures/postgresql/declarations.sql').text(),check=createValidator().compile(schema);

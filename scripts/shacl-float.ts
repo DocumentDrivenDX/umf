@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads} from '../src';
+import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads} from '../src/index-node-v4';
 const prefix='@prefix ex: <https://example.org/> . @prefix sh: <http://www.w3.org/ns/shacl#> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . ',results:any[]=[];
 for(const [name,value,type,limit,limitType,cmp] of await Bun.file('native/shacl/float-pairs.json').json())for(const constraint of ['minInclusive','minExclusive','maxInclusive','maxExclusive','lessThan','lessThanOrEquals']){
  const pair=constraint.startsWith('less'),expected=cmp!==null&&(constraint==='minInclusive'?cmp>=0:constraint==='minExclusive'?cmp>0:constraint==='maxInclusive'?cmp<=0:constraint==='maxExclusive'||constraint==='lessThan'?cmp<0:cmp<=0),id=name+'-'+constraint;

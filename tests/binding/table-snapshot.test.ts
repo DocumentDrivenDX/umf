@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {inspectTableLifecycle} from '../../src/extensions/tables';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {generatePythonClient} from '../../src/access';
+import {inspectTableLifecycle,compileTableDeployment,generatePythonClient} from '../../src/index-node-v4';
 import {snapshotSource} from '../unified/table-snapshot-fixture';
 const config={module:'demo',schema:'snapshot_schema',ownerRole:'snapshot_owner',personRole:'snapshot_person',batchRole:'snapshot_batch',groupRoles:{}};
 const op=(source:any)=>source.modules[0].extensions['umf.tables'].commands.find((c:any)=>c.id==='capture');

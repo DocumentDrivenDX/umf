@@ -3,7 +3,7 @@ import {uuidModelQualificationTests} from './qualification-inventory';
 /** Source-bound gate aggregation. Does not turn a bounded model profile into universal adapter support. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {projectBit128Model} from '../../src/projections/bit128-model';
+import {projectBit128Model} from "../../src/index-node-v4";
 import {uuidModel} from '../../tests/helpers/uuid-model-fixtures';
 const sha=async(path:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex');
 const read=(stem:string)=>Bun.file('fixtures/validation/uuid/'+stem+'.json').json();

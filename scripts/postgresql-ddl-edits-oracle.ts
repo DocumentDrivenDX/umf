@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {randomUUID,createHash} from 'node:crypto';
 import {backend} from '../native/postgresql/runtime';
-import {importPostgresqlSql,exportPostgresqlSql,importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,readDocument,writeDocument} from '../src';
+import {importPostgresqlSql,exportPostgresqlSql,importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,readDocument,writeDocument} from '../src/index-node-v4';
 const base='fixtures/postgresql/edits/',fixture=await Bun.file(base+'candidates.json').json(),image=(await Bun.file('native/postgresql/catalog/image.json').json()).reference,name='umf-postgresql-edits-'+randomUUID();
 if(!/^postgres@sha256:[0-9a-f]{64}$/.test(image))throw Error('Expected pinned image');
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});if(input!==undefined){p.stdin!.write(input);p.stdin!.end();}const [out,err,status]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(status)throw Error(err);return out;}

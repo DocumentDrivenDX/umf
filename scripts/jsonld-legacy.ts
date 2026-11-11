@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../src';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const cases=await Bun.file('native/jsonld/examples/legacy-cases.json').json(),results=[];
 function sort(v:any):any{return Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sort(v[k])])):v;}
 for(const c of cases)for(const mode of ['10','11']){if(c.only11&&mode==='10')continue;const options={id:c.id,baseIRI:'https://example.org/source',processingMode:mode==='10'?'json-ld-1.0':'json-ld-1.1'} as const,source=importJsonLdDocument(JSON.stringify(c.source),options),r=await proposeJsonLdExpansion(source,{lossPolicy:'report'}),exports=[],edits=[];

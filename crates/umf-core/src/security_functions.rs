@@ -49,6 +49,191 @@ fn string_value(value: &Value) -> Option<&Utf16> {
     }
 }
 
+/// Private candidate-only bridge for source-typed literals. The SDK does not
+/// export this operation; it shares Rust validation and identity semantics
+/// with the current core evaluator.
+pub fn inspect_candidate_literal(
+    source: &Value,
+    field_ref: &Value,
+    value: &Value,
+    include_identity: bool,
+    text_limit: usize,
+    context: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    fn literal_text_units(
+        root: &Value,
+        total: &mut usize,
+        limit: usize,
+        context: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        let mut pending = vec![root];
+        while let Some(value) = pending.pop() {
+            context.charge_work(1, Utf16::default())?;
+            match value {
+                Value::String(value) => *total = total.saturating_add(value.units().len()),
+                Value::Array(values) => {
+                    for value in values {
+                        context.charge_work(1, Utf16::default())?;
+                        pending.push(value);
+                    }
+                }
+                Value::Object(values) => {
+                    for (key, value) in values {
+                        context.charge_work(1, Utf16::default())?;
+                        *total = total.saturating_add(key.units().len());
+                        pending.push(value);
+                    }
+                }
+                _ => {}
+            }
+            if *total > limit {
+                return Err(EngineError::new(
+                    "PROTECTION_LITERAL_BOUND",
+                    Utf16::default(),
+                    "resource-exhausted: literal text budget exceeded",
+                ));
+            }
+        }
+        Ok(())
+    }
+    let invalid_ref = || {
+        EngineError::new(
+            "PROTECTION_LITERAL_FIELD",
+            Utf16::default(),
+            "Invalid closed qualified Field reference",
+        )
+    };
+    context.charge_work(1, Utf16::default())?;
+    let Value::Object(reference) = field_ref else {
+        return Err(invalid_ref());
+    };
+    if reference.len() != 3 {
+        return Err(invalid_ref());
+    }
+    let mut document_id: Option<&Utf16> = None;
+    let mut module_id: Option<&Utf16> = None;
+    let mut element_id: Option<&Utf16> = None;
+    for (key, value) in reference {
+        let Value::String(value) = value else {
+            return Err(invalid_ref());
+        };
+        if value.units().is_empty() {
+            return Err(invalid_ref());
+        }
+        let slot = if key == &Utf16::from("documentId") {
+            &mut document_id
+        } else if key == &Utf16::from("moduleId") {
+            &mut module_id
+        } else if key == &Utf16::from("elementId") {
+            &mut element_id
+        } else {
+            return Err(invalid_ref());
+        };
+        if slot.replace(value).is_some() {
+            return Err(invalid_ref());
+        }
+    }
+    let (Some(document_id), Some(module_id), Some(element_id)) =
+        (document_id, module_id, element_id)
+    else {
+        return Err(invalid_ref());
+    };
+    if !matches!(member(source, "id"), Some(Value::String(id)) if id == document_id) {
+        return Err(EngineError::new(
+            "PROTECTION_LITERAL_FIELD",
+            Utf16::default(),
+            "Field document does not match source",
+        ));
+    }
+    context.charge_work(1, Utf16::default())?;
+    let modules = match member(source, "modules") {
+        Some(Value::Array(modules)) => modules,
+        _ => {
+            return Err(EngineError::new(
+                "PROTECTION_LITERAL_FIELD",
+                Utf16::default(),
+                "Source modules are required",
+            ))
+        }
+    };
+    let mut selected_field = None;
+    for module in modules {
+        context.charge_work(1, Utf16::default())?;
+        if !matches!(member(module, "id"), Some(Value::String(id)) if id == module_id) {
+            continue;
+        }
+        let Some(Value::Array(elements)) = member(module, "elements") else {
+            continue;
+        };
+        for element in elements {
+            context.charge_work(1, Utf16::default())?;
+            if matches!(member(element, "id"), Some(Value::String(id)) if id == element_id) {
+                selected_field = Some(element);
+                break;
+            }
+        }
+        if selected_field.is_some() {
+            break;
+        }
+    }
+    let field = selected_field.ok_or_else(|| {
+        EngineError::new(
+            "PROTECTION_LITERAL_FIELD",
+            Utf16::default(),
+            "Field is missing from source",
+        )
+    })?;
+    if !matches!(member(field, "kind"), Some(Value::String(kind)) if kind == &Utf16::from("field"))
+    {
+        return Err(EngineError::new(
+            "PROTECTION_LITERAL_FIELD",
+            Utf16::default(),
+            "Selected element is not a Field",
+        ));
+    }
+    let mut input_text_units = 0usize;
+    literal_text_units(field, &mut input_text_units, text_limit, context)?;
+    literal_text_units(value, &mut input_text_units, text_limit, context)?;
+    let engine = crate::security_parameters::core_engine()?;
+    engine.check_schema_literal_public(source, field, value, context)?;
+    let identity = if include_identity {
+        Some(
+            crate::literal::literal_identity(field, value, engine.policy(), context)?.ok_or_else(
+                || {
+                    EngineError::new(
+                        "PROTECTION_LITERAL_IDENTITY",
+                        Utf16::default(),
+                        "Typed literal identity is unavailable",
+                    )
+                },
+            )?,
+        )
+    } else {
+        None
+    };
+    let mut identity_text = Value::Null;
+    if let Some(identity) = identity {
+        identity_text = Value::String(identity);
+    }
+    let identity_units = match &identity_text {
+        Value::String(identity) => identity.units().len(),
+        _ => 0,
+    };
+    let text_units = input_text_units.saturating_add(identity_units);
+    if text_units > text_limit {
+        return Err(EngineError::new(
+            "PROTECTION_LITERAL_BOUND",
+            Utf16::default(),
+            "resource-exhausted: literal text budget exceeded",
+        ));
+    }
+    Ok(Value::Object(vec![
+        ("identity".into(), identity_text),
+        ("identityUnits".into(), Value::Number(identity_units as f64)),
+        ("textUnits".into(), Value::Number(text_units as f64)),
+    ]))
+}
+
 fn json_string_content_units(value: &str) -> usize {
     value
         .chars()

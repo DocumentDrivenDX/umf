@@ -1,6 +1,6 @@
 /** Original native source capture only; no pending source admission authority. */
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql,exportPostgresqlSql} from '../../src/adapters/postgresql';
+import {importPostgresqlSql,exportPostgresqlSql} from "../../src/index-node-v4";
 import {readDocument} from '../../src/model/document';
 const root='/private/tmp/truss-security-main-integration';
 const sourcePath=root+'/docs/helix/02-design/contracts/catalog-pending-binding-source-v0.1.proposal.sql';

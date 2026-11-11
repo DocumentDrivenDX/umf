@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {domains} from '../../scripts/domain-packs/catalog';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {inspectDomainPack} from '../../src/index-node-v4';
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 import {join} from 'node:path';
 for(const domain of domains){
  // Domain-specific schema/inventory assertions. AC5/7 explicitly partial in STPs.
@@ -33,7 +33,7 @@ test('@covers US-060-AC3 @covers US-060-AC7 invalid target, profile, inclusion a
  for(const mutate of [(p:any)=>p.execution_profile.version='2.0.0',(p:any)=>p.execution_profile.code='execute',(p:any)=>p.execution_profile.targets.graph=['orders'],(p:any)=>p.execution_profile.scales.large=10001,(p:any)=>p.execution_profile.include_sources=['missing'],(p:any)=>p.source_bindings[0].source_id='missing',(p:any)=>p.schemas.push(p.schemas[0])]){const p=structuredClone(original);mutate(p);expect(inspectDomainPack(p).valid).toBe(false);}
  expect(inspectDomainPack(original).valid).toBe(true);
 });
-import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-model';
+import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-node';
 import {stringify} from 'yaml';
 test('JSON and YAML profile admission agree and malformed present profiles refuse',async()=>{
  const text=await Bun.file('spec/domain-packs/commerce/pack.json').text(),pack=JSON.parse(text);

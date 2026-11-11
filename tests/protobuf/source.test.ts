@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {importProtobufSources,exportProtobufDescriptorSet,inspectProtobuf,type ProtobufSourceCompiler,type ProtobufSourceRequest} from '../../src';
+import {importProtobufSources,exportProtobufDescriptorSet,inspectProtobuf,type ProtobufSourceCompiler,type ProtobufSourceRequest} from '../../src/index-node-v4';
 export const sources:ProtobufSourceRequest={roots:['legacy.proto','modern.proto','edition.proto'],files:{}};
 for(const name of sources.roots)sources.files[name]=await Bun.file('fixtures/protobuf/'+name).text();
 sources.files['google/protobuf/descriptor.proto']=await Bun.file('fixtures/protobuf/upstream/google/protobuf/descriptor.proto').text();

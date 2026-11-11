@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/generalized-rdf/results.json').json()).cases;
 for(const c of cases){c.raw=await Bun.file(c.path).text();c.output=await Bun.file(c.exports[0].path).text();c.back=await Bun.file(c.reversePath).text();c.again=await Bun.file(c.againPath).text();c.edited=await Bun.file(c.editPath).text();}
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/generalized-rdf-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/generalized-rdf-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/generalized-rdf-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Generalized RDF</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',route=>{if(!route.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return route.abort();}return route.continue();});await page.goto('http://127.0.0.1:'+server.port);
  const result=await page.evaluate(async(cases)=>{const path='/umf.js',u=await import(path);let sources=0,exports=0,reverse=0,reprojections=0,edits=0,jsonLiteralChecks=0;

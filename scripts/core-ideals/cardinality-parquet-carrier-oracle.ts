@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {parquetCardinalityFile} from '../../src/core-ideals/parquet-cardinality-carrier';
+import {parquetCardinalityFile} from "./parquet-cardinality-carrier";
 import {parquetCardinalityCarrierCases} from './cardinality-parquet-carrier-cases';
 const rows=[];
 for(const c of parquetCardinalityCarrierCases()){

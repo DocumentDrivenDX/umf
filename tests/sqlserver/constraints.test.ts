@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerConstraintMetadata,proposeSqlServerCatalogEdit,inspectSqlServer,readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerConstraintMetadata,proposeSqlServerCatalogEdit,inspectSqlServer,readDocument,writeDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/sqlserver/constraint-metadata.schema.json';
 const text=await Bun.file('fixtures/sqlserver/constraints-catalog.json').text(),source=importSqlServerCatalog(text,{id:'constraints'}),check=createValidator().compile(schema);

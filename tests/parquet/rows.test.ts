@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,assembleParquetRows,decodeParquetPhysical,coreSchema,parquetRowsSchema} from '../../src';
+import {captureParquet,exportParquetCapture,assembleParquetRows,decodeParquetPhysical,coreSchema,parquetRowsSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const validate=ajv.compile(parquetRowsSchema);
 test('US-019-AC18: assembled corpus rows match native-value evidence without source changes',async()=>{

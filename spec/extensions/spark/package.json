@@ -150,14 +150,7 @@
       "fixtures/spark/collation-oracle-results.json",
       "tests/spark/parameters.test.ts",
       "fixtures/spark/parameter-oracle-results.json",
-      "tests/spark/projection.test.ts",
-      "tests/spark/reverse-projection.test.ts",
-      "fixtures/projections/spark-arrow/projection-oracle-results.json",
-      "fixtures/projections/spark-arrow/reverse-oracle-results.json",
-      "tests/spark/arrow-origin.test.ts",
-      "fixtures/projections/arrow-spark/oracle-results.json",
-      "tests/spark/upstream-projection.test.ts",
-      "fixtures/projections/arrow-spark-upstream/oracle-results.json"
+      "tests/rust-core/arrow-spark-projection-public-root.test.ts"
     ]
   }
 }

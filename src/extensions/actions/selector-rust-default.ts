@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
 import {copyJson} from '../../model/json';
-import type {ActionInputs, CompiledActionSelector, PreparedActionIdentities, SelectedActionIdentity} from './selector';
+import type {ActionInputs, CompiledActionSelector, PreparedActionIdentities, SelectedActionIdentity, CompiledActionRule, ActionRulePhase} from './runtime-types';
 import type {Action, ActionFrame, ActionRule} from './types';
-import type {CompiledActionRule, ActionRulePhase} from './expression';
 import type {Document} from '../../model/types';
 type Engine = {
   compileActionRule(document: unknown, action: unknown, rule: unknown, phase: ActionRulePhase): unknown;

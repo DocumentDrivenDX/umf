@@ -4,7 +4,7 @@ import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues} from '../src/index';
+import {readDocument,validateCoreDatasetValues,verifyCoreDatasetValues} from '../src/index-node-v4';
 import {supplyChainDataset} from '../tests/helpers/supply-chain-dataset';
 const directory=resolve(process.argv[2]??'');
 if(!process.argv[2]||await Bun.file(join(directory,'report.json')).exists())throw Error('Explicit fresh evidence directory required');

@@ -5,7 +5,7 @@ import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 import {UmfError} from '../../src/model/errors';
 import {copyJson} from '../../src/model/json';
 import {createCoreModelEngine,createCoreCardinalityHostInputEngine,isHostJsonResponseError} from '../../bindings/core/node/index.js';
-import {inspectCoreCardinality as referenceInspect,declareCoreCardinality as referenceDeclare,verifyCoreCardinalityDeclaration as referenceVerify} from '../../src/model/cardinality';
+import {inspectCoreCardinality as referenceInspect,declareCoreCardinality as referenceDeclare,verifyCoreCardinalityDeclaration as referenceVerify} from "../../src/index-node-v4";
 
 const frozen=await Bun.file('tests/rust-core/fixtures/r5-model-bindings/frozen-cardinality-typescript.json').json();
 const api=bindCoreCardinalityRust(createCoreCardinalityHostInputEngine(CORE_MODEL_RESOURCES),isHostJsonResponseError);

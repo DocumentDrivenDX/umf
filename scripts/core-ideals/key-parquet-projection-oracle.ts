@@ -3,9 +3,9 @@ import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {parquetKeyProjectionCases} from './key-parquet-projection-cases';
-import {projectKeysToParquet, recoverKeysParquetIdeal} from '../../src/core-ideals/key-parquet-projection';
-import {exportParquetCapture} from '../../src/adapters/parquet';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
+import {projectKeysToParquet,recoverKeysParquetIdeal} from "../../src/index-node-v4";
+import {exportParquetCapture} from "../../src/index-node-v4";
+import {importParquetSchema} from "../../src/index-node-v4";
 const rows=[];
 for(const c of parquetKeyProjectionCases()){
  const r=projectKeysToParquet(c.source,c.authors,c.request);assert.equal(r.status,c.expected,c.name);if(r.status==='blocked')continue;

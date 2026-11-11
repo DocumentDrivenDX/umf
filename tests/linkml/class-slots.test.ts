@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/linkml/class-slots-schema.json';
-import {importLinkmlDocument,inspectLinkmlClassSlots,exportLinkmlDocument,readDocument,writeDocument} from '../../src';
+import {importLinkmlDocument,inspectLinkmlClassSlots,exportLinkmlDocument,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/linkml/class-slots/';
 test('US-024-AC6: all pinned example/metamodel local memberships match native evidence',async()=>{
  const cases=(await Bun.file(base+'results.json').json()).cases,oracle=(await Bun.file(base+'oracle-results.json').json()).results;

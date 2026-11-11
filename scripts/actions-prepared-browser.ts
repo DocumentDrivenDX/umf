@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import * as api from '../src/index';
+import * as api from '../src/index-node-v4';
 import {runPreparedCorpus} from '../tests/actions-prepared-corpus';
 // Optional exact ESM permits qualifying an isolated producer instead of this checkout.
 const testedApi=Bun.argv[3]?await import(Bun.argv[3]):api;

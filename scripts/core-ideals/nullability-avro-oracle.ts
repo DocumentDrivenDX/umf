@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {avroAvailabilitySource} from './nullability-avro-cases';
-import {classifyAvroNullability, recoverAvroNullabilityBundle} from '../../src/core-ideals/nullability-avro';
+import {classifyAvroNullability, recoverAvroNullabilityBundle} from '../../src/index-node-v4';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const fixture='fixtures/avro/nullability-cases.json';
 const cases=await Bun.file(fixture).json();const rows=[];
@@ -15,7 +15,7 @@ for(const c of cases.cases){
   rows.push({id:c.id,format,schema:recovered.schema,nullability:back.mapping.nullability,scope:back.mapping.scope,carrier:back.mapping.carrier});
  }
 }
-const paths=[fixture,'scripts/core-ideals/nullability-avro-oracle.ts','src/adapters/avro/index.ts','src/core-ideals/nullability-avro.ts','src/core-ideals/avro-availability-type.ts','scripts/core-ideals/nullability-avro-cases.ts','spec/core/avro-nullability-classification.schema.json','spec/extensions/avro-nullability/schema.json','spec/extensions/avro-nullability/package.json','src/model/native-json.ts'];
+const paths=[fixture,'scripts/core-ideals/nullability-avro-oracle.ts','src/adapters/avro/index.ts','src/core-ideals/nullability-avro-types.ts','src/core-ideals/avro-availability-type.ts','scripts/core-ideals/nullability-avro-cases.ts','spec/core/avro-nullability-classification.schema.json','spec/extensions/avro-nullability/schema.json','spec/extensions/avro-nullability/package.json','src/model/native-json.ts'];
 const fingerprints=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
 await Bun.write('fixtures/validation/nullability-avro-recovered.json',JSON.stringify({scope:'Scoped underlying-field-value Nullability classifications retain the native availability corpus',rows,fingerprints},null,2)+'\n');
 const child=Bun.spawn(['.venv/bin/python','scripts/core-ideals/nullability-avro-native.py'],{stdout:'inherit',stderr:'inherit'});if(await child.exited!==0)throw Error('Native availability oracle failed');

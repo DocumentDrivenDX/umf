@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {mixedModel,compositeModel,associationModel,associationData,polymorphicModel,polymorphicData,values,compositeValues} from '../../tests/helpers/uuid-composition-fixtures';
-import {projectBit128Model,recoverBit128ModelProjection} from '../../src/projections/bit128-model';
-import {encodeBit128Record,decodeBit128Record} from '../../src/extensions/binding/bit128-record';
-import {encodeBit128FileRecord,decodeBit128FileRecord} from '../../src/projections/bit128-file-values';
-import {validateBit128Dataset} from '../../src/extensions/binding/model-dataset';
+import {projectBit128Model,recoverBit128ModelProjection} from "../../src/index-node-v4";
+import {encodeBit128Record,decodeBit128Record} from "../../src/index-node-v4";
+import {encodeBit128FileRecord,decodeBit128FileRecord} from "../../src/index-node-v4";
+import {validateBit128Dataset} from "../../src/index-node-v4";
 import type {Bit128DatasetRecord} from '../../src/extensions/binding/model-dataset';
 const cases=[];
 for(const system of ['postgresql','sqlserver','avro','parquet','tablespec'])for(const stage of ['mixed','containers','associations','associations-polymorphic']){

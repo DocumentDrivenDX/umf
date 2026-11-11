@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from '../binding/browser-runtime';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
@@ -12,7 +13,7 @@ const cases=await Promise.all(corpus.cases.map(async(c:any)=>{
  const bytes=new Uint8Array(await Bun.file(row.path).arrayBuffer());assert.equal(createHash('sha256').update(bytes).digest('hex'),row.sha256);
  return {...c,bytes:Array.from(bytes)};
 }));
-const build=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm'});
 assert.ok(build.success,JSON.stringify(build.logs));const bundle=await build.outputs[0]!.text();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){
  const path=new URL(request.url).pathname;

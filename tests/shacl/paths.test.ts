@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import pathSchema from '../../spec/extensions/shacl/path-schema.json';
-import {importShaclTurtle,exportShaclTurtle,getShaclQuads,getShaclPropertyPath,evaluateShaclPropertyPath,proposeShaclQuadEdit,inspectShaclDocument,importRdfTurtle,importRdfTriG,getRdfQuads,readDocument,writeDocument} from '../../src';
+import {importShaclTurtle,exportShaclTurtle,getShaclQuads,getShaclPropertyPath,evaluateShaclPropertyPath,proposeShaclQuadEdit,inspectShaclDocument,importRdfTurtle,importRdfTriG,getRdfQuads,readDocument,writeDocument} from '../../src/index-node-v4';
 const baseIRI='https://example.org/',iri=(s:string)=>({kind:'iri' as const,value:baseIRI+s}),options={id:'shapes',baseIRI};
 const prefix='@prefix ex: <https://example.org/> . @prefix sh: <http://www.w3.org/ns/shacl#> . @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ';
 test('US-028 graph preservation, all path operators and independent expected sets',async()=>{

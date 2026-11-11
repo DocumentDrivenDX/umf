@@ -2,11 +2,12 @@
 import {test,expect} from 'bun:test';
 import {createEngine} from '../../bindings/core/node/index.js';
 import {coreSchema,semanticTypeReferenceSchema,extensionPackageSchema,coreConstraints,domainPolicy} from '../../src/generated/core-model';
-import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,importLakeviewDashboard,exportLakeviewDashboard,lakeviewRegistry,inspectLakeview,projectLakeviewToLegacyDashboard,lakeviewPackage} from '../../src/adapters/lakeview';
+import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,importLakeviewDashboard,exportLakeviewDashboard,lakeviewRegistry,inspectLakeview,lakeviewPackage} from '../../src/adapters/lakeview';
+import {projectLakeviewToLegacyDashboard} from '../../src/index-node-v4';
 import {Registry} from '../../src/registry/registry';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
 const runtime=createEngine({coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy});

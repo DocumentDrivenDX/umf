@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration,discoverTableMigrationChanges} from '../../src/table-migration';
-import {compileTableMigrationWithOperations} from '../../src/table-migration/internal';
-import {validateG11SourceCorrespondence} from '../../src/table-migration/g11-source';
+import {compileTableDeployment,compileTableMigration,discoverTableMigrationChanges} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
 import tablesSchema from '../../spec/extensions/tables/schema.json';
@@ -281,29 +278,6 @@ test('G11 represents deny-to-allow policy evolution and restores the typed updat
  expect(policy[1]?.sql).not.toContain('FALSE');
 });
 
-test('internal G11 grant effects retain complete typed table-grant rows for add and revoke',()=>{
- const addedInput=request(true,document=>{document.modules[0].extensions['umf.tables'].tables[0].policy.batch.update={kind:'allow'};});
- const added=compileTableMigrationWithOperations(addedInput);
- if(added.result.status!=='compiled')throw new Error(JSON.stringify(added.result));
- expect(added.operations).toHaveLength(added.result.plan.steps.length);
- const add=added.operations.find(operation=>operation.role==='grant-add');
- expect(add?.subject.type).toBe('grant-group');
- if(add?.subject.type!=='grant-group')throw new Error('G11 grant add lost its complete typed grant rows');
- expect(add.subject).toMatchObject({table:'notes',sourcePath:add.sourcePath,rendererStepId:expect.any(String),rows:[{table:'notes',schema:'plugin_demo',relation:'notes',role:'plugin_batch',privilege:'update',columns:['owner','summary'],grantOption:false}]});
- expect(add.subject.dependencyMeaningDigest).toMatch(/^[a-f0-9]{64}$/);
-
- const {before,after}=sourcePair(),beforeTable=before.modules[0]!.extensions['umf.tables'].tables[0]!,afterTable=after.modules[0]!.extensions['umf.tables'].tables[0]!;
- beforeTable.policy.batch.update={kind:'allow'};afterTable.policy.batch.update={kind:'deny'};
- const previous=compiledBundle(before),next=compiledBundle(after),reviewedChanges=discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.3'}).map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker);
- const revoked=compileTableMigrationWithOperations({id:'typed-grant-revoke',predecessor:{id:'typed-grant-revoke-previous',digest:'f'.repeat(64)},previous,next,options:{version:'umf.table-migration-options/0.6',backfills:[],concurrentIndexes:[],reviewedChanges,validations:[]}});
- if(revoked.result.status!=='compiled')throw new Error(JSON.stringify(revoked.result));
- expect(revoked.operations).toHaveLength(revoked.result.plan.steps.length);
- const revoke=revoked.operations.find(operation=>operation.role==='grant-revoke');
- if(revoke?.subject.type!=='grant-group')throw new Error('G11 grant revoke lost its complete typed grant rows');
- expect(revoke.subject.rows).toEqual([{table:'notes',schema:'plugin_demo',relation:'notes',role:'plugin_batch',privilege:'update',columns:['owner','summary'],grantOption:false}]);
- expect(revoke.subject.dependencyMeaningDigest).toMatch(/^[a-f0-9]{64}$/);
-});
-
 test('G11 orders a referenced Key and its cross-table ForeignKey by typed dependency identity',()=>{
  const before=legalSource(),after=structuredClone(before),module=after.modules[0]!,payload=module.extensions['umf.tables'];
  for(const doc of [before,after])doc.modules[0]!.extensions['umf.tables'].seedSets=[];
@@ -388,8 +362,8 @@ test('G11 refuses missing purge review, unrelated logical edits and source-conte
  expect(compileTableMigration({...predicate,previous:predicatePrevious,next:predicateNext,options:{...predicate.options,reviewedChanges:predicateMarkers}}).status).toBe('blocked');
  const extraRoot=request(),rootDoc=JSON.parse(extraRoot.next.source.utf8),rootCommand=rootDoc.modules[0].extensions['umf.tables'].commands.find((item:any)=>item.body?.kind==='read');rootCommand.vendorSemantics={mode:'preserve'};
  const rootNext={...extraRoot.next,source:{...extraRoot.next.source,utf8:JSON.stringify(rootDoc)}};rootNext.sourceDigest=sha256Text(rootNext.source.utf8);
- const rootCandidates=discoverTableMigrationChanges(extraRoot.previous,rootNext,{version:'umf.table-migration-discovery/0.3'}),rootMarkers=rootCandidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker);
- expect(()=>validateG11SourceCorrespondence(extraRoot.previous,rootNext,rootMarkers)).toThrow();
+ expect(()=>discoverTableMigrationChanges(extraRoot.previous,rootNext,{version:'umf.table-migration-discovery/0.3'})).toThrow('Deployment differs from exact source recompilation');
+ expect(compileTableMigration({...extraRoot,next:rootNext}).status).toBe('blocked');
 });
 
 test('G11 refuses to revise retained authored seed-set behavior',()=>{

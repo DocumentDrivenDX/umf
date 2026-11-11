@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {repairParquetDictionaryOffsets,exportParquetCapture,captureParquet,inspectParquetPages,decodeParquetValues,reconcileDeltaParquetCheckpoint,coreSchema} from '../../src';
+import {repairParquetDictionaryOffsets,exportParquetCapture,captureParquet,inspectParquetPages,decodeParquetValues,reconcileDeltaParquetCheckpoint,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/parquet/offset-repair.schema.json';
 const ajv=createValidator(false);ajv.addSchema(coreSchema);const check=ajv.compile(schema),base='fixtures/parquet/offset-repair/',report=await Bun.file(base+'results.json').json();

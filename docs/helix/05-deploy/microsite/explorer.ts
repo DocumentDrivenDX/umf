@@ -4,7 +4,13 @@ import {displayLabel,numericLexeme} from './presentation';
 import {ensureYaml,pretty,yamlSource} from '../schema-browser/format-runtime';
 import {clearDownloads,renderDownloads} from './download-view';
 import {ontologyModel,renderOntology} from './ontology-view';
-import {parseEntry,sourceValue,key,matches,type Entry,type Parsed,type Definition} from './explorer-model';
+import {parseEntry as parse,sourceValue as readSource,key,matches,type Entry,type ExplorerRuntime,type Parsed,type Definition} from './explorer-model';
+import {renderTree} from '../../../../src/model/native-json';
+// Browser V4 resolves only after its locally copied WASM runtime is ready.
+const v4=await import('../../../../src/index-browser-v4');
+const runtime:ExplorerRuntime={parseNativeJson:v4.parseNativeJson,parseNativeYaml:v4.parseNativeYaml,renderNative:renderTree,readJsonValue:v4.readJsonValue,readDocument:v4.readDocument,validateDocument:v4.validateDocument,importTableSpec:v4.importTableSpec,inspectTableSpec:v4.inspectTableSpec,inspectDomainPack:v4.inspectDomainPack};
+const parseEntry=(entry:Entry)=>parse(entry,runtime);
+const sourceValue=(entry:Entry)=>readSource(entry,runtime);
 const $=<T extends HTMLElement>(id:string)=>document.getElementById(id) as T;
 const catalog=$('catalog'), inspector=$('inspector'), status=$('status');
 let downloadUrl:string|undefined;

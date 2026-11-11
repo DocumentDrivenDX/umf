@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import sourceInput from '../spec/domain-packs/commerce/ontology.json';
-import {inspectCoreEvolution,verifyCoreEvolution,coreEvolutionPolicySchema} from '../src/model/evolution';
-import {validateCoreRecordValues} from '../src/model/record-values';
+import {inspectCoreEvolution,verifyCoreEvolution} from '../src/index-node-v4';
+import {coreEvolutionPolicySchema} from '../src/model/operation-schemas';
+import {validateCoreRecordValues} from '../src/index-node-v4';
 const policy={profile:'core-0.8-absent-string-additions/0.1'} as const;
 const source=()=>structuredClone(sourceInput) as any;
 function added(){const s=source(),m=s.modules.find((m:any)=>m.id==='domain');m.elements.push({id:'products.evolution_note',name:'evolution_note',kind:'field',scalarType:'string',cardinality:'one',nullability:'absent-allowed',extensions:{}});m.elements.find((e:any)=>e.id==='products').members.push({module:'domain',element:'products.evolution_note'});return s;}

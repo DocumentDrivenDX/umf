@@ -1,7 +1,7 @@
 /** Information-gap diagnostic, not an interpreter or native admission test. */
 import {createHash} from 'node:crypto';
 import {domainFixture} from '../../tests/security/protection/domain-fixture';
-import {inspectProtectionCatalog,requireProtectionInterpretation,resolveSecurityProtectionDomains} from '../../src/index';
+import {inspectProtectionCatalog,requireProtectionInterpretation,resolveSecurityProtectionDomains} from '../../src/index-node-v4';
 const rows:any[]=[];
 for(const action of ['read','field-access','query-original','reverse-opaque']){
  const f=domainFixture(),t=f.catalog.transforms[0];t.kind='tokenize';delete t.function;t.parameters=[];t.disclosureProfile=[];t.reversibility='vault';t.reverseAction=action;

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../model/types';
-import type {AvroTableSpecPolicy,AvroTableSpecProjection} from './avro-tablespec';
-import type {TableSpecAvroPolicy,TableSpecAvroProjection} from './tablespec-avro';
+import type {AvroTableSpecPolicy,AvroTableSpecProjection} from './avro-tablespec-types';
+import type {TableSpecAvroPolicy,TableSpecAvroProjection} from './tablespec-avro-types';
 
 type NativeErrorGuard=(error:unknown)=>boolean;
 interface Engine {

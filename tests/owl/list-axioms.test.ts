@@ -2,7 +2,7 @@
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {importOwlTurtle,exportOwlTurtle,getOwlListAxioms,getOwlQuads,getOwlAxiomAnnotations,proposeOwlQuadEdit,readDocument,writeDocument} from '../../src';
+import {importOwlTurtle,exportOwlTurtle,getOwlListAxioms,getOwlQuads,getOwlAxiomAnnotations,proposeOwlQuadEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-029 list axioms preserve ordering, duplicate occurrences, annotation anchors and malformed source',async()=>{
  const raw=await Bun.file('native/owl/list-axioms.ttl').text(),doc=importOwlTurtle(raw,{id:'lists',baseIRI:'https://example.org/',blankNodeScope:'list-scope'});
  const ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/list-axioms-schema.json').json());

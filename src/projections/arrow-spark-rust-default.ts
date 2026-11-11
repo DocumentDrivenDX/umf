@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError, type Document} from '../model/types';
-import type {ArrowSparkPolicy, ArrowSparkProjection} from './arrow-spark';
-import type {SparkArrowPolicy, SparkArrowProjection} from './spark-arrow';
+import type {ArrowSparkPolicy, ArrowSparkProjection} from './arrow-spark-types';
+import type {SparkArrowPolicy, SparkArrowProjection} from './spark-arrow-types';
 
 type NativeErrorGuard = (error: unknown) => boolean;
 

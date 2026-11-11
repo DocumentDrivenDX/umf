@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {extractOpenapiSchema,importOpenapiDocument,getOpenapiNode,openapiSchemaExtractionSchema,coreSchema} from '../../src';
+import {extractOpenapiSchema,importOpenapiDocument,getOpenapiNode,openapiSchemaExtractionSchema,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const owner=(schemas:string,extra='')=>`{"openapi":"3.1.2","info":{"title":"Extraction","version":"1"},"components":{"schemas":${schemas}}${extra}}`;
 const load=(text:string)=>importOpenapiDocument(text,{id:'extraction',format:'json',baseUri:'https://example.test/api.json',resources:[{uri:'https://example.test/shared.json',text:'{"type":"string"}',format:'json'}]});

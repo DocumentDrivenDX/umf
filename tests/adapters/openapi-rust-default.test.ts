@@ -1,3 +1,4 @@
+import {Registry} from '../../src/registry/registry';
 import {describe,expect,test} from 'bun:test';
 import {createOpenapiRustDefault} from '../../src/adapters/openapi/rust-default';
 import {UmfError} from '../../src/model/errors';
@@ -27,7 +28,7 @@ describe('OpenAPI Rust default facade',()=>{
    exportBundle(){throw new Error('unexpected bundle operation');},
    edit(){throw new Error('unexpected edit operation');},
   });
-  const api=createOpenapiRustDefault(engine,()=>false);
+  const api=createOpenapiRustDefault(engine,()=>false,()=>new Registry());
   const source='{"openapi":"3.2.1","info":{"title":"API 🚀","version":"1"},"paths":{}}';
   const imported=api.importOpenapiDocument(source,{id:'openapi-rust-default',format:'json'});
   expect(imported).toBe(document);
@@ -39,7 +40,7 @@ describe('OpenAPI Rust default facade',()=>{
  test('maps malformed native request refusals to the public error while preserving control errors',()=>{
   const malformed=Object.assign(new Error('format must be json or yaml'),{code:'REQUEST',path:'/format'});
   const engine=openapiEngine({import(){throw malformed;}});
-  const api=createOpenapiRustDefault(engine,()=>true);
+  const api=createOpenapiRustDefault(engine,()=>true,()=>new Registry());
   let error:unknown;
   try{api.importOpenapiDocument('{}',{id:'bad',format:'json' as never});}catch(value){error=value;}
   expect(error).toBeInstanceOf(UmfError);
@@ -47,7 +48,7 @@ describe('OpenAPI Rust default facade',()=>{
   expect((error as UmfError).path).toBe('/format');
 
   const control=Object.assign(new Error('cancelled'),{code:'CANCELLED',path:'/request'});
-  const controlled=createOpenapiRustDefault(openapiEngine({...engine.openapi,import(){throw control;}}),()=>true);
+  const controlled=createOpenapiRustDefault(openapiEngine({...engine.openapi,import(){throw control;}}),()=>true,()=>new Registry());
   let observed:unknown;
   try{controlled.importOpenapiDocument('{}',{id:'x',format:'json'});}catch(value){observed=value;}
   expect(observed).toBe(control);
@@ -57,7 +58,7 @@ describe('OpenAPI Rust default facade',()=>{
   const payload={profile:'openapi-json-yaml-0.1',root:{kind:'object',members:{openapi:{kind:'string',value:'3.2.1'},info:{kind:'object',members:{title:{kind:'string',value:'API'},version:{kind:'string',value:'1'}}},paths:{kind:'object',members:{}}}},originalSource:'{"openapi":"3.2.1","info":{"title":"API","version":"1"},"paths":{}}',originalFormat:'json'};
   const diagnostic:Diagnostic={code:'OPENAPI_VALIDATION_LIMIT',path:'/root',message:'Scoped validation',severity:'warning'};
   const engine=openapiEngine({inspectPayload({payload:actual}){expect(actual).toBe(payload);return [diagnostic];}});
-  const api=createOpenapiRustDefault(engine,()=>false);
+  const api=createOpenapiRustDefault(engine,()=>false,()=>new Registry());
   const registration=api.openapiRegistry().registrations()[0];
   if(!registration)throw new Error('OpenAPI registration was not created');
   expect(registration.manifest.id).toBe('umf.openapi');

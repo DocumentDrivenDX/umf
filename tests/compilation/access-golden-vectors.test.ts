@@ -2,8 +2,8 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {describe, expect, test} from 'bun:test';
 import corpus from '../../fixtures/access/golden-vectors/core-carriers.json';
-import {validateCoreFieldValue} from '../../src/model/schema-properties';
-import {validateCoreRecordValues} from '../../src/model/record-values';
+import {validateCoreFieldValue} from "../../src/index-node-v4";
+import {validateCoreRecordValues} from '../../src/index-node-v4';
 import {validateDocument} from '../../src/validation/document';
 import type {Document} from '../../src/model/types';
 import type {CoreLiteral} from '../../src/model/schema-literals';

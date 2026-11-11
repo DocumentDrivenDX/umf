@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureParquet,reconcileDeltaParquetCheckpoint} from '../src';
+import {captureParquet,reconcileDeltaParquetCheckpoint} from '../src/index-node-v4';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/parquet-checkpoint/',corpus=(await Bun.file('fixtures/delta/parquet-actions/results.json').json()).results,results=[];
 for(const c of corpus.filter((c:any)=>!c.path.includes('/_sidecars/'))){const version=BigInt(c.path.split('/').at(-1).split('.')[0]).toString(),actions=c.status==='projected'?(await Bun.file('fixtures/delta/parquet-actions/'+c.id+'.jsonl').text()).trim().split('\n').map(l=>JSON.parse(l)):[],spec=actions.some(a=>a.checkpointMetadata)?'v2':'v1',sidecars=[],bindings=[];for(const a of actions.filter(a=>a.sidecar)){const ref=a.sidecar,matches=corpus.filter((x:any)=>x.path.endsWith('/'+ref.path.split('/').at(-1)));if(matches.length!==1)throw Error('Ambiguous pinned sidecar');const file=matches[0].path;sidecars.push({path:ref.path,source:captureParquet(new Uint8Array(await Bun.file(file).arrayBuffer()),{id:file})});bindings.push({path:ref.path,file});}const r=reconcileDeltaParquetCheckpoint({version,source:captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id})},[],spec,sidecars);

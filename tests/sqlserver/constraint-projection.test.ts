@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,getSqlServerColumnMetadata,projectSqlServerToAvro,exportAvroSchema,writeDocument,readDocument,coreSchema,type SqlServerAvroPolicy} from '../../src';
+import {importSqlServerCatalog,getSqlServerColumnMetadata,exportAvroSchema,writeDocument,readDocument,coreSchema} from '../../src/index-node-v4';
+import {projectSqlServerToAvro,type SqlServerAvroPolicy} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/projections/sqlserver-avro.schema.json';
 const source=importSqlServerCatalog(await Bun.file('fixtures/sqlserver/constraints-catalog.json').text(),{id:'constraints'}),ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(schema);

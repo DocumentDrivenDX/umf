@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const base='fixtures/delta/upstream/',actions=await Bun.file('fixtures/delta/upstream/action-results.json').json(),report=await Bun.file(base+'log-results.json').json(),cases=[];
 for(const c of report.results)cases.push({...c,actions:actions.results.find((r:any)=>r.path===c.path),text:await Bun.file(base+c.path).text()});
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/delta-log-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/delta-log-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/delta-log-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Delta log source</title>');}});let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);

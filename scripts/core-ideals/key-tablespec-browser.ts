@@ -2,10 +2,10 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {classifyTableSpecKeys} from '../../src/core-ideals/key-tablespec';
-import {importTableSpec} from '../../src/adapters/tablespec';
+import {classifyTableSpecKeys} from "../../src/index-node-v4";
+import {importTableSpec} from "../../src/index-node-v4";
 import {tableSpecKeyProjectionCases} from './key-tablespec-projection-cases';
-import {projectKeysToTableSpec} from '../../src/core-ideals/key-tablespec-projection';
+import {projectKeysToTableSpec} from "../../src/index-node-v4";
 import discovery from '../../fixtures/validation/key-tablespec-discovery-native.json';
 const rows=discovery.cases.map(row=>{const text=JSON.stringify(row.source),source=importTableSpec(text,{id:'native',format:'json'});return {text,source,expected:classifyTableSpecKeys(source,{mode:'report',profile:'declared-metadata'})};});
 const projectionRows=tableSpecKeyProjectionCases().map(row=>({...row,result:projectKeysToTableSpec(row.source,row.authors,row.request)}));

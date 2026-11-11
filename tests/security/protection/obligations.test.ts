@@ -4,7 +4,7 @@
 // @covers US-079-AC10
 import {test,expect} from 'bun:test';
 import {inspectProtectionObligations} from '../../../src/extensions/security/protection/obligations';
-import {inspectSecurityDisclosureV2} from '../../../src/extensions/security/protection/disclosure';
+import {inspectSecurityDisclosureV2} from '../../../src/index-node-v4';
 import {migrateCandidateSecurityOntology} from '../../../src/extensions/security/ontology-migration-candidate';
 import {securityFixture,ref} from '../fixture';
 function fixture(){

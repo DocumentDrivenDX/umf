@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {sqlserverKeyProjectionCases} from './key-sqlserver-projection-cases';
-import {projectKeysToSqlServer} from '../../src/core-ideals/key-sqlserver-projection';
+import {projectKeysToSqlServer} from "../../src/index-node-v4";
 const cases=sqlserverKeyProjectionCases().map(c=>({...c,result:projectKeysToSqlServer(c.source,c.authors,c.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const p=new URL(req.url).pathname;if(p==='/cases')return Response.json(cases);if(p==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});return new Response('<!doctype html><title>SQL Server authored Key projection</title>',{headers:{'content-type':'text/html'}});}});
 let browser;

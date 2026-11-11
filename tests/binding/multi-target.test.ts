@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureDeltaLog,exportDeltaLog,inspectBinding,projectBindingIndexes,projectBindingToDelta,readBindingDocument,writeBindingDocument,type Document} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectBinding,projectBindingIndexes,readBindingDocument,writeBindingDocument,type Document} from '../../src/index-node-v4';
+import {projectBindingToDelta} from '../../src/index-node-v4';
 
 const graph=await Bun.file('fixtures/projections/ddd-postgresql-tables/case.json').json();
 const delta=await Bun.file('fixtures/projections/ddd-postgresql-tables/delta-binding.json').json();

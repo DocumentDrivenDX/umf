@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureParquet,projectDeltaParquetActions,exportDeltaLog} from '../src';
+import {captureParquet,projectDeltaParquetActions,exportDeltaLog} from '../src/index-node-v4';
 const m=await Bun.file('fixtures/parquet/values/results.json').json(),base='fixtures/delta/parquet-actions/',results=[];
 for(const c of m.results.filter((c:any)=>c.id.startsWith('upstream-'))){const r=projectDeltaParquetActions(captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id}));if(r.log)await Bun.write(base+c.id+'.jsonl',exportDeltaLog(r.log));results.push({id:c.id,path:c.path,status:r.status,actions:r.actions?.length,omittedNullFields:r.omittedNullFields,scalarConversions:r.scalarConversions,diagnostics:r.diagnostics.filter(d=>d.severity==='error')});}
 await Bun.write(base+'results.json',JSON.stringify({files:results.length,projected:results.filter(r=>r.status==='projected').length,results},null,2)+'\n');console.log({files:results.length,projected:results.filter(r=>r.status==='projected').length,blocked:results.filter(r=>r.status==='blocked').map(r=>({id:r.id,diagnostics:r.diagnostics.at(-1)}))});

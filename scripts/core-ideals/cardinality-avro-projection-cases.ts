@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreCardinality, type CoreCardinalityDeclaration} from '../../src/model/cardinality';
+import {type CoreCardinalityDeclaration} from "../../src/model/cardinality";
+import {declareCoreCardinality} from "../../src/index-node-v4";
 import type {Document, Json} from '../../src/model/types';
 import type {CardinalityAvroRequest} from '../../src/core-ideals/cardinality-avro-projection';
 export interface AvroCardinalityProjectionCase {id:string;author:CoreCardinalityDeclaration;request:CardinalityAvroRequest;sample:Json;expectedValue:Json;}

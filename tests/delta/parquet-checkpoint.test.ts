@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {reconcileDeltaParquetCheckpoint,reconcileDeltaCheckpoint,exportParquetCapture,readDocument,writeDocument,coreSchema} from '../../src';
+import {reconcileDeltaParquetCheckpoint,reconcileDeltaCheckpoint,exportParquetCapture,readDocument,writeDocument,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/delta-log/parquet-checkpoint.schema.json';
 const ajv=createValidator(false);ajv.addSchema(coreSchema);const check=ajv.compile(schema),base='fixtures/delta/parquet-checkpoint/',report=await Bun.file(base+'results.json').json();

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreNullability} from '../../src/model/nullability';
-import {parquetCarriers} from '../../src/core-ideals/parquet-carriers';
+import {declareCoreNullability} from "../../src/index-node-v4";
+import {parquetCarriers} from './parquet-carriers';
 import type {Document, Nullability, ScalarType} from '../../src/model/types';
 import type {NullabilityParquetRequest} from '../../src/core-ideals/nullability-parquet-projection';
 const families:Record<keyof typeof parquetCarriers,ScalarType>={boolean:'boolean',int32:'integer',int64:'integer',float32:'float',float64:'float',binary:'binary',string:'string',date:'date','time-millis':'time','time-micros':'time','timestamp-millis-utc':'timestamp','timestamp-micros-utc':'timestamp'};

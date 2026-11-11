@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {BIT128_PROFILE} from '../model/bit128';
-import type {
- Bit128Value, parseBits128, bits128FromBytes, bits128ToBytes, compareBits128,
- bits128ToWords, bits128FromWords, bits128ToInteger, bits128FromInteger,
-} from '../model/bit128';
-import type {parseUuid, uuidFromBits128, uuidToBits128, UuidValue} from '../model/uuid';
+import {BIT128_PROFILE,type Bit128Value} from '../model/bit128-types';
+import type {UuidValue} from '../model/uuid';
 import {UmfError} from '../model/errors';
 import type {Bit128NativeTypeInput,Bit128ProjectionPolicy,Bit128NativeProjection} from '../projections/bit128';
 import type {Bit128ModelProjection} from '../projections/bit128-model';
@@ -28,17 +24,17 @@ export interface Bit128RustEngine {
  decodeBit128FileRecord(binding:Document,logical:Document,identity:{module:string;element:string},datum:Record<string,Json>):unknown;
  projectBit128CarrierSchema(binding:Document,logical:Document,identity:{module:string;element:string},policy:Bit128ProjectionPolicy):unknown;
  recoverBit128CarrierProjection(report:Bit128NativeProjection,text:string):unknown;
- parseBits128: typeof parseBits128;
- parseUuid: typeof parseUuid;
- bits128FromBytes: typeof bits128FromBytes;
- bits128ToBytes: typeof bits128ToBytes;
- uuidFromBits128: typeof uuidFromBits128;
- uuidToBits128: typeof uuidToBits128;
- compareBits128: typeof compareBits128;
- bits128ToWords: typeof bits128ToWords;
- bits128FromWords: typeof bits128FromWords;
- bits128ToInteger: typeof bits128ToInteger;
- bits128FromInteger: typeof bits128FromInteger;
+ parseBits128(hex:string):Bit128Value;
+ parseUuid(text:string):UuidValue;
+ bits128FromBytes(bytes:Uint8Array):Bit128Value;
+ bits128ToBytes(value:Bit128Value):Uint8Array;
+ uuidFromBits128(value:Bit128Value):UuidValue;
+ uuidToBits128(value:UuidValue):Bit128Value;
+ compareBits128(left:Bit128Value,right:Bit128Value):-1|0|1;
+ bits128ToWords(value:Bit128Value,signed:boolean):{high:string;low:string};
+ bits128FromWords(words:{high:string;low:string},signed:boolean):Bit128Value;
+ bits128ToInteger(value:Bit128Value,signed:boolean):{integerToken:string};
+ bits128FromInteger(literal:{integerToken:string},signed:boolean):Bit128Value;
  classifyNativeType(input:Bit128NativeTypeInput):unknown;
 }
 

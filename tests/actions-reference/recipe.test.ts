@@ -6,7 +6,7 @@ import {ReferenceRevisionRepository} from '../../scripts/actions-reference/revis
 import {prepareReferenceAction} from '../../scripts/actions-reference/preparation';
 import {seedReferenceEntity,freezeReferenceState} from '../../scripts/actions-reference/state';
 import {executeCandidateRecipe} from '../../scripts/actions-reference/recipe';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey} from '../../src/index-node-v4';
 import {decodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {withReferenceStore} from './native-harness';
 test('native candidate recipe orders missing inputs, versions, conditions and evaluates isolated final state',async()=>{

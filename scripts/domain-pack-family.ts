@@ -2,7 +2,7 @@
 import {resolve,dirname,relative,isAbsolute,sep} from 'node:path';
 import {realpath} from 'node:fs/promises';
 import {readJsonValue} from '../src/model/serialization';
-import {requireDomainPackProfile} from '../src/domain-packs/profile';
+import {requireDomainPackProfile} from '../src/index-node-v4';
 export async function resolveDomainFamily(input:string){
  const read=async(path:string)=>{const text=await Bun.file(path).text(),pack:any=readJsonValue(text,'json');requireDomainPackProfile(pack);return {path,text,pack};};
  const root=await read(resolve(input));

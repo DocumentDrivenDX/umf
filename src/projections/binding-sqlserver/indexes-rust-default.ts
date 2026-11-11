@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../../model/types';
 import type {SqlServerColumnMetadata} from '../../adapters/sqlserver';
-import type {SqlServerIndexProjection} from './indexes';
+import type {SqlServerIndexProjection} from '../binding-sqlserver-types';
 type Engine={['binding-index-projection']:Record<'projectBindingIndexesToSqlServer',(fields?:Record<string,unknown>)=>unknown>};
 type ColumnSource={getSqlServerColumnMetadata(document:Document):SqlServerColumnMetadata[]};
 function maxLength(column:SqlServerColumnMetadata):number{

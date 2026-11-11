@@ -3,7 +3,7 @@ import {expect,test} from 'bun:test';
 import {createRequire} from 'node:module';
 import frozen from '../rust-core/fixtures/r5-schema-properties/frozen-typescript.json' with {type:'json'};
 import fieldValueFrozen from '../rust-core/fixtures/r5-field-value/frozen-typescript.json' with {type:'json'};
-import * as reference from '../../src/model/schema-properties';
+import * as reference from '../../src/index-node-v4';
 import {createCoreModelRootEngine} from '../../bindings/core/node/index.js';
 import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 

@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {parseNativeJson} from '../../src/model/native-json';
 import {equalJsonLdText} from '../../scripts/jsonld-compare';
-import {importJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
+import {importJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 test('US-026-AC7: exact numbers retain numeric semantics through expansion and edits',async()=>{
  const cases=await Bun.file('native/jsonld/examples/numeric-cases.json').json(),evidence=(await Bun.file('fixtures/jsonld/numeric/results.json').json()).results,oracle=(await Bun.file('fixtures/jsonld/numeric/oracle-results.json').json()).results;expect(cases).toHaveLength(9);expect(oracle).toHaveLength(9);
  for(const c of cases){const d=importJsonLdDocument(c.source,{id:c.id,baseIRI:'https://example.org/source'}),r=await proposeJsonLdExpansion(d,{lossPolicy:'report'}),native=oracle.find((n:any)=>n.id===c.id),saved=evidence.find((n:any)=>n.id===c.id);expect(exportJsonLdDocument(r.source)).toBe(c.source);expect(r.status).toBe(c.blocked?'blocked':'candidate');if(c.blocked){expect(r.candidate).toBeUndefined();expect(native.native).toBe('rejected');continue;}expect(getJsonLdNode(r.candidate!,'')).toEqual(parseNativeJson(c.expected));expect(native.exactEqual).toBe(true);

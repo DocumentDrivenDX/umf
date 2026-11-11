@@ -7,7 +7,7 @@ import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/framing-schema.json';
 import {equalCompactJsonLdText} from '../../scripts/jsonld-compare';
-import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFraming,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFraming,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const validate=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC10/11: complete pinned frame corpus, archives and native discrepancies',async()=>{
  const sources=await Bun.file('native/jsonld/framing-sources/manifest.json').json(),cases=(await Bun.file('fixtures/jsonld/framing/results.json').json()).cases,oracle=(await Bun.file('fixtures/jsonld/framing/oracle-results.json').json()).results;

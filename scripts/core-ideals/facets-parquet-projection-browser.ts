@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {parquetFacetProjectionCases} from './facets-parquet-projection-cases';
-import {projectFacetsToParquet} from '../../src/core-ideals/facets-parquet-projection';
+import {projectFacetsToParquet} from "../../src/index-node-v4";
 const bundle='dist/umf.js';
 const rows=parquetFacetProjectionCases().map(row=>({...row,expected:projectFacetsToParquet(row.author,row.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(r){return new URL(r.url).pathname==='/projection.js'?new Response(Bun.file(bundle),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Parquet facet projection</title>',{headers:{'content-type':'text/html'}});}});

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect,beforeAll} from 'bun:test';
-import {importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,proposeProtobufDescriptorEdit,readDocument,writeDocument,readDescriptorSet,writeDescriptorSet,type DescriptorNode} from '../../src';
+import {importProtobufDescriptorSet,exportProtobufDescriptorSet,getProtobufDescriptorSet,inspectProtobuf,proposeProtobufDescriptorEdit,readDocument,writeDocument,readDescriptorSet,writeDescriptorSet,type DescriptorNode} from '../../src/index-node-v4';
 import {fromBinary,toBinary} from '@bufbuild/protobuf';
 import {FileDescriptorSetSchema} from '@bufbuild/protobuf/wkt';
 import {mkdtemp,rm} from 'node:fs/promises';

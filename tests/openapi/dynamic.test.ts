@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../src/validation/schema';
-import {openapiDynamicReferenceSchema} from '../../src';
+import {openapiDynamicReferenceSchema} from '../../src/index-node-v4';
 import {test,expect} from 'bun:test';
-import {importOpenapiDocument,resolveOpenapiDynamicReference} from '../../src';
+import {importOpenapiDocument,resolveOpenapiDynamicReference} from '../../src/index-node-v4';
 const uri=(name:string)=>'https://example.test/'+name;
 const schemas={Tree:{$id:uri('tree'),$dynamicAnchor:'node',type:'object',properties:{children:{type:'array',items:{$dynamicRef:'#node'}}},$defs:{Fixed:{$anchor:'fixed',type:'string'}}},Strict:{$id:uri('strict'),$dynamicAnchor:'node',$ref:uri('tree'),unevaluatedProperties:false,$defs:{Fixed:{$dynamicAnchor:'fixed',type:'integer'}}},Outer:{$id:uri('outer'),$dynamicAnchor:'node',$ref:uri('strict')},Ordinary:{$id:uri('ordinary'),$anchor:'node',$ref:uri('tree')}};
 function doc(reference='#node'){

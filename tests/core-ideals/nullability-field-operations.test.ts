@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {nullabilityFieldOperationsCases} from '../../scripts/core-ideals/nullability-field-operations-cases';
-import {declareCoreElementKind, inspectCoreElementKind, verifyCoreKindDeclaration} from '../../src/model/field-kind';
-import {declareCoreRecordType, verifyCoreRecordTypeDeclaration} from '../../src/model/record-type';
-import {declareCoreNullability} from '../../src/model/nullability';
-import {selectCoreElements} from '../../src/model/selection';
+import {declareCoreElementKind,inspectCoreElementKind,verifyCoreKindDeclaration,declareCoreRecordType,verifyCoreRecordTypeDeclaration,selectCoreElements} from '../../src/index-node-v4';
+import {declareCoreNullability} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 

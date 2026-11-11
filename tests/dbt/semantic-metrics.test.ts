@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importDbtSemanticManifest,exportDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,writeDocument,readDocument} from '../../src';
+import {importDbtSemanticManifest,exportDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,writeDocument,readDocument} from '../../src/index-node-v4';
 const base='fixtures/dbt/semantic-metrics/',sha=(s:string|Uint8Array)=>createHash('sha256').update(s).digest('hex');
 test('US-022-AC11: all pinned native metric types and parameter candidates retain source meaning',async()=>{
  const raw=await Bun.file(base+'semantic-manifest.json').text(),source=JSON.parse(raw),d=importDbtSemanticManifest(raw,{id:'metrics'}),cases=await Bun.file(base+'results.json').json(),oracle=await Bun.file(base+'oracle-results.json').json();

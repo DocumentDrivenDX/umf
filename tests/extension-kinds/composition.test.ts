@@ -7,7 +7,7 @@ import {Registry} from '../../src/registry/registry';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
-import {selectCoreElements} from '../../src/model/selection';
+import {selectCoreElements} from '../../src/index-node-v4';
 import {copyJson} from '../../src/model/json';
 import type {Document,ExtensionPackage} from '../../src/model/types';
 import {fixtureSemantics} from './support';

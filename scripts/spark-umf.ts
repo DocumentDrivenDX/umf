@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importSparkSchema,exportSparkSchema,proposeSparkNodeEdit,readDocument,writeDocument} from '../src';
+import {importSparkSchema,exportSparkSchema,proposeSparkNodeEdit,readDocument,writeDocument} from '../src/index-node-v4';
 import {parseNativeJson} from '../src/model/native-json';
 const base='fixtures/spark/',cases=await Bun.file(base+'schema-cases.json').json(),results=[];
 // Read original case source with exact tokens: JSON.parse would round metadata longs.

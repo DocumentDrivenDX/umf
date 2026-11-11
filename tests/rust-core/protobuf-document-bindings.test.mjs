@@ -8,7 +8,6 @@ const bindingEntry = process.env.UMF_NODE_BINDING_DIR
   ? pathToFileURL(resolve(process.env.UMF_NODE_BINDING_DIR, 'index.js')).href
   : new URL('../../bindings/core/node/index.js', import.meta.url).href;
 const rust = await import(bindingEntry);
-const predecessor = await import('../../src/adapters/protobuf/index.ts');
 const root = resolve(import.meta.dir, '../..');
 const authored = new Uint8Array(readFileSync(resolve(root, 'fixtures/protobuf/authored.pb')));
 const unknown = new Uint8Array([0x82, 0xb5, 0x18, 0x04, 0x00, 0x01, 0x02, 0xff]);
@@ -16,26 +15,25 @@ const packet = JSON.parse(readFileSync(resolve(root, 'tests/rust-core/fixtures/r
 const equal = (a, b) => expect(JSON.parse(JSON.stringify(a))).toEqual(JSON.parse(JSON.stringify(b)));
 const hex = bytes => [...bytes].map(byte => byte.toString(16).padStart(2, '0')).join('');
 
-test('Node/Bun descriptor and document packet matches bounded TypeScript predecessor vectors', () => {
+test('Node/Bun descriptor and document operations match frozen source vectors', () => {
   expect(rust.PROTOBUF_DOCUMENT_PROFILE).toBe('umf-r8-protobuf-descriptor-document/0.1.0');
   const engine = rust.createProtobufDescriptorDocumentEngine();
-  for (const bytes of [new Uint8Array(), authored, unknown]) {
+  for (const [bytes,key,writeKey] of [[new Uint8Array(),'readEmpty',null],[authored,'readAuthored','writeAuthored'],[unknown,'readUnknownWire','writeUnknownWire']]) {
     const descriptor = engine.readDescriptorSet(bytes);
-    equal(descriptor, predecessor.readDescriptorSet(bytes));
-    expect([...engine.writeDescriptorSet(descriptor)]).toEqual([...predecessor.writeDescriptorSet(descriptor)]);
+    equal(descriptor, packet.vectors[key].value);
+    expect(hex(engine.writeDescriptorSet(descriptor))).toBe(writeKey ? packet.vectors[writeKey].value : '');
   }
-  const descriptor = engine.readDescriptorSet(authored);
   const document = engine.importProtobufDescriptorSet(authored, {id: 'packet'});
-  equal(document, predecessor.importProtobufDescriptorSet(authored, {id: 'packet'}));
-  equal(engine.getProtobufDescriptorSet(document), predecessor.getProtobufDescriptorSet(document));
-  expect([...engine.exportProtobufDescriptorSet(document)]).toEqual([...predecessor.exportProtobufDescriptorSet(document)]);
-  equal(engine.inspectProtobuf(document), predecessor.inspectProtobuf(document));
+  equal(document, {...packet.vectors.importAuthored.value, id: 'packet'});
+  equal(engine.getProtobufDescriptorSet(document), packet.vectors.getAuthored.value);
+  expect(hex(engine.exportProtobufDescriptorSet(document))).toBe(packet.vectors.exportAuthored.value);
+  equal(engine.inspectProtobuf(document), packet.vectors.inspectAuthored.value);
   const bundle = engine.exportProtobufBundle(document);
-  const expectedBundle = predecessor.exportProtobufBundle(document);
-  expect([...bundle.descriptorSet]).toEqual([...expectedBundle.descriptorSet]);
-  equal(bundle.source, expectedBundle.source);
+  const expectedBundle = packet.vectors.bundleAuthored.value;
+  expect(hex(bundle.descriptorSet)).toBe(expectedBundle.descriptorSet);
+  equal(bundle.source, {...expectedBundle.source, id: 'packet'});
   equal(bundle.diagnostics, expectedBundle.diagnostics);
-  expect(engine.readDescriptorSet(authored)).toEqual(descriptor);
+  equal(engine.readDescriptorSet(authored), packet.vectors.readAuthored.value);
 }, {timeout: 120_000});
 
 test('packet preserves raw unknown wire bytes and returns isolated byte/tree copies', () => {
@@ -83,20 +81,16 @@ test('binary cap and per-call host controls refuse before native byte conversion
   expect(() => rust.createProtobufDescriptorDocumentEngine().importProtobufDescriptorSet(tooLarge, hostileOptions)).toThrow('id getter observed');
 });
 
-test('semantic failure uses the public UmfError class and predecessor diagnostic', () => {
+test('semantic failure uses the public UmfError class and frozen diagnostic', () => {
   const malformed = new Uint8Array(11).fill(0x80);
-  let predecessorError;
   let rustError;
-  try { predecessor.readDescriptorSet(malformed); } catch (error) { predecessorError = error; }
   try { rust.createProtobufDescriptorDocumentEngine().readDescriptorSet(malformed); } catch (error) { rustError = error; }
-  expect(predecessorError?.name).toBe('UmfError');
   expect(rustError?.name).toBe('UmfError');
-  expect(rustError?.code).toBe('PROTOBUF_BINARY');
-  expect(rustError?.message).toBe(predecessorError?.message);
+  expect({name: rustError?.name, code: rustError?.code, path: rustError?.path, message: rustError?.message}).toEqual({name: packet.vectors.readMalformed.name, code: packet.vectors.readMalformed.code, path: packet.vectors.readMalformed.path, message: packet.vectors.readMalformed.message});
   let injectedError;
   try { rust.createProtobufDescriptorDocumentEngine({ErrorType: PublicUmfError}).readDescriptorSet(malformed); } catch (error) { injectedError = error; }
   expect(injectedError).toBeInstanceOf(PublicUmfError);
-  expect(injectedError?.message).toBe(predecessorError?.message);
+  expect(injectedError?.message).toBe(packet.vectors.readMalformed.message);
 });
 
 test('raw host admission matches the frozen TypeScript observation packet', () => {
@@ -124,8 +118,8 @@ test('raw host admission matches the frozen TypeScript observation packet', () =
 test('Node operations match all frozen success and error vectors', () => {
   const engine = rust.createProtobufDescriptorDocumentEngine({ErrorType: PublicUmfError});
   const malformed = new Uint8Array(11).fill(0x80);
-  const document = predecessor.importProtobufDescriptorSet(authored, {id: 'frozen-packet'});
-  const unknownDocument = predecessor.importProtobufDescriptorSet(unknown, {id: 'unknown-wire'});
+  const document = engine.importProtobufDescriptorSet(authored, {id: 'frozen-packet'});
+  const unknownDocument = engine.importProtobufDescriptorSet(unknown, {id: 'unknown-wire'});
   const actual = {
     readEmpty: engine.readDescriptorSet(new Uint8Array()),
     readAuthored: engine.readDescriptorSet(authored),

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {classifyAvroKeys, recoverAvroKeySource, verifyAvroKeyClassification} from '../../src/core-ideals/key-avro';
-import {importAvroSchema, exportAvroBundle} from '../../src/adapters/avro';
+import {classifyAvroKeys, recoverAvroKeySource, verifyAvroKeyClassification} from '../../src/index-node-v4';
+import {importAvroSchema,exportAvroBundle} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const cases=(await Bun.file('fixtures/avro/key-discovery-cases.json').json()).cases as {id:string;schemaText:string}[];
 for(const c of cases)test('Avro Key classification: '+c.id,()=>{

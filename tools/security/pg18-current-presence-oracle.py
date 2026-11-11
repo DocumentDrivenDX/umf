@@ -19,7 +19,7 @@ def val(s):return json.loads(sql(s))
 def literal(s):return "E'"+s.replace('\\','\\\\').replace("'","''")+"'"
 def check(id,expected,actual):
  observations.append({'id':id,'expected':expected,'actual':actual});assert expected==actual,id
-paths=[root/'package.json',root/'bun.lock',root/'node_modules/ajv/package.json',a.presence_source.resolve(),root/'tools/security/current-query-presence-source.ts',root/'tests/security/protection/current-query-presence-source.json',root/'tests/security/protection/current-query-source.json',root/'src/extensions/security/protection/disclosure.ts',pathlib.Path(__file__).resolve(),a.packet.resolve(),a.wheel.resolve(),root/'tests/security/protection/disclosure-fixtures.json',root/'tools/security/native_owned_cleanup.py']
+paths=[root/'package.json',root/'bun.lock',root/'node_modules/ajv/package.json',a.presence_source.resolve(),root/'tools/security/current-query-presence-source.ts',root/'tests/security/protection/current-query-presence-source.json',root/'tests/security/protection/current-query-source.json',root/'src/index-node-v4.ts',pathlib.Path(__file__).resolve(),a.packet.resolve(),a.wheel.resolve(),root/'tests/security/protection/disclosure-fixtures.json',root/'tools/security/native_owned_cleanup.py']
 def closure(path,seen):
  path=path.resolve()
  if path in seen:return
@@ -27,7 +27,7 @@ def closure(path,seen):
  if path.suffix not in ['.ts','.js']:return
  for rel in re.findall(r'''(?:from\s*|import\s*)['"](\.[^'"]+)['"]''',path.read_text()):
   b=path.parent/rel;found=next((p for p in [b,pathlib.Path(str(b)+'.ts'),pathlib.Path(str(b)+'.json'),b/'index.ts']if p.is_file()),None);assert found is not None;closure(found,seen)
-selected=set();closure(root/'src/extensions/security/protection/disclosure.ts',selected);closure(root/'tools/security/current-query-presence-source.ts',selected);paths+=sorted(selected)
+selected=set();closure(root/'src/index-node-v4.ts',selected);closure(root/'tools/security/current-query-presence-source.ts',selected);paths+=sorted(selected)
 frozen={str(p):p.read_bytes()for p in paths};native=pathlib.Path(importlib.import_module('weft.weft').__file__);shim=pathlib.Path(weft.__file__);frozen[str(native)]=native.read_bytes();frozen[str(shim)]=shim.read_bytes()
 with zipfile.ZipFile(a.wheel)as z:
  binaries=[n for n in z.namelist()if n.endswith(('.so','.pyd'))];assert len(binaries)==1 and z.read(binaries[0])==frozen[str(native)]and z.read('weft/__init__.py')==frozen[str(shim)]
@@ -100,7 +100,7 @@ try:
   except ValueError:observations.append({'id':label,'refused':True})
   else:raise AssertionError(label)
  native_batch=copy.deepcopy(base['batch']);native_batch['columns']=[carrier[0]['columnDescriptor']];native_batch['rows']=[[c]for c in decoded]
- inspector="const a=await import("+text(str(root/'src/extensions/security/protection/disclosure.ts'))+"); const x=JSON.parse(await Bun.stdin.text());console.log(JSON.stringify(a.inspectSecurityDisclosureV2(x.batch,x.policy,x.catalog,x.closure)));"
+ inspector="const a=await import("+text(str(root/'src/index-node-v4.ts'))+"); const x=JSON.parse(await Bun.stdin.text());console.log(JSON.stringify(a.inspectSecurityDisclosureV2(x.batch,x.policy,x.catalog,x.closure)));"
  def inspect(batch):return json.loads(require(command(['/opt/homebrew/bin/bun','-e',inspector],input=text(dict(batch=batch,policy=base['policy'],catalog=base['catalog'],closure=base['closure'])))))
  native_inspection=inspect(native_batch);check('actual-public-native-batch-inspection','validated-disclosure',native_inspection['status']);assert native_inspection['complete']is False and native_inspection['authority']is False
  for label,change in [('missing-null-value',lambda b:b['rows'][0][0].pop('value')),('foreign-output-domain',lambda b:b['rows'][3][0]['outputDomain'].update(documentId='foreign')),('wrong-transform-identity',lambda b:b['rows'][3][0]['transform'].update(id='mask'))]:

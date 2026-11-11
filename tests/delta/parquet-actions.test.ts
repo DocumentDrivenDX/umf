@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,projectDeltaParquetActions,exportDeltaLog,coreSchema} from '../../src';
+import {captureParquet,exportParquetCapture,projectDeltaParquetActions,exportDeltaLog,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/delta-log/parquet-actions.schema.json';
 const ajv=createValidator(false);ajv.addSchema(coreSchema);const check=ajv.compile(schema),base='fixtures/delta/parquet-actions/';

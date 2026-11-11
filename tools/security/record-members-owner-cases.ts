@@ -1,5 +1,5 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
-import {inspectCoreRecordMembers} from '../../src/model/record-members';
+import {inspectCoreRecordMembers} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
 import sourceSchema from '../../spec/core/schema.json';
 import resultSchema from '../../spec/core/record-members-inspection-v0.3.schema.json';

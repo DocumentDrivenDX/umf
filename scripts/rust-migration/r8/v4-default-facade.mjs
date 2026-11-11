@@ -12,9 +12,9 @@ const entries = ['src/index-node-v4.ts', 'src/index-browser-v4.ts'];
 const platformOnlyLocalExports = new Map([
   ['src/index-node-v4.ts', new Set(['createPostgresqlSqlEngine'])],
 ]);
-const reference = 'src/index.ts';
+const reference = 'src/index-v4-default.ts';
 const aggregatorFiles = new Set([
-  'src/index.ts', 'src/index-node-v4.ts', 'src/index-browser-v4.ts',
+  'src/index.ts', 'src/index-v4-default.ts', 'src/index-node-v4.ts', 'src/index-browser-v4.ts',
   'src/node.ts', 'src/browser.ts', 'src/node-v3.ts', 'src/browser-v3.ts',
 ]);
 const rel = file => path.relative(root, file).split(path.sep).join('/');

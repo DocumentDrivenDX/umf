@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../../model/types';
 import type {PostgresqlBackend} from '../../adapters/postgresql';
-import type {PostgresqlIndexProjection} from './indexes';
+import type {PostgresqlIndexProjection} from './indexes-types';
 type Engine={['binding-index-projection']:Record<'prepareBindingIndexesToPostgresql'|'completeBindingIndexesToPostgresql',(fields?:Record<string,unknown>)=>unknown>};
 type PostgresqlRust={importPostgresqlSql(source:string,backend:PostgresqlBackend,options:{id:string}):Promise<Document>;exportPostgresqlSql(document:Document,backend:PostgresqlBackend):Promise<string>};
 const CONTROL=new Set(['LIMIT','CAPACITY','RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);

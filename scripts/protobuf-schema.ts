@@ -2,7 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {type DescMessage,ScalarType} from '@bufbuild/protobuf';
 import {file_google_protobuf_descriptor} from '@bufbuild/protobuf/wkt';
-import {descriptorRoot} from '../src/adapters/protobuf/descriptor';
+import {descriptorRoot} from '../src/adapters/protobuf/descriptor-schema';
 const defs:Record<string,any>={};
 function scalar(type:ScalarType|undefined):any {
  if(type===undefined)return {type:'integer',minimum:-2147483648,maximum:2147483647};

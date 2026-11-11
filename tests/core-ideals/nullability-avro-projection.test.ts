@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-avro-projection-cases';
-import {projectNullabilityToAvro, recoverNullabilityFromAvro} from '../../src/core-ideals/nullability-avro-projection';
-import {exportAvroSchema} from '../../src/adapters/avro';
+import {projectNullabilityToAvro,recoverNullabilityFromAvro} from "../../src/index-node-v4";
+import {exportAvroSchema} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('authored Avro availability projects null carriers and recovers every ideal and residual',()=>{
@@ -35,7 +35,7 @@ test('unmapped document, module, relationship and extension meaning remains reco
  source.modules.push({id:'other',namespace:'other',elements:[{id:'x',extensions:{}}]});
  source.modules[0]!.elements[0]!.extensions.future={availability:'unknown',nested:[null,true]};
  source.modules[0]!.elements[0]!.references=[{role:'future',module:'other',element:'x'}];
- const {declareCoreNullability}=await import('../../src/model/nullability');
+ const {declareCoreNullability}=await import('../../src/index-node-v4');
  const author=declareCoreNullability(source,{module:'m',element:'e'},'required');expect(projectNullabilityToAvro(author,c.request).status).toBe('blocked');
  const report=projectNullabilityToAvro(author,{...c.request,mode:'report'});expect(report.status).toBe('projected');
  for(const path of ['/future','/vocabularies','/modules/0/extensions','/modules/1','/modules/0/elements/0/extensions','/modules/0/elements/0/references'])expect(report.residuals.map(r=>r.path)).toContain(path);

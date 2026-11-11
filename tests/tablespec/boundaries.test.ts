@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importTableSpec,importTableSpecBundle,exportTableSpecBundle,editTableSpecColumn,editTableSpecTable,writeDocument,readDocument} from '../../src';
+import {importTableSpec,importTableSpecBundle,exportTableSpecBundle,editTableSpecColumn,editTableSpecTable,writeDocument,readDocument} from '../../src/index-node-v4';
 test('CONTRACT-030 edit mappings reject non-JSON inputs without evaluating accessors or mutating source',()=>{
  const source=importTableSpec('{"version":"1.0","table_name":"t","columns":[{"name":"id","data_type":"INTEGER"}]}',{id:'guards',format:'json'}),before=writeDocument(source,'json');let invoked=0;
  const getter=Object.defineProperty({},'description',{enumerable:true,get(){invoked++;return {kind:'string',value:'lost'};}});

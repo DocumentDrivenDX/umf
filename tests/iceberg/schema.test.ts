@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importIcebergSchema,exportIcebergSchema,inspectIceberg,getIcebergNode,proposeIcebergNodeEdit,readDocument,writeDocument,ICEBERG_EXTENSION} from '../../src';
+import {importIcebergSchema,exportIcebergSchema,inspectIceberg,getIcebergNode,proposeIcebergNodeEdit,readDocument,writeDocument,ICEBERG_EXTENSION} from '../../src/index-node-v4';
 const base='fixtures/iceberg/',m=await Bun.file(base+'manifest.json').json();
 test('US-020-AC1: recursive schema shapes and exact source tokens round trip in both UMF formats',async()=>{
  for(const c of m.cases){const raw=await Bun.file(c.path).text();if(!c.umfValid){expect(()=>importIcebergSchema(raw,{id:c.id})).toThrow();continue;}const d=importIcebergSchema(raw,{id:c.id});expect(inspectIceberg(d).valid).toBe(true);for(const f of ['json','yaml'] as const)expect(exportIcebergSchema(readDocument(writeDocument(d,f),f))).toBe(exportIcebergSchema(d));}

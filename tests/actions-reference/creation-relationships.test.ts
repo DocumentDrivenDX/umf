@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {inspectActions,registerActions} from '../../src/extensions/actions';
+import {inspectActions,registerActions} from '../../src/index-node-v4';
 import {Registry} from '../../src/registry/registry';
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';

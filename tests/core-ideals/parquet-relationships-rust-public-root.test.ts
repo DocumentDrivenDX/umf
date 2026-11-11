@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {classifyParquetRelationships,verifyParquetRelationshipClassification,recoverParquetRelationshipSource} from '../../src/index-node-v4';
-import {importParquetSchema} from '../../src/adapters/parquet/field-metadata';
+import {importParquetSchema} from "../../src/index-node-v4";
 
 test('Node V4 Parquet relationship observation classifies, verifies, recovers and refuses strict promotion through Rust',async()=>{
  const bytes=new Uint8Array(await Bun.file('fixtures/parquet/containers/list-tuple.parquet').arrayBuffer());

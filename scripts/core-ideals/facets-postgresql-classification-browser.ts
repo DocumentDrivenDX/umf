@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlFacetSource,postgresqlFacetRequest} from './facets-postgresql-cases';
 const source=postgresqlFacetSource(),rows:{request:u.PostgresqlFacetRequest;expected:unknown}[]=[];
@@ -25,7 +25,7 @@ try{
   if(JSON.stringify(input.source)!==before)throw Error('Source mutated');if('Bun'in globalThis||'process'in globalThis)throw Error('Host globals');return {cases:input.rows.length,classified,blocked,recoveries};
  },{source,rows} as any);
  assert.equal(checks.cases,rows.length);assert.equal(checks.classified+checks.blocked,rows.length);assert.equal(checks.recoveries,checks.classified);assert.deepEqual(externalRequests,[]);
- const paths=['src/core-ideals/facets-postgresql.ts','src/adapters/postgresql/facet-catalog.ts','src/adapters/postgresql/facet-resolved-predicate.ts','src/adapters/postgresql/facet-node-tree.ts','src/adapters/postgresql/facet-typmod.ts','src/index.ts','spec/core/postgresql-facet-classification.schema.json','spec/extensions/postgresql-facets/package.json','spec/extensions/postgresql-facets/schema.json','scripts/core-ideals/facets-postgresql-cases.ts','scripts/core-ideals/facets-postgresql-classification-browser.ts','fixtures/validation/facets-postgresql-constraints-native.json','dist/umf.js','dist/postgresql/runtime.js','dist/postgresql/libpg-query.wasm'];
+ const paths=['src/core-ideals/facets-postgresql.ts','scripts/core-ideals/postgresql-facet-catalog.ts','scripts/core-ideals/postgresql-facet-resolved-predicate.ts','scripts/core-ideals/postgresql-facet-node-tree.ts','scripts/core-ideals/postgresql-facet-typmod.ts','src/index.ts','spec/core/postgresql-facet-classification.schema.json','spec/extensions/postgresql-facets/package.json','spec/extensions/postgresql-facets/schema.json','scripts/core-ideals/facets-postgresql-cases.ts','scripts/core-ideals/facets-postgresql-classification-browser.ts','fixtures/validation/facets-postgresql-constraints-native.json','dist/umf.js','dist/postgresql/runtime.js','dist/postgresql/libpg-query.wasm'];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async path=>[path,createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/facets-postgresql-classification-browser.json',JSON.stringify({scope:'Experimental PostgreSQL 17.4 public facet classification and exact retained source recovery; no authored projection or full binding acceptance',browser:browser.version(),checks,externalRequests,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

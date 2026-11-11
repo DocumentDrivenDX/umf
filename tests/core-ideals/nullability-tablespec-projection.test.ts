@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {nullabilityTableSpecAuthor,nullabilityTableSpecProjectionCases} from '../../scripts/core-ideals/nullability-tablespec-projection-cases';
-import {projectNullabilityToTableSpec, recoverNullabilityFromTableSpec, exportTableSpec, readJsonValue, writeJsonValue, copyJson, declareCoreNullability, importTableSpec, classifyTableSpecField, classifyTableSpecNullability} from '../../src';
-import type {NullabilityTableSpecRequest} from '../../src';
+import {projectNullabilityToTableSpec, recoverNullabilityFromTableSpec, exportTableSpec, readJsonValue, writeJsonValue, copyJson, declareCoreNullability, importTableSpec, classifyTableSpecField, classifyTableSpecNullability} from '../../src/index-node-v4';
+import type {NullabilityTableSpecRequest} from '../../src/index-node-v4';
 const request:NullabilityTableSpecRequest={id:'target',tableName:'Orders',columnName:'value',nativeType:'VARCHAR',mode:'strict',profile:'runtime-model',context:null,carrier:'null-value'};
 test('authored availability projects under explicit profiles with atomic strict/report loss and exact ideal recovery',()=>{
  for(const c of nullabilityTableSpecProjectionCases()){

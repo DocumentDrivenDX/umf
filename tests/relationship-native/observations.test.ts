@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test, expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importRdfNQuads, exportRdfNQuads, getRdfQuads, importLinkmlDocument, exportLinkmlDocument, getLinkmlDocumentNode, importTableSpec, exportTableSpec, getTableSpecTable, readDocument, writeDocument} from '../../src';
+import {importRdfNQuads, exportRdfNQuads, getRdfQuads, importLinkmlDocument, exportLinkmlDocument, getLinkmlDocumentNode, importTableSpec, exportTableSpec, getTableSpecTable, readDocument, writeDocument} from '../../src/index-node-v4';
 import {parseNativeJson} from '../../src/model/native-json';
 
 const base='fixtures/relationship-native/';

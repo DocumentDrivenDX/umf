@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const base='fixtures/odcs/relationships/',cases=[];for(const c of (await Bun.file(base+'results.json').json()).results)cases.push({...c,raw:await Bun.file(base+c.id+'.json').text(),expectedReport:await Bun.file(base+c.id+'.json.report.json').json()});
-const build=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/odcs-relationship-browser',naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/odcs-relationship-browser',naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/odcs-relationship-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>ODCS relationships</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);
  const result=await page.evaluate(async(cases)=>{const path='/umf.js',u=await import(path);let comparisons=0;

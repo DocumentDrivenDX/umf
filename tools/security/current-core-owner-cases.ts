@@ -1,7 +1,7 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import type {Document} from '../../src/model/types';
-import {inspectCoreRecordMembers} from '../../src/model/record-members';
-import {inspectCoreScalarType} from '../../src/model/scalar-type';
+import {inspectCoreRecordMembers} from "../../src/index-node-v4";
+import {inspectCoreScalarType} from "../../src/index-node-v4";
 import {inspectCoreReferenceLinks} from '../../src/model/reference-links';
 import {createValidator} from '../../src/validation/schema';
 import sourceSchema from '../../spec/core/schema.json';

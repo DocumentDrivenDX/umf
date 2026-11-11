@@ -6,7 +6,7 @@ import {scanPlanJson} from '../../src/extensions/actions/plan-artifacts';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {evaluateCandidateCatalogReadDisclosureBatchWithinOperation} from '../../src/extensions/security/catalog-runtime-candidate';
 import {CandidateSecurityOperationBudget} from '../../src/extensions/security/operation-budget-candidate';
-import {inspectSecurityDisclosureV2} from '../../src/extensions/security/protection/disclosure';
+import {inspectSecurityDisclosureV2} from '../../src/index-node-v4';
 import {encodeDisclosureChildFrame} from './current-disclosure-child';
 export const NATIVE_DISCLOSURE_CHILD_VERSION='umf.security.private-disclosure-child/0.2-candidate';
 export const NATIVE_DISCLOSURE_CHILD_LIMITS=Object.freeze({sourceBytes:4194304,inspectionBytes:16777216,responseBytes:16777216,facts:10000,inspectionNodes:100016});

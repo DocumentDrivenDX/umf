@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importTableSpec,importTableSpecBundle,getTableSpecTable,editTableSpecTable,readDocument,writeDocument,exportTableSpecBundle} from '../../src';
+import {importTableSpec,importTableSpecBundle,getTableSpecTable,editTableSpecTable,readDocument,writeDocument,exportTableSpecBundle} from '../../src/index-node-v4';
 import {parseNativeJson,type NativeJson} from '../../src/model/native-json';
 test('CONTRACT-030 table metadata inspection is exact, isolated and distinct from split source recovery',async()=>{
  const text='{"version":"1.0","table_name":"orders","primary_key":["id"],"context_column":"tenant","future":{"exact":9007199254740993,"negativeZero":-0,"decimal":1.2300},"columns":[{"name":"id","data_type":"INTEGER"}]}';

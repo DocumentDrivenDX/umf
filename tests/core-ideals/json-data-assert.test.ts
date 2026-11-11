@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importAvroSchema, getAvroNode, readDocument, writeDocument, copyJson} from '../../src';
+import {importAvroSchema, getAvroNode, readDocument, writeDocument, copyJson} from '../../src/index-node-v4';
 import {parseNativeJson} from '../../src/model/native-json';
 import {test,expect} from 'bun:test';
 import {assertJsonDataEqual,assertNativeRepresentationEqual} from '../../scripts/core-ideals/json-data-assert';

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/errors';
 import {copyJson} from '../model/json';
-import type {normalizeRowScope, RowScopeBindingContext} from './row-scope';
+import type {RowScopeBindingContext,RowScopeResult} from './row-scope-types';
 
-type Result = ReturnType<typeof normalizeRowScope>;
+type Result = RowScopeResult;
 export interface NativeRowScopeEngine {
   prepareRowScope(input: unknown, context: unknown): unknown;
   completeRowScope(input: unknown, context: unknown, prepared: unknown, admitPolicyDiagnostics: unknown): unknown;
@@ -26,10 +26,20 @@ export function createRowScopeRustDefault(
       throw new UmfError(native.code, String(native.message ?? ''), typeof native.path === 'string' ? native.path : typeof native.pointer === 'string' ? native.pointer : '');
     }
   };
-  return function normalize(input: Parameters<typeof normalizeRowScope>[0], context: RowScopeBindingContext): Result {
+  return function normalize(input: unknown, context: RowScopeBindingContext): Result {
     // Keep the executable callback on the host side; tagged wire only carries
     // the declarative binding/context values consumed by the native kernel.
-    const {admitPolicy, ...transportContext} = context;
+    const {
+      admitPolicy, groups, openReferenceRead, lifecycleDocument, tableId, deploymentConfiguration, ...bindings
+    } = context;
+    const transportContext = {
+      ...bindings,
+      ...(groups === undefined ? {} : {groups}),
+      ...(openReferenceRead === undefined ? {} : {openReferenceRead}),
+      ...(lifecycleDocument === undefined ? {} : {lifecycleDocument}),
+      ...(tableId === undefined ? {} : {tableId}),
+      ...(deploymentConfiguration === undefined ? {} : {deploymentConfiguration}),
+    };
     const prepared = nativeCall<unknown>(engine => engine.prepareRowScope(input, transportContext));
     if (!prepared || typeof prepared !== 'object' || Array.isArray(prepared)) throw new Error('Native row-scope preparation returned an invalid result');
     const candidate = prepared as Result;

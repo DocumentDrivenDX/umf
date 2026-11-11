@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../model/types';
 import type {PostgresqlBackend} from '../adapters/postgresql';
-import type {PostgresqlRelationshipClassification,PostgresqlRelationshipRequest} from './relationship-postgresql-factory';
+import type {PostgresqlRelationshipClassification,PostgresqlRelationshipRequest} from './relationship-postgresql-types';
 type Guard=(error:unknown)=>boolean;
 type ParserRows={queries:{id:string;sql:string}[]};
 type Parser={responses:{id:string;sql:string;ast:unknown}[]};

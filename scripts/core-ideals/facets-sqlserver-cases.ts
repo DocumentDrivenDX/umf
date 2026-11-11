@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import type {SqlServerFacetRequest} from '../../src/core-ideals/facets-sqlserver';
 import proof from '../../fixtures/validation/facets-sqlserver-discovery-native.json';
 /** Each fixture is an explicit single-table capture, retaining the entire table.

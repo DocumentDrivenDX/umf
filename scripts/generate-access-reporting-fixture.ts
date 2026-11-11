@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {generateAccessPackage} from '../src/compilation/index';
+import {generateAccessPackage} from '../src/node-access-compilation';
 import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {profile,request,mutateSource} from '../tests/compilation/access-fixtures';
 const output=process.argv[2];if(!output)throw new Error('temporary output directory required');

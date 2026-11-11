@@ -2,7 +2,7 @@
 import {UmfError} from '../../model/errors';
 import type {ActionPlanArtifact, ActionPlanAssessment, ActionPlanCapabilities, ActionPlanInspection, ActionPlanInspectionContext} from './plan-types';
 import type {ActionManifestInspection} from './manifest-types';
-import type {ActionManifestConstruction, ConstructedActionManifest} from './manifest-construction';
+import type {ActionManifestConstruction, ConstructedActionManifest} from './manifest-construction-types';
 
 type Guard = (value: unknown) => boolean;
 type Session = {run(op: string, fields?: Record<string, unknown>): unknown};

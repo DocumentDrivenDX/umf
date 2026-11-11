@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importDeltaTable,exportDeltaTable,renameDeltaMappedField,deltaMappedRenameSchema,coreSchema} from '../../src';
+import {importDeltaTable,exportDeltaTable,renameDeltaMappedField,deltaMappedRenameSchema,coreSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const validator=createValidator();validator.addSchema(coreSchema);const check=validator.compile(deltaMappedRenameSchema);
 const opts={fieldPointer:'/fields/1',name:'area',uninterpretedReferences:'preserve-and-report' as const};

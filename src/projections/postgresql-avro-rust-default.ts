@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document} from '../model/types';
-import type {PostgresqlAvroPolicy,PostgresqlAvroProjection} from './postgresql-avro';
+import type {PostgresqlAvroPolicy,PostgresqlAvroProjection} from './postgresql-avro-types';
 type Guard=(error:unknown)=>boolean;
 interface Engine{['postgresql-avro-projection']:{projectPostgresqlToAvro(fields:{source:Document;policy:PostgresqlAvroPolicy}):unknown}}
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importOpenapiDocument,exportOpenapiDocument,exportOpenapiBundle,lookupOpenapiResource,proposeOpenapiEdit,inspectOpenapi,getOpenapiNode,readDocument,writeDocument} from '../../src';
+import {importOpenapiDocument,exportOpenapiDocument,exportOpenapiBundle,lookupOpenapiResource,proposeOpenapiEdit,inspectOpenapi,getOpenapiNode,readDocument,writeDocument} from '../../src/index-node-v4';
 const baseUri='https://example.test/petstore/spec/swagger.json';
 async function fixture(format:'json'|'yaml'){
  const prefix='fixtures/openapi/upstream/examples/v2.0/'+format+'/petstore-separate/';const ext=format;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importIcebergTable,exportIcebergTable,inspectIcebergTableTransforms as inspect,writeDocument,readDocument} from '../../src';
+import {importIcebergTable,exportIcebergTable,inspectIcebergTableTransforms as inspect,writeDocument,readDocument} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/iceberg-table/transform-binding-schema.json';
 const minimal=await Bun.file('fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json').json(),valid=createValidator().compile(schema);

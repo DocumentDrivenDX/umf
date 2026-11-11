@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, test} from 'bun:test';
 import {createDomainPackLoaderInspectionOperation} from '../../src/domain-packs/loader-rust';
-import {inspectDomainPackLoader as inspectReference} from '../../src/domain-packs/loader';
+import {inspectDomainPackLoader as inspectReference} from '../../src/index-node-v4';
 
 const loader = {
   version: '1.0.0', id: 'umf.document-loader', implementation_version: '1.0.0',

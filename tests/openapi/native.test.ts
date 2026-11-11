@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importOpenapiDocument,exportOpenapiDocument,exportOpenapiBundle,getOpenapiNode,proposeOpenapiEdit,inspectOpenapi,readDocument,writeDocument,parseNativeYaml} from '../../src';
+import {importOpenapiDocument,exportOpenapiDocument,exportOpenapiBundle,getOpenapiNode,proposeOpenapiEdit,inspectOpenapi,readDocument,writeDocument,parseNativeYaml} from '../../src/index-node-v4';
 import {renderTree,parseNativeJson} from '../../src/model/native-json';
 const yaml=await Bun.file('fixtures/openapi/orders.yaml').text();
 test('US-011-AC1: OpenAPI JSON/YAML preserves native operations, schemas, extension content and source',async()=>{

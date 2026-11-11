@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 const identity={module:'m',element:'v'};
 const doc=(family:string):u.Document=>({umf:'0.10.0',id:'facets',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{opaque:'9007199254740993'}},modules:[{id:'m',namespace:'',elements:[{id:'v',kind:'field',scalarType:family,extensions:{future:{unknown:[null,'keep']}}}]}]});
 test('authored facet groups have copied provenance, exact declared bounds and verifiable JSON/YAML receipts',()=>{

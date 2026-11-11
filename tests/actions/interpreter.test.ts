@@ -3,9 +3,7 @@ import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
 import type {Document} from '../../src/model/types';
 import type {Action,ActionRule} from '../../src/extensions/actions/types';
-import {compileActionRule} from '../../src/extensions/actions/expression';
-import {evaluateActionRule,actionFieldValueKey,type ActionRuleState} from '../../src/extensions/actions/evaluation';
-import {compileActionSelector,selectActionIdentity,admitActionInputs} from '../../src/extensions/actions/selector';
+import {compileActionRule,evaluateActionRule,actionFieldValueKey,compileActionSelector,selectActionIdentity,admitActionInputs,type ActionRuleState} from '../../src/index-node-v4';
 function setup(){
  const document=structuredClone(fixture) as unknown as Document;
  document.modules[0]!.elements.push({id:'quantity',kind:'field',scalarType:'integer',cardinality:'one',nullability:'required',extensions:{},facets:{integerWidth:{bits:64,signed:true}}},{id:'flag',kind:'field',scalarType:'boolean',cardinality:'one',nullability:'absent-allowed',extensions:{}});

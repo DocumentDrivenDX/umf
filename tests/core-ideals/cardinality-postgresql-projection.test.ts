@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {declareCoreCardinality, type Document} from '../../src';
-import {projectCardinalityToPostgresql, recoverCardinalityFromPostgresql, type CardinalityPostgresqlRequest} from '../../src/core-ideals/cardinality-postgresql-projection';
+import {declareCoreCardinality, type Document} from '../../src/index-node-v4';
+import {type CardinalityPostgresqlRequest} from "../../src/core-ideals/cardinality-postgresql-projection";
+import {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql} from "../../src/index-node-v4";
 import {backend} from '../../native/postgresql/runtime';
 const base={id:'projection',namespace:'public',tableName:'values',columnName:'value',nativeType:'integer',storage:'scalar',requireExactValues:false,mode:'report'} as const;
 function author(shape:'one'|'array'|'map'|'unspecified'){

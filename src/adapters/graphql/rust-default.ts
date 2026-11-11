@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document,Diagnostic,Json,ExtensionPackage} from '../../model/types';
 import type {GraphqlPayload} from './index';
-import {Registry} from '../../registry/registry';
+import type {Registry} from '../../registry/registry';
 import manifest from '../../../spec/extensions/graphql/package.json';
 import {UmfError} from '../../model/errors';
 import type {GraphqlInputBindings,GraphqlInputProjection} from '../../projections/graphql-input-json-schema-types';
@@ -18,7 +18,7 @@ export interface GraphqlRustEngine {
 }
 
 /** Keep the six established GraphQL API signatures on the source-built Rust path. */
-export function createGraphqlRustDefault(engine:GraphqlRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean,createRegistry:()=>Registry=()=>new Registry()){
+export function createGraphqlRustDefault(engine:GraphqlRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean,createRegistry:()=>Registry){
   const invoke=<T>(operation:()=>T,callbackFailure?:{value:unknown;thrown:boolean}):T=>{
     try{return operation();}
     catch(error){if(callbackFailure?.thrown&&error===callbackFailure.value)throw error;if(isNativeUmfCoreError(error)){const native=error as Error&{code:string;path:string};if(native.code.startsWith('GRAPHQL_'))throw new UmfError(native.code,native.message,native.path);}throw error;}

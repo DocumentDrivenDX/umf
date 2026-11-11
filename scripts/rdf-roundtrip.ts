@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importRdfNQuads,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,readDocument,writeDocument} from '../src';
+import {importRdfNQuads,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,readDocument,writeDocument} from '../src/index-node-v4';
 const manifest=await Bun.file('native/rdf/sources/manifest.json').json(),results=[];
 for(const c of [...manifest.cases,{id:'authored-schema',positive:true,path:'native/rdf/examples/schema.nq',type:'authored'}]){const raw=await Bun.file(c.path).text();let d;try{d=importRdfNQuads(raw,{id:c.id});}catch(e){if(c.positive)throw Error(c.id+': '+String(e));results.push({...c,status:'rejected'});continue;}if(!c.positive)throw Error('Negative accepted: '+c.id);
  const quads=getRdfQuads(d);let candidate;const index=quads.findIndex(q=>q.object.kind==='literal');if(index>=0){const q=quads[index]!;candidate=proposeRdfQuadEdit(d,index,{...q,object:{kind:'literal',value:'UMF reviewed literal',datatype:'http://www.w3.org/2001/XMLSchema#string'}}).document;}

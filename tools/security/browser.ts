@@ -9,8 +9,10 @@
 // @covers US-079-AC6
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
-import {securityLogicCorpus,securityPolicyCorpus,securityEvaluationCorpus,securityRegistrationCorpus,securityGuardCorpus,securityWriteCorpus,securityDependencyCorpus,securityDisclosureCorpus} from '../../tests/security/browser-corpus';
-const files=['src/extensions/security/logic.ts','src/model/json.ts','src/model/types.ts',
+import * as nodeRuntime from '../../src/index-node-v4';
+import {buildBindingBrowserRuntime} from '../../scripts/binding/browser-runtime';
+import {configureSecurityRuntime,securityLogicCorpus,securityPolicyCorpus,securityEvaluationCorpus,securityRegistrationCorpus,securityGuardCorpus,securityWriteCorpus,securityDependencyCorpus,securityDisclosureCorpus} from '../../tests/security/browser-corpus';
+const files=['src/index-node-v4.ts','src/index-browser-v4.ts','scripts/binding/browser-runtime.ts','bindings/core/wasm/pkg/umf_core_wasm.js','bindings/core/wasm/pkg/umf_core_wasm_bg.wasm','src/extensions/security/logic.ts','src/model/json.ts','src/model/types.ts',
   'src/extensions/security/types.ts','src/extensions/security/policy.ts',
   'spec/extensions/security/schema.json','spec/extensions/security/ontology.schema.json',
   'spec/extensions/security/package.json','tests/security/fixture.ts',
@@ -25,8 +27,13 @@ for(const file of files)before[file]=createHash('sha256').update(new Uint8Array(
 const build=await Bun.build({entrypoints:['tests/security/browser-corpus.ts'],target:'browser',format:'esm'});
 if(!build.success)throw new Error('Security logic browser build failed');
 const js=await build.outputs[0]!.text();
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){
-  return new URL(req.url).pathname==='/logic.js' ? new Response(js,{headers:{'content-type':'text/javascript'}}) : new Response('<!doctype html><title>Security logic</title>');
+  const path=new URL(req.url).pathname;
+  if(path==='/logic.js')return new Response(js,{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});
+  if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});
+  return new Response('<!doctype html><title>Security logic</title>');
 }});
 let browser;
 try {
@@ -35,9 +42,10 @@ try {
   await page.route('**/*',route=>{if(new URL(route.request().url()).hostname!=='127.0.0.1'){external++;return route.abort();}return route.continue();});
   await page.goto(`http://127.0.0.1:${server.port}`);
   const observed=await page.evaluate(async()=>{
-    const url='/logic.js'; const m=await import(url);
+    const url='/logic.js'; const m=await import(url),runtime=await import('/umf.js');m.configureSecurityRuntime(runtime);
     return {corpus:m.securityLogicCorpus(),policy:m.securityPolicyCorpus(),evaluation:m.securityEvaluationCorpus(),registration:m.securityRegistrationCorpus(),guard:await m.securityGuardCorpus(),write:m.securityWriteCorpus(),dependencies:m.securityDependencyCorpus(),disclosure:m.securityDisclosureCorpus(),hostGlobals:['Bun','process','Buffer'].filter(key=>key in globalThis)};
   });
+  configureSecurityRuntime(nodeRuntime);
   const expected=securityLogicCorpus();
   const policyExpected=securityPolicyCorpus();
   const evaluationExpected=securityEvaluationCorpus();

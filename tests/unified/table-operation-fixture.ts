@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
-import type {TableOperation} from '../../src/extensions/tables';
+import type {TableOperation} from '../../src/extensions/tables/types';
 const ref=(element:string)=>({module:'demo',element});
 const parameter=(id:string)=>({kind:'parameter' as const,parameter:id});
 const common={version:'umf.table-operation/0.1' as const,consistency:'transaction' as const,replay:'caller-key-required' as const};

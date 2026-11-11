@@ -1,7 +1,7 @@
 import {expect,test} from 'bun:test';
 import {exportAvroSchema,projectFieldToAvro,recoverFieldFromAvro,projectRecordToAvro,recoverRecordFromAvro} from '../../src/index-node-v4';
 import {CURRENT_CORE_VERSION,type Document} from '../../src/model/types';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 
 test('Node V4 routes authored Avro Field projection, refusal and receipt recovery through Rust',()=>{
  const source:Document={umf:CURRENT_CORE_VERSION,id:'field',vocabularies:{},modules:[{id:'m',namespace:'sales',elements:[{id:'e',name:'value',description:'Unicode 雪',extensions:{}}]}]};

@@ -644,15 +644,14 @@ pub(super) fn compile(
     ]);
     let phases = array(vec![object(vec![
         ("id", s("phase-00001")),
-        ("kind", s("transaction")),
+        ("kind", s("default-change")),
         ("transaction", s("required")),
         ("steps", array(vec![s("step-00001")])),
     ])]);
     let execution = object(vec![
-        ("version", s("umf.table-migration-execution/0.5")),
+        ("version", s("umf.table-migration-execution/0.4")),
         ("progressRelation", s("umf_lifecycle_progress")),
         ("ownerOnly", Value::Bool(true)),
-        ("ingressProfile", s("umf.table-generation-ingress/0.1")),
     ]);
     let body = object(vec![
         ("version", s("umf.table-migration/0.5")),

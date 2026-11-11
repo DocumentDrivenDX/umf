@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {compileTableDeployment} from '../src/table-deployment';
+import {compileTableDeployment} from '../src/index-node-v4';
 import {writeDocument} from '../src/model/document';
 import {tableOperationSource} from '../tests/unified/table-operation-fixture';
 import fixture from '../tests/binding/fixtures/table-lifecycle-note.json';

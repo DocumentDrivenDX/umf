@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importTableSpecBundle,exportTableSpecBundle,editTableSpecColumn,readDocument,writeDocument} from '../src';
+import {importTableSpecBundle,exportTableSpecBundle,editTableSpecColumn,readDocument,writeDocument} from '../src/index-node-v4';
 const base='native/tablespec/sources/examples/synthea/umfs/providers';
 const files:Record<string,string>={};for await(const path of new Bun.Glob('**/*.yaml').scan(base))files[path]=await Bun.file(base+'/'+path).text();
 const rich={'table.yaml':'version: "1.0"\ntable_name: t\n','columns/value.yaml':'column: {name: value, data_type: INTEGER, nullable: false}\nderivation: {strategy: base_column}\nvalidations: []\nfuture: retained\n','expectations.yaml':'expectations: []\n','notes.txt':'retain exactly\n'};

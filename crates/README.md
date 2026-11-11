@@ -2,7 +2,7 @@
 
 UMF's Rust workspace is the implementation behind the native library, CLI, Python extension, Node/Bun addon and browser WASM host. It owns shared document and registry semantics, compiler operations, and the native adapter operations exposed by those hosts. The current UMF document/core version is 0.10.0.
 
-The workspace packages are not published to crates.io. Use the `umf-v0.10.9` release ref for the Rust library and CLI. For local development, use the workspace or a path dependency:
+The workspace packages are not published to crates.io. Use the `umf-v0.10.11` release ref for the Rust library and CLI. For local development, use the workspace or a path dependency:
 
 ```toml
 [dependencies]
@@ -60,12 +60,12 @@ assert_eq!(exported.to_utf8().expect("UTF-8 source"), source);
 
 ## Using the codegen engine from another crate
 
-`umf-codegen` is not published to crates.io. Depend on it by release tag rather than a branch. The fixed-resource accessor described below is not in any released tag yet: `umf-v0.10.9` and `umf-v0.10.10` do not contain it, so use the first release tag that includes it (`<tag>` below), or a pinned `rev` until then:
+`umf-codegen` is not published to crates.io. Depend on it by release tag rather than a branch. Release `umf-v0.10.11` includes the fixed-resource accessor:
 
 ```toml
 [dependencies]
-umf-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
-umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+umf-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
+umf-codegen = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
 ```
 
 Depending on `umf-codegen` enables `umf-core`'s default features, including `embedded-adapters` (the JSON-LD/RDF stack), because `umf-codegen` depends on `umf-core` with default features and Cargo unifies features. A downstream `default-features = false` on `umf-core` therefore has no effect once `umf-codegen` is in the graph. That is why the vendored-crate patch table below is required.
@@ -90,12 +90,12 @@ UMF builds against patched copies of `hashbrown` 0.12 and 0.13, `json-ld-core`, 
 
 ```toml
 [patch.crates-io]
-hashbrown-012 = { package = "hashbrown", version = "=0.12.3", git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
-hashbrown-013 = { package = "hashbrown", version = "=0.13.2", git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
-json-ld-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
-json-ld-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
-json-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
-xsd-types = { git = "https://github.com/DocumentDrivenDX/umf", tag = "<tag>" }
+hashbrown-012 = { package = "hashbrown", version = "=0.12.3", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
+hashbrown-013 = { package = "hashbrown", version = "=0.13.2", git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
+json-ld-core = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
+json-ld-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
+json-syntax = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
+xsd-types = { git = "https://github.com/DocumentDrivenDX/umf", tag = "umf-v0.10.11" }
 ```
 
 The two `hashbrown` entries need their exact `version` pins: the UMF repository holds both 0.12.3 and 0.13.2, and Cargo rejects a git patch that matches more than one version. (Checked by resolving a scratch crate with these dependencies and this patch table against a UMF commit.)

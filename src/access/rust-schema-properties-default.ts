@@ -1,9 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {CoreDefaultInput,CoreSchemaPropertyIdentity,CoreSchemaPropertyPatch,inspectCoreSchemaProperties,resolveCoreDefault} from '../model/schema-properties';
+import type {CoreDefaultInput,CoreSchemaPropertyIdentity,CoreSchemaPropertyPatch} from '../model/schema-properties';
 import type {CoreLiteral} from '../model/schema-literals';
-import type {Document,Validation} from '../model/types';
-type CoreSchemaPropertyInspection=ReturnType<typeof inspectCoreSchemaProperties>;
-type CoreDefaultResolution=ReturnType<typeof resolveCoreDefault>;
+import type {Diagnostic,Document,Json,Validation} from '../model/types';
+type CoreSchemaPropertyInspection={
+ operation:'inspect-core-schema-properties';version:'2.0.0';source:Document;
+ identity:CoreSchemaPropertyIdentity;path:string;properties:Record<string,Json>;
+ diagnostics:Diagnostic[];provenance:'unverified';
+};
+type CoreDefaultResolution={
+ operation:'resolve-core-default';version:'2.0.0';source:Document;identity:Json;
+ input:CoreDefaultInput;result:CoreDefaultInput;applied:boolean;
+};
 
 /** Rust host-json operations selected by the default V4 root. */
 export interface CoreSchemaPropertiesRustEngine {

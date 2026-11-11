@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {strict as assert} from 'node:assert';
 import fixture from '../../fixtures/actions/approve.json';
-import {actionFieldValueKey} from '../../src/index';
-import type {Document,Action} from '../../src/index';
+import {actionFieldValueKey,type Document,type Action} from '../../src/index-node-v4';
 import {ReferenceActionIssuer} from '../actions-reference/authentication';
 import {ReferenceActionPolicy} from '../actions-reference/policy';
 import {ReferenceActionExecutor} from '../actions-reference/executor';

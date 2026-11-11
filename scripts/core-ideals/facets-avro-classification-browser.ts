@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {avroFacetClassificationCases} from './facets-avro-cases';
 const rows=avroFacetClassificationCases().map(row=>({...row,expected:u.classifyAvroFacets(row.document,row.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(r){return new URL(r.url).pathname==='/umf.js'?new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Avro facet classification</title>',{headers:{'content-type':'text/html'}});}});

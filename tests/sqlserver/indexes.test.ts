@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerIndexMetadata,proposeSqlServerCatalogEdit,inspectSqlServer,readDocument,writeDocument,projectSqlServerToAvro} from '../../src';
+import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerIndexMetadata,proposeSqlServerCatalogEdit,inspectSqlServer,readDocument,writeDocument} from '../../src/index-node-v4';
+import {projectSqlServerToAvro} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/sqlserver/index-metadata.schema.json';
 const text=await Bun.file('fixtures/sqlserver/indexes-catalog.json').text(),source=importSqlServerCatalog(text,{id:'indexes'}),check=createValidator().compile(schema);

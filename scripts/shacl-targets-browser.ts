@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const matrix=await Bun.file('fixtures/shacl/target-results.json').json();for(const c of matrix.cases){c.raw=await Bun.file(c.shapes).text();c.dataRaw=await Bun.file(c.data).text();}
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/shacl-targets-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await Bun.build({entrypoints:['src/index-browser-v4.ts'],outdir:'.cache/shacl-targets-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/shacl-targets-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>SHACL targets</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',route=>{if(!route.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return route.abort();}return route.continue();});await page.goto('http://127.0.0.1:'+server.port);
 const result=await page.evaluate(async matrix=>{const path='/umf.js',u=await import(path);let sources=0,selections=0,edits=0;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../../src/model/types';
-import type {CoreDatasetInput} from '../../src/model/dataset-values';
+import type {CoreDatasetInput} from '../../src/model/dataset-values-types';
 /** Explicit test consumer of retained candidate lexical values; no native IDs. */
 export function commerceDataset(source:Document,graph:any):CoreDatasetInput{
  const elements=new Map(source.modules.flatMap(m=>m.elements.map(e=>[JSON.stringify([m.id,e.id]),e] as const)));

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../src/model/types';
 // Synthetic current-core fixture for active operation/projection behavior.
-import {declareCoreCardinality, copyJson, type Document, type CoreCardinalityDeclaration, type CardinalityTableSpecRequest} from '../../src';
+import {declareCoreCardinality, copyJson, type Document, type CoreCardinalityDeclaration, type CardinalityTableSpecRequest} from '../../src/index-node-v4';
 export function cardinalityTableSpecProjectionCases(){
  const rows:{name:string;author:CoreCardinalityDeclaration;request:CardinalityTableSpecRequest;expectedStatus:'blocked'|'projected'}[]=[];
  for(const cardinality of ['one','array','map','unspecified'] as const)for(const item of ['missing','float','nested','record','unknown'] as const)for(const profile of ['generated-json','generated-spark','unresolved'] as const)for(const mode of ['strict','report'] as const){

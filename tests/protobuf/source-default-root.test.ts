@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, test} from 'bun:test';
 import {importProtobufSources, exportProtobufSources, readDescriptorSet, writeDescriptorSet, proposeProtobufDescriptorEdit} from '../../src/index-node-v4';
-import type {DescriptorNode} from '../../src/adapters/protobuf/descriptor';
+import type {DescriptorNode} from '../../src/adapters/protobuf/descriptor-types';
 
 async function runNative(input: object) {
   const process = Bun.spawn(['go', 'run', '.'], {

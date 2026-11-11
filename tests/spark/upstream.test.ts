@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSparkSchema,exportSparkSchema,readDocument,writeDocument} from '../../src';
+import {importSparkSchema,exportSparkSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 import {parseNativeJson,renderTree} from '../../src/model/native-json';
 test('US-017-AC4: pinned upstream schema examples preserve native JSON and rejection boundaries',async()=>{
  const cases=parseNativeJson(await Bun.file('fixtures/spark/upstream-cases.json').text());expect(cases.kind).toBe('array');if(cases.kind!=='array')throw Error('Expected cases');expect(cases.items.length).toBe(42);

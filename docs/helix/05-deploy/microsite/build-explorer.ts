@@ -1,8 +1,8 @@
 import {resolve,relative,join,dirname,isAbsolute} from 'node:path';
 import {readdir,realpath,rm} from 'node:fs/promises';
 import {resolveDomainFamily} from '../../../../scripts/domain-pack-family';
-import {requireDomainPackProfile} from '../../../../src/domain-packs/profile';
-import {parseEntry,type Entry} from './explorer-model';
+import {requireDomainPackProfile} from '../../../../src/index-node-v4';
+import {parseEntry,type Entry} from './explorer-node';
 const repo=resolve(import.meta.dir,'../../../..'),dist=join(import.meta.dir,'dist');
 const supplied=process.argv.slice(2),roots=supplied.length?supplied.map(p=>resolve(p)):[...['domain-packs','packs','spec/domain-packs','examples/domain-packs'].map(p=>join(repo,p)),join(import.meta.dir,'catalog-sources')];
 async function files(root:string):Promise<string[]>{try{const items=await readdir(root,{withFileTypes:true});return (await Promise.all(items.filter(i=>!i.name.startsWith('.')&&i.name!=='node_modules').map(i=>i.isDirectory()?files(join(root,i.name)):Promise.resolve(/\.(json|ya?ml)$/i.test(i.name)?[join(root,i.name)]:[])))).flat().sort();}catch(error:any){if(error.code==='ENOENT'&&!supplied.length)return [];throw error;}}

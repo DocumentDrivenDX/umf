@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {compileTableDeployment} from '../../src/table-deployment';
-import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/table-migration';
+import {compileTableDeployment} from '../../src/index-node-v4';
+import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 import tablesSchema from '../../spec/extensions/tables/schema.json';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';

@@ -2,7 +2,7 @@
 /** Host-only pinned native discovery. No ideal classification or binding admission. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importPostgresqlCatalogCapture, exportPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
+import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';

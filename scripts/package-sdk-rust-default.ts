@@ -13,6 +13,7 @@ import {rustCompileResources} from './metamodel/source-closure';
 import {assertSameSourceInventory} from './rust-migration/r8/source-inventory.mjs';
 import {copySourceSnapshotFile} from './rust-migration/r8/copy-source-snapshot';
 import {normalizeSdkDeclarations} from './sdk-declarations';
+import {writeLoaderContractRuntimeAssets} from './loader-contract-assets';
 
 const workspaceRoot=process.cwd();
 let root=workspaceRoot;
@@ -320,8 +321,7 @@ try{
  await cp(join(root,'dist/postgresql'),join(dist,'postgresql'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(dist,'umf_core_wasm.js'));
  await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(dist,'umf_core_wasm.d.ts'));
- const loaderBuild=await Bun.build({entrypoints:['src/domain-packs/loader-contract.ts'],outdir:dist,naming:'loader-contract.js',target:'browser',format:'esm'});
- if(!loaderBuild.success)throw new Error(loaderBuild.logs.join('\n'));
+ await writeLoaderContractRuntimeAssets(dist);
 
  const host=process.platform==='darwin'?'darwin':process.platform;
  const arch=process.arch;

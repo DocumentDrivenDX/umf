@@ -2,8 +2,8 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {classifySqlServerKeys} from '../../src/core-ideals/key-sqlserver';
-import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
+import {classifySqlServerKeys} from "../../src/index-node-v4";
+import {importSqlServerCatalog} from "../../src/index-node-v4";
 const proof=await Bun.file('fixtures/validation/key-sqlserver-discovery-native.json').json(),nativeSource=proof.sourceText;
 const request={nativeSource,mode:'report',profile:'captured-stored-values'} as const;
 const expected=classifySqlServerKeys(importSqlServerCatalog(nativeSource,{id:'browser-keys'}),request);

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {relationshipExtraCases} from '../../scripts/core-ideals/relationship-extras-cases';
-import {projectRelationshipToExtra, classifyRelationshipExtra, importRelationshipExtraArchive, verifyRelationshipExtra, recoverRelationshipExtraIdeal, recoverRelationshipExtraNative, readJsonValue, writeJsonValue, declareCoreRelationship, type Document, type RelationshipExtraArchive, type RelationshipExtraProjection, type RelationshipExtraSystem} from '../../src';
+import {projectRelationshipToExtra, classifyRelationshipExtra, importRelationshipExtraArchive, verifyRelationshipExtra, recoverRelationshipExtraIdeal, recoverRelationshipExtraNative, readJsonValue, writeJsonValue, declareCoreRelationship, type Document, type RelationshipExtraArchive, type RelationshipExtraProjection, type RelationshipExtraSystem} from '../../src/index-node-v4';
 const cases=relationshipExtraCases();
 // @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 // @covers US-045-AC3 @covers US-045-AC5

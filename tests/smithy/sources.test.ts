@@ -8,7 +8,7 @@ test('US-014-AC7: IDL/JSON source bundles preserve exact text and candidate edit
  expect(inspectSmithy(doc).complete).toBe(false);expect(inspectSmithy(doc).diagnostics.some(x=>x.code==='SMITHY_SOURCE_UNVALIDATED')).toBe(true);
  const edited=proposeSmithySourceEdit(doc,'common.smithy',files['common.smithy'].replace('string OrderId','integer OrderId'));
  expect(exportSmithySources(edited.document).files['common.smithy']).toContain('integer OrderId');expect(exportSmithySources(doc).files).toEqual(files);
- expect(()=>exportSmithyJson(doc)).toThrow('JSON AST profile');
+ expect(()=>exportSmithyJson(doc)).toThrow('Operation does not match the Smithy document profile');
  // The source archive must not certify syntax merely because text is serializable.
  expect(inspectSmithy(proposeSmithySourceEdit(doc,'main.smithy','invalid ???').document).complete).toBe(false);
 });
@@ -16,7 +16,7 @@ test('US-014-AC8: source path constraints and unknown representation remain expl
  for(const name of ['../x.smithy','/x.smithy','x/../y.json','x.ts'])expect(()=>importSmithySources({files:{[name]:'text'}},{id:'bad'})).toThrow();
  expect(()=>importSmithySources({files:{}},{id:'empty'})).toThrow();
  const doc=importSmithySources({files:{'main.smithy':'text'}},{id:'unknown'});(doc.modules[0]!.elements[0]!.extensions!['umf.smithy'] as any).future={retain:true};
- expect(readDocument(writeDocument(doc,'yaml'),'yaml')).toEqual(doc);expect(()=>exportSmithySources(doc)).toThrow('unknown content');
+ expect(readDocument(writeDocument(doc,'yaml'),'yaml')).toEqual(doc);expect(()=>exportSmithySources(doc)).toThrow('Unknown payload fields cannot be assembled losslessly');
 });
 test('US-014-AC9: all pinned valid-loader IDL fixtures survive exact source round trips',async()=>{
  const manifest=await Bun.file('fixtures/smithy/idl-upstream/manifest.json').json();const entries=manifest.files.filter((x:any)=>x.file.endsWith('.smithy'));

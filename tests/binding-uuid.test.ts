@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../src/index';
+import * as u from '../src/index-node-v4';
 import {uuidDocument,uuidBinding,FIELD,UUID} from './helpers/uuid-fixtures';
 test('explicit UUID carriers preserve bits; paired signed words retain exact native transport tokens',()=>{
  for(const kind of ['words64','uuid-text','native-uuid','bytes16'])for(const signed of [true,false]){

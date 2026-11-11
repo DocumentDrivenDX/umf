@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from "../../src/index-node-v4";
 
 
-import {classifyPostgresqlField} from '../../src/core-ideals/postgresql-field';
+import {classifyPostgresqlField} from "../../src/index-node-v4";
 import type {PostgresqlNullabilityRequest} from '../../src/core-ideals/nullability-postgresql';
 import type {Nullability} from '../../src/model/types';
 export function postgresqlAvailabilitySource(nativeSource:string,relation:string,column='value'){

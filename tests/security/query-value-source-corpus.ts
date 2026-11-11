@@ -6,9 +6,12 @@ import modesSource from './protection/query-value-modes-source.json';
 import {evaluationFixture} from './evaluation-fixture';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {evaluateCandidateCatalogScanBatch,evaluateCandidateCatalogAction} from '../../src/extensions/security/catalog-runtime-candidate';
-import {inspectProtectionQueryProperties} from '../../src/extensions/security/protection/queries';
+import type * as Umf from '../../src/index-browser-v4';
+type QueryValueRustApi=Pick<typeof Umf,'inspectProtectionQueryProperties'|'evaluateSecurityAccess'>;
+let rustApi:QueryValueRustApi|undefined;
+export function configureQueryValueRustApi(api:QueryValueRustApi){rustApi=api;}
+function api():QueryValueRustApi{if(!rustApi)throw Error('Security V4 query runtime was not injected');return rustApi;}
 import {inspectCandidateStoredQueryProperties} from '../../src/extensions/security/stored-query-candidate';
-import {evaluateSecurityAccess} from '../../src/extensions/security/evaluate';
 const ref=(elementId:string)=>({documentId:'domain',moduleId:'m',elementId});
 export function runQueryValueSourceCorpus(){
  const rows:{id:string;expected:unknown;observed:unknown;passed:boolean}[]=[];
@@ -41,8 +44,8 @@ export function runQueryValueSourceCorpus(){
   const mode=operator==='order'?'original-authorized':'disclosed';check('new-source:'+operator+':matching-modes',[mode,mode],[me.fields.find((f:any)=>f.ref.elementId==='token').queryUse[operator],mt.queryUse[operator]]);
   const p=inspectCandidateStoredQueryProperties(mp,modes.owner,{type:ref('Resource'),field:ref('token'),operator,required:[operator==='order'?'order':'equality']});check('new-source:'+operator+':conditional-capability',operator==='order'?'requires-original-action':'compatible-properties',p.report?.status);
  }
- check('new-source:salary-catalog-original-query-route','requires-original-action',inspectProtectionQueryProperties(modes.policy,modes.catalog,modes.closure,{ruleIndex:0,disclosureIndex:0,operator:'predicate',required:['equality']}).status);
- check('new-source:salary-order-prohibited','prohibited',inspectProtectionQueryProperties(modes.policy,modes.catalog,modes.closure,{ruleIndex:0,disclosureIndex:0,operator:'order',required:['order']}).status);
+  check('new-source:salary-catalog-original-query-route','requires-original-action',api().inspectProtectionQueryProperties(modes.policy,modes.catalog,modes.closure,{ruleIndex:0,disclosureIndex:0,operator:'predicate',required:['equality']}).status);
+ check('new-source:salary-order-prohibited','prohibited',api().inspectProtectionQueryProperties(modes.policy,modes.catalog,modes.closure,{ruleIndex:0,disclosureIndex:0,operator:'order',required:['order']}).status);
  for(const intent of modes.intendedOriginalActions){
   check('new-source:'+intent.operator+':exact-purpose',true,modes.ontology.actionPurposes.some((a:any)=>a.action===intent.action&&JSON.stringify(a.purposes)==='["original-authorized"]')&&!['read','reverse','vault-write'].includes(intent.action));
   check('new-source:'+intent.operator+':membership-not-weakened',true,JSON.stringify(modes.policy.rules.find((r:any)=>r.id===intent.action+'-membership').condition)===JSON.stringify(modes.policy.rules.find((r:any)=>r.id==='membership').condition));
@@ -58,15 +61,15 @@ export function runQueryValueSourceCorpus(){
  const f=evaluationFixture();f.policy.revision='query-value-legacy-policy-r1';f.resolution.ontology.revision='query-value-legacy-ontology-r1';f.policy.ontology.revision=f.resolution.ontology.revision;f.cut.policyRevision=f.policy.revision;f.cut.ontologyRevision=f.resolution.ontology.revision;
  const salary=f.resolution.ontology.entities.find(e=>e.type.elementId==='Resource')!.fields.find(f=>f.ref.elementId==='salary')!;salary.queryUse={predicate:'original-authorized'};f.resolution.ontology.actions.push('query-original');
  const request={action:'read',output:[ref('salary')],queryUses:[{field:ref('salary'),operator:'predicate' as const,originalAction:'query-original'}]};
- check('legacy:no-separate-grant','indeterminate',evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
+ check('legacy:no-separate-grant','indeterminate',api().evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
  f.policy.rules.push({id:'query-original',effect:'permit',actions:['query-original'],target:[ref('Resource')],condition:{op:'literal',value:true}});
- const separate=evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource);check('legacy:separate-query-still-withholds-output',{decision:'permit',output:[{field:ref('salary'),disposition:'withheld'}]},separate);
+ const separate=api().evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource);check('legacy:separate-query-still-withholds-output',{decision:'permit',output:[{field:ref('salary'),disposition:'withheld'}]},separate);
  f.policy.rules[0]!.disclosure![0]!.disposition={kind:'transformed',transform:'constant',version:'0.1.0',field:ref('staffId'),value:{string:'redacted'}};
- check('legacy:per-use-original-and-dto-domains',{decision:'permit',output:[{field:ref('salary'),disposition:'transformed',outputType:ref('staffId'),value:{string:'redacted'}}]},evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource));
+ check('legacy:per-use-original-and-dto-domains',{decision:'permit',output:[{field:ref('salary'),disposition:'transformed',outputType:ref('staffId'),value:{string:'redacted'}}]},api().evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource));
  check('legacy:original-field-not-retyped','integer',f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='salary')!.scalarType);
  salary.queryUse={predicate:'disclosed'};f.resource.fields=f.resource.fields.filter(v=>v.field.elementId!=='salary');f.resource.absent=[ref('salary')];f.resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='salary')!.nullability='absent-allowed';
- check('legacy:constant-dto-needs-no-invented-live-input',{decision:'permit',output:[{field:ref('salary'),disposition:'transformed',outputType:ref('staffId'),value:{string:'redacted'}}]},evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[ref('salary')],queryUses:[{field:ref('salary'),operator:'predicate'}]},f.resource));
- salary.queryUse={predicate:'original-authorized'};check('legacy:known-absence-permission-is-not-scalar-lowering','permit',evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
+ check('legacy:constant-dto-needs-no-invented-live-input',{decision:'permit',output:[{field:ref('salary'),disposition:'transformed',outputType:ref('staffId'),value:{string:'redacted'}}]},api().evaluateSecurityAccess(f.policy,f.resolution,f.cut,{action:'read',output:[ref('salary')],queryUses:[{field:ref('salary'),operator:'predicate'}]},f.resource));
+ salary.queryUse={predicate:'original-authorized'};check('legacy:known-absence-permission-is-not-scalar-lowering','permit',api().evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision);
  check('named-sources-unchanged',true,original===JSON.stringify({source,scenarios}));
  return rows;
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {Builder} from 'flatbuffers';
-import {decodeArrowFlatbuffer,exportArrowFlatbufferModel,exportArrowIpcCapture,type ArrowFlatbufferRoot} from '../../src';
+import {decodeArrowFlatbuffer,exportArrowFlatbufferModel,exportArrowIpcCapture,type ArrowFlatbufferRoot} from '../../src/index-node-v4';
 const base='fixtures/arrow/metadata/';const manifest=await Bun.file(base+'manifest.json').json();
 test('US-016-AC7: all real metadata roots decode with exact source retention',async()=>{
  expect(manifest.cases.length).toBe(70);expect([...new Set(manifest.cases.map((c:any)=>c.rootType))].sort()).toEqual(['Footer','Message','Schema','SparseTensor','Tensor']);

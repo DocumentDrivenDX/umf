@@ -176,6 +176,54 @@ fn term_key_metered(v: &Value, ctx: &mut Context<'_>) -> Result<Vec<u16>, Engine
     ctx.charge_work(units, Utf16::default())?;
     Ok(term_key(v))
 }
+
+fn enqueue_shacl_shape_node(
+    node: &Value,
+    nodes: &mut BTreeSet<Vec<u16>>,
+    queue: &mut Vec<Value>,
+    ctx: &mut Context<'_>,
+) -> Result<Option<Vec<u16>>, EngineError> {
+    if !matches!(text(member(node, "kind")), Some(kind) if kind == &u("iri") || kind == &u("blank"))
+    {
+        return Ok(None);
+    }
+    let key = term_key_metered(node, ctx)?;
+    if nodes.insert(key.clone()) {
+        reserve_items(queue, 1, ctx)?;
+        queue.push(copy_json(node, ctx)?);
+    }
+    Ok(Some(key))
+}
+
+fn shacl_visit_shape_dependencies(
+    node: &[u16],
+    dependencies: &BTreeMap<Vec<u16>, Vec<Vec<u16>>>,
+    active: &mut BTreeSet<Vec<u16>>,
+    done: &mut BTreeSet<Vec<u16>>,
+    depth: usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    if depth > 128 || active.contains(node) {
+        return Err(EngineError::new(
+            "SHACL_ENGINE_RECURSION",
+            Utf16::default(),
+            "Cyclic or excessively deep shape dependencies require separate semantics",
+        ));
+    }
+    if done.contains(node) {
+        return Ok(());
+    }
+    ctx.charge_work(1, Utf16::default())?;
+    active.insert(node.to_vec());
+    if let Some(children) = dependencies.get(node) {
+        for child in children {
+            shacl_visit_shape_dependencies(child, dependencies, active, done, depth + 1, ctx)?;
+        }
+    }
+    active.remove(node);
+    done.insert(node.to_vec());
+    Ok(())
+}
 fn reserve_items<T>(
     items: &mut Vec<T>,
     additional: usize,
@@ -2120,19 +2168,46 @@ fn shacl_literal_length(
     Ok(Some(lexical.len()))
 }
 
+fn shacl_xsd_name(datatype: &Utf16) -> Option<String> {
+    datatype
+        .to_utf8()
+        .ok()?
+        .strip_prefix("http://www.w3.org/2001/XMLSchema#")
+        .map(str::to_owned)
+}
+
+fn shacl_exact_bounds(datatype: &str) -> Option<(Option<i128>, Option<i128>)> {
+    Some(match datatype {
+        "decimal" | "integer" => (None, None),
+        "long" => (Some(i64::MIN.into()), Some(i64::MAX.into())),
+        "int" => (Some(i32::MIN.into()), Some(i32::MAX.into())),
+        "short" => (Some(i16::MIN.into()), Some(i16::MAX.into())),
+        "byte" => (Some(i8::MIN.into()), Some(i8::MAX.into())),
+        "unsignedLong" => (Some(0), Some(u64::MAX.into())),
+        "unsignedInt" => (Some(0), Some(u32::MAX.into())),
+        "unsignedShort" => (Some(0), Some(u16::MAX.into())),
+        "unsignedByte" => (Some(0), Some(u8::MAX.into())),
+        "nonNegativeInteger" => (Some(0), None),
+        "positiveInteger" => (Some(1), None),
+        "nonPositiveInteger" => (None, Some(0)),
+        "negativeInteger" => (None, Some(-1)),
+        _ => return None,
+    })
+}
+
 fn shacl_decimal(
     value: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Option<(i8, String, usize)>, EngineError> {
-    const XSD: &str = "http://www.w3.org/2001/XMLSchema#";
     if text(member(value, "kind")) != Some(&u("literal")) {
         return Ok(None);
     }
-    let datatype = text(member(value, "datatype"));
-    if !matches!(datatype, Some(dt) if dt == &u(&format!("{XSD}integer")) || dt == &u(&format!("{XSD}decimal")))
-    {
+    let Some(datatype) = text(member(value, "datatype")).and_then(shacl_xsd_name) else {
         return Ok(None);
-    }
+    };
+    let Some((lower, upper)) = shacl_exact_bounds(&datatype) else {
+        return Ok(None);
+    };
     let Some(lexical) = text(member(value, "value")) else {
         return Ok(None);
     };
@@ -2157,9 +2232,19 @@ fn shacl_decimal(
         || whole.is_empty() && fraction.is_empty()
         || !whole.bytes().all(|byte| byte.is_ascii_digit())
         || !fraction.bytes().all(|byte| byte.is_ascii_digit())
-        || datatype == Some(&u(&format!("{XSD}integer"))) && !fraction.is_empty()
+        || datatype != "decimal" && body.contains('.')
     {
         return Ok(None);
+    }
+    if lower.is_some() || upper.is_some() {
+        let within_bounds = match lexical.parse::<i128>() {
+            Ok(value) => lower.is_none_or(|bound| value >= bound)
+                && upper.is_none_or(|bound| value <= bound),
+            Err(_) => if sign < 0 { lower.is_none() } else { upper.is_none() },
+        };
+        if !within_bounds {
+            return Ok(None);
+        }
     }
     ctx.charge_text(whole.len().saturating_add(fraction.len()), Utf16::default())?;
     let mut digits = String::with_capacity(whole.len() + fraction.len());
@@ -2179,36 +2264,122 @@ fn shacl_decimal(
     Ok(Some((sign, digits, scale)))
 }
 
+fn shacl_decimal_scientific(value: &(i8, String, usize)) -> String {
+    let (sign, digits, scale) = value;
+    if *sign == 0 {
+        return String::from("0");
+    }
+    let exponent = digits.len() as i128 - *scale as i128 - 1;
+    let mantissa = if digits.len() == 1 {
+        digits.to_owned()
+    } else {
+        format!("{}.{}", &digits[..1], &digits[1..])
+    };
+    format!("{}{}e{exponent}", if *sign < 0 { "-" } else { "" }, mantissa)
+}
+
+fn shacl_binary_float(
+    source: &str,
+    double: bool,
+    ctx: &mut Context<'_>,
+) -> Result<Option<f64>, EngineError> {
+    let source_len = source.encode_utf16().count();
+    ctx.charge_text(source_len, Utf16::default())?;
+    if source_len > 10_000 {
+        return Err(EngineError::new(
+            "SHACL_ENGINE_UNSUPPORTED",
+            Utf16::default(),
+            "Float lexical form exceeds the 10,000 character conversion limit",
+        ));
+    }
+    let lexical = source.trim_matches([' ', '\t', '\r', '\n']);
+    match lexical {
+        "INF" | "+INF" => return Ok(Some(f64::INFINITY)),
+        "-INF" => return Ok(Some(f64::NEG_INFINITY)),
+        "NaN" => return Ok(Some(f64::NAN)),
+        _ => (),
+    }
+    let bytes = lexical.as_bytes();
+    let mut index = usize::from(matches!(bytes.first(), Some(b'+' | b'-')));
+    let mut significand_digits = 0usize;
+    while bytes.get(index).is_some_and(u8::is_ascii_digit) {
+        significand_digits += 1;
+        index += 1;
+    }
+    if bytes.get(index) == Some(&b'.') {
+        index += 1;
+        while bytes.get(index).is_some_and(u8::is_ascii_digit) {
+            significand_digits += 1;
+            index += 1;
+        }
+    }
+    if significand_digits == 0 {
+        return Ok(None);
+    }
+    if matches!(bytes.get(index), Some(b'e' | b'E')) {
+        index += 1;
+        if matches!(bytes.get(index), Some(b'+' | b'-')) {
+            index += 1;
+        }
+        let exponent_start = index;
+        while bytes.get(index).is_some_and(u8::is_ascii_digit) {
+            index += 1;
+        }
+        if exponent_start == index {
+            return Ok(None);
+        }
+    }
+    if index != bytes.len() {
+        return Ok(None);
+    }
+    if double {
+        Ok(lexical.parse::<f64>().ok())
+    } else {
+        Ok(lexical.parse::<f32>().ok().map(f64::from))
+    }
+}
+
+fn shacl_numeric_lexical(
+    value: &Value,
+    exact: Option<&(i8, String, usize)>,
+) -> Option<String> {
+    if let Some(exact) = exact {
+        return Some(shacl_decimal_scientific(exact));
+    }
+    text(member(value, "value"))
+        .and_then(|lexical| lexical.to_utf8().ok())
+}
+
 fn shacl_numeric_order(
     left: &Value,
     right: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Option<std::cmp::Ordering>, EngineError> {
-    if let (
-        Some((left_sign, left_digits, left_scale)),
-        Some((right_sign, right_digits, right_scale)),
-    ) = (shacl_decimal(left, ctx)?, shacl_decimal(right, ctx)?)
-    {
+    let left_decimal = shacl_decimal(left, ctx)?;
+    let right_decimal = shacl_decimal(right, ctx)?;
+    if let (Some(left_decimal), Some(right_decimal)) = (&left_decimal, &right_decimal) {
         use std::cmp::Ordering;
+        let (left_sign, left_digits, left_scale) = left_decimal;
+        let (right_sign, right_digits, right_scale) = right_decimal;
         if left_sign != right_sign {
-            return Ok(Some(left_sign.cmp(&right_sign)));
+            return Ok(Some(left_sign.cmp(right_sign)));
         }
-        if left_sign == 0 {
+        if *left_sign == 0 {
             return Ok(Some(Ordering::Equal));
         }
-        let scale = left_scale.max(right_scale);
+        let scale = (*left_scale).max(*right_scale);
         ctx.charge_text(scale.saturating_mul(2), Utf16::default())?;
-        let mut left_digits = left_digits;
-        let mut right_digits = right_digits;
-        left_digits.extend(std::iter::repeat_n('0', scale - left_scale));
-        right_digits.extend(std::iter::repeat_n('0', scale - right_scale));
+        let mut left_digits = left_digits.to_owned();
+        let mut right_digits = right_digits.to_owned();
+        left_digits.extend(std::iter::repeat_n('0', scale - *left_scale));
+        right_digits.extend(std::iter::repeat_n('0', scale - *right_scale));
         let left_digits = left_digits.trim_start_matches('0');
         let right_digits = right_digits.trim_start_matches('0');
         let magnitude = left_digits
             .len()
             .cmp(&right_digits.len())
             .then_with(|| left_digits.cmp(right_digits));
-        return Ok(Some(if left_sign < 0 {
+        return Ok(Some(if *left_sign < 0 {
             magnitude.reverse()
         } else {
             magnitude
@@ -2234,29 +2405,33 @@ fn shacl_numeric_order(
             datatype == &u(&format!("{XSD}float")) || datatype == &u(&format!("{XSD}double"))
         })
     };
-    if float_type(ldt) && float_type(rdt) {
-        let (Some(lvalue), Some(rvalue)) = (lvalue, rvalue) else {
-            return Ok(None);
-        };
-        ctx.charge_text(lvalue.len().saturating_add(rvalue.len()), Utf16::default())?;
-        let (Ok(lvalue), Ok(rvalue)) = (lvalue.to_utf8(), rvalue.to_utf8()) else {
-            return Ok(None);
-        };
-        let double =
-            ldt == Some(&u(&format!("{XSD}double"))) || rdt == Some(&u(&format!("{XSD}double")));
-        let ordering = if double {
-            lvalue
-                .parse::<f64>()
-                .ok()
-                .zip(rvalue.parse::<f64>().ok())
-                .and_then(|(l, r)| l.partial_cmp(&r))
+    let left_binary = float_type(ldt);
+    let right_binary = float_type(rdt);
+    if (left_decimal.is_some() || left_binary) && (right_decimal.is_some() || right_binary) {
+        let double_type = u(&format!("{XSD}double"));
+        let common_double = ldt == Some(&double_type) || rdt == Some(&double_type);
+        let left_double = if left_decimal.is_some() {
+            common_double
         } else {
-            lvalue
-                .parse::<f32>()
-                .ok()
-                .zip(rvalue.parse::<f32>().ok())
-                .and_then(|(l, r)| l.partial_cmp(&r))
+            ldt == Some(&double_type)
         };
+        let right_double = if right_decimal.is_some() {
+            common_double
+        } else {
+            rdt == Some(&double_type)
+        };
+        let (Some(lvalue), Some(rvalue)) = (
+            shacl_numeric_lexical(left, left_decimal.as_ref()),
+            shacl_numeric_lexical(right, right_decimal.as_ref()),
+        ) else {
+            return Ok(None);
+        };
+        // Parse at each operand's declared precision before promoting to the
+        // wider type. Exact integer/decimal operands are converted at the
+        // promoted width; xsd:float is rounded to binary32 before promotion.
+        let ordering = shacl_binary_float(&lvalue, left_double, ctx)?
+            .zip(shacl_binary_float(&rvalue, right_double, ctx)?)
+            .and_then(|(l, r)| l.partial_cmp(&r));
         return Ok(ordering);
     }
     Ok(None)
@@ -3176,14 +3351,18 @@ fn evaluate_shacl_constraints(
                             })
                             .filter_map(|row| member(row, "object"))
                             .collect::<Vec<_>>();
-                        if paths.len() != 1 || text(member(paths[0], "kind")) != Some(&u("iri")) {
+                        if paths.len() != 1 {
                             return Err(EngineError::new(
                                 "SHACL_ENGINE_UNSUPPORTED",
                                 Utf16::default(),
-                                "sh:closed currently supports only direct property paths",
+                                "Closed shape property must declare exactly one path",
                             ));
                         }
-                        allowed.insert(term_key_metered(paths[0], ctx)?);
+                        // Complex paths still validate through their property shape.
+                        // Only a path that is itself a predicate allows that predicate.
+                        if text(member(paths[0], "kind")) == Some(&u("iri")) {
+                            allowed.insert(term_key_metered(paths[0], ctx)?);
+                        }
                     }
                     for row in qs.iter().filter(|row| {
                         member(row, "subject").is_some_and(|s| term_eq(s, shape))
@@ -3196,7 +3375,6 @@ fn evaluate_shacl_constraints(
                             }
                         }
                     }
-                    let rdf_type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
                     for row in data
                         .iter()
                         .filter(|row| member(row, "subject").is_some_and(|s| term_eq(s, focus)))
@@ -3210,9 +3388,7 @@ fn evaluate_shacl_constraints(
                             )
                         })?;
                         let key = term_key_metered(predicate, ctx)?;
-                        if text(member(predicate, "value")) != Some(&u(rdf_type))
-                            && !allowed.contains(&key)
-                        {
+                        if !allowed.contains(&key) {
                             let object = member(row, "object");
                             push_shacl_violation(
                                 out,
@@ -3362,10 +3538,27 @@ fn evaluate_shacl_constraints(
                         "sh:datatype must be an IRI",
                     )
                 })?;
+                let name = shacl_xsd_name(expected);
                 for value in value_nodes {
-                    if text(member(value, "kind")) != Some(&u("literal"))
-                        || text(member(value, "datatype")) != Some(expected)
-                    {
+                    let matches_datatype = text(member(value, "kind")) == Some(&u("literal"))
+                        && text(member(value, "datatype")) == Some(expected);
+                    let valid = if !matches_datatype {
+                        false
+                    } else {
+                        match name.as_deref() {
+                            Some(name) if shacl_exact_bounds(name).is_some() => {
+                                shacl_decimal(value, ctx)?.is_some()
+                            }
+                            Some(name @ ("float" | "double")) => {
+                                match text(member(value, "value")).and_then(|lexical| lexical.to_utf8().ok()) {
+                                    Some(lexical) => shacl_binary_float(&lexical, name == "double", ctx)?.is_some(),
+                                    None => false,
+                                }
+                            }
+                            _ => true,
+                        }
+                    };
+                    if !valid {
                         push_shacl_violation(
                             out,
                             focus,
@@ -3972,6 +4165,22 @@ pub fn propose_shacl_engine_validation_sync(
                     "Imports and entailment require explicit processing",
                 ));
             }
+            if predicate == Some(&u("http://www.w3.org/ns/shacl#target")) {
+                return Err(EngineError::new(
+                    "SHACL_TARGET_UNSUPPORTED",
+                    Utf16::default(),
+                    "Custom SHACL targets are not implemented",
+                ));
+            }
+            if ["sparql", "js", "rule"].iter().any(|local| {
+                predicate == Some(&u(&format!("http://www.w3.org/ns/shacl#{local}")))
+            }) {
+                return Err(EngineError::new(
+                    "SHACL_ENGINE_UNSUPPORTED",
+                    Utf16::default(),
+                    "Custom targets, SPARQL, JavaScript, and SHACL rules require separate execution capabilities",
+                ));
+            }
         }
         rdf::export_rdf_turtle(rt, &data_eval, ctx)?;
         if !values(Some(&rdf::get_rdf_named_graphs(rt, &data_eval, ctx)?)).is_empty() {
@@ -4031,6 +4240,116 @@ pub fn propose_shacl_engine_validation_sync(
             "deactivated",
             "defaultValue",
         ];
+        // The shapes graph may also contain ordinary RDF data such as an
+        // embedded SHACL validation report. Only inspect SHACL predicates on
+        // nodes participating in shape declarations or reachable shape links.
+        let sh = "http://www.w3.org/ns/shacl#";
+        let rdf_type = u("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+        let mut outgoing = BTreeMap::<Vec<u16>, Vec<usize>>::new();
+        for (index, quad) in sq.iter().enumerate() {
+            ctx.charge_work(1, Utf16::default())?;
+            if let Some(subject) = member(quad, "subject") {
+                let key = term_key_metered(subject, ctx)?;
+                let rows = outgoing.entry(key).or_default();
+                reserve_items(rows, 1, ctx)?;
+                rows.push(index);
+            }
+        }
+        let mut shape_nodes = BTreeSet::new();
+        let mut shape_queue = Vec::new();
+        for quad in &sq {
+            ctx.charge_work(1, Utf16::default())?;
+            let (Some(subject), Some(predicate)) = (
+                member(quad, "subject"),
+                text(member(member(quad, "predicate"), "value")),
+            ) else {
+                continue;
+            };
+            let local = predicate
+                .to_utf8()
+                .ok()
+                .and_then(|value| value.strip_prefix(sh).map(str::to_owned));
+            let shape_type = predicate == &rdf_type
+                && member(quad, "object").is_some_and(|object| {
+                    let value = text(member(object, "value"));
+                    value == Some(&u(&format!("{sh}NodeShape")))
+                        || value == Some(&u(&format!("{sh}PropertyShape")))
+                });
+            if shape_type
+                || local.as_deref().is_some_and(|name| {
+                    name.starts_with("target")
+                        || matches!(
+                            name,
+                            "path" | "property" | "node" | "not" | "and" | "or" | "xone" | "qualifiedValueShape"
+                        )
+                })
+            {
+                enqueue_shacl_shape_node(subject, &mut shape_nodes, &mut shape_queue, ctx)?;
+            }
+        }
+        let mut dependencies = BTreeMap::<Vec<u16>, Vec<Vec<u16>>>::new();
+        let mut shape_index = 0;
+        while shape_index < shape_queue.len() {
+            let shape = shape_queue[shape_index].clone();
+            let shape_key = term_key_metered(&shape, ctx)?;
+            shape_index += 1;
+            if let Some(rows) = outgoing.get(&shape_key) {
+                for row_index in rows {
+                    let quad = &sq[*row_index];
+                    ctx.charge_work(1, Utf16::default())?;
+                    let (Some(local), Some(object)) = (
+                        text(member(member(quad, "predicate"), "value"))
+                            .and_then(|predicate| predicate.to_utf8().ok())
+                            .and_then(|predicate| predicate.strip_prefix(sh).map(str::to_owned)),
+                        member(quad, "object"),
+                    ) else {
+                        continue;
+                    };
+                    match local.as_str() {
+                        "property" | "node" | "not" | "qualifiedValueShape" => {
+                            if let Some(child) = enqueue_shacl_shape_node(
+                                object,
+                                &mut shape_nodes,
+                                &mut shape_queue,
+                                ctx,
+                            )? {
+                                let children = dependencies.entry(shape_key.clone()).or_default();
+                                reserve_items(children, 1, ctx)?;
+                                children.push(child);
+                            }
+                        }
+                        "and" | "or" | "xone" => {
+                            for nested in shacl_list_values(&sq, object, ctx)? {
+                                if let Some(child) = enqueue_shacl_shape_node(
+                                    &nested,
+                                    &mut shape_nodes,
+                                    &mut shape_queue,
+                                    ctx,
+                                )? {
+                                    let children =
+                                        dependencies.entry(shape_key.clone()).or_default();
+                                    reserve_items(children, 1, ctx)?;
+                                    children.push(child);
+                                }
+                            }
+                        }
+                        _ => (),
+                    }
+                }
+            }
+        }
+        let mut active_dependencies = BTreeSet::new();
+        let mut completed_dependencies = BTreeSet::new();
+        for shape in &shape_nodes {
+            shacl_visit_shape_dependencies(
+                shape,
+                &dependencies,
+                &mut active_dependencies,
+                &mut completed_dependencies,
+                0,
+                ctx,
+            )?;
+        }
         for quad in &sq {
             ctx.charge_work(1, Utf16::default())?;
             let Some(predicate) = text(member(member(quad, "predicate"), "value")) else {
@@ -4042,6 +4361,12 @@ pub fn propose_shacl_engine_validation_sync(
             }) else {
                 continue;
             };
+            let Some(subject) = member(quad, "subject") else {
+                continue;
+            };
+            if !shape_nodes.contains(&term_key_metered(subject, ctx)?) {
+                continue;
+            }
             if local == "target" {
                 return Err(EngineError::new(
                     "SHACL_TARGET_UNSUPPORTED",
@@ -4229,9 +4554,19 @@ pub fn propose_shacl_engine_validation_sync(
                 })
                 .filter_map(|q| member(q, "object"))
                 .collect();
-            let node_shape = shape_types
+            let explicit_node_shape = shape_types
                 .iter()
                 .any(|t| text(member(t, "value")) == Some(&u(&format!("{sh}NodeShape"))));
+            let explicit_property_shape = shape_types
+                .iter()
+                .any(|t| text(member(t, "value")) == Some(&u(&format!("{sh}PropertyShape"))));
+            let has_path = sq.iter().any(|quad| {
+                member(quad, "subject").is_some_and(|subject| term_eq(subject, &shape))
+                    && member(quad, "predicate").and_then(|predicate| member(predicate, "value"))
+                        == Some(&Value::String(u(&format!("{sh}path"))))
+            });
+            let node_shape = explicit_node_shape
+                || (!explicit_property_shape && !has_path);
             if node_shape {
                 evaluate_shacl_constraints(
                     &sq,
@@ -4537,7 +4872,8 @@ pub fn get_owl_ontology_headers(
     let ontology = u("http://www.w3.org/2002/07/owl#Ontology");
     let version = u("http://www.w3.org/2002/07/owl#versionIRI");
     let imports = u("http://www.w3.org/2002/07/owl#imports");
-    let mut nodes = BTreeMap::new();
+    let mut nodes = Vec::new();
+    let mut seen_nodes = BTreeSet::new();
     for q in &qs {
         ctx.charge_work(1, Utf16::default())?;
         if member(member(q, "predicate").unwrap_or(&Value::Null), "value")
@@ -4549,14 +4885,15 @@ pub fn get_owl_ontology_headers(
         {
             if let Some(s) = member(q, "subject") {
                 let key = term_key_metered(s, ctx)?;
-                if !nodes.contains_key(&key) {
-                    nodes.insert(key, copy_json(s, ctx)?);
+                if seen_nodes.insert(key) {
+                    reserve_items(&mut nodes, 1, ctx)?;
+                    nodes.push(copy_json(s, ctx)?);
                 }
             }
         }
     }
     let mut result = Vec::new();
-    for node in nodes.into_values() {
+    for node in nodes {
         result.push(Value::Object(vec![
             (u("node"), copy_json(&node, ctx)?),
             (
@@ -4575,7 +4912,8 @@ fn owl_header_values(
     predicate: &Utf16,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let mut terms = BTreeMap::new();
+    let mut terms = Vec::new();
+    let mut seen_terms = BTreeSet::new();
     for q in rows {
         ctx.charge_work(1, Utf16::default())?;
         if member(q, "subject").is_some_and(|s| term_eq(s, node))
@@ -4584,13 +4922,14 @@ fn owl_header_values(
         {
             if let Some(object) = member(q, "object") {
                 let key = term_key_metered(object, ctx)?;
-                if !terms.contains_key(&key) {
-                    terms.insert(key, copy_json(object, ctx)?);
+                if seen_terms.insert(key) {
+                    reserve_items(&mut terms, 1, ctx)?;
+                    terms.push(copy_json(object, ctx)?);
                 }
             }
         }
     }
-    Ok(Value::Array(terms.into_values().collect()))
+    Ok(Value::Array(terms))
 }
 
 const OWL: &str = "http://www.w3.org/2002/07/owl#";
@@ -4932,15 +5271,19 @@ fn owl_list_quad_indexes(
         && seen.len() <= 10_000
     {
         let mut next = None;
+        let mut first_indexes = Vec::new();
+        let mut rest_indexes = Vec::new();
         ctx.charge_work(rows.len(), Utf16::default())?;
         for (index, q) in rows.iter().enumerate() {
             if member(q, "subject").is_some_and(|s| term_eq(s, &current)) {
                 if let Some(p) = predicate(q) {
-                    if p == &u(&format!("{RDF}first")) || p == &u(&format!("{RDF}rest")) {
-                        reserve_items(&mut indexes, 1, ctx)?;
-                        indexes.push(index);
+                    if p == &u(&format!("{RDF}first")) {
+                        reserve_items(&mut first_indexes, 1, ctx)?;
+                        first_indexes.push(index);
                     }
                     if p == &u(&format!("{RDF}rest")) {
+                        reserve_items(&mut rest_indexes, 1, ctx)?;
+                        rest_indexes.push(index);
                         next = member(q, "object")
                             .map(|value| copy_json(value, ctx))
                             .transpose()?;
@@ -4948,6 +5291,9 @@ fn owl_list_quad_indexes(
                 }
             }
         }
+        reserve_items(&mut indexes, first_indexes.len().saturating_add(rest_indexes.len()), ctx)?;
+        indexes.extend(first_indexes);
+        indexes.extend(rest_indexes);
         let Some(value) = next else { break };
         current = value;
     }
@@ -4974,17 +5320,26 @@ fn predicate(q: &Value) -> Option<&Utf16> {
 fn grouped(
     rows: &[Value],
     ctx: &mut Context<'_>,
-) -> Result<BTreeMap<Vec<u16>, (Value, Vec<(usize, Value)>)>, EngineError> {
-    let mut groups = BTreeMap::new();
+) -> Result<Vec<(Vec<u16>, (Value, Vec<(usize, Value)>))>, EngineError> {
+    // Preserve first-subject encounter order while retaining indexed lookup for
+    // subsequent rows in each group.
+    let mut groups = Vec::new();
+    let mut group_indexes = BTreeMap::<Vec<u16>, usize>::new();
     for (index, row) in rows.iter().enumerate() {
         if let Some(subject) = member(row, "subject") {
             ctx.charge_work(1, Utf16::default())?;
             let key = term_key_metered(subject, ctx)?;
-            if !groups.contains_key(&key) {
+            let position = if let Some(position) = group_indexes.get(&key) {
+                *position
+            } else {
                 ctx.charge_work(key.len(), Utf16::default())?;
-                groups.insert(key.clone(), (copy_json(subject, ctx)?, Vec::new()));
-            }
-            let statements = &mut groups.get_mut(&key).expect("group inserted").1;
+                reserve_items(&mut groups, 1, ctx)?;
+                let position = groups.len();
+                groups.push((key.clone(), (copy_json(subject, ctx)?, Vec::new())));
+                group_indexes.insert(key, position);
+                position
+            };
+            let statements = &mut groups.get_mut(position).expect("group index inserted").1.1;
             statements.try_reserve(1).map_err(|_| {
                 EngineError::new("LIMIT", Utf16::default(), "OWL group allocation failed")
             })?;
@@ -5016,88 +5371,128 @@ pub fn get_owl_list_axioms(
 ) -> Result<Value, EngineError> {
     let source = copy_json(document, ctx)?;
     let rows = owl_quads(rt, document, ctx)?;
-    let groups = grouped(&rows, ctx)?;
-    let mut axioms = Vec::new();
-    let mut malformed = Vec::new();
-    for (_, (node, statements)) in &groups {
-        for (predicate_iri, kind) in [
+    let mut main = Vec::<(&'static str, Value, Value, Vec<usize>)>::new();
+    let mut main_index = BTreeMap::<(Vec<u16>, &'static str, Vec<u16>), usize>::new();
+    for (index, row) in rows.iter().enumerate() {
+        let Some(subject) = member(row, "subject") else {
+            continue;
+        };
+        let Some(head) = member(row, "object") else {
+            continue;
+        };
+        let Some(kind) = [
             (format!("{OWL}propertyChainAxiom"), "propertyChain"),
             (format!("{OWL}hasKey"), "key"),
             (format!("{OWL}disjointUnionOf"), "disjointUnion"),
-        ] {
-            for (index, row) in statements {
-                if predicate(row) != Some(&u(&predicate_iri)) {
-                    continue;
-                }
-                let Some(head) = member(row, "object") else {
-                    continue;
-                };
-                ctx.charge_work(1, Utf16::default())?;
-                let indexes = Value::Array(vec![Value::Number(*index as f64)]);
-                let members = match owl_list(&rows, head, ctx) {
-                    Ok(members) => members,
-                    Err(failure) if failure.is_control_failure() || failure.code == "LIMIT" => {
-                        return Err(failure)
-                    }
-                    Err(failure) => {
-                        reserve_items(&mut malformed, 1, ctx)?;
-                        malformed.push(Value::Object(vec![
-                            (u("kind"), Value::string_utf8(kind)),
-                            (u("node"), copy_json(node, ctx)?),
-                            (u("head"), copy_json(head, ctx)?),
-                            (u("quadIndexes"), indexes),
-                            (u("reason"), Value::String(failure.message)),
-                        ]));
-                        continue;
-                    }
-                };
-                let min = if kind == "key" { 1 } else { 2 };
-                if members.len() < min
-                    || members
-                        .iter()
-                        .any(|term| text(member(term, "kind")) == Some(&u("literal")))
-                {
-                    reserve_items(&mut malformed, 1, ctx)?;
-                    malformed.push(Value::Object(vec![
-                        (u("kind"), Value::string_utf8(kind)),
-                        (u("node"), copy_json(node, ctx)?),
-                        (u("head"), copy_json(head, ctx)?),
-                        (u("quadIndexes"), indexes),
-                        (
-                            u("reason"),
-                            Value::string_utf8("List has too few or non-resource members"),
-                        ),
-                    ]));
-                    continue;
-                }
-                ctx.charge_work(members.len(), Utf16::default())?;
-                reserve_items(&mut axioms, 1, ctx)?;
-                axioms.push(Value::Object(vec![
-                    (u("kind"), Value::string_utf8(kind)),
-                    (u("node"), copy_json(node, ctx)?),
-                    (u("head"), copy_json(head, ctx)?),
-                    (
-                        u("members"),
-                        Value::Array(
-                            members
-                                .iter()
-                                .map(|term| copy_json(term, ctx))
-                                .collect::<Result<_, _>>()?,
-                        ),
-                    ),
-                    (u("quadIndexes"), indexes),
-                    (
-                        u("listQuadIndexes"),
-                        Value::Array(
-                            owl_list_quad_indexes(&rows, head, ctx)?
-                                .into_iter()
-                                .map(|index| Value::Number(index as f64))
-                                .collect(),
-                        ),
-                    ),
-                ]));
-            }
+        ]
+        .into_iter()
+        .find_map(|(iri, kind)| (predicate(row) == Some(&u(&iri))).then_some(kind))
+        else {
+            continue;
+        };
+        ctx.charge_work(1, Utf16::default())?;
+        let key = (
+            term_key_metered(subject, ctx)?,
+            kind,
+            term_key_metered(head, ctx)?,
+        );
+        if let Some(position) = main_index.get(&key) {
+            let indexes = &mut main.get_mut(*position).expect("OWL list axiom index").3;
+            reserve_items(indexes, 1, ctx)?;
+            indexes.push(index);
+        } else {
+            ctx.charge_work(key.0.len().saturating_add(key.2.len()), Utf16::default())?;
+            reserve_items(&mut main, 1, ctx)?;
+            let position = main.len();
+            main.push((kind, copy_json(subject, ctx)?, copy_json(head, ctx)?, vec![index]));
+            main_index.insert(key, position);
         }
+    }
+    let mut axioms = Vec::new();
+    let mut malformed = Vec::new();
+    for (kind, node, head, indexes) in main {
+        let indexes = Value::Array(
+            indexes
+                .into_iter()
+                .map(|index| Value::Number(index as f64))
+                .collect(),
+        );
+        if kind == "disjointUnion" && text(member(&node, "kind")) != Some(&u("iri")) {
+            reserve_items(&mut malformed, 1, ctx)?;
+            malformed.push(Value::Object(vec![
+                (u("kind"), Value::string_utf8(kind)),
+                (u("node"), node),
+                (u("head"), head),
+                (u("quadIndexes"), indexes),
+                (
+                    u("reason"),
+                    Value::string_utf8("Disjoint union subject must be an IRI"),
+                ),
+            ]));
+            continue;
+        }
+        let members = match owl_list(&rows, &head, ctx) {
+            Ok(members) => members,
+            Err(failure) if failure.is_control_failure() || failure.code == "LIMIT" => {
+                return Err(failure)
+            }
+            Err(failure) => {
+                reserve_items(&mut malformed, 1, ctx)?;
+                malformed.push(Value::Object(vec![
+                    (u("kind"), Value::string_utf8(kind)),
+                    (u("node"), node),
+                    (u("head"), head),
+                    (u("quadIndexes"), indexes),
+                    (u("reason"), Value::String(failure.message)),
+                ]));
+                continue;
+            }
+        };
+        let min = if kind == "key" { 1 } else { 2 };
+        if members.len() < min
+            || members
+                .iter()
+                .any(|term| text(member(term, "kind")) == Some(&u("literal")))
+        {
+            reserve_items(&mut malformed, 1, ctx)?;
+            malformed.push(Value::Object(vec![
+                (u("kind"), Value::string_utf8(kind)),
+                (u("node"), node),
+                (u("head"), head),
+                (u("quadIndexes"), indexes),
+                (
+                    u("reason"),
+                    Value::string_utf8("List has too few or non-resource members"),
+                ),
+            ]));
+            continue;
+        }
+        ctx.charge_work(members.len(), Utf16::default())?;
+        reserve_items(&mut axioms, 1, ctx)?;
+        axioms.push(Value::Object(vec![
+            (u("kind"), Value::string_utf8(kind)),
+            (u("node"), node),
+            (u("head"), head.clone()),
+            (
+                u("members"),
+                Value::Array(
+                    members
+                        .iter()
+                        .map(|term| copy_json(term, ctx))
+                        .collect::<Result<_, _>>()?,
+                ),
+            ),
+            (u("quadIndexes"), indexes),
+            (
+                u("listQuadIndexes"),
+                Value::Array(
+                    owl_list_quad_indexes(&rows, &head, ctx)?
+                        .into_iter()
+                        .map(|index| Value::Number(index as f64))
+                        .collect(),
+                ),
+            ),
+        ]));
     }
     Ok(Value::Object(vec![
         (u("profile"), Value::string_utf8("owl-list-axioms-1")),
@@ -5316,6 +5711,7 @@ pub fn get_owl_axiom_annotations(
         }
     }
     let mut records = BTreeMap::<Vec<u16>, Value>::new();
+    let mut record_order = Vec::<Vec<u16>>::new();
     let mut malformed = Vec::new();
     let axiom_type = u(&format!("{OWL}Axiom"));
     let annotation_type = u(&format!("{OWL}Annotation"));
@@ -5400,7 +5796,13 @@ pub fn get_owl_axiom_annotations(
             ),
             (u("nested"), Value::Array(Vec::new())),
         ]);
-        records.insert(term_key_metered(node, ctx)?, record);
+        let key = term_key_metered(node, ctx)?;
+        if !records.contains_key(&key) {
+            ctx.charge_work(key.len(), Utf16::default())?;
+            reserve_items(&mut record_order, 1, ctx)?;
+            record_order.push(key.clone());
+        }
+        records.insert(key, record);
     }
     let selected = &rows[quad_index];
     let mut roots = Vec::new();
@@ -5411,7 +5813,8 @@ pub fn get_owl_axiom_annotations(
         member(selected, "object"),
     ) {
         let selected_key = triple_key(s, p, o, ctx)?;
-        for record in records.values() {
+        for key in &record_order {
+            let record = records.get(key).expect("OWL record order index");
             if text(field(record, "kind")) != Some(&u("Axiom")) {
                 continue;
             }
@@ -5436,12 +5839,19 @@ pub fn get_owl_axiom_annotations(
         }
     }
     let mut reachable = BTreeSet::new();
-    let mut nested_map = BTreeMap::<Vec<u16>, BTreeMap<Vec<u16>, Value>>::new();
-    while let Some(parent_key) = todo.pop() {
+    let mut reachable_order = Vec::new();
+    let mut nested_map = BTreeMap::<Vec<u16>, Vec<Value>>::new();
+    let mut nested_seen = BTreeMap::<Vec<u16>, BTreeSet<Vec<u16>>>::new();
+    let mut todo_index = 0;
+    while todo_index < todo.len() {
+        let parent_key = todo[todo_index].clone();
+        todo_index += 1;
         ctx.charge_work(parent_key.len(), Utf16::default())?;
         if !reachable.insert(parent_key.clone()) {
             continue;
         }
+        reserve_items(&mut reachable_order, 1, ctx)?;
+        reachable_order.push(parent_key.clone());
         let Some(parent) = records.get(&parent_key) else {
             continue;
         };
@@ -5464,7 +5874,8 @@ pub fn get_owl_axiom_annotations(
                 continue;
             };
             let key = triple_key(s, p, o, ctx)?;
-            for child in records.values() {
+            for child_key in &record_order {
+                let child = records.get(child_key).expect("OWL record order index");
                 if text(field(child, "kind")) != Some(&u("Annotation")) {
                     continue;
                 }
@@ -5482,19 +5893,24 @@ pub fn get_owl_axiom_annotations(
                         let child_key = term_key_metered(node, ctx)?;
                         ctx.charge_work(parent_key.len(), Utf16::default())?;
                         ctx.charge_work(child_key.len(), Utf16::default())?;
-                        nested_map
+                        if nested_seen
                             .entry(parent_key.clone())
                             .or_default()
-                            .insert(child_key.clone(), copy_json(node, ctx)?);
-                        reserve_items(&mut todo, 1, ctx)?;
-                        todo.push(child_key);
+                            .insert(child_key.clone())
+                        {
+                            let children = nested_map.entry(parent_key.clone()).or_default();
+                            reserve_items(children, 1, ctx)?;
+                            children.push(copy_json(node, ctx)?);
+                            reserve_items(&mut todo, 1, ctx)?;
+                            todo.push(child_key);
+                        }
                     }
                 }
             }
         }
     }
     let mut output_records = Vec::new();
-    for key in reachable {
+    for key in reachable_order {
         let mut record = records
             .get(&key)
             .ok_or_else(|| {
@@ -5509,12 +5925,7 @@ pub fn get_owl_axiom_annotations(
             if let Some((_, Value::Array(nested))) =
                 fields.iter_mut().find(|(name, _)| name == &u("nested"))
             {
-                *nested = nested_map
-                    .remove(&key)
-                    .unwrap_or_default()
-                    .into_values()
-                    .map(|node| copy_json(&node, ctx))
-                    .collect::<Result<_, _>>()?;
+                *nested = nested_map.remove(&key).unwrap_or_default();
             }
         }
         output_records.push(record);
@@ -5557,7 +5968,11 @@ pub fn get_owl_declarations(
         (format!("{OWL}AnnotationProperty"), "annotationProperty"),
         (format!("{OWL}NamedIndividual"), "namedIndividual"),
     ];
-    let mut declarations = BTreeMap::<(Vec<u16>, &'static str), (Value, Vec<usize>)>::new();
+    // Preserve first encounter order from the source quad stream. The index map
+    // is for identity lookup only; iterating a BTreeMap here sorted declarations
+    // by RDF term and changed the established OWL view order.
+    let mut declaration_index = BTreeMap::<(Vec<u16>, &'static str), usize>::new();
+    let mut declarations = Vec::<(Value, &'static str, Vec<usize>)>::new();
     for (index, row) in rows.iter().enumerate() {
         ctx.charge_work(1, Utf16::default())?;
         if predicate(row) != Some(&u(&format!("{RDF}type"))) {
@@ -5577,19 +5992,25 @@ pub fn get_owl_declarations(
         };
         let subject_key = term_key_metered(subject, ctx)?;
         let key = (subject_key, *kind);
-        if !declarations.contains_key(&key) {
+        let position = if let Some(position) = declaration_index.get(&key) {
+            *position
+        } else {
             // The map key is caller-derived and cloning it duplicates a potentially
             // large RDF identifier, so admit that work before the clone.
             ctx.charge_work(key.0.len(), Utf16::default())?;
-            declarations.insert(key.clone(), (copy_json(subject, ctx)?, Vec::new()));
-        }
-        let record = declarations.get_mut(&key).expect("declaration inserted");
+            reserve_items(&mut declarations, 1, ctx)?;
+            let position = declarations.len();
+            declarations.push((copy_json(subject, ctx)?, *kind, Vec::new()));
+            declaration_index.insert(key, position);
+            position
+        };
+        let record = declarations.get_mut(position).expect("declaration index inserted");
         ctx.charge_work(1, Utf16::default())?;
-        record.1.push(index);
+        record.2.push(index);
     }
     let mut named = Vec::new();
     let mut anonymous = Vec::new();
-    for ((_, kind), (node, indexes)) in declarations {
+    for (node, kind, indexes) in declarations {
         let target = if text(member(&node, "kind")) == Some(&u("iri")) {
             &mut named
         } else {
@@ -6353,8 +6774,9 @@ _:name <http://www.w3.org/ns/shacl#path> ( <https://ex.test/child> <https://ex.t
 <https://ex.test/shape> a <http://www.w3.org/ns/shacl#NodeShape> ;
   <http://www.w3.org/ns/shacl#targetNode> <https://ex.test/person> ;
   <http://www.w3.org/ns/shacl#closed> true ;
-  <http://www.w3.org/ns/shacl#property> _:p .
+  <http://www.w3.org/ns/shacl#property> _:p, _:inverse .
 _:p <http://www.w3.org/ns/shacl#path> <https://ex.test/name> .
+_:inverse <http://www.w3.org/ns/shacl#path> [ <http://www.w3.org/ns/shacl#inversePath> <https://ex.test/worksFor> ] .
 "#,
             )
             .units(),
@@ -6648,6 +7070,249 @@ _:boolean <http://www.w3.org/ns/shacl#datatype> <http://www.w3.org/2001/XMLSchem
         );
         assert_eq!(
             shacl_numeric_order(&decimal("-2.1250"), &decimal("-2.13"), &mut ctx).unwrap(),
+            Some(std::cmp::Ordering::Greater)
+        );
+    }
+
+    #[test]
+    fn validation_report_vocabulary_in_the_shapes_graph_is_not_a_shape_constraint() {
+        let mut ctx = Context::ordinary();
+        let runtime = RdfRuntime::new(&mut ctx).unwrap();
+        let graph = import_rdf_turtle(
+            &runtime,
+            Utf16::from(
+                r#"
+<urn:shape> <http://www.w3.org/ns/shacl#targetNode> <urn:focus> ;
+  <http://www.w3.org/ns/shacl#property> <urn:property> .
+<urn:property> <http://www.w3.org/ns/shacl#path> <urn:value> ;
+  <http://www.w3.org/ns/shacl#minCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<urn:expected> a <http://www.w3.org/ns/shacl#ValidationReport> ;
+  <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> ;
+  <http://www.w3.org/ns/shacl#result> [
+    <http://www.w3.org/ns/shacl#focusNode> <urn:other> ;
+    <http://www.w3.org/ns/shacl#resultPath> <urn:otherPath>
+  ] .
+"#,
+            )
+            .units(),
+            &u("shacl-shapes-and-report"),
+            &u("urn:base:"),
+            None,
+            &mut ctx,
+        )
+        .unwrap();
+        let shapes = domain_document(&graph, "umf.shacl", "shaclVersion", "1.0", &mut ctx);
+        let result = futures::executor::block_on(propose_shacl_engine_validation(
+            &runtime,
+            &shapes,
+            &graph,
+            &u("embedded-report-output"),
+            &u("disjoint-inputs"),
+            &mut ctx,
+        ))
+        .unwrap();
+        assert_eq!(
+            member(&result, "status"),
+            Some(&Value::string_utf8("evaluated"))
+        );
+        assert_eq!(member(&result, "engineConforms"), Some(&Value::Bool(false)));
+    }
+
+    #[test]
+    fn targeted_path_free_shape_constraints_are_evaluated_and_recursion_is_blocked() {
+        let mut ctx = Context::ordinary();
+        let runtime = RdfRuntime::new(&mut ctx).unwrap();
+        let shapes_rdf = import_rdf_turtle(
+            &runtime,
+            Utf16::from(
+                r#"<urn:shape> <http://www.w3.org/ns/shacl#targetNode> <urn:focus> ;
+  <http://www.w3.org/ns/shacl#node> <urn:shape> ."#,
+            )
+            .units(),
+            &u("recursive-path-free-shape"),
+            &u("urn:base:"),
+            None,
+            &mut ctx,
+        )
+        .unwrap();
+        let shapes = domain_document(
+            &shapes_rdf,
+            "umf.shacl",
+            "shaclVersion",
+            "1.0",
+            &mut ctx,
+        );
+        let data = import_rdf_turtle(
+            &runtime,
+            Utf16::default().units(),
+            &u("recursive-path-free-data"),
+            &u("urn:base:"),
+            None,
+            &mut ctx,
+        )
+        .unwrap();
+        let result = futures::executor::block_on(propose_shacl_engine_validation(
+            &runtime,
+            &shapes,
+            &data,
+            &u("recursive-path-free-report"),
+            &u("disjoint-inputs"),
+            &mut ctx,
+        ))
+        .unwrap();
+        assert_eq!(
+            member(&result, "status"),
+            Some(&Value::string_utf8("blocked"))
+        );
+        assert!(values(member(&result, "diagnostics")).iter().any(|item| {
+            text(member(item, "code")) == Some(&u("SHACL_ENGINE_BLOCKED"))
+        }));
+
+        let disconnected_rdf = import_rdf_turtle(
+            &runtime,
+            Utf16::from(
+                r#"<urn:unreachable> <http://www.w3.org/ns/shacl#node> <urn:unreachable> ."#,
+            )
+            .units(),
+            &u("disconnected-recursive-shape"),
+            &u("urn:base:"),
+            None,
+            &mut ctx,
+        )
+        .unwrap();
+        let disconnected_shapes = domain_document(
+            &disconnected_rdf,
+            "umf.shacl",
+            "shaclVersion",
+            "1.0",
+            &mut ctx,
+        );
+        let disconnected = futures::executor::block_on(propose_shacl_engine_validation(
+            &runtime,
+            &disconnected_shapes,
+            &data,
+            &u("disconnected-recursive-report"),
+            &u("disjoint-inputs"),
+            &mut ctx,
+        ))
+        .unwrap();
+        assert_eq!(
+            member(&disconnected, "status"),
+            Some(&Value::string_utf8("blocked"))
+        );
+    }
+
+    #[test]
+    fn disconnected_custom_execution_features_are_refused_globally() {
+        let mut ctx = Context::ordinary();
+        let runtime = RdfRuntime::new(&mut ctx).unwrap();
+        let data_rdf = import_rdf_turtle(
+            &runtime,
+            Utf16::default().units(),
+            &u("unsupported-data"),
+            &u("urn:base:"),
+            None,
+            &mut ctx,
+        )
+        .unwrap();
+        for unsupported in [
+            r#"<urn:orphan> <http://www.w3.org/ns/shacl#sparql> "SELECT * WHERE {}" ."#,
+            r#"<urn:orphan> <http://www.w3.org/ns/shacl#js> <urn:script> ."#,
+            r#"<urn:orphan> <http://www.w3.org/ns/shacl#rule> <urn:rule> ."#,
+            r#"<urn:orphan> <http://www.w3.org/ns/shacl#target> <urn:custom> ."#,
+        ] {
+            let source = format!(
+                "<urn:shape> <http://www.w3.org/ns/shacl#targetNode> <urn:focus> . {unsupported}"
+            );
+            let shapes_rdf = import_rdf_turtle(
+                &runtime,
+                Utf16::from(source.as_str()).units(),
+                &u("disconnected-unsupported-shape"),
+                &u("urn:base:"),
+                None,
+                &mut ctx,
+            )
+            .unwrap();
+            let shapes =
+                domain_document(&shapes_rdf, "umf.shacl", "shaclVersion", "1.0", &mut ctx);
+            let result = futures::executor::block_on(propose_shacl_engine_validation(
+                &runtime,
+                &shapes,
+                &data_rdf,
+                &u("disconnected-unsupported-report"),
+                &u("disjoint-inputs"),
+                &mut ctx,
+            ))
+            .unwrap();
+            assert_eq!(
+                member(&result, "status"),
+                Some(&Value::string_utf8("blocked")),
+                "unexpectedly accepted {unsupported}"
+            );
+        }
+    }
+
+    #[test]
+    fn mixed_binary_float_comparison_rounds_operands_at_declared_precision() {
+        let float = |lexical: &str, datatype: &str| {
+            Value::Object(vec![
+                (u("kind"), Value::string_utf8("literal")),
+                (u("value"), Value::string_utf8(lexical)),
+                (u("datatype"), Value::string_utf8(datatype)),
+            ])
+        };
+        let f32_value = float(
+            "0.1",
+            "http://www.w3.org/2001/XMLSchema#float",
+        );
+        let f64_bound = float(
+            "0.1",
+            "http://www.w3.org/2001/XMLSchema#double",
+        );
+        let mut ctx = Context::ordinary();
+        assert_eq!(
+            shacl_numeric_order(&f32_value, &f64_bound, &mut ctx).unwrap(),
+            Some(std::cmp::Ordering::Greater)
+        );
+
+        let long = float(
+            &format!("1.{}", "1".repeat(10_001)),
+            "http://www.w3.org/2001/XMLSchema#float",
+        );
+        assert!(shacl_numeric_order(&long, &f32_value, &mut ctx)
+            .unwrap_err()
+            .to_string()
+            .contains("10,000"));
+    }
+
+    #[test]
+    fn exact_decimal_values_promote_to_the_common_binary_float_width() {
+        let number = |lexical: &str, datatype: &str| {
+            Value::Object(vec![
+                (u("kind"), Value::string_utf8("literal")),
+                (u("value"), Value::string_utf8(lexical)),
+                (u("datatype"), Value::string_utf8(datatype)),
+            ])
+        };
+        let binary = number(
+            "0.1",
+            "http://www.w3.org/2001/XMLSchema#float",
+        );
+        let rounded_equal = number(
+            "0.100000001",
+            "http://www.w3.org/2001/XMLSchema#decimal",
+        );
+        let rounded_greater = number(
+            "0.10000001",
+            "http://www.w3.org/2001/XMLSchema#decimal",
+        );
+        let mut ctx = Context::ordinary();
+        assert_eq!(
+            shacl_numeric_order(&rounded_equal, &binary, &mut ctx).unwrap(),
+            Some(std::cmp::Ordering::Equal)
+        );
+        assert_eq!(
+            shacl_numeric_order(&rounded_greater, &binary, &mut ctx).unwrap(),
             Some(std::cmp::Ordering::Greater)
         );
     }

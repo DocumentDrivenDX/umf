@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import * as core from '../../src/index';
+import type * as Umf from '../../src/index-browser-v4';
 import engine from '../../fixtures/access/commerce/engine-only.json';
-export function probePreparedInspection(){
+type PreparedInspectionApi=Pick<typeof Umf,'readDocument'|'prepareCoreInspection'|'inspectCoreKeys'|'inspectCoreFacets'|'inspectCoreSchemaProperties'>;
+export function probePreparedInspection(core:PreparedInspectionApi){
  const results:unknown[]=[];
  const require=(ok:boolean,message:string)=>{if(!ok)throw Error(message);};
- for(const version of ['0.8.0','0.9.0']){
+ for(const version of ['0.10.0']){
   const doc=core.readDocument(JSON.stringify({...engine,umf:version}),'json');
   const record=doc.modules[0]!.elements.find(e=>e.id==='Order')!;
   (record.keys as Record<string,unknown>[])[0]!.future={retained:'opaque'};

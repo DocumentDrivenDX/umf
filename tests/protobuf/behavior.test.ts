@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {importProtobufDescriptorSet,exportProtobufDescriptorSet,proposeProtobufDescriptorEdit,writeDocument,readDocument,type DescriptorNode} from '../../src';
+import {importProtobufDescriptorSet,exportProtobufDescriptorSet,proposeProtobufDescriptorEdit,writeDocument,readDocument,type DescriptorNode} from '../../src/index-node-v4';
 
 test('US-003-AC6: independent native runtime behavior survives and detects semantic mutations',async()=>{
  const directory=await mkdtemp(join(tmpdir(),'umf-protobuf-behavior-'));

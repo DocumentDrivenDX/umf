@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/avro/field-metadata.json').json();
 const temporal=await Bun.file('fixtures/avro/temporal-metadata.json').json();
 const candidates=await Bun.file('fixtures/avro/candidate-edits.json').json();
 const integers=await Bun.file('fixtures/avro/integer-metadata.json').json();
-const build=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/avro-metadata-browser',naming:'umf.js'});if(!build.success)throw Error(String(build.logs));
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/avro-metadata-browser',naming:'umf.js'});if(!build.success)throw Error(String(build.logs));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/avro-metadata-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Avro field metadata</title>');}});
 let browser;
 try{

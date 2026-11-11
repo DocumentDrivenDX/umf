@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importAvroSchema,getAvroFieldMetadata,exportAvroSchema,editAvroNode,writeDocument,readDocument} from '../../src';
+import {importAvroSchema,getAvroFieldMetadata,exportAvroSchema,editAvroNode,writeDocument,readDocument} from '../../src/index-node-v4';
 
 test('CONTRACT-007 temporal core classification requires exact annotation and carrier',async()=>{
  const cases=[];

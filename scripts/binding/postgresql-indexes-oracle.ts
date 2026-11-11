@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql,getPostgresqlSource,importPostgresqlSql,projectBindingIndexesToPostgresql,type Document} from '../../src';
+import {exportPostgresqlSql,getPostgresqlSource,importPostgresqlSql,projectBindingIndexesToPostgresql,type Document} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/postgresql-indexes/case.json').json();
 const source=await Bun.file(fixture.native).text();
@@ -35,7 +35,7 @@ try{
   assert.equal(rows.find((r:any)=>r.name==='orders_unique')?.unique_index,true);
   observed=rows;
 }finally{if(created)await run(['docker','rm','-f',name]);}
-const files=['fixtures/binding/postgresql-indexes/case.json',fixture.native,'fixtures/binding/postgresql-indexes/generated.sql','src/projections/binding-postgresql/indexes.ts'];
+const files=['fixtures/binding/postgresql-indexes/case.json',fixture.native,'fixtures/binding/postgresql-indexes/generated.sql','src/projections/binding-postgresql/indexes-types.ts','crates/umf-core/src/binding_postgresql_indexes.rs'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 await Bun.write('fixtures/binding/postgresql-indexes/oracle.json',JSON.stringify({scope:'PostgreSQL 17.4 isolated native execution of seven authored index forms; no production deployment, query-plan or performance claim',image,serverVersion:170004,adapter:backend.identity,residuals:result.residuals,observed,sha256},null,2)+'\n');
 console.log(JSON.stringify({created:(observed as any[]).length,residuals:result.residuals.length,serverVersion:170004}));

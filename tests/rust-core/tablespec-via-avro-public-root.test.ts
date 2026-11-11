@@ -2,7 +2,7 @@
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {projectToTableSpecViaAvro,type TableSpecViaAvroPolicy} from '../../src/index-node-v4';
-import type {PostgresqlAvroPolicy} from '../../src/projections/postgresql-avro';
+import type {PostgresqlAvroPolicy} from '../../src/projections/postgresql-avro-types';
 
 test('PostgreSQL to Avro to TableSpec uses the native composite and preserves both stage reports',()=>{
  const fixture=JSON.parse(readFileSync('fixtures/validation/tablespec-chains.json','utf8'));

@@ -3,24 +3,19 @@ import {readFile,writeFile,mkdir,readdir} from 'node:fs/promises';
 import {resolve,dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {rustMetamodel} from './rust';
-import {structuralSource} from './structural';
-import {structuralAccountingSource} from './structural-accounting';
 import {rustCompilePackages,rustCompileResources,compilerDigestExcluded} from './source-closure';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
-const ACCOUNTED_COMPANION_PATH='src/generated/core-validators-accounted.ts';
 const OUTPUT_PATHS=[
  'spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json',
  'spec/core/facet-operation-v3.schema.json','spec/core/cardinality-operation-v4.schema.json','spec/core/kind-operation-v6.schema.json',
  'spec/core/nullability-operation-v5.schema.json','spec/core/key-operation-v2.schema.json','spec/core/record-type-operation-v6.schema.json',
  'spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json',
  'spec/metamodel/generated/python-shapes.json','python/umf_access/src/umf_access/generated_core.py',
- 'src/generated/core-model.ts','src/generated/core-validators.ts',ACCOUNTED_COMPANION_PATH,'spec/metamodel/generated/manifest.json',
+ 'src/generated/core-model.ts','spec/metamodel/generated/manifest.json',
 ] as const;
 // External compile-time inputs in the Rust CLI dependency closure. The other
 // schema-looking includes in Rust sources are behind cfg(test) and are not
 // part of this CLI build's compile-time resource set.
-// The explicit Ajv backend remains a build-time dependency until the JS cutover.
-// It never executes inside the native core, CLI, Python wheel or WASM engine.
 async function compilerClosure():Promise<string[]>{
  const files=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml',...rustCompileResources];
  for(const dir of rustCompilePackages){
@@ -46,7 +41,7 @@ async function workspaceClosure():Promise<string[]>{
 }
 export async function generate(options:{check?:boolean;outputRoot?:string}={}){
  const compilerFiles=await compilerClosure(),workspaceFiles=(await workspaceClosure()).filter(path=>!compilerFiles.includes(path));
- const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/source-closure.ts','scripts/metamodel/structural.ts','scripts/metamodel/structural-accounting.ts','src/validation/json-equality.ts','bindings/core/node/src/wire.js','package.json','bun.lock'];
+ const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/source-closure.ts','bindings/core/node/src/wire.js','package.json','bun.lock'];
  const sources=Object.fromEntries(await Promise.all(['spec/metamodel/umf.yaml',...compilerFiles,...workspaceFiles,...backendFiles].map(async p=>[p,hash(await readFile(resolve(root,p)))])));
  const provenance={modelSha256:sources['spec/metamodel/umf.yaml'],compilerSha256:hash(json(Object.fromEntries(compilerFiles.filter(p=>!compilerDigestExcluded.includes(p)).map(p=>[p,sources[p]]))))};
  const compiled=rustMetamodel(['outputs','--input','spec/metamodel/umf.yaml','--compiler-sha256',provenance.compilerSha256],undefined,{sourceBound:true});
@@ -58,10 +53,8 @@ export async function generate(options:{check?:boolean;outputRoot?:string}={}){
  for(const item of compiled.outputs){if(!portablePaths.delete(item.path)||typeof item.contents!=='string')throw Error('METAMODEL_INVALID_RUST_OUTPUT '+item.path);outputs[item.path]=item.contents;}
  if(portablePaths.size)throw Error('METAMODEL_MISSING_RUST_OUTPUT '+[...portablePaths].join(','));
  const core=JSON.parse(outputs['spec/core/schema.json']!),reference=JSON.parse(outputs['spec/core/semantic-type-reference.schema.json']!),pkg=JSON.parse(outputs['spec/core/extension-package.schema.json']!);
- outputs['src/generated/core-validators.ts']=structuralSource([core,reference,pkg]);
- outputs[ACCOUNTED_COMPANION_PATH]=structuralAccountingSource(outputs['src/generated/core-validators.ts']!,[core,reference,pkg]);
  const result={...compiled.result,core,reference,pkg,language:compiled.language,constraints:JSON.parse(outputs['spec/metamodel/generated/core-constraints.json']!),domains:JSON.parse(outputs['spec/metamodel/generated/domain-policy.json']!)};
- const manifest={profile:'umf.metamodel.outputs/1',provenance,sources,compilerInputs:Object.fromEntries(compilerFiles.map(p=>[p,sources[p]])),workspaceInputs:Object.fromEntries(workspaceFiles.map(p=>[p,sources[p]])),backend:{name:'Ajv standalone with bounded structural accounting transform',ownership:'explicit third-party build-time JavaScript backend; Rust owns portable metamodel outputs',inputs:Object.fromEntries(backendFiles.map(p=>[p,sources[p]]))},outputs:Object.fromEntries(Object.entries(outputs).map(([p,v])=>[p,{sha256:hash(v),bytes:Buffer.byteLength(v)}]))};outputs['spec/metamodel/generated/manifest.json']=json(manifest);
+ const manifest={profile:'umf.metamodel.outputs/1',provenance,sources,compilerInputs:Object.fromEntries(compilerFiles.map(p=>[p,sources[p]])),workspaceInputs:Object.fromEntries(workspaceFiles.map(p=>[p,sources[p]])),backend:{name:'Rust metamodel compiler',ownership:'Rust owns validation and all portable metamodel outputs',inputs:Object.fromEntries(backendFiles.map(p=>[p,sources[p]]))},outputs:Object.fromEntries(Object.entries(outputs).map(([p,v])=>[p,{sha256:hash(v),bytes:Buffer.byteLength(v)}]))};outputs['spec/metamodel/generated/manifest.json']=json(manifest);
  if(OUTPUT_PATHS.length!==Object.keys(outputs).length||OUTPUT_PATHS.some(path=>!Object.hasOwn(outputs,path)))throw Error('METAMODEL_OUTPUT_ROSTER');
  // Check the whole declared source set after compilation/backend emission and
  // before touching outputs, including added/removed workspace files.

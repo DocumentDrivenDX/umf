@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcConsistency,renameArrowIpcField} from '../../src';
+import {captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcConsistency,renameArrowIpcField} from '../../src/index-node-v4';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';
 const paths=['generated_decimal.arrow_file','generated_primitive_no_batches.arrow_file','generated_primitive_zerolength.arrow_file'];
 test('US-016-AC12: readable historical metadata-version discrepancies are preserved and block unqualified rewrite',async()=>{

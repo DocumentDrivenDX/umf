@@ -1,10 +1,32 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
 import type {Registry} from '../../registry/registry';
-import type {Diagnostic} from '../../model/types';
+import type {Diagnostic,Document,Validation} from '../../model/types';
 import {jsonSchemaPackage} from './package';
+import type {NativeJson} from '../../model/native-json';
+import type {SchemaPosition} from './index';
 
-type PublicMethods=Pick<typeof import('./index'),'importJsonSchema'|'inspectJsonSchema'|'exportJsonSchema'|'exportJsonSchemaResources'|'exportJsonSchemaBundle'|'getJsonSchemaNode'|'walkJsonSchema'|'editJsonSchemaNode'> & Pick<typeof import('../../model/native-json'),'parseNativeJson'|'parseNativeYaml'>;
+type InspectJsonSchema = (document: Document) => Validation;
+type ImportJsonSchema = (text: string, options: { id: string; baseUri: string; resources?: Record<string, string>; }) => Document;
+type ExportJsonSchema = (document: Document) => string;
+type ExportJsonSchemaResources = (document: Document) => Record<string, string>;
+type GetJsonSchemaNode = (document: Document, path: string) => NativeJson;
+type WalkJsonSchema = (document: Document) => SchemaPosition[];
+type EditJsonSchemaNode = (document: Document, path: string, replacement: string) => Document;
+type ExportJsonSchemaBundle = (document: Document) => { schema: string; resources: Record<string, string>; source: Document; diagnostics: Diagnostic[]; };
+
+type PublicMethods = {
+  inspectJsonSchema: InspectJsonSchema;
+  importJsonSchema: ImportJsonSchema;
+  exportJsonSchema: ExportJsonSchema;
+  exportJsonSchemaResources: ExportJsonSchemaResources;
+  getJsonSchemaNode: GetJsonSchemaNode;
+  walkJsonSchema: WalkJsonSchema;
+  editJsonSchemaNode: EditJsonSchemaNode;
+  exportJsonSchemaBundle: ExportJsonSchemaBundle;
+  parseNativeJson(text:string):NativeJson;
+  parseNativeYaml(text:string,options?:{version?:'1.1'|'1.2';dateOnly?:'string';booleanLexicon?:'pyyaml'}):NativeJson;
+};
 type NativeMethods={[K in keyof PublicMethods]:(...args:Parameters<PublicMethods[K]>)=>unknown};
 export interface JsonSchemaRustEngine extends NativeMethods {inspectJsonSchemaPayload(payload:unknown,path:string):Diagnostic[]}
 const CONTROL=new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);

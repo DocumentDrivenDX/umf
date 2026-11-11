@@ -1,8 +1,8 @@
+import type {CoreElementSelection} from '../../src/model/selection-types';
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {initializeWasm} from '../../bindings/core/wasm/index.js';
+import {initializeCoreModelRootKindNullabilityWasm} from '../../bindings/core/wasm/index.js';
 import {Registry} from '../../src/registry/registry';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
-import {selectCoreElements} from '../../src/model/selection';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
 import {coreSchema,semanticTypeReferenceSchema,extensionPackageSchema,coreConstraints,domainPolicy} from '../../src/generated/core-model';
@@ -10,7 +10,7 @@ import {fixtureSemantics} from './support';
 import type {ExtensionPackage} from '../../src/model/types';
 export async function verify(){
   const moduleUrl='/wasm/umf_core_wasm.js';
-  const engine=await initializeWasm(()=>import(moduleUrl),globalThis,{coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy});
+  const engine=await initializeCoreModelRootKindNullabilityWasm({coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy},()=>import(moduleUrl),globalThis);
   const cases=await(await fetch('/cases.json')).json();
   const results=cases.map((c:any)=>{
     const registry=new Registry(engine);
@@ -20,7 +20,7 @@ export async function verify(){
   const manifest=await(await fetch('/package.json')).json();
   const doc=readDocument(await(await fetch('/dashboard.yaml')).text(),'yaml');
   const registry=new Registry(engine).register(manifest as ExtensionPackage,fixtureSemantics,{kinds:true});
-  const selection=selectCoreElements(doc,{references:'transitive',identities:[{module:'sales',element:'sales-row'}]},registry);
+  const selection=engine.selectCoreElements(doc,{references:'transitive',identities:[{module:'sales',element:'sales-row'}]},registry.registrations()) as CoreElementSelection;
   if(JSON.stringify(selection.selection.map(e=>e.element.id))!==JSON.stringify(['channel','revenue','sales-row']))throw Error('Core Record/Field composition failed');
   const first=inspectExtensionKinds(doc,registry);
   for(const format of ['json','yaml'] as const){

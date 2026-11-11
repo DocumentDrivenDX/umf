@@ -2,7 +2,7 @@
 /** Separate ideal-admission and qualified five-target delivery decision, following CONTRACT-040/076. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {projectBit128Model,recoverBit128ModelProjection} from '../../src/projections/bit128-model';
+import {projectBit128Model,recoverBit128ModelProjection} from "../../src/index-node-v4";
 import {uuidModel} from '../../tests/helpers/uuid-model-fixtures';
 export const uuidSystems=['postgresql','sqlserver','avro','parquet','tablespec'] as const;
 export async function verifyUuidFingerprints(record:any){

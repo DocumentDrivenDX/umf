@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {uuidModel,CHILD} from './helpers/uuid-model-fixtures';
-import {projectBit128Model,encodeBit128FileRecord,decodeBit128FileRecord,recoverBit128ModelProjection} from '../src';
+import {projectBit128Model,encodeBit128FileRecord,decodeBit128FileRecord,recoverBit128ModelProjection} from '../src/index-node-v4';
 const uuid='00112233-4455-6677-8899-aabbccddeeff';
 test('file/model bundles retain unenforced Keys/relations and pair absence uses one nullable group',()=>{
  for(const system of ['avro','parquet','tablespec'])for(const kind of system==='tablespec'?['uuid-text']:['native-uuid','bytes16','uuid-text','words64']){

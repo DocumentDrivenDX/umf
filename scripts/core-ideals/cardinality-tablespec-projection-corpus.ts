@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {cardinalityTableSpecProjectionCases} from './cardinality-tablespec-projection-cases';
 const rows=cardinalityTableSpecProjectionCases().map(row=>{
  const result=u.projectCardinalityToTableSpec(row.author,row.request),nativeText=result.target?u.exportTableSpec(result.target):null;

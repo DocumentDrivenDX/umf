@@ -1649,11 +1649,11 @@ impl Projection<'_, '_> {
             def_fields.push((Utf16::from("required"), array_str(&required)));
         }
         self.defs
-            .push((Utf16::from(name), Value::Object(def_fields)));
+            .push((Utf16::from(name.clone()), Value::Object(def_fields)));
         self.active.pop();
         Ok(object(vec![(
             "$ref",
-            strval(&format!("#/$defs/concept_{}", self.names.len() - 1)),
+            strval(&format!("#/$defs/{name}")),
         )]))
     }
     fn scalar(&mut self, ty: &Value, path: &Utf16) -> Result<Value, EngineError> {

@@ -2,10 +2,8 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/create-link.json';
-import {registerActions,inspectActions,assessAction,editAction} from '../../src/extensions/actions';
-import {Registry} from '../../src/registry/registry';
+import {registerActions,inspectActions,assessAction,editAction,Registry,type ActionExecutorProfile} from '../../src/index-node-v4';
 import type {Document} from '../../src/model/types';
-import type {ActionExecutorProfile} from '../../src/extensions/actions';
 const source=()=>structuredClone(fixture) as unknown as Document;
 const registry=()=>registerActions(new Registry());
 const identity={module:'sales',action:'create-order'};

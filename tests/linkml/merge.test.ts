@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/linkml/merge-schema.json';
-import {proposeLinkmlImportMerge,importLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,readDocument,writeDocument} from '../../src';
+import {proposeLinkmlImportMerge,importLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlDocumentNodeEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 const fixture=await Bun.file('fixtures/linkml/merge/results.json').json(),cases=fixture.cases;
 test('US-024-AC9: both explicit precedence policies preserve context and candidate round trips',async()=>{
  const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core).compile(schema),native=await Bun.file('fixtures/linkml/merge/oracle-results.json').json();

@@ -2,9 +2,9 @@
 import assert from 'node:assert/strict';
 import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {parquetFacetProjectionCases} from './facets-parquet-projection-cases';
-import {projectFacetsToParquet, recoverFacetsFromParquet} from '../../src/core-ideals/facets-parquet-projection';
+import {projectFacetsToParquet,recoverFacetsFromParquet} from "../../src/index-node-v4";
 const hash=async(path:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex');
 const native=await Bun.file('fixtures/validation/facets-parquet-projection-native.json').json();
 for(const [path,sha] of Object.entries(native.sha256))assert.equal(await hash(path),sha,'Stale native evidence: '+path);

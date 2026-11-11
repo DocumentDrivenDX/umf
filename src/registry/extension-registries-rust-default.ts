@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Rust-owned semantic callbacks for built-in extension registries. */
 import {UmfError} from '../model/errors';
-import {canonicalSchemaJson} from '../model/schema-literals';
+import {canonicalSchemaJson} from '../model/canonical-schema-json';
 import type {Diagnostic, ExtensionPackage} from '../model/types';
 import type {Registry as RegistryInstance, SemanticValidator} from './registry';
 import {composeOwnedSemanticValidator} from './semantic-owner';

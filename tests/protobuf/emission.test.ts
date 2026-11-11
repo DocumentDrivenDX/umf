@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import {mkdtemp,rm,mkdir} from 'node:fs/promises';
 import {join,dirname} from 'node:path';
 import {tmpdir} from 'node:os';
-import {importProtobufDescriptorSet,exportProtobufDescriptorSet,exportProtobufSources,proposeProtobufDescriptorEdit,type DescriptorNode,type ProtobufSourceEmitter} from '../../src';
+import {importProtobufDescriptorSet,exportProtobufDescriptorSet,exportProtobufSources,proposeProtobufDescriptorEdit,type DescriptorNode,type ProtobufSourceEmitter} from '../../src/index-node-v4';
 const emitter:ProtobufSourceEmitter={async emit(descriptorSet){
  const proc=Bun.spawn(['go','run','.'],{cwd:'native/protobuf',stdin:new Blob([JSON.stringify({operation:'emit',descriptorHex:Buffer.from(descriptorSet).toString('hex')})]),stdout:'pipe',stderr:'pipe'});
  const [out,err]=await Promise.all([new Response(proc.stdout).text(),new Response(proc.stderr).text()]);

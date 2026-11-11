@@ -19,8 +19,7 @@ const probes = [
     source: String.raw`
 import fs from "node:fs";
 import {verifyReferenceEntityOutputs} from "./scripts/actions-reference/handler-outputs";
-import {admitActionInputs} from "./src/extensions/actions/selector";
-import {actionFieldValueKey as k} from "./src/extensions/actions/evaluation";
+import {admitActionInputs,actionFieldValueKey as k} from "./src/index-node-v4";
 const source=JSON.parse(fs.readFileSync("fixtures/actions/approve.json","utf8")),m=source.modules[0],action=m.extensions["umf.actions"].actions[0],record=m.elements.find(x=>x.id==="order");
 action.authorization.profile={id:"umf.actions.roles",version:"1"};action.binding={kind:"handler",profile:{id:"umf.actions.container",version:"1"},handler:{id:"h",version:"1"}};
 m.elements.push({id:"other",kind:"field",scalarType:"string",cardinality:"one",nullability:"required",extensions:{}});record.members.push({module:"sales",element:"other"});record.keys.push({id:"alt",name:"alternate",primary:false,fields:[{module:"sales",element:"status"},{module:"sales",element:"other"}]});
@@ -66,7 +65,7 @@ check("hostile getter rejected by output admission",hostile,[]);console.log("get
     name: 'other-canonical grant and corrected hostile getter controls',
     cases: 2,
     source: String.raw`
-import fs from "node:fs";import {verifyReferenceEntityOutputs} from "./scripts/actions-reference/handler-outputs";import {admitActionInputs} from "./src/extensions/actions/selector";import {actionFieldValueKey as k} from "./src/extensions/actions/evaluation";
+import fs from "node:fs";import {verifyReferenceEntityOutputs} from "./scripts/actions-reference/handler-outputs";import {admitActionInputs,actionFieldValueKey as k} from "./src/index-node-v4";
 const source=JSON.parse(fs.readFileSync("fixtures/actions/approve.json","utf8")),m=source.modules[0],action=m.extensions["umf.actions"].actions[0],record=m.elements.find(e=>e.id==="order");action.authorization.profile={id:"umf.actions.roles",version:"1"};action.binding={kind:"handler",profile:{id:"umf.actions.container",version:"1"},handler:{id:"h",version:"1"}};m.elements.push({id:"other",kind:"field",scalarType:"string",cardinality:"one",nullability:"required",extensions:{}});record.members.push({module:"sales",element:"other"});record.keys.push({id:"alt",name:"alternate",primary:false,fields:[{module:"sales",element:"status"},{module:"sales",element:"other"}]});
 const input={key:{module:"sales",element:"order",key:"pk"},components:[{string:"o1"}]},alt={key:{module:"sales",element:"order",key:"alt"},components:[{string:"pending"},{string:"secret"}]};action.outputs=[{id:"out",kind:"entity",target:alt.key,required:true}];
 const entity=(id,primary,other)=>({id,record:{module:"sales",element:"order"},fields:{[k({module:"sales",element:"id"})]:{string:primary},[k({module:"sales",element:"status"})]:{string:"pending"},[k({module:"sales",element:"other"})]:{string:other}},version:"v0"}),a=entity("1","o1","secret"),b=entity("2","o2","different");

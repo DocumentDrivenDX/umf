@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSparkSchema,exportSparkSchema,inspectSpark} from '../../src';
+import {importSparkSchema,exportSparkSchema,inspectSpark} from '../../src/index-node-v4';
 const source=(metadata:string)=>'{"type":"struct","fields":[{"name":"x","type":"string","nullable":true,"metadata":'+metadata+'}]}';
 test('US-017-AC2: exact metadata warns about JVM numeric and array interpretation without normalizing',()=>{
  const cases:[string,string[]][]=[['{"x":9223372036854775807}',[]],['{"x":-9223372036854775808}',[]],['{"x":9223372036854775808}',['INT64_OVERFLOW']],['{"x":-9223372036854775809}',['INT64_OVERFLOW']],['{"x":9007199254740993.25}',['DOUBLE']],['{"x":1e400}',['NONFINITE']],['{"x":[1,2.5]}',['ARRAY_MIXED','DOUBLE']],['{"x":[null]}',['ARRAY_UNSUPPORTED']],['{"x":[[1]]}',['ARRAY_UNSUPPORTED']],['{"x":[]}',['EMPTY_ARRAY']],['{"x":null}',[]]];

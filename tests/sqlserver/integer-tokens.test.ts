@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog,exportSqlServerCatalog,proposeSqlServerCatalogEdit,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog,exportSqlServerCatalog,proposeSqlServerCatalogEdit,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src/index-node-v4';
 const source=await Bun.file('fixtures/sqlserver/catalog.json').text();
 test('CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers',async()=>{
  const original=importSqlServerCatalog(source,{id:'integer-tokens'}),field=getSqlServerColumnMetadata(original)[0]!,before=writeDocument(original,'json');

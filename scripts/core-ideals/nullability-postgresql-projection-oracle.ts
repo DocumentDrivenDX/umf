@@ -2,12 +2,12 @@
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlNullabilityProjectionCases} from './nullability-postgresql-projection-cases';
-import {projectNullabilityToPostgresql, recoverNullabilityFromPostgresql} from '../../src/core-ideals/nullability-postgresql-projection';
-import {classifyPostgresqlNullability, recoverPostgresqlNullabilitySource} from '../../src/core-ideals/nullability-postgresql';
-import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {projectNullabilityToPostgresql,recoverNullabilityFromPostgresql} from "../../src/index-node-v4";
+import {classifyPostgresqlNullability,recoverPostgresqlNullabilitySource} from "../../src/index-node-v4";
+import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from "../../src/index-node-v4";
 
 
-import {classifyPostgresqlField} from '../../src/core-ideals/postgresql-field';
+import {classifyPostgresqlField} from "../../src/index-node-v4";
 import {identifier, carriers} from '../../src/core-ideals/postgresql-syntax';
 const name='umf-nullability-down-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){

@@ -105,6 +105,7 @@ fn strip_selected(
     module_id: &str,
     removed: &[String],
     added: &[String],
+    removed_declarations: &[String],
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     let Some(Value::Array(modules)) = member_mut(document, "modules") else {
@@ -132,7 +133,7 @@ fn strip_selected(
             !(is_field
                 && id
                     .as_ref()
-                    .is_some_and(|id| removed.contains(id) || added.contains(id)))
+                    .is_some_and(|id| removed_declarations.contains(id) || added.contains(id)))
         });
         for element in elements.iter_mut() {
             if text(get(element, "kind").unwrap_or(&Value::Null)).as_deref() == Some("record") {
@@ -1692,17 +1693,20 @@ pub(super) fn validate_mapping_replacement(
         )
         .unwrap_or(&Value::Null),
     );
+    let mut removed_declarations = Vec::new();
     for id in &removed {
-        if all_fields_old
-            .iter()
-            .filter(|e| text(get(e, "id").unwrap_or(&Value::Null)).as_deref() == Some(id))
-            .count()
-            != 1
-            || all_fields_new
-                .iter()
-                .any(|e| text(get(e, "id").unwrap_or(&Value::Null)).as_deref() == Some(id))
-        {
-            return Err(error("TABLE_MIGRATION_OPTIONS","/next/source/modules","Removed G11 Fields must be exact predecessor declarations absent from the successor"));
+        let is_selected = |element: &&Value| {
+            text(get(element, "id").unwrap_or(&Value::Null)).as_deref() == Some(id.as_str())
+        };
+        if all_fields_old.iter().filter(is_selected).count() != 1 {
+            return Err(error(
+                "TABLE_MIGRATION_OPTIONS",
+                "/next/source/modules",
+                "Removed G11 mappings must refer to exact predecessor Field declarations",
+            ));
+        }
+        if !all_fields_new.iter().any(|element| is_selected(&element)) {
+            removed_declarations.push(id.clone());
         }
     }
     for id in &added {
@@ -1746,8 +1750,22 @@ pub(super) fn validate_mapping_replacement(
     let markers = fields(get(options, "reviewedChanges").unwrap_or(&Value::Null));
     let mut old_normal = copy(&old_doc, ctx)?;
     let mut new_normal = copy(&new_doc, ctx)?;
-    strip_selected(&mut old_normal, &module_id, &removed, &added, ctx)?;
-    strip_selected(&mut new_normal, &module_id, &removed, &added, ctx)?;
+    strip_selected(
+        &mut old_normal,
+        &module_id,
+        &removed,
+        &added,
+        &removed_declarations,
+        ctx,
+    )?;
+    strip_selected(
+        &mut new_normal,
+        &module_id,
+        &removed,
+        &added,
+        &removed_declarations,
+        ctx,
+    )?;
     for candidate in &candidates {
         let kind = text(get(candidate, "kind").unwrap_or(&Value::Null)).unwrap_or_default();
         if !dependency_candidate(&kind) {
@@ -1793,6 +1811,28 @@ pub(super) fn validate_mapping_replacement(
                     "TABLE_MIGRATION_OPTIONS",
                     "/options/reviewedChanges",
                     "Changed operation must reference a selected G11 Field",
+                ));
+            }
+            let before_body = v(before, "body");
+            let after_body = v(after, "body");
+            let editable_body_members: &[&str] = match txt(before_body, "kind").as_str() {
+                "read" => &["fields"],
+                "insert" | "insertFrom" | "update" | "upsert" => &["values", "returning"],
+                _ => &[],
+            };
+            if !eq(
+                &omit(before, &["parameters", "body"], ctx)?,
+                &omit(after, &["parameters", "body"], ctx)?,
+                ctx,
+            )? || !eq(
+                &omit(before_body, editable_body_members, ctx)?,
+                &omit(after_body, editable_body_members, ctx)?,
+                ctx,
+            )? {
+                return Err(error(
+                    "TABLE_MIGRATION_OPTIONS",
+                    new_path.as_deref().unwrap(),
+                    "Changed G11 operation must preserve command metadata and non-projection body meaning",
                 ));
             }
             continue;
@@ -1876,10 +1916,6 @@ pub(super) fn validate_mapping_replacement(
         ));
     }
     for candidate in &candidates {
-        let kind = text(get(candidate, "kind").unwrap_or(&Value::Null)).unwrap_or_default();
-        if !dependency_candidate(&kind) {
-            continue;
-        }
         let marker = markers.iter().find(|marker| {
             get(marker, "id") == get(candidate, "id")
                 && get(marker, "kind") == get(candidate, "kind")
@@ -1895,16 +1931,7 @@ pub(super) fn validate_mapping_replacement(
             ));
         }
     }
-    if markers.len()
-        != candidates
-            .iter()
-            .filter(|item| {
-                dependency_candidate(
-                    &text(get(item, "kind").unwrap_or(&Value::Null)).unwrap_or_default(),
-                )
-            })
-            .count()
-    {
+    if markers.len() != candidates.len() {
         return Err(error(
             "TABLE_MIGRATION_OPTIONS",
             "/options/reviewedChanges",

@@ -466,6 +466,22 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
     }
     let operation = text_field(request, "op").ok_or_else(|| err("REQUEST", "op is required"))?;
     match operation.as_str() {
+        "inspectRawTableBinding" => {
+            let binding =
+                field(request, "binding").ok_or_else(|| err("REQUEST", "binding is required"))?;
+            let logical =
+                field(request, "logical").ok_or_else(|| err("REQUEST", "logical is required"))?;
+            let target =
+                field(request, "target").ok_or_else(|| err("REQUEST", "target is required"))?;
+            let module =
+                field(request, "module").ok_or_else(|| err("REQUEST", "module is required"))?;
+            let resources = BindingInspectionResources::new(ctx)?;
+            Ok(validation_value(
+                umf_core::binding_inspection::inspect_raw_table_binding(
+                    &resources, binding, logical, target, module, ctx,
+                )?,
+            ))
+        }
         "inspectBinding" => {
             let binding =
                 field(request, "binding").ok_or_else(|| err("REQUEST", "binding is required"))?;

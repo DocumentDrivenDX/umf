@@ -24,7 +24,7 @@ try{
   return {cases:input.length,bytes,refusals,getterCalls};
  },rows);
  assert.equal(checks.cases,54);assert.deepEqual(externalRequests,[]);
- const paths=[corpus,'src/core-ideals/parquet-facet-carrier.ts','src/core-ideals/parquet-carriers.ts','src/adapters/parquet/encode.ts','src/model/json.ts','scripts/core-ideals/facets-parquet-carrier-browser.ts',bundle,...rows.map(r=>r.path)];
+ const paths=[corpus,'src/core-ideals/parquet-facet-carrier.ts','src/core-ideals/parquet-carriers.ts','crates/umf-core/src/parquet_wire_encode.rs','src/model/json.ts','scripts/core-ideals/facets-parquet-carrier-browser.ts',bundle,...rows.map(r=>r.path)];
  const sha256=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
  await Bun.write('fixtures/validation/facets-parquet-carrier-browser.json',JSON.stringify({scope:'Internal explicit native schema emitter, including reader-unrepresentable declarations; no author ideal projection or binding acceptance',browser:browser.version(),checks,externalRequests,bindingAccepted:false,sha256},null,2)+'\n');console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

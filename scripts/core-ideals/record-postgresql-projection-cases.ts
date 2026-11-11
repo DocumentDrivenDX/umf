@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {recordCase} from './record-tablespec-cases';
 import {copyJson} from '../../src/model/json';
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import {type Document} from '../../src/model/types';
 import {type RecordPostgresqlRequest} from '../../src/core-ideals/record-postgresql-projection';
 export function postgresqlRecordCase(tableName='Orders',empty=false){

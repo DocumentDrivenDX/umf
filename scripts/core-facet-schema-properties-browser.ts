@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {inspectCoreFacets} from '../src/model/facets';
+import {inspectCoreFacets} from "../src/index-node-v4";
 import type {Document} from '../src/model/types';
 const identity={module:'m',element:'v'};
 const rows=[{scalarType:'string',facets:{length:{min:2,unit:'unicode-scalar'}}},{scalarType:'binary',facets:{length:{min:0,max:8,unit:'byte'}}},{scalarType:'integer',facets:{integerWidth:{bits:128,signed:true},range:{min:{integerToken:'9007199254740993'},max:{integerToken:'9007199254740995'},minInclusive:false}}},{scalarType:'decimal',facets:{precision:38,scale:2,range:{min:{decimalToken:'-1.25'},max:{decimalToken:'2.50'},maxInclusive:false}}},{cardinality:'array',itemType:{module:'m',element:'item'},facets:{collectionSize:{min:0,max:3}}},{cardinality:'map',itemType:{module:'m',element:'item'},facets:{collectionSize:{min:2}}},{scalarType:'string',facets:{length:{min:1,unit:'future'}}},{scalarType:'integer',facets:{range:{min:{integerToken:'1'},'future/~':false},future:null}},{scalarType:'string'},{kind:'record',members:[]}];

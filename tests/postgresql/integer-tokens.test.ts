@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,getPostgresqlCatalogNode,proposePostgresqlCatalogEdit,readDocument,writeDocument} from '../../src';
+import {importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata,getPostgresqlCatalogNode,proposePostgresqlCatalogEdit,readDocument,writeDocument} from '../../src/index-node-v4';
 import {nativePointer,treeChild,parseNativeJson,renderTree} from '../../src/model/native-json';
 test('CONTRACT-015 exact catalog integers prevent false scalar classification through rounding',async()=>{
  const source=await Bun.file('fixtures/postgresql/catalog-capture.json').text(),original=importPostgresqlCatalogCapture(source,{id:'exact-integers'}),column=getPostgresqlColumnMetadata(original).find(c=>c.element.scalarType==='integer')!,before=writeDocument(original,'json'),cases=[];

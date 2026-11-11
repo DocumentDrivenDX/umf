@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe, expect, test} from 'bun:test';
 import {createRowScopeRustDefault} from '../../src/table-authoring/rust-default';
-import type {TablePolicy} from '../../src/extensions/tables';
+import type {TablePolicy} from '../../src/extensions/tables/types';
 
 const rowPolicy:TablePolicy={
   mode:'native-rls',

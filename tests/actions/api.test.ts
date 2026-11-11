@@ -2,9 +2,7 @@
 import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
-import {Registry} from '../../src/registry/registry';
-import {inspectActions,registerActions,declareAction,editAction,assessAction,actionsPackage} from '../../src/extensions/actions';
-import type {ActionExecutorProfile,Action} from '../../src/extensions/actions';
+import {Registry,inspectActions,registerActions,declareAction,editAction,assessAction,actionsPackage,dddRegistry,type ActionExecutorProfile,type Action} from '../../src/index-node-v4';
 import type {Document} from '../../src/model/types';
 const document=()=>structuredClone(fixture) as unknown as Document;
 const registry=()=>registerActions(new Registry());
@@ -95,7 +93,7 @@ test('warnings at existing model obligations and transitive package qualifiers b
  r.register({id:'test.guard',version:'1.0.0',coreVersion:CURRENT_CORE_VERSION,description:'guard',schema:true,semantics:'guard',scopes:['module'],capabilities:{validation:'semantic',directions:[],evidence:[]}},()=>[{code:'GUARD_UNKNOWN',path:'/modules/0/elements/2',message:'unknown model meaning',severity:'warning'}]);
  expect(assessAction(source,id,completeProfile(source),r).declaredCompatible).toBe(false);
  expect(()=>editAction(source,id,inspectActions(source,r).actions[0]!.action,r)).toThrow();
- const {default:fixture}=await import('../../fixtures/actions/ddd-binding.json'),{dddPackage,dddRegistry}=await import('../../src/extensions/ddd');
+ const {default:fixture}=await import('../../fixtures/actions/ddd-binding.json'),{dddPackage}=await import('../../src/extensions/ddd');
  const d=structuredClone(fixture) as unknown as Document,dr=registerActions(new Registry().register(dddPackage,dddRegistry().get('umf.ddd','0.1.0')!.semantics));
  (d.vocabularies['umf.ddd'] as any).future={unknown:true};
  const target=inspectActions(d,dr).actions[0]!,identity={module:target.module,action:target.action.id};

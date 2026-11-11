@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {reconcileDeltaMultipartCheckpoint,exportParquetCapture,coreSchema} from '../../src';
+import {reconcileDeltaMultipartCheckpoint,exportParquetCapture,coreSchema} from '../../src/index-node-v4';
 import {sparkStringHash} from '../../src/adapters/delta/spark-hash';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/delta-log/multipart.schema.json';
@@ -13,6 +13,6 @@ test('US-018-AC19: missing/duplicate parts, mismatched identities and hash-clust
  const e=report.results[0],parts=e.parts.map(({name,source}:any)=>({name,source}));const cases=[reconcileDeltaMultipartCheckpoint(e.version,2,parts.slice(0,1),[]),reconcileDeltaMultipartCheckpoint(e.version,2,[parts[0],parts[0]],[]),reconcileDeltaMultipartCheckpoint('11',2,parts,[]),reconcileDeltaMultipartCheckpoint(e.version,3,parts,[]),reconcileDeltaMultipartCheckpoint(e.version,2,parts.map((p:any,i:number)=>({...p,source:parts[1-i].source})),[])];for(const r of cases){expect(r.status).toBe('blocked');expect(r.recovery?.state).toBeUndefined();expect(check(r)).toBe(true);expect(r.diagnostics.some(d=>d.severity==='error')).toBe(true);}expect(cases.at(-1)?.diagnostics.at(-1)?.message).toContain('hash partitioning');
 });
 test('US-018-AC19: V2 features and repeated actions cannot be assembled as a multipart snapshot',async()=>{
- const {captureParquet}=await import('../../src');const e=report.results[0];for(const c of (await Bun.file(base+'negative-manifest.json').json()).cases){const parts=e.parts.map(({name,source}:any)=>({name,source}));parts[c.replaces].source=captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id});const r=reconcileDeltaMultipartCheckpoint(e.version,e.partCount,parts,[]);expect(r.status).toBe('blocked');expect(r.recovery?.state).toBeUndefined();expect(check(r)).toBe(true);expect(r.diagnostics.some(d=>c.id==='v2-feature'?d.message.includes('v2Checkpoint forbids'):d.code==='DELTA_HISTORY_DUPLICATE')).toBe(true);}
+ const {captureParquet}=await import('../../src/index-node-v4');const e=report.results[0];for(const c of (await Bun.file(base+'negative-manifest.json').json()).cases){const parts=e.parts.map(({name,source}:any)=>({name,source}));parts[c.replaces].source=captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id});const r=reconcileDeltaMultipartCheckpoint(e.version,e.partCount,parts,[]);expect(r.status).toBe('blocked');expect(r.recovery?.state).toBeUndefined();expect(check(r)).toBe(true);expect(r.diagnostics.some(d=>c.id==='v2-feature'?d.message.includes('v2Checkpoint forbids'):d.code==='DELTA_HISTORY_DUPLICATE')).toBe(true);}
 });
 test('US-018-AC19: invalid finite part counts retain schema-valid blocked evidence',()=>{for(const n of [-1,1.5,1001]){const r=reconcileDeltaMultipartCheckpoint('10',n,[],[]);expect(r.status).toBe('blocked');expect(check(r)).toBe(true);}});

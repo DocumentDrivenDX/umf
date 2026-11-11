@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureDeltaLog,exportDeltaLog,inspectDeltaLog,readDocument,writeDocument} from '../src';
+import {captureDeltaLog,exportDeltaLog,inspectDeltaLog,readDocument,writeDocument} from '../src/index-node-v4';
 const base='fixtures/delta/upstream/',manifest=await Bun.file(base+'manifest.json').json(),results=[];
 for(const file of manifest.files){
  if(!file.path.endsWith('.json'))continue;

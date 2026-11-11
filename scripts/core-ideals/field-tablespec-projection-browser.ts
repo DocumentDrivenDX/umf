@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Synthetic current-core fixture for active operation/projection behavior.
 import {recordCase} from './record-tablespec-cases';
-import {projectRecordToTableSpec} from '../../src/core-ideals/record-tablespec-projection';
+import {projectRecordToTableSpec} from "../../src/index-node-v4";
 import {chromium} from 'playwright';
-import {declareCoreElementKind} from '../../src/model/field-kind';
-import {projectFieldToTableSpec, type FieldTableSpecRequest} from '../../src/core-ideals/field-tablespec-projection';
-import {exportTableSpec} from '../../src/adapters/tablespec';
+import {declareCoreElementKind} from "../../src/index-node-v4";
+import {type FieldTableSpecRequest} from "../../src/core-ideals/field-tablespec-projection";
+import {projectFieldToTableSpec} from "../../src/index-node-v4";
+import {exportTableSpec} from "../../src/index-node-v4";
 import {type Document} from '../../src/model/types';
+import {buildBindingBrowserRuntime} from '../binding/browser-runtime';
 const rows:any[]=[];
 for(const nativeType of ['BOOLEAN','INTEGER','DECIMAL','FLOAT','TEXT','VARCHAR','CHAR','DATE','DATETIME','TIMESTAMP'] as const)for(const mode of ['strict','report'] as const)for(const namespace of ['sales','']){
  const source:Document={umf:'0.10.0',id:'source',vocabularies:{},modules:[{id:'m',namespace,elements:[{id:'e',name:'value',extensions:{}}]}]};
@@ -24,7 +26,8 @@ for(const mode of ['strict','report'] as const)for(const variant of ['clean','mi
  const result=projectRecordToTableSpec(author,request);records.push({variant,author,request,result,...(result.target?{text:exportTableSpec(result.target)}:{})});
  if(variant==='empty-namespace'&&(result.status!=='projected'||result.residuals.length))throw Error('Strict record control must have no loss');
 }
-const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(rows);if(path==='/records')return Response.json(records);return new Response('<!doctype html><html><body>Field projection</body></html>',{headers:{'content-type':'text/html'}});}});
+const {browserJs,wasmBytes}=await buildBindingBrowserRuntime();
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(browserJs,{headers:{'content-type':'text/javascript'}});if(path==='/umf_core_wasm_bg.wasm')return new Response(Bun.file(wasmBytes),{headers:{'content-type':'application/wasm'}});if(path==='/cases')return Response.json(rows);if(path==='/records')return Response.json(records);return new Response('<!doctype html><html><body>Field projection</body></html>',{headers:{'content-type':'text/html'}});}});
 let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();const external:string[]=[];

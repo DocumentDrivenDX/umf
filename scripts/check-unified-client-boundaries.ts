@@ -1,28 +1,24 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-/** Checks the portable generator and the shipped Python template, without importing it. */
+/** Checks the checked-in Rust facade dependencies and host boundary. */
 import ts from 'typescript-api';
 import {readFile,readdir} from 'node:fs/promises';
-import {pythonRuntime} from '../src/access/python-runtime';
-// Portable-generator dependencies are restricted to the audited predecessor
-// files below. Every Rust facade/resource file has its own exact imports; a
+// Every Rust facade/resource file has its own exact imports; a
 // new file requires an explicit entry and cannot inherit another file's grants.
 const allowedImports:Record<string,readonly string[]>={
  'codegen-resources.ts':['../../spec/core/schema.json','../../spec/core/semantic-type-reference.schema.json','../../spec/core/extension-package.schema.json','../../spec/metamodel/generated/core-constraints.json','../../spec/metamodel/generated/domain-policy.json','../../spec/extensions/tables/package.json','../../spec/extensions/actions/package.json','../../spec/extensions/binding/package.json','../../spec/extensions/binding-stable/package.json'],
- 'constants.ts':[],
  'core-model-resources.ts':['../../spec/core/schema.json','../../spec/core/semantic-type-reference.schema.json','../../spec/core/extension-package.schema.json','../../spec/metamodel/generated/core-constraints.json','../../spec/metamodel/generated/domain-policy.json'],
- 'index.ts':['../model/document','../model/types','../extensions/actions/structure','../extensions/actions/analysis','../extensions/actions/types','../compilation/bundle/index','./python-runtime','./table-runtime','./table-client','./constants','./types'],
- 'python-runtime.ts':['./constants'],
+ 'index.ts':['./rust-candidate'],
  'read-json-value-ordinary.ts':['../model/errors','../model/types'],
- 'rust-bit128-default.ts':['../model/bit128','../model/uuid','../model/errors','../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
+ 'rust-bit128-default.ts':['../model/bit128-types','../model/uuid','../model/errors','../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
  'rust-candidate.ts':[],
  'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors'],
  'rust-kind-nullability-default.ts':['../model/field-kind','../model/nullability','../model/types','../model/errors'],
  'rust-core-inspectors-default.ts':['../model/scalar-type','../model/record-members','../model/reference-links','../model/types','../model/errors'],
  'rust-core-bit128-field-default.ts':['../model/errors','../model/types'],
  'rust-core-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types'],
- 'rust-core-evolution-candidate.ts':['../model/types','../model/evolution','../model/errors'],
+ 'rust-core-evolution-candidate.ts':['../model/types','../model/evolution-types','../model/errors'],
  'rust-csv-boolean-default.ts':['../model/csv-boolean-lexical','../model/types','../model/errors'],
- 'rust-dataset-values-compact-default.ts':['../model/dataset-values','../model/dataset-values-compact','../model/types','../model/errors'],
+ 'rust-dataset-values-compact-default.ts':['../model/dataset-values-types','../model/dataset-values-compact-types','../model/types','../model/errors'],
  'rust-default-v4.ts':['./rust-candidate'],
  'rust-facets-default.ts':['../model/facets','../model/types','../model/json','../model/errors'],
  'rust-host-reads-v3.ts':['./rust-candidate'],
@@ -31,30 +27,29 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-key-tuple-default.ts':['../model/key-tuple','../model/types','../model/errors'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric','../model/json','../model/errors'],
  'rust-relationships-default.ts':['../model/relationships','../model/types','../model/json','../model/errors'],
- 'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types','../model/json','../model/errors'],
- 'rust-record-values-default.ts':['../model/record-values'],
+ 'rust-record-type-default.ts':['../model/field-kind','../model/record-type-types','../model/types','../model/json','../model/errors'],
+ 'rust-record-values-default.ts':['../model/record-values-types'],
  'rust-schema-properties-default.ts':['../model/schema-properties','../model/schema-literals','../model/types'],
  'rust-scalar-types-for-version-default.ts':[],
  'rust-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types','../extensions/semantic-types'],
- 'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
+ 'rust-selection-default.ts':['../model/selection-types','../model/types','../registry/registry'],
  'rust-runtime.ts':['../model/errors','./rust-candidate','./rust-host-reads-v3','./rust-host-reads-v4'],
- 'table-client.ts':['../model/types','../extensions/tables','./types'],
- 'table-runtime.ts':[],
- 'types.ts':[],
 };
 // These predecessor modules supply declarations only. A value import would
 // restore executable TypeScript behavior behind the Rust-selected facade.
 const typeOnlyImports:Record<string,readonly string[]>={
+ 'index.ts':['./rust-candidate'],
  'read-json-value-ordinary.ts':['../model/types'],
- 'rust-core-evolution-candidate.ts':['../model/types','../model/evolution'],
+ 'rust-core-evolution-candidate.ts':['../model/types','../model/evolution-types'],
  'rust-core-semantic-types-default.ts':['../model/semantic-types','../model/types'],
- 'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types'],
+ 'rust-record-type-default.ts':['../model/field-kind','../model/record-type-types','../model/types'],
  'rust-kind-nullability-default.ts':['../model/field-kind','../model/nullability','../model/types'],
- 'rust-record-values-default.ts':['../model/record-values'],
- 'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],
+ 'rust-record-values-default.ts':['../model/record-values-types'],
+ 'rust-dataset-values-compact-default.ts':['../model/dataset-values-types','../model/dataset-values-compact-types','../model/types'],
+ 'rust-selection-default.ts':['../model/selection-types','../model/types','../registry/registry'],
  'rust-semantic-types-default.ts':['../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric'],
- 'rust-bit128-default.ts':['../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
+ 'rust-bit128-default.ts':['../model/uuid','../projections/bit128','../projections/bit128-model','../extensions/binding/bit128-record','../model/types','../model/schema-literals'],
  'rust-core-bit128-field-default.ts':['../model/types'],
  'rust-key-tuple-default.ts':['../model/key-tuple','../model/types'],
 };
@@ -104,8 +99,5 @@ if(import.meta.main){
   }
   errors.push(...checkAccessSource(file,await readFile(new URL('../src/access/'+file,import.meta.url),'utf8')));
  }
- const imports=[...pythonRuntime.matchAll(/^[ \t]*(?:from|import) ([\w.]+)/gm)].map(m=>m[1]!.split('.')[0]);
- const stdlib=new Set(['__future__','asyncio','collections','dataclasses','datetime','decimal','enum','typing','uuid','base64','re','inspect','math']);
- for(const module of imports)if(!stdlib.has(module!))errors.push('Python template: unapproved import '+module);
- if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log('Unified client boundaries: portable generator; stdlib-only request builders; no SQL compiler or host I/O');
+ if(errors.length){console.error(errors.join('\n'));process.exitCode=1;}else console.log('Unified client boundaries: Rust codegen facades; no TypeScript generation engine or host I/O');
 }

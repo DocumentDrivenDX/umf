@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {nullabilityTableSpecProjectionCases} from './nullability-tablespec-projection-cases';
-import {projectNullabilityToTableSpec} from '../../src';
+import {projectNullabilityToTableSpec} from '../../src/index-node-v4';
 const rows=nullabilityTableSpecProjectionCases().map(row=>({...row,result:projectNullabilityToTableSpec(row.author,row.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(rows);return new Response('<!doctype html><html><body>TableSpec authored availability</body></html>',{headers:{'content-type':'text/html'}});}});
 let browser;

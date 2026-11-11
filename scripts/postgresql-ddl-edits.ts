@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {backend} from '../native/postgresql/runtime';
-import {importPostgresqlSql,getPostgresqlNode,proposePostgresqlNodeEdit,exportPostgresqlSql,writeDocument,readDocument,getPostgresqlSource} from '../src';
+import {importPostgresqlSql,getPostgresqlNode,proposePostgresqlNodeEdit,exportPostgresqlSql,writeDocument,readDocument,getPostgresqlSource} from '../src/index-node-v4';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/postgresql/edits/',source=await Bun.file(base+'source.sql').text(),expectedSource=await Bun.file(base+'expected.sql').text();
 const document=await importPostgresqlSql(source,backend,{id:'ddl-edit-source'}),expected=await importPostgresqlSql(expectedSource,backend,{id:'authored-expectation'});

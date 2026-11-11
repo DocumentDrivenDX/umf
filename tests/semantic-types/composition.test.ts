@@ -3,7 +3,7 @@ import {test,expect} from 'bun:test';
 import {createValidator} from '../../src/validation/schema';
 import {validateDocument} from '../../src/validation/document';
 import {copyJson} from '../../src/model/json';
-import {declareCoreSemanticTypes,getCoreSemanticTypes} from '../../src/model/semantic-types';
+import {declareCoreSemanticTypes,getCoreSemanticTypes} from "../../src/index-node-v4";
 import schema from '../../spec/core/schema.json';
 import type {Document} from '../../src/model/types';
 const term={vocabulary:'example.identity',version:'2026-10',term:'external-id'};

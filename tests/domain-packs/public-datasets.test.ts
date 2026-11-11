@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createValidator} from '../../src/validation/schema';
 import {generateDomainPackSchema} from '../../src/domain-packs/schema';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 
 const ids=['nyc-tlc','movielens','noaa-ghcn-daily','gtfs-schedule'];
 const load=(id:string)=>Bun.file(`spec/domain-packs/${id}/pack.json`).json();

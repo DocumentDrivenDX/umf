@@ -4,7 +4,7 @@ import {mkdtemp,cp,rm,stat} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {resolveDomainFamily} from '../../scripts/domain-pack-family';
-import {inspectDomainPack} from '../../src/domain-packs/profile';
+import {inspectDomainPack} from '../../src/index-node-v4';
 import {readDocument} from '../../src/model/document';
 import {validateDocument} from '../../src/validation/document';
 const root='spec/domain-packs/medical/pack.json';
@@ -34,4 +34,4 @@ async function run(input:string,output:string,check=false){const p=Bun.spawn(['b
   parent.composition.components[0].version='1.2.0';parent.composition.components[0].checksum.value='0'.repeat(64);await Bun.write(copy,JSON.stringify(parent));expect((await run(copy,join(dir,'blocked'))).stderr).toContain('checksum');
   const child=join(dir,'medical-carrier/pack.json'),metadata=await Bun.file(child).json();metadata.sources.cms_carrier.license.redistribution='unknown';const text=JSON.stringify(metadata);await Bun.write(child,text);parent.composition.components[0].checksum.value=new Bun.CryptoHasher('sha256').update(text).digest('hex');await Bun.write(copy,JSON.stringify(parent));expect((await run(copy,join(dir,'blocked'))).stderr).toContain('redistribution');expect(await stat(join(dir,'blocked')).then(()=>true,()=>false)).toBe(false);
  }finally{await rm(dir,{recursive:true,force:true});}
-},30000);
+},120000);

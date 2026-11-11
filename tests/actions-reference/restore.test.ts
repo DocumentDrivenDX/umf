@@ -9,7 +9,7 @@ import {ReferenceActionPolicy} from '../../scripts/actions-reference/policy';
 import {ReferenceActionExecutor} from '../../scripts/actions-reference/executor';
 import {ReferenceActionProjection} from '../../scripts/actions-reference/projection';
 import {seedReferenceEntity} from '../../scripts/actions-reference/state';
-import {inspectActions,registerActions} from '../../src/extensions/actions';
+import {inspectActions,registerActions} from '../../src/index-node-v4';
 import {Registry} from '../../src/registry/registry';
 import {encodeReferenceIdentity,encodeReferenceJson,decodeReferenceJson} from '../../scripts/actions-reference/codec';
 import {withReferenceStore} from './native-harness';

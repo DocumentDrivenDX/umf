@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importParquetSchema,captureParquet,exportParquetCapture,inspectParquetContainers,renameParquetField,renameParquetFieldWithArrowSchema,getParquetArrowSchema,exportArrowFlatbufferModel,coreSchema,readDocument,writeDocument} from '../../src';
+import {importParquetSchema,captureParquet,exportParquetCapture,inspectParquetContainers,renameParquetField,renameParquetFieldWithArrowSchema,getParquetArrowSchema,exportArrowFlatbufferModel,coreSchema,readDocument,writeDocument} from '../../src/index-node-v4';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';
 import {createValidator} from '../../src/validation/schema';
 import schema from '../../spec/extensions/parquet/arrow-rename.schema.json';

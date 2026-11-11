@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, readJsonValue, writeJsonValue, copyJson, declareCoreCardinality} from '../../src';
-import {classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource, verifyPostgresqlCardinalityClassification} from '../../src/core-ideals/cardinality-postgresql';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, readJsonValue, writeJsonValue, copyJson, declareCoreCardinality} from '../../src/index-node-v4';
+import {classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource,verifyPostgresqlCardinalityClassification} from "../../src/index-node-v4";
 const fixture=await Bun.file('fixtures/validation/cardinality-postgresql-catalog-native.json').json();
 function input(){const source=importPostgresqlCatalogCapture(fixture.captureSource,{id:'classification'});for(const e of source.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';return source;}
 test('all observed native shapes retain paired archives through report classification and serialized recovery',()=>{

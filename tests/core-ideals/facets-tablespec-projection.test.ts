@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import {facetProjectionSource,facetsTableSpecProjectionCases} from '../../scripts/core-ideals/facets-tablespec-projection-cases';
 import {tableSpecFacetSource} from '../../scripts/core-ideals/facets-tablespec-cases';
 const identity={module:'m',element:'value'};

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifyPostgresqlField, recoverPostgresqlFieldCapture} from '../../src/core-ideals/postgresql-field';
-import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+import {classifyPostgresqlField,recoverPostgresqlFieldCapture} from "../../src/index-node-v4";
+import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from "../../src/index-node-v4";
 
-import {declareCoreElementKind} from '../../src/model/field-kind';
+import {declareCoreElementKind} from "../../src/index-node-v4";
 import {copyJson} from '../../src/model/json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const nativeSource=' \n'+await Bun.file('fixtures/postgresql/catalog-capture.json').text()+'\n';

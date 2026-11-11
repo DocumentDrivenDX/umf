@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {bindingMigrationCase} from './stable-ids-cases';
-import {migrateBindingRelationships} from '../../src';
+import {migrateBindingRelationships} from '../../src/index-node-v4';
 const fixture=bindingMigrationCase(),expected=migrateBindingRelationships(fixture.binding,fixture.logical);
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){
  const path=new URL(request.url).pathname;

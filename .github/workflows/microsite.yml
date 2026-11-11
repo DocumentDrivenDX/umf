@@ -78,8 +78,6 @@ jobs:
           bun-version: '1.4.2'
       - name: Publish individual document research tools and evidence
         run: python3 scripts/build-document-research-release.py
-      - name: Build browser playground
-        run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Build schema explorer and domain-pack catalog
         run: bun docs/helix/05-deploy/microsite/build-explorer.ts
       - name: Install pinned released schema browser assets
@@ -91,6 +89,8 @@ jobs:
         run: bun scripts/build-protobuf.ts
       - name: Build generated reference and fixed browser tools
         run: bun run build:reference
+      - name: Build browser playground
+        run: bun build docs/helix/05-deploy/microsite/demo.ts --target browser --minify --outfile docs/helix/05-deploy/microsite/dist/demo.js
       - name: Check generated reference and module boundaries
         run: |
           bun run check:reference-boundaries

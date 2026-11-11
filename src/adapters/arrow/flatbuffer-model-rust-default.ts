@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError,type Document,type Json,type Validation} from '../../model/types';
-import type {ArrowFlatbufferEncodingBackend} from './flatbuffer-encode';
-import type {ArrowFlatbufferRoot} from './flatbuffer-decode';
+import type {ArrowFlatbufferDecodeResult,ArrowFlatbufferEncodingBackend,ArrowFlatbufferModelEdit,ArrowFlatbufferRoot} from './api-types';
 
 type Guard=(value:unknown)=>boolean;
-type Diagnostic={code:string;path:string;severity:'error'|'warning';message:string};
-type DecodeResult={source:Document;model?:Document;complete:false;status:'decoded'|'uninterpreted';diagnostics:Diagnostic[]};
 interface Engine{['arrow-flatbuffer-model']:{
  importArrowFlatbufferModel(fields:{text:string;id:string}):unknown;
  inspectArrowFlatbufferModel(fields:{document:Document}):unknown;
@@ -38,8 +35,8 @@ export function createArrowFlatbufferModelRustDefault(engine:Engine,isNativeUmfC
   importArrowFlatbufferModel(text:string,options:{id:string}):Document{return call(()=>engine['arrow-flatbuffer-model'].importArrowFlatbufferModel({text,id:options.id}))},
   inspectArrowFlatbufferModel(document:Document):Validation{return call(()=>engine['arrow-flatbuffer-model'].inspectArrowFlatbufferModel({document}))},
   exportArrowFlatbufferModel(document:Document):string{return call(()=>engine['arrow-flatbuffer-model'].exportArrowFlatbufferModel({document}))},
-  proposeArrowFlatbufferEdit(document:Document,path:string,replacement:Json):{document:Document;validation:Validation}{return call(()=>engine['arrow-flatbuffer-model'].proposeArrowFlatbufferEdit({document,path,replacement}))},
-  decodeArrowFlatbuffer(bytes:Uint8Array,options:{id:string;rootType:ArrowFlatbufferRoot}):DecodeResult{
+  proposeArrowFlatbufferEdit(document:Document,path:string,replacement:Json):ArrowFlatbufferModelEdit{return call(()=>engine['arrow-flatbuffer-model'].proposeArrowFlatbufferEdit({document,path,replacement}))},
+  decodeArrowFlatbuffer(bytes:Uint8Array,options:{id:string;rootType:ArrowFlatbufferRoot}):ArrowFlatbufferDecodeResult{
    if(!(bytes instanceof Uint8Array)||bytes.byteLength>MAX_BYTES)throw new UmfError('ARROW_IPC_LIMIT','Expected at most 1000000 source bytes');
    return call(()=>engine['arrow-flatbuffer-model'].decodeArrowFlatbuffer({id:options.id,rootType:options.rootType,bytes:hex(bytes)}));
   },

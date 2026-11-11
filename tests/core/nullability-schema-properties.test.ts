@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectCoreNullability,declareCoreNullability} from '../../src/model/nullability';
+import {inspectCoreNullability,declareCoreNullability} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
 const identity={module:'m',element:'v'};
 const source=(kind:string,extra:Record<string,unknown>={}):Document=>({umf:'0.10.0',id:'source',vocabularies:{},extensions:{},modules:[{id:'m',namespace:'m',elements:[{id:'v',kind,extensions:{},...extra}]}]});

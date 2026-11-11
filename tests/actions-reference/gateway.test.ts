@@ -2,9 +2,9 @@
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
 import type {Document} from '../../src/model/types';
-import {admitActionInputs} from '../../src/extensions/actions/selector';
+import {admitActionInputs} from '../../src/index-node-v4';
 import {ReferenceMutationGateway} from '../../scripts/actions-reference/gateway';
-import {actionFieldValueKey} from '../../src/extensions/actions/evaluation';
+import {actionFieldValueKey} from '../../src/index-node-v4';
 import type {FrozenReferenceState} from '../../scripts/actions-reference/state';
 function setup(){const source=structuredClone(fixture) as unknown as Document,entity={id:'1',record:{module:'sales',element:'order'},version:'v0',fields:{[actionFieldValueKey({module:'sales',element:'id'})]:{string:'o1'},[actionFieldValueKey({module:'sales',element:'status'})]:{string:'pending'}}},state:FrozenReferenceState={frames:[{id:'write',access:'write',canonical:'entity:1',entity,identity:{key:{module:'sales',element:'order',key:'pk'},components:[{string:'o1'}]},fields:[actionFieldValueKey({module:'sales',element:'status'})],relationships:[],create:false,delete:false}],parameters:new Map(),missingInputs:[]};return {source,state,gateway:new ReferenceMutationGateway(source,state)};}
 test('gateway verifies immediate writes, reports net restoration and isolates snapshots',()=>{const {gateway,state}=setup(),field={module:'sales',element:'status'};expect(gateway.set('write',[{field,value:{string:'approved'}}])).toBe('changed');expect(gateway.updates()).toHaveLength(1);expect(gateway.set('write',[{field,value:{string:'pending'}}])).toBe('changed');expect(gateway.updates()).toEqual([]);expect(state.frames[0]!.entity!.fields[actionFieldValueKey(field)]).toEqual({string:'pending'});});

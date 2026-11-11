@@ -1807,6 +1807,38 @@ fn generalized_jsonld_id(
     }
 }
 
+fn generalized_quad_identity(quad: &Value, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+    fn term(value: &Value) -> Result<Value, EngineError> {
+        let term_type = string(field(value, "termType"))
+            .ok_or_else(|| error("JSONLD_RDF_TERM", "Generalized term type missing"))?;
+        let term_value = string(field(value, "value"))
+            .ok_or_else(|| error("JSONLD_RDF_TERM", "Generalized term value missing"))?;
+        let mut parts = vec![
+            Value::String(term_type.clone()),
+            Value::String(term_value.clone()),
+        ];
+        if term_type == &Utf16::from("Literal") {
+            parts.push(field(value, "language").cloned().unwrap_or(Value::Null));
+            let datatype = field(value, "datatype")
+                .map(term)
+                .transpose()?
+                .unwrap_or(Value::Null);
+            parts.push(datatype);
+        }
+        Ok(Value::Array(parts))
+    }
+
+    let parts = ["subject", "predicate", "object", "graph"]
+        .into_iter()
+        .map(|name| {
+            field(quad, name)
+                .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad term missing"))
+                .and_then(term)
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    serialization::stringify_compact_metered(&Value::Array(parts), ctx)
+}
+
 fn native_member<'a>(node: &'a NativeJsonNode, key: &str) -> Option<&'a NativeJsonNode> {
     match node {
         NativeJsonNode::Object(fields) => fields
@@ -2872,7 +2904,14 @@ pub fn propose_generalized_rdf_to_jsonld(
     let mut groups: BTreeMap<Option<Utf16>, BTreeMap<Utf16, Vec<(Utf16, Value)>>> = BTreeMap::new();
     let mut raw_json_tokens = Vec::<(String, String)>::new();
     ctx.charge_work(quads.len(), Utf16::default())?;
+    let allow_blank_predicate =
+        processing_mode == &Utf16::from("json-ld-1.0") && loss_policy == &Utf16::from("report");
+    let mut seen_quads = BTreeSet::new();
     for quad in &quads {
+        let identity = generalized_quad_identity(quad, ctx)?;
+        if !seen_quads.insert(identity) {
+            continue;
+        }
         let subject = generalized_jsonld_id(
             field(quad, "subject")
                 .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad subject missing"))?,
@@ -2881,7 +2920,8 @@ pub fn propose_generalized_rdf_to_jsonld(
         )?;
         let predicate_value = field(quad, "predicate")
             .ok_or_else(|| error("JSONLD_RDF_SOURCE", "Quad predicate missing"))?;
-        let mut predicate = match generalized_jsonld_id(predicate_value, false, ctx) {
+        let mut predicate = match generalized_jsonld_id(predicate_value, allow_blank_predicate, ctx)
+        {
             Ok(predicate) => predicate,
             Err(failure) if failure.is_control_failure() || failure.code == "LIMIT" => {
                 return Err(failure)
@@ -3398,9 +3438,14 @@ pub fn propose_jsonld_to_rdf(
     };
     let candidate = if produce_generalized_rdf {
         let mut quads = Vec::with_capacity(rendered_quads.len());
+        let mut seen_quads = BTreeSet::new();
         for quad in rendered_quads {
             ctx.charge_work(1, Utf16::default())?;
-            quads.push(generalized_quad_value(quad, &vocabulary, ctx)?);
+            let value = generalized_quad_value(quad, &vocabulary, ctx)?;
+            let identity = generalized_quad_identity(&value, ctx)?;
+            if seen_quads.insert(identity) {
+                quads.push(value);
+            }
         }
         let encoded = serialization::write_json_value(&Value::Array(quads), Format::Json, ctx)?;
         crate::rdf::import_generalized_rdf_dataset(rdf_runtime, encoded.units(), id, None, ctx)?
@@ -5361,6 +5406,23 @@ mod jsonld_rdf_projection_tests {
             Some(&Utf16::from("blocked"))
         );
         assert!(field(&report, "candidate").is_none());
+
+        let report = propose_generalized_rdf_to_jsonld(
+            &rdf,
+            &Utf16::from("generalized-view-1.0"),
+            &Utf16::from("https://example.test/"),
+            &Utf16::from("json-ld-1.0"),
+            &Utf16::from("report"),
+            &rdf_runtime,
+            &jsonld_runtime,
+            &mut ctx,
+        )
+        .unwrap();
+        assert_eq!(
+            string(field(&report, "status")),
+            Some(&Utf16::from("candidate"))
+        );
+        assert!(field(&report, "candidate").is_some());
     }
 
     #[test]
@@ -5663,10 +5725,8 @@ mod jsonld_rdf_projection_tests {
             panic!("compacted graph root should retain its graph array");
         };
         assert!(graph_nodes.iter().any(|node| {
-            native_member(node, "@id")
-                == Some(&NativeJsonNode::String(Utf16::from("person")))
-                && native_member(node, "name")
-                    == Some(&NativeJsonNode::String(Utf16::from("Ada")))
+            native_member(node, "@id") == Some(&NativeJsonNode::String(Utf16::from("person")))
+                && native_member(node, "name") == Some(&NativeJsonNode::String(Utf16::from("Ada")))
         }));
 
         let referenced_source = Utf16::from(

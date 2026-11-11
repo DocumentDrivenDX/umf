@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,inspectParquetContainers,coreSchema,parquetContainerInspectionSchema,type ParquetContainerInspection} from '../../src';
+import {captureParquet,exportParquetCapture,inspectParquetContainers,coreSchema,parquetContainerInspectionSchema,type ParquetContainerInspection} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(parquetContainerInspectionSchema);
 test('US-019-AC9: container interpretations preserve source and match qualified native evidence',async()=>{

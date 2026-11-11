@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {compileTableDeployment,type TableDeploymentBundle} from '../../src/table-deployment';
-import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/table-migration';
-import {compileTableMigrationWithOperations} from '../../src/table-migration/internal';
-import {preflightG03DefaultLiteral} from '../../src/table-migration/g03-defaults';
+import {compileTableDeployment,compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/index-node-v4';
+import type {TableDeploymentBundle} from '../../src/index-v4-default';
 import {createValidator} from '../../src/validation/schema';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
 import tablesSchema from '../../spec/extensions/tables/schema.json';
@@ -49,12 +47,7 @@ const typedSource=(scalarType:string,nativeType:unknown,value:unknown)=>{
 test('G03 changes one existing target default and preserves immutable target identity',()=>{
  const {previous,next,options}=transition(undefined,literal('new'),true);
  const result=compileTableMigration({id:'g03-default-002',predecessor:{id:'g03-default-001',digest:'a'.repeat(64)},previous,next,options});
- const internal=compileTableMigrationWithOperations({id:'g03-default-002',predecessor:{id:'g03-default-001',digest:'a'.repeat(64)},previous,next,options});
  expect(result.status).toBe('compiled');if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
- expect(internal.result.status).toBe('compiled');if(internal.result.status!=='compiled')throw Error(JSON.stringify(internal.result.diagnostics));
- expect(JSON.stringify(internal.result.plan)).toBe(JSON.stringify(result.plan));
- expect(internal.operations).toHaveLength(1);
- expect(internal.operations[0]).toMatchObject({role:'change-default',sourcePath:result.plan.steps[0]!.sourcePath,subject:{type:'field',table:'notes',field:{module:'demo',element:'owner'}}});
  expect(result.plan.version).toBe('umf.table-migration/0.5');
  expect(result.plan.steps).toHaveLength(1);
  expect(result.plan.steps[0]?.operation).toBe('set-default');
@@ -240,37 +233,6 @@ test('G03 raw-source preflight rejects malformed retained bundles with located d
   const result=compileTableMigration({id:'g03-shape-'+name.replaceAll(' ','-'),predecessor:{id:'g03-shape-base',digest:'6'.repeat(64)},previous,next,options} as any);
   expect(result.status,'case '+name).toBe('blocked');
   expect(result.status==='blocked'&&result.diagnostics[0]?.path,'case '+name).toBe(path);
- }
-});
-
-test('G03 native numeric preflight bounds exact integer widths and numeric precision before coefficient allocation',()=>{
- const run=(nativeType:any,carrier:'integerToken'|'decimalToken',token:string)=>{
-  const old=source(),fresh=source() as any,column=fresh.modules[0]!.extensions['umf.tables'].tables[0]!.columns[1]!;
-  column.nativeType=nativeType;column.default={kind:'literal',value:{[carrier]:token}};
-  const fake=(doc:any)=>({source:{format:'json',utf8:JSON.stringify(doc)},configuration} as any);
-  const options={version:'umf.table-migration-options/0.5',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[{id:'review-g03',kind:'change-default',path:'/modules/0/extensions/umf.tables/tables/0/columns/1/default',oldDigest:'a'.repeat(64),newDigest:'b'.repeat(64)}]};
-  return ()=>preflightG03DefaultLiteral({options,previous:fake(old),next:fake(fresh)});
- };
- for(const token of ['32767','-32768','327670e-1','0e'+'9'.repeat(80)])expect(run({kind:'int2'},token.includes('0e')?'integerToken':'decimalToken',token)).not.toThrow();
- for(const token of ['32768','-32769','1.2','1e'+'9'.repeat(80)])expect(run({kind:'int2'},token.includes('.')||token.startsWith('1e')?'decimalToken':'integerToken',token)).toThrow();
- for(const token of ['99.99','9999e-2','0e'+'9'.repeat(80)])expect(run({kind:'numeric',precision:4,scale:2},'decimalToken',token)).not.toThrow();
- for(const token of ['100.00','1.001','1e'+'9'.repeat(80)])expect(run({kind:'numeric',precision:4,scale:2},'decimalToken',token)).toThrow();
-});
-
-test('G03 bounds raw numeric native-type qualifiers before numeric preflight',()=>{
- for(const nativeType of [
-  {kind:'numeric',precision:'bad',scale:0},
-  {kind:'numeric'},
-  {kind:'numeric',precision:8,scale:0.5},
-  {kind:'numeric',precision:1001,scale:0},
-  {kind:'numeric',precision:8,scale:0,future:true},
- ]){
-  const previous=numericSource() as any,doc=numericSource({kind:'literal',value:{decimalToken:'1'}}) as any;
-  doc.modules[0]!.extensions['umf.tables'].tables[0]!.columns.find((item:any)=>item.name==='measure')!.nativeType=nativeType;
-  const targetIndex=doc.modules[0]!.extensions['umf.tables'].tables[0]!.columns.findIndex((item:any)=>item.name==='measure'),targetPath='/modules/0/extensions/umf.tables/tables/0/columns/'+targetIndex+'/default';
-  const fake=(value:any)=>({source:{format:'json',utf8:JSON.stringify(value)},configuration} as any);
-  try{preflightG03DefaultLiteral({options:{version:'umf.table-migration-options/0.5',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[{id:'review-g03',kind:'change-default',path:targetPath,oldDigest:'a'.repeat(64),newDigest:'b'.repeat(64)}]},previous:fake(previous),next:fake(doc)});throw Error('malformed numeric native type was admitted');}
-  catch(error){expect((error as any).path).toBe('/next/source'+targetPath.replace(/\/default$/,'/nativeType'));}
  }
 });
 

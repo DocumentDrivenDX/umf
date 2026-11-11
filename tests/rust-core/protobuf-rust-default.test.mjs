@@ -9,7 +9,6 @@ const bindingEntry = process.env.UMF_NODE_BINDING_DIR
   ? pathToFileURL(resolve(process.env.UMF_NODE_BINDING_DIR, 'index.js')).href
   : new URL('../../bindings/core/node/index.js', import.meta.url).href;
 const rust = await import(bindingEntry);
-const predecessor = await import('../../src/adapters/protobuf/index.ts');
 const root = resolve(import.meta.dir, '../..');
 const authored = new Uint8Array(readFileSync(resolve(root, 'fixtures/protobuf/authored.pb')));
 const unknown = new Uint8Array([0x82, 0xb5, 0x18, 0x04, 0x00, 0x01, 0x02, 0xff]);
@@ -27,20 +26,20 @@ test('Rust facade uses the public error constructor and matches frozen operation
   expect(json(api.readDescriptorSet(authored))).toEqual(packet.vectors.readAuthored.value);
   expect(json(api.readDescriptorSet(unknown))).toEqual(packet.vectors.readUnknownWire.value);
   const descriptor = api.readDescriptorSet(authored);
-  expect([...api.writeDescriptorSet(descriptor)]).toEqual([...predecessor.writeDescriptorSet(descriptor)]);
+  expect([...api.writeDescriptorSet(descriptor)].map(byte => byte.toString(16).padStart(2, '0')).join('')).toBe(packet.vectors.writeAuthored.value);
   const document = api.importProtobufDescriptorSet(authored, {id: 'frozen-packet'});
   expect(json(document)).toEqual(packet.vectors.importAuthored.value);
   expect(json(api.getProtobufDescriptorSet(document))).toEqual(packet.vectors.getAuthored.value);
-  expect([...api.exportProtobufDescriptorSet(document)]).toEqual([...predecessor.exportProtobufDescriptorSet(document)]);
+  expect([...api.exportProtobufDescriptorSet(document)].map(byte => byte.toString(16).padStart(2, '0')).join('')).toBe(packet.vectors.exportAuthored.value);
   expect(json(api.inspectProtobuf(document))).toEqual(packet.vectors.inspectAuthored.value);
   const bundle = api.exportProtobufBundle(document);
-  const expectedBundle = predecessor.exportProtobufBundle(document);
-  expect([...bundle.descriptorSet]).toEqual([...expectedBundle.descriptorSet]);
-  expect(json(bundle.source)).toEqual(json(expectedBundle.source));
-  expect(json(bundle.diagnostics)).toEqual(json(expectedBundle.diagnostics));
+  const expectedBundle = packet.vectors.bundleAuthored.value;
+  expect([...bundle.descriptorSet].map(byte => byte.toString(16).padStart(2, '0')).join('')).toBe(expectedBundle.descriptorSet);
+  expect(json(bundle.source)).toEqual(expectedBundle.source);
+  expect(json(bundle.diagnostics)).toEqual(expectedBundle.diagnostics);
 }, {timeout: 120_000});
 
-test('Rust facade preserves public UmfError identity and predecessor option getter order', () => {
+test('Rust facade preserves public UmfError identity and frozen option getter order', () => {
   const malformed = new Uint8Array(11).fill(0x80);
   let error;
   try { api.readDescriptorSet(malformed); } catch (caught) { error = caught; }

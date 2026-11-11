@@ -1,5 +1,9 @@
 /** Executable component observations, not an acceptance runner binding. */
-import * as api from '../../src/index';
+import type * as Umf from '../../src/index-browser-v4';
+type PolicyV2Api=Pick<typeof Umf,'upgradeSecurityPolicySource'|'downgradeSecurityPolicySource'|'evaluateSecurityPolicyV2LegacyAccess'|'inspectSecurityPolicy'|'evaluateSecurityAccess'|'resolveSecurityProtectionSources'>;
+let nativeApi:PolicyV2Api|undefined;
+export function configurePolicyV2Api(api:PolicyV2Api){nativeApi=api;}
+const api=new Proxy({} as PolicyV2Api,{get(_target,key){if(!nativeApi)throw Error('Policy V2 Rust runtime was not injected');return Reflect.get(nativeApi,key);}});
 export function policyV2Controls(f:any){
  const rows:{id:string;passed:boolean}[]=[];
  const add=(id:string,passed:boolean)=>rows.push({id,passed});

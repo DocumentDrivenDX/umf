@@ -37,7 +37,7 @@ function bounded(value:Json):boolean{
  }return true;
 }
 /** Exact pins qualify only the supplied immutable core definitions, not their provenance. */
-export function resolveSecurityProtectionDomains(policyInput:unknown,catalogInput:unknown,closureInput:unknown):SecurityProtectionDomainResolution {
+export function resolveSecurityProtectionDomainsCandidate(policyInput:unknown,catalogInput:unknown,closureInput:unknown):SecurityProtectionDomainResolution {
  const sources=resolveSecurityProtectionSources(policyInput,catalogInput);
  const diagnostics:Diagnostic[]=sources.diagnostics.filter(d=>d.code!=='PROTECTION_UNIMPLEMENTED'&&d.code!=='SECURITY_V2_UNIMPLEMENTED');
  const domains:ProtectionDomainOccurrence[]=[];let closure:Json=null;

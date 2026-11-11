@@ -2,7 +2,7 @@
 /** Host-only filesystem boundary. Paths in result.files include the package prefix;
  * destination is the fixed output parent containing that package. */
 import {createHash} from 'node:crypto';
-import {generateAccessPackage,diffAccessPackages} from '../src/compilation/index';
+import {generateAccessPackage,diffAccessPackages} from '../src/node-access-compilation';
 import type {AccessResult} from '../src/compilation/ir/index';
 import {lstat,readdir,readFile,mkdir,mkdtemp,writeFile,rename,rm} from 'node:fs/promises';
 import {resolve,dirname,join,parse} from 'node:path';

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipCandidate} from '../core-relationship-cases';
-import {declareCoreRelationship} from '../../src/model/relationships';
+import {declareCoreRelationship} from "../../src/index-node-v4";
 import registry from '../../native/tablespec/relationship-runtime/domain-base-types.json';
-import {importTableSpec, importTableSpecBundle, exportTableSpec} from '../../src/adapters/tablespec';
+import {importTableSpec,importTableSpecBundle,exportTableSpec} from "../../src/index-node-v4";
 import type {Document} from '../../src/model/types';
-import type {RelationshipTableSpecRequest} from '../../src/core-ideals/relationship-tablespec-projection';
+import type {RelationshipTableSpecRequest} from '../../src/core-ideals/relationship-tablespec-projection-types';
 export function relationshipTableSpecCase(name='many-to-one'){
  const logical=relationshipCandidate(),r=logical.modules[0].relationships[0];
  if(name==='one-to-one')r.sourceMultiplicity={min:0,max:1};

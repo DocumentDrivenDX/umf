@@ -1,16 +1,17 @@
+import * as core from '../../src/index-node-v4';
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
 import evidence from '../../fixtures/validation/facets-postgresql-constraints-native.json';
-import {inspectPostgresqlFacetCatalog, correlatePostgresqlFacetCatalog} from '../../src/adapters/postgresql/facet-catalog';
-import {importPostgresqlCatalogCapture, proposePostgresqlCatalogEdit} from '../../src/adapters/postgresql/catalog';
+import {inspectPostgresqlFacetCatalog, correlatePostgresqlFacetCatalog} from '../../scripts/core-ideals/postgresql-facet-catalog';
+import {importPostgresqlCatalogCapture,proposePostgresqlCatalogEdit} from "../../src/index-node-v4";
 import {renderTree} from '../../src/model/native-json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
 const source=()=>importPostgresqlCatalogCapture(evidence.sourceText,{id:'facet-catalog'});
 const text=()=>JSON.stringify(evidence.capture);
-const run=(value=source(),supplement=text())=>correlatePostgresqlFacetCatalog(value,supplement,'little-endian-datum64',backend);
+const run=(value=source(),supplement=text())=>correlatePostgresqlFacetCatalog(value,supplement,'little-endian-datum64',backend,core);
 test('complete catalog correspondence preserves sources and verifies overlapping CHECKs',async()=>{
  const r=await run();expect(r.matches).toHaveLength(12);expect(r.matches.filter(m=>m.inspection.state==='verified-expression')).toHaveLength(8);
  expect(r.sameSnapshotVerified).toBe(false);expect(r.authenticated).toBe(false);expect(r.nativeSupplement).toBe(text());

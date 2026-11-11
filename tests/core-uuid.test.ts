@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../src/index';
+import * as u from '../src/index-node-v4';
+import {selectCoreElements,selectCoreRelationships} from '../src/index-node-v4';
 import {uuidDocument,FIELD,UUID,HEX} from './helpers/uuid-fixtures';
 test('version-scoped validation, copied authoring, allowed values, defaults and serialization',()=>{
  const doc=uuidDocument();expect(u.validateDocument(doc).complete).toBe(true);
@@ -25,7 +26,7 @@ test('current metadata inspectors, selection, containers and unknown refinement 
  expect(u.inspectCoreFacets(d,FIELD).meaning.state).toBe('missing');expect(u.inspectCoreKeys(d,record).meaning.state).toBe('known');
  expect(u.inspectCoreRecordMembers(d,record).meaning.state).toBe('known');expect(u.inspectCoreReferenceLinks(d,FIELD).meaning.state).toBe('missing');
  expect(u.inspectCoreRelationships(d,{module:'m'}).meaning.state).toBe('missing');
- const selected=u.selectCoreElements(d,{references:'transitive',identities:[record]});expect(selected.selection.length).toBe(2);expect(selected.source).toEqual(d);
+ const selected=selectCoreElements(d,{references:'transitive',identities:[record]});expect(selected.selection.length).toBe(2);expect(selected.source).toEqual(d);
  const f=d.modules[0]!.elements[1]!;f.facets={futureRule:1};expect(u.validateDocument(d).complete).toBe(false);expect(u.validateCoreFieldValue(d,FIELD,{uuid:UUID}).valid).toBe(false);
  delete f.facets;d.modules[0]!.elements.push({id:'list',kind:'field',cardinality:'array',itemType:FIELD,nullability:'required',extensions:{}});
  expect(u.validateCoreFieldValue(d,{module:'m',element:'list'},{array:[{uuid:UUID}]}).valid).toBe(true);
@@ -41,7 +42,7 @@ test('extension validators receive the current UUID document directly',()=>{
  const d=uuidDocument();d.vocabularies['fixture.uuid']={version:'1.0.0'};d.modules[0]!.elements[1]!.extensions['fixture.uuid']={};
  let checks=0;const registry=new u.Registry().register({id:'fixture.uuid',version:'1.0.0',coreVersion:'0.10.0',description:'Synthetic context check',schema:{type:'object'},semantics:'Exact context',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}},(_payload,context)=>{expect(context.document.umf).toBe('0.10.0');expect(context.document.modules[0]!.elements[1]!.scalarType).toBe('uuid');checks++;return [];});
  expect(u.validateDocument(d,registry).complete).toBe(true);expect(checks).toBe(1);
- expect(u.selectCoreRelationships(uuidDocument(),{}).version).toBe('2.0.0');
+ expect(selectCoreRelationships(uuidDocument(),{}).version).toBe('2.0.0');
 });
 test('signed and unsigned integer128 keep mathematical equality and lossless bigint context',()=>{
  for(const signed of [true,false]){

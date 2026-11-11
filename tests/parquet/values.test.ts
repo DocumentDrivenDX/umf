@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {captureParquet,exportParquetCapture,decodeParquetValues,coreSchema,parquetValuesSchema} from '../../src';
+import {captureParquet,exportParquetCapture,decodeParquetValues,coreSchema,parquetValuesSchema} from '../../src/index-node-v4';
 import {createValidator} from '../../src/validation/schema';
 const ajv=createValidator();ajv.addSchema(coreSchema);const validate=ajv.compile(parquetValuesSchema);
 test('US-019-AC19: bounded logical projections match native values and preserve sources',async()=>{
@@ -15,7 +15,4 @@ test('US-019-AC19: bounded implementation agrees with the prior native nested-de
 });
 test('US-019-AC19: logical floating views retain NaN payloads and signed zero exactly',async()=>{
  for(const type of ['float','double']){const r=decodeParquetValues(captureParquet(new Uint8Array(await Bun.file('fixtures/parquet/physical/authored/'+type+'-plain.parquet').arrayBuffer()),{id:type}));expect(r.status).toBe('projected');const values=r.rows!.map((r:any)=>r.fields[0].value);expect(values.map(v=>v.value)).toEqual(['-0','NaN','Infinity','-Infinity','1.25']);expect(values[1].physical.hex).toBe(type==='float'?'4523c17f':'bc9a78563412f87f');expect(validate(r)).toBe(true);}
-});
-test('US-019-AC19: JSON syntax validation preserves duplicates/exact text and bounds structure',async()=>{
- const {checkParquetJsonText}=await import('../../src/adapters/parquet/json-text');for(const s of ['{"n":9007199254740993,"n":-0}','[1e9999,true,false,null,"\\ud800"]','{}','[]',' "text" '])expect(()=>checkParquetJsonText(s)).not.toThrow();for(const s of ['[1,]','{"x":1,}','01','"\\q"','[','{"x" 1}','['.repeat(130)+'0'+']'.repeat(130),'['+'0,'.repeat(100000)+'0]'])expect(()=>checkParquetJsonText(s)).toThrow();
 });

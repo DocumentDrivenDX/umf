@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type * as API from '../src/index';
+import type * as API from '../src/index-node-v4';
 import {createManifestCorpusFixture} from './actions-manifest-corpus';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';
 export function runConstructionCorpus(api:typeof API){

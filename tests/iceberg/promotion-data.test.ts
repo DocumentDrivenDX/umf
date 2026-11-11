@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importIcebergTable,exportIcebergTable,proposeIcebergTablePromotion,readDocument,writeDocument} from '../../src';
+import {importIcebergTable,exportIcebergTable,proposeIcebergTablePromotion,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/iceberg/table-promotion/',sha=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 test('US-021-AC9: data evidence binds exact files and metadata to current public candidates',async()=>{
  const manifest=await Bun.file(base+'data/manifest.json').json(),native=await Bun.file(base+'data/java-results.json').json(),cases=(await Bun.file(base+'results.json').json()).results;

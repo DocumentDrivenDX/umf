@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
-import {projectRelationshipToTableSpec} from '../../src/core-ideals/relationship-tablespec-projection';
-import {getTableSpecTable, exportTableSpec, exportTableSpecBundle} from '../../src/adapters/tablespec';
+import {projectRelationshipToTableSpec} from '../../src/index-node-v4';
+import {getTableSpecTable,exportTableSpec,exportTableSpecBundle} from "../../src/index-node-v4";
 import {renderTree} from '../../src/model/native-json';
-import {lookupCoreRelationship} from '../../src/model/relationships';
+import {lookupCoreRelationship} from "../../src/index-node-v4";
 import {relationshipTableSpecProjectionCases} from './relationship-tablespec-projection-cases';
 const rows=[],refusals=[];
 for(const c of relationshipTableSpecProjectionCases()){

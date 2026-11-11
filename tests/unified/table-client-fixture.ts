@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {generatePythonClient} from '../../src/access';
+import {generatePythonClient} from '../../src/index-node-v4';
 import {tableOperationSource} from './table-operation-fixture';
 import {domainSource} from './table-domain-fixture';
 const root=process.argv[2];if(!root)throw Error('Output directory required');

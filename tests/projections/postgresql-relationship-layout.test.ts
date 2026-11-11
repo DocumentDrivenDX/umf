@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {copyJson,validatePostgresqlRelationshipLayout} from '../../src';
+import {copyJson,validatePostgresqlRelationshipLayout} from '../../src/index-node-v4';
 import {postgresqlLayoutCase,postgresqlLayoutCases} from '../../scripts/relationship-postgresql-layout-cases';
 
 test('@covers US-048-AC3 @covers US-048-AC4 @covers US-048-AC8: exact endpoint policy matrix validates atomically and retains every source',()=>{

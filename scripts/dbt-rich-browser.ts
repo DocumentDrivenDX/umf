@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
 const base='fixtures/dbt/rich/',report=await Bun.file(base+'results.json').json(),native=await Bun.file(base+'oracle-results.json').json(),input={raw:await Bun.file(base+'manifest.json').text(),edits:report.edits,expected:native.results,sourceHash:createHash('sha256').update(await Bun.file(base+'roundtrip.json.json').bytes()).digest('hex')};
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/dbt-rich-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/dbt-rich-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/dbt-rich-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>dbt resource corpus</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);const result=await page.evaluate(async(c)=>{const path='/umf.js',u=await import(path),d=u.importDbtManifest(c.raw,{id:'dbt-rich'}),hash=async(text:string)=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)))).map(x=>x.toString(16).padStart(2,'0')).join('');let comparisons=0;
  for(const f of ['json','yaml'])if(await hash(u.exportDbtManifest(u.readDocument(u.writeDocument(d,f),f)))!==c.sourceHash)throw Error('Source differs');

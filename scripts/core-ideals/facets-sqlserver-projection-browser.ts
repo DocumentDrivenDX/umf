@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {projectFacetsToSqlServer} from '../../src';
+import {projectFacetsToSqlServer} from '../../src/index-node-v4';
 import {facetsSqlServerProjectionCases} from './facets-sqlserver-projection-cases';
 const cases=facetsSqlServerProjectionCases().map(c=>({...c,expected:projectFacetsToSqlServer(c.author,c.request)}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){return new URL(request.url).pathname==='/umf.js'?new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>SQL Server facet projection</title>',{headers:{'content-type':'text/html'}});}});

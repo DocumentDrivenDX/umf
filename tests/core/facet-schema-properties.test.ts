@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectCoreFacets,declareCoreFacets} from '../../src/model/facets';
+import {inspectCoreFacets,declareCoreFacets} from "../../src/index-node-v4";
 import schema from '../../spec/core/facet-operation-v5.schema.json';
 import {createValidator} from '../../src/validation/schema';
 import core from '../../spec/core/schema.json';

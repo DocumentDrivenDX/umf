@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql,getPostgresqlSource,projectDddTablesToPostgresql,type Document} from '../../src';
+import {exportPostgresqlSql,getPostgresqlSource,projectDddTablesToPostgresql,type Document} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/projections/ddd-postgresql-tables/case.json').json();
 const report=await projectDddTablesToPostgresql(fixture.logical as Document,fixture.binding as Document,backend,fixture.policy,'report');
@@ -37,7 +37,7 @@ try{
   assert.equal(productChecks.some((x:any)=>x.name==='ck_products_payload_object'&&x.validated&&x.definition.includes('jsonb_typeof')),true);
   observed={tables,columns,checks,productColumns,productChecks};
 }finally{if(created)await run(['docker','rm','-f',name]);}
-const files=['fixtures/projections/ddd-postgresql-tables/case.json','fixtures/projections/ddd-postgresql-tables/generated.sql','src/projections/ddd-postgresql/tables.ts'];
+const files=['fixtures/projections/ddd-postgresql-tables/case.json','fixtures/projections/ddd-postgresql-tables/generated.sql','src/projections/ddd-postgresql-types.ts','crates/umf-core/src/ddd_postgresql_projection.rs'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 await Bun.write('fixtures/projections/ddd-postgresql-tables/oracle.json',JSON.stringify({scope:'PostgreSQL 17.4 isolated execution of DDD-derived tables, JSONB object carrier and LIST/default partition; relationship, key, index and path semantics remain residual',image,serverVersion:170004,adapter:backend.identity,observed,residuals:report.residuals,sha256},null,2)+'\n');
 console.log(JSON.stringify({tables:(observed as any).tables.length,residuals:report.residuals.length}));

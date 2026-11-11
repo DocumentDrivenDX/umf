@@ -2,7 +2,7 @@
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {getShaclShapeMetadata,importShaclTurtle,exportShaclTurtle,readDocument,writeDocument,proposeShaclQuadEdit,getShaclQuads} from '../../src';
+import {getShaclShapeMetadata,importShaclTurtle,exportShaclTurtle,readDocument,writeDocument,proposeShaclQuadEdit,getShaclQuads} from '../../src/index-node-v4';
 const SH='http://www.w3.org/ns/shacl#',root={kind:'iri' as const,value:'https://example.org/Order'};
 test('US-028 metadata supports consumers without collapsing native declarations',async()=>{
  const raw=await Bun.file('native/shacl/metadata.ttl').text(),doc=importShaclTurtle(raw,{id:'order',baseIRI:'https://example.org/',blankNodeScope:'orders'});

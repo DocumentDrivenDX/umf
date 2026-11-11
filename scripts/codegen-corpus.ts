@@ -1,7 +1,7 @@
 import {legalSource,evolvedLegalSource,indexedLegalSource} from '../tests/lifecycle/legal-fixture';
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Cross-runtime corpus uses the real portable generator and complete results. */
-import {generatePythonClient,type PythonClientRequest} from '../src/access';
+import {generatePythonClient,type PythonClientRequest} from '../src/index-node-v4';
 import {stringify} from 'yaml';
 import {tableOperationSource} from '../tests/unified/table-operation-fixture';
 import {temporalSource} from '../tests/unified/table-temporal-fixture';

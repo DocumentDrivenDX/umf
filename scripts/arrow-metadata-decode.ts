@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {decodeArrowFlatbuffer,exportArrowFlatbufferModel,exportArrowIpcCapture,type ArrowFlatbufferRoot} from '../src';
+import {decodeArrowFlatbuffer,exportArrowFlatbufferModel,exportArrowIpcCapture,type ArrowFlatbufferRoot} from '../src/index-node-v4';
 import {createHash} from 'node:crypto';
 const base='fixtures/arrow/metadata/';const manifest=await Bun.file(base+'manifest.json').json();let checked=0;
 for(const c of manifest.cases){

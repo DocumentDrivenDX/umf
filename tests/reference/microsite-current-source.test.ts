@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {resolve} from 'node:path';
-import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-model';
+import {parseEntry} from '../../docs/helix/05-deploy/microsite/explorer-node';
 const root=resolve(import.meta.dir,'../..');
 const site=root+'/docs/helix/05-deploy/microsite';
 const source=await Bun.file(site+'/catalog-sources/legal/ontology.json').text();

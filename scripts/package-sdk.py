@@ -200,6 +200,13 @@ def package(root, output=OUTPUT):
         'name': metadata['name'], 'version': metadata['version'],
         'private': True, 'type': metadata['type'], 'license': metadata['license'],
         'files': ['dist/'], 'exports': metadata['exports'],
+        'imports': {'#umf-source': {
+            'types': metadata['exports']['.']['types'],
+            'browser': metadata['exports']['.']['browser'],
+            'bun': metadata['exports']['.']['node'],
+            'node': metadata['exports']['.']['node'],
+            'default': metadata['exports']['.']['default'],
+        }},
         'dependencies': metadata.get('dependencies', {}),
     }
     package_bytes = (json.dumps(package_json, indent=2) + '\n').encode()

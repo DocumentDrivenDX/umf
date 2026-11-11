@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importLinkmlDocument,inspectLinkmlClassSlots,inspectLinkmlSlotValues,exportLinkmlDocument,readDocument,writeDocument,getLinkmlDocumentNode} from '../../src';
+import {importLinkmlDocument,inspectLinkmlClassSlots,inspectLinkmlSlotValues,exportLinkmlDocument,readDocument,writeDocument,getLinkmlDocumentNode} from '../../src/index-node-v4';
 import {parseNativeJson} from '../../src/model/native-json';
 const base='fixtures/linkml/slot-corpus/';
 test('US-024-AC8: pinned local scalar induction matches every comparable native query',async()=>{

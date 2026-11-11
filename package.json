@@ -1,6 +1,6 @@
 {
   "name": "@umf/core",
-  "version": "0.10.9",
+  "version": "0.10.11",
   "private": true,
   "type": "module",
   "files": [
@@ -8,6 +8,18 @@
     "spec/"
   ],
   "packageManager": "bun@1.4.2",
+  "imports": {
+    "#umf-source": {
+      "types": {
+        "browser": "./src/index-browser-v4.ts",
+        "default": "./src/index-node-v4.ts"
+      },
+      "browser": "./src/index-browser-v4.ts",
+      "bun": "./src/index-node-v4.ts",
+      "node": "./src/index-node-v4.ts",
+      "default": "./src/index-browser-v4.ts"
+    }
+  },
   "exports": {
     ".": {
       "types": {
@@ -25,8 +37,14 @@
       "import": "./dist/runtime/wasm/index.js"
     },
     "./loader-contract": {
-      "types": "./dist/src/domain-packs/loader-contract.d.ts",
-      "import": "./dist/loader-contract.js"
+      "types": {
+        "node": "./dist/src/domain-packs/loader-contract-node.d.ts",
+        "default": "./dist/src/domain-packs/loader-contract-browser.d.ts"
+      },
+      "browser": "./dist/loader-contract.js",
+      "node": "./dist/loader-contract.node.js",
+      "import": "./dist/loader-contract.js",
+      "default": "./dist/loader-contract.js"
     }
   },
   "scripts": {
@@ -60,7 +78,7 @@
     "check:saga-package": "python3 scripts/build-saga-package.py --check",
     "build:saga-runtime": "bun scripts/build-saga-runtime.ts",
     "test:access-e2e": "bun scripts/access-e2e.ts",
-    "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/reference/build.ts",
+    "build:reference": "bun scripts/build-postgresql.ts && bun scripts/build-protobuf.ts && bun scripts/build-reference-wasm.ts && bun scripts/reference/build.ts",
     "test:reference": "bun test tests/reference && bun scripts/reference/build.ts --check",
     "test:reference:browser": "bun scripts/reference/browser.ts && bun scripts/reference/reader-browser.ts && bun scripts/reference/ontology-browser.ts",
     "check:reference-boundaries": "bun scripts/reference/check-boundaries.ts",

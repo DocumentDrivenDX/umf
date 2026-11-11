@@ -4,7 +4,7 @@ import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/rdf/merge-schema.json';
-import {importRdfNQuads,importRdfTurtle,importRdfTriG,exportRdfTriG,exportRdfNQuads,getRdfQuads,getRdfNamedGraphs,proposeRdfDatasetMerge,readDocument,writeDocument} from '../../src';
+import {importRdfNQuads,importRdfTurtle,importRdfTriG,exportRdfTriG,exportRdfNQuads,getRdfQuads,getRdfNamedGraphs,proposeRdfDatasetMerge,readDocument,writeDocument} from '../../src/index-node-v4';
 const options={id:'merged',graphPolicy:'union-by-name',blankNodePolicy:'disjoint-inputs'} as const;
 const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-025-AC7: all positive RDF source datasets merge with independent blank scopes',async()=>{

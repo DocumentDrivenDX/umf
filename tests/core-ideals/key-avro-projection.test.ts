@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroKeyAuthors,avroKeyProjectionCases} from '../../scripts/core-ideals/key-avro-projection-cases';
-import {projectKeysToAvro, verifyKeysAvroProjection, recoverKeysAvroIdeal} from '../../src/core-ideals/key-avro-projection';
-import {importAvroSchema, exportAvroSchema} from '../../src/adapters/avro';
+import {projectKeysToAvro,verifyKeysAvroProjection,recoverKeysAvroIdeal} from "../../src/index-node-v4";
+import {importAvroSchema,exportAvroSchema} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 for(const c of avroKeyProjectionCases())test('Avro authored Key: '+c.name,()=>{
  const before=JSON.stringify(c),r=projectKeysToAvro(c.source,c.authors,c.request);expect(JSON.stringify(c)).toBe(before);expect(r.status).toBe(c.expected);expect(r.mappings.length).toBe(c.authors.length);expect(r.residuals.filter(r=>r.path.includes('/keys/')).length).toBe(c.authors.length);expect(r.mappings.every(m=>m.enforcement==='not-expressible')).toBe(true);
@@ -38,7 +38,7 @@ test('generated native proof preserves duplicates and the boolean null coercion 
  const generated=await Bun.file('fixtures/avro/key-projection-generated.json').json();for(const item of generated.cases){const c=avroKeyProjectionCases().find(c=>c.name===item.name)!,r=projectKeysToAvro(c.source,c.authors,c.request);expect(exportAvroSchema(r.target!)).toBe(item.schemaText);expect(r.mappings).toEqual(item.keyMappings);}
 });
 test('reimport without retained authors cannot reconstruct core identity',async()=>{
- const {classifyAvroKeys,recoverAvroKeySource}=await import('../../src/core-ideals/key-avro'),c=avroKeyAuthors(),r=projectKeysToAvro(c.source,c.authors,c.request),schema=exportAvroSchema(r.target!),nativeSource={schema,dependencies:[]};
+ const {classifyAvroKeys,recoverAvroKeySource}=await import('../../src/index-node-v4'),c=avroKeyAuthors(),r=projectKeysToAvro(c.source,c.authors,c.request),schema=exportAvroSchema(r.target!),nativeSource={schema,dependencies:[]};
  const observation=classifyAvroKeys(importAvroSchema(schema,{id:'native-only'}),{mode:'report',profile:'schema-declarations',nativeSource});expect(observation.observations.every(o=>o.authorIntent==='unknown'&&o.enforcement==='not-expressible')).toBe(true);expect(observation.target!.modules.every(m=>m.elements.every(e=>e.keys===undefined))).toBe(true);expect(recoverAvroKeySource(observation,observation.target!)).toEqual(nativeSource);
 });
 test('cross-record ownership, changed stable key IDs and duplicate physical mappings refuse',()=>{

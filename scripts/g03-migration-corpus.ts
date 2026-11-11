@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Cross-runtime G03 selector and plan corpus. Historical corpus stays frozen. */
 import fixture from '../tests/binding/fixtures/table-lifecycle-note.json';
-import {compileTableDeployment,type TableDeploymentBundle} from '../src/table-deployment';
-import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../src/table-migration';
+import {compileTableDeployment,compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../src/index-node-v4';
+import type {ReviewedChangeMarker,TableDeploymentBundle} from '../src/index-v4-default';
 import {hashCanonical} from '../src/compilation/bundle/hash';
-import '../scripts/codegen/entry';
 
 const configuration={module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{readers:'plugin_readers'}};
 const selector={version:'umf.table-migration-discovery/0.2'} as const;
@@ -40,7 +39,7 @@ for(const item of transitions){
  if(!marker)throw Error('Selected discovery omitted G03 candidate: '+item.name);
  const {oldValue:_old,newValue:_new,...reviewed}=marker;
  const request={id:'g03-corpus-'+item.name,predecessor:{id:'g03-corpus-prior',digest:'a'.repeat(64)},previous,next,
-  options:{version:'umf.table-migration-options/0.5' as const,backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[reviewed]}};
+  options:{version:'umf.table-migration-options/0.5' as const,backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[reviewed as ReviewedChangeMarker]}};
  const result=compileTableMigration(request);
  plans.push({name:item.name,request,expected:result});
 }
@@ -58,7 +57,7 @@ for(const token of ['1.0','1e0']){
  if(!marker)throw Error('Numeric source spelling omitted G03 candidate: '+token);
  discovery.push({name:'numeric-'+token+'-selected',previous:numericOld,next,options:selector,expected:selected});
  const {oldValue:_old,newValue:_new,...reviewed}=marker;
- const request={id:'g03-corpus-numeric-'+token,predecessor:{id:'g03-corpus-prior',digest:'b'.repeat(64)},previous:numericOld,next,options:{version:'umf.table-migration-options/0.5' as const,backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[reviewed]}};
+ const request={id:'g03-corpus-numeric-'+token,predecessor:{id:'g03-corpus-prior',digest:'b'.repeat(64)},previous:numericOld,next,options:{version:'umf.table-migration-options/0.5' as const,backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[reviewed as ReviewedChangeMarker]}};
  plans.push({name:'numeric-'+token,request,expected:compileTableMigration(request)});
 }
 // Explicit selector errors and selected-profile source refusal are part of the portable refusal corpus.
@@ -69,9 +68,10 @@ for(const [name,options] of [['null-options-omission',null],['wrong-selector',{v
  catch(error){const e=error as Error;if(e.message==='Selector control unexpectedly accepted: '+name)throw e;discovery.push({name,previous:reference.request.previous,next:reference.request.next,options,expectedError:{code:'MIGRATION_CHANGES_FAILED',message:e.message}});}
 }
 const rawNullRequest={previous:reference.request.previous,next:reference.request.next,options:null};
-const rawNullResponse=JSON.parse((globalThis as any).__umf_table_migration_changes(JSON.stringify(rawNullRequest)));
-if(rawNullResponse.ok!==false)throw Error('Raw-wire null selector unexpectedly accepted');
-discovery.push({name:'raw-wire-null-selector-refuses',rawWireRequest:rawNullRequest,expectedError:rawNullResponse.error});
+let rawNullError:any;
+try {discoverTableMigrationChanges(rawNullRequest.previous,rawNullRequest.next,rawNullRequest.options as any);throw Error('Raw-wire null selector unexpectedly accepted');}
+catch(error){const e=error as Error&{code?:string;path?:string};if(e.message==='Raw-wire null selector unexpectedly accepted')throw e;rawNullError={code:e.code??'MIGRATION_CHANGES_FAILED',message:e.message,...(e.path?{path:e.path}:{})};}
+discovery.push({name:'raw-wire-null-selector-refuses',rawWireRequest:rawNullRequest,expectedError:rawNullError});
 const yamlPrevious=bundle(source(undefined,false),'yaml');
 const yamlNext=bundle(source(literal({string:'future value'}),true),'yaml');
 try {

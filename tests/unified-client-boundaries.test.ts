@@ -54,31 +54,31 @@ test('the Record Type facade has only its exact audited model imports', () => {
 test('the Record Type facade cannot restore a predecessor value import', () => {
 	const allowed = checkAccessSource(
 		'rust-record-type-default.ts',
-		"import type {CoreRecordTypeDeclaration} from '../model/record-type';\n",
+		"import type {CoreRecordTypeDeclaration} from '../model/record-type-types';\n",
 	);
 	const denied = checkAccessSource(
 		'rust-record-type-default.ts',
-		"import {declareCoreRecordType} from '../model/record-type';\n",
+		"import {declareCoreRecordType} from '../model/record-type-types';\n",
 	);
 
 	expect(allowed).toEqual([]);
-	expect(denied).toContain('rust-record-type-default.ts: value import from type-only module ../model/record-type');
-	expect(checkAccessSource('rust-record-type-default.ts', "export * from '../model/record-type';\n"))
-		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type');
+	expect(denied).toContain('rust-record-type-default.ts: value import from type-only module ../model/record-type-types');
+	expect(checkAccessSource('rust-record-type-default.ts', "export * from '../model/record-type-types';\n"))
+		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type-types');
 });
 
-test('the Record Values facade keeps its predecessor import type-only and isolated', () => {
-	const source = "import type {CoreRecordValueCheck} from '../model/record-values';\n";
+test('the Record Values facade keeps its model import type-only and isolated', () => {
+	const source = "import type {CoreRecordValueCheck} from '../model/record-values-types';\n";
 	expect(checkAccessSource('rust-record-values-default.ts', source)).toEqual([]);
 	expect(checkAccessSource('rust-record-type-default.ts', source)).toContain(
-		'rust-record-type-default.ts: unapproved import ../model/record-values',
+		'rust-record-type-default.ts: unapproved import ../model/record-values-types',
 	);
 	expect(checkAccessSource('rust-record-values-default.ts',
-		"import {validateCoreRecordValues} from '../model/record-values';\n"))
-		.toContain('rust-record-values-default.ts: value import from type-only module ../model/record-values');
+		"import {validateCoreRecordValues} from '../model/record-values-types';\n"))
+		.toContain('rust-record-values-default.ts: value import from type-only module ../model/record-values-types');
 	expect(checkAccessSource('rust-record-values-default.ts',
-		"export * from '../model/record-values';\n"))
-		.toContain('rust-record-values-default.ts: value re-export from type-only module ../model/record-values');
+		"export * from '../model/record-values-types';\n"))
+		.toContain('rust-record-values-default.ts: value re-export from type-only module ../model/record-values-types');
 });
 
 test('the Core Semantic Types Rust facade grants exact type-only predecessor imports', () => {
@@ -150,14 +150,19 @@ test('the Core Bit128 Field facade allows only its audited error adapter import'
 	expect(deniedHook).toContain('rust-core-bit128-field-default.ts: host or executable hook fetch');
 });
 
-test('the Core Semantic Types Rust facade preserves predecessor public signatures', () => {
+test('the Core Semantic Types Rust facade implements the public signatures', () => {
 	type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
 	type Assert<T extends true> = T;
 	type Bound = ReturnType<typeof import('../src/access/rust-core-semantic-types-default').bindCoreSemanticTypesRust>;
-	type _Inspect = Assert<Equal<Bound['inspectCoreSemanticTypes'], typeof import('../src/model/semantic-types').inspectCoreSemanticTypes>>;
-	type _Get = Assert<Equal<Bound['getCoreSemanticTypes'], typeof import('../src/model/semantic-types').getCoreSemanticTypes>>;
-	type _Declare = Assert<Equal<Bound['declareCoreSemanticTypes'], typeof import('../src/model/semantic-types').declareCoreSemanticTypes>>;
-	type _Verify = Assert<Equal<Bound['verifyCoreSemanticTypeDeclaration'], typeof import('../src/model/semantic-types').verifyCoreSemanticTypeDeclaration>>;
+	type Document = import('../src/model/types').Document;
+	type Reference = import('../src/model/types').CoreSemanticTypeReference;
+	type Identity = import('../src/model/semantic-types').CoreSemanticTypeIdentity;
+	type Inspection = import('../src/model/semantic-types').CoreSemanticTypeInspection;
+	type Declaration = import('../src/model/semantic-types').CoreSemanticTypeDeclaration;
+	type _Inspect = Assert<Equal<Bound['inspectCoreSemanticTypes'], (source: Document, identity: Identity) => Inspection>>;
+	type _Get = Assert<Equal<Bound['getCoreSemanticTypes'], (source: Document, identity: Identity) => Reference[] | undefined>>;
+	type _Declare = Assert<Equal<Bound['declareCoreSemanticTypes'], (source: Document, identity: Identity, types: Reference[] | null) => Declaration>>;
+	type _Verify = Assert<Equal<Bound['verifyCoreSemanticTypeDeclaration'], (receipt: Declaration, current: Document) => Declaration>>;
 	expect(true).toBe(true);
 });
 
@@ -179,29 +184,29 @@ test('the Semantic Types facade cannot import executable predecessor semantics',
 test('the Core Evolution candidate keeps predecessor declarations type-only', () => {
 	const allowed = checkAccessSource(
 		'rust-core-evolution-candidate.ts',
-		"import type {CoreEvolutionPolicy} from '../model/evolution';\n",
+		"import type {CoreEvolutionPolicy} from '../model/evolution-types';\n",
 	);
 	const denied = checkAccessSource(
 		'rust-core-evolution-candidate.ts',
-		"import {inspectCoreEvolution} from '../model/evolution';\n",
+		"import {inspectCoreEvolution} from '../model/evolution-types';\n",
 	);
 
 	expect(allowed).toEqual([]);
-	expect(denied).toContain('rust-core-evolution-candidate.ts: value import from type-only module ../model/evolution');
+	expect(denied).toContain('rust-core-evolution-candidate.ts: value import from type-only module ../model/evolution-types');
 });
 
 test('the Selection facade grants only audited type imports and no host hooks', () => {
 	const allowed = checkAccessSource(
 		'rust-selection-default.ts',
-		"import type {CoreElementQuery} from '../model/selection';\nimport type {Registry} from '../registry/registry';\n",
+		"import type {CoreElementQuery} from '../model/selection-types';\nimport type {Registry} from '../registry/registry';\n",
 	);
 	const denied = checkAccessSource(
 		'rust-selection-default.ts',
-		"import {selectCoreElements} from '../model/selection';\nimport {readFile} from 'node:fs';\nconst environment = process.env;\n",
+		"import {selectCoreElements} from '../model/selection-types';\nimport {readFile} from 'node:fs';\nconst environment = process.env;\n",
 	);
 
 	expect(allowed).toEqual([]);
-	expect(denied).toContain('rust-selection-default.ts: value import from type-only module ../model/selection');
+	expect(denied).toContain('rust-selection-default.ts: value import from type-only module ../model/selection-types');
 	expect(denied).toContain('rust-selection-default.ts: unapproved import node:fs');
 	expect(denied).toContain('rust-selection-default.ts: host or executable hook process');
 });
@@ -340,7 +345,7 @@ test('ordinary Rust JSON facade allows only its audited error and type imports',
 
 test('the Bit128 Rust facades admit only their audited type-only imports', () => {
  const bit128Allowed=checkAccessSource('rust-bit128-default.ts',[
-  "import {BIT128_PROFILE} from '../model/bit128';",
+  "import {BIT128_PROFILE} from '../model/bit128-types';",
   "import type {Bit128NativeTypeInput} from '../projections/bit128';",
   "import type {Bit128ModelProjection} from '../projections/bit128-model';",
   "import type {Bit128RecordValue} from '../extensions/binding/bit128-record';",

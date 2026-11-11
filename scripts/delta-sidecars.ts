@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureParquet,captureDeltaLog,reconcileDeltaCheckpointSidecars,readDocument,writeDocument,exportDeltaLog,type DeltaCommit} from '../src';
+import {captureParquet,captureDeltaLog,reconcileDeltaCheckpointSidecars,readDocument,writeDocument,exportDeltaLog,type DeltaCommit} from '../src/index-node-v4';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/sidecars/',checkpoint={version:'10',source:captureDeltaLog(await Bun.file(base+'checkpoint.jsonl').text(),{id:'checkpoint-10'})},commits:DeltaCommit[]=[],results=[];
 const sidecars=[];for(const f of (await Bun.file(base+'manifest.json').json()).sidecars)sidecars.push({path:f.path,source:captureParquet(new Uint8Array(await Bun.file(base+f.path).arrayBuffer()),{id:f.path})});

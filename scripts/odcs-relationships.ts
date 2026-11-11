@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importOdcsDocument,exportOdcsDocument,inspectOdcsRelationships,readDocument,writeDocument} from '../src';
+import {importOdcsDocument,exportOdcsDocument,inspectOdcsRelationships,readDocument,writeDocument} from '../src/index-node-v4';
 const base='fixtures/odcs/relationships/',path='native/odcs/sources/docs/examples/references/relationships.odcs.yaml',raw=await Bun.file(path).text(),native=JSON.parse(exportOdcsDocument(importOdcsDocument(raw,{id:'upstream',format:'yaml'}),'json'));
 const fixed=structuredClone(native);fixed.schema[1].properties[2].name='address_street';
 const cases:{id:string;source:any;expected:string;code?:string}[]=[{id:'upstream',source:native,expected:'blocked',code:'ODCS_REFERENCE_MISSING'},{id:'paired',source:fixed,expected:'checked'}];

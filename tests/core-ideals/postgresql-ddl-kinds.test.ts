@@ -4,10 +4,10 @@ import declarationsSchema from '../../spec/extensions/postgresql/ddl-declaration
 import {test,expect} from 'bun:test';
 import {ddlKindCases} from '../../scripts/core-ideals/postgresql-ddl-kind-cases';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql, proposePostgresqlNodeEdit} from '../../src/adapters/postgresql';
-import {getPostgresqlDdlDeclarations} from '../../src/adapters/postgresql/declarations';
+import {importPostgresqlSql,proposePostgresqlNodeEdit} from "../../src/index-node-v4";
+import {getPostgresqlDdlDeclarations} from "../../src/index-node-v4";
 
-import {classifyPostgresqlDdlRecord, recoverPostgresqlDdlKinds} from '../../src/core-ideals/postgresql-ddl-kinds';
+import {classifyPostgresqlDdlRecord,recoverPostgresqlDdlKinds} from "../../src/index-node-v4";
 import {copyJson} from '../../src/model/json';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 test('declared records retain source SQL and distinguish unresolved namespace from catalog facts',async()=>{

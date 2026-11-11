@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type * as API from '../src/index';
+import type * as API from '../src/index-node-v4';
 import {createPlanCorpusFixture,corpusCapabilities} from './actions-plan-corpus';
 import {sha256Text} from '../src/extensions/actions/plan-artifacts';
 const artifact=(value:unknown)=>{const utf8=typeof value==='string'?value:JSON.stringify(value);return {mediaType:'application/json',utf8,sha256:sha256Text(utf8,16777216)};};

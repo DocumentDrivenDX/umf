@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {captureParquet,decodeParquetFooter,encodeParquetWire,appendParquetKeyValueMetadata,exportParquetCapture,readDocument,writeDocument} from '../src';
+import {captureParquet,decodeParquetFooter,encodeParquetWire,appendParquetKeyValueMetadata,exportParquetCapture,readDocument,writeDocument} from '../src/index-node-v4';
 const base='fixtures/parquet/transforms/',manifest=await Bun.file('fixtures/parquet/footer/manifest.json').json(),results=[];
 const additions=[{key:'umf.example.description',value:'Orders / 注文 / 🧾'},{key:'umf.example.unset'},{key:'umf.example.empty',value:''},{key:'umf.example.bom',value:'\ufeffvalue'}];
 for(const c of manifest.results){

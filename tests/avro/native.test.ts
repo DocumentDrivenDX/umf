@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importAvroSchema,exportAvroSchema,inspectAvro,getAvroNode,editAvroNode,exportAvroBundle,readDocument,writeDocument} from '../../src';
+import {importAvroSchema,exportAvroSchema,inspectAvro,getAvroNode,editAvroNode,exportAvroBundle,readDocument,writeDocument} from '../../src/index-node-v4';
 const original=await Bun.file('fixtures/avro/order.avsc').text();
 const simple='{"type":"record","name":"R","fields":[{"name":"id","type":"int","default":1}]}';
 test('US-007-AC1: native Avro structure, metadata and logical types survive core serializations',async()=>{

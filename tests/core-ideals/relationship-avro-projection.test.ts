@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipAvroCase,relationshipAvroProjectionCases} from '../../scripts/core-ideals/relationship-avro-projection-cases';
-import {projectRelationshipToAvro, verifyRelationshipAvroProjection, recoverRelationshipAvroIdeal, recoverRelationshipAvroNative} from '../../src/core-ideals/relationship-avro-projection';
-import {createAvroRelationshipProjection} from '../../src/core-ideals/relationship-avro-projection-factory';
-import {lookupCoreRelationship as typescriptLookup,verifyCoreRelationshipOperation as typescriptVerify} from '../../src/model/relationships';
-import {classifyAvroRelationships, recoverAvroRelationshipSource} from '../../src/core-ideals/relationship-avro';
-import {importAvroSchema} from '../../src/adapters/avro';
+import {projectRelationshipToAvro, verifyRelationshipAvroProjection, recoverRelationshipAvroIdeal, recoverRelationshipAvroNative} from '../../src/index-node-v4';
+import {classifyAvroRelationships, recoverAvroRelationshipSource} from '../../src/index-node-v4';
+import {importAvroSchema} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 // @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipAvroProjectionCases())test('authored Avro relationship: '+c.name,()=>{
@@ -25,16 +23,6 @@ test('forged author, stale keys/components, reordered tuples and accessors rejec
  const author=structuredClone(c.author);author.request.name='forged';expect(()=>projectRelationshipToAvro(c.source,author,c.request)).toThrow();
  const swapped={...c.request,components:[...c.request.components].reverse()};expect(projectRelationshipToAvro(c.source,c.author,swapped).status).toBe('blocked');
  let reads=0;expect(()=>projectRelationshipToAvro(c.source,c.author,{...c.request,get shape(){reads++;return 'one' as const;}})).toThrow();expect(reads).toBe(0);
-});
-test('Avro projection factory injects relationship operations through replay and recovery',()=>{
- const calls={lookup:0,verify:0},api=createAvroRelationshipProjection({
-  lookupCoreRelationship:(...args:Parameters<typeof typescriptLookup>)=>{calls.lookup++;return typescriptLookup(...args);},
-  verifyCoreRelationshipOperation:(...args:Parameters<typeof typescriptVerify>)=>{calls.verify++;return typescriptVerify(...args);},
- });
- const c=relationshipAvroProjectionCases().find(x=>x.expected==='projected')!;
- const result=api.projectRelationshipToAvro(c.source,c.author,c.request);
- expect(api.recoverRelationshipAvroIdeal(result,result.target!)).toEqual(c.source);
- expect(calls.lookup).toBeGreaterThan(2);expect(calls.verify).toBeGreaterThan(1);
 });
 test('float Key equality remains invalid instead of being legitimized by an Avro float carrier',()=>{
  const c=relationshipAvroCase(),source=structuredClone(c.source);source.modules[0]!.elements.find(e=>e.id==='Customer.id')!.scalarType='float';expect(()=>projectRelationshipToAvro(source,c.author,{...c.request,components:c.request.components.map(v=>({...v,type:'float'}))})).toThrow();

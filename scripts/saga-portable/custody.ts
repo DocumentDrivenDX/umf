@@ -23,7 +23,7 @@ export const SDK_SAGA_NODE_ENTRY='dist/umf-node.js';
 export const SDK_SAGA_BROWSER_ENTRY='dist/umf-browser.js';
 export const SDK_SAGA_MEMBERS=[
  'package.json','manifest.json',SDK_SAGA_NODE_ENTRY,SDK_SAGA_BROWSER_ENTRY,
- 'dist/rust-default-manifest.json','dist/umf_core_node.node','dist/loader-contract.js','dist/runtime/wasm/index.js','dist/runtime/wasm/index-node.js','dist/runtime/wasm/loader.js',
+ 'dist/rust-default-manifest.json','dist/umf_core_node.node','dist/loader-contract.js','dist/loader-contract.node.js','dist/loader-contract-validator.js','dist/runtime/wasm/index.js','dist/runtime/wasm/index-node.js','dist/runtime/wasm/loader.js',
  'dist/runtime/wasm/pkg/umf_core_wasm.js','dist/runtime/wasm/pkg/umf_core_wasm_bg.wasm'
 ] as const;
 export type PortableCase={id:string;covers:number[]};

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {compileTableDeployment,type TableDeploymentBundle} from '../src/table-deployment';
-import {discoverTableMigrationChanges} from '../src/table-migration';
+import {compileTableDeployment} from '../src/index-node-v4';
+import type {TableDeploymentBundle} from '../src/index-v4-default';
+import {discoverTableMigrationChanges} from '../src/index-node-v4';
 import {legalSource} from '../tests/lifecycle/legal-fixture';
 
 const configuration={module:'legal_lifecycle',schema:'legal_demo',ownerRole:'legal_owner',personRole:'legal_person',batchRole:'legal_batch',groupRoles:{billing_admin:'legal_billing_admin'}};

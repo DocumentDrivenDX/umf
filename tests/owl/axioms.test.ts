@@ -2,7 +2,7 @@
 import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
-import {importOwlTurtle,exportOwlTurtle,getOwlSpecialAxioms,readDocument,writeDocument,getOwlQuads,proposeOwlQuadEdit} from '../../src';
+import {importOwlTurtle,exportOwlTurtle,getOwlSpecialAxioms,readDocument,writeDocument,getOwlQuads,proposeOwlQuadEdit} from '../../src/index-node-v4';
 test('US-029 special axioms preserve negative polarity, lists and source through recovery and edits',async()=>{
  const raw=await Bun.file('native/owl/special-axioms.ttl').text(),doc=importOwlTurtle(raw,{id:'s',baseIRI:'https://example.org/',blankNodeScope:'scope'});
  const ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/special-axioms-schema.json').json());

@@ -1,5 +1,5 @@
 /** Shape/domain validation of native disclosure only; not authorization. */
-import {decodeSecurityDisclosure} from '../../../src/extensions/security/disclosure';
+import {decodeSecurityDisclosure} from '../../../src/index-node-v4';
 import {securityFixture,ref} from '../fixture';
 const {policy,resolution}=securityFixture();
 resolution.documents[0]!.revision='native-disclosure-schema-1';

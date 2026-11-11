@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importJsonLdDocument,proposeJsonLdToRdf,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,getRdfQuads} from '../../src';
+import {importJsonLdDocument,proposeJsonLdToRdf,proposeJsonLdExpansion,proposeJsonLdFlatten,proposeJsonLdCompaction,proposeJsonLdFraming,getRdfQuads} from '../../src/index-node-v4';
 const ordered=(quads:unknown[])=>quads.map(q=>JSON.stringify(q)).sort();
 test('US-026-AC16: Unicode IRIs retain their spelling across processing and selected framing',async()=>{
  const cases=(await Bun.file('native/jsonld/examples/to-rdf-cases.json').json()).filter((c:any)=>c.id.startsWith('unicode-'));expect(cases).toHaveLength(4);

@@ -1,16 +1,17 @@
 /** Real Chromium check of intrinsic entity typing; no compiler/native admission. */
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
+import {buildStandaloneBindingBrowserRuntime} from '../../scripts/binding/browser-runtime';
 import {securityFixture} from '../../tests/security/fixture';
 import {migrateCandidateSecurityOntology} from '../../src/extensions/security/ontology-migration-candidate';
 import {migrateCandidateSecurityPolicy} from '../../src/extensions/security/policy-migration-candidate';
 const source='src/extensions/security/entity-terms-candidate.ts';
-const paths=[source,'tools/security/entity-terms-browser.ts','tools/security/entity-terms-browser-entry.ts','tests/security/fixture.ts','docs/helix/02-design/spikes/security/policy-v0.2.schema.json','docs/helix/02-design/spikes/security/ontology-v0.2.schema.json',...new Bun.Glob('src/**/*').scanSync({onlyFiles:true}),...new Bun.Glob('spec/**/*').scanSync({onlyFiles:true})];
+const paths=[source,'tools/security/entity-terms-browser.ts','tools/security/entity-terms-browser-entry.ts','scripts/binding/browser-runtime.ts','bindings/core/wasm/pkg/umf_core_wasm.js','bindings/core/wasm/pkg/umf_core_wasm_bg.wasm','tests/security/fixture.ts','docs/helix/02-design/spikes/security/policy-v0.2.schema.json','docs/helix/02-design/spikes/security/ontology-v0.2.schema.json',...new Bun.Glob('src/**/*').scanSync({onlyFiles:true}),...new Bun.Glob('spec/**/*').scanSync({onlyFiles:true})];
 const hash=async(p:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex');
 const sourceDigests=Object.fromEntries(await Promise.all(paths.map(async p=>[p,await hash(p)])));
 const f=securityFixture(),ontology:any=structuredClone(migrateCandidateSecurityOntology(f.resolution.ontology,'ontology-2').target);ontology.associations=[];ontology.context=[{documentId:'domain',moduleId:'m',elementId:'active'}];
 const policy:any=structuredClone(migrateCandidateSecurityPolicy(f.policy,{documentId:'domain',revision:'ontology-2'},'policy-2').target);policy.rules=policy.rules.slice(0,1);policy.rules[0].condition={op:'and',args:[{op:'eq',left:{kind:'resource',field:{documentId:'domain',moduleId:'m',elementId:'salary'}},right:{kind:'constant',field:{documentId:'domain',moduleId:'m',elementId:'salary'},value:{integerToken:'9007199254740993'}}},{op:'eq',left:{kind:'context',field:{documentId:'domain',moduleId:'m',elementId:'active'}},right:{kind:'constant',field:{documentId:'domain',moduleId:'m',elementId:'active'},value:{boolean:true}}}]};
-const build=await Bun.build({entrypoints:['tools/security/entity-terms-browser-entry.ts'],target:'browser',format:'esm'});if(!build.success)throw Error('Browser build failed');
+const build=await buildStandaloneBindingBrowserRuntime({entrypoints:['tools/security/entity-terms-browser-entry.ts'],target:'browser',format:'esm'});if(!build.success)throw Error('Browser build failed');
 const js=await build.outputs[0]!.text(),server=Bun.serve({hostname:'127.0.0.1',port:0,fetch:r=>new URL(r.url).pathname==='/candidate.js'?new Response(js,{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html>')});let browser;
 try{
  browser=await chromium.launch({headless:true,executablePath:Bun.env.UMF_CHROMIUM_PATH});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():(externalRequests++,r.abort()));await page.goto(`http://127.0.0.1:${server.port}`);

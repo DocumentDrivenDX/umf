@@ -4,7 +4,7 @@ import type {TypeSpecJsonSchemaEmission} from '../adapters/typespec/report-types
 import type {TypeSpecJsonSchemaPolicy} from './typespec-json-schema-types';
 import type {SmithyJsonSchemaBackend,SmithyJsonSchemaPolicy,SmithyJsonSchemaProjection} from './smithy-json-schema-types';
 import type {SmithyAssemblyResult} from '../adapters/smithy/assembly';
-import type {ProjectionIssue} from './json-schema-protobuf';
+import type {ProjectionIssue} from './projection-types';
 
 type Guard=(error:unknown)=>boolean;
 type Engine={['typespec-smithy-jsonschema-projection']:Record<'prepareTypeSpecJsonSchema'|'completeTypeSpecJsonSchema'|'prepareSmithyJsonSchema'|'completeSmithyJsonSchema',(fields?:Record<string,unknown>)=>unknown>};

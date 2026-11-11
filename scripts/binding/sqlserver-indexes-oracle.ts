@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importSqlServerCatalog,projectBindingIndexesToSqlServer,type Document} from '../../src';
+import {importSqlServerCatalog,projectBindingIndexesToSqlServer,type Document} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/sqlserver-indexes/case.json').json();
 const nativeSource=await Bun.file(fixture.native).text();
@@ -32,7 +32,7 @@ try{
   assert.equal(rows.find((r:any)=>r.name==='umf_id_unique')?.is_unique,true);
   observed=rows;
 }finally{if(created)await run(['docker','rm','-f','-v',name]);}
-const files=['fixtures/binding/sqlserver-indexes/case.json',fixture.native,fixture.sourceDdl,'fixtures/binding/sqlserver-indexes/generated.sql','src/projections/binding-sqlserver/indexes.ts'];
+const files=['fixtures/binding/sqlserver-indexes/case.json',fixture.native,fixture.sourceDdl,'fixtures/binding/sqlserver-indexes/generated.sql','src/projections/binding-sqlserver-types.ts','crates/umf-core/src/binding_index_projection.rs'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 await Bun.write('fixtures/binding/sqlserver-indexes/oracle.json',JSON.stringify({scope:'SQL Server 2022 isolated native execution of rowstore, unique and filtered index DDL; no query-plan or performance claim',image,sourceVersion:JSON.parse(nativeSource).serverVersion,observed,residuals:report.residuals,sha256},null,2)+'\n');
 console.log(JSON.stringify({created:(observed as any[]).length,residuals:report.residuals.length}));

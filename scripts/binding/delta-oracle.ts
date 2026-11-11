@@ -2,7 +2,8 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,projectBindingToDelta,type Document} from '../../src';
+import {captureDeltaLog,exportDeltaLog,inspectDeltaActions,type Document} from '../../src/index-node-v4';
+import {projectBindingToDelta} from '../../src/index-node-v4';
 
 const fixture=await Bun.file('fixtures/binding/delta/case.json').json();
 const text=await Bun.file(fixture.native).text();
@@ -23,7 +24,7 @@ const child=Bun.spawn([python,'scripts/binding/delta-native.py'],{stdout:'pipe',
 const nativeEvidence=JSON.parse(await new Response(child.stdout).text());
 assert.equal(await child.exited,0);
 assert.equal(nativeEvidence.runtime,'deltalake 1.6.4');
-const sha256=Object.fromEntries(await Promise.all(['fixtures/binding/delta/case.json',fixture.native,'fixtures/binding/delta/candidate.jsonl','src/projections/binding-delta/index.ts','scripts/binding/delta-native.py'].map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
+const sha256=Object.fromEntries(await Promise.all(['fixtures/binding/delta/case.json',fixture.native,'fixtures/binding/delta/candidate.jsonl','crates/umf-core/src/binding_delta_projection.rs','scripts/binding/delta-native.py'].map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 const evidence={scope:'Delta 3.2 clustering domainMetadata action shape against existing native log context; reader loads metadata version 1, but no data file clustering or independent Delta writer enforcement is claimed',adapter:'umf.delta.log 0.1.0',native:nativeEvidence,knownShapesValid:true,clusteringColumns:[['order_id']],officialProtocol:'https://github.com/delta-io/delta/blob/master/PROTOCOL.md',sha256};
 await Bun.write('fixtures/binding/delta/oracle.json',JSON.stringify(evidence,null,2)+'\n');
 console.log(JSON.stringify({status:report.status,native:nativeEvidence.runtime,knownShapesValid:true}));

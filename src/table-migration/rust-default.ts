@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/errors';
-import type {TableDeploymentBundle} from '../table-deployment';
-import type {compileTableMigration,verifyTableMigration} from './index';
-import type {G04DiscoverySelector, G04ReviewedCandidate, ReviewedChangeCandidate} from './index';
+import type {TableDeploymentBundle} from '../table-deployment/types';
+import type {
+ G04DiscoverySelector,G04MigrationOptions,G04ReviewedCandidate,G04TableMigrationResult,
+ LegacyTableMigrationOptions,LegacyTableMigrationResult,ReviewedChangeCandidate,
+ TableMigrationDiscoverySelector,TableMigrationPlan,TableMigrationRequest,TableMigrationResult,
+} from './types';
 
-type Selector = {version:'umf.table-migration-discovery/0.2'|'umf.table-migration-discovery/0.3'} | G04DiscoverySelector;
+type Selector = TableMigrationDiscoverySelector | G04DiscoverySelector;
 type Result = ReviewedChangeCandidate[]|G04ReviewedCandidate[];
 type Guard = (error:unknown)=>boolean;
 interface NativeMigrationEngine {
@@ -28,9 +31,13 @@ export function createTableMigrationDiscoveryRustDefault(createEngine:()=>Native
       throw error;
     }
   };
-  return function discover(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:Selector):Result{
+  function discover(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector:G04DiscoverySelector):G04ReviewedCandidate[];
+  function discover(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:TableMigrationDiscoverySelector):ReviewedChangeCandidate[];
+  function discover(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:Selector):Result;
+  function discover(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:Selector):Result{
     return call<Result>(native=>native.discoverTableMigrationChanges(previous,next,selector));
-  };
+  }
+  return discover;
 }
 
 
@@ -58,8 +65,14 @@ export function createTableMigrationRustDefault(createEngine:()=>NativeMigration
       throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:typeof native.pointer==='string'?native.pointer:'');
     }
   };
+  function compileTableMigration(request:Omit<TableMigrationRequest,'options'>&{options:G04MigrationOptions}):G04TableMigrationResult;
+  function compileTableMigration(request:Omit<TableMigrationRequest,'options'>&{options?:LegacyTableMigrationOptions}):LegacyTableMigrationResult;
+  function compileTableMigration(request:TableMigrationRequest):TableMigrationResult;
+  function compileTableMigration(request:TableMigrationRequest):TableMigrationResult{
+    return call(native=>native.compileTableMigration(request));
+  }
   return Object.freeze({
-    compileTableMigration(request:Parameters<typeof compileTableMigration>[0]):ReturnType<typeof compileTableMigration>{return call(native=>native.compileTableMigration(request));},
-    verifyTableMigration(plan:Parameters<typeof verifyTableMigration>[0]):ReturnType<typeof verifyTableMigration>{return call(native=>native.verifyTableMigration(plan));},
+    compileTableMigration,
+    verifyTableMigration(plan:unknown):TableMigrationPlan{return call(native=>native.verifyTableMigration(plan));},
   });
 }

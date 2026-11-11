@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, getSqlServerConstraintMetadata, readJsonValue, writeJsonValue, copyJson} from '../../src';
-import {classifySqlServerCardinality, recoverSqlServerCardinalitySource} from '../../src/core-ideals/cardinality-sqlserver';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, getSqlServerConstraintMetadata, readJsonValue, writeJsonValue, copyJson} from '../../src/index-node-v4';
+import {classifySqlServerCardinality,recoverSqlServerCardinalitySource} from "../../src/index-node-v4";
 const fixture=await Bun.file('fixtures/validation/cardinality-sqlserver-profile-native.json').json(),nativeSource:string=fixture.nativeSource;
 function source(text=nativeSource){return importSqlServerCatalog(text,{id:'logical'});}
 test('logical representations retain physical scalar metadata and exact native text',()=>{

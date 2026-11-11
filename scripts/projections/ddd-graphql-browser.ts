@@ -2,7 +2,7 @@
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
-import {projectDddToGraphql} from '../../src';
+import {projectDddToGraphql} from '../../src/index-node-v4';
 import {graphqlCases} from './ddd-graphql-cases';
 const cases=graphqlCases().map(f=>({...f,expected:projectDddToGraphql(f.logical,f.policy,'report')}));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;
@@ -46,7 +46,7 @@ try{
   return {cases:cases.length,idealRecoveries,nativeRecoveries,strictBlocks,forgedRefusals,staleRefusals,getterReads,currentSourceCustody:true,nativeUnknownRecoveries:2};
  });
  if(external.length)throw Error('External request');
- const paths=['src/index.ts','spec/projections/ddd-graphql.schema.json','src/projections/ddd-graphql/index.ts','src/projections/ddd-graphql/entities.ts','scripts/projections/ddd-graphql-cases.ts','scripts/projections/ddd-graphql-browser.ts','fixtures/projections/ddd-graphql/case.json','fixtures/projections/ddd-authored-relationships/base.json','dist/umf.js'];
+ const paths=['src/index.ts','spec/projections/ddd-graphql.schema.json','src/projections/ddd-graphql-types.ts','src/projections/ddd-graphql-schema.ts','scripts/projections/ddd-graphql-cases.ts','scripts/projections/ddd-graphql-browser.ts','fixtures/projections/ddd-graphql/case.json','fixtures/projections/ddd-authored-relationships/base.json','dist/umf.js'];
  await Bun.write('fixtures/projections/ddd-graphql/browser.json',JSON.stringify({browser:browser.version(),checks,externalRequests:external,sha256:Object.fromEntries(paths.map(p=>[p,createHash('sha256').update(readFileSync(p)).digest('hex')]))},null,2)+'\n');
  console.log(JSON.stringify(checks));
 }finally{await browser?.close();server.stop(true);}

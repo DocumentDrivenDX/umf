@@ -114,7 +114,7 @@ try{
   'scripts/g03-migration-corpus.ts','scripts/g03-sdk-browser.ts','scripts/package-sdk.ts',
   'scripts/package-sdk.py','scripts/test-sdk-install.ts','package.json','python/pyproject.toml',
   'tests/binding/fixtures/table-lifecycle-note.json','tests/codegen/g03_migration_probe.py',
-  'src/table-migration/index.ts','src/generated/core-model.ts',
+  'src/table-migration/rust-default.ts','crates/umf-codegen/src/migration/mod.rs','src/generated/core-model.ts',
  ];
  const sourceHashes=Object.fromEntries(await Promise.all(paths.map(async path=>[path,await hash(await readFile(path))])));
  const sdkInputs={sdkArchivePath:archivePath,installedPackagePath:packageRoot,corpusPath,pythonReportPath,

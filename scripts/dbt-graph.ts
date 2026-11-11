@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importDbtManifest,inspectDbtManifestGraph,readDocument,writeDocument} from '../src';
+import {importDbtManifest,inspectDbtManifestGraph,readDocument,writeDocument} from '../src/index-node-v4';
 for(const base of ['fixtures/dbt/','fixtures/dbt/rich/']){
  const raw=await Bun.file(base+'manifest.json').text(),d=importDbtManifest(raw,{id:'graph'}),report=inspectDbtManifestGraph(d);
  for(const f of ['json','yaml'] as const)if(JSON.stringify(inspectDbtManifestGraph(readDocument(writeDocument(d,f),f)))!==JSON.stringify(report))throw Error('Graph differs after round trip');

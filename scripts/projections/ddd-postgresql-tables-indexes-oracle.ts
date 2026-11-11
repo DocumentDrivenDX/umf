@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
-import {exportPostgresqlSql,getPostgresqlSource,projectDddTablesAndIndexesToPostgresql,type Document} from '../../src';
+import {exportPostgresqlSql,getPostgresqlSource,projectDddTablesAndIndexesToPostgresql,type Document} from '../../src/index-node-v4';
 
 const directory='fixtures/projections/ddd-postgresql-tables-indexes';
 const fixture=await Bun.file('fixtures/projections/ddd-postgresql-tables/case.json').json();
@@ -31,7 +31,7 @@ try{
   assert.equal(indexes.find((x:any)=>x.name==='orders_partial')?.predicate.includes('paid'),true);
   observed={indexes};
 }finally{if(created)await run(['docker','rm','-f',name]);}
-const files=['fixtures/projections/ddd-postgresql-tables/case.json',`${directory}/generated.sql`,'src/projections/ddd-postgresql/tables-indexes.ts','src/projections/binding-postgresql/indexes.ts'];
+const files=['fixtures/projections/ddd-postgresql-tables/case.json',`${directory}/generated.sql`,'src/projections/ddd-postgresql-types.ts','src/projections/binding-postgresql/indexes-types.ts','crates/umf-core/src/ddd_postgresql_projection.rs','crates/umf-core/src/binding_postgresql_indexes.rs'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
 await Bun.write(`${directory}/oracle.json`,JSON.stringify({scope:'PostgreSQL 17.4 DDD table and supported index DDL; unsupported access methods, partitioned uniqueness, clustering and relationships stay residual',image,serverVersion:170004,adapter:backend.identity,observed,residuals:report.residuals,sha256},null,2)+'\n');
 console.log(JSON.stringify({indexes:(observed as any).indexes.length,residuals:report.residuals.length}));

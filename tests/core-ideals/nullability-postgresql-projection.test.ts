@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-postgresql-projection-cases';
-import {projectNullabilityToPostgresql, recoverNullabilityFromPostgresql} from '../../src/core-ideals/nullability-postgresql-projection';
+import {projectNullabilityToPostgresql,recoverNullabilityFromPostgresql} from "../../src/index-node-v4";
 import {backend} from '../../native/postgresql/runtime';
-import {getPostgresqlSource} from '../../src/adapters/postgresql';
+import {getPostgresqlSource} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('authored availability projects with explicit scope and recovers every residual through both formats',async()=>{
@@ -38,7 +38,7 @@ test('programmatic metadata and unknown extension obligations survive report rec
  source.modules.push({id:'other',namespace:'other',elements:[{id:'x',extensions:{}}]});
  source.modules[0]!.elements[0]!.extensions.future={minimumAvailability:'unknown',nested:[null,true]};
  source.modules[0]!.elements[0]!.references=[{role:'future',module:'other',element:'x'}];
- const {declareCoreNullability}=await import('../../src/model/nullability');
+ const {declareCoreNullability}=await import('../../src/index-node-v4');
  const author=declareCoreNullability(source,{module:'m',element:'e'},'required');
  expect((await projectNullabilityToPostgresql(author,c.request,backend)).status).toBe('blocked');
  const report=await projectNullabilityToPostgresql(author,{...c.request,mode:'report'},backend);

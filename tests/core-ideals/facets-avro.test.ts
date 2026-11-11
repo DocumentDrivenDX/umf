@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import * as u from '../../src';
-import {classifyAvroFacets as classify, recoverAvroFacetSource as recover, avroFacetsPackage, AVRO_FACETS_EXTENSION, type AvroFacetRequest} from '../../src/core-ideals/facets-avro';
+import * as u from '../../src/index-node-v4';
+import {avroFacetsPackage,AVRO_FACETS_EXTENSION,type AvroFacetRequest} from "../../src/core-ideals/facets-avro";
+import {classifyAvroFacets as classify,recoverAvroFacetSource as recover} from "../../src/index-node-v4";
 function sample(nativeSource='"int"',scalarType:u.ScalarType='integer',options:Partial<AvroFacetRequest>={}){
  const dependencies=options.dependencies;
  const native=u.importAvroSchema(nativeSource,{id:'avro-facets',...(dependencies?{dependencies}:{})});

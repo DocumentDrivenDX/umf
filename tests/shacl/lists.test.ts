@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportShaclTurtle,readDocument,writeDocument} from '../../src';
+import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportShaclTurtle,readDocument,writeDocument} from '../../src/index-node-v4';
 const prefix='@prefix sh: <http://www.w3.org/ns/shacl#> . @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ';
 test('US-028 malformed Core constraint lists never produce a conformance result',async()=>{
  const tails=['','<urn:list> rdf:first 1 .','<urn:list> rdf:rest rdf:nil .','<urn:list> rdf:first 1,2 ; rdf:rest rdf:nil .','<urn:list> rdf:first 1 ; rdf:rest rdf:nil,<urn:other> .','<urn:list> rdf:first 1 ; rdf:rest "bad" .','<urn:list> rdf:first 1 ; rdf:rest <urn:list> .','<urn:list> rdf:first 1 ; rdf:rest rdf:nil . rdf:nil rdf:first 2 .'];

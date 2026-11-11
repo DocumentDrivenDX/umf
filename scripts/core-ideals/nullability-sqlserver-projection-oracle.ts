@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {sqlserverNullabilityProjectionCases} from './nullability-sqlserver-projection-cases';
-import {projectNullabilityToSqlServer, recoverNullabilityFromSqlServer} from '../../src/core-ideals/nullability-sqlserver-projection';
-import {classifySqlServerNullability, recoverSqlServerNullabilitySource} from '../../src/core-ideals/nullability-sqlserver';
-import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
+import {projectNullabilityToSqlServer,recoverNullabilityFromSqlServer} from "../../src/index-node-v4";
+import {classifySqlServerNullability,recoverSqlServerNullabilitySource} from "../../src/index-node-v4";
+import {importSqlServerCatalog,getSqlServerColumnMetadata} from "../../src/index-node-v4";
 
 
-import {classifySqlServerField} from '../../src/core-ideals/sqlserver-field';
+import {classifySqlServerField} from "../../src/index-node-v4";
 import {sqlServerIdentifier as identifier, sqlServerLiteral as literal} from '../../src/core-ideals/sqlserver-syntax';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-nullability-down-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(err||out||'Process failed');return out;}

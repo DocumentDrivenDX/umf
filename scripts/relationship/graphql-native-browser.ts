@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {importGraphqlSchema} from '../../src';
+import {importGraphqlSchema} from '../../src/index-node-v4';
 
 const directory='fixtures/relationship/graphql-native';
 const source=await Bun.file(`${directory}/schema.graphql`).text();

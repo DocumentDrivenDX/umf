@@ -2,8 +2,8 @@
 import {expect,test} from 'bun:test';
 import {classifyAvroField,recoverAvroFieldBundle,classifyAvroRecord,recoverAvroRecordBundle} from '../../src/index-node-v4';
 import {avroFieldCases} from '../../scripts/core-ideals/avro-field-cases';
-import {importAvroSchema,getAvroFieldMetadata} from '../../src/adapters/avro';
-import {avroRecords} from '../../src/core-ideals/avro-records';
+import {importAvroSchema,getAvroFieldMetadata} from "../../src/index-node-v4";
+import {avroRecords} from '../../scripts/core-ideals/avro-record-inventory';
 
 test('Node V4 Avro Field and Record classifier defaults retain and recover exact bundles through Rust',()=>{
  const c=avroFieldCases[0]!,source=importAvroSchema(c.schema,{id:c.id,dependencies:c.dependencies});

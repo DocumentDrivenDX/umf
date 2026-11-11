@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import * as u from '../../src';
+import * as u from '../../src/index-node-v4';
 import evidence from '../../fixtures/validation/facets-postgresql-constraints-native.json';
 export function postgresqlFacetSource(){
  let document=u.importPostgresqlCatalogCapture(evidence.sourceText,{id:'postgresql-facets'});

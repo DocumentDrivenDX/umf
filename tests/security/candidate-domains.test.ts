@@ -2,6 +2,7 @@
 // @covers US-079-AC3
 // @covers US-079-AC16
 import {test,expect} from 'bun:test';
+import '../../src/index-node-v4';
 import {securityFixture,ref} from './fixture';
 import {migrateCandidateSecurityOntology} from '../../src/extensions/security/ontology-migration-candidate';
 import {createCandidateEntityTermScope,resolveCandidateEntityTerm,candidateEntityTermsCompatible} from '../../src/extensions/security/entity-terms-candidate';

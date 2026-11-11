@@ -2,7 +2,7 @@ import {CURRENT_CORE_VERSION} from '../../../src/generated/core-model';
 /** Authored fixed native profile. Decisions remain logical, never SQL credentials. */
 import type {CoreLiteral} from '../../../src/model/schema-literals';
 import type {SecurityWriteState} from '../../../src/extensions/security/write';
-import {evaluateSecurityWrite} from '../../../src/extensions/security/write';
+import {evaluateSecurityWrite} from '../../../src/index-node-v4';
 import {compileCandidateCatalogProgram} from '../../../src/extensions/security/catalog-program-candidate';
 import {evaluateCandidateCatalogWrite} from '../../../src/extensions/security/catalog-write-candidate';
 import {migrateCandidateSecurityOntology} from '../../../src/extensions/security/ontology-migration-candidate';

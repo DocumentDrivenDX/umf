@@ -1,14 +1,25 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Regression coverage for CONTRACT-083's explicit legacy compatibility view. */
 import {expect,test} from 'bun:test';
-import {projectLakeviewToLegacyDashboard} from '../../src/adapters/lakeview';
-import {elementKey} from '../../src/adapters/lakeview/project';
+import {projectLakeviewToLegacyDashboard} from '../../src/index-node-v4';
+import {elementKey} from '../../src/adapters/lakeview/projection-types';
 
 import {legacyIds as ids,legacyFixture as fixture,legacyNumericFixture as numericFixture,legacyMixedDefaults,legacySelectionFixture,legacyUnknownWidgetTypes,legacyUnknownFormats,legacyUnknownChannels,legacyFormatFixture,legacyChannelFixture} from './legacy-fixture';
 
 function project(view:any){return projectLakeviewToLegacyDashboard(view,ids,{title:'Legacy view'});}
 const filter=(result:ReturnType<typeof project>)=>result.elements.get(elementKey('page','filter')) as any;
 const dataset=(result:ReturnType<typeof project>)=>result.elements.get(elementKey('data','dataset')) as any;
+
+test('legacy projection preserves host objects and UTF-16 diagnostic text',()=>{
+  const view=fixture('__proto__');
+  const opaque='🎨'.repeat(70);
+  const result=project({...view,future:opaque});
+  expect(Object.getPrototypeOf(result.root)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(dataset(result))).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(dataset(result).fields)).toBeNull();
+  expect(Object.getPrototypeOf(result.issues[0])).toBe(Object.prototype);
+  expect(result.issues[0]?.detail).toBe(`Native content ${JSON.stringify(opaque).slice(0,120)} is retained but not expressed by the neutral declaration`);
+});
 
 for(const name of ['constructor','toString','__proto__'])test('legacy field names are own data: '+name,()=>{
   const result=project(fixture(name));

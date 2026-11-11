@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {buildStandaloneBindingBrowserRuntime} from './binding/browser-runtime';
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/rdf/merge/results.json').json()).cases;
 for(const c of cases){c.raw=await Bun.file(c.inputPath).text();for(const e of c.exports)e.output=await Bun.file(e.path).text();}
 const anchor=await Bun.file('native/rdf/examples/empty-graphs.trig').text();
-const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/rdf-merge-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const built=await buildStandaloneBindingBrowserRuntime({entrypoints:['src/index.ts'],outdir:'.cache/rdf-merge-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/rdf-merge-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>RDF merge</title>');}});let browser;
 try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);const result=await page.evaluate(async({cases,anchor})=>{
  const path='/umf.js',u=await import(path),a=u.importRdfTriG(anchor,{id:'same-id',baseIRI:'https://example.org/schema.trig'});let merges=0,exports=0;

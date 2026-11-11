@@ -2,15 +2,15 @@
 /** Reimport actual generated native artifacts through the existing preservation adapters. */
 import assert from 'node:assert/strict';
 import {backend} from '../../native/postgresql/runtime';
-import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource} from '../../src/adapters/postgresql';
-import {importSqlServerCatalog,exportSqlServerCatalog} from '../../src/adapters/sqlserver';
-import {importAvroSchema,exportAvroSchema} from '../../src/adapters/avro';
-import {captureParquet,exportParquetCapture} from '../../src/adapters/parquet';
-import {inspectParquetMetadata} from '../../src/adapters/parquet/metadata';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
+import {importPostgresqlSql,exportPostgresqlSql,getPostgresqlSource} from "../../src/index-node-v4";
+import {importSqlServerCatalog,exportSqlServerCatalog} from "../../src/index-node-v4";
+import {importAvroSchema,exportAvroSchema} from "../../src/index-node-v4";
+import {captureParquet,exportParquetCapture} from "../../src/index-node-v4";
+import {inspectParquetMetadata} from "../../src/index-node-v4";
+import {importTableSpec,exportTableSpec} from "../../src/index-node-v4";
 import {readDocument,writeDocument} from '../../src/model/document';
-import {projectBit128Model,recoverBit128ModelProjection} from '../../src/projections/bit128-model';
-import {classifyBit128NativeType} from '../../src/projections/bit128';
+import {projectBit128Model,recoverBit128ModelProjection} from "../../src/index-node-v4";
+import {classifyBit128NativeType} from "../../src/index-node-v4";
 import {uuidModel} from '../../tests/helpers/uuid-model-fixtures';
 import {canonicalSchemaJson} from '../../src/model/schema-literals';
 import type {Document} from '../../src/model/types';

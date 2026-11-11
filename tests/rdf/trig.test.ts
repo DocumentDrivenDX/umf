@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importRdfTriG,exportRdfTriG,exportRdfNQuads,importRdfNQuads,getRdfNamedGraphs,getRdfQuads,proposeRdfQuadEdit,proposeRdfIriRename,readDocument,writeDocument} from '../../src';
+import {importRdfTriG,exportRdfTriG,exportRdfNQuads,importRdfNQuads,getRdfNamedGraphs,getRdfQuads,proposeRdfQuadEdit,proposeRdfIriRename,readDocument,writeDocument} from '../../src/index-node-v4';
 const base='fixtures/rdf/trig/';
 test('US-025-AC6: full official TriG corpus, expected graphs and candidate exports',async()=>{
  const fixture=await Bun.file(base+'results.json').json(),oracle=await Bun.file(base+'oracle-results.json').json(),manifest=await Bun.file('native/rdf/trig-sources/manifest.json').json();expect(fixture.results.filter((c:any)=>c.id!=='authored-empty').map((c:any)=>c.id)).toEqual(manifest.cases.map((c:any)=>c.id));expect(fixture.results).toHaveLength(358);expect(oracle.results.filter((r:any)=>r.officialExpectedQuads)).toHaveLength(143);let accepted=0,edits=0;

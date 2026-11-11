@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
-import {importGraphqlSchema} from '../../src';
+import {importGraphqlSchema} from '../../src/index-node-v4';
 
 const base='fixtures/projections/ddd-authored-relationships/';
 const source=await Bun.file(base+'expected-relationships.graphql').text();

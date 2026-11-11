@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {equalJsonLdText} from './jsonld-compare';
-import {importRdfNQuads,importRdfTriG,exportRdfNQuads,exportRdfTriG,getRdfQuads,proposeRdfQuadEdit,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../src';
+import {importRdfNQuads,importRdfTriG,exportRdfNQuads,exportRdfTriG,getRdfQuads,proposeRdfQuadEdit,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../src/index-node-v4';
 const results=[];
 for(const c of await Bun.file('native/jsonld/examples/from-rdf-cases.json').json()){
  const options={id:c.id+'-jsonld',baseIRI:'https://example.org/source',lossPolicy:'report',...c.options},d=c.syntax==='trig'?importRdfTriG(c.source,{id:c.id,baseIRI:options.baseIRI}):importRdfNQuads(c.source,{id:c.id}),r=await proposeRdfToJsonLd(d,options),exports=[],edits=[];

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private canonical action/disposition kernel. Host attestations are not native credentials. */
 import {copyJson} from '../../model/json';
-import {encodeCoreKeyTupleBody,type CoreKeyTupleValue} from '../../model/key-tuple';
+import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../model/key-tuple';
 import {canonicalSchemaJson,type CoreLiteral} from '../../model/schema-literals';
 import {CandidateSecurityOperationBudget} from './operation-budget-candidate';
 import {GREGORIAN_DATE_PROFILE,parseGregorianDate} from '../../adapters/gregorian-date';
@@ -146,7 +146,7 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  const keys=new Map<string,any>();for(const e of entities.values()){const record=records.get(id(e.type)),key=record.keys.find((k:any)=>k.id===e.keyId);keys.set(id(e.type),key);}
  const tuple=(type:any,values:any):string=>{step();const e=entity(type),key=keys.get(id(type));list(values,64);if(values.length!==key.fields.length)fail('Key arity');
   for(const [i,k] of key.fields.entries()){const r={documentId:type.documentId,moduleId:k.module,elementId:k.element},f=field(r);budget.check(f.document,f.field,values[i]);}
-  const result=encodeCoreKeyTupleBody(documents.get(type.documentId),{module:type.moduleId,element:type.elementId,key:e.keyId},values as CoreKeyTupleValue[],{valid:true,complete:true,diagnostics:[]},(d,f,v)=>budget.check(d,f,v));
+  const result=encodeCoreKeyTuple(documents.get(type.documentId),{module:type.moduleId,element:type.elementId,key:e.keyId},values as CoreKeyTupleValue[]);
   return budget.retain(canonicalSchemaJson([id(type),e.keyId,result.bytesHex]));
  };
  const selectors=new WeakMap<object,string>();const selector=(s:any)=>{shape(s,['type','key']);let key=selectors.get(s);if(!key){key=tuple(s.type,s.key);selectors.set(s,key);}return key;};

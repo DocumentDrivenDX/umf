@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {SqlServerPhysicalPolicy,SqlServerPhysicalProjection} from './index';
+import type {SqlServerPhysicalPolicy,SqlServerPhysicalProjection} from '../binding-sqlserver-types';
 import type {Document} from '../../model/types';
 type Engine={['binding-sqlserver-physical']:Record<'projectBindingToSqlServer'|'verifyBindingSqlServerProjection'|'recoverBindingSqlServerSources'|'recoverBindingSqlServerNative',(fields?:Record<string,unknown>)=>unknown>};
 export function createBindingSqlServerPhysicalRustDefault(engine:Engine){

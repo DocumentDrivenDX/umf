@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {CURRENT_CORE_VERSION} from '../../generated/core-model';
-import type {Registry} from '../../registry/registry';
+import type {RegistryBase as Registry} from '../../registry/base';
 import type {Document} from '../../model/types';
 import type {CoreLiteral} from '../../model/schema-literals';
 import type {ActionReference,ActionKeyReference,ActionIdentity,ActionExecutorProfile,ActionProfileIdentity} from './types';

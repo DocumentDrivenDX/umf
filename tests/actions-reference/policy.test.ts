@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import fixture from '../../fixtures/actions/approve.json';
-import type {Action} from '../../src/extensions/actions';
+import type {Action} from '../../src/index-node-v4';
 import {ReferenceActionIssuer} from '../../scripts/actions-reference/authentication';
 import {ReferenceActionPolicy} from '../../scripts/actions-reference/policy';
 import {withReferenceStore} from './native-harness';

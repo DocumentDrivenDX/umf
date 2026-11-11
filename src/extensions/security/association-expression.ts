@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../validation/schema';
 import documentSchema from '../../../spec/core/schema.json';
-import {checkSchemaLiteral} from '../../model/schema-literals';
+import {ProtectionLiteralBudget} from './protection/literals';
 import {createCandidateEntityTermScope,readCandidateEntityTermScope,readCandidateEntityTermScopeRoot,resolveCandidateEntityTerm} from './entity-terms-candidate';
 import {resolveCandidateSecurityOntology} from './ontology-checks-candidate';
 /** Private association-scope normalization. Residual terms prevent policy admission. */
@@ -27,7 +27,7 @@ function sourceFor(checks:CandidateAssociationChecks){
 function classificationsFor(checks:CandidateAssociationChecks){
  let rows=sharedClassifications.get(checks);if(!rows){rows=(checks.classifications as any[]).map(record=>({key:identity(record.type),encoded:canonical({...record,fields:[...record.fields].sort((a:any,b:any)=>identity(a.ref)<identity(b.ref)?-1:identity(a.ref)>identity(b.ref)?1:0)})}));sharedClassifications.set(checks,rows);}return rows;
 }
-export function normalizeCandidateAssociationExpression(input:unknown,available:readonly CandidateAssociationChecks[],contextInput?:unknown,entityScope?:unknown):{readonly expression:unknown;readonly residuals:readonly {path:string;reason:string}[]}{
+export function normalizeCandidateAssociationExpression(input:unknown,available:readonly CandidateAssociationChecks[],contextInput?:unknown,entityScope?:unknown,literalBudget=new ProtectionLiteralBudget()):{readonly expression:unknown;readonly residuals:readonly {path:string;reason:string}[]}{
  const packet:any=copyJson({input,...(contextInput===undefined?{}:{context:contextInput})}),expression=packet.input,contexts=Object.hasOwn(packet,'context')?packet.context:{},bindings=new Map<string,CandidateAssociationChecks>();
  const models=new Map<string,string>(),classifications=new Map<string,string>();
  if(!Array.isArray(available))return fail();const length=Object.getOwnPropertyDescriptor(available,'length');if(!length||!('value'in length)||typeof length.value!=='number'||!Number.isSafeInteger(length.value)||length.value<0||length.value>256)return fail();const count=length.value;
@@ -67,7 +67,7 @@ export function normalizeCandidateAssociationExpression(input:unknown,available:
    const candidates=[...bindings.values()].filter(checks=>(checks.classifications as any[]).some(record=>record.fields.some((f:any)=>identity(f.ref)===identity(value.field))));
    if(!candidates.length){residuals.push({path,reason:'constant-field-source-unresolved'});return {kind:'unresolved-term',source:value};}
    let definition:string|undefined;
-   for(const checks of candidates){const source=sourceFor(checks),document=source.document,field=source.fields.get(JSON.stringify([value.field.documentId,value.field.moduleId,value.field.elementId]));if(!field)fail();const encoded=canonical(field);if(definition!==undefined&&definition!==encoded)fail();definition=encoded;checkSchemaLiteral(document,field,value.value);}
+   for(const checks of candidates){const source=sourceFor(checks),document=source.document,field=source.fields.get(JSON.stringify([value.field.documentId,value.field.moduleId,value.field.elementId]));if(!field)fail();const encoded=canonical(field);if(definition!==undefined&&definition!==encoded)fail();literalBudget.check(document,field,value.value);}
    return {checks:candidates[0],term:{kind:'constant',field:value.field,value:value.value}};
   }
   if(value?.kind!=='variable'){residuals.push({path,reason:'non-association-term-typing-unresolved'});return {kind:'unresolved-term',source:value};}

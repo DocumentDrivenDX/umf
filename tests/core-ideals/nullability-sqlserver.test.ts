@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlserverAvailabilitySource,sqlserverNullabilityCases} from '../../scripts/core-ideals/nullability-sqlserver-cases';
-import {classifySqlServerNullability, verifySqlServerNullabilityClassification, recoverSqlServerNullabilitySource, sqlserverNullabilityPackage, SQLSERVER_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';
-import type {SqlServerNullabilityRequest} from '../../src';
+import {classifySqlServerNullability, verifySqlServerNullabilityClassification, recoverSqlServerNullabilitySource, sqlserverNullabilityPackage, SQLSERVER_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src/index-node-v4';
+import type {SqlServerNullabilityRequest} from '../../src/index-node-v4';
 const fixture=await Bun.file('fixtures/validation/nullability-sqlserver-native.json').json(),text:string=fixture.nativeSource;
 const base={scope:'stored-relation',carrier:'sql-null',mode:'strict'} as const;
 test('native catalog availability matrix retains source and scope through both serializations',()=>{

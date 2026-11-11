@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/errors';
-import type {Document} from '../../model/types';
+import type {Document,Validation} from '../../model/types';
 import {copyJson} from '../../model/json';
-import {validateDocument} from '../../validation/document';
 import {actionCallerSemanticValidator} from './native-semantic-owner';
-import {Registry, type SemanticValidator} from '../../registry/registry';
+import {RegistryBase} from '../../registry/base';
+import type {KindRegistration} from '../../registry/kind-runtime';
 import type {
   ActionPlanArtifact,
   ActionPlanAssessment,
@@ -17,6 +17,7 @@ import type {
 } from './plan-types';
 
 type Guard = (value: unknown) => boolean;
+type ValidateRegistry = (document:Document,registrations:KindRegistration[])=>Validation;
 export type ActionPlanSessionEngine = {run(op: string, fields?: Record<string, unknown>): unknown};
 type Session = ActionPlanSessionEngine;
 const CONTROL = new Set(['RESOURCE_LIMIT','CANCELLED','METER_FAILURE','CANCELLATION_CHECK_FAILURE','CLOCK_CAPABILITY_REQUIRED','DEADLINE','DEADLINE_EXCEEDED']);
@@ -54,22 +55,22 @@ function list<T>(value: unknown, name: string, maximum: number): T[] {
   return result;
 }
 
-function registryDiagnostics(document: Document, registry: Registry) {
-  if (!(registry instanceof Registry)) throw new UmfError('PAP_INVALID', 'Explicit original Registry required', '/context/registry');
-  const validationRegistry = new Registry(registry.kindRuntime);
-  for (const registration of registry.registrations()) {
-    validationRegistry.register(
-      registration.manifest,
-      actionCallerSemanticValidator(registration.semantics,registration.manifest) as SemanticValidator | undefined,
-      registration.kinds === undefined ? {} : {kinds: registration.kinds},
-    );
-  }
-  return validateDocument(document, validationRegistry).diagnostics.map(({code, path, message, severity}) => ({code, path, message, severity}));
+function registryDiagnostics(document: Document, registry: RegistryBase, validateWithRuntime: ValidateRegistry) {
+  if (!(registry instanceof RegistryBase)) throw new UmfError('PAP_INVALID', 'Explicit original Registry required', '/context/registry');
+  const registrations=registry.registrations().map(registration=>{
+    const semantics=actionCallerSemanticValidator(registration.semantics,registration.manifest);
+    return {manifest:registration.manifest,...(registration.kinds===undefined?{}:{kinds:registration.kinds}),...(semantics?{semantics:semantics as NonNullable<KindRegistration['semantics']>}:{})};
+  });
+  const runtime=registry.kindRuntime;
+  const validation=runtime
+    ? runtime.validateDocument(document,registrations)
+    : validateWithRuntime(document,registrations);
+  return validation.diagnostics.map(({code, path, message, severity}) => ({code, path, message, severity}));
 }
-function registryResponse(prepared: Record<string, unknown>, registry: Registry) {
+function registryResponse(prepared: Record<string, unknown>, registry: RegistryBase, validateWithRuntime: ValidateRegistry) {
   return {
     source: prepared.document,
-    diagnostics: registryDiagnostics(prepared.document as Document, registry),
+    diagnostics: registryDiagnostics(prepared.document as Document, registry, validateWithRuntime),
     actionSemantics: !!registry.get('umf.actions', '0.1.0')?.semantics,
     dddSemantics: !!registry.get('umf.ddd', '0.1.0')?.semantics,
   };
@@ -93,12 +94,12 @@ function selectResponse(stage: Record<string, unknown>, context: ActionPlanInspe
 }
 
 /** Public Action Plan surface over Rust-owned model, plan, and assessment semantics. */
-export function createActionPlanRustDefault(session: Session, isNative: Guard) {
+export function createActionPlanRustDefault(session: Session, isNative: Guard, validateWithRuntime: ValidateRegistry) {
   const call = <T>(op: string, fields: Record<string, unknown>) => nativeCall<T>(isNative, () => session.run(op, fields) as T);
   const cancel = (stage: Record<string, unknown>) => { try { session.run('cancel', {token: stage.token}); } catch {} };
-  const completeRegistry = (stage: Record<string, unknown>, registry: Registry) => {
+  const completeRegistry = (stage: Record<string, unknown>, registry: RegistryBase) => {
     let response: ReturnType<typeof registryResponse>;
-    try { response = registryResponse(stage, registry); }
+    try { response = registryResponse(stage, registry, validateWithRuntime); }
     catch (error) { cancel(stage); throw error; }
     try { return call<Record<string, unknown>>('completeRegistry', {token: stage.token, response}); }
     catch (error) { cancel(stage); throw error; }
@@ -114,13 +115,13 @@ export function createActionPlanRustDefault(session: Session, isNative: Guard) {
   return Object.freeze({
     prepareActionPlanModel: (model: ActionPlanModelPin, action: PortableActionPin, context: ActionPlanInspectionContext) => {
       const stage = call<Record<string, unknown>>('prepareModel', {modelPin: model, actionPin: action, models: data(context, 'models'), actions: data(context, 'actions')});
-      return completeRegistry(stage, data(context, 'registry') as Registry) as unknown as ActionPlanArtifact;
+      return completeRegistry(stage, data(context, 'registry') as RegistryBase) as unknown as ActionPlanArtifact;
     },
     inspectActionPlan: (artifact: ActionPlanArtifact, context: ActionPlanInspectionContext) => {
       const selections = list<ActionPlanSelectionInspector>(data(context, 'selections'), 'selections', 64);
       const stage = call<Record<string, unknown>>('prepareInspect', {artifact, models: data(context, 'models'), actions: data(context, 'actions'), selections: selections.map(entry => ({profile: copyJson(data(entry, 'profile'))}))});
       const registered = Object.prototype.hasOwnProperty.call(stage, 'stage')
-        ? completeRegistry(stage, data(context, 'registry') as Registry)
+        ? completeRegistry(stage, data(context, 'registry') as RegistryBase)
         : stage;
       return (Object.prototype.hasOwnProperty.call(registered, 'stage') ? completeSelection(registered, context) : registered) as unknown as ActionPlanInspection;
     },
@@ -128,7 +129,7 @@ export function createActionPlanRustDefault(session: Session, isNative: Guard) {
       const selections = list<ActionPlanSelectionInspector>(data(context, 'selections'), 'selections', 64);
       const stage = call<Record<string, unknown>>('prepareAssess', {inspection, capabilities, models: data(context, 'models'), actions: data(context, 'actions'), selections: selections.map(entry => ({profile: copyJson(data(entry, 'profile'))}))});
       const registered = Object.prototype.hasOwnProperty.call(stage, 'stage')
-        ? completeRegistry(stage, data(context, 'registry') as Registry)
+        ? completeRegistry(stage, data(context, 'registry') as RegistryBase)
         : stage;
       return (Object.prototype.hasOwnProperty.call(registered, 'stage') ? completeSelection(registered, context) : registered) as unknown as ActionPlanAssessment;
     },
