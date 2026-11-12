@@ -490,7 +490,7 @@ assertion, crash, identity failure or first-denial regression MUST NOT be
 reclassified as a budget refusal. Full fresh native selection, compiled-list
 correspondence, all51 cold calls, terminal/resource refusal and cleanup are still
 execution gates. The source-only charge and reachability map is recorded in
-[the combined batch packet](../../04-build/evidence/inspector-combined-budget-source.md).
+the combined batch packet.
 
 ### Distinct resource identities in the combined index
 

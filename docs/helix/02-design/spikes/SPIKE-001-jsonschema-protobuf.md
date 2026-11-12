@@ -33,7 +33,7 @@ Answer three design questions with evidence:
 
 Success requires the FR-37 demonstration: two scoped native round trips on real
 corpora and one JSON Schema-to-Protobuf projection with complete known-mismatch
-reporting. Test strategy is in [TP-001](../../03-test/test-plan.md).
+reporting. Test strategy is in TP-001.
 
 Out of scope: production packaging, all ecosystem versions, ontology machinery,
 general inference, exhaustive extension design, performance optimization, and

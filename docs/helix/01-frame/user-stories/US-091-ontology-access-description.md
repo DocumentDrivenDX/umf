@@ -122,5 +122,5 @@ Hohfeld parser changes, execution and table-SDK migration.
   profile; old profile and required-field optional assignments refuse unchanged.
 
 The checked adoption criteria have local portable/client and synthetic-host
-evidence in [the adoption record](../../04-build/evidence/praxis-adoption.md).
+evidence in the adoption record.
 They establish no production executor or platform-matrix qualification.

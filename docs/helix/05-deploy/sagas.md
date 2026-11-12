@@ -20,9 +20,9 @@ the public Python package is [`umf-core` 0.10.5](https://pypi.org/project/umf-co
 The coupled archives are also available in the
 [Python GitHub release](https://github.com/DocumentDrivenDX/umf/releases/tag/python-v0.10.5).
 Publication and public-install verification are tracked by the
-[completed plan](../04-build/saga-public-library-completion-plan.md) and
-[product release evidence](../04-build/evidence/saga-public-library-completion/README.md).
-The implementation plan and [saga qualification packet](../04-build/evidence/sagas/README.md)
+completed plan and
+product release evidence.
+The implementation plan and saga qualification packet
 record source, CI, consumer and artifact-hash evidence. Do not replace an older
 published wheel with new bytes under its old version.
 

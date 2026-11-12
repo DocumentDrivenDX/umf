@@ -86,7 +86,7 @@ At the 2026-10-02 review, this gate is implemented. [`package.json`](../../../..
 pins Bun 1.3.14 and TypeScript 7.0.2; `bun.lock` is committed;
 [`tsconfig.json`](../../../../tsconfig.json) excludes host runtime types from the
 portable source while [`tsconfig.tools.json`](../../../../tsconfig.tools.json)
-admits Bun types for scripts and tests. The [implementation plan](../../04-build/implementation-plan.md)
+admits Bun types for scripts and tests. The implementation plan
 records passing strict type checks, browser builds, actual Chromium 148.0.7778.0
 execution without host globals, and scoped Bun/native corpus checks. The latest
 [integrated relationship acceptance record](../../../../fixtures/validation/relationship-integrated-acceptance-evidence.json)
@@ -119,7 +119,7 @@ portable/tooling type environments mitigate the runtime-boundary override.
 ## References
 
 - Authority: owner's 2026-09-20 instruction to use Bun for development/testing.
-- [Architecture](../architecture.md), [PRD](../../01-frame/prd.md), and [TP-001](../../03-test/test-plan.md).
+- [Architecture](../architecture.md), [PRD](../../01-frame/prd.md), and TP-001.
 - [Bun TypeScript documentation](https://bun.com/docs/typescript) and [test runner documentation](https://bun.com/docs/test), accessed 2026-09-20; living docs, not project version pins.
 
 ## Review Checklist

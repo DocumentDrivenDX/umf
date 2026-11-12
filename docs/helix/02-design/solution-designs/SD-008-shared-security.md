@@ -126,7 +126,7 @@ unsupported latency claim. Public semantic code remains browser-compatible.
 ## Field protection decisions — 2026-10-14
 
 Owner direction (2026-10-14) applies proposal P-G of the
-[field-protection plan](../../04-build/security-field-protection-plan.md).
+field-protection plan.
 These are design decisions; none is implemented or natively evidenced yet.
 
 1. **Layering.** Row/attribute meaning stays in `umf.security` (proposed minor

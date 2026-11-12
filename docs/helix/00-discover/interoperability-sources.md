@@ -57,7 +57,7 @@ ground candidate oracles and comparison work without establishing UMF's fidelity
 
 [Architecture](../02-design/architecture.md) uses these sources to identify
 native tooling boundaries. [SPIKE-001](../02-design/spikes/SPIKE-001-jsonschema-protobuf.md)
-turns those boundaries into experiments. [TP-001](../03-test/test-plan.md)
+turns those boundaries into experiments. TP-001
 distinguishes validation vectors, descriptor comparisons, preservation checks,
 and target projection outcomes.
 

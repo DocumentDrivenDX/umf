@@ -76,7 +76,7 @@ Which time entries belong to eligible matter-team members, and which fabricated 
 
 ## Planning Handoff
 
-1. Reuse the completed [legal pack](../../../../spec/domain-packs/legal/pack.json), CONTRACT-052 and [build evidence](../../04-build/evidence/domain-packs.md). The schemas, trusted generator, small/demo/large presets and legal CSV ZIP profile already exist.
+1. Reuse the completed [legal pack](../../../../spec/domain-packs/legal/pack.json), CONTRACT-052 and build evidence. The schemas, trusted generator, small/demo/large presets and legal CSV ZIP profile already exist.
 2. Map existing evidence to these preserved AC IDs before scheduling additional work. AC1 has eight-schema exact-recovery evidence; AC6 has typed CSV/engine read-back evidence. Review consumer tests for the precise replay, scale, scenario and unsupported-meaning coverage rather than inferring blanket acceptance from aggregate counts.
 3. Add STP-061 coverage citations and domain profile/TD material only for gaps or expanded scope. Keep generator and data tests in TableSpec; UMF schema checks remain Bun/Chromium.
 4. Retain the fabricated-only source classification. Official terminology imports, calibrated realism, independent injected-violation queries, measured large-scale resource budgets and live Databricks support need their own evidence if claimed.

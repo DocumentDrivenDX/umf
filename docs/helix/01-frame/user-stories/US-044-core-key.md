@@ -29,7 +29,7 @@ qualification. Current native admission and priority delivery remain
 acceptance ledger. Earlier qualified-delivery statements describe their original
 source and artifact pins and do not establish the current qualification.
 
-The [current qualification policy](../../04-build/evidence/metamodel-authority/current-native-qualification.json)
+The current qualification policy
 records the exact criteria and evidence. Historical core upgrade/rollback
 observations remain historical; the current runtime refuses retired core markers
 and does not expose a migration dispatch path. This note does not downgrade
@@ -145,4 +145,4 @@ The gate covers 118 authored cases, 85 emitted targets, 170 ideal recoveries,
 Fresh native/browser qualification, negative evidence checks, core tests,
 typechecking and schema/package audits pass. Native equivalence remains
 unclaimed; source payloads and unknown semantics remain attached. See the
-[Key gate admission record](../../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
+Key gate admission record for commands, versions, profiles and limits.

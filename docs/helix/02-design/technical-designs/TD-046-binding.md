@@ -120,5 +120,5 @@ receipt-backed migration and rollback. The original 0.1.0 schema/package is
 retained. Migration rejects missing/ambiguous authored matches and unknown
 `id` collisions; rollback preserves new choices explicitly. Complete operation
 schemas and Bun/Chromium evidence are in
-[the transition record](../../04-build/evidence/binding-stable-ids.md).
+the transition record.
 Relationship storage generation remains separate work.

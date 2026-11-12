@@ -310,7 +310,7 @@ failure; the Postgres lane also uses a network proxy.
 ## Embedder completion integration
 
 [CONTRACT-081](../contracts/CONTRACT-081-table-lifecycle.md#embedder-completion-successor)
-owns successor behavior; the [completion plan](../../04-build/praxis-embedder-completion-plan.md)
+owns successor behavior; the completion plan
 owns slice dependencies. Preserve public 0.1/0.2 compiler/verifier paths unchanged.
 Adopt the new boundaries in `bun run check:access-boundaries` and table lifecycle
 checkers before feature changes; include private-import, driver-in-portable-code,

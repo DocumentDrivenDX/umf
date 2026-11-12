@@ -148,6 +148,6 @@ execution engines, audit, migrations and changes to the existing table SDK.
   byte parity are separately recorded; isolated generated imports need no umf_access.
 
 The checked adoption criteria have local portable/client and synthetic-host
-evidence in [the adoption record](../../04-build/evidence/praxis-adoption.md) and
-the [cancellation and settlement remediation packet](../../04-build/evidence/typed-api-remediation/README.md).
+evidence in the adoption record and
+the cancellation and settlement remediation packet.
 They establish no production executor or platform-matrix qualification.

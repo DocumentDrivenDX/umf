@@ -293,7 +293,7 @@ The restored old document remains paired with the original logical model in
 the receipt; rollback does not reassociate old names with a renamed model.
 
 The binding suite, schema audits and Chromium migration/recovery results are
-recorded in [the transition evidence](../../04-build/evidence/binding-stable-ids.md).
+recorded in the transition evidence.
 No physical storage or native relationship enforcement is claimed by this transition.
 
 

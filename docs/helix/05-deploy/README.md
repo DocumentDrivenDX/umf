@@ -2,65 +2,20 @@
 
 Document release readiness, deployment checks, monitoring, and operations.
 
-[Core and Codegen0.10.8](core-codegen-release-notes-0.10.8.md) are public on PyPI
-with their separate [Core](evidence/pypi-0.10.8/README.md) and
-[Codegen](evidence/pypi-codegen-0.10.8/README.md) public-byte/fresh-consumer proofs.
-Codegen preserves its original failed attempt and inherited verifier identities.
-Access's publisher binding is configured, but full-cohort qualification/admission
-and Access publication remain held. The
-[earlier publisher-refusal packet](evidence/pypi-publisher-refusals-20261103/README.md)
-retains its original historical state.
+## Releases
 
-The [UMF SDK 0.5.8 candidate notes](sdk-release-notes-0.5.8.md) record the
-source-only preparation state for the proposed G03 successor. This is not a
-published release; final qualification, review, merge, tag selection and public
-proof remain pending.
+Releases are tag-driven: push `umf-vX.Y.Z` from `main` and `.github/workflows/release.yml` tests, builds, smoke
+tests and publishes (see the repository [CHANGELOG](../../../CHANGELOG.md) and AGENTS.md). Nothing is published from a
+developer machine.
 
 ## Microsite
 
-The site source is in [microsite/dist](microsite/dist/index.html). Its live
-playground imports the UMF library through [demo.ts](microsite/demo.ts).
-The [design guide](../02-design/DESIGN.md) records the visual identity and voice.
-
-[Publish microsite](../../../.github/workflows/microsite.yml) builds the
-playground with Bun 1.4.2 and uploads only the static site directory. Pull
-requests build without deploying. Pushes to `main` publish to GitHub Pages;
-the workflow can also be run manually from Actions on `main`.
-
-GitHub Pages is configured to use Actions. The publication address is
-https://documentdrivendx.github.io/umf/; the first publication requires this
-workflow and site source to reach `main`. The existing private Sites preview
-remains separate.
-
-The manual deployment workflow defaults to its existing locked renderer build.
-For the locally qualified 0.10.11 candidate, select **Deploy exact 0.10.11**;
-that route verifies every committed pre-seal file against the pinned local
-manifest and receipt, then uses the same build signer and publication checks.
-It skips renderer assembly because that command rebuilds and mutates site files.
-
-To revert a site change, revert its commit on `main`; the next workflow run
-publishes the previous source. Review the Actions run and the published pages
-after a deployment. No separate hosting token is required; the existing
-`INNSIGLE_BUILD_KEY` Actions secret signs the site during publication.
-
-The [microsite evidence](microsite-evidence.json) records earlier browser checks
-and private-preview deployments. These do not qualify a library release.
-
-## Page signatures
-
-All first-party HTML in the root, Actions and Reference signing inventory is
-model-primary content. CI signs every page with the existing build-role key from
-`INNSIGLE_BUILD_KEY`. No human-role signature, 1Password session or manual
-re-sealing is required. The private key is never committed or printed.
-
-The inventory in `.innsigle/generated-pages.json` must exactly match the HTML
-files and configured content globs. `bun scripts/generated-page-seals.ts
---inventory` checks coverage without a secret. CI seals exact final bytes,
-publishes public claims into `.well-known/innsigle/`, then checks content digests,
-model-primary colophons, the registered build signer and cryptographic signatures.
-Missing keys, missing pages, stale bytes or wrong signer roles block publication.
-Legacy public human keys/endorsements remain for historical verification only.
-See [.innsigle/AGENTS.md](../../../.innsigle/AGENTS.md) for commands.
+The site is built from source by `.github/workflows/pages.yml` (`bun scripts/site/build.ts`): the hand-written pages
+in `site/` plus the playground ([demo.ts](microsite/demo.ts)), the schema explorer, the reference, the Actions guide,
+Pack Tools and the loader companions are assembled in `microsite/dist` (never committed) and deployed to
+https://documentdrivendx.github.io/umf/. Every page footer carries the version stamp from `spec/release.json` and
+`git describe`; `version.json` has the same data. The [design guide](../02-design/DESIGN.md) records the visual
+identity and voice. To revert a site change, revert its commit on `main`.
 
 ## Action guide build
 
@@ -68,14 +23,13 @@ Canonical guide text lives in `04-build/guides/actions`. Run `bun run build:docs
 
 `microsite/dist/actions/` alone is generator-owned. Root pages remain authored sources, and the newer explorer/catalog build remains separate. Each diagram has explicit desktop/mobile SVG layouts: titles/descriptions are in source.json; topology and visible labels are authored in render-diagrams.py. HTML embeds SVG bytes and the CSS/JavaScript SHA-256 manifest, so reviewed page signatures bind those diagram bytes and declared asset digests. Browser verification must compare served assets to those bound digests; signatures alone do not fetch or verify remote asset content.
 
-Generate and validate exact final HTML. The pinned CI signer seals all configured root and nested routes with the build environment key, verifies the resulting public signatures and publishes the attestations. Preview and verify the `/umf/` base path before merging, and verify the deployed source/asset hashes after the main workflow completes. A release must follow deployment verification, not substitute for it.
 ## Domain-pack releases
 
-[Three component releases](domain-pack-release-notes.md) publish the shared loader,
+Three component releases publish the shared loader,
 appellate corpus and public-company intelligence corpus at 1.0.0. The website
 explorer exposes source metadata and individual collector/qualification tools.
 Pages does not build or serve generated ZIPs. Consumers invoke
-`scripts/build-domain-pack-releases.ts --output DIRECTORY` to build local archives. HTML and its existing signatures are unchanged.
+`scripts/build-domain-pack-releases.ts --output DIRECTORY` to build local archives.
 
 
 The [document research tools 1.0.0](document-research.md) publish Supreme Court discovery,

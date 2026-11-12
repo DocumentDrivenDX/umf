@@ -1,6 +1,6 @@
 # Executable formal-analysis sources
 
-Start with [analysis findings and limits](../../../../04-build/evidence/actions-formal-analysis.md).
+Start with analysis findings and limits.
 
 - semantics.py: independent SMT relations and concrete relational/access witnesses.
 - Commands.tla / run_tlc.py: phased finite safety/progress model, mutations and positive witnesses.

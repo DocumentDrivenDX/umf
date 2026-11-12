@@ -1,0 +1,303 @@
+name: release
+
+# Cut a release by pushing a tag `umf-vX.Y.Z` from main. The tag must equal the version in every manifest
+# (python scripts/check-release-versions.py --access --tag ...). The run tests, builds wheels, sdists,
+# SDK and CLI tarballs on Linux x86_64, Linux aarch64 and macOS arm64, installs them into fresh environments,
+# and only then publishes to PyPI (trusted publishing, environment `pypi`) and creates the GitHub Release
+# with SHA256SUMS and a build-provenance attestation.
+#
+# `workflow_dispatch` is a dry run: it does everything except publish and create the release.
+# The macOS arm64 runner is used here only; push and pull request CI stays Linux only.
+on:
+  push:
+    tags: ['umf-v*']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Build and smoke test only; never publish (publishing is only possible from a tag push)'
+        type: boolean
+        default: true
+      run_ci:
+        description: 'Also run the full ci.yml test suite'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: never
+  CARGO_INCREMENTAL: '0'
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      tag: ${{ steps.v.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - id: v
+        run: |
+          version="$(python3 -c 'import json; print(json.load(open("spec/release.json"))["version"])')"
+          tag="umf-v$version"
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            python3 scripts/check-release-versions.py --access --tag "$GITHUB_REF_NAME"
+          else
+            python3 scripts/check-release-versions.py --access --tag "$tag"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: The tag commit is on main
+        if: github.ref_type == 'tag'
+        run: |
+          git fetch --no-tags origin main
+          git merge-base --is-ancestor "$GITHUB_SHA" FETCH_HEAD
+
+  test:
+    needs: verify
+    if: github.event_name == 'push' || inputs.run_ci
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  build:
+    needs: verify
+    name: build (${{ matrix.platform }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 120
+    # Linux builds run in the manylinux_2_34 image so the wheels, CLI and Node addon need glibc 2.34 only.
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux-x86_64
+            runner: ubuntu-24.04
+            container: quay.io/pypa/manylinux_2_34_x86_64
+            target: x86_64-unknown-linux-gnu
+            sdk: linux-x86_64
+          - platform: linux-aarch64
+            runner: ubuntu-24.04-arm
+            container: quay.io/pypa/manylinux_2_34_aarch64
+            target: aarch64-unknown-linux-gnu
+            sdk: linux-aarch64
+          - platform: macos-arm64
+            runner: macos-15
+            target: aarch64-apple-darwin
+            sdk: macos-aarch64
+    env:
+      VERSION: ${{ needs.verify.outputs.version }}
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+      UMF_SDK_CARGO_TARGET: ${{ github.workspace }}/target
+      UMF_SDK_NATIVE_CARGO_TARGET: ${{ github.workspace }}/target
+      UMF_SDK_NATIVE_MACOSX_DEPLOYMENT_TARGET: '11.0'
+    steps:
+      - name: System packages (manylinux)
+        if: runner.os == 'Linux'
+        run: |
+          dnf install -y unzip clang-devel llvm-devel
+          echo /opt/python/cp311-cp311/bin >> "$GITHUB_PATH"
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        if: runner.os == 'macOS'
+        with:
+          python-version: '3.11'
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: release-${{ matrix.platform }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
+      - run: python -m pip install --upgrade pip build 'hatchling==1.27.0'
+      - run: bun install --frozen-lockfile
+      - name: umf-core wheel
+        run: |
+          mkdir -p raw assets
+          python -m build --wheel --outdir raw python
+          if [ "$RUNNER_OS" = Linux ]; then
+            auditwheel show raw/*.whl
+            auditwheel repair --plat auto --only-plat --wheel-dir assets raw/*.whl
+          else
+            cp raw/*.whl assets/
+          fi
+          ls -l assets
+      - name: Source distributions, umf-codegen and umf-access (pure Python, built once)
+        if: matrix.platform == 'linux-x86_64'
+        run: |
+          mkdir -p assets-pure
+          python -m build --sdist --outdir assets-pure python
+          python -m build --outdir assets-pure python/umf_codegen
+          python -m build --outdir assets-pure python/umf_access
+          ls -l assets-pure
+      - name: SDK tarball (Node/Bun native addon and browser WASM)
+        run: |
+          bun run build:sdk
+          cp .cache/sdk-distribution/umf-sdk.tgz "assets/umf-sdk-$VERSION-${{ matrix.sdk }}.tgz"
+      - name: CLI tarball
+        run: |
+          cargo build --release --locked -p umf-cli --features native-postgresql --target ${{ matrix.target }}
+          name="umf-v$VERSION-${{ matrix.target }}"
+          mkdir -p "stage/$name"
+          cp "target/${{ matrix.target }}/release/umf" LICENSE.md LICENSE-MIT LICENSE-APACHE "stage/$name/"
+          tar -C stage -czf "assets/$name.tar.gz" "$name"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.platform }}
+          path: assets/*
+          if-no-files-found: error
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        if: matrix.platform == 'linux-x86_64'
+        with:
+          name: dist-pure
+          path: assets-pure/*
+          if-no-files-found: error
+          retention-days: 7
+
+  # A fresh environment per platform: install the built wheels by path and run the README quickstart.
+  smoke:
+    needs: [verify, build]
+    name: smoke (${{ matrix.platform }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux-x86_64
+            runner: ubuntu-24.04
+            wheel: '*manylinux*x86_64.whl'
+            target: x86_64-unknown-linux-gnu
+            sdk: linux-x86_64
+          - platform: linux-aarch64
+            runner: ubuntu-24.04-arm
+            wheel: '*manylinux*aarch64.whl'
+            target: aarch64-unknown-linux-gnu
+            sdk: linux-aarch64
+          - platform: macos-arm64
+            runner: macos-15
+            wheel: '*macosx*arm64.whl'
+            target: aarch64-apple-darwin
+            sdk: macos-aarch64
+    env:
+      VERSION: ${{ needs.verify.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: assets
+      - name: Fresh venv, wheels by path, README quickstart
+        run: |
+          ls -l assets
+          python -m venv "$RUNNER_TEMP/venv"
+          core="$(ls assets/umf_core-$VERSION-${{ matrix.wheel }})"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install "$core" "assets/umf_codegen-$VERSION-py3-none-any.whl" "assets/umf_access-$VERSION-py3-none-any.whl"
+          "$RUNNER_TEMP/venv/bin/python" -m pip list
+          # Run from an empty directory so the checkout cannot shadow the installed packages.
+          mkdir "$RUNNER_TEMP/empty"
+          cd "$RUNNER_TEMP/empty"
+          "$RUNNER_TEMP/venv/bin/python" "$GITHUB_WORKSPACE/scripts/smoke_quickstart.py"
+      - name: The sdist builds a working wheel (Linux x86_64 only)
+        if: matrix.platform == 'linux-x86_64'
+        run: |
+          python -m venv "$RUNNER_TEMP/venv-sdist"
+          "$RUNNER_TEMP/venv-sdist/bin/python" -m pip install "assets/umf_core-$VERSION.tar.gz"
+          cd "$RUNNER_TEMP" && "$RUNNER_TEMP/venv-sdist/bin/python" -c "import umf; print(umf.__version__)"
+      - name: Fresh directory, SDK tarball
+        run: |
+          mkdir "$RUNNER_TEMP/sdk" && cd "$RUNNER_TEMP/sdk"
+          tar -xzf "$GITHUB_WORKSPACE/assets/umf-sdk-$VERSION-${{ matrix.sdk }}.tgz"
+          node "$GITHUB_WORKSPACE/scripts/test-native-sdk-install.mjs" "$PWD/package"
+      - name: CLI tarball
+        run: |
+          mkdir "$RUNNER_TEMP/cli" && cd "$RUNNER_TEMP/cli"
+          tar -xzf "$GITHUB_WORKSPACE/assets/umf-v$VERSION-${{ matrix.target }}.tar.gz"
+          "umf-v$VERSION-${{ matrix.target }}/umf" --help | head -5
+
+  publish:
+    needs: [verify, test, build, smoke]
+    # Only a tag push publishes. A manual run can never reach this job.
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/umf-v')
+    runs-on: ubuntu-24.04
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: all
+      - name: Sort the distributions by project
+        run: |
+          mkdir -p dist/umf-core dist/umf-codegen dist/umf-access
+          mv all/umf_core-* dist/umf-core/
+          mv all/umf_codegen-* dist/umf-codegen/
+          mv all/umf_access-* dist/umf-access/
+          ls -l dist/*
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/umf-core
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/umf-codegen
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/umf-access
+
+  github-release:
+    needs: [verify, publish]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ needs.verify.outputs.tag }}
+      VERSION: ${{ needs.verify.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: assets
+      - name: SHA256SUMS
+        run: cd assets && sha256sum * > SHA256SUMS && cat SHA256SUMS
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: assets/*
+      - name: Release notes from CHANGELOG.md
+        run: |
+          awk -v v="$VERSION" '$0 ~ "^## \\[?"v"\\]?" {p=1; next} /^## / {p=0} p' CHANGELOG.md > notes.md
+          test -s notes.md || echo "UMF $VERSION" > notes.md
+      - run: gh release create "$TAG" assets/* --repo "$GITHUB_REPOSITORY" --verify-tag --title "UMF $VERSION" --notes-file notes.md
+      # Releases created with GITHUB_TOKEN do not start other workflows; ask for the site rebuild explicitly.
+      - run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main

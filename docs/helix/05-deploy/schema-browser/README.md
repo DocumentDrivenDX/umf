@@ -2,7 +2,7 @@
 
 Version **2.1.0** projects record maps and structural comparisons into
 umf.visual 1.3.0 and uses its public Lini renderer in a dedicated worker.
-See [the migration record](../../04-build/visual-rendering-migration.md)
+See the migration record
 for scoped verification.
 Direct map consumers can await `handle.ready` and `handle.update(model)`; serve
 `visual-worker.js` and `lini/` beside their bundled entry. The exact package's
@@ -155,7 +155,7 @@ Rust build instructions above describe the later worktree.
 
 ## npm release publication
 
-New releases use [`release-schema-browser.yml`](../../../../.github/workflows/release-schema-browser.yml)
+New releases use `release-schema-browser.yml`
 to qualify an exact committed source with frozen dependencies and Bun 1.4.2.
 It compares two clean builds, verifies the recorded source closure, installs the
 packed archive into a fresh consumer, checks both TypeScript module modes and
@@ -174,7 +174,7 @@ Draft verification uses the release ID because GitHub's tag lookup does not
 return the unpublished draft.
 
 The public package `@documentdrivendx/umf-schema-browser` is published only by
-the Actions workflow [`publish-schema-browser-npm.yml`](../../../../.github/workflows/publish-schema-browser-npm.yml).
+the Actions workflow `publish-schema-browser-npm.yml`.
 Publishing verifies the exact public GitHub release, immutable tag target,
 package provenance, `SHA256SUMS`, release manifest and archive bytes before
 using npm OIDC. It accepts an automatic run after an immutable published release
@@ -192,12 +192,12 @@ backfill. See [GitHub's release settings](https://docs.github.com/en/code-securi
 
 The main-only `npm` environment and exact package trusted publisher are now
 configured, including **Allow npm publish**. The
-[qualified 2.1.0 Actions publication](../evidence/schema-browser-npm-2.1.0/README.md)
+qualified 2.1.0 Actions publication
 passed complete producer qualification, actual OIDC upload, exact public-byte
 verification and a fresh public-npm install/import. The successful upload at
 2026-10-26 22:35:51 UTC validated the pending publisher before its
 2026-10-28 19:22 UTC deadline. Independent npm signature and provenance checks
-also passed. The historical [2.0.0 verification](../evidence/schema-browser-npm-2.0.0/README.md)
+also passed. The historical 2.0.0 verification
 remains an unchanged matching-byte skip, not an OIDC upload claim.
 
 The workflow's only publishing identity is the main-only GitHub `npm`

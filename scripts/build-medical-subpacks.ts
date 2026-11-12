@@ -72,7 +72,7 @@ async function build(id:string,tables:MedicalTables,sources:Record<string,any>,q
  if(!validate(pack))throw Error('Invalid generated metadata: '+JSON.stringify(validate.errors));
  await output(join(root,'pack.json'),serialize(pack));
  await output(join(root,'README.md'),'# '+id+' '+packVersion+'\n\n'+String(qualification.subset)+'\n\n'+String(qualification.limits)+'\n\n'+
-  'Use the shared `export-domain-pack.ts --include-sources` command with this pack, then TableSpec `sample-data ingest`. Sources and schemas are local and checksum-pinned. Remote/licensed references remain metadata.\n\nSee `licenses/NOTICE.txt`, source provenance and [governed evidence](../../../docs/helix/04-build/evidence/medical-subpacks.md).\n');
+  'Use the shared `export-domain-pack.ts --include-sources` command with this pack, then TableSpec `sample-data ingest`. Sources and schemas are local and checksum-pinned. Remote/licensed references remain metadata.\n\nSee `licenses/NOTICE.txt`, source provenance and governed evidence.\n');
  console.log(JSON.stringify({pack:id,schemas:schemas.length,rows:Object.values(fixture_counts).reduce((a,b)=>a+b,0),checked:check}));
 }
 

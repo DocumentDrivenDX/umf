@@ -23,7 +23,7 @@ is recorded in architecture and ADR-002; semantic implementation neutrality rema
 The owner selected the JSON Schema + Protobuf vertical slice as the first
 spike. Exact versions, feature subsets, contracts, feature specs, and story-level
 acceptance criteria remain to be developed. See the
-[design phase](../02-design/README.md) and [test phase](../03-test/README.md).
+[design phase](../02-design/README.md) and test phase.
 
 The latest core amendment is [FEAT-005](features/FEAT-005-core-ideals.md), with
 US-040–US-044 for field, nullability, cardinality, facets and key. FR-3 ideal

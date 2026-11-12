@@ -10,7 +10,7 @@ except ModuleNotFoundError:
     from pip._vendor import tomli as tomllib
 
 
-def check(root):
+def check(root, access=False, tag=None):
     load = lambda path: json.loads((root / path).read_text())
     release = load("spec/release.json")
     core, series = release["coreVersion"], release["releaseSeries"]
@@ -62,11 +62,22 @@ def check(root):
     for path in sorted((root / "docs/helix/02-design/contracts").glob("CONTRACT-90*.md")):
         text = path.read_text()
         require(not re.search(r'core(?:Version| version)?[ :]+["`]?0\.[89]\.0', text), str(path.relative_to(root)) + " stale normative core pin")
+    if tag is not None:
+        require(tag == "umf-v" + artifact, f"tag {tag} does not name release umf-v{artifact}")
+    if access:
+        # umf-access is on the unified umf line: same version, and it needs at least this umf-core.
+        accessed = re.search(r'__version__ = "([^"]+)"', (root / "python/umf_access/src/umf_access/_version.py").read_text())
+        require(bool(accessed) and accessed[1] == artifact, "umf-access version equals the release version")
+        major, minor = series.split(".")
+        wanted = f'"umf-core>={artifact},<{major}.{int(minor) + 1}"'
+        require(wanted in (root / "python/umf_access/pyproject.toml").read_text(), "umf-access depends on " + wanted)
     return errors
 
 
 if __name__ == "__main__":
-    errors = check(Path(__file__).resolve().parents[1])
+    argv = sys.argv[1:]
+    tag = argv[argv.index("--tag") + 1] if "--tag" in argv else None
+    errors = check(Path(__file__).resolve().parents[1], access="--access" in argv, tag=tag)
     if errors:
         sys.exit("UMF release drift: " + "; ".join(errors))
     print("UMF artifact versions agree; core, vocabulary and wire versions remain independently checked.")

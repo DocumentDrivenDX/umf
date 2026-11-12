@@ -731,7 +731,7 @@ catalog reverified before witness/history publication. Error or cancellation
 rolls back seed data, DDL, RLS changes and the ledger together through the enclosing
 savepoint; native sequence allocation retains PostgreSQL's normal semantics.
 Normal person/batch grants are never broadened for seeds. Replaying an already
-applied migration performs no seed DML. [Candidate execution evidence](../../04-build/evidence/praxis-p2/seed-migrations/receipt.json)
+applied migration performs no seed DML. Candidate execution evidence
 qualifies the local PG18 subset; publication and full Praxis acceptance remain
 separate gates.
 
@@ -1260,7 +1260,7 @@ profile.
 
 ## Embedder completion successor
 
-The owner-selected [completion plan](../../04-build/praxis-embedder-completion-plan.md)
+The owner-selected completion plan
 extends the released U1–U3 profile without changing the meaning or regeneration
 of historical 0.1/0.2 plans. U4 reuses description comments and canonical enum/range
 facets. U7/U8 delivery claims MUST name actual installed platform/Python/wheel
@@ -7673,7 +7673,7 @@ process/barrier/installed/platform/browser/CI/release gates remain mandatory.
 
 # G11 native ROOT mutation checkpoints 001
 
-Proposed supplement to [native interface001](g11-concrete-native-root-session-001.md),
+Proposed supplement to native interface001,
 for governing014 review. Governing010–013 ROOT and logical wires stay exact. This
 is a design, not an implemented capability or native acceptance receipt. The
 original target lease in interface001 stays held through013 context issue. The

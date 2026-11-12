@@ -22,7 +22,7 @@ ddx:
 **User Story:** [[US-905-saga-recovery-conformance]]
 **Technical Design:** [[TD-905-saga-recovery-conformance]]
 **Solution Design:** [SD-901](../../02-design/solution-designs/SD-901-saga-semantics.md)
-**Project Test Plan:** [TP-001](../test-plan.md).
+**Project Test Plan:** TP-001.
 
 ## Scope and Objective
 
@@ -30,9 +30,9 @@ Prove the selected sequential profile against CONTRACT-908 using an isolated
 coordinator and two native provider stores, original effect/outcome custody,
 current authority and independent provider observations. This allocation names
 actual executable witnesses; test counts and coverage annotations alone do not
-prove an acceptance criterion. The [completed release packet](../../04-build/evidence/sagas/README.md)
+prove an acceptance criterion. The completed release packet
 remains source-bound historical evidence. The successor
-[test-tightening plan](../../04-build/actions-sagas-test-tightening-plan.md)
+test-tightening plan
 owns oracle sensitivity, current mappings and test consolidation.
 
 ## Acceptance Criteria Test Mapping

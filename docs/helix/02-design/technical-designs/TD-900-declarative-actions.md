@@ -66,7 +66,7 @@ The declaration schema/package, public API, semantic analysis, fixtures and brow
 harness are implemented experimentally. `analysis.ts` holds dependency/obligation
 analysis; `expression.ts`, `selector.ts` and `evaluation.ts` implement separate
 bounded explicit interpretation. Report/profile schemas are implemented; the
-[historical certificate](../../04-build/evidence/actions-certification.md) records
+historical certificate records
 completed qualification at its captured sources. Changed integrated sources need
 fresh qualification. The table below names actual implementation components.
 
@@ -110,7 +110,7 @@ All existing concerns and ADR-002 browser/tooling overrides apply.
 
 ## Testing
 
-[STP-900](../../03-test/test-plans/STP-900-declarative-actions.md) owns the
+STP-900 owns the
 per-criterion assertions and canonical citations. Require source copy isolation,
 unknown retention, both serializers, malformed/profile drift counterexamples,
 no handler/network execution and real browser parity. Executor witnesses remain

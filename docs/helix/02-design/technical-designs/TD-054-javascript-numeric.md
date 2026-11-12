@@ -95,7 +95,7 @@ package and do not introduce Biome or workspace restructuring.
 
 ## Testing
 
-[STP-054](../../03-test/test-plans/STP-054-javascript-numeric.md) owns the
+STP-054 owns the
 per-criterion matrix. TP-001 allocates contract/integration/browser layers.
 Require every US-054-AC1–9 to be exercised with a canonical citation; declarations
 alone are not evidence. Existing core schema-property/key regression must pass.

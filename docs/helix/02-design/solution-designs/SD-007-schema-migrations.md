@@ -267,7 +267,7 @@ inform adapter obligations; they do not establish portable semantic preservation
 
 The requirements table allocates every new criterion to components and tests.
 CONTRACT-046 remains the read-only comparator. CONTRACT-081 owns the first native
-table execution profile. The [build plan](../../04-build/schema-migration-plan.md)
+table execution profile. The build plan
 requires a migration-intent/plan/outcome contract, story technical design and
 AC-level test allocation before implementation. Existing U1/U2 work in the chat
 **Plan UMF and Weft Praxis asks** owns the native CONTRACT-081/TD-085/STP-085
@@ -372,7 +372,7 @@ Before code, allocate exact wire shapes, diagnostic codes, compiler/host version
 admission and boundary-check commands in CONTRACT-081/TD-085, and primary fixture
 ownership in STP-085 with `@covers US-051-AC12`, `AC15` and `AC16`. If one reviewed
 artifact amendment is insufficient, add only the missing contract surface.
-The [build plan](../../04-build/schema-migration-plan.md#remaining-gap-delivery-order)
+The build plan
 defines the G01 implementation gates and subsequent residual sequence. Existing
 fail-if-any-null tightening and appended-column fill retain regression coverage.
 

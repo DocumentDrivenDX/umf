@@ -323,8 +323,8 @@ try{
 
  const host=process.platform==='darwin'?'darwin':process.platform;
  const arch=process.arch;
- if(!((host==='darwin'&&arch==='arm64')||(host==='linux'&&arch==='x64')))throw new Error(`Unsupported SDK native cohort: ${host}-${arch}`);
- const nativeTarget=host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu';
+ if(!((host==='darwin'&&arch==='arm64')||(host==='linux'&&(arch==='x64'||arch==='arm64'))))throw new Error(`Unsupported SDK native cohort: ${host}-${arch}`);
+ const nativeTarget=host==='darwin'?'aarch64-apple-darwin':arch==='arm64'?'aarch64-unknown-linux-gnu':'x86_64-unknown-linux-gnu';
  const nativeCargoTarget=process.env.UMF_SDK_NATIVE_CARGO_TARGET?resolve(process.env.UMF_SDK_NATIVE_CARGO_TARGET):cargoTarget;
  const nativeRustFlags=process.env.UMF_SDK_NATIVE_RUSTFLAGS;
  const nativeCargoEnv={...cargoEnv,CARGO_TARGET_DIR:nativeCargoTarget,
@@ -368,7 +368,7 @@ try{
   profile:'umf.rust-sdk-default/1',
   defaultRouteSource:'V4 synchronous Rust root entry selected by package.json for the supported native and browser hosts',
   packageVersion,
-  platform:{os:host,arch:archId,nodeArch:arch,nativeTarget:host==='darwin'?'aarch64-apple-darwin':'x86_64-unknown-linux-gnu',napi:'N-API 8',runtimeCohort:['Node','Bun']},
+  platform:{os:host,arch:archId,nodeArch:arch,nativeTarget,napi:'N-API 8',runtimeCohort:['Node','Bun']},
   resources:{count:10,identity:'fixed-repository-owned'},
   nativeBuild:{target:nativeTarget,profile:'release',cargoCacheMode:process.env.UMF_SDK_NATIVE_CARGO_TARGET?'external-native-only':'shared-sdk-target',flags:{releaseOptLevel:nativeCargoEnv.CARGO_PROFILE_RELEASE_OPT_LEVEL??process.env.CARGO_PROFILE_RELEASE_OPT_LEVEL??null,releaseDebug:nativeCargoEnv.CARGO_PROFILE_RELEASE_DEBUG??process.env.CARGO_PROFILE_RELEASE_DEBUG??null,releaseStrip:nativeCargoEnv.CARGO_PROFILE_RELEASE_STRIP??process.env.CARGO_PROFILE_RELEASE_STRIP??null,rustflags:nativeCargoEnv.RUSTFLAGS??process.env.RUSTFLAGS??null,macosDeploymentTarget:nativeCargoEnv.MACOSX_DEPLOYMENT_TARGET??process.env.MACOSX_DEPLOYMENT_TARGET??null}},
   limits:{recordPositions:10000,actionPositions:1000,selectedIdentityUtf16Units:4000000},

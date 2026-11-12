@@ -93,7 +93,7 @@ prepared execution; its retained native stderr trace exposes the independently
 observed private Assignment relation OID. This is a decisive refusal/control pair,
 not a production publication guarantee or raw-wire noninterference proof.
 
-The [checkpoint](../../../04-build/evidence/security/pg-routine-drift/checkpoint.json)
+The checkpoint
 retains72 native observations, four pure custody tests, source-specific earlier
 receipts, the initial failed invocation and Astra ultra's independent evidence
 audit. Final native execution freezes five declared inputs, executes the helper

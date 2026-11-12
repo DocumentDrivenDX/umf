@@ -412,5 +412,5 @@ reached Key Field in generator admission. Existing input depth, value and text
 limits remain active; the selected/reached element bound counts unique authored
 element roots rather than relevance paths. The explicit capacity E2E and parity,
 unknown, mutation and refusal controls are recorded in
-[the prepared inspection evidence](../../04-build/evidence/typed-persistence/prepared-inspection-20261016/README.md).
+the prepared inspection evidence.
 This is structural metadata evidence. Temporal SDK qualification remains HELD.

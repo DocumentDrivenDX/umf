@@ -70,5 +70,5 @@ Live predicates, nullable/null mutation semantics, computed assignments, joins, 
 
 ## Implementation evidence
 
-The previous unmerged validators and independent Python consumer are being replayed against current main alongside the new constructor. [US-903 evidence](../../04-build/evidence/bulk-update/us903-implementation.md) records current scoped checks and native limitations. Earlier source/test totals are historical; no native execution or release acceptance is claimed.
+The previous unmerged validators and independent Python consumer are being replayed against current main alongside the new constructor. US-903 evidence records current scoped checks and native limitations. Earlier source/test totals are historical; no native execution or release acceptance is claimed.
 

@@ -67,13 +67,13 @@ def main() -> int:
             or profile.get("python") != "3.11.17"
             or profile.get("runtimeAbi") != {
                 "distribution": "umf_access",
-                "version": "0.1.0.dev10",
+                "version": "0.10.12",
                 "abi": "umf-access-runtime/0.1",
             }
             or profile.get("runtimeDependencies") != expected_dependencies
-            or args.runtime_version != "0.1.0.dev10"
+            or args.runtime_version != "0.10.12"
             or args.pydantic_version != expected_dependencies["pydantic"]
-            or RUNTIME_IDENTITY != ("umf_access", "0.1.0.dev10", "umf-access-runtime/0.1")):
+            or RUNTIME_IDENTITY != ("umf_access", "0.10.12", "umf-access-runtime/0.1")):
         raise AssertionError("explicit selected Linux runtime profile differs")
     if (sys.implementation.name != "cpython" or sys.version_info[:3] != (3, 11, 17)
             or platform.system() != "Linux" or platform.machine().lower() not in ("x86_64", "amd64")):
@@ -115,7 +115,7 @@ def main() -> int:
         ],
         "python": {"version": "3.11.17"},
         "dependencies": [
-            {"distribution": "umf_access", "version": "0.1.0.dev10"},
+            {"distribution": "umf_access", "version": "0.10.12"},
             {"distribution": "pydantic", "version": "2.13.5"},
             {"distribution": "pydantic-core", "version": "2.46.5"},
             {"distribution": "annotated-types", "version": "0.8.0"},
@@ -151,7 +151,7 @@ def main() -> int:
             or generation_result.get("outcome") != "candidate"
             or generation_result.get("runtimeAbi") != {
                 "distribution": "umf_access",
-                "version": "0.1.0.dev10",
+                "version": "0.10.12",
                 "abi": "umf-access-runtime/0.1",
             }
             or generation_profile.get("codeSha256") != trusted_profile_sha256
@@ -278,13 +278,13 @@ def main() -> int:
             or generated_manifest.get("contract") != generation_result.get("contract")
             or generated_manifest.get("abi") != generation_result.get("abi")
             or generated_manifest.get("runtimeAbi") != {
-                "distribution": "umf_access", "version": "0.1.0.dev10",
+                "distribution": "umf_access", "version": "0.10.12",
                 "abi": "umf-access-runtime/0.1",
             }
             or generation_profile.get("id") != profile.get("id")
             or generation_profile.get("version") != profile.get("version")
             or generation_profile.get("dependencies") != [
-                {"distribution": "umf_access", "version": "0.1.0.dev10"},
+                {"distribution": "umf_access", "version": "0.10.12"},
                 {"distribution": "pydantic", "version": "2.13.5"},
                 {"distribution": "pydantic-core", "version": "2.46.5"},
                 {"distribution": "annotated-types", "version": "0.8.0"},

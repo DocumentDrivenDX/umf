@@ -1,8 +1,8 @@
 # Official UMF Python support
 
-`umf-core` provides the `umf` import namespace. The current package version is `0.10.11`, and the document/core version is `0.10.0`. The authored metamodel generates packaged JSON Schemas and portable constraint data; Pydantic provides access models. Rust owns shared validation, registry semantics and the native adapter operations exposed through Python. Consumer extension definitions and execution policies remain in consumer repositories.
+`umf-core` provides the `umf` import namespace. The package version is the UMF release version (see the latest release); the document/core version is `0.10.0`. The authored metamodel generates packaged JSON Schemas and portable constraint data; Pydantic provides access models. Rust owns shared validation, registry semantics and the native adapter operations exposed through Python. Consumer extension definitions and execution policies remain in consumer repositories.
 
-Download the matching Core wheel and [Codegen wheel](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.11/umf_codegen-0.10.11-py3-none-any.whl) from the 0.10.11 GitHub release. Codegen requires exactly `umf-core==0.10.11`.
+Install from PyPI: `pip install umf-core umf-codegen umf-access`. Codegen requires exactly the same `umf-core` version; `umf-access` requires `umf-core>=` its own version.
 
 Build the native Rust extension from source with Rust 1.90.0 and the locked Cargo dependencies:
 
@@ -71,6 +71,6 @@ schema sources, schema/package options and `ddl`, `orm`, `crud` targets. The res
 contains generated files, exact source companions, diagnostics and per-source
 coverage. Unkeyed tables receive DDL without invented ORM identities.
 
-The paired `umf-codegen==0.10.11` wheel asset in the same GitHub release exposes
+The paired `umf-codegen` package of the same release exposes
 `umf_codegen.generate_pack_tools(request)`, using the native CLI bundled with
-`umf-core==0.10.11`. The matching archives are included in the GitHub release.
+the matching `umf-core`.

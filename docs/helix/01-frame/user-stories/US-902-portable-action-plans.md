@@ -68,4 +68,4 @@ Live predicates, nullable/null mutation semantics, computed assignments, joins, 
 
 ## Implementation evidence
 
-The previous unmerged implementation is being replayed against current main. Current scoped results and native limitations are recorded in [US-902 evidence](../../04-build/evidence/bulk-update/us902-implementation.md). Earlier test totals and source pins are historical and do not qualify this integration or the live compiler demonstration.
+The previous unmerged implementation is being replayed against current main. Current scoped results and native limitations are recorded in US-902 evidence. Earlier test totals and source pins are historical and do not qualify this integration or the live compiler demonstration.

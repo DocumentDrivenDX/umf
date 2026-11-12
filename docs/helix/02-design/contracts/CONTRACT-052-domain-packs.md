@@ -328,7 +328,7 @@ packs. Medical clinical 1.0.0 remains byte-stable. Supplemental carrier resource
 are FHIR-shaped authored examples, not full native-conformance evidence. CMS
 claims rows, complete terminology dictionaries/maps, TCIA images, live PACS/X12
 and native graph-engine consumers remain separately required and unimplemented.
-See [scoped execution evidence](../../04-build/evidence/medical-subpacks.md).
+See scoped execution evidence.
 ### Public dataset schema profiles
 
 The first public packs use the same 1.0.0 metadata contract and authored

@@ -215,7 +215,7 @@ backend execution responsibilities behind the common API.
 US-091 covers deriving/reviewing the API; US-092 covers generating/using the
 client. The original Praxis request remains source material.
 [CONTRACT-079](../contracts/CONTRACT-079-unified-python-access.md) specifies the
-implemented Python and transport surface. The [implementation evidence](../../04-build/evidence/unified-python-access.md)
+implemented Python and transport surface. The implementation evidence
 records tested behavior and remaining feature requirements. The generator lives
 in UMF; SQL compilation and PostgreSQL carrier admission live in Weft.
 

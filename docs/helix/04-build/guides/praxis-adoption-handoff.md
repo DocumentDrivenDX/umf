@@ -47,7 +47,7 @@ remaining upstream gaps. General transforms, online reconciliation, multi-store
 migration and other MIG-G02–G11 limits are not implied by bounded G01 support.
 ```
 
-Upstream references: [candidate support inventory](../../05-deploy/sdk-release-notes-0.5.5.md),
+Upstream references: candidate support inventory,
 [lifecycle profiles](legal-table-lifecycle.md),
 [offline distribution](python-wheel-mirror.md), and
-[independent G01 signoff](../evidence/schema-migration-design-review/g01-review.json).
+independent G01 signoff.

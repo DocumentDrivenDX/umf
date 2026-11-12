@@ -1016,7 +1016,7 @@ installer-inserted overlapping numeric IDs exercise defensive typed identity;
 they are not admitted normal Truss allocation populations. No installation
 marker, issuer, seven native semantic bodies or publication path is qualified.
 
-The first checkpoint [native receipt](../../04-build/evidence/security/truss-native-membership/3d079a08-9485-49c2-b3f1-81f7ad503fd4/native.json)
+The first checkpoint native receipt
 retains110 observations and51 transcripts against the independently authored raw
 membership oracle. All six input pins remain unchanged, including original DDL,
 overlay, runner, oracle and original case inventory. Separate active-assignment,
@@ -1044,7 +1044,7 @@ an experimental physical witness and cannot become a second policy compiler.
 
 Astra ultra independently audited the final source pins, retained native outputs,
 independent oracle and invocation receipts, finding no remaining blocker in this
-fixed mapping scope. The [read-only audit](../../04-build/evidence/security/truss-native-membership/astra-review.json)
+fixed mapping scope. The read-only audit
 does not claim an independent native rerun.
 
 
@@ -1067,7 +1067,7 @@ unchanged. Ordinary actor `true` is a separate typing control: Boolean JSON
 result. This is a source-qualified fixed property mapping, not registered core
 Field decoding, authentic attribute issuance or accepted model/key allocation.
 
-The new [native receipt](../../04-build/evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/native.json)
+The new native receipt
 retains217 observations at six unchanged input pins. Missing and ambiguous Staff
 bindings refuse evaluated projection/count calls both with Resource rows and
 with no Resources. Complete actor restores, foreign-type matching login, private
@@ -1084,7 +1084,7 @@ complete source/fact coverage, general authenticated binding, current-authority
 and final-publication closure remain unqualified. Uniform tested error messages
 are not arbitrary-diagnostics noninterference. No full Truss case is promoted.
 
-[Four conditional formal laws](../../04-build/evidence/security/graph-principal-formal/c3f36651-19b6-4c93-8072-6d9b1b3171a7/proof.json)
+Four conditional formal laws
 retain12 pre-solve formulas with UNSAT safety, SAT population and SAT weakened
 control for each law. The count/min selection law assumes three distinct int64
 Staff IDs and complete exactly typed match/eligibility predicates; separate
@@ -1101,7 +1101,7 @@ sanity checks; they do not independently model publication or prove SQL ordering
 The final cardinality-erasure control retains JSON string typing. Earlier217
 and formal source snapshots remain historical rather than repinned.
 
-The [Astra ultra final read-only review](../../04-build/evidence/security/truss-native-membership/61a4b228-9f59-48a1-8ba4-b34cd82720e0/astra-review.json)
+The Astra ultra final read-only review
 verified all current native/formal source pins and independently replayed12
 formulas, finding no remaining issue in this fixed-fixture scope. It did not
 execute a native rerun or promote acceptance.
@@ -1116,8 +1116,8 @@ route. A matching expected inventory cannot override this fixed deny rule.
 Mere membership without INHERIT, SET or ADMIN may match a fresh scoped baseline.
 Ordinary self-SET is not a distinct transition and does not alone cause refusal.
 
-The [actual merged component and native evidence](../../04-build/evidence/security/truss-installed-role-paths/integration.json)
-and [source-derived guard laws](../../04-build/evidence/security/truss-role-guard-formal/ddff3684-cae4-4029-bd7a-4ac7cb518b5b/proof.json)
+The actual merged component and native evidence
+and source-derived guard laws
 separate the three layers: the normative route prohibition, the exact Python
 predicate/fold/terminal behavior, and native PG16.15 SET/ADMIN effect witnesses.
 The pure guard is extracted from the exact archived owner source, with32 complete
@@ -1136,7 +1136,7 @@ replace the original caller/owner/authority handoff and seven operation bodies.
 
 ### Truss SCRAM authentication and session lifetime — 2026-10-10
 
-[Direct-main integration evidence](../../04-build/evidence/security/truss-scram-authentication/integration.json) records Truss main
+Direct-main integration evidence records Truss main
 `bb5eb75a018e068c281c565ae49e9a50825ee400`. The separately installed combined wheel matches53 source,
 owner-asset and typing files, passes328 tests and212 Python boundary imports.
 The original PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
@@ -1167,7 +1167,7 @@ from this fixture's success.
 
 ### Native elevation routes outside the registered namespace — 2026-10-10
 
-[Verified direct-main integration](../../04-build/evidence/security/truss-definer-routes/integration.json) records Truss
+Verified direct-main integration records Truss
 `71ba19f8373657cca34085250819220efd5ea79c`. The fixed invoker observer now requires a twelfth census
 section enumerating native EXECUTE-accessible SECURITY DEFINER routines across
 all schemas. Schema USAGE is retained independently and cannot filter the census.
@@ -1206,7 +1206,7 @@ case is promoted; acceptance remains26/132 and the full goal remains active.
 
 ### Operator-backed hidden definer and source-derived guard laws — 2026-10-10
 
-[Native integration](../../04-build/evidence/security/truss-operator-routes/integration.json) records Truss main
+Native integration records Truss main
 `f48975262c74317940329c4f70bd193db81b68fa`. A native operator invokes a SECURITY DEFINER
 implementation in a distinct function schema to which the ordinary caller has
 no USAGE. The caller also lacks direct UPDATE, but the operator commits a row
@@ -1226,7 +1226,7 @@ verifies the native source/preimage and wheel pins. Library source remains the
 reviewed71ba19f8 implementation; no unchanged owner build is attributed as new
 implementation.
 
-[Source-derived analysis](../../04-build/evidence/security/truss-definer-census-formal/cfa978ae-c2c9-4fef-b244-4495aab10da9/proof.json) recognizes the complete exact
+Source-derived analysis recognizes the complete exact
 census SQL subset and extracts the actual final three Python classifier
 statements. Three UNSAT violation queries show the selected hidden executable
 definer cannot be filtered by schema access, a nonempty census cannot match and
@@ -1250,7 +1250,7 @@ stays active.
 
 ### Protected caller capture: post-elevation information loss — 2026-10-10
 
-[Native observability evidence](../../04-build/evidence/security/truss-capture-observability/533c90f6-3dbe-4d7d-ae83-484617149b4a/native.json) passes10
+Native observability evidence passes10
 observations on PostgreSQL16.15 / pgserver0.1.4+truss.pg16.15 / pg8000
 1.31.5. In one physical connection and transaction, direct and unregistered
 wrapper paths enter the same privileged function. Their original effective actors
@@ -1260,7 +1260,7 @@ role OID and entry-routine OID. The wrapper explicitly captures its actor in
 PLpgSQL before entering the writer; direct host capture precedes its native call.
 This avoids relying on SQL target-expression evaluation order.
 
-[Formal equal-input analysis](../../04-build/evidence/security/truss-capture-observability-formal/4b3dbd6b-1c44-49f6-8480-0e84fd4c6a69/proof.json) retains two
+Formal equal-input analysis retains two
 UNSAT separation attempts for arbitrary deterministic decisions over that exact
 tuple, including equal extra state. A SAT population shows that adding a distinct
 trusted pre-entry actor can distinguish the paths. This does not authenticate an
@@ -1296,7 +1296,7 @@ final receipt alone qualifies the explicit capture order.
 
 ### Trusted-host protected capture candidate — 2026-10-10
 
-The [native candidate receipt](../../04-build/evidence/security/truss-protected-capture-candidate/90e12409-3a54-466f-8184-2a54c961669d/native.json) retains23 matching observations on
+The native candidate receipt retains23 matching observations on
 PostgreSQL16.15, corrected pgserver0.1.4+truss.pg16.15 and pg8000 1.31.5.
 Original source bytes, seven source pins and actual installed routine OIDs,
 owners, settings and complete definitions accompany the receipt. The earlier
@@ -1355,7 +1355,7 @@ ordinary registry grants are added to Truss.
 
 ### Native current-authority primitive and lock boundary — 2026-10-10
 
-The [final native receipt](../../04-build/evidence/security/truss-protected-capture-candidate/85d31486-2f88-48e5-b492-ec15b9d730f3/native.json) extends the protected capture candidate to39
+The final native receipt extends the protected capture candidate to39
 matching observations. Seven original source pins/preimages and six actual
 installed routine identities, owners, settings and complete bodies are retained.
 READ COMMITTED is independently observed and explicitly required by the writer.
@@ -1383,7 +1383,7 @@ deadlock freedom or final publication. PostgreSQL16's documented FOR SHARE
 conflicts and transaction/savepoint release rules govern this candidate:
 https://www.postgresql.org/docs/16/explicit-locking.html.
 
-[Formal guard analysis](../../04-build/evidence/security/truss-capture-authority-formal/19fe84d8-27c7-4bc7-b323-52ad9fe0223d/proof.json) saves eight independently replayable formulas:
+Formal guard analysis saves eight independently replayable formulas:
 four UNSAT laws and four SAT positive/weakened controls. Positive generation
 integers are unbounded in the model. Exact authority-check and writer routine
 bodies are recognized, but SQL execution/FOUND/atomic exception behavior and
@@ -1463,7 +1463,7 @@ Refreshed formal evidence `truss-graph-capture-formal/0e186858-5aca-40cf-b1a6-53
 
 The next catalog integration cannot silently rewrite the owner source. The actual frozen Truss declaration collector, executed on the retained original owner document, exposes five keys with unspecified primary roles, zero core relationship declarations and two ontology associations with ordered typed endpoints. Resource's complete required signed64 integer salary declaration is preserved alongside key-only read projections. Current native staging source explicitly requires a Boolean primary selection; its guard is source inspection here, not a performed native refusal. These facts require owner-issued storage key-role choices and relationship bindings with original accepted-binding provenance. Key-only graph projection cannot stand in for complete Record/property catalog staging or field publication.
 
-[Owner-binding audit](../../04-build/evidence/security/truss-owner-binding-audit/9d296d60-1dd6-48cd-bb6e-2b63d7d4778e/audit.json) is located under `docs/helix/04-build/` and passes14 observations with five current/preimage pins, SHA256 `46a649c19af2f370518c27667e45de4177b59e0b954ba6f4a12426809d938f01`. A separately parsed frozen oracle checks the complete post-call document, exact ordered keys, complete Field/reference inventories and full ordered ontology endpoints. Composite-key reversal, integer-width deletion, unknown-extension mutation, omitted Record and omitted Field controls all refuse. The initial eight-observation audit had aliased preservation checks and provides no independent preservation qualification; its receipt remains historical. The twelve-observation correction predates the final completeness controls. No fresh owner validation, original catalog preparation/staging or binding authority is claimed by this audit.
+Owner-binding audit is located under `docs/helix/04-build/` and passes14 observations with five current/preimage pins, SHA256 `46a649c19af2f370518c27667e45de4177b59e0b954ba6f4a12426809d938f01`. A separately parsed frozen oracle checks the complete post-call document, exact ordered keys, complete Field/reference inventories and full ordered ontology endpoints. Composite-key reversal, integer-width deletion, unknown-extension mutation, omitted Record and omitted Field controls all refuse. The initial eight-observation audit had aliased preservation checks and provides no independent preservation qualification; its receipt remains historical. The twelve-observation correction predates the final completeness controls. No fresh owner validation, original catalog preparation/staging or binding authority is claimed by this audit.
 
 Astra ultra independently verified147 native observations/14 pins, replayed14 formulas/17 pins and verified the final14 audit observations/five pins, including all five mutation/omission controls. Adjacent reviews are clean within their declared scopes. The acceptance map treats authentication as a PA-N01 prerequisite, without claiming SET ROLE coverage, and retains original US-056 component links. Complete owner bindings/authenticated artifact/current-cut/installed-callable and mutation closure, all four families/seven semantic bodies, canonical graph keys and final publication/drain remain required. Complete backend acceptance stays26/132; no supported production profile is promoted.
 
@@ -2687,11 +2687,11 @@ use the same semantic callable shapes, while their native capture and physical
 mapping remain separately qualified. Delta/Ashlar also retain separate native
 issuer/publication/current-authority obligations.
 
-Preimplementation callable witnesses are retained in [the proposal packet](../../04-build/evidence/security/native-computation-driver-proposal-20261015/README.md): supplied-cut alternate read-purpose admission and original local extension issuance/import refusal. They do not execute an actual Weft designation or native issuer and promote no acceptance case.
+Preimplementation callable witnesses are retained in the proposal packet: supplied-cut alternate read-purpose admission and original local extension issuance/import refusal. They do not execute an actual Weft designation or native issuer and promote no acceptance case.
 
 ### Independent current-source native scalar edges — 2026-10-15
 
-Independent conditional PG18.6 execution now passes17 UTF8/signed64/operator edge cases and4 exact pre-execution refusals through the actual retained current-query object. COUNT logical meaning stays separate from its native bounded text codec. Authored stage eligibility/modes/scopes remain assumptions; current source/caller/Subject capture, private result/contributor sidebands and guarded release are still absent. This does not qualify B08/P03 or a backend profile. See the [retained packet](../../04-build/evidence/security/current-scalar-native-edges-20261015/README.md).
+Independent conditional PG18.6 execution now passes17 UTF8/signed64/operator edge cases and4 exact pre-execution refusals through the actual retained current-query object. COUNT logical meaning stays separate from its native bounded text codec. Authored stage eligibility/modes/scopes remain assumptions; current source/caller/Subject capture, private result/contributor sidebands and guarded release are still absent. This does not qualify B08/P03 or a backend profile. See the retained packet.
 
 ### Private computation child implementation — 2026-10-15
 
@@ -2709,7 +2709,7 @@ credentials, public server, native issuer or guarded release is added.
 The builder discovers the original dependency closure, pins before the actual
 build, verifies the same closure and post-build pins, and retains original
 third-party license notices. Independent Astra controls and real pipe tests are
-retained in [the child packet](../../04-build/evidence/security/current-query-child-20261015/README.md).
+retained in the child packet.
 Native current-Subject/fact capture, primary-action correspondence, typed Weft
 contributor lineage and held-context release remain required integration work.
 No backend acceptance case is promoted.

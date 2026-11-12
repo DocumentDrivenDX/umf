@@ -139,7 +139,7 @@ pyright and ty in the environment where the pinned dependencies are installed.
 Generated code targets Python 3.11 and later. The `umf_access` runtime carries
 the checker-specific suppressions its operator overloads need (for mypy, pyright
 and ty); generated code needs none. The
-[DSL typing spike](../../04-build/evidence/typed-persistence/dsl-typing-spike/README.md)
+DSL typing spike
 records pyright, mypy and ty, targeting Python 3.11, rejecting every row below that
 it covers:
 
@@ -206,7 +206,7 @@ before first use (CONTRACT-072) and codec validation of every bound value.
 ### DSL surface in 0.1
 
 The 0.1 surface is the form set UMF requested from Weft in
-[the Weft requirements](../../04-build/weft-requirements-typed-access.md)
+the Weft requirements
 (tranche A), and its meaning follows that document's shared semantics S1 to S17:
 SQL three-valued logic, explicit null placement, binary string order, exact
 numeric and instant comparison, and a complete-Key tiebreak on every ordering.

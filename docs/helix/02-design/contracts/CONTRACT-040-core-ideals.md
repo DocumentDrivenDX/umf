@@ -29,7 +29,7 @@ tracks current-source and installed-route evidence separately. Native equivalenc
 remains unclaimed.
 Facet core 0.5.0 and all five priority facet bindings have passed
 qualified acceptance. Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
-[facet gate admission record](../../04-build/evidence/facet-gate-admission.md).
+facet gate admission record.
 
 ## Purpose
 
@@ -910,13 +910,13 @@ Strict mode blocks loss; report mode retains explicit residuals. Invalid carrier
 block both modes. Recovery verifies the full retained ideal receipt and emitted
 text; native recovery preserves original text and dependencies. Neither recovery
 is source authentication or a native-equivalence claim. The
-[Avro evidence record](../../04-build/evidence/avro-facet-discovery.md) records
+Avro evidence record records
 current qualification and unresolved acceptance checks. This profile definition
 alone does not admit facets or complete five-system delivery.
 
 ### Facet gate admission
 
-Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. The [admission record](../../04-build/evidence/facet-gate-admission.md)
+Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. The admission record
 records useful mappings, both retained recovery directions, permanent float
 counterexamples and the PostgreSQL aggregate receipt limit. This qualification
 does not alter the normative facet meaning or any native replacement gate.
@@ -1032,7 +1032,7 @@ The gate covers 118 authored cases, 85 emitted targets, 170 ideal recoveries,
 Fresh native/browser qualification, negative evidence checks, core tests,
 typechecking and schema/package audits pass. Native equivalence remains
 unclaimed; source payloads and unknown semantics remain attached. See the
-[Key gate admission record](../../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
+Key gate admission record for commands, versions, profiles and limits.
 
 
 ### Proposed 128-bit/UUID ideal extension

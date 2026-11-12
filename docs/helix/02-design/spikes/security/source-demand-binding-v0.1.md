@@ -137,10 +137,10 @@ population is a private retention primitive, not a full compiler-context/native
 population. Matching backend assignment atoms and swapped-scope refusal remain
 future matcher controls, rather than claims about this issuer.
 
-[Rust execution receipt](../../../04-build/evidence/security/weft-source-demands.json)
+Rust execution receipt
 retains raw commands/output and source/build digests. Failed development attempts
 and preceding successful receipts are archived; they are not silently repinned.
-[Formal receipt](../../../04-build/evidence/security/source-demands-formal.json)
+Formal receipt
 retains fifteen independently replayed formulas for five conditional finite
 composition laws, including fragment union, distinct-scope alternatives,
 original-use conjunction, scoped edges versus marginals and the separate native

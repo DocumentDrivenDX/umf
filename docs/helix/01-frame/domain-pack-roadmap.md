@@ -40,11 +40,11 @@ FEAT-009 governs shared catalog behavior. Each domain has its own feature becaus
 
 The legal pack is completed for its declared fabricated tabular subset. [Canonical pack](../../../spec/domain-packs/legal/pack.json) version 1.0.0 declares `tablespec.legal` 1.0.0, eight TableSpec 1.0 JSON schemas and small/demo/large presets. UMF owns pack/schema artifacts and local export; TableSpec owns generation, CSV ZIP and engine ingestion. No migration of the generated TableSpec example back into UMF is needed.
 
-[Implementation evidence](../04-build/evidence/domain-packs.md) records exact native recovery of all eight schemas, four focused Bun tests, nine Chromium 153 checks, Python packaging checks and local Sail 0.6.6/classic Spark ingestion including typed values and repeated Delta replacement. This closes the earlier real-loader uncertainty for that tested subset. The live Databricks path remains unrun. The recorded full UMF suite has 24 failures and one between-test error; focused evidence is not full-suite acceptance.
+Implementation evidence records exact native recovery of all eight schemas, four focused Bun tests, nine Chromium 153 checks, Python packaging checks and local Sail 0.6.6/classic Spark ingestion including typed values and repeated Delta replacement. This closes the earlier real-loader uncertainty for that tested subset. The live Databricks path remains unrun. The recorded full UMF suite has 24 failures and one between-test error; focused evidence is not full-suite acceptance.
 
 The shared source mechanism already retains external and mixed metadata and supports explicit local CSV ingestion in TableSpec. Medical adds checksum enforcement and pinned local source bundles. It does not implement remote retrieval, arbitrary conversion or mixed-source joins. Ecology and archaeology must plan these consumer capabilities only where needed, while reusing existing provenance/license descriptors. Fabricated legal rows require no official-record import. The draft catalog ACs remain qualification targets; existing evidence should be mapped to them rather than rerunning the completed baseline or retroactively claiming every new AC passed.
 
-Medical is also delivered: [scoped evidence](../04-build/evidence/medical-domain-pack.md) records 17 HL7 R4 4.0.1 originals, eight tabular projections, 51 rows, checksum/rights refusal, source-to-archive mappings and local Sail/Spark execution. It is a fixed external fabricated corpus with no generator or clinical simulation claim. CMS candidates remain reference-only. Source integrity enforcement and explicit source bundling are now shared capabilities; mixed-source transformations and remote retrieval remain outside the delivered subset.
+Medical is also delivered: scoped evidence records 17 HL7 R4 4.0.1 originals, eight tabular projections, 51 rows, checksum/rights refusal, source-to-archive mappings and local Sail/Spark execution. It is a fixed external fabricated corpus with no generator or clinical simulation claim. CMS candidates remain reference-only. Source integrity enforcement and explicit source bundling are now shared capabilities; mixed-source transformations and remote retrieval remain outside the delivered subset.
 
 The owner's next implementation direction is [SD-026](../02-design/solution-designs/SD-026-domain-pack-platform.md): author all remaining domain schemas and bounded scenarios, including ontology schemas for graph targets, then qualify dataset tooling and explorer visibility. Ontology schemas belong in UMF; execution and storage bindings remain consumer-owned. Scenario replay is labeled independently of realistic population generation.
 
@@ -114,7 +114,7 @@ The ecology approach is developed in [SD-024](../02-design/solution-designs/SD-0
 
 The sixteen-pack catalog is implemented with tabular schemas, UMF ontology schemas,
 small fixtures, bounded replay tooling and explorer discovery.
-[Build evidence](../04-build/evidence/domain-pack-catalog.md) records Astra ultra
+Build evidence records Astra ultra
 review and producer/consumer/browser checks. Native graph intake, open-source corpus
 adapters, independently varied scientific/topological dimensions and population
 realism remain separately planned work; catalog membership does not complete those
@@ -126,6 +126,6 @@ The owner requested a separate issuer-evidence pack under FEAT-027.
 CONTRACT-059 and TD-078/STP-078 reuse CONTRACT-052/053 fixed-mode profiles.
 The selected 25-company universe, item-metadata screen and scoped financial
 observations are independent of licensed S&P membership and legal firm data.
-[evidence/public-company-intelligence.md](../04-build/evidence/public-company-intelligence.md)
+evidence/public-company-intelligence.md
 qualifies local source/consumer/browser results and unresolved narrative access.
 Model routing, live Databricks, admin UI, scheduling and email remain consumer work.

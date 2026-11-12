@@ -72,7 +72,7 @@ Use the exact finite item/byte/node/deadline/result-capacity bounds in the contr
 
 ## Testing
 
-[STP-902](../../03-test/test-plans/STP-902-portable-action-plans.md) allocates each criterion once to a planned test with canonical citation. Command: `bun test tests/actions-plan.test.ts`. Current scoped portable replay evidence is retained under `docs/helix/04-build/evidence/bulk-update/`; native execution remains unqualified. Independent exact effects/refusals are the oracle, not generated output snapshots alone.
+STP-902 allocates each criterion once to a planned test with canonical citation. Command: `bun test tests/actions-plan.test.ts`. Current scoped portable replay evidence is retained under `docs/helix/04-build/evidence/bulk-update/`; native execution remains unqualified. Independent exact effects/refusals are the oracle, not generated output snapshots alone.
 
 ## Migration & Rollback
 

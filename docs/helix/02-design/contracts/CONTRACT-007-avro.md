@@ -156,7 +156,7 @@ including an explicitly empty `dependencies: []`. A replacement may replace the
 selected subtree and its contents. Field metadata is regenerated on a copy;
 renaming or removing a field that has attached core metadata requires a separate
 reassociation operation and is refused here. The exact report schema is
-[`spec/extensions/avro/rust-candidate-edit-report.schema.json`](../../../spec/extensions/avro/rust-candidate-edit-report.schema.json).
+`spec/extensions/avro/rust-candidate-edit-report.schema.json`.
 
 ### Rust document inspection profile — `umf-r5-avro-document-inspect/0.1.0`
 

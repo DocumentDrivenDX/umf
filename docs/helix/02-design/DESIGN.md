@@ -58,7 +58,7 @@ meanings traveling together. One olive strand provides recognition without
 suggesting that the other strands collapse into one.
 
 The editable vector master is
-[logo.svg](../05-deploy/microsite/dist/logo.svg). Use the symbol beside the
+logo.svg. Use the symbol beside the
 lowercase **umf** wordmark; the standalone symbol serves as the favicon.
 Keep clear space of at least one stroke width, preserve aspect ratio and
 use the paper background to retain crossing separations. Minimum intended

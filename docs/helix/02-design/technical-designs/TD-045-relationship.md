@@ -173,7 +173,7 @@ legacy module collision in a source-qualified residual. Rollback restores the
 original 0.6.0 document and retains all subsequent 0.7.0 content in its source;
 it does not merge new assertions into the old interpreter. Receipt verification
 recomputes the operation. Bun and Chromium evidence is recorded in the
-[implementation plan](../../04-build/implementation-plan.md). Public operations
+implementation plan. Public operations
 and full core-task acceptance remain separate from this candidate checkpoint.
 
 
@@ -426,7 +426,7 @@ alternate-UNIQUE, nullable-composite and association/anonymous-junction layouts;
 separate native counterexamples cover NOT VALID, MATCH SIMPLE and actions.
 Bun and Chromium verify strict/report behavior, both recovery directions,
 unknown native content and source-qualified residuals. See
-[the acceptance record](../../04-build/evidence/postgresql-relationship-acceptance.md).
+the acceptance record.
 Full DDD/edge/partition/index composition remains a separate generator task.
 
 ### Qualified additional GraphQL, RDF and LinkML bindings

@@ -126,7 +126,7 @@ logical journal/source/evidence identities, and validate per-component semantics
 Final narrow review verifies transit date identity, same-event ecological effort,
 last-touch attribution and fixed medical external provenance, with no remaining
 material finding in that scope. The first-release evidence is
-[domain-pack-catalog.md](../../04-build/evidence/domain-pack-catalog.md). Broader
+domain-pack-catalog.md. Broader
 feature acceptance remains qualified by the explicit AC5/AC7 boundaries.
 
 ## Reusable acquisition companion
