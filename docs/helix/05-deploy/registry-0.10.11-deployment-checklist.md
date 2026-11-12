@@ -28,9 +28,20 @@ Linux x86-64 at runtime. The Rust library identity is `umf-core@0.10.11`.
 - An npm member who can create a package in `@documentdrivendx` creates a
   short-lived granular token with **Read and write** access to that package
   scope and **Bypass 2FA** enabled. Store it as `NPM_TOKEN` in the
-  `npm-core` environment. After first publication, revoke the token and
-  configure trusted publishing for subsequent releases against the repository,
-  workflow filename, and `npm-core` environment. Enable **Allow npm publish**.
+  `npm-core` environment. After public byte verification, revoke the token on
+  npm and remove the GitHub environment secret.
+- For the next SDK version, attach the qualified npm tarball before publishing
+  its immutable GitHub release. Record the exact source, version, package
+  name, filename, size, and SHA-256 in
+  `.github/release-admissions/umf-sdk-npm-<version>.json` using the
+  [0.10.11 npm admission](../../../scripts/registry/admit-01011-npm.json) format.
+  Configure GitHub Actions Trusted Publishing on `@documentdrivendx/umf-core`
+  for organization `DocumentDrivenDX`, repository `umf`, workflow filename
+  `publish-npm-sdk-trusted.yml`, environment `npm-core`, with **Allow npm publish**.
+  Create the binding when the next archive is ready. npm expires unvalidated
+  bindings after two days. Dispatch the
+  [trusted publisher](../../../.github/workflows/publish-npm-sdk-trusted.yml)
+  from `main`. It uses read-only release access and a short-lived npm identity.
   [npm access tokens](https://docs.npmjs.com/about-access-tokens/)
   [npm trusted publishers](https://docs.npmjs.com/trusted-publishers/)
 - A crates.io user with a verified email creates a short-lived token with

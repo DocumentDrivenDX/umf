@@ -1,0 +1,45 @@
+name: Publish the UMF SDK with npm Trusted Publishing
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: UMF version with a reviewed npm archive in its immutable GitHub release
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: umf-sdk-trusted-npm
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    environment: npm-core
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Download the exact archive from its public release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: python3 scripts/registry/publish_npm_sdk_trusted.py stage "$VERSION"
+      - name: Publish with the short-lived npm identity
+        env:
+          VERSION: ${{ inputs.version }}
+        run: python3 scripts/registry/publish_npm_sdk_trusted.py publish "$VERSION"
