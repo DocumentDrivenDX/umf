@@ -38,7 +38,7 @@ try{
  assert.deepEqual(observed,outputs);assert.deepEqual(externalRequests,[]);assert.equal(wasmRequested,true);
  const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
  const evidence={scope:'Native CodegenEngine typed access generation in Node and real Chromium WASM; output parity does not qualify Python runtime execution',bun:Bun.version,chromium:browser.version(),cases:cases.map(c=>c.id),runsPerRuntime:2,candidates:outputs.filter(r=>r.outcome==='candidate').length,refusals:outputs.filter(r=>r.outcome==='refused').length,externalRequests,wasmRequested,bundleSha256:sha(bundle),inputsSha256:sha(JSON.stringify(cases)),outputsSha256:sha(JSON.stringify(outputs)),sourceSha256:Object.fromEntries(await Promise.all(originFiles.map(async p=>[p,sha(await Bun.file(p).text())])))};
- await Bun.write('docs/helix/04-build/evidence/typed-persistence/b-tp-002-003/browser.json',JSON.stringify(evidence,null,2)+'\n');
- await Bun.write('docs/helix/04-build/evidence/typed-persistence/b-tp-002-003/browser-cases.json',JSON.stringify({cases,outputs},null,2)+'\n');
+ await Bun.write('out/typed-persistence/b-tp-002-003/browser.json',JSON.stringify(evidence,null,2)+'\n');
+ await Bun.write('out/typed-persistence/b-tp-002-003/browser-cases.json',JSON.stringify({cases,outputs},null,2)+'\n');
  console.log(JSON.stringify(evidence));
 }finally{await browser?.close();server.stop(true);}

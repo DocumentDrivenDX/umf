@@ -1,5 +1,0 @@
-{
-  "operation": "approved-temporary-principal-create",
-  "exit": 1,
-  "result": "Error: https://adb-7405607548213398.18.azuredatabricks.net/api/2.0/preview/scim/v2/ServicePrincipals is only accessible by admins.\n\nProfile:   aidev-cus\nHost:      https://adb-7405607548213398.18.azuredatabricks.net\nAuth type: OAuth (databricks-cli)\n\nNext steps:\n  - Verify you have the required permissions for this operation\n  - Check your identity: databricks auth describe --profile aidev-cus"
-}

@@ -89,7 +89,7 @@ class ReadFenceDriverTests(unittest.TestCase):
         self.assertEqual(calls[-1], ("SELECT first_snapshot()", ()))
 
     def test_actual_context_operations_do_not_reset_full_timeout(self):
-        packet = Path(__file__).resolve().parents[3] / "docs/helix/04-build/evidence/typed-persistence/read-consistency-r25-r22-20261017/public-stream/original-artifact.json"
+        packet = Path(__file__).resolve().parent / "fixtures/read-consistency-original-artifact.json"
         artifact = json.loads(packet.read_text())
         class Entry:
             def artifact(self): return artifact

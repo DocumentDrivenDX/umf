@@ -5,7 +5,6 @@ import corpus from '../../fixtures/relationship/authored/corpus.json';
 import * as u from '../../src/index-node-v4';
 import {relationshipCurrentBase} from './relationship-current-base';
 import {relationshipExtraCases} from './relationship-extras-cases';
-import {verifyRelationshipEvidence} from './relationship-evidence';
 import {relationshipTests,digest} from './relationship-gate-inputs';
 
 // @covers US-045-AC1 @covers US-045-AC2 @covers US-045-AC3 @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
@@ -55,16 +54,6 @@ export async function verifyRelationshipBindingRoundTrips(){
 }
 // @covers US-045-AC9
 export async function verifyRelationshipConformance(){
- const evidence=await verifyRelationshipEvidence(undefined,{allowUnqualifiedHistorical:true}),authored=verifyRelationshipAuthoredCorpus(),roundTrips=await verifyRelationshipBindingRoundTrips();
- assertJsonDataEqual(await verifyRelationshipEvidence(undefined,{allowUnqualifiedHistorical:true}),evidence,'Evidence changed during conformance');
- const admission={idealAdmitted:false,sourceOperationsVerified:true,currentNativeQualification:'UNQUALIFIED',minimumUsefulPriorityMappings:2,sourceUsefulSystems:evidence.usefulSystems,sourceUsefulMappings:evidence.usefulMappings,historicalQualification:'PARTIALLY_REVALIDATED',qualification:{path:'fixtures/validation/relationship-gate-refresh.json',sha256:evidence.refreshSha256,versions:evidence.versions},authored};
- const delivery={priorityDelivery:false,sourceBindingsVerified:['postgresql','sqlserver','tablespec','avro','parquet'],qualifiedBindings:0,currentNativeQualification:'UNQUALIFIED',systems:['postgresql','sqlserver','tablespec','avro','parquet'],extras:['graphql','rdf','linkml'],evidence,roundTrips};
- return {admission,delivery,nativeEquivalence:false,limits:[
-  'Historical PostgreSQL and SQL Server FK/junction evidence records contain useful insertion controls; their current native qualification remains UNQUALIFIED because original source and oracle artifacts are only partially recoverable.',
-  'The current-source replay exercises six canonical shapes, alternate Key selection, an undirected relationship, a keyed Enrollment association and bounded multiplicities. It does not establish current native admission or physical representability.',
-  'TableSpec metadata, Avro/Parquet target-key carriers and GraphQL/RDF/LinkML schema declarations do not enforce graph-wide relationship instances.',
-  'Native-only classification retains original archives and records observations without inventing author identity. Retained receipts prove consistency, not authenticity.',
-  'Current source declaration and recovery behavior is tested separately from historical native acceptance. Missing original artifacts remain explicit and cannot promote current native admission or delivery.'
- ]};
+ const authored=verifyRelationshipAuthoredCorpus(),roundTrips=await verifyRelationshipBindingRoundTrips();
+ return {authored,roundTrips};
 }
-if(import.meta.main){const result=await verifyRelationshipConformance();await Bun.write('fixtures/validation/relationship-conformance.json',JSON.stringify(result,null,2)+'\n');await Bun.write('fixtures/validation/relationship-admission.json',JSON.stringify({...result.admission,nativeEquivalence:false},null,2)+'\n');await Bun.write('fixtures/validation/relationship-delivery.json',JSON.stringify({...result.delivery,nativeEquivalence:false},null,2)+'\n');console.log(JSON.stringify({idealAdmitted:false,sourceOperationsVerified:true,priorityDelivery:false,nativeEquivalence:false,authoredCases:result.admission.authored.cases.length,roundTrips:result.delivery.roundTrips.passed}));}

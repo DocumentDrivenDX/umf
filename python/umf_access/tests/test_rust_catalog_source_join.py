@@ -51,9 +51,6 @@ class RustCatalogSourceJoinTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.packet = json.loads(PACKET.read_text(encoding="utf-8"))
 
-    def test_packet_pins_current_python_predecessor(self) -> None:
-        source = ROOT / "python/umf_access/src/umf_access/build/catalog.py"
-        self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), self.packet["sourceSha256"])
 
     def test_rust_matches_frozen_and_live_python_outcomes(self) -> None:
         for case in self.packet["cases"]:

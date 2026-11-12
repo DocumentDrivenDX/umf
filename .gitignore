@@ -16,8 +16,6 @@ __pycache__/
 *.pyc
 .ddx/*.stale-break.lock
 
-# Stable POSIX coordination inode for native identity preflight attempts.
-/docs/helix/04-build/evidence/security/.databricks-actors.json.lock
 
 # Rust migration spike build and installed-package artifacts.
 /target/
@@ -27,3 +25,13 @@ __pycache__/
 /bindings/core/wasm/pkg/
 /python/src/umf/_rust_core*.so
 /python/src/umf/_rust_core*.pyd
+
+# Run output, receipts, review packets and built sites are never committed.
+# CI uploads them as workflow artifacts (see scripts/check-repo-size.py).
+/out/
+/docs/helix/04-build/evidence/
+/docs/helix/05-deploy/microsite/dist/
+*.whl
+*.tgz
+*.zip
+!/fixtures/**/*.zip

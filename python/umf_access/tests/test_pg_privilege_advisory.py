@@ -66,40 +66,6 @@ class PostgresPrivilegeAdvisoryTests(unittest.TestCase):
         ):
             pg_privileges.postgres_runtime_advisory(target(), [candidate])
 
-    def test_current_runtime_reference_cannot_qualify_current_target_or_other_operations(
-        self,
-    ):
-        result = report()
-        reference = result["runtimeAdvisory"]["testedReferences"][0]
-        root = Path(__file__).resolve().parents[3]
-        inventory = root / reference["packet"] / "inventory.json"
-        self.assertEqual(
-            hashlib.sha256(inventory.read_bytes()).hexdigest(),
-            reference["packetInventorySha256"],
-        )
-        self.assertEqual(
-            reference["sdkSourceCommit"], "7b206ef3b2720500c8409b17915629e4aac11448"
-        )
-        self.assertEqual(
-            [e["name"] for e in reference["selectedEntries"]], ["plain", "pages"]
-        )
-        self.assertEqual(reference["observedNecessaryFunctions"], 27)
-        self.assertFalse(reference["currentTargetQualified"])
-        self.assertFalse(reference["qualificationTransfer"])
-        self.assertFalse(reference["nativeAuthority"])
-        self.assertFalse(reference["inventoryComplete"])
-        self.assertTrue(
-            {"actions", "bulk commands", "search"}.issubset(
-                reference["unselectedOperations"]
-            )
-        )
-        self.assertFalse(result["inventoryComplete"])
-        self.assertEqual(result["qualification"]["leastPrivilege"], "UNQUALIFIED")
-        reference["selectedEntries"].clear()
-        self.assertEqual(
-            len(report()["runtimeAdvisory"]["testedReferences"][0]["selectedEntries"]),
-            2,
-        )
 
     def historical_sql_snapshot(self):
         # Unit fixture for the unchanged archived native cohort, not current SQL
@@ -158,43 +124,6 @@ class PostgresPrivilegeAdvisoryTests(unittest.TestCase):
         self.assertTrue(data["fixedSqlHashesMatch"])
         self.assertFalse(data["nativeTestedSourceMatches"])
 
-    def test_shipped_signatures_match_exact_native_provenance(self):
-        root = Path(__file__).resolve().parents[3]
-        data = report()["runtimeAdvisory"]
-        packet = root / data["evidence"]["packet"]
-        self.assertEqual(
-            hashlib.sha256((packet / "inventory.json").read_bytes()).hexdigest(),
-            data["evidence"]["inventorySha256"],
-        )
-        native = json.loads((packet / "runtime-descriptor.json").read_text())
-
-        def signature(f):
-            return (
-                f["schema"],
-                f["name"],
-                tuple((t["schema"], t["name"]) for t in f["arguments"]),
-                (f["result"]["schema"], f["result"]["name"]),
-            )
-
-        self.assertEqual(
-            {signature(f) for f in data["runtimeFunctions"]},
-            {signature(f["function"]) for f in native["runtimeRequiredFunctions"]},
-        )
-        self.assertEqual(
-            {
-                (r["schema"], r["relation"], tuple(r["columns"]), r["wholeRow"])
-                for r in data["runtimeRelations"]
-            },
-            {
-                (
-                    r["schema"],
-                    r["relname"],
-                    tuple(c["attname"] for c in r["columns"]),
-                    r["wholeRow"],
-                )
-                for r in native["runtimeMetadataSelect"]
-            },
-        )
 
     def test_selected_fixture_compiler_functions_stay_separate_from_owner(self):
         original = entry()

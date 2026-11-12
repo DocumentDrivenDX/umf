@@ -1,4 +1,0 @@
-$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json
-src/extensions/actions/bulk.ts(2,30): error TS2307: Cannot find module './framed-json' or its corresponding type declarations.
-src/extensions/actions/manifests.ts(1,30): error TS2307: Cannot find module './framed-json' or its corresponding type declarations.
-error: script "typecheck" exited with code 1

@@ -1,5 +1,0 @@
-{"status": "fail", "checks": 0, "ownedServerStopped": true}
-Traceback (most recent call last):
-  File "/private/tmp/pg-final-fence-source-observation.py", line 41, in <module>
-    raise AssertionError(('original guard false; independent native observations retained',actual))
-AssertionError: ('original guard false; independent native observations retained', [(False,)])

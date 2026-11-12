@@ -7,7 +7,7 @@
     "dist/",
     "spec/"
   ],
-  "packageManager": "bun@1.4.2",
+  "packageManager": "bun@1.4.3",
   "imports": {
     "#umf-source": {
       "types": {
@@ -48,10 +48,9 @@
     }
   },
   "scripts": {
-    "check:access-boundaries": "bun scripts/check-compilation-boundaries.ts && python3 scripts/check-access-python-boundaries.py",
-    "test:access-boundaries": "bun test tests/compilation/boundaries.test.ts",
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
     "test": "bun run test:prepare && bun scripts/run-tests.ts",
+    "test:fast": "bun scripts/run-tests.ts --keep-going --exclude-file scripts/slow-tests.txt",
     "build": "bun scripts/build.ts",
     "build:schema-browser": "bun scripts/build-schema-browser.ts",
     "test:schema-browser": "bun scripts/schema-browser-package-browser.ts",
@@ -86,8 +85,6 @@
     "check:metamodel": "bun scripts/metamodel/build.ts --check",
     "test:metamodel": "bun test tests/metamodel && bun scripts/metamodel-browser.ts",
     "check:core-authority": "bun scripts/check-core-authority.ts",
-    "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
-    "check:rust-boundaries": "python3 scripts/check-rust-boundaries.py",
     "test:rust-core": "cargo test --locked -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql",
     "check:release-versions": "python3 scripts/check-release-versions.py",
     "test:sdk-installed": "node scripts/test-native-sdk-install.mjs \"$UMF_SDK_PACKAGE\"",

@@ -1,0 +1,31 @@
+# Globs of tracked files allowed to exceed 1 MiB (checked by scripts/check-repo-size.py).
+# These are test fixtures, vendored sources and generated sources that tests read.
+# Run output, receipts, evidence and built sites must not be added here; upload them as CI artifacts.
+crates/umf-core/src/*
+crates/umf-core/tests/fixtures/cpython-re/*
+fixtures/delta/parquet-checkpoint/*
+fixtures/delta/upstream/*
+fixtures/linkml/merge/*
+fixtures/parquet/pages/*
+fixtures/parquet/rows/*
+fixtures/parquet/schema/*
+fixtures/parquet/values/*
+fixtures/postgresql/*
+fixtures/projections/postgresql-relationship-layout/*
+fixtures/sqlserver/*
+fixtures/validation/*
+fixtures/validation/core-check-refresh/*
+native/shacl/sources/data-shapes-test-suite/reports/*
+scripts/assets/*
+spec/domain-packs/legal-appellate/data/*
+spec/domain-packs/legal-appellate/sources/*
+spec/domain-packs/legal/sources/*
+src/generated/*
+tests/rust-core/*
+tests/rust-core/fixtures/*
+tests/security/protection/*
+docs/helix/04-build/conformance-extraction/files.tsv.gz
+docs/helix/04-build/implementation-plan.md
+docs/helix/05-deploy/microsite/assets/weft-local-mutation/weft_wasm_bg.wasm.gz
+site/og-explorer.png
+python/umf_access_generated_executor/tests/fixtures/**

@@ -1,8 +1,0 @@
-import {readFileSync,writeFileSync} from 'node:fs';
-const [root,corpus,out]=Bun.argv.slice(2);if(!root||!corpus||!out)throw Error('root corpus output required');
-const {resolveCoreDefault}=await import(root+'/src/model/schema-properties.ts');
-const {checkSchemaLiteral}=await import(root+'/src/model/schema-literals.ts');
-const {validateDocument}=await import(root+'/src/validation/document.ts');
-const cases=JSON.parse(readFileSync(corpus,'utf8')).cases;
-const results=cases.map((c:any)=>{if(c.construction){let payload:any=[];if(c.construction.depth)for(let i=0;i<c.construction.depth;i++)payload=[payload];else payload=new Array(c.construction.values).fill(null);c.document.extensions={'umf.future':payload};}const before=JSON.stringify(c);let outcome;try{if(c.operation==='default'){const receipt=resolveCoreDefault(c.document,c.field,c.state);outcome={accepted:true,applied:receipt.applied,result:JSON.parse(JSON.stringify(receipt.result))};receipt.source.id='mutated-return';if(receipt.result.state==='present'&&receipt.result.value&&typeof receipt.result.value==='object')receipt.result.value.mutated=true;}else {checkSchemaLiteral(c.document,c.document.modules[0].elements[0],c.value);outcome={accepted:true};}}catch(error:any){outcome={accepted:false,code:error.code??null,path:error.path??null,error:error.message};}const v=validateDocument(c.document);return {id:c.id,outcome,inputUnchanged:JSON.stringify(c)===before,document:{valid:v.valid,complete:v.complete,diagnostics:v.diagnostics}};});
-writeFileSync(out,JSON.stringify({runtime:Bun.version,results},null,2)+'\n');

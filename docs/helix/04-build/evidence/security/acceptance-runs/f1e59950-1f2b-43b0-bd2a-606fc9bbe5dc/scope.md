@@ -1,1 +1,0 @@
-Fresh full gate after Python original Unix-census qualification. Command: bun docs/helix/02-design/spikes/security/acceptance.ts. Exit1:26 original registered runners accepted;106 missing executable bindings of132 required. No census prerequisite promoted to a backend pass. Original per-case command/stdout/stderr/runId/timing retained in acceptance.json.

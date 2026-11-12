@@ -20,10 +20,7 @@ from umf_access.values import (
 
 ROOT = Path(__file__).resolve().parents[3]
 PROFILE = ROOT / "fixtures/access/golden-vectors/temporal-profile.json"
-SAMPLE = (
-    ROOT
-    / "docs/helix/04-build/evidence/typed-persistence/temporal-profile/python-normalization-sample.json"
-)
+SAMPLE = Path(__file__).resolve().parent / "fixtures/python-normalization-sample.json"
 VALIDATORS = {
     "date": validate_date,
     "instant": validate_instant,

@@ -2,7 +2,7 @@
 import {chromium} from 'playwright';
 import {resolve,join} from 'node:path';
 import {mkdir} from 'node:fs/promises';
-const site=resolve('docs/helix/05-deploy/microsite/dist'),evidence=resolve('docs/helix/04-build/evidence/generated-reference/reader');await mkdir(evidence,{recursive:true});
+const site=resolve('docs/helix/05-deploy/microsite/dist'),evidence=resolve('out/generated-reference/reader');await mkdir(evidence,{recursive:true});
 const server=Bun.serve({hostname:'127.0.0.1',port:0,async fetch(req){const path=resolve(site,new URL(req.url).pathname.replace(/^\/umf\//,''));if(!path.startsWith(site+'/'))return new Response('Not found',{status:404});const file=Bun.file(path);return await file.exists()?new Response(file):new Response('Not found',{status:404});}});
 const browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
 const page=await browser.newPage({viewport:{width:1280,height:960}}),origin=`http://127.0.0.1:${server.port}/umf/reference/`,errors:string[]=[],requests:string[]=[],checks:string[]=[];

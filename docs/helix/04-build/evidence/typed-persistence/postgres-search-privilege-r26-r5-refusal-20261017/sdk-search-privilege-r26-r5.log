@@ -1,6 +1,0 @@
-{"exitCode": 1, "sourceAndPayloadUnchanged": true, "ownedServerStopped": true, "payloadCount": 49, "nativeAuthority": false, "inventoryComplete": false, "temporal": "HELD"}
-Traceback (most recent call last):
-  File "/private/tmp/run-r26-search-grants-r5.py", line 37, in <module>
-    after=snapshot();(OUT/'after.json').write_text(json.dumps(after,indent=2));text=(OUT/'campaign.log').read_text();receipt={'exitCode':result.returncode,'sourceAndPayloadUnchanged':before==after,'ownedServerStopped':'ownedServerStopped=true' in text,'payloadCount':49,'nativeAuthority':False,'inventoryComplete':False,'temporal':'HELD'};(OUT/'result.json').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt));assert result.returncode==0 and before==after and receipt['ownedServerStopped']
-                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError

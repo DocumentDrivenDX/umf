@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import tomllib
 import hashlib
 import importlib.util
 import json
@@ -762,6 +763,12 @@ def test_rust_include_authorities_are_in_sdist_closure() -> None:
     source_trees = tuple(repository / name for name in ROOT_TREES)
     include_pattern = re.compile(r'include_(?:str|bytes)!\s*\(\s*"([^"]+)"')
     separately_forced = {source for _name, source in RESOURCES}
+    # The sdist also force-includes these through pyproject.toml.
+    separately_forced.update(
+        tomllib.loads((repository / "python/pyproject.toml").read_text())["tool"]["hatch"]["build"][
+            "targets"
+        ]["sdist"]["force-include"].values()
+    )
     separately_forced.add("spec/extensions/tables/operation.schema.json")
     separately_forced.add("spec/extensions/tables/operation-0.2.schema.json")
     separately_forced_directories = (

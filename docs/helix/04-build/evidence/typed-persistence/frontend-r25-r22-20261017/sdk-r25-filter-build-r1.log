@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/search_filter_parameters_e2e.py", line 78, in <module>
-    (OUT / 'public-cli.log').write_text(command(sys.executable, '-B', '-m', 'umf_access.build.catalog', 'catalog', '--config', GENERATED / 'search-filter-config.json', '--root', GENERATED))
-                                        ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/search_filter_parameters_e2e.py", line 39, in command
-    raise RuntimeError(result.stdout + result.stderr)
-RuntimeError: {"reason":"WEFT_BLOCKED: {\"diagnostics\":[{\"code\":\"search filter expression unavailable\"}],\"status\":\"blocked\",\"version\":\"weft.search/0.1\"}","status":"refused"}
-

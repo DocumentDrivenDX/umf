@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/private/tmp/sdk-public-stream-rewrite-prep/regression.py", line 93, in <module>
-    if __name__=='__main__': raise SystemExit(main())
-                                              ^^^^^^
-  File "/private/tmp/sdk-public-stream-rewrite-prep/regression.py", line 58, in main
-    assert artifact['keyset'] is True
-           ~~~~~~~~^^^^^^^^^^
-KeyError: 'keyset'

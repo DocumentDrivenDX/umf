@@ -1,1 +1,0 @@
-import{importTableSpec2,inspectTableSpec2,exportTableSpec2}from"./chunk-f28xews1.js";import"./chunk-7cr0d0qk.js";import"./chunk-60aq4gnb.js";import"./chunk-q7d9xqsf.js";import"./chunk-7z2b65k4.js";export{exportTableSpec2 as exportTableSpec,importTableSpec2 as importTableSpec,inspectTableSpec2 as inspectTableSpec};

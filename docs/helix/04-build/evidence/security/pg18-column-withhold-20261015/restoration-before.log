@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/native/pg18-column-withhold.py", line 84, in <module>
-    check('restored-visible:'+label,oracle['actors']['umf_sec_alice'],value(VISIBLE,'umf_sec_alice'))
-  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/native/pg18-column-withhold.py", line 24, in value
-    def value(text,actor='postgres'):return json.loads(require(sql(text,actor)))
-  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/native/pg18-column-withhold.py", line 18, in require
-    if result.returncode:raise RuntimeError('Disposable qualification command failed: '+result.stderr[:3000])
-RuntimeError: Disposable qualification command failed: ERROR:  permission denied for table resource
-

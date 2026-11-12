@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/native/pg18-replay/write.py", line 67, in <module>
-    native=inventory_module['collect'](value,lambda id,expected,observed:check('before:'+id,expected,observed),oracle,sources)
-  File "tests/security/native/pg18-replay/write-inventory.py", line 12, in collect
-    check('inventory:resource-columns',[['id','text',True],['owner_project','text',True],['value','text',True]],[[c['name'],c['type'],c['notNull']] for c in inventory['columns'] if c['table']=='resource' and c['kind']!='n'])
-  File "tests/security/native/pg18-replay/write-inventory.py", line 12, in <listcomp>
-    check('inventory:resource-columns',[['id','text',True],['owner_project','text',True],['value','text',True]],[[c['name'],c['type'],c['notNull']] for c in inventory['columns'] if c['table']=='resource' and c['kind']!='n'])
-KeyError: 'kind'

@@ -40,4 +40,4 @@ for(const name of ['marketing-campaign','lexical-quirks','empty-sections']){
 for(const host of [node.results,bun.results])if(JSON.stringify(host)!==JSON.stringify(native))throw Error('Installed Lakeview host parity differs');
 if(JSON.stringify(before)!==JSON.stringify(await snapshot()))throw Error('Source changed during native Lakeview qualification');
 const receipt={profile:'umf.lakeview.installed-original-bytes/1',hosts:['installed Node package','installed Bun package','native CLI with empty PATH'],results:native,mismatches:0,sources:before,artifacts:{node:hash(await Bun.file(resolve(pkg,'umf_core_node.node')).bytes()),cli:hash(await Bun.file(cli).bytes())},limits:'Committed originals only; native Rust serializers in both UMF JSON/YAML paths; no Databricks acceptance or edited-source rewrite qualification.'};
-await Bun.write('docs/helix/04-build/evidence/lakeview/installed.json',JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt));
+await Bun.write('out/lakeview/installed.json',JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt));

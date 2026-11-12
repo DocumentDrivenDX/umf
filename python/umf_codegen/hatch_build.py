@@ -32,7 +32,7 @@ class CustomBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         root = Path(self.root)
         repository = root.resolve().parents[1]
-        canonical_check = repository / "scripts/rust-migration/r4/sync_codegen_resources.py"
+        canonical_check = repository / "scripts/sync-codegen-resources.py"
         if canonical_check.is_file():
             subprocess.run([sys.executable, str(canonical_check)], cwd=repository, check=True)
         package = root / 'src/umf_codegen'
