@@ -103,7 +103,7 @@ jobs:
       - name: System packages (manylinux)
         if: runner.os == 'Linux'
         run: |
-          dnf install -y unzip clang-devel llvm-devel protobuf-compiler
+          dnf install -y unzip clang-devel llvm-devel
           echo /opt/python/cp311-cp311/bin >> "$GITHUB_PATH"
       - uses: actions/checkout@v4
         with:
