@@ -1,0 +1,79 @@
+name: pages
+
+# Builds the microsite from source (nothing built is committed) and, from main, deploys it to GitHub Pages.
+# release.yml starts this workflow on main after a release so the live site states the released version.
+# Pushes between releases show "development build". The Innsigle page-sealing steps of the old local-only
+# deployment are not part of this build.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'docs/**'
+      - 'spec/**'
+      - 'src/**'
+      - 'scripts/**'
+      - 'bindings/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.1'
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: pages
+      - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
+      - run: cargo fetch --locked
+      - run: bun install --frozen-lockfile
+      - run: bunx playwright install --with-deps chromium
+      - run: bun scripts/site/build.ts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: docs/helix/05-deploy/microsite/dist
+          retention-days: 7
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/helix/05-deploy/microsite/dist
+
+  deploy:
+    # Only the default branch deploys; a dispatch on any other branch builds and uploads the artifact only.
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
