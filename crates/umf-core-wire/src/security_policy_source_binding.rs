@@ -179,6 +179,19 @@ pub fn execute_security_policy_source_wire_with_control(
                     &mut context,
                 )
             }
+            "inspectCandidateCatalogObligations" => {
+                closed(
+                    &request,
+                    &["profile", "op", "policy", "catalog", "closure", "ontology"],
+                )?;
+                umf_core::security_policy::inspect_candidate_catalog_protection_obligations(
+                    required(&request, "policy")?,
+                    required(&request, "catalog")?,
+                    required(&request, "closure")?,
+                    required(&request, "ontology")?,
+                    &mut context,
+                )
+            }
             "requireV1" => {
                 closed(&request, &["profile", "op", "source", "resolution"])?;
                 Ok(umf_core::security_policy::require_security_interpretation(

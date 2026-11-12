@@ -164,8 +164,50 @@ delete obsolete predecessor drivers. Keep host wrappers, static package
 data, live declarations, examples, development tooling and explicit
 TypeSpec and Smithy interop.
 
+### Runtime ownership follow-up
+
+- SQL Server CHECK predicate inspection uses one parser, in Rust. Route the
+  predicate cases through the Node and browser SDKs. A rejected conjunction
+  must retain the source and return no candidates, including when the first
+  clause is supported.
+- The SDK Registry delegates duplicate and replacement admission and callback
+  order to Rust. JavaScript retains the callback objects and invokes them in
+  the returned order. Check same-manifest replacement, changed-manifest
+  refusal, and registration with a caller-supplied kind runtime.
+- The loader subpath compiles and validates schemas in Rust on both SDK hosts.
+  Check a registered reference, exact equality, failed validation diagnostics,
+  and the conditional package exports. The facade exposes `addSchema`,
+  `compile`, `getSchema` and each predicate's `errors` property. The browser
+  root and loader share the generated WASM module.
+- The private security catalog routes policy and ontology admission, program
+  expansion and rule selection, condition lowering and dependency planning,
+  inventory coverage, disclosure and recipe selection, write comparison and
+  action planning, and atomic batch assembly through Rust. The Node and WASM
+  adapters carry detached inputs and return ordered positions or receipts.
+  Host code retains the original issued handles, applies the shared operation
+  ledger, and supplies typed fact and graph lookups to the evaluator.
+  The shared text ledger counts literal data and retained identities. Field
+  definitions use the source text bound, and repeated Field lookups still
+  consume work units.
+  Verify the private action, disclosure, write and batch results against the
+  logical catalog fixtures. Its result envelopes carry `complete: false` and
+  `authority: false`.
+
 ### Local verification on the completion branch
 
+- The SQL Server CHECK corpus passed in Bun and Chromium; Chromium matched
+  all 75 cases and made no external requests. Registry replacement and
+  custom runtime checks passed in Bun with the Lakeview interchange baseline.
+  The packaged loader passed on Node, Bun and Chromium, including rejected
+  schema registration, exact equality and independent validator instances.
+  Chromium loaded the SDK root and loader with one WASM binary request.
+- The private security catalog passed focused action, write snapshot and
+  cumulative budget checks in Bun. The WASM condition callback passed a
+  Chromium check for lexical bindings, UTF-16 equality and short circuiting.
+  The current port also passed selected graph source and witness checks,
+  graph and flat write authorization, mixed operation and scan batches,
+  Gregorian recipe rendering, and the V2 disclosure batch corpus with
+  181 assertions across provenance, codecs, and shared budgets.
 - Lakeview passed the projection and interchange baseline, a 37-case comparison
   with the predecessor, and direct, JSON and YAML native-source round trips in
   Chromium. Stock Node verified the returned map order and a projected field.
@@ -195,9 +237,9 @@ TypeSpec and Smithy interop.
   Protobuf source. The separate schema explorer built and recovered Arrow IPC,
   canonical Protobuf descriptors, and the exact OWL and SHACL source bytes.
 - Neither public SDK bundle emits UMF's legacy TypeScript document validator,
-  constraint interpreter, literal kernel, or registry admission. The TypeSpec
-  compiler and the explicit SDK loader validator retain their third-party
-  dependencies for interoperability.
+  constraint interpreter, literal kernel, or registry admission. The explicit
+  SDK loader subpath also uses Rust for schema validation. TypeSpec retains
+  its compiler interop.
 - The SHACL engine deletion exposed native gaps in mixed numeric promotion,
   conversion limits, embedded reports, and untyped or recursive shapes. Mixed
   float/double and decimal/float promotion, binary32 conversion refusal,

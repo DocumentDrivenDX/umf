@@ -22,18 +22,19 @@ function freezeReport(value:unknown):unknown{
 
 /** Present Rust's protection reports through the existing public API. */
 export function createProtectionRustDefault(engine:ProtectionNativeEngine,isNativeError:(error:unknown)=>boolean){
- if(engine.inspectCandidateLiteral)configureCandidateLiteralOperation(engine.inspectCandidateLiteral);
- if(engine.inspectCoreCandidateLiteral)configureCoreCandidateLiteralOperation(engine.inspectCoreCandidateLiteral);
- const call=<T>(operation:()=>unknown):T=>{
+ const call=<T>(operation:()=>unknown,candidateLiteral=false):T=>{
   try{return freezeReport(operation()) as T;}
   catch(error){
    if(!isNativeError(error))throw error;
    const native=error as {code?:unknown;message?:unknown;path?:unknown};
-   if(typeof native.code==='string'&&(native.code.startsWith('PROTECTION_')||native.code==='REQUEST'))
+   if(typeof native.code==='string'&&(candidateLiteral||native.code.startsWith('PROTECTION_')||native.code==='REQUEST'))
     throw new UmfError(native.code,String(native.message??''),typeof native.path==='string'?native.path:'');
    throw error;
   }
  };
+ const candidateLiteral=(operation:CandidateLiteralOperation):CandidateLiteralOperation=>(...args)=>call(()=>operation(...args),true);
+ if(engine.inspectCandidateLiteral)configureCandidateLiteralOperation(candidateLiteral(engine.inspectCandidateLiteral));
+ if(engine.inspectCoreCandidateLiteral)configureCoreCandidateLiteralOperation(candidateLiteral(engine.inspectCoreCandidateLiteral));
  return Object.freeze({
   inspectProtectionFunction(...args:Parameters<ProtectionFunctionInspector>):ReturnType<ProtectionFunctionInspector>{return call(()=>engine.inspectProtectionFunction(...args));},
   evaluateProtectionValue(...args:Parameters<ProtectionValueEvaluator>):ReturnType<ProtectionValueEvaluator>{return call(()=>engine.evaluateProtectionValue(...args));},

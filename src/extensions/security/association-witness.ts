@@ -3,6 +3,7 @@
 import {copyJson} from '../../model/json';
 import {requireIssuedCandidateAssociationChecks,type CandidateAssociationChecks} from './association-checks';
 import {resolveCandidateRelationshipTerm,type CandidateRelationshipTerm} from './relationship-candidate';
+import {resolveCandidateRelationshipTerm as resolveNativeWitnessTerm} from '#security-candidate-condition';
 export interface CandidateAssociationScope {readonly kind:'candidate-association-scope/0.1'}
 export interface CandidateAssociationWitness {readonly name:string;readonly checks:CandidateAssociationChecks}
 const scopes=new WeakMap<object,ReadonlyMap<string,CandidateAssociationWitness>>(),witnesses=new WeakSet<object>();
@@ -18,20 +19,20 @@ export function bindCandidateAssociationWitness(parent:CandidateAssociationScope
 /** The witness reference is retained on every selected term. Sibling bindings
  * remain distinct even when their display names and checked plans are equal. */
 export function resolveCandidateAssociationWitnessTerm(witness:CandidateAssociationWitness,input:CandidateRelationshipTerm):{readonly witness:CandidateAssociationWitness;readonly term:unknown}{
- if(!witnesses.has(witness))return fail();const term:any=copyJson(input),checks=witness.checks;
- if(checks.kind==='candidate-graph-relationship-checks/0.1')return Object.freeze({witness,term:resolveCandidateRelationshipTerm(checks.plan,term)});
- const plan=checks.plan;let selected:unknown;
- if(term.kind==='endpoint'){
-  if(Object.keys(term).length!==2||typeof term.role!=='string')return fail();const endpoint=plan.endpoints.find(e=>e.role===term.role);if(!endpoint)return fail();
-  selected=Object.freeze({kind:'entity-identity',association:plan.type,role:endpoint.role,type:endpoint.target,key:endpoint.key,fields:endpoint.fields});
- }else if(term.kind==='identity'){
-  if(Object.keys(term).length!==1)return fail();selected=Object.freeze({kind:'record-identity',type:plan.type,key:plan.key});
- }else if(term.kind==='attribute'){
-  if(Object.keys(term).length!==2||!term.field||typeof term.field!=='object'||Array.isArray(term.field)||Object.keys(term.field).length!==3||!['documentId','moduleId','elementId'].every(k=>Object.hasOwn(term.field,k)&&typeof term.field[k]==='string'))return fail();
-  if(term.field.documentId!==plan.type.documentId||!(plan.sourceRecord as any).members.some((r:any)=>r.module===term.field.moduleId&&r.element===term.field.elementId))return fail();
-  selected=Object.freeze({kind:'record-attribute',type:plan.type,field:Object.freeze(term.field)});
- }else return fail();
- return Object.freeze({witness,term:selected});
+ if(!witnesses.has(witness))return fail();
+ const checks=witness.checks;
+ const term=checks.kind==='candidate-graph-relationship-checks/0.1'
+  ?resolveCandidateRelationshipTerm(checks.plan,input)
+  :resolveNativeWitnessTerm({plan:checks.plan,term:copyJson(input)});
+ return Object.freeze({witness,term:freeze(term)});
+}
+
+function freeze<T>(value:T):T{
+ if(value&&typeof value==='object'&&!Object.isFrozen(value)){
+  Object.values(value).forEach(freeze);
+  Object.freeze(value);
+ }
+ return value;
 }
 
 /** Resolve through the active lexical scope, rather than accepting an arbitrary

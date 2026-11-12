@@ -4,6 +4,8 @@ import {UmfError,type Document,type Element} from '../../../model/types';
 import {candidateLiteralFieldRef,inspectCandidateLiteral} from '../candidate-literal-runtime';
 export class ProtectionLiteralBudget {
  private work=0;private text=0;
+ get remainingWork(){return 100_000-this.work;}
+ get remainingText(){return 100_000-this.text;}
  step(units=1){this.work+=units;if(this.work>100_000)throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: literal work exceeds100000 units');}
  reserveText(units:number):void{if(!Number.isSafeInteger(units)||units<0)throw new UmfError('PROTECTION_LITERAL_BOUND','Invalid retained text charge');this.text+=units;if(this.text>100_000)throw new UmfError('PROTECTION_LITERAL_BOUND','resource-exhausted: retained identity text exceeds100000 units');}
  retain(identity:string):string{this.reserveText(identity.length);return identity;}

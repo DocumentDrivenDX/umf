@@ -17,6 +17,7 @@ import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
+import {createSecurityCandidateConditionOperations} from './src/security-candidate-condition.js';
 import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
 import {createSecurityProtectionSourceEngine as createSecurityProtectionSourceEngineWithWire, SECURITY_PROTECTION_SOURCE_PROFILE} from './src/security-protection-source.js';
 import {createSecurityPolicySourceEngine as createSecurityPolicySourceEngineWithWire, SECURITY_POLICY_SOURCE_PROFILE} from './src/security-policy-source.js';
@@ -161,7 +162,13 @@ export function createJavascriptNumericEngine(resources, options = {}) {
 /** Create the opt-in Rust engine for bounded CONTRACT-062 truth/composition operations. */
 export function createSecurityLogicEngine(options = {}) {
   if (typeof addon.executeSecurityLogicWire !== 'function' || typeof addon.securityNotScalar !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
-  return createSecurityLogicEngineWithWire((wire, control) => addon.executeSecurityLogicWire(wire, control), options, UmfCoreError, (value, control) => addon.securityNotScalar(value, control));
+  return createSecurityLogicEngineWithWire((wire, control, candidate) => addon.executeSecurityLogicWire(wire, control, candidate), options, UmfCoreError, (value, control) => addon.securityNotScalar(value, control));
+}
+
+/** Create the private Rust compact-condition evaluator with lazy host reads. */
+export function createSecurityCandidateConditionEngine() {
+  if (typeof addon.executeSecurityCandidateConditionWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityCandidateConditionOperations((wire, callback) => addon.executeSecurityCandidateConditionWire(wire, callback), UmfCoreError);
 }
 
 /** Create the opt-in pure protection-function reference engine. */
@@ -1714,7 +1721,14 @@ export function createPreparedJsonSchemaEngine(options = {}) {
     if (failure) throw jsonSchemaFailureError(failure, UmfCoreError);
     return fromWire(JSON.parse(response.wire), work);
   };
-  return createJsonSchemaOperations(call, preflight);
+  const operations = createJsonSchemaOperations(call, preflight);
+  return Object.freeze(Object.assign({}, operations, {
+    copyValidatorSchema(value) { return copyJson(value); },
+    validatorSchemasEqual(left, right) { return call('validatorSchemaEqual', {left, right}, preflight()); },
+    registerValidatorSchema(identities, schema) { return call('validatorRegisterSchema', {identities, schema}, preflight()); },
+    compileValidator(key, schema, resources = [], strict = true) { return call('validatorCompile', {key, schema, resources, strict}, preflight()); },
+    validateValidator(key, data) { return call('validatorValidate', {key, data}, preflight()); },
+  }));
 }
 
 /** Create the opt-in structural document comparison adapter. */

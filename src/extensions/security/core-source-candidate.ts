@@ -2,6 +2,7 @@
 /** Private shared immutable core source; semantic custody only, never authenticity. */
 import {copyJson} from '../../model/json';
 import {validateDocument} from '../../validation/document';
+import {createUmfRegistry} from '../../index';
 import type {Validation} from '../../model/types';
 import type {Registry} from '../../registry/registry';
 import {requireCandidateCoreExtensionRegistry} from './core-extension-closure-candidate';
@@ -13,7 +14,7 @@ export function candidateCoreSourceComplete(source:any,checked:Validation):boole
  return source?.umf==='0.10.0'&&checked.valid&&checked.diagnostics.every(d=>d.code==='EXPERIMENTAL_CORE_SEMANTIC_TYPES'&&d.path==='/umf'&&d.severity==='warning');
 }
 export function captureCandidateCoreSource(input:unknown,extensionClosure?:unknown,registry?:Registry):unknown{
- const source=copyJson(input),checked=extensionClosure===undefined?validateDocument(source):validateDocument(source,requireCandidateCoreExtensionRegistry(extensionClosure,registry!));
+ const source=copyJson(input),checked=extensionClosure===undefined?validateDocument(source):validateDocument(source,requireCandidateCoreExtensionRegistry(extensionClosure,registry??createUmfRegistry()));
  if(!candidateCoreSourceComplete(source,checked))throw Error('SECURITY_CANDIDATE_CORE_SOURCE_UNRESOLVED');
  const handle=Object.freeze({kind:'candidate-core-source/0.1'});sources.set(handle,freeze(source));return handle;
 }

@@ -6,6 +6,7 @@ import {createDashboardRustDefault} from './extensions/dashboard/rust-default';
 import type {Document,Diagnostic,Json} from './model/types';
 import {createBulkActionsRustDefault} from './extensions/actions/bulk-state';
 import {createLakeviewLegacyProjectionRustDefault} from './adapters/lakeview/project-rust-default';
+import {lakeviewRegistry as createLakeviewRegistry,inspectLakeview as inspectLakeviewWithRuntime,type LakeviewRuntime} from './adapters/lakeview';
 import {createCoreIdealReportsRustDefault} from './core-ideals/reports-rust-default';
 import {createSecurityAuthorityGuardRustDefault} from './extensions/security/authority-guard-rust-default';
 import {createPythonClientRustCandidateV4} from './browser-v4';
@@ -369,7 +370,9 @@ const {editExtension}=createEditExtensionRustDefault(model,isNativeUmfCoreError)
 const dashboardPublic=createDashboardRustDefault(nativeFamilyDispatcher,isNativeUmfCoreError,()=>new Registry(),editExtension);
 const {dashboardRegistry,registerDashboard,inspectDashboard,readDashboardDocument,writeDashboardDocument,getDashboardDefinition,editDashboardDefinition}=dashboardPublic;
 const {declareCoreBit128Field}=bindCoreBit128FieldRust(await initializeCoreBit128FieldWasm(CORE_MODEL_RESOURCES,async()=>wasmModule),isCoreBit128FieldBindingError);
-const {Registry,validateDocument,validateRegistrations,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions);
+const {Registry,validateDocument,validateRegistrations,readDocument,writeDocument,createUmfRegistry:baseCreateUmfRegistry}=createRegistryRustDefault(model,isNativeUmfCoreError,registerActions,nativeFamilyDispatcher['registry-policy']);
+export const lakeviewRegistry=(runtime:LakeviewRuntime)=>createLakeviewRegistry(runtime,Registry);
+export const inspectLakeview=(document:Document,runtime:LakeviewRuntime)=>inspectLakeviewWithRuntime(document,runtime,Registry);
 const ownedExtensionRegistries=createExtensionRegistriesRustDefault(
  ()=>new Registry(),securityPolicySource,model,
  createCodegenEngine(wasmModule,CODEGEN_RESOURCES),

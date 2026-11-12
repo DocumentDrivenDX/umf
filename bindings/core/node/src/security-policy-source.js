@@ -14,6 +14,7 @@ export function createSecurityPolicySourceEngine(execute, ErrorType = Error) {
   return Object.freeze({
     inspectSecurityActionPurposes(ontology, documents) { return run('inspectActionPurposes', {ontology, documents}); },
     inspectProtectionObligations(policy, catalog, closure, ontology) { return run('inspectProtectionObligations', {policy, catalog, closure, ontology}); },
+    inspectCandidateCatalogObligations(policy, catalog, closure, ontology) { return run('inspectCandidateCatalogObligations', {policy, catalog, closure, ontology}); },
     inspectSecurityPolicy(source, resolution) { return run('inspectV1', {source, ...(resolution === undefined ? {} : {resolution})}); },
     inspectSecurityPolicyPayload(payload, path) { return run('inspectPayload', {payload, path}); },
     requireSecurityInterpretation(source, resolution) { return run('requireV1', {source, resolution}); },

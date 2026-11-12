@@ -11,6 +11,7 @@ export const retiredCorePaths=[
   `spec/core/${name}-document.schema.json`,
  ]),
  'src/model/schema-properties-transition-schema.ts',
+ 'src/adapters/sqlserver/facet-predicate.ts',
  'src/validation/facets.ts',
  'scripts/core-schema-properties-schema.py',
  'scripts/core-key-tuple-schema.ts',

@@ -28,7 +28,7 @@ for(const original of originals)test('@covers US-093-AC1: original file bytes su
 },60_000);
 
 test('@covers US-093-AC2: generic discovery and core selection see Records/Fields without a parallel field dictionary',()=>{
-  const {document}=load(),registry=lakeviewRegistry(runtime);
+  const {document}=load(),registry=lakeviewRegistry(runtime,Registry);
   const inspection=inspectExtensionKinds(document,registry);
   expect(inspection.entries[0]!.reference).toEqual({extension:'umf.lakeview',version:'0.2.0',kind:'dashboard'});
   expect(registry.listKinds().definitions.map(d=>d.reference.kind)).toEqual(['dashboard','data','dataset','field','layout-item','page','query-result']);
@@ -79,11 +79,11 @@ test('@covers US-093-AC4: core/native edits, unknown representation and broken r
     expect(()=>exportLakeviewDashboard(changed,runtime)).toThrow('changed');
   }
   const wrong=copyJson(document) as unknown as Document;native(wrong).kind='page';
-  expect(inspectLakeview(wrong,runtime).diagnostics.map(d=>d.code)).toContain('EXTENSION_KIND_SCOPE');
+  expect(inspectLakeview(wrong,runtime,Registry).diagnostics.map(d=>d.code)).toContain('EXTENSION_KIND_SCOPE');
   const missing=copyJson(document) as unknown as Document;delete native(missing).kind;
-  expect(inspectLakeview(missing,runtime).valid).toBe(false);
+  expect(inspectLakeview(missing,runtime,Registry).valid).toBe(false);
   const broken=copyJson(document) as unknown as Document;native(broken).originalText='invalid JSON';
-  expect(inspectLakeview(broken,runtime).diagnostics.map(d=>d.code)).toContain('LAKEVIEW_SOURCE_INVALID');
+  expect(inspectLakeview(broken,runtime,Registry).diagnostics.map(d=>d.code)).toContain('LAKEVIEW_SOURCE_INVALID');
   expect(()=>importLakeviewDashboard('{"datasets":[],"datasets":[]}',options,runtime)).toThrow();
   expect(()=>importLakeviewDashboardBytes(new Uint8Array([0xff,0xfe]),options,runtime)).toThrow();
 },60_000);

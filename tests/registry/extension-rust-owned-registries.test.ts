@@ -4,7 +4,8 @@ import {copyJson} from '../../src/model/json';
 import {Registry,securityPackage,securityRegistry,semanticTypesRegistry,tableLifecycleRegistry,validateDocument} from '../../src/index-node-v4';
 import {securityFixture} from '../security/fixture';
 import noteFixture from '../binding/fixtures/table-lifecycle-note.json';
-import type {Document} from '../../src/model/types';
+import type {Document,Json} from '../../src/model/types';
+import type {ExtensionKindRuntime} from '../../src/registry/kind-runtime';
 
 test('public Rust-owned extension registries preserve warnings, refusals, and caller callbacks',()=>{
  const {policy,resolution}=securityFixture();
@@ -31,4 +32,24 @@ test('public Rust-owned extension registries preserve warnings, refusals, and ca
  const withCaller=validateDocument(securityDocument,securityRegistry(registry));
  expect(callerCalls).toBe(1);expect(withCaller.valid).toBe(false);
  expect(withCaller.diagnostics).toContainEqual(expect.objectContaining({code:'CALLER_SECURITY_REFUSAL',path:'/extensions/umf.security'}));
+ const callbackOrder:string[]=[];
+ const first=(payload:unknown,context:{path:string})=>{callbackOrder.push('first');return [{code:'CALLBACK_FIRST',path:context.path,message:'first',severity:'warning' as const}];};
+ const second=(payload:unknown,context:{path:string})=>{callbackOrder.push('second');return [{code:'CALLBACK_SECOND',path:context.path,message:'second',severity:'warning' as const}];};
+ const ordered=securityRegistry(new Registry().register(securityPackage,first));
+ ordered.register(securityPackage,second);
+ securityRegistry(ordered);
+ validateDocument(securityDocument,ordered);
+ expect(callbackOrder).toEqual(['first','second']);
+
+ const customRuntime:ExtensionKindRuntime={
+  validatePackagePayload:()=>[],listKinds:()=>({}),getKind:()=>undefined,
+  inspectExtensionKinds:()=>({} as any),validateDocument:()=>({valid:true,complete:true,diagnostics:[]}),
+ };
+ let customCalls=0;
+ const custom=new Registry(customRuntime).register(securityPackage,(_payload,context)=>{customCalls++;return [{code:'CUSTOM_RUNTIME_CALLBACK',path:context.path,message:'retained',severity:'warning'}];});
+ securityRegistry(custom);
+ securityRegistry(custom);
+ expect(()=>custom.register({...securityPackage,description:'different manifest'})).toThrow(expect.objectContaining({code:'DUPLICATE_VERSION'}));
+ custom.get(securityPackage.id,securityPackage.version)!.semantics!(policy as unknown as Json,{document:securityDocument,path:'/extensions/umf.security',scope:'document'});
+ expect(customCalls).toBe(1);
 });

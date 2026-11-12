@@ -6,6 +6,7 @@ import {createLakeviewLegacyProjectionRustDefault} from '../../src/adapters/lake
 import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,lakeviewRegistry} from '../../src/adapters/lakeview';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
+import {Registry} from '../../src/registry/registry';
 import {elementKey} from '../../src/adapters/lakeview/projection-types';
 import {legacyIds,legacyFixture,legacyNumericFixture,legacyMixedDefaults,legacySelectionFixture,legacyUnknownWidgetTypes,legacyUnknownFormats,legacyUnknownChannels,legacyFormatFixture,legacyChannelFixture} from './legacy-fixture';
 export async function verify(){
@@ -25,7 +26,7 @@ export async function verify(){
       recoveries.push({format,sha256:await hash(output)});
     }
     if(name==='marketing-campaign'){
-      const registry=lakeviewRegistry(runtime),inspection=inspectExtensionKinds(document,registry);
+      const registry=lakeviewRegistry(runtime,Registry),inspection=inspectExtensionKinds(document,registry);
       if(!inspection.sourceValidation.valid||inspection.entries[0]?.reference.kind!=='dashboard')throw Error('Generic Lakeview discovery failed');
       const selected=runtime.selectCoreElements(document,{references:'transitive',identities:[{module:document.modules[0]!.id,element:'ds_metric'}]},registry.registrations()) as CoreElementSelection;
       if(!selected.selection.some(e=>e.element.kind==='field'&&e.element.name==='Metric Value'))throw Error('Core Record/Field selection failed');

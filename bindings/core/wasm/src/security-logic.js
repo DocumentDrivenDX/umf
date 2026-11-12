@@ -91,10 +91,11 @@ function directControlBridge(controls) {
 export function createSecurityLogicEngine(execute, options = {}, ErrorType = Error, executeNotScalar) {
   if (typeof execute !== 'function') throw new Error('RUST_BINDING_MISSING');
   const controls = optionsControls(options);
+  const publicOperations = new Set(['securityNot', 'securityAnd', 'securityOr', 'composeSecurityRules', 'securityRefIdentity']);
   function invoke(op, args) {
     const bridge = Object.keys(controls).length ? controlBridge(controls) : undefined;
     const wire = encodeRequestWire({profile: SECURITY_LOGIC_PROFILE, op, args}, admissionWork(bridge, ErrorType));
-    const response = JSON.parse(execute(wire, bridge));
+    const response = JSON.parse(execute(wire, bridge, !publicOperations.has(op)));
     const failure = resultError(response);
     if (failure) throw new ErrorType(failure.code, failure.message, failure.path);
     return fromWire(JSON.parse(response.wire));
@@ -116,5 +117,30 @@ export function createSecurityLogicEngine(execute, options = {}, ErrorType = Err
     securityOr(values) { return invoke('securityOr', {values}); },
     composeSecurityRules(rules, protectedFields = []) { return invoke('composeSecurityRules', {rules, protectedFields}); },
     securityRefIdentity(ref) { return invoke('securityRefIdentity', {ref}); },
+    prepareCandidateCatalogProgram(input) { return invoke('prepareCandidateCatalogProgram', {input}); },
+    planCandidateCatalogProgram(input) { return invoke('planCandidateCatalogProgram', {input}); },
+    prepareCandidateCatalogOntology(input) { return invoke('prepareCandidateCatalogOntology', {input}); },
+    planCandidateCatalogOntology(input) { return invoke('planCandidateCatalogOntology', {input}); },
+    resolveCandidateCatalogEntityTerm(input) { return invoke('resolveCandidateCatalogEntityTerm', {input}); },
+    compileCandidateCompactCondition(condition, associationCount) { return invoke('compileCandidateCompactCondition', {condition, associationCount}); },
+    validateCandidateCatalogStorage(program, owner, maxSteps) { return invoke('validateCandidateCatalogStorage', {program, owner, maxSteps}); },
+    admitCandidateCatalogInventory(inventory) { return invoke('admitCandidateCatalogInventory', {inventory}); },
+    resolveCandidateRecordAssociation(input) { return invoke('resolveCandidateRecordAssociation', {input}); },
+    validateCandidateRelationshipAssociation(input) { return invoke('validateCandidateRelationshipAssociation', {input}); },
+    resolveCandidateRelationshipTerm(input) { return invoke('resolveCandidateRelationshipTerm', {input}); },
+    candidateWitnessTermCapability(input) { return invoke('candidateWitnessTermCapability', {input}); },
+    admitCandidateCatalogCut(input) { return invoke('admitCandidateCatalogCut', {input}); },
+    planCandidateCatalogRequest(input) { return invoke('planCandidateCatalogRequest', {input}); },
+    admitCandidateCatalogDateProfiles(input) { return invoke('admitCandidateCatalogDateProfiles', {input}); },
+    candidateAssociationOperandDomain(input) { return invoke('candidateAssociationOperandDomain', {input}); },
+    planCandidateEmptyDisclosures(input) { return invoke('planCandidateEmptyDisclosures', {input}); },
+    selectCandidateCatalogDisclosures(input) { return invoke('selectCandidateCatalogDisclosures', {input}); },
+    checkCandidateDisclosureIdentities(input) { return invoke('checkCandidateDisclosureIdentities', {input}); },
+    renderCandidateCatalogCells(input) { return invoke('renderCandidateCatalogCells', {input}); },
+    assembleCandidateDisclosureBatch(input) { return invoke('assembleCandidateDisclosureBatch', {input}); },
+    admitCandidateCatalogOperationBatch(input) { return invoke('admitCandidateCatalogOperationBatch', {input}); },
+    admitCandidateCatalogScanBatch(input) { return invoke('admitCandidateCatalogScanBatch', {input}); },
+    composeCandidateCatalogOperationBatch(input) { return invoke('composeCandidateCatalogOperationBatch', {input}); },
+    composeCandidateCatalogScanBatch(input) { return invoke('composeCandidateCatalogScanBatch', {input}); },
   });
 }

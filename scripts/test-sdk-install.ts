@@ -66,7 +66,13 @@ import {createValidator,readJsonValue,inspectDomainPackLoader,generateDomainPack
 const registry=createUmfRegistry();
 if(!registry.get('umf.actions','0.1.0')?.semantics||typeof createValidator!=='function')throw Error('Missing installed SDK entrypoint');
 const ajv=createValidator(),generic=ajv.compile({type:'object',required:['ok'],properties:{ok:{type:'boolean'}},additionalProperties:false});
-if(!generic({ok:true})||generic({ok:'true'})||generic({ok:true,extra:1}))throw Error('Installed generic AJV interop changed');
+if(!generic({ok:true})||generic({ok:'true'})||generic.errors?.[0]?.keyword!=='type'||generic({ok:true,extra:1})||ajv.getSchema('missing-schema')!==undefined)throw Error('Installed Rust validator interop changed');
+const shared={$id:'urn:loader-contract:shared',type:'string'},root={$id:'urn:loader-contract:root',type:'object',properties:{value:{$ref:'urn:loader-contract:shared'}},required:['value'],additionalProperties:false};
+ajv.addSchema(shared);const rootCheck=ajv.compile(root);if(ajv.getSchema(root.$id)!==rootCheck||!rootCheck({value:'ok'})||rootCheck({value:1})||rootCheck.errors?.[0]?.keyword!=='type')throw Error('Installed Rust validator reference registry changed');
+const falseCheck=ajv.compile(false);if(!ajv.compile(true)(null)||falseCheck(null)||falseCheck.errors?.[0]?.keyword!=='false schema')throw Error('Installed boolean schema validator changed');
+let identityConflict=false;try{ajv.addSchema({...shared,type:'number'});}catch{identityConflict=true;}if(!identityConflict)throw Error('Installed Rust validator accepted a conflicting schema identity');
+let metaschemaRejected=false;try{ajv.addSchema({$id:'https://json-schema.org/draft/2020-12/schema'});}catch{metaschemaRejected=true;}if(!metaschemaRejected)throw Error('Installed Rust validator accepted a metaschema identity');
+let malformedSchemaRejected=false;try{ajv.addSchema({$id:'urn:loader-contract:invalid',type:'nonsense'});}catch{malformedSchemaRejected=true;}if(!malformedSchemaRejected)throw Error('Installed Rust validator delayed schema metaschema admission');
 if(!Bun.deepEquals(readJsonValue('{"ok":true}','json'),{ok:true}))throw Error('Installed native JSON admission changed');
 const loader={version:'1.0.0',id:'umf.document-loader',implementation_version:'1.0.0',profile:'court-documents',runtime:'bun',entrypoint:'run.ts',configuration_schema:'inventory.schema.json',qualification:'Finite explicit inventory only',artifacts:[{reference:'run.ts',sha256:'a'.repeat(64)},{reference:'inventory.schema.json',sha256:'b'.repeat(64)}]};
 if(!inspectDomainPackLoader(loader).valid||inspectDomainPackLoader({...loader,entrypoint:'../run.ts'}).valid||generateDomainPackLoaderSchema().$id!=='urn:umf:domain-pack-loader:1.0.0'||generateLoaderInventorySchema().$id!=='urn:umf:loader-inventory:1.0.0')throw Error('Installed Rust loader contract changed');

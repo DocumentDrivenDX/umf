@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {NativeJson} from '../../model/native-json';
 import type {SqlServerFacetTypeInspection} from './facet-type';
-import type {SqlServerFacetPredicateCandidate} from './facet-predicate';
+import type {SqlServerFacetPredicateCandidate} from './facet-predicate-types';
 export type SqlServerFacetConstraintScope='stored-and-ordinary-checked-write-non-null'|'ordinary-checked-write-non-null';
 export type SqlServerFacetConstraintFact=
  |{kind:'integer-bound';operator:'>='|'<=';literal:string}

@@ -22,13 +22,13 @@ export function resolveCandidateRecordAssociationChecks(selector:unknown,documen
  const shared=isIssuedCandidateCoreSource(document),packet:any=copyJson({selector,...(!shared?{document}:{}),entities,classifications});if(shared)packet.document=readCandidateCoreSource(document);
  const core=shared?{valid:true,complete:true,diagnostics:[]}:validateDocument(packet.document);
  if(!core.valid||!core.complete)throw Error('SECURITY_ASSOCIATION_CORE_UNRESOLVED');
- const plan=resolveCandidateRecordAssociation(packet.selector,shared?document:packet.document,packet.entities);
+ const plan=resolveCandidateRecordAssociation(packet.selector,shared?document:packet.document,packet.entities,packet.classifications);
  requireCandidateEndpointDomainCorrespondence(plan);
  const retained=requireCandidateAssociationClassifications(plan,packet.classifications);
  return issued({kind:'candidate-record-association-checks/0.1' as const,plan,classifications:retained},packet.document);
 }
 
-import {resolveCandidateRelationship,type CandidateRelationshipPlan} from './relationship-candidate';
+import {resolveCandidateRelationship,readCandidateRelationshipClassifications,readCandidateRelationshipInterpretation,type CandidateRelationshipPlan} from './relationship-candidate';
 export interface CandidateGraphRelationshipChecks {
  readonly kind:'candidate-graph-relationship-checks/0.1';
  readonly plan:CandidateRelationshipPlan;readonly classifications:unknown;
@@ -41,18 +41,11 @@ export function resolveCandidateGraphRelationshipChecks(selector:unknown,documen
  const core=shared?{valid:true,complete:true,diagnostics:[]}:validateDocument(packet.document);
  if(!core.valid)throw Error('SECURITY_ASSOCIATION_CORE_UNRESOLVED');
  if(Object.hasOwn(packet,'interpretation')&&(!packet.interpretation||typeof packet.interpretation!=='object'||Array.isArray(packet.interpretation)||Object.keys(packet.interpretation).length!==1||packet.interpretation.profile!=='association-record-key-agreement/0.1'))throw Error('SECURITY_ASSOCIATION_INTERPRETATION_UNSUPPORTED');
- const plan=resolveCandidateRelationship(packet.selector,shared?document:packet.document,packet.entities);
- let interpretedQualifier:CandidateGraphRelationshipChecks['interpretedQualifier'];
- if(!core.complete){
-  const mi=packet.document.modules.findIndex((m:any)=>m.id===plan.relationship.moduleId),ri=packet.document.modules[mi].relationships.findIndex((r:any)=>r.id===plan.relationship.relationshipId),path=`/modules/${mi}/relationships/${ri}/associationRecord/key`;
-  if(!packet.interpretation||plan.witness.kind!=='record-key'||core.diagnostics.length!==1||core.diagnostics[0]?.code!=='UNKNOWN_RELATIONSHIP_QUALIFIER'||core.diagnostics[0]?.path!==path)throw Error('SECURITY_ASSOCIATION_CORE_UNRESOLVED');
-  const keyId=(plan.witness.key as any).id;
-  if((plan.sourceRelationship as any).associationRecord.key!==keyId)throw Error('SECURITY_ASSOCIATION_KEY_AGREEMENT');
-  interpretedQualifier=Object.freeze({profile:'association-record-key-agreement/0.1',path,keyId});
- }
+ const plan=resolveCandidateRelationship(packet.selector,shared?document:packet.document,packet.entities,packet.interpretation,packet.classifications,core);
+ const interpretedQualifier=readCandidateRelationshipInterpretation(plan) as CandidateGraphRelationshipChecks['interpretedQualifier'];
  const scope=plan.endpoints.map(e=>e.target);
  if(plan.witness.kind==='record-key')scope.push(plan.witness.type);
- const retained=checkCandidateRecordClassifications(shared?document:packet.document,scope,packet.classifications);
+ const retained=readCandidateRelationshipClassifications(plan)??checkCandidateRecordClassifications(shared?document:packet.document,scope,packet.classifications);
  return issued({kind:'candidate-graph-relationship-checks/0.1' as const,plan,classifications:retained,...(interpretedQualifier?{interpretedQualifier}:{})},packet.document);
 }
 

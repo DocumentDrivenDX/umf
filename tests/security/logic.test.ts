@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {composeSecurityRules} from '../../src/index-node-v4';
-import {securityAnd,securityOr,securityNot,type SecurityTruth,type EvaluatedSecurityRule,type SecurityDisposition} from '../../src/extensions/security/logic';
+import {composeSecurityRules,securityAnd,securityOr,securityNot} from '../../src/index-node-v4';
+import type {SecurityTruth,EvaluatedSecurityRule,SecurityDisposition} from '../../src/extensions/security/logic';
 
 test('strong Kleene tables agree with an independently enumerated oracle', () => {
   // @covers US-079-AC4

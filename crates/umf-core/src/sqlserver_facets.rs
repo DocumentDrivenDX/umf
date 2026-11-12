@@ -686,7 +686,11 @@ pub fn inspect_sqlserver_facet_predicate(
         _ => false,
     };
     ctx.charge_work(candidates.len(), Utf16::default())?;
-    let candidate_values = candidates.iter().map(Candidate::value).collect();
+    let candidate_values = if candidate {
+        candidates.iter().map(Candidate::value).collect()
+    } else {
+        Vec::new()
+    };
     Ok(obj(vec![
         ("native", native),
         (

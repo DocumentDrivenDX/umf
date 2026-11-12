@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {createValidator} from '../../validation/schema';
-import documentSchema from '../../../spec/core/schema.json';
 import {ProtectionLiteralBudget} from './protection/literals';
 import {createCandidateEntityTermScope,readCandidateEntityTermScope,readCandidateEntityTermScopeRoot,resolveCandidateEntityTerm} from './entity-terms-candidate';
 import {resolveCandidateSecurityOntology} from './ontology-checks-candidate';
@@ -8,8 +6,8 @@ import {resolveCandidateSecurityOntology} from './ontology-checks-candidate';
 import {copyJson} from '../../model/json';
 import {resolveCandidateAssociationChecks,requireIssuedCandidateAssociationChecks,readCandidateAssociationSource,readCandidateAssociationSourceReference,type CandidateAssociationChecks} from './association-checks';
 import {createCandidateAssociationScope,bindCandidateAssociationWitness,resolveCandidateAssociationScopeTerm,type CandidateAssociationScope} from './association-witness';
+import {compileCandidateCompactCondition,normalizeCandidateConditionSource,candidateAssociationOperandDomain} from '#security-candidate-condition';
 function canonical(v:any):string{return Array.isArray(v)?'['+v.map(canonical).join(',')+']':v&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);}
-const literalValidator=createValidator();literalValidator.addSchema(documentSchema);const literalShape=literalValidator.compile({$ref:documentSchema.$id+'#/$defs/literal'});
 const fail=():never=>{throw Error('SECURITY_ASSOCIATION_EXPRESSION_UNSUPPORTED');};
 function shape(v:any,keys:string[]){if(!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!Object.hasOwn(v,k)))fail();}
 function reference(r:any,relationship=false){shape(r,relationship?['documentId','moduleId','relationshipId']:['documentId','moduleId','elementId']);for(const v of Object.values(r))if(typeof v!=='string'||!v)fail();}
@@ -51,7 +49,7 @@ export function normalizeCandidateAssociationExpression(input:unknown,available:
  const resolvedContexts=new Map<string,{checks:CandidateAssociationChecks;endpoint:any}>();
  for(const [name,context] of Object.entries(contexts) as [string,any][]){shape(context,['association','endpoint']);if(typeof context.endpoint!=='string'||!context.endpoint)fail();const checks=bindings.get(identity(context.association,Object.hasOwn(context.association??{},'relationshipId')));if(!checks)fail();const endpoint=checks!.plan.endpoints.find(e=>e.role===context.endpoint);if(!endpoint)fail();resolvedContexts.set(name,{checks:checks!,endpoint});}
  if(entityScope!==undefined)for(const [name,binding] of resolvedContexts){const intrinsic:any=resolveCandidateEntityTerm(entityScope,{kind:name,identity:true});if(canonical(intrinsic.term.type)!==canonical(binding.endpoint.target)||canonical(intrinsic.term.key)!==canonical(binding.endpoint.key))fail();}
- const residuals:{path:string;reason:string}[]=[];let nodes=0;
+ const residuals:{path:string;reason:string}[]=[];
  function term(value:any,scope:CandidateAssociationScope,path:string):unknown{
   if(entityScope!==undefined&&['subject','resource','context','constant'].includes(value?.kind))return {entity:resolveCandidateEntityTerm(entityScope,value)};
   if((value?.kind==='subject'||value?.kind==='resource')&&Object.hasOwn(contexts,value.kind)){
@@ -63,7 +61,7 @@ export function normalizeCandidateAssociationExpression(input:unknown,available:
    return {context:value.kind,checks,term:{kind:'record-attribute',type:endpoint!.target,field:value.field}};
   }
   if(value?.kind==='constant'){
-   shape(value,['kind','field','value']);reference(value.field);if(!literalShape(value.value))fail();
+   shape(value,['kind','field','value']);reference(value.field);if(candidateAssociationOperandDomain({term:{kind:'literal-shape',value:value.value}})!==true)fail();
    const candidates=[...bindings.values()].filter(checks=>(checks.classifications as any[]).some(record=>record.fields.some((f:any)=>identity(f.ref)===identity(value.field))));
    if(!candidates.length){residuals.push({path,reason:'constant-field-source-unresolved'});return {kind:'unresolved-term',source:value};}
    let definition:string|undefined;
@@ -79,49 +77,69 @@ export function normalizeCandidateAssociationExpression(input:unknown,available:
   if(bound.entity)return bound.entity.domain;
   if(!bound.witness&&!bound.checks)return undefined;
   const selected=bound.term,checks=bound.witness?.checks??bound.checks;const source=sourceFor(checks),document=source.document;
-  function domain(ref:any,identity=false):unknown{
-   if(ref.documentId!==document.id)fail();const field=source!.fields.get(JSON.stringify([ref.documentId,ref.moduleId,ref.elementId]));if(!field)fail();
-   if(field.kind!=='field'||!['boolean','string','integer','decimal','binary'].includes(field.scalarType)||field.cardinality!=='one'||!(identity?field.nullability==='required':['required','absent-allowed'].includes(field.nullability))||field.references?.some((r:any)=>r.role==='record-type')||(field.extensions&&Object.keys(field.extensions).length))fail();
-   const facets=field.facets??{};if(field.scalarType==='decimal'&&(!Number.isSafeInteger(facets.precision)||!Number.isSafeInteger(facets.scale)))fail();
-   return {scalarType:field.scalarType,cardinality:field.cardinality,nullability:field.nullability,facets,allowedValues:field.allowedValues??null};
+  const fieldAt=(ref:any)=>{
+   if(ref.documentId!==document.id)fail();
+   return source.fields.get(JSON.stringify([ref.documentId,ref.moduleId,ref.elementId]))??fail();
+  };
+  const fields=selected.field?[fieldAt(selected.field)]:selected.key.fields.map((field:any)=>
+   fieldAt({documentId:selected.type.documentId,moduleId:field.module,elementId:field.element}));
+  return candidateAssociationOperandDomain({term:selected,fields}) as string;
+ }
+ const scopes=[createCandidateAssociationScope()],witnesses:unknown[]=[],operands:unknown[]=[];
+ const normalized=normalizeCandidateConditionSource(expression,(request:unknown)=>{
+  const event=request as any;
+  if(event.kind==='term'){
+   const index=operands.length;
+   operands.push(term(event.term,scopes[event.scope]!,event.path));
+   return index;
   }
-  if(selected.kind==='record-attribute'||selected.kind==='constant')return 'scalar:'+canonical(domain(selected.field));
-  if(!['entity-identity','record-identity'].includes(selected.kind))return fail();
-  const domains=selected.key.fields.map((f:any)=>domain({documentId:selected.type.documentId,moduleId:f.module,elementId:f.element},true));
-  return 'identity:'+canonical({type:selected.type,keyId:selected.key.id,domains});
+  if(event.kind==='domains')return [operandType(operands[event.left])??null,operandType(operands[event.right])??null];
+  if(event.kind==='bind'){
+   const graph=Object.hasOwn(event.association??{},'relationshipId');
+   const checks=bindings.get(identity(event.association,graph))??fail();
+   const bound=bindCandidateAssociationWitness(scopes[event.scope]!,checks,event.alias);
+   const scope=scopes.length,witness=witnesses.length;
+   scopes.push(bound.scope);witnesses.push(bound.witness);
+   return {scope,witness};
+  }
+  return fail();
+ });
+ function attach(value:any):unknown{
+  switch(value.op){
+   case 'eq':return {op:value.op,left:operands[value.left],right:operands[value.right]};
+   case 'exists':return {op:value.op,witness:witnesses[value.witness],where:attach(value.where)};
+   case 'not':return {op:value.op,arg:attach(value.arg)};
+   case 'and':case 'or':return {op:value.op,args:value.args.map(attach)};
+   default:return value;
+  }
  }
- function walk(value:any,scope:CandidateAssociationScope,path:string,depth:number):unknown{
-  if(++nodes>4096||depth>16)fail();
-  if(value?.op==='literal'){shape(value,['op','value']);if(typeof value.value!=='boolean')fail();return value;}
-  if(value?.op==='eq'){shape(value,['op','left','right']);const left=term(value.left,scope,path+'/left'),right=term(value.right,scope,path+'/right'),lt=operandType(left),rt=operandType(right);if(lt!==undefined&&rt!==undefined&&lt!==rt)fail();return {op:'eq',left,right};}
-  if(value?.op==='not'){shape(value,['op','arg']);return {op:'not',arg:walk(value.arg,scope,path+'/arg',depth+1)};}
-  if(value?.op==='and'||value?.op==='or'){shape(value,['op','args']);if(!Array.isArray(value.args)||!value.args.length||value.args.length>64)fail();return {op:value.op,args:value.args.map((v:any,i:number)=>walk(v,scope,path+'/args/'+i,depth+1))};}
-  if(value?.op!=='exists')return fail();shape(value,['op','association','as','where']);
-  const graph=Object.hasOwn(value.association??{},'relationshipId'),key=identity(value.association,graph),checks=bindings.get(key);if(!checks)return fail();
-  const binding=bindCandidateAssociationWitness(scope,checks,value.as);
-  return {op:'exists',witness:binding.witness,where:walk(value.where,binding.scope,path+'/where',depth+1)};
- }
- const result=freeze({expression:walk(expression,createCandidateAssociationScope(),'',1),residuals});issuedExpressions.add(result);expressionSources.set(result,packet);expressionChecks.set(result,[...bindings.values()]);if(entityScope!==undefined)expressionEntities.set(result,entityScope);return result;
+ const result=freeze({expression:attach(normalized),residuals});
+ issuedExpressions.add(result);
+ expressionSources.set(result,packet);
+ expressionChecks.set(result,[...bindings.values()]);
+ if(entityScope!==undefined)expressionEntities.set(result,entityScope);
+ return result;
 }
 
 
-function encodeCandidateCondition(input:{expression:any},association:(checks:CandidateAssociationChecks)=>number):unknown{
- let nextOccurrence=0;
- function term(value:any,scope:Map<object,number>):unknown{
-  if(value.entity)return {kind:'entity-term',term:copyJson(value.entity.term),domain:value.entity.domain};
-  if(value.witness){const occurrence=scope.get(value.witness);if(occurrence===undefined)fail();return {kind:'witness-term',occurrence,term:copyJson(value.term)};}
-  if(value.checks)return {kind:value.context?'context-term':'constant-term',...(value.context?{context:value.context}:{}),association:association(value.checks),term:copyJson(value.term)};
+function marshalCandidateCondition(input:{expression:any},association:(checks:CandidateAssociationChecks)=>number):unknown{
+ let nextToken=0;const witnessTokens=new WeakMap<object,number>();
+ const token=(witness:object):number=>{let value=witnessTokens.get(witness);if(value===undefined){value=nextToken++;if(value>=4096)fail();witnessTokens.set(witness,value);}return value;};
+ function term(value:any):unknown{
+  if(value.entity)return {kind:'entity',term:copyJson(value.entity.term),domain:value.entity.domain};
+  if(value.witness)return {kind:'witness',token:token(value.witness),term:copyJson(value.term)};
+  if(value.checks)return {kind:value.context?'context':'association',...(value.context?{context:value.context}:{}),association:association(value.checks),term:copyJson(value.term)};
   return fail();
  }
- function walk(value:any,scope:Map<object,number>):unknown{
+ function walk(value:any):unknown{
   if(value.op==='literal')return copyJson(value);
-  if(value.op==='eq')return {op:'eq',left:term(value.left,scope),right:term(value.right,scope)};
-  if(value.op==='not')return {op:'not',arg:walk(value.arg,scope)};
-  if(value.op==='and'||value.op==='or')return {op:value.op,args:value.args.map((v:any)=>walk(v,scope))};
-  if(value.op!=='exists')return fail();const occurrence=nextOccurrence++,nested=new Map(scope);nested.set(value.witness,occurrence);
-  return {op:'exists',occurrence,alias:value.witness.name,association:association(value.witness.checks),where:walk(value.where,nested)};
+  if(value.op==='eq')return {op:'eq',left:term(value.left),right:term(value.right)};
+  if(value.op==='not')return {op:'not',arg:walk(value.arg)};
+  if(value.op==='and'||value.op==='or')return {op:value.op,args:value.args.map((v:any)=>walk(v))};
+  if(value.op!=='exists')return fail();
+  const witness=value.witness;return {op:'exists',token:token(witness),alias:witness.name,association:association(witness.checks),where:walk(value.where)};
  }
- return walk(input.expression,new Map());
+ return walk(input.expression);
 }
 
 /** Private JSON transport bridge, not a compiler or authorization admission token. */
@@ -131,7 +149,7 @@ export function serializeCandidateAssociationExpression(normalized:unknown):unkn
  const associations:any[]=[],associationIndexes=new Map<object,number>();
  function association(checks:CandidateAssociationChecks):number{let index=associationIndexes.get(checks);if(index===undefined){index=associations.length;associationIndexes.set(checks,index);associations.push({checks:copyJson(checks),source:readCandidateAssociationSource(checks)});}return index;}
  for(const checks of expressionChecks.get(normalized as object)!)association(checks);
- const expression=encodeCandidateCondition(input,association),entities=expressionEntities.get(normalized as object);return freeze({kind:entities===undefined?'candidate-association-expression-transport/0.1':'candidate-association-expression-transport/0.2',sourceExpression:copyJson(expressionSources.get(normalized as object)),associations,expression,...(entities===undefined?{}:{entities:readCandidateEntityTermScope(entities)})});
+ const lowered=compileCandidateCompactCondition(marshalCandidateCondition(input,association),associations.length) as any,expression=lowered.expression,entities=expressionEntities.get(normalized as object);return freeze({kind:entities===undefined?'candidate-association-expression-transport/0.1':'candidate-association-expression-transport/0.2',sourceExpression:copyJson(expressionSources.get(normalized as object)),associations,expression,...(entities===undefined?{}:{entities:readCandidateEntityTermScope(entities)})});
 }
 
 
@@ -179,6 +197,6 @@ export function compileCandidateAssociationCondition(normalized:unknown,availabl
  }
  const original=expressionChecks.get(normalized as object)!;
  if(indexes.size!==original.length||original.some(checks=>!indexes.has(checks)))fail();
- const expression=encodeCandidateCondition(input,checks=>{const index=indexes.get(checks);if(index===undefined)fail();return index!;});
- const result=freeze({kind:'candidate-compact-condition/0.1',expression});compactConditions.set(result,{associations:Object.freeze([...indexes.keys()]),entityScope:expressionEntities.get(normalized as object)});return result;
+ const result=compileCandidateCompactCondition(marshalCandidateCondition(input,checks=>{const index=indexes.get(checks);if(index===undefined)fail();return index!;}),indexes.size) as any;
+ freeze(result);compactConditions.set(result,{associations:Object.freeze([...indexes.keys()]),entityScope:expressionEntities.get(normalized as object)});return result;
 }

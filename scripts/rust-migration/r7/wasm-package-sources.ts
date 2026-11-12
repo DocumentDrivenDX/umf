@@ -21,6 +21,7 @@ const pairs = [
   ['bindings/core/node/src/access-rrf.js', 'bindings/core/wasm/src/access-rrf.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
   ['bindings/core/node/src/security-logic.js', 'bindings/core/wasm/src/security-logic.js'],
+  ['bindings/core/node/src/security-candidate-condition.js', 'bindings/core/wasm/src/security-candidate-condition.js'],
   ['bindings/core/node/src/security-functions.js', 'bindings/core/wasm/src/security-functions.js'],
   ['bindings/core/node/src/security-protection-source.js', 'bindings/core/wasm/src/security-protection-source.js'],
   ['bindings/core/node/src/security-policy-source.js', 'bindings/core/wasm/src/security-policy-source.js'],

@@ -7,7 +7,7 @@
 use crate::{
     context::Context,
     error::EngineError,
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
 
 fn member<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
@@ -153,7 +153,7 @@ pub fn inspect_candidate_literal(
                 "PROTECTION_LITERAL_FIELD",
                 Utf16::default(),
                 "Source modules are required",
-            ))
+            ));
         }
     };
     let mut selected_field = None;
@@ -191,10 +191,14 @@ pub fn inspect_candidate_literal(
             "Selected element is not a Field",
         ));
     }
+    // Field definitions belong to the admitted source. Charge the lookup and
+    // traversal as work, and reserve the shared text ledger for literal data.
+    let source_text_limit = context.limits().max_text_units;
+    let mut source_text_units = 0;
+    literal_text_units(field, &mut source_text_units, source_text_limit, context)?;
     let mut input_text_units = 0usize;
-    literal_text_units(field, &mut input_text_units, text_limit, context)?;
     literal_text_units(value, &mut input_text_units, text_limit, context)?;
-    let engine = crate::security_parameters::core_engine()?;
+    let engine = crate::security_parameters::core_engine_ref()?;
     engine.check_schema_literal_public(source, field, value, context)?;
     let identity = if include_identity {
         Some(
@@ -1161,7 +1165,7 @@ fn disposition_field(disposition: &Value) -> &Value {
 
 #[cfg(test)]
 mod tests {
-    use super::{bounded_literal, LiteralAdmissionError};
+    use super::{LiteralAdmissionError, bounded_literal};
     use crate::{Context, Utf16, Value};
 
     #[test]

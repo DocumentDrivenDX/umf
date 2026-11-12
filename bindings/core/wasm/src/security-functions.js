@@ -19,11 +19,30 @@ export function createSecurityFunctionsEngine(execute, ErrorType = Error) {
     evaluateProtectionValue(policy, catalog, closure, selection) {
       return invoke('evaluateProtectionValue', {policy, catalog, closure, selection});
     },
+    catalogRecipe(input) { return invoke('catalogRecipe', {input}); },
     inspectCandidateLiteral(source, field, value, limits) {
       return invoke('inspectCandidateLiteral', {source, field, value, ...limits});
     },
     inspectCoreCandidateLiteral(source, field, value, limits) {
       return invoke('inspectCoreCandidateLiteral', {source, field, value, ...limits});
     },
+    compareCatalogWrite(input) {
+      return invoke('compareCatalogWrite', {input});
+    },
+    foldCatalogWriteDecisions(decisions) {
+      return invoke('foldCatalogWriteDecisions', {decisions});
+    },
+    planCatalogWriteIncidence(input) {
+      return invoke('planCatalogWriteIncidence', {input});
+    },
+    admitCatalogWriteProfiles(input) {
+      return invoke('admitCatalogWriteProfiles', {input});
+    },
+    catalogWriteReadNeeds(decisions) { return invoke('catalogWriteReadNeeds', {decisions}); },
+    resolveCatalogWriteRead(input) { return invoke('resolveCatalogWriteRead', {input}); },
+    planCatalogWriteActions(input) { return invoke('planCatalogWriteActions', {input}); },
+    validateCatalogWriteDependencies(input) { return invoke('validateCatalogWriteDependencies', {input}); },
+    admitCatalogWriteAssociations(input) { return invoke('admitCatalogWriteAssociations', {input}); },
+    validateCatalogWriteCoverage(input) { return invoke('validateCatalogWriteCoverage', {input}); },
   });
 }

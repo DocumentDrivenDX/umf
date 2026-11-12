@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import type {SqlServerFacetPredicateCandidate} from '../../src/adapters/sqlserver/facet-predicate';
+import type {SqlServerFacetPredicateCandidate} from '../../src/adapters/sqlserver/facet-predicate-types';
 /** Syntax observations only; no CHECK enforcement or core facet claim. */
 export const predicateCases: {text:string;column:string;expected:SqlServerFacetPredicateCandidate[]}[] = [
  {text:'([value]>=(-128) AND [value]<=(127))',column:'value',expected:[{kind:'bound',operator:'>=',literal:'-128'},{kind:'bound',operator:'<=',literal:'127'}]},
