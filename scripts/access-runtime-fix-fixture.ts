@@ -15,7 +15,7 @@ const admitted={
 const selected=selectedPath?JSON.parse(await readFile(selectedPath,'utf8')) as Record<string,any>:null;
 const pins=selected&&admitted[selected.id as keyof typeof admitted];
 if(selectedPath&&!pins)throw Error('Only fixed selected Access profiles are admitted');
-if(selected&&(!pins||selected.python!==pins.python||selected.version!=='0.1.0'||selected.runtimeAbi?.distribution!=='umf_access'||selected.runtimeAbi?.version!=='0.1.0.dev10'||selected.runtimeAbi?.abi!=='umf-access-runtime/0.1'||selected.runtimeDependencies?.pydantic!==pins.pydantic||selected.runtimeDependencies?.['pydantic-core']!==pins.core))throw Error('Selected profile identity or dependency pins differ');
+if(selected&&(!pins||selected.python!==pins.python||selected.version!=='0.1.0'||selected.runtimeAbi?.distribution!=='umf_access'||selected.runtimeAbi?.version!=='0.10.12'||selected.runtimeAbi?.abi!=='umf-access-runtime/0.1'||selected.runtimeDependencies?.pydantic!==pins.pydantic||selected.runtimeDependencies?.['pydantic-core']!==pins.core))throw Error('Selected profile identity or dependency pins differ');
 if(selected){
  const relative=selected.id==='umf-access-local-linux311-identity-qualification'
   ?'../python/umf_access/compatibility-profile-linux311.json'
@@ -74,7 +74,7 @@ const pinned=profile();
 pinned.id=selected?.id??'umf-access-local-production-replay';
 pinned.version=selected?.version??'0.1.0';
 pinned.python.version=pins?.python??'3.14.8';
-pinned.dependencies=[{distribution:'umf_access',version:selected?.runtimeAbi.version??'0.1.0.dev10'},...Object.entries(selected?.runtimeDependencies??{pydantic:'2.14.1'}).map(([distribution,version])=>({distribution,version:String(version)}))];
+pinned.dependencies=[{distribution:'umf_access',version:selected?.runtimeAbi.version??'0.10.12'},...Object.entries(selected?.runtimeDependencies??{pydantic:'2.14.1'}).map(([distribution,version])=>({distribution,version:String(version)}))];
 pinned.vocabularies=selectedPath?[{id:'umf.access',version:'0.1.0'},{id:'umf.binding',version:'0.2.0'}]:pinned.vocabularies;
 pinned.assertionKinds=selectedPath?['kind','nullability','Key','facets','umf.access']:pinned.assertionKinds;
 pinned.reservedNames=selectedPath?[]:pinned.reservedNames;

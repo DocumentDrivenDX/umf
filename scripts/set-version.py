@@ -54,13 +54,14 @@ def main(argv):
     for path in ["package.json", "bindings/core/node/package.json", "bindings/core/wasm/package.json"]:
         sub(path, r'^(  "version": ")' + lit + '"', r"\g<1>" + new + '"')
     members = re.findall(r'"([^"]+)"', re.search(r"members\s*=\s*\[(.*?)\]", (ROOT / "Cargo.toml").read_text(), re.S)[1])
-    for member in members:
+    bindings = ["bindings/core/node", "bindings/core/python", "bindings/core/wasm", "bindings/pack-tools/wasm"]
+    for member in members + bindings:
         sub(f"{member}/Cargo.toml", r'^(version = ")' + lit + '"', r"\g<1>" + new + '"')
     lock = ROOT / "Cargo.lock"
     text = lock.read_text()
     text, n = re.subn(r'(name = "umf-[^"]+"\nversion = ")' + lit + '"', r"\g<1>" + new + '"', text)
-    if n != len(members):
-        sys.exit(f"Cargo.lock: updated {n} workspace packages, expected {len(members)}")
+    if n != len(members) + len(bindings):
+        sys.exit(f"Cargo.lock: updated {n} workspace packages, expected {len(members) + len(bindings)}")
     lock.write_text(text)
     sub("python/pyproject.toml", r'^(version = ")' + lit + '"', r"\g<1>" + new + '"')
     sub("python/src/umf/__init__.py", r'^(__version__ = ")' + lit + '"', r"\g<1>" + new + '"')

@@ -6,7 +6,7 @@ from typing import Literal, TypedDict, cast
 
 from ._native import GenerationError, execute
 
-__version__ = "0.10.11"
+__version__ = "0.10.12"
 
 
 class RecordSelection(TypedDict):
