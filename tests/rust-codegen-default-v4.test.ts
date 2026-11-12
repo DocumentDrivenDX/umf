@@ -10,7 +10,8 @@ const source=await Bun.file(new URL('../tests/unified/commerce.json',import.meta
 test('V4 root route has closed native platform cohorts',()=>{
  expect(()=>assertPythonClientRustPlatformV4('darwin','arm64')).not.toThrow();
  expect(()=>assertPythonClientRustPlatformV4('linux','x64')).not.toThrow();
- for(const [platform,architecture] of [['darwin','x64'],['linux','arm64'],['win32','x64'],['freebsd','x64']]){
+ expect(()=>assertPythonClientRustPlatformV4('linux','arm64')).not.toThrow();
+ for(const [platform,architecture] of [['darwin','x64'],['linux','arm32'],['win32','x64'],['freebsd','x64']]){
   expect(()=>assertPythonClientRustPlatformV4(platform!,architecture!)).toThrow(/UMF_RUST_CODEGEN_UNSUPPORTED_PLATFORM/);
  }
 });

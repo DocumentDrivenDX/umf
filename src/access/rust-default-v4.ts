@@ -4,10 +4,10 @@ import type {PythonClientRequest,PythonClientResult} from './rust-candidate';
 export type PythonClientRustInitializerV4=()=>Promise<unknown>;
 export type PythonClientRustDefaultV4=(request:PythonClientRequest)=>PythonClientResult;
 
-/** Release candidate ships native archives only for the reviewed initial cohorts. */
+/** Releases ship native archives only for these cohorts (linux/arm64 is built and smoke tested by release.yml). */
 export function assertPythonClientRustPlatformV4(platform:string,architecture:string):void {
- if((platform==='darwin'&&architecture==='arm64')||(platform==='linux'&&architecture==='x64'))return;
- throw new Error(`UMF_RUST_CODEGEN_UNSUPPORTED_PLATFORM: ${platform}/${architecture}; supported cohorts are darwin/arm64 and linux/x64`);
+ if((platform==='darwin'&&architecture==='arm64')||(platform==='linux'&&(architecture==='x64'||architecture==='arm64')))return;
+ throw new Error(`UMF_RUST_CODEGEN_UNSUPPORTED_PLATFORM: ${platform}/${architecture}; supported cohorts are darwin/arm64, linux/x64 and linux/arm64`);
 }
 
 /** Await candidate initialization now so callers retain the synchronous API. */
