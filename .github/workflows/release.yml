@@ -6,7 +6,8 @@ name: release
 # and only then publishes to PyPI (trusted publishing, environment `pypi`) and creates the GitHub Release
 # with SHA256SUMS and a build-provenance attestation.
 #
-# `workflow_dispatch` is a dry run: it does everything except publish and create the release.
+# Manual runs default to build and smoke. Set dry_run=false and give an existing
+# release tag on main to publish an already locally qualified source revision.
 # The macOS arm64 runner is used here only; push and pull request CI stays Linux only.
 on:
   push:
@@ -14,9 +15,13 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Build and smoke test only; never publish (publishing is only possible from a tag push)'
+        description: 'Build and smoke test without publishing'
         type: boolean
         default: true
+      release_tag:
+        description: 'Existing umf-vX.Y.Z tag on main (required to publish manually)'
+        type: string
+        default: ''
       run_ci:
         description: 'Also run the full ci.yml test suite'
         type: boolean
@@ -36,31 +41,48 @@ jobs:
     outputs:
       version: ${{ steps.v.outputs.version }}
       tag: ${{ steps.v.outputs.tag }}
+      source: ${{ steps.v.outputs.source }}
+      publish: ${{ steps.v.outputs.publish }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
       - id: v
+        env:
+          REQUESTED_TAG: ${{ inputs.release_tag }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          version="$(python3 -c 'import json; print(json.load(open("spec/release.json"))["version"])')"
-          tag="umf-v$version"
+          publish=false
+          tag="$REQUESTED_TAG"
           if [ "$GITHUB_REF_TYPE" = tag ]; then
-            python3 scripts/check-release-versions.py --access --tag "$GITHUB_REF_NAME"
-          else
-            python3 scripts/check-release-versions.py --access --tag "$tag"
+            tag="$GITHUB_REF_NAME"
+            publish=true
+          elif [ "$DRY_RUN" = false ]; then
+            test "$GITHUB_REF" = refs/heads/main
+            test -n "$tag"
+            publish=true
           fi
+          if [ -n "$tag" ]; then
+            [[ "$tag" =~ ^umf-v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+            git fetch --no-tags origin main
+            source="$(git rev-parse --verify "refs/tags/$tag^{commit}")"
+            git merge-base --is-ancestor "$source" FETCH_HEAD
+            git checkout --detach "$source"
+          else
+            source="$(git rev-parse HEAD)"
+          fi
+          version="$(python3 -c 'import json; print(json.load(open("spec/release.json"))["version"])')"
+          tag="${tag:-umf-v$version}"
+          python3 scripts/check-release-versions.py --access --tag "$tag"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-      - name: The tag commit is on main
-        if: github.ref_type == 'tag'
-        run: |
-          git fetch --no-tags origin main
-          git merge-base --is-ancestor "$GITHUB_SHA" FETCH_HEAD
+          echo "source=$source" >> "$GITHUB_OUTPUT"
+          echo "publish=$publish" >> "$GITHUB_OUTPUT"
 
   test:
     needs: verify
-    if: github.event_name == 'push' || inputs.run_ci
+    if: github.event_name == 'push' || (inputs.run_ci && inputs.release_tag == '')
     uses: ./.github/workflows/ci.yml
     permissions:
       contents: read
@@ -104,6 +126,7 @@ jobs:
           echo /opt/python/cp311-cp311/bin >> "$GITHUB_PATH"
       - uses: actions/checkout@v4
         with:
+          ref: ${{ needs.verify.outputs.source }}
           persist-credentials: false
       - uses: actions/setup-python@v5
         if: runner.os == 'macOS'
@@ -196,6 +219,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ needs.verify.outputs.source }}
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -238,8 +262,11 @@ jobs:
 
   publish:
     needs: [verify, test, build, smoke]
-    # Only a tag push publishes. A manual run can never reach this job.
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/umf-v')
+    if: >-
+      ${{ !cancelled() && needs.verify.outputs.publish == 'true' &&
+          needs.build.result == 'success' && needs.smoke.result == 'success' &&
+          (needs.test.result == 'success' ||
+           (github.event_name == 'workflow_dispatch' && needs.test.result == 'skipped')) }}
     runs-on: ubuntu-24.04
     environment: pypi
     permissions:
@@ -283,6 +310,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ needs.verify.outputs.source }}
           persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
@@ -300,4 +328,4 @@ jobs:
           test -s notes.md || echo "UMF $VERSION" > notes.md
       - run: gh release create "$TAG" assets/* --repo "$GITHUB_REPOSITORY" --verify-tag --title "UMF $VERSION" --notes-file notes.md
       # Releases created with GITHUB_TOKEN do not start other workflows; ask for the site rebuild explicitly.
-      - run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+      - run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main -f release_tag="$TAG"
