@@ -1,0 +1,87 @@
+{
+  "phase": {
+    "profile": "umf.private-installed-constructor-phase-failure/1",
+    "actualCandidateSource": "2f0fb762c6b0dc51acfe4893c445648d074abadc",
+    "wheelSHA256": "c2c12158856be405d9d79ba4221d4dd8f201ca1db53add03f0533a94a32b02c5",
+    "nativeSHA256": "9350c88172194f0a2445ccf5236656c9d0de5bf4ed2ba405369024169cdb44ca",
+    "closureSHA256": "6478e3c40fcf56a0d7a9ac0b10163be91d245e18873c213738ea2be52674b8a1",
+    "currentInputIdentity": {
+      "resourceFixture": "tests/qualification/fixtures/inspector-installed-candidate-01011-resources.json",
+      "resourceFixtureSHA256": "91e767491951ef4a916967644ab655f3a6ce0debb8d74e65b566d8a74dbf2ca6",
+      "candidateArtifactVersion": "0.10.11",
+      "literalDataSHA256": "0280b6a6d602eac87c069e8fadf9484dbaad4089e78bfc4f5bf4b560117c92a6",
+      "generation": {
+        "sourceCommit": "dd8fce652b6cf10f3a273361a93e8f68e196fe76",
+        "sourceTree": "45e36b4835a4ed96e6023022ad3fe2e412e85353",
+        "workflowPath": ".github/workflows/merged-source-generation.yml",
+        "workflowSHA256": "b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f",
+        "runId": "43060243401",
+        "attempt": "1",
+        "jobId": "130660529072",
+        "artifactId": "13873332393",
+        "artifactDigest": "e69b452ea9786f5f718a92ccaa2a2490a50afe8e93a48ddec1b071b7c779cde5",
+        "outputManifestSHA256": "8034df65d9fc64945b24a83b84c4856e93e81de90a2e36c6f0e261e92409d697",
+        "correspondenceReceiptSHA256": "9b8428eb328e65c93e298eb491b9978377626fe39a93a6c2519a88c271579b85",
+        "finalAttestationSHA256": "a5d0ef5a1f9e204d9553af9a442a3e5ead7b068a0ec0693b16a57fe072db6b0e",
+        "compilerSHA256": "2e5a095e418dff1b063d3c395b9c2954131b9f125f046df8527abd393fabe4ff",
+        "compilerBinarySHA256": "865aaaa35ebfba2758e51906cdbc32f5731f3b37bb3555a78bb87112fcdd7f2b"
+      },
+      "scope": "private-candidate-component-only-not-release-proof"
+    },
+    "case": "default-instant",
+    "carrier": "dispatcher",
+    "maximumWork": 1000000,
+    "constructorAttemptedWork": 1000020,
+    "constructorReturnedWork": 999999,
+    "nativeObservationIncomplete": false,
+    "nativePhases": [
+      {
+        "phase": "native-installed-materialization",
+        "calls": 69342,
+        "attemptedWork": 432368,
+        "returnedWork": 432368
+      },
+      {
+        "phase": "native-installed-full-admission",
+        "calls": 81,
+        "attemptedWork": 2711,
+        "returnedWork": 2711
+      },
+      {
+        "phase": "native-core-copy",
+        "calls": 55113,
+        "attemptedWork": 242789,
+        "returnedWork": 242789
+      },
+      {
+        "phase": "native-resource-compilation",
+        "calls": 19503,
+        "attemptedWork": 322151,
+        "returnedWork": 322130
+      }
+    ],
+    "firstNativeRefusal": {
+      "phase": "native-resource-compilation",
+      "amount": 21,
+      "nativeCallback": 144039
+    }
+  },
+  "cleanup": {
+    "source": "2f0fb762c6b0dc51acfe4893c445648d074abadc",
+    "run": "43061858037",
+    "attempt": "1",
+    "ownedTargetAbsent": true,
+    "ownedConsumerAbsent": true,
+    "localSharedAdmissionUsed": false,
+    "ledgerChanged": false,
+    "signalsSent": false
+  },
+  "candidate": "2f0fb762c6b0dc51acfe4893c445648d074abadc",
+  "run": 43061858037,
+  "job": 130666272903,
+  "retainedArtifacts": {
+    "batch": 13875095961,
+    "producer": 13875255721,
+    "cleanup": 13875136000
+  }
+}

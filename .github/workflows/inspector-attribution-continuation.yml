@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   observation:
-    if: github.event_name == 'workflow_dispatch' && inputs.admitted == true
+    if: github.event_name == 'workflow_dispatch' && inputs.admitted == true && github.ref != 'refs/heads/codex/c1-8m-retained-diagnostic'
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
@@ -123,5 +123,103 @@ jobs:
         with:
           name: private-${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/${{ github.ref == 'refs/heads/codex/c1-01011-cost-observation' && 'c1-cost-observation' || 'c8-installed-observation' }}/cleanup.json
+          if-no-files-found: error
+          retention-days: 90
+  diagnostic:
+    if: github.event_name == 'workflow_dispatch' && inputs.admitted == true && github.ref == 'refs/heads/codex/c1-8m-retained-diagnostic'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      EXPECTED_CONTROLLER: ${{ inputs.controller_sha }}
+      ORIGINAL_OWNER: 2f0fb762c6b0dc51acfe4893c445648d074abadc
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+          architecture: x64
+      - name: Authenticate retained run materials and exact C1 wheel without building
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$GITHUB_REPOSITORY" = DocumentDrivenDX/umf
+          test "$GITHUB_REF" = refs/heads/codex/c1-8m-retained-diagnostic
+          test "$EXPECTED_CONTROLLER" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_CONTROLLER"
+          out="$RUNNER_TEMP/c1-8m-diagnostic"
+          owner="$RUNNER_TEMP/c1-8m-owner"
+          test ! -e "$out" && test ! -e "$owner"
+          mkdir "$out"
+          printf 'OBS_OUT=%s\nOWNER_CHECKOUT=%s\n' "$out" "$owner" >> "$GITHUB_ENV"
+          git worktree add --detach "$owner" "$ORIGINAL_OWNER"
+          python -I -B tools/intake_inspector_c1_8m_diagnostic.py intake \
+            --controller "$GITHUB_WORKSPACE" --owner "$owner" --out "$out" \
+            --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
+          printf 'RETAINED_WHEEL=%s\n' "$(python -I -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["wheelPath"])' "$out/intake.json")" >> "$GITHUB_ENV"
+      - name: Fresh normal resolver install of the exact retained wheel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv "$OBS_OUT/consumer"
+          env -u GH_TOKEN -u GITHUB_TOKEN -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_URL \
+            "$OBS_OUT/consumer/bin/python" -m pip --isolated install --no-cache-dir --no-compile \
+            --index-url https://pypi.org/simple --report "$OBS_OUT/install-report.json" \
+            --constraint "$OBS_OUT/dependency-constraints.txt" "$RETAINED_WHEEL" 'pytest==8.4.2' 'pydantic==2.14.2' \
+            2>&1 | tee "$OBS_OUT/install.log"
+          "$OBS_OUT/consumer/bin/python" -m pip --isolated check | tee "$OBS_OUT/pip-check.log"
+          "$OBS_OUT/consumer/bin/python" -m pip --isolated freeze --all > "$OBS_OUT/freeze.txt"
+      - name: One cold 8M installed constructor with independent callback totals and byte identity
+        timeout-minutes: 4
+        shell: bash
+        run: |
+          set -euo pipefail
+          env -u GH_TOKEN -u GITHUB_TOKEN -u ACTIONS_RUNTIME_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_TOKEN -u ACTIONS_ID_TOKEN_REQUEST_URL \
+            "$OBS_OUT/consumer/bin/python" -I -B tools/probe_inspector_c1_8m_diagnostic.py \
+            --controller "$GITHUB_WORKSPACE" --owner "$OWNER_CHECKOUT" --wheel "$RETAINED_WHEEL" --out "$OBS_OUT" \
+            --controller-sha "$EXPECTED_CONTROLLER" --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT" \
+            2>&1 | tee "$OBS_OUT/observation.log"
+      - name: Seal bounded diagnostic receipts
+        if: always()
+        id: retention
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I -B tools/intake_inspector_c1_8m_diagnostic.py seal --controller "$GITHUB_WORKSPACE" \
+            --owner "$OWNER_CHECKOUT" --out "$OBS_OUT" --controller-sha "$EXPECTED_CONTROLLER" \
+            --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
+      - name: Retain bounded diagnostic receipts
+        if: always() && steps.retention.outputs.bounded == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-c1-8m-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/c1-8m-diagnostic/*.json
+            ${{ runner.temp }}/c1-8m-diagnostic/*.log
+            ${{ runner.temp }}/c1-8m-diagnostic/*.txt
+            ${{ runner.temp }}/c1-8m-diagnostic/materials/*.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Dispose only this consumer and exact-source worktree
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I -B tools/intake_inspector_c1_8m_diagnostic.py cleanup --controller "$GITHUB_WORKSPACE" \
+            --owner "$OWNER_CHECKOUT" --out "$OBS_OUT" --controller-sha "$EXPECTED_CONTROLLER" \
+            --observer-run "$GITHUB_RUN_ID" --observer-attempt "$GITHUB_RUN_ATTEMPT"
+      - name: Retain owned cleanup receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-c1-8m-diagnostic-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/c1-8m-diagnostic/cleanup.json
           if-no-files-found: error
           retention-days: 90

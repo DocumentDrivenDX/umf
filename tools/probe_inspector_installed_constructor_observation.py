@@ -36,9 +36,9 @@ def encoded(value):return json.dumps(value,ensure_ascii=True,sort_keys=True,sepa
 
 class Recorder:
     """Fixed slots, bounded tail, streaming begin-order digest; no event history."""
-    def __init__(self,bounds,phases,clock=time.monotonic,progress=None):
+    def __init__(self,bounds,phases,clock=time.monotonic,progress=None,limit=LIMIT):
         require(len(phases)<=128 and len(set(phases))==len(phases) and 'unknown-metadata' in phases,'phase roster')
-        self.bounds=bounds;self.clock=clock;self.start=None;self.events=0;self.progress=progress
+        self.bounds=bounds;self.clock=clock;self.start=None;self.events=0;self.progress=progress;self.limit=limit
         self.tail=deque(maxlen=bounds['tail']);self.digest=hashlib.sha256();self.first=None;self.last=None
         self.failure=None
         try:self.start=clock()
@@ -46,6 +46,8 @@ class Recorder:
         self.terminal=False;self.denied=None;self.denied_native=None;self.stack={'status':'not-attempted'};self.stack_attempted=False
         self.streams={k:dict(count=0,positive=0,zero=0,attemptedWork=0,acceptedWork=0,acceptedCount=0) for k in ('host','native')}
         self.phases={p:dict(count=0,attemptedWork=0,acceptedWork=0) for p in phases}
+        self.hostPhases={p:dict(count=0,attemptedWork=0,acceptedWork=0) for p in phases}
+        self.activeNativePhase='unknown-metadata';self.firstHostOverLimit=None;self.firstHostOverLimitCandidate=None
     def fail(self,message):
         if self.failure is None:self.failure=message
     def begin(self,stream,args,kwargs):
@@ -64,12 +66,17 @@ class Recorder:
         if self.events>=self.bounds['events']:self.fail('observer-event-bound');return None
         if not args or type(args[0]) is not int or args[0]<0 or args[0]>2**32-1:
             self.fail('observer-invalid-amount');return None
-        amount=args[0];phase=args[1] if stream=='native' and len(args)>1 else ('host' if stream=='host' else None)
+        amount=args[0];phase=args[1] if stream=='native' and len(args)>1 else (self.activeNativePhase if stream=='host' else None)
         # Original arguments are NEVER modified; only this diagnostic label is bucketed.
         label=phase if type(phase) is str and phase in self.phases else 'unknown-metadata'
         self.events+=1;counter=self.streams[stream];counter['count']+=1
         counter['positive' if amount else 'zero']+=1;counter['attemptedWork']+=amount
         if stream=='native':self.phases[label]['count']+=1;self.phases[label]['attemptedWork']+=amount
+        else:
+            self.hostPhases[label]['count']+=1;self.hostPhases[label]['attemptedWork']+=amount
+            prior=counter['attemptedWork']-amount
+            if self.firstHostOverLimit is None and self.firstHostOverLimitCandidate is None and prior<=self.limit<prior+amount:
+                self.firstHostOverLimitCandidate={'event':self.events,'amount':amount,'priorAttemptedWork':prior,'phase':label}
         if phase is not None and (type(phase) is not str or len(phase)>256):self.fail('observer-phase-shape')
         row={'event':self.events,'stream':stream,'amount':amount,'phase':label,'phaseMetadata':phase if phase is None or type(phase)is str and len(phase)<=256 else None}
         self.digest.update(encoded(row)+b'\n');self.tail.append(row)
@@ -83,11 +90,17 @@ class Recorder:
         if row is None:return
         counter=self.streams[row['stream']];counter['acceptedWork']+=row['amount'];counter['acceptedCount']+=1
         if row['stream']=='native':self.phases[row['phase']]['acceptedWork']+=row['amount']
+        else:
+            self.hostPhases[row['phase']]['acceptedWork']+=row['amount']
+            if self.firstHostOverLimitCandidate and self.firstHostOverLimitCandidate['event']==row['event']:
+                self.firstHostOverLimit=self.firstHostOverLimitCandidate;self.firstHostOverLimitCandidate=None
     def refused(self,row,error):
         if not self.terminal:
             self.terminal=True;self.denied={'event':row,'error':error_fields(error)}
     def receipt(self):
         return {'events':self.events,'streams':self.streams,'phaseTotals':self.phases,
+                'nativePhaseTotals':self.phases,'hostPhaseTotals':self.hostPhases,
+                'firstHostOverLimit':self.firstHostOverLimit,
                 'orderedBeginStreamSHA256':self.digest.hexdigest(),'eventSerialization':'sorted ASCII JSON + LF; BEGIN order, native encloses host; returns tracked in counters only',
                 'first':self.first,'last':self.last,'denied':self.denied,'deniedNative':self.denied_native,'tail':list(self.tail),
                 'observerFailure':self.failure,'countersComplete':self.failure is None,'stack':self.stack}
@@ -175,13 +188,15 @@ class StackSnapshot:
                 'possiblyTruncated':count==self.limit,'mapping':'authenticated ELF static symbols, no DWARF or source lines'}
 
 
-def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=None):
+def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=None,maximum_work=LIMIT):
     """Diagnostics cannot replace any original delegated return or exception."""
+    # The diagnostic crossing remains the literal historical 1M threshold;
+    # the constructor's configured budget is independent.
     record=Recorder(pins['bounds'],pins['phaseNames'],clock,progress)
     old_host=compiler._host_work;old_export=native.create_installed_codegen_resources
     original_control=compiler._native_control
     counts={'hostFactories':0,'nativeExports':0,'constructorCalls':0};original_error=None;completed=False
-    observer_failure=[None];terminal_error=[None]
+    observer_failure=[None];terminal_error=[None];elapsed=None
     def latch(label):
         # Independent fixed storage; never call another fallible diagnostic to
         # report the first diagnostic failure, especially while raising Core's error.
@@ -199,7 +214,7 @@ def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=N
         if native_event and record.denied_native is None:
             record.denied_native={'event':row,'error':error_fields(error)}
     def stack_before(row):
-        if row is not None and not record.stack_attempted and row['amount']+record.streams['host']['acceptedWork']>LIMIT:
+        if row is not None and not record.stack_attempted and row['amount']+record.streams['host']['attemptedWork']>maximum_work:
             record.stack_attempted=True
             try:record.stack=stack.capture() if stack is not None else {'status':'unavailable-no-stack-backend'}
             except BaseException as error:record.stack={'status':'unavailable','errorType':type(error).__name__}
@@ -208,7 +223,7 @@ def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=N
         elif record.denied_native is None:record.denied_native={'event':row,'error':error_fields(delegate.failure)}
     def host_factory(*args,**kwargs):
         counts['hostFactories']+=1;require(counts['hostFactories']==1,'second-host-work-factory')
-        require(args==(LIMIT,None,None,None,None) and not kwargs,'changed-public-defaults')
+        require(args==(maximum_work,None,None,None,None) and not kwargs,'changed-public-defaults')
         delegate=old_host(*args,**kwargs)
         def work(*items,**named):
             row=before('host',items,named)
@@ -229,11 +244,14 @@ def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=N
             def __call__(self,*items,**named):
                 row=before('native',items,named)
                 diagnostic('observer-stack-metadata',stack_before,row)
+                previous_phase=record.activeNativePhase
+                record.activeNativePhase=row['phase'] if row is not None else 'unknown-metadata'
                 try:result=delegate(*items,**named)
                 except BaseException as error:
                     if terminal_error[0] is None:terminal_error[0]=error
                     diagnostic('observer-refused-native',refusal,row,error,True)
                     raise
+                finally:record.activeNativePhase=previous_phase
                 diagnostic('observer-completed-native',native_completion,row,delegate)
                 # Exact original result/failure, even if any preceding diagnostic
                 # failed. No tuple/error normalization and no second delegate.
@@ -244,7 +262,9 @@ def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=N
     try:
         compiler._host_work=host_factory;native.create_installed_codegen_resources=export
         counts['constructorCalls']+=1
-        compiler.CodegenEngine.from_installed(max_work=LIMIT)
+        started=time.monotonic()
+        compiler.CodegenEngine.from_installed(max_work=maximum_work)
+        elapsed=time.monotonic()-started
         completed=True
     except BaseException as error:
         original_error=error
@@ -257,7 +277,7 @@ def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=N
     value=diagnostic('observer-receipt',record.receipt)
     if value is None:
         # No fabricated counters/digest when even the diagnostic snapshot failed.
-        value={'events':None,'streams':None,'phaseTotals':None,'orderedBeginStreamSHA256':None,
+        value={'events':None,'streams':None,'phaseTotals':None,'nativePhaseTotals':None,'hostPhaseTotals':None,'firstHostOverLimit':None,'orderedBeginStreamSHA256':None,
                'first':None,'last':None,'denied':None,'deniedNative':None,'tail':[],
                'observerFailure':None,'countersComplete':False,'stack':{'status':'unknown-diagnostic-failure'}}
     summary=diagnostic('observer-error-summary',error_fields,original_error) if original_error is not None else None
@@ -266,15 +286,18 @@ def observe_once(compiler,native,pins,stack=None,clock=time.monotonic,progress=N
         baseline=pins['baseline'];host=value['streams']['host'];denied=value['denied']
         amount=denied['event']['amount'] if denied and denied['event'] else None
         return host['acceptedWork']==baseline['acceptedHostWork'] and host['attemptedWork']==baseline['attemptedHostWork'] and amount==baseline['refusedCharge']
-    matches=diagnostic('observer-baseline-comparison',comparison) if value['streams'] is not None else False
+    compare_baseline=pins.get('compareBaseline',True)
+    matches=(diagnostic('observer-baseline-comparison',comparison)
+             if value['streams'] is not None and compare_baseline else None)
     if value.get('observerFailure') is not None:latch(value['observerFailure'])
     failure=observer_failure[0]
-    value.update(profile=PROFILE,inputProfile='installed-canonical/1',maximumWork=LIMIT,
+    value.update(profile=PROFILE,inputProfile='installed-canonical/1',maximumWork=maximum_work,
         counts=counts,constructorCompleted=completed,error=summary,observerFailure=failure,
+        elapsedSeconds=elapsed if completed else None,elapsedInstrumentation='monotonic clock; host/native callback instrumentation active',
         countersComplete=value['countersComplete'] and failure is None,
         status='failed-observation' if failure is not None else ('constructor-completed-unqualified' if completed else 'constructor-refused'),
         hostAuthoritative=True,nativeSubsetNotAdditive=True,publishable=False,readyForEnrollment=False,
-        baselineComparison={'totalsMatch':failure is None and matches is True,
+        baselineComparison={'enabled':compare_baseline,'totalsMatch':(failure is None and matches is True) if compare_baseline else None,
             'originalPhaseSequenceCounts':'UNRECORDED; no equality claim','newRunOnlyDigest':True})
     return value
 

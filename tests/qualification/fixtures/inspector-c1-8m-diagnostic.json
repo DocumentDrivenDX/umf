@@ -1,0 +1,232 @@
+{
+  "artifacts": {
+    "cleanup": {
+      "bytes": 303,
+      "id": 13875136000,
+      "members": [
+        "cleanup.json"
+      ],
+      "name": "private-inspector-construction-batch-cleanup-43061858037-1",
+      "sha256": "c55aa332fdf12b7f4c0d99932016bba2aafd730562675d6993a5b9671503e095"
+    },
+    "early": {
+      "bytes": 35938853,
+      "id": 13875255721,
+      "members": [
+        "wheels/umf_core-0.10.11-cp311-abi3-linux_x86_64.whl",
+        "producer.json",
+        "source-inputs.tar",
+        "source-and-payload.json",
+        "build.log",
+        "rustc.txt",
+        "cargo.txt",
+        "cargo-metadata.json",
+        "producer-cargo-features.txt"
+      ],
+      "name": "private-inspector-early-producer-43061858037-1",
+      "sha256": "c27d43a27ffa964ecabac9accf3f7ece8381349d9ed87db1508f8e86450d3e93"
+    },
+    "result": {
+      "bytes": 36004174,
+      "id": 13875095961,
+      "members": [
+        "build-tools.log",
+        "build.log",
+        "admission-precharge-pure.log",
+        "candidate-binding-pure.log",
+        "cargo-metadata.json",
+        "cargo.txt",
+        "census-pure.log",
+        "combined-pure.log",
+        "constructor-phase-failure.json",
+        "control-pure.log",
+        "cost-census-pure.log",
+        "cost-driver.log",
+        "cost-gate.json",
+        "dependency-constraints.txt",
+        "factory-boundary-pure.log",
+        "factory-controller-pure.log",
+        "factory-facade-pure.log",
+        "factory-data-pure.log",
+        "freeze.txt",
+        "identity-cost-after.json",
+        "identity-cost-before.json",
+        "identity-producer-before-rust.json",
+        "install-report.json",
+        "install.log",
+        "installed-record-cost-before.json",
+        "installed-record-cost-after.json",
+        "installed-record-producer-before-rust.json",
+        "lanes-pure.log",
+        "measurement.json",
+        "metaschema-data-pure.log",
+        "operation-data-pure.log",
+        "owned-plan-pure.log",
+        "owner-cursors-pure.log",
+        "pip-check.log",
+        "producer-cargo-features.txt",
+        "producer.json",
+        "public-probe.log",
+        "rustc.txt",
+        "source-and-payload.json",
+        "source-inputs.tar",
+        "stage-budget-cost.json",
+        "stage-budget-install.json",
+        "stage-budget-producer.json",
+        "wheel-bounds-pure.log",
+        "wheels/umf_core-0.10.11-cp311-abi3-linux_x86_64.whl"
+      ],
+      "name": "private-inspector-construction-batch-43061858037-1",
+      "sha256": "8cec65ba09d12a81f1c9d8bb9fa5c204ee7a3a65366806b2e627c061416a8f13"
+    }
+  },
+  "bounds": {
+    "events": 8000000,
+    "partialBytes": 16777216,
+    "partialMembers": 100,
+    "receiptBytes": 8388608,
+    "seconds": 180,
+    "stackPCs": 64,
+    "tail": 64
+  },
+  "cleanupSHA256": "fdc503aecf173fdc7929c6638e0d1dfe1cb5b1610dbafba05a8a4c46211739c3",
+  "failure": {
+    "attemptedWork": 1000020,
+    "carrier": "dispatcher",
+    "constructorPhaseFailureSHA256": "ec90e9faf1ff9c17f2bba671d0d32dd201e427a0077c884981f34ba3bf8f18d5",
+    "firstCase": "default-instant",
+    "installedFilesUnchanged": false,
+    "maximumWork": 1000000,
+    "nativeCallback": 144039,
+    "nativeObservationIncomplete": false,
+    "nativePhases": [
+      {
+        "attemptedWork": 432368,
+        "calls": 69342,
+        "phase": "native-installed-materialization",
+        "returnedWork": 432368
+      },
+      {
+        "attemptedWork": 2711,
+        "calls": 81,
+        "phase": "native-installed-full-admission",
+        "returnedWork": 2711
+      },
+      {
+        "attemptedWork": 242789,
+        "calls": 55113,
+        "phase": "native-core-copy",
+        "returnedWork": 242789
+      },
+      {
+        "attemptedWork": 322151,
+        "calls": 19503,
+        "phase": "native-resource-compilation",
+        "returnedWork": 322130
+      }
+    ],
+    "phase": "native-resource-compilation",
+    "refusalAmount": 21,
+    "requestCustodyPreserved": false,
+    "returnedWork": 999999,
+    "status": "resource-limited"
+  },
+  "parent": {
+    "attempt": 1,
+    "event": "workflow_dispatch",
+    "id": 43061858037,
+    "jobConclusion": "failure",
+    "jobID": 130666272903,
+    "jobLabel": "ubuntu-24.04",
+    "jobName": "feasibility",
+    "repository": "DocumentDrivenDX/umf",
+    "repositoryId": 1382276802,
+    "repositoryOwnerId": 273466046,
+    "runConclusion": "failure",
+    "runUrl": "https://github.com/DocumentDrivenDX/umf/actions/runs/43061858037"
+  },
+  "parentIdentity": {
+    "afterSHA256": "a86e3a2c69ff3849f62b65a86d6a7e912058b96300bf3ef203a8d45592db4ddd",
+    "beforeSHA256": "a86e3a2c69ff3849f62b65a86d6a7e912058b96300bf3ef203a8d45592db4ddd",
+    "identical": true,
+    "recordAfterSHA256": "5797148e5a08898d82d1f4cabc67fb3bb5ced7ef5760c183107ef710dc4d4bae",
+    "recordBeforeSHA256": "5797148e5a08898d82d1f4cabc67fb3bb5ced7ef5760c183107ef710dc4d4bae"
+  },
+  "phaseFailurePath": "constructor-phase-failure.json",
+  "phaseObservation": "Native callback phase totals from retained run; new diagnostic independently records host and native totals.",
+  "producer": {
+    "cargoLockSHA256": "3db26195900ae4c32550174037c569b5b58b51092b654718327a758a8f33f1ad",
+    "censusSHA256": "81cd4911bf3f00345a4f5682502c7348d5f454e6ea86e242a97c176e30749f7e",
+    "currentInputIdentity": {
+      "candidateArtifactVersion": "0.10.11",
+      "generation": {
+        "artifactDigest": "e69b452ea9786f5f718a92ccaa2a2490a50afe8e93a48ddec1b071b7c779cde5",
+        "artifactId": "13873332393",
+        "attempt": "1",
+        "compilerBinarySHA256": "865aaaa35ebfba2758e51906cdbc32f5731f3b37bb3555a78bb87112fcdd7f2b",
+        "compilerSHA256": "2e5a095e418dff1b063d3c395b9c2954131b9f125f046df8527abd393fabe4ff",
+        "correspondenceReceiptSHA256": "9b8428eb328e65c93e298eb491b9978377626fe39a93a6c2519a88c271579b85",
+        "finalAttestationSHA256": "a5d0ef5a1f9e204d9553af9a442a3e5ead7b068a0ec0693b16a57fe072db6b0e",
+        "jobId": "130660529072",
+        "outputManifestSHA256": "8034df65d9fc64945b24a83b84c4856e93e81de90a2e36c6f0e261e92409d697",
+        "runId": "43060243401",
+        "sourceCommit": "dd8fce652b6cf10f3a273361a93e8f68e196fe76",
+        "sourceTree": "45e36b4835a4ed96e6023022ad3fe2e412e85353",
+        "workflowPath": ".github/workflows/merged-source-generation.yml",
+        "workflowSHA256": "b54068851dfdbeb6d35aaf528154b0e4d915376d5a026f45cfff2f4416e9ca1f"
+      },
+      "literalDataSHA256": "0280b6a6d602eac87c069e8fadf9484dbaad4089e78bfc4f5bf4b560117c92a6",
+      "resourceFixture": "tests/qualification/fixtures/inspector-installed-candidate-01011-resources.json",
+      "resourceFixtureSHA256": "91e767491951ef4a916967644ab655f3a6ce0debb8d74e65b566d8a74dbf2ca6",
+      "scope": "private-candidate-component-only-not-release-proof"
+    },
+    "dependencies": {
+      "Pygments": "2.21.0",
+      "annotated-types": "0.8.0",
+      "iniconfig": "2.3.1",
+      "packaging": "26.3",
+      "pluggy": "1.7.0",
+      "pydantic": "2.14.2",
+      "pydantic_core": "2.50.2",
+      "pytest": "8.4.2",
+      "typing-inspection": "0.4.4",
+      "typing_extensions": "4.16.0"
+    },
+    "sha256": "86bbf2c57e2d8b238af1e11316e8bc7bd944561ddbb5e65f312e6fc511d1c084",
+    "sourceInputsTarBytes": 12482560,
+    "sourceInputsTarSHA256": "6a0488152c5ca9a7db34d5acec22081d1d89175f7b48470b26cd7df19884a305",
+    "sourcePayloadSHA256": "b8461f1208152c1189d979d4c917f4b38e44041fb0e1b50d9788ff1bf9990779"
+  },
+  "profile": "umf.private-c1-8m-diagnostic-inputs/1",
+  "retainedMaterials": {
+    "CUSTODY.json": "d9613164b2b4052241d72939c4613849927cf616ef0be6f7ad2931d507cc7385",
+    "artifacts.json": "5ab8ca09d17e6348f58b91b1c8e11d735bf5ae40e64a5be76abafdcfd2111ba5",
+    "jobs.json": "9266b917a3d82a8f7c3a579b12a550b1dae7303320f5bca8b628deb17b8c8256",
+    "run.json": "2041de71b5ed18cb4a86c590f7c358255503f79c8889e971a48a6cc47a200584"
+  },
+  "runtimeBranch": "codex/core-cold-constructor-01011",
+  "runtimeSource": "2f0fb762c6b0dc51acfe4893c445648d074abadc",
+  "runtimeTree": "9f400b8706cc6f5ca38532cb67fad00eea3477a4",
+  "runtimeWorkflowId": 406353585,
+  "runtimeWorkflowPath": ".github/workflows/inspector-retained-attribution.yml",
+  "stack": {
+    "ELFmachine": 62,
+    "ELFtype": 3,
+    "enabled": true,
+    "nativeBytes": 58507304,
+    "nativeSHA256": "9350c88172194f0a2445ccf5236656c9d0de5bf4ed2ba405369024169cdb44ca",
+    "sectionHeaders": 33,
+    "symtabBytes": 1520712,
+    "symtabEntries": 63363
+  },
+  "terminalCustodySHA256": "69f92d370a60e0b875302ef68d50426657ab5b075e9a894deeab39132a87c21a",
+  "wheel": {
+    "bytes": 34645206,
+    "filename": "umf_core-0.10.11-cp311-abi3-linux_x86_64.whl",
+    "nativeMember": {
+      "path": "umf/_rust_core.abi3.so",
+      "sha256": "9350c88172194f0a2445ccf5236656c9d0de5bf4ed2ba405369024169cdb44ca"
+    },
+    "sha256": "c2c12158856be405d9d79ba4221d4dd8f201ca1db53add03f0533a94a32b02c5"
+  }
+}
