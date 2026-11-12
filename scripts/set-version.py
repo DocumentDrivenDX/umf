@@ -3,7 +3,7 @@
 
     python scripts/set-version.py 0.10.12 [--no-regenerate]
 
-Edits the version strings, then regenerates the outputs that embed digests of them
+Edits the version strings (use Python 3.10 or newer), then regenerates the outputs that embed digests of them
 (metamodel, action runtime resources, codegen resources, action plan identity).
 Afterwards run `python scripts/check-release-versions.py --access` and `bun scripts/metamodel/build.ts --check`.
 The document/core format version (spec/release.json coreVersion) is not touched.
@@ -80,7 +80,11 @@ def main(argv):
     sub("python/umf_access/pyproject.toml", r'"umf-core(?:==[^"]+|>=[^"]+)"', f'"umf-core>={new},<{series.split(".")[0]}.{int(series.split(".")[1]) + 1}"')
     if "--no-regenerate" in argv:
         return
+    # Order matters: the metamodel outputs embed a digest of the sources, the codegen literals embed the outputs,
+    # and the manifest records the literals file (which is excluded from the compiler digest).
     for command in [
+        ["bun", "scripts/metamodel/build.ts"],
+        [sys.executable, "tools/generate_codegen_resource_literals.py"],
         ["bun", "scripts/metamodel/build.ts"],
         [sys.executable, "scripts/action-runtime-resources.py"],
         [sys.executable, "scripts/sync-codegen-resources.py", "--write"],
