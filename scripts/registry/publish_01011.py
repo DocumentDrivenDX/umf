@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Transport and publish the reviewed 0.10.11 registry archives."""
+"""Transport and publish reviewed UMF registry archives."""
 from __future__ import annotations
 
 import argparse
@@ -42,26 +42,36 @@ def digest(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def admission(registry):
-    path = ADMISSIONS / f"admit-01011-{registry}.json"
+def release_admission(registry, version):
+    require(SEMVER.fullmatch(version), "Invalid UMF version")
+    path = (ADMISSIONS / f"admit-01011-{registry}.json" if version == VERSION else
+            ADMISSIONS / f"admit-{version}-{registry}.json")
     value = json.loads(path.read_text())
-    require(value["source"] == SOURCE and value["version"] == VERSION, "Incorrect release admission")
+    require(value["version"] == version and re.fullmatch(r"[a-f0-9]{40}", value["source"]),
+            "Incorrect release admission")
+    if version == VERSION:
+        require(value["source"] == SOURCE, "Incorrect 0.10.11 source")
     records = value["archives"]
     require(records and len({record["file"] for record in records}) == len(records),
             "Missing or duplicate admitted archive")
     if registry == "npm":
         require([(r["name"], r["version"], r["file"]) for r in records] ==
-                [(NPM_NAME, VERSION, NPM_ARCHIVE)], "Incorrect npm package identity")
+                [(NPM_NAME, version, f"documentdrivendx-umf-core-{version}.tgz")],
+                "Incorrect npm package identity")
     else:
-        require(records[-1]["name"] == "umf-core" and records[-1]["version"] == VERSION,
-                "The final admitted crate must be umf-core 0.10.11")
+        require(records[-1]["name"] == "umf-core" and records[-1]["version"] == version,
+                f"The final admitted crate must be umf-core {version}")
         for r in records:
             require(CRATE_NAME.fullmatch(r["name"]) and SEMVER.fullmatch(r["version"]) and
                     r["file"] == f'{r["name"]}-{r["version"]}.crate', "Incorrect crate identity")
     for r in records:
         require(SHA256.fullmatch(r["sha256"]) and type(r["bytes"]) is int and r["bytes"] > 0,
                 "Incorrect archive digest or size")
-    return records
+    return value
+
+
+def admission(registry):
+    return release_admission(registry, VERSION)["archives"]
 
 
 def gh_api(resource, *, binary=False, output=None):
@@ -76,12 +86,25 @@ def check_archive(path, record):
             and digest(path) == record["sha256"], f"Archive differs from admission: {path.name}")
 
 
-def stage(records, directory, release_id):
+def verify_release_tag(version, source):
+    root = f"repos/{REPO}/git"
+    target = json.loads(gh_api(f"{root}/ref/tags/umf-v{version}"))["object"]
+    if target["type"] == "tag":
+        target = json.loads(gh_api(f'{root}/tags/{target["sha"]}'))["object"]
+    require(target["type"] == "commit" and target["sha"] == source,
+            "Public release tag differs from admission")
+
+
+def stage(records, directory, release_id, *, version=VERSION, source=SOURCE):
     require(release_id.isascii() and release_id.isdecimal(), "Supply the numeric GitHub draft release ID")
+    staging_tag = STAGING_TAG
+    if version != VERSION:
+        verify_release_tag(version, source)
+        staging_tag = f"umf-registry-v{version}"
     root = f"repos/{REPO}/releases"
     release = json.loads(gh_api(f"{root}/{release_id}"))
-    require(release["tag_name"] == STAGING_TAG and release["draft"] is True
-            and release["target_commitish"] == SOURCE, "Unexpected registry staging release")
+    require(release["tag_name"] == staging_tag and release["draft"] is True
+            and release["target_commitish"] == source, "Unexpected registry staging release")
     directory.mkdir()
     for record in records:
         matches = [asset for asset in release["assets"] if asset["name"] == record["file"]]
@@ -237,11 +260,13 @@ def main():
     parser.add_argument("registry", choices=("npm", "crates"))
     parser.add_argument("--directory", type=Path, default=Path("registry-candidates"))
     parser.add_argument("--release-id")
+    parser.add_argument("--version", default=VERSION)
     args = parser.parse_args()
-    records = admission(args.registry)
+    qualified = release_admission(args.registry, args.version)
+    records = qualified["archives"]
     if args.command == "stage":
         require(args.release_id, "Supply --release-id")
-        stage(records, args.directory, args.release_id)
+        stage(records, args.directory, args.release_id, version=args.version, source=qualified["source"])
         return
     visible = npm_visible if args.registry == "npm" else crate_visible
     payloads = {}
