@@ -10,6 +10,7 @@ on:
   schedule:
     - cron: '17 5 * * *'
   workflow_dispatch:
+  workflow_call:
 
 concurrency:
   # One group per trigger, so a nightly/manual run is not cancelled by a push to the same branch.
@@ -202,11 +203,44 @@ jobs:
       - working-directory: python/umf_access_generated_executor
         run: PYTHONPATH=src python -m unittest discover -s tests
 
+  # The quarantined files, informationally (they are expected to fail; see scripts/known-failures.txt).
+  quarantine:
+    if: github.workflow == 'ci' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    needs: native-addon
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
+      - run: bun install --frozen-lockfile
+      - uses: actions/cache/restore@v4
+        with:
+          path: bindings/core/node/umf_core_node.node
+          key: umf-core-node-addon-${{ runner.os }}-${{ hashFiles('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'crates/**/*.rs', 'crates/**/Cargo.toml', 'bindings/core/node/Cargo.toml', 'bindings/core/node/build.rs', 'bindings/core/node/src/**/*.rs') }}
+          fail-on-cache-miss: true
+      - name: Quarantined Bun test files (shard ${{ matrix.shard }} of 4)
+        continue-on-error: true
+        run: bun scripts/run-tests.ts --jobs 2 --keep-going --only-file scripts/known-failures.txt --shard ${{ matrix.shard }}/4
+
   # Slow suites: the full Bun inventory, browsers, WASM/SDK packaging, every Rust test.
   nightly:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    # Not when release.yml calls this workflow (github.workflow is then the caller's name).
+    if: github.workflow == 'ci' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-24.04
-    timeout-minutes: 150
+    # The full Bun inventory (every file, including the slow ones) takes several hours on one 4-vCPU runner.
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
         with:
@@ -250,10 +284,6 @@ jobs:
       - name: Every Bun test file except the quarantined ones
         if: ${{ !cancelled() }}
         run: bun scripts/run-tests.ts --jobs 4 --keep-going --exclude-file scripts/known-failures.txt
-      - name: Quarantined Bun test files (informational, see scripts/known-failures.txt)
-        if: ${{ !cancelled() }}
-        continue-on-error: true
-        run: bun scripts/run-tests.ts --jobs 4 --keep-going --only-file scripts/known-failures.txt
       - name: Browser suites
         if: ${{ !cancelled() }}
         run: |
