@@ -219,3 +219,5 @@ tests/binding/postgresql-indexes.test.ts
 tests/domain-packs/download.test.ts
 # needs the action test prerequisites (owned PostgreSQL + spawned command process), prepared by test:prepare in the nightly job
 tests/actions-reference/process-recovery.test.ts
+# Passes in the nightly job: its tests take 30-130 s each on the PR job's addon and the last one exceeds the 120 s per-test timeout.
+tests/security/protection/policy-v2.test.ts
