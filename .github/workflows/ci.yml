@@ -165,9 +165,6 @@ jobs:
       # the ones that currently fail and are quarantined (see the PR description).
       - name: Tests (shard ${{ matrix.shard }} of 24)
         run: bun scripts/run-tests.ts --jobs 2 --keep-going --exclude-file scripts/slow-tests.txt --exclude-file scripts/known-failures.txt --shard ${{ matrix.shard }}/24
-      - name: Quarantined files (TEMPORARY triage run)
-        continue-on-error: true
-        run: bun scripts/run-tests.ts --jobs 2 --keep-going --only-file scripts/known-failures.txt --shard ${{ matrix.shard }}/24
 
   python:
     runs-on: ubuntu-24.04
