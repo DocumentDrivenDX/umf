@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {expectAccessorRefusal} from '../core/admission-refusal';
 import {expect,test} from 'bun:test';
 import {bindingRegistry,copyJson,getBinding,inspectBinding,migrateBindingRelationships,readBindingDocument,rollbackBindingRelationships,writeBindingDocument,type Document} from '../../src/index-node-v4';
 import {bindingMigrationCase} from '../../scripts/binding/stable-ids-cases';
@@ -59,10 +60,10 @@ test('public binding inspection refuses mismatched profiles and accessors withou
  expect(inspectBinding(binding,logical).valid).toBe(false);
  let calls=0;const evil=bindingMigrationCase().binding;
  Object.defineProperty(evil,'extensions',{enumerable:true,get(){calls++;throw Error('executed');}});
- expect(inspectBinding(evil,logical).valid).toBe(false);expect(()=>getBinding(evil,logical)).toThrow();expect(calls).toBe(0);
+ expectAccessorRefusal(()=>inspectBinding(evil,logical));expect(()=>getBinding(evil,logical)).toThrow();expect(calls).toBe(0);
  const model=bindingMigrationCase().logical;
  Object.defineProperty(model,'id',{enumerable:true,get(){calls++;throw Error('executed');}});
- expect(inspectBinding(bindingMigrationCase().binding,model).valid).toBe(false);expect(calls).toBe(0);
+ expectAccessorRefusal(()=>inspectBinding(bindingMigrationCase().binding,model));expect(calls).toBe(0);
 });
 
 test('published migration/receipt/rollback schema validates full retained representation and rejects missing content',async()=>{

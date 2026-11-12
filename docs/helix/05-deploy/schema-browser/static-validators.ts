@@ -4,7 +4,7 @@ import standalone from 'ajv/dist/standalone';
 import {_} from 'ajv/dist/compile/codegen';
 import {_Code} from 'ajv/dist/compile/codegen/code';
 import {generateDomainPackSchema} from '../../../../src/domain-packs/schema';
-import {generateDomainPackLoaderSchema} from '../../../../src/domain-packs/loader';
+import {generateDomainPackLoaderSchema} from '../../../../src/index-node-v4';
 import {generateArtifactCollectionSchema} from '../../../../src/domain-packs/artifacts';
 import {resolve} from 'node:path';
 export async function staticValidators(output:string){

@@ -1,292 +1,266 @@
-# Bun test files that failed on the Linux runner with an assertion or error (not a timeout) after the
-# merged Rust-port commit. They are skipped by the PR job and run, informationally, by the nightly
-# job ("Known failures"). Each needs triage; remove a line when its file passes. The reason shown is the
-# first error line of the first failing test, not a diagnosis.
+# Bun test files that fail on Linux after the Rust port (#143) and are skipped by the PR job. They run
+# informationally in the nightly job. Each entry is a possible regression of public behaviour, not a stale or
+# environment-bound test (those were fixed, deleted or moved to scripts/slow-tests.txt): the reason is the a
+# failing assertion or error, tagged with the likely shared cause. Fix the behaviour (or, where the new behaviour is
+# intended, the test) and remove the line.
 
-# assertion failure
+# malformed guard versions return source-qualified errors: expected "/rows/0/guard/version", got "" @ or).toBeInstanceOf(api.UmfError);expect((error as api.UmfError).code).toBe('LIMIT');expect((error as
 tests/actions-manifest-construction.test.ts
-# assertion failure
+# [bounds] validateBulkOutcome accepts an output entity key whose module is 129 emoji (expected valid=false, got true)
 tests/actions-manifest.test.ts
-# error: Independent strict JSON expectation failed: depth64
+# [admission-throws] retain_unknown: source retained and relevant unknown blocks,: UmfError: Artifact digest mismatch
 tests/actions-plan.test.ts
-# assertion failure
+# duplicate registration refuses; unrelated registry semantic : expected false, got true @ assessAction(source,id,completeProfile(source),r).declaredCompatible).toBe(false);
 tests/actions/api.test.ts
-# assertion failure
+# : complete exact snapshot comparison never proves execution: assertion fails @ ]!.obligations.map(({id,path,kind,status})=>({id,path,kind,status}))).toEqual(expectedObligations);
 tests/actions/assessment.test.ts
-# error: known-role-declaration: completeness differs
+# language-neutral declaration corpus: known-role-declaration completeness differs
 tests/actions/corpus.test.ts
-# assertion failure
+# [validation-missing] strict reference admission no longer throws for a key expression with component input 'id-value' (expected a throw)
 tests/actions/interpreter.test.ts
-# assertion failure
+# US-016-AC9: IPC file/stream boundaries agree with native PyA: expected false, got true @ t(captureArrowIpc(input,{id:'bad'}));expect(result.bytesAccountedFor).toBe(false);expect(result.diag
 tests/arrow/ipc-layout.test.ts
-# UmfError: Native schema decoding changed captured logical metadata
-tests/arrow/ipc.test.ts
-# UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severit
+# [avro-semantics-unchecked] US-007-AC7: explicit ordered dependencies resolve native nam: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked
 tests/avro/bundle.test.ts
-# UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severit
+# [avro-semantics-unchecked] US-007-AC6: pinned Apache schema corpus survives with per-fi: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked
 tests/avro/corpus.test.ts
-# UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severit
+# [avro-semantics-unchecked] CONTRACT-007 native syntax schema describes every schema con: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked
 tests/avro/native-schema.test.ts
-# assertion failure
+# [avro-semantics-unchecked] US-007-AC2: precise long defaults and newer union defaults r: expected true, got false @ mportAvroSchema(simple,{id:'edit'});expect(inspectAvro(doc).complete).toBe(true);
 tests/avro/native.test.ts
-# assertion failure
+# [avro-semantics-unchecked] editing an Avro temporal annotation no longer throws 'All present semantics...' (expected a throw)
 tests/avro/temporal-metadata.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
+# [unknown-facets] an unknown logical facet no longer makes inspectBinding(...).complete false (expected false, got true)
 tests/binding-uuid.test.ts
-# AdmissionError: Unsupported JavaScript value type: undefined
+# [admission-throws] : invalid index kind combinations and paths fail: AdmissionError: Unsupported JavaScript value type: undefined
 tests/binding/indexes.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/binding/stable-ids.test.ts
-# error: count_copy:{"op":"literal","value":{"decimalToken":"-0e999999999999999999999999"}} [{"code":"
+# [validation-missing] invalid table operation declarations are accepted: expected diagnostic TABLES_OPERATION_GENERATED, got none
 tests/binding/table-operations.test.ts
-# assertion failure
+# fixed query declared scope and derived frame identities are : expected false, got true @ tate(command(d));const i=inspectTableLifecycle(d);expect(i.complete).toBe(false);
 tests/binding/table-query.test.ts
-# UmfError: Source structural limit exceeded
+# [limits] catalog opt-in retains the ordinary profile and restores it : UmfError: Source structural limit exceeded
 tests/catalog-resource-profile.test.ts
-# assertion failure
+# semantic work exhaustion no longer refuses: returns 900+ 'Existing definition or unsupported structure differs' diagnostics instead
 tests/core-evolution.test.ts
-# assertion failure
+# [rust-panic] Rust panics at crates/umf-core/src/cardinality_parquet_projection.rs:610 (Option::unwrap on None) and aborts the process (exit 134)
 tests/core-ideals/cardinality-parquet-projection.test.ts
-# assertion failure
+# qualified catalog result differs from the expected value (toEqual at cardinality-postgresql-catalog.test.ts:26)
 tests/core-ideals/cardinality-postgresql-catalog.test.ts
-# UmfError: 3
+# fixed bounds preserve lower-bound losses and refuse impossib: UmfError: 3
 tests/core-ideals/facets-avro-projection.test.ts
-# UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severit
+# [avro-semantics-unchecked] original source texts, dependency order, unknown numeric tok: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked
 tests/core-ideals/facets-avro.test.ts
-# UmfError: Parser response does not match the ordered prepared CHECK requests
+# native carriers and qualified predicates classify width, dec: UmfError: Parser response does not match the ordered prepared CHECK requests
 tests/core-ideals/facets-postgresql.test.ts
-# assertion failure
+# diagnostics mirror disclosed loss and legacy receipts still : assertion fails @ Path='/tampered';expect(()=>recoverFieldFromTableSpec(legacy,native)).toThrow('does not match');
 tests/core-ideals/field-tablespec-projection.test.ts
-# assertion failure
+# missing authors, stale tuples, absent membership, invalid na: expected "blocked", got "projected" @ ojectKeysToAvro(c.source,c.authors,{...c.request,recordName}).status).toBe('blocked');
 tests/core-ideals/key-avro-projection.test.ts
-# assertion failure
+# named dependency archives and unknown document content recov: assertion fails @ unknown as typeof r;expect(recoverAvroKeySource(saved,saved.target!)).toEqual(nativeSource);}
 tests/core-ideals/key-avro.test.ts
-# assertion failure
+# missing or stale authors, changed tuples, ownership conflict: assertion fails @ c.source,c.authors,c.request);expect(exportParquetCapture(r.target!)).toEqual(new Uint8Array(await B
 tests/core-ideals/key-parquet-projection.test.ts
-# assertion failure
+# correlation refuses wrong column type: assertion fails @ latePostgresqlKeyCatalog(source(),JSON.stringify(s),backend)).rejects.toThrow();});
 tests/core-ideals/key-postgresql-correlation.test.ts
-# UmfError: Value does not match the pinned projection schema
+# SQL Server authored keys: family-conflict: UmfError: Value does not match the pinned projection schema
 tests/core-ideals/key-sqlserver-projection.test.ts
-# UmfCoreError: Parsing would change the decimal value
+# [number-profile] unknown native numeric lexemes and core extensions remain un: UmfCoreError: Parsing would change the decimal value
 tests/core-ideals/key-sqlserver.test.ts
-# assertion failure
+# rejects missing, duplicate, forged, mismatched and stale aut: assertion fails @ ther';expect(()=>projectKeysToTableSpec(foreign,c.authors,c.request)).toThrow('author identity');
 tests/core-ideals/key-tablespec-projection.test.ts
-# UmfError: wrongly indented line in block scalar at line 3583, column 5:
+# [yaml-roundtrip] catalog composites expose ordered fields without formatted-t: UmfError: wrongly indented line in block scalar at line 3583, column 5:
 tests/core-ideals/postgresql-composite.test.ts
-# assertion failure
+# declared empty, nested, recursive and dependency records ret: assertion fails @ ypeof result;expect(recoverAvroRecordBundle(receipt,receipt.target!)).toEqual({schema:c.schema,depen
 tests/core-ideals/record-avro.test.ts
-# UmfError: SchemaElement parameters outside the candidate view are present
+# Parquet root records keep ordered value slots separate from : UmfError: SchemaElement parameters outside the candidate view are present
 tests/core-ideals/record-parquet.test.ts
-# UmfError: wrongly indented line in block scalar at line 2209, column 5:
+# [yaml-roundtrip] qualified relations remain distinct records and only selecte: UmfError: wrongly indented line in block scalar at line 2209, column 5:
 tests/core-ideals/record-postgresql.test.ts
-# UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severit
+# [avro-semantics-unchecked] Avro relationship classification: unresolved-named-type: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked; sem
 tests/core-ideals/relationship-avro.test.ts
-# assertion failure
+# [yaml-roundtrip] YAML writer emits a block scalar without an indentation indicator, so a string with leading spaces reads back changed (data loss)
 tests/core/core.test.ts
-# UmfCoreError: Schema evaluation depth exceeded
+# [limits] deep unknown native content survives TableSpec receipt verif: UmfCoreError: Schema evaluation depth exceeded
 tests/core/deep-json-equality.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/core/field-ideals.test.ts
-# UmfCoreError: Number outside the core interoperable numeric profile
+# [number-profile] decimal admission uses exact binary value rather than shorte: UmfCoreError: Number outside the core interoperable numeric profile
 tests/core/javascript-numeric.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
+# [admission-throws] validateDocument throws AdmissionError 'JSON nesting exceeds the admission limit' where a diagnostic result is expected
 tests/core/key-ideals.test.ts
-# assertion failure
+# US-024-AC4: explicit YAML 1.1 preserves underscored boundari: expected "{"max":9223372036854775807,"min":-922337203685477, got "{"max":"9_223_372_036_854_775_807","min":"-9_223_ @ expect(renderTree(parseNativeYaml(text,{version:'1
 tests/core/native-json.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/core/nullability-ideals.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
+# [number-profile] validateRelationshipCandidate throws UmfError 'Number outside the core interoperable numeric profile' where diagnostics[0].code 'NUMBER' is expected
 tests/core/relationship-ideal.test.ts
-# assertion failure
+# single exclusive bounds reject integer and decimal domain ex: expected false, got true @ expect(validateDocument(invalid).valid).toBe(false);
 tests/core/schema-properties-review.test.ts
-# assertion failure
+# CONTRACT-001 malformed queries and unresolved core sources f: assertion fails @ rn ['Customer'];}};expect(()=>selectCoreElements(mixed,query as any)).toThrow('accessors');expect(in
 tests/core/selection.test.ts
-# assertion failure
+# early byte traversal matches native JSON escapes/UTF8 and ne: expected "LIMIT", got undefined @ expect(code).toBe('LIMIT');expect(fullSeria
 tests/csv-boolean-lexical.test.ts
-# error: DASHBOARD_REFERENCE
+# : placement, reference, field, aggregation, encoding, filter: DASHBOARD_REFERENCE
 tests/dashboard/profile.test.ts
-# assertion failure
+# Spark Delta 4 target binding is typed and original property : assertion fails @ relation',relation:['local','schema','bad'],location:'/tmp/bad'})).toThrow();
 tests/delta/ddl.test.ts
-# UmfCoreError: JSON structural value limit exceeded
+# [limits] US-018-AC9: inspection bounds leave uninspected source intac: UmfCoreError: JSON structural value limit exceeded
 tests/delta/log.test.ts
-# assertion failure
+# US-018-AC18: explicit V1/V2 Parquet checkpoint recovery agre: assertion fails @ ParquetCheckpoint(e.checkpoint,e.sources,e.spec,e.sidecars);expect(r).toEqual(e);expect(check(r)).to
 tests/delta/parquet-checkpoint.test.ts
-# assertion failure
+# US-018-AC16: native sidecar checkpoints recover states and r: expected true, got false @ d=>d.code==='DELTA_PARQUET_CONVERSION'&&d.message.includes('int96'))).toBe(true);expect(r.sidecars).
 tests/delta/sidecars.test.ts
-# error: Cannot find module './pkg/umf_core_wasm.js' from '/home/runner/work/umf/umf/bindings/core/was
-tests/domain-packs/download.test.ts
-# assertion failure
+# real process interruption before and after publication commi: expected true, got false @ true;break;}await new Promise(r=>setTimeout(r,20));}expect(isReady).toBe(true);
 tests/domain-packs/loader-runner.test.ts
-# assertion failure
+# : lookup snapshots, atomic failures and explicit shared-runt: assertion fails @ egister(manifest as ExtensionPackage,fixtureSemantics,{kinds:true})).toThrow('shared native/WASM');
 tests/extension-kinds/composition.test.ts
-# assertion failure
+# US-027-AC2: exact unknown source, scope, interpretation guar: expected "candidate", got "blocked"
 tests/generalized-rdf/dataset.test.ts
-# UmfCoreError: Serialized text limit exceeded
+# [limits] US-009-AC7: pinned upstream full schema survives JSON/YAML a: UmfCoreError: Serialized text limit exceeded
 tests/graphql/corpus.test.ts
-# assertion failure
+# US-009-AC3: invalid native schemas and destructive AST edits: assertion fails @ a:Int="bad"):String }'])expect(()=>importGraphqlSchema(s,{id:'bad'})).toThrow();
 tests/graphql/native.test.ts
-# assertion failure
+# US-021-AC6: v3 multi-source fields preserve both formats but: assertion fails @ ked');expect(r.diagnostics.filter(d=>d.path.endsWith('/source-ids'))).toHaveLength(2);
 tests/iceberg/table-transforms.test.ts
-# assertion failure
+# standalone schema warning result differs (toEqual at iceberg/table.test.ts:13)
 tests/iceberg/table.test.ts
-# assertion failure
+# US-002-AC1: full native schema survives editable UMF tree an: expected true, got false @ expect(inspectJsonSchema(doc).complete).toBe(true);
 tests/json-schema/native.test.ts
-# assertion failure
+# US-026-AC8: full pinned flatten corpus, archives, report sch: assertion fails @ ample.org/'});await expect(proposeJsonLdFlatten(d,{} as any)).rejects.toThrow('Explicit');await expe
 tests/jsonld/flatten.test.ts
-# UmfError: This framing subset requires an inline object @context
+# US-026-AC10/11: complete pinned frame corpus, archives and n: UmfError: This framing subset requires an inline object @context
 tests/jsonld/framing.test.ts
-# UmfCoreError: Number outside the core interoperable numeric profile
+# [number-profile] US-026-AC12: complete fromRDF corpus, archives, exact offici: UmfCoreError: Number outside the core interoperable numeric profile
 tests/jsonld/from-rdf.test.ts
-# assertion failure
+# US-026-AC6: legacy IRI mapping and prefixes respect the sele: expected "candidate", got "blocked"
 tests/jsonld/legacy.test.ts
-# assertion failure
+# expansion fails with 'Invalid @nest value' where a result containing 'nested value' is expected
 tests/jsonld/nest.test.ts
-# assertion failure
+# US-026-AC17: edited exact tokens remain archived while binar: expected true, got false @ (d=>d.code==='JSONLD_RDF_NUMBER_LOSS'&&d.path==='/0/urn:p/0/@value')).toBe(true);
 tests/jsonld/numeric-rdf.test.ts
-# assertion failure
+# G01 preserves an unchanged future default while the fill onl: expected "compiled", got "blocked" @ expect(result.status).toBe('compiled');if(result.sta
 tests/lifecycle/g01-fill.test.ts
-# assertion failure
+# G02 preserves the existing optional-field fill/tighten pair : expected "compiled", got "blocked" @ =='compiled')expect(result.plan.steps.map(step=>step.phaseOperation)).toEqual(['add-column','target-
 tests/lifecycle/g02-derived-fill.test.ts
-# assertion failure
+# G02 temporal native packet contains independently compiled c: expected 0, got 1 @ expect(result.exitCode).toBe(0);if(result.exitCode!==0)
 tests/lifecycle/g02-temporal-native-fixture.test.ts
-# assertion failure
+# G03 preserves the historical .2 missing-predecessor refusal : expected "Version 0.2 phased plans require a previous insta, got "Phased plans require a previous installed source; @ expect(result.status==='blocked'&&result.diagnosti
 tests/lifecycle/g03-defaults.test.ts
-# error: {"status":"blocked","diagnostics":[{"code":"destructive_change_unreviewed","path":"/modules/0
+# G11 binds changed CHECK subjects and orders their removal/ad: {"status":"blocked","diagnostics":[{"code":"TABLE_MIGRATION_OPTIONS","path":"/next/source","message":"G11 replacement changes unselected source meanin
 tests/lifecycle/g11-field-replacement.test.ts
-# assertion failure
+# US-024-AC4: every pinned metamodel source and metadata candi: expected "a11f98bbaed863b1e8b3a1b981a65820f702aad0dd4a1d461, got "172ff6c7ad7ede2fed5f54aee22dfbb8ae9c39fca9869329c @ expect(getLinkmlDocumentNode(d,'/types/int64/minim
 tests/linkml/metamodel.test.ts
-# assertion failure
+# US-024-AC8: pinned local scalar induction matches every comp: expected "blocked", got "resolved" @ rce)).toBe(raw);if(q.status==='induction-blocked'){expect(r.status).toBe('blocked');expect(r.fields)
 tests/linkml/slot-corpus.test.ts
-# assertion failure
+# US-024-AC7: malformed/coercing fields or missing slots block: expected "blocked", got "resolved" @ format:'json'}),r=inspectLinkmlSlotValues(d,'C','s');expect(r.status).toBe('blocked');expect(r.field
 tests/linkml/slot-values.test.ts
-# assertion failure
+# US-023-AC5: relationship reports preserve source, atomic pai: expected true, got false @ .r.relationships.flatMap(x=>x.diagnostics)].some(x=>x.code===c.code)).toBe(true);for(const row of r.
 tests/odcs/relationships.test.ts
-# assertion failure
+# US-023-AC6: renames preserve ordered endpoints and native ev: expected "candidate", got "blocked" @ pect(collision.diagnostics.some(x=>x.code==='ODCS_RENAME_COLLISION')).toBe(true);expect(check(collis
 tests/odcs/rename.test.ts
-# assertion failure
+# US-011-AC20: missing, invalid and mismatched evaluation cont: assertion fails @ amicReference(doc(),{pointer,evaluationScope:[uri('tree')+'#node']})).toThrow('fragment-free');
 tests/openapi/dynamic.test.ts
-# assertion failure
+# US-011-AC13: target mismatches, cycles and unsupported scope: assertion fails @ eference(fixture({name:'id',in:'query'}),{...request,kind:'header'})).toThrow('must have required pr
 tests/openapi/references.test.ts
-# assertion failure
+# US-029 declaration corpus agrees with independent explicit R: assertion fails @ arations(readDocument(writeDocument(d,c.format),c.format));expect(v).toEqual(c.view);expect(exportOw
 tests/owl/declarations.test.ts
-# assertion failure
+# [blank-node-ids] blank node labels differ (g_15 vs g_14): the label counter is not reset per case (same cause as the Rust rdf_parity failure)
 tests/owl/list-axioms.test.ts
-# assertion failure
+# CONTRACT-035 Arrow refinements require explicit losses even : assertion fails @ ult.issues.filter(i=>i.code.startsWith('ARROW_')))expect(issue.path).toMatch(/^\/key_value_metadata\
 tests/parquet/avro-arrow-loss.test.ts
-# assertion failure
+# CONTRACT-035 nested Parquet shapes preserve nullable lists, : expected true, got false @ .toBe('null');else expect(Array.isArray(type.items.fields[1].type)).toBe(c.native.type.valueNullable
 tests/parquet/avro-projection.test.ts
-# UmfError: Duplicate column name
+# CONTRACT-034 unsupported mappings, ambiguity, stale metadata: UmfError: Duplicate column name
 tests/postgresql/avro-projection.test.ts
-# UmfError: Duplicate qualified relation
+# US-015-AC6: ambiguity and unknown representation data are pr: UmfError: Duplicate qualified relation
 tests/postgresql/catalog.test.ts
-# assertion failure
+# CONTRACT-015 exact catalog integers prevent false scalar cla: assertion fails @ expect(()=>proposePostgresqlCatalogEdit(original,path,replacement)).toThrow('POSTGRESQL_CATALOG_INTE
 tests/postgresql/integer-tokens.test.ts
-# assertion failure
+# US-015-AC3: unknown AST and representation fields cannot dis: assertion fails @ =='SELECT FALSE;')await expect(exportPostgresqlSql(doc,raw)).rejects.toThrow('drop or change');
 tests/postgresql/native.test.ts
-# UmfError: Only scalar fields can be lowered
+# : entity SDL, scalar wrappers and schema-mode import: UmfError: Only scalar fields can be lowered
 tests/projections/ddd-graphql-entities.test.ts
-# assertion failure
+# : unknown binding and invalid index evidence never produce D: assertion fails @ await expect(project(invalid)).rejects.toThrow('BINDING_INDEX');
 tests/projections/ddd-postgresql-tables-indexes.test.ts
-# assertion failure
+# : stale table policy entries block before DDL emission: assertion fails @ await expect(project(fixture.binding,missing)).rejects.toThrow('Field type policy has
 tests/projections/ddd-postgresql-tables.test.ts
-# assertion failure
+# US-025-AC5: full official Turtle corpus, expected graphs and: assertion fails @ );expect(native.datasetIsomorphic).toBe(true);expect(getRdfQuads(d)).toEqual(c.terms);expect(exportR
 tests/rdf/turtle.test.ts
-# UmfCoreError: resource-exhausted: literal text budget exceeded
+# [limits] canonical atomic disclosure batch retains fold provenance th: UmfCoreError: resource-exhausted: literal text budget exceeded
 tests/security/catalog-disclosure-batch.test.ts
-# UmfCoreError: resource-exhausted: literal text budget exceeded
+# [limits] whole catalog recipes share the parameter ledger and clear p: UmfCoreError: resource-exhausted: literal text budget exceeded
 tests/security/catalog-program.test.ts
-# error: SECURITY_CORE_EXTENSION_REGISTRY_REQUIRED
+# current products action extension survives explicit source c: SECURITY_CORE_EXTENSION_REGISTRY_REQUIRED
 tests/security/core-extension-closure.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/security/evaluate.test.ts
-# assertion failure
+# endpoint identity selection reaches nested association targe: assertion fails @ expect(result.records.map(r=>r.type.elementId)).toEqual(['Assignment','Ownersh
 tests/security/identity-transport.test.ts
-# TypeError: Attempted to assign to readonly property.
+# [admission-throws] envelope inspection preserves uninterpreted payload and neve: TypeError: Attempted to assign to readonly property.
 tests/security/protection/catalog.test.ts
-# assertion failure
+# bounds and shared literal work refuse atomically, with no in: expected "refused", got "validated-disclosure" @ used=(f:ReturnType<typeof fixture>)=>{const r=run(f);expect(r.status).toBe('refused');expect(r.batch
 tests/security/protection/disclosure.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
+# [bounds] resolveSecurityProtectionDomains accepts an oversized (4 MB) closure document: status 'resolved-domains', expected 'refused' with PROTECTION_DOMAIN_BOUND
 tests/security/protection/domains.test.ts
-# assertion failure
+# partial uses Unicode scalars without overlap and exposes sho: expected "transformed", got "refused" @ expect(ready(f).status).toBe('reference-ready');const
 tests/security/protection/functions.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/security/protection/policy-v2.test.ts
-# error: false
+# ownership policy-change action cannot borrow permission from: false
 tests/security/write.test.ts
-# assertion failure
+# public package mutation cannot weaken the original prototype: expected false, got true @ expect(validateDocument(invalid,semanticTypesRegistry()).valid).toBe(false);
 tests/semantic-types/semantic-types.test.ts
-# assertion failure
+# US-028 malformed Core constraint lists never produce a confo: expected "blocked", got "evaluated" @ pes,data,{id:'r',blankNodePolicy:'disjoint-inputs'});expect(r.status).toBe('evaluated');expect(r.eng
 tests/shacl/lists.test.ts
-# assertion failure
+# US-017-AC2: parameter diagnostics preserve source and distin: assertion fails @ ter(d=>!['SPARK_NATIVE_UNVERIFIED'].includes(d.code)).map(d=>d.code)).toEqual(expected[i]!.map(s=>'S
 tests/spark/parameters.test.ts
-# assertion failure
+# CONTRACT-031 malformed captures reject and future type ident: assertion fails @ ;expect(()=>importSqlServerCatalog(JSON.stringify(input),{id:'bad'})).toThrow('SQLSERVER_CAPTURE_STR
 tests/sqlserver/catalog.test.ts
-# assertion failure
+# CONTRACT-031 declared catalog integers cannot be rounded int: assertion fails @ expect(()=>proposeSqlServerCatalogEdit(original,path,replacement)).toThrow('SQLSERVER_INTEGER');
 tests/sqlserver/integer-tokens.test.ts
-# UmfError: Compiler returned a different root count
+# US-013-AC6: invalid compilation and unresolved selections ca: UmfError: Compiler returned a different root count
 tests/typespec/semantic.test.ts
-
-# Second CI run after the Rust-port merge (same criteria):
-# error: Command process beacon timed out
-tests/actions-reference/process-recovery.test.ts
-# TypeError: undefined is not an object (evaluating 'unresolved.validation.complete')
+# US-007-AC9 explicit Avro candidates preserve logical annotat: TypeError: undefined is not an object (evaluating 'unresolved.validation.complete')
 tests/avro/candidate-edit.test.ts
-# AdmissionError: JSON nesting exceeds the admission limit
+# [admission-throws,limits] CONTRACT-081: malformed input, unknown revisions and bounded: AdmissionError: JSON nesting exceeds the admission limit
 tests/binding/tables.test.ts
-# assertion failure
+# dependency changes and large uninterpreted native tokens can: expected true, got false @ 3');expect(unknown.residuals.some(x=>x.path==='/request/nativeType')).toBe(true);
 tests/core-ideals/cardinality-avro-projection.test.ts
-# assertion failure
+# Avro nested, recursive, union and dependency fields retain s: assertion fails @ typeof result;expect(recoverAvroFieldBundle(receipt,receipt.target!)).toEqual({schema:c.schema,depen
 tests/core-ideals/field-avro.test.ts
-# UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severit
+# [avro-semantics-unchecked] Avro relationship discovery preserves unresolved-named-type: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked;
 tests/core-ideals/relationship-avro-discovery.test.ts
-# assertion failure
-tests/core-ideals/relationship-postgresql.test.ts
-# assertion failure
-tests/core-ideals/relationship-tablespec-projection.test.ts
-# UmfError: Number outside the core interoperable numeric profile
+# [number-profile] facet tokens are checked before conversion; unsafe numbers a: UmfError: Number outside the core interoperable numeric profile
 tests/core/facet-ideals.test.ts
-# UmfError: partCount must be a safe positive integer
+# [number-profile] US-018-AC19: native multipart recovery preserves all parts a: UmfError: partCount must be a safe positive integer
 tests/delta/multipart.test.ts
-# SyntaxError: Export named 'generateDomainPackLoaderSchema' not found in module '/home/runner/work/um
-tests/domain-packs/schema-browser-embedding.test.ts
-# assertion failure
+# US-026-AC16: Unicode IRIs retain their spelling across proce: assertion fails @ .toBe('candidate');expect(ordered(getRdfQuads(projected.candidate!))).toEqual(ordered(index===3?expe
 tests/jsonld/unicode-iri.test.ts
-# UmfCoreError: Parsing would change the decimal value
+# [number-profile] US-011-AC15: extraction retains exact numbers, references an: UmfCoreError: Parsing would change the decimal value
 tests/openapi/extraction.test.ts
-# UmfCoreError: Unknown tagged representation fields prevent native rendering
+# US-011-AC2: candidate edits validate object structure and re: UmfCoreError: Unknown tagged representation fields prevent native rendering
 tests/openapi/native.test.ts
-# assertion failure
+# CONTRACT-015 DDL type inventory respects native edits, unkno: expected "blocked", got "observed" @ 80000').document;expect(getPostgresqlDdlDeclarations(version).status).toBe('blocked');expect(check(g
 tests/postgresql/declarations.test.ts
-# assertion failure
+# : core Field availability controls SDL wrappers: assertion fails @ expect(()=>project(fixture.logical,policy)).toThrow('cannot ignore a core F
 tests/projections/ddd-graphql-core-fields.test.ts
-# assertion failure
-tests/projections/ddd-postgresql.test.ts
-# assertion failure
+# both removed and added retargeting anchors must be explicitl: expected "permit", got "indeterminate" @ e',type:ref('Resource'),key:[{string:'r2'}]});expect(run(f).decision).toBe('permit');
 tests/security/catalog-write.test.ts
-# UmfCoreError: Literal does not match scalar family
+# [limits] typed parameters apply original literal semantics atomically: UmfCoreError: Literal does not match scalar family
 tests/security/protection/query-properties.test.ts
-# assertion failure
+# US-017-AC2: field-local collation warnings distinguish targe: assertion fails @ tics.filter(d=>d.code.startsWith('SPARK_COLLATION_')).map(d=>d.code)).toEqual(expected[c.id]!.map(s=
 tests/spark/collations.test.ts
-# assertion failure
+# US-017-AC5: nested structs own independent metadata and poin: assertion fails @ Field(original,{...options,fieldPointer:'/fields/0/metadata/other'})).toThrow('actual StructField');
 tests/spark/rename.test.ts
-# assertion failure
+# US-017-AC1: native schema cases preserve exact source throug: expected true, got false @ ctSpark(udt).diagnostics.some(d=>d.code==='SPARK_UDT_UNINTERPRETED')).toBe(true);expect(exportSparkS
 tests/spark/schema.test.ts
-# assertion failure
+# CONTRACT-031 old coverage, malformed sections, duplicate obs: assertion fails @ t(()=>importSqlServerCatalog(JSON.stringify(missing),{id:'missing'})).toThrow('STRUCTURE');
 tests/sqlserver/constraints.test.ts
-# assertion failure
+# CONTRACT-033 interpreted numeric qualifiers cannot round int: expected "blocked", got "projected" @ t result=projectTableSpecToAvro(source,policy);expect(result.status).toBe('blocked');expect(result.t
 tests/tablespec/avro-integers.test.ts
-# assertion failure
+# CONTRACT-030 split bundle rejects ambiguous or unmapped chan: assertion fails @ importTableSpecBundle({'table.yaml':files['table.yaml']},{id:'bad'})).toThrow('at least one');
 tests/tablespec/split.test.ts
-# UmfCoreError: Duplicate object key
+# file/model bundles retain unenforced Keys/relations and pair: UmfCoreError: Duplicate object key
 tests/uuid-file-model.test.ts
-# UmfError: To-many targets require an explicit association Record
+# complete model expands Keys, indexes and foreign keys into e: UmfError: To-many targets require an explicit association Record
 tests/uuid-model.test.ts
-# assertion failure
+# native name collisions and partition choices are explicit: expected "LIMIT", got undefined @ d source accepted');}catch(error){expect((error as u.UmfError).code).toBe('LIMIT');}
 tests/uuid-native-projection.test.ts
-
-# Third CI run after the Rust-port merge (same criteria):
-tests/binding/postgresql-indexes.test.ts
+# composite mappings distinguish dynamic map values and refuse forged recovery reports: 6 failing tests (only the end of the output is kept by the runner)
 tests/uuid-mixed-model.test.ts
+# CONTRACT-031 v3 requires observations; older, unavailable an: assertion fails @ t(()=>importSqlServerCatalog(JSON.stringify(missing),{id:'missing'})).toThrow('STRUCTURE');missing.p
 tests/sqlserver/indexes.test.ts
-tests/core-ideals/relationship-extras.test.ts
+# US-028 Core target sets match native SPARQL across official : assertion fails @ prefix+text,options);expect(()=>getShaclTargetNodes(d,iri('s'),data)).toThrow();expect(exportShaclTu
 tests/shacl/targets.test.ts

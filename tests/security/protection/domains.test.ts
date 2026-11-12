@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {expectAccessorRefusalBy} from '../../core/admission-refusal';
 import {test,expect} from 'bun:test';
 import {resolveSecurityProtectionDomains} from '../../../src/index-node-v4';
 import {domainFixture,domainRef} from './domain-fixture';
@@ -59,7 +60,7 @@ test('core definitions retain all known families containers and unspecified mean
 test('domain closure is bounded before document validation and never executes getters',()=>{
  const f=domainFixture(),large:any=structuredClone(f.closure);large.documents[0].document.future='x'.repeat(4_000_001);
  const bounded=resolveSecurityProtectionDomains(f.policy,f.catalog,large);expect(bounded.status).toBe('refused');expect(bounded.diagnostics.some(d=>d.code==='PROTECTION_DOMAIN_BOUND')).toBe(true);expect(bounded.closure).toEqual(large);
- let calls=0;const bad={get pins(){calls++;return [];}};expect(resolveSecurityProtectionDomains(f.policy,f.catalog,bad).status).toBe('refused');expect(calls).toBe(0);
+ let calls=0;const bad={get pins(){calls++;return [];}};expectAccessorRefusalBy(()=>resolveSecurityProtectionDomains(f.policy,f.catalog,bad),r=>r.status==='refused');expect(calls).toBe(0);
  const atLimit=domainFixture();for(let i=1;i<256;i++){const id='extra-'+i;atLimit.closure.pins.push({documentId:id,revision:'schema1'});atLimit.closure.documents.push({revision:'schema1',document:{...structuredClone(atLimit.closure.documents[0]!.document),id}});}expect(resolve(atLimit).status).toBe('resolved-domains');
  const many={pins:Array.from({length:257},(_,i)=>({documentId:String(i),revision:'r'})),documents:[]};expect(resolveSecurityProtectionDomains(f.policy,f.catalog,many).status).toBe('refused');
 });

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {expectAccessorRefusalBy} from '../core/admission-refusal';
 import {test,expect} from 'bun:test';
 import {ref} from './fixture';
 import {evaluateSecurityAccess,evaluateSecurityCollection} from '../../src/index-node-v4';
@@ -81,7 +82,7 @@ test('hostile accessors cannot run at the evaluation boundary',()=>{
   // @covers US-079-AC3
   const f=evaluationFixture();let invoked=false;
   const request={get action(){invoked=true;return 'read';},output:[]};
-  expect(evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource).decision).toBe('indeterminate');expect(invoked).toBe(false);
+  expectAccessorRefusalBy(()=>evaluateSecurityAccess(f.policy,f.resolution,f.cut,request,f.resource),r=>r.decision==='indeterminate');expect(invoked).toBe(false);
 });
 
 test('an empty collection still admits every scoped complete dependency',()=>{

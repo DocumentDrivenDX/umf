@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {expectAccessorRefusalBy} from '../../core/admission-refusal';
 import {evaluateSecurityPolicyV2LegacyAccess,evaluateSecurityAccess,inspectSecurityPolicy,upgradeSecurityPolicySource,downgradeSecurityPolicySource,inspectSecurityPolicyV2Source,resolveSecurityProtectionSources} from '../../../src/index-node-v4';
 import {test,expect} from 'bun:test';
 import {securityFixture,ref} from '../fixture';
@@ -22,7 +23,7 @@ test('new revision, source shape and source/target text budgets are enforced',()
  expect(upgradeSecurityPolicySource({...source,version:'future'},'new').target).toBeUndefined();
  expect(upgradeSecurityPolicySource({...source,native:{large:'x'.repeat(4_000_001)}},'new').status).toBe('refused');
  expect(upgradeSecurityPolicySource(source,'x'.repeat(4_000_001)).status).toBe('refused');
- let calls=0;const bad={get vocabulary(){calls++;return 'umf.security';}};expect(upgradeSecurityPolicySource(bad,'new').status).toBe('refused');expect(calls).toBe(0);
+ let calls=0;const bad={get vocabulary(){calls++;return 'umf.security';}};expectAccessorRefusalBy(()=>upgradeSecurityPolicySource(bad,'new'),r=>r.status==='refused');expect(calls).toBe(0);
 });
 test('unknown old members cannot be silently promoted into recognized new meaning',()=>{
  const source:any=securityFixture().policy;source.protection={id:'catalog',revision:'c1'};const upgraded=upgradeSecurityPolicySource(source,'new');expect(upgraded.status).toBe('refused');expect(upgraded.target).toBeUndefined();expect(upgraded.source).toEqual(source);expect(upgraded.diagnostics.some(d=>d.code==='SECURITY_MIGRATION_MEANING')).toBe(true);
