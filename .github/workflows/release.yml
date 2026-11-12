@@ -11,6 +11,9 @@ name: release
 on:
   push:
     tags: ['umf-v*']
+  # TEMPORARY: dry-run this workflow from the pull request (workflow_dispatch needs the file on main). Remove before merge.
+  pull_request:
+    paths: ['.github/workflows/release.yml']
   workflow_dispatch:
     inputs:
       dry_run:
