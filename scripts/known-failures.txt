@@ -85,16 +85,12 @@ tests/core-ideals/relationship-avro.test.ts
 tests/core/core.test.ts
 # UmfCoreError: Schema evaluation depth exceeded
 tests/core/deep-json-equality.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/core/field-ideals.test.ts
 # UmfCoreError: Number outside the core interoperable numeric profile
 tests/core/javascript-numeric.test.ts
 # AdmissionError: Accessor properties are not invoked during admission
 tests/core/key-ideals.test.ts
 # assertion failure
 tests/core/native-json.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/core/nullability-ideals.test.ts
 # AdmissionError: Accessor properties are not invoked during admission
 tests/core/relationship-ideal.test.ts
 # assertion failure
@@ -209,8 +205,6 @@ tests/security/protection/disclosure.test.ts
 tests/security/protection/domains.test.ts
 # assertion failure
 tests/security/protection/functions.test.ts
-# AdmissionError: Accessor properties are not invoked during admission
-tests/security/protection/policy-v2.test.ts
 # error: false
 tests/security/write.test.ts
 # assertion failure
@@ -247,8 +241,6 @@ tests/core-ideals/relationship-tablespec-projection.test.ts
 tests/core/facet-ideals.test.ts
 # UmfError: partCount must be a safe positive integer
 tests/delta/multipart.test.ts
-# SyntaxError: Export named 'generateDomainPackLoaderSchema' not found in module '/home/runner/work/um
-tests/domain-packs/schema-browser-embedding.test.ts
 # assertion failure
 tests/jsonld/unicode-iri.test.ts
 # UmfCoreError: Parsing would change the decimal value
