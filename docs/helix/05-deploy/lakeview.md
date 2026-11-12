@@ -67,7 +67,7 @@ omitted through own string membership, retaining recognized encodings and
 reporting the unsupported source pointers. Edited dashboard generation and a future
 generic dashboard profile need separate semantics and evidence.
 
-The [execution evidence](../04-build/evidence/lakeview/README.md) records byte
+The execution evidence records byte
 comparisons through both UMF formats in Rust, packed Node/Bun, the native CLI
 with an empty PATH, and real Chromium. It qualifies three committed inputs,
 including PR42's unchanged original fixture; it does not qualify live Databricks

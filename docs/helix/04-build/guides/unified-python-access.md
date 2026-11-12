@@ -43,7 +43,7 @@ ontology integration.
 
 The compiler lives in Weft. Generated Python builds schema-referenced requests;
 the host authorizes and executes them. Backend limitations raise typed failures.
-The [execution evidence](../evidence/unified-python-access.md) records what is
+The execution evidence records what is
 implemented and tested.
 
 ## Synchronous calling mode
@@ -75,7 +75,7 @@ release gates; see the exact native receipt below.
 The host runtime's Pydantic requirement is >=2.13,<3. Its MISSING compatibility
 import uses the actual Pydantic sentinel, preserving absence/null across 2.13.5
 and 2.14.1. Generated stdlib-only clients do not require Pydantic. See
-[P1 evidence](../evidence/praxis-p1.md) for commands, tested subset and limits.
+P1 evidence for commands, tested subset and limits.
 
 Use `SyncSession` / `AsyncSession` with Psycopg3, `Psycopg2Session` with
 synchronous Psycopg2 2.9, or `SQLAlchemySession` / `AsyncSQLAlchemySession` with
@@ -96,7 +96,7 @@ The [native harness](../../../../tests/unified/session_native_e2e.py) currently
 uses a bounded fixture executor: Psycopg2/SQLAlchemy generated reads are
 parameter-free. Parameterized driver transport, complete artifact admission and
 Weft mutations are separate pending work. The
-[native receipt](../evidence/praxis-p1/session-native-postgresql.json) records
+native receipt records
 versions, source hashes, transaction/pool/cancellation checks and these limits.
 
 
@@ -125,7 +125,7 @@ stdlib-only imports. The embedded engine is a build-tool dependency; it is not
 required by generated application clients. The wheel and self-contained source
 distribution have local macOS arm64 Python3.11 evidence; Linux CI is configured
 but not executed, and no new package/index release has been published. See
-[P1 evidence](../evidence/praxis-p1.md) for the exact candidate and remaining gates.
+P1 evidence for the exact candidate and remaining gates.
 
 ## Declared native reader candidate
 

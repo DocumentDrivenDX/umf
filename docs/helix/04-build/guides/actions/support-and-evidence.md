@@ -4,11 +4,11 @@ Support follows the exact source, inputs and bounded profile recorded by each qu
 
 ## Current integration
 
-The current model migration passes all 62 security test files (324 tests) and all 41 action-reference files (123 tests), including their declared local native checks. The [complete per-file inventories and logs](../../evidence/metamodel-authority/regression/root-shards.json) identify these integration observations. Frozen certificates below remain bound to their original source. Current Truss native preparation awaits an upstream compiler/profile upgrade and renewed observations; its [scoped gate](../../evidence/metamodel-authority/external-truss-current-gate.json) records that boundary.
+The current model migration passes all 62 security test files (324 tests) and all 41 action-reference files (123 tests), including their declared local native checks. The complete per-file inventories and logs identify these integration observations. Frozen certificates below remain bound to their original source. Current Truss native preparation awaits an upstream compiler/profile upgrade and renewed observations; its scoped gate records that boundary.
 
 ## Frozen integrated qualification
 
-The retained [merged acceptance certificate](../../evidence/actions-integrated-certification.md) qualifies its recorded core and action profiles on frozen source `1fa21f6ea1d7a3e1009746da99f1a61d444cd489`. Its [machine-readable certificate](../../evidence/actions-integrated-certification.json) and [independent audit](../../evidence/actions-merged-integration/audit.json) bind the actual commands, inputs, runtime versions and retained results.
+The retained merged acceptance certificate qualifies its recorded core and action profiles on frozen source `1fa21f6ea1d7a3e1009746da99f1a61d444cd489`. Its machine-readable certificate and independent audit bind the actual commands, inputs, runtime versions and retained results.
 
 - Fresh behavior regression: 2,448 distinct tests across 450 files, zero failures or skips; eight separate semantic checks also pass.
 - Actual PostgreSQL reference execution: 119 tests; 216 histories and 648 transitions with zero mismatches. All five implementation mutants are detected.
@@ -17,13 +17,13 @@ The retained [merged acceptance certificate](../../evidence/actions-integrated-c
 - Bounded design checks: 22 SMT outcomes and 13 TLC runs using the pinned public Java runtime. These check the stated model bounds, not arbitrary deployments.
 - All 21 action acceptance criteria have executed passing witnesses. Seven audit controls reject omitted or forged inputs and invalid execution claims.
 
-The [immutable strict baseline](../../evidence/actions-documentation/qualification-integrated-5be80ab9/README.md) separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source `5be80ab9`. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.
+The immutable strict baseline separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source `5be80ab9`. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.
 
 Two sessions with beginner readers remain a usability follow-up. The executable demonstrations are verified independently of those sessions.
 
 ## Subsequent main integration
 
-Earlier integration added shared security metadata and core inspection. They have a [separate integration record](../../evidence/actions-security-integration/README.md); they do not change the frozen certificate above.
+Earlier integration added shared security metadata and core inspection. They have a separate integration record; they do not change the frozen certificate above.
 
 Fresh checks passed for the native action consumer, public browser behavior, the beginner native tutorial and affected core/facet operations. The record identifies actual versions, supported subsets and refusals. Shared security backend acceptance remains open, and security declarations do not automatically become executable action authorization.
 

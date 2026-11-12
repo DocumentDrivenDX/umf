@@ -48,6 +48,6 @@ All source-list identities have a docket outcome; PDF inventory is available wit
 S1–S4 passed for the declared source-only subset: all 104 list-scoped dockets,
 4,466 proceedings and 305 counsel sections retained; 7,775 PDF URLs inventoried,
 300 acquired in six verified preservation handoffs. The remaining 7,475 PDFs
-are explicitly unattempted. [Evidence](evidence/supreme-court-mirror.md) records
+are explicitly unattempted. Evidence records
 tests, hashes, corrected application discovery and portable handoff checks.
 All-case enumeration and complete PDF backfill remain subsequent slices.

@@ -1,6 +1,6 @@
 # Typed joins and reviewed reporting SQL
 
-This is the experimental PostgreSQL 18 read profile. [Evidence and limits](../evidence/typed-reporting/README.md) identify the tested versions. Lakebase 18 compiles; service execution is still unverified.
+This is the experimental PostgreSQL 18 read profile. Evidence and limits identify the tested versions. Lakebase 18 compiles; service execution is still unverified.
 
 ## Build a joined read
 

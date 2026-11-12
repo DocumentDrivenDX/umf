@@ -111,7 +111,7 @@ the default runtime mirror.
 
 The optional administrative parser is a separate cohort and mirror. The
 [pglast template](../../../../python/packaging/pglast-optional-wheel-lock.template.json)
-and [captured lock](../evidence/praxis-embedder/pglast-optional-wheel-lock.json)
+and captured lock
 pin pglast 7.20 for the four target OS/Python cells. This lock records each
 wheel hash and size plus the upstream sdist URL and hash. The wheels declare
 `GPL-3.0-or-later` and contain no standalone license files; the lock records the

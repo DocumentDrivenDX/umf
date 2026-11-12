@@ -230,4 +230,4 @@ identifiers and roomy description columns. Ontologies use record selection and
 wrapped graph labels; structured metadata uses full-width disclosures. Export
 panels remain inside the viewport. Browser entry-point typechecking is part of
 `bun run typecheck`. Visual evidence and limitations:
-[workspace qualification](../../04-build/evidence/schema-browser-ux.md).
+workspace qualification.

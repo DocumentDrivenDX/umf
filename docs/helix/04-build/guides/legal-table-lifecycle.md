@@ -88,7 +88,7 @@ a committed pair without repeating its fill or clock.
 This is a standalone maintenance operation: additional column/table/index,
 validation, seed or other effects refuse before a runnable plan is returned.
 Arbitrary per-row transforms and online reconciliation remain unsupported.
-The [independent installed signoff](../evidence/schema-migration-design-review/g01-review.json)
+The independent installed signoff
 qualifies the exact PostgreSQL/Python/package cohort and thirteen-case subset.
 Durable approval and the closed installation-reference 0.3 metadata profile are
 required. They do not authorize downgrading a persistent-approval installation
@@ -191,13 +191,13 @@ upper bound without changing bootstrap or history fixtures.
 ## Validation and remaining limits
 
 The migration implementation plan tracks residuals MIG-G01 through MIG-G11 in
-[`schema-migration-plan.md`](../schema-migration-plan.md). Those entries include
+`schema-migration-plan.md`. Those entries include
 existing-column NULL fills outside the selected 0.3 pair, arbitrary row transforms, general defaults, narrowing,
 retirement/restore, online chunked rewrites, cross-document work, non-PostgreSQL
 backends, managed-consumer qualification, v0.2 inventory/bootstrap and combined
 column drop/append. They are explicit scope limits, not implied support.
 
-The [U1–U3 evidence packet](../evidence/praxis-u123-adoption/README.md) records the
+The U1–U3 evidence packet records the
 exact installed candidate wheels, source correspondence, portable/browser checks,
 mixed-phase recovery, all four reviewed-operation shards and owner+via native
 authorization. MIG-R01–R06 are closed for this recorded PostgreSQL 18 maintenance

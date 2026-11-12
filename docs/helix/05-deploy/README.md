@@ -2,27 +2,27 @@
 
 Document release readiness, deployment checks, monitoring, and operations.
 
-[Core and Codegen0.10.8](core-codegen-release-notes-0.10.8.md) are public on PyPI
-with their separate [Core](evidence/pypi-0.10.8/README.md) and
-[Codegen](evidence/pypi-codegen-0.10.8/README.md) public-byte/fresh-consumer proofs.
+Core and Codegen0.10.8 are public on PyPI
+with their separate Core and
+Codegen public-byte/fresh-consumer proofs.
 Codegen preserves its original failed attempt and inherited verifier identities.
 Access's publisher binding is configured, but full-cohort qualification/admission
 and Access publication remain held. The
-[earlier publisher-refusal packet](evidence/pypi-publisher-refusals-20261103/README.md)
+earlier publisher-refusal packet
 retains its original historical state.
 
-The [UMF SDK 0.5.8 candidate notes](sdk-release-notes-0.5.8.md) record the
+The UMF SDK 0.5.8 candidate notes record the
 source-only preparation state for the proposed G03 successor. This is not a
 published release; final qualification, review, merge, tag selection and public
 proof remain pending.
 
 ## Microsite
 
-The site source is in [microsite/dist](microsite/dist/index.html). Its live
+The site source is in microsite/dist. Its live
 playground imports the UMF library through [demo.ts](microsite/demo.ts).
 The [design guide](../02-design/DESIGN.md) records the visual identity and voice.
 
-[Publish microsite](../../../.github/workflows/microsite.yml) builds the
+Publish microsite builds the
 playground with Bun 1.4.2 and uploads only the static site directory. Pull
 requests build without deploying. Pushes to `main` publish to GitHub Pages;
 the workflow can also be run manually from Actions on `main`.
@@ -43,7 +43,7 @@ publishes the previous source. Review the Actions run and the published pages
 after a deployment. No separate hosting token is required; the existing
 `INNSIGLE_BUILD_KEY` Actions secret signs the site during publication.
 
-The [microsite evidence](microsite-evidence.json) records earlier browser checks
+The microsite evidence records earlier browser checks
 and private-preview deployments. These do not qualify a library release.
 
 ## Page signatures
@@ -60,7 +60,7 @@ publishes public claims into `.well-known/innsigle/`, then checks content digest
 model-primary colophons, the registered build signer and cryptographic signatures.
 Missing keys, missing pages, stale bytes or wrong signer roles block publication.
 Legacy public human keys/endorsements remain for historical verification only.
-See [.innsigle/AGENTS.md](../../../.innsigle/AGENTS.md) for commands.
+See .innsigle/AGENTS.md for commands.
 
 ## Action guide build
 
@@ -71,7 +71,7 @@ Canonical guide text lives in `04-build/guides/actions`. Run `bun run build:docs
 Generate and validate exact final HTML. The pinned CI signer seals all configured root and nested routes with the build environment key, verifies the resulting public signatures and publishes the attestations. Preview and verify the `/umf/` base path before merging, and verify the deployed source/asset hashes after the main workflow completes. A release must follow deployment verification, not substitute for it.
 ## Domain-pack releases
 
-[Three component releases](domain-pack-release-notes.md) publish the shared loader,
+Three component releases publish the shared loader,
 appellate corpus and public-company intelligence corpus at 1.0.0. The website
 explorer exposes source metadata and individual collector/qualification tools.
 Pages does not build or serve generated ZIPs. Consumers invoke
