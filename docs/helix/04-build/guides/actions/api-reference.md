@@ -47,58 +47,7 @@ These operations inspect supplied artifacts and construct inert bytes. They do n
 ## Public types
 
 <!-- generated:public-types:start -->
-- Action
-- ActionAssessment
-- ActionAssignment
-- ActionAuthorization
-- ActionBinding
-- ActionBusinessState
-- ActionCondition
-- ActionEffect
-- ActionEntityBinding
-- ActionEntityInput
-- ActionExecutorProfile
-- ActionExpression
-- ActionExpressionType
-- ActionFrame
-- ActionFrameState
-- ActionIdentity
-- ActionInputs
-- ActionInspection
-- ActionKeyReference
-- ActionManifest
-- ActionManifestConstruction
-- ActionManifestInspection
-- ActionObligation
-- ActionObligationKind
-- ActionParameter
-- ActionPlanArtifact
-- ActionPlanAssessment
-- ActionPlanCapabilities
-- ActionPlanCapability
-- ActionPlanDiagnostic
-- ActionPlanInspection
-- ActionPlanInspectionContext
-- ActionPlanModelPin
-- ActionPlanSelectionInspector
-- ActionReference
-- ActionRelationshipReference
-- ActionRule
-- ActionRulePhase
-- ActionRuleReference
-- ActionRuleState
-- ActionValueBinding
-- BulkOutcomeValidation
-- CompiledActionRule
-- CompiledActionSelector
-- ConstructedActionManifest
-- InspectedAction
-- PortableActionPin
-- PortableActionPlan
-- PreparedActionIdentities
-- PreparedActionPlanModel
-- SelectedActionIdentity
-- SelectedActionRow
+
 <!-- generated:public-types:end -->
 
 The exported type inventory above is checked mechanically against src/index.ts. Consult src/extensions/actions/types.ts, expression.ts, selector.ts, evaluation.ts, plan-types.ts and manifest-types.ts for exact members; CONTRACT-900 through CONTRACT-904 own their respective semantics. Entity inputs contain a selected Key and ordered literal components, not database row IDs. Committed recipe outputs are empty; changed identities and receipts are consumer metadata.

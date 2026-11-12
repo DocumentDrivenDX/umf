@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {expectAccessorRefusal} from './core/admission-refusal';
 import {test,expect} from 'bun:test';
 import * as u from '../src/index-node-v4';
 import {uuidDocument,uuidBinding,FIELD,UUID} from './helpers/uuid-fixtures';
@@ -25,7 +26,7 @@ test('partial pairs, collisions, unknown carrier, domain conflicts, nulls and st
 test('dispatch rejects getters before reading profile and relevant unknown logical facets block codecs',()=>{
  const d=uuidDocument();let calls=0;
  const hostile:any={get vocabularies(){calls++;return {'umf.binding':{version:'0.3.0'}};}};
- expect(u.inspectBinding(hostile,d).valid).toBe(false);expect(calls).toBe(0);
+ expectAccessorRefusal(()=>u.inspectBinding(hostile,d));expect(calls).toBe(0);
  d.modules[0]!.elements[1]!.facets={unknownRule:1};expect(u.inspectBinding(uuidBinding(),d).complete).toBe(false);expect(()=>u.encodeBit128CarrierValue(uuidBinding(),d,FIELD,{uuid:UUID})).toThrow();
 });
 test('unqualified native index layouts remain serializable but cannot authorize generation or values',()=>{

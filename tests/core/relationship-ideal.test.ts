@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {expectAccessorRefusal} from './admission-refusal';
 import {test,expect} from 'bun:test';
 import {relationshipCandidate,relationshipCases} from '../../scripts/core-relationship-cases';
 import {validateRelationshipCandidate} from '../../src/validation/relationships';
@@ -32,7 +33,7 @@ test('candidate retains unknown meanings and rejects accessors and cyclic input 
  const lifecycle=relationshipCases().find(r=>r.id==='future-lifecycle')!;
  const result=validateRelationshipCandidate(lifecycle.document);expect(result.valid).toBe(true);expect(result.complete).toBe(false);
  let calls=0;const d=relationshipCandidate();Object.defineProperty(d.modules[0],'relationships',{enumerable:true,get(){calls++;return [];}});
- expect(validateRelationshipCandidate(d).valid).toBe(false);expect(calls).toBe(0);
+ expectAccessorRefusal(()=>validateRelationshipCandidate(d));expect(calls).toBe(0);
  const oversized=relationshipCandidate();oversized.modules[0].relationships[0].targetMultiplicity.max=Number.MAX_SAFE_INTEGER+1;
  expect(validateRelationshipCandidate(oversized).diagnostics[0]!.code).toBe('NUMBER');
  const cyclic=relationshipCandidate();cyclic.unknown=cyclic;expect(validateRelationshipCandidate(cyclic).valid).toBe(false);

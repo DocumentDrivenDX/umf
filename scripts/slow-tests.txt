@@ -201,3 +201,23 @@ tests/spark/upstream.test.ts
 # Timed out at 60 s in the fourth CI run (they pass in 5 s to 1 min depending on runner load).
 tests/actions-reference/graph.test.ts
 tests/table-authoring/row-scope.test.ts
+
+# Moved from known-failures.txt: no assertion failure of their own; they need more time or a prepared environment than the PR job has.
+# killed after 5-10 min with no assertion failure (Arrow IPC corpus; too slow for the PR job addon)
+tests/arrow/ipc.test.ts
+# test exceeds its 120 s timeout and the file is killed (relationship projection matrix; too slow for the PR job addon)
+tests/core-ideals/relationship-extras.test.ts
+# test exceeds its 120 s timeout and the file is killed (FK/junction projection matrix; too slow for the PR job addon)
+tests/core-ideals/relationship-postgresql.test.ts
+# test exceeds its 120 s timeout and the file is killed (relationship projection matrix; too slow for the PR job addon)
+tests/core-ideals/relationship-tablespec-projection.test.ts
+# killed after 5-10 min with no assertion failure (DDD PostgreSQL projection; too slow for the PR job addon)
+tests/projections/ddd-postgresql.test.ts
+# only failure is the test timeout (60 s) on the PR job addon
+tests/binding/postgresql-indexes.test.ts
+# needs the browser WASM package bindings/core/wasm/pkg (built by build:reference in the nightly job)
+tests/domain-packs/download.test.ts
+# needs the action test prerequisites (owned PostgreSQL + spawned command process), prepared by test:prepare in the nightly job
+tests/actions-reference/process-recovery.test.ts
+# Passes in the nightly job: its tests take 30-130 s each on the PR job's addon and the last one exceeds the 120 s per-test timeout.
+tests/security/protection/policy-v2.test.ts

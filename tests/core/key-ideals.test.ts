@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+import {expectAccessorRefusal} from './admission-refusal';
 import {test,expect} from 'bun:test';
 import {validateDocument} from '../../src/validation/document';
 import {createValidator} from '../../src/validation/schema';
@@ -27,7 +28,7 @@ test('current key schema leaves cross-reference semantics to validator',()=>{
 });
 test('key candidate never invokes getters and retains path-qualified unknowns',()=>{
  let invoked=false;const d=keyCandidate();Object.defineProperty(d.modules[0].elements[0],'keys',{enumerable:true,get(){invoked=true;return [];}});
- expect(validateDocument(d).valid).toBe(false);expect(invoked).toBe(false);
+ expectAccessorRefusal(()=>validateDocument(d));expect(invoked).toBe(false);
  const row=keyCases().find(r=>r.id==='unknown-qualifier')!;
  expect(validateDocument(row.document).diagnostics.some(d=>d.path.endsWith('/keys/0/a~1b~0c')&&d.severity==='warning')).toBe(true);
  const cycle=keyCandidate();cycle.modules[0].elements[0].unknown=cycle;
