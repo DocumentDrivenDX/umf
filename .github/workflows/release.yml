@@ -22,6 +22,10 @@ on:
         description: 'Existing umf-vX.Y.Z tag on main (required to publish manually)'
         type: string
         default: ''
+      qualified_run_id:
+        description: 'Completed release run with verified artifacts to finalize after PyPI publication'
+        type: string
+        default: ''
       run_ci:
         description: 'Also run the full ci.yml test suite'
         type: boolean
@@ -38,11 +42,15 @@ jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
     outputs:
       version: ${{ steps.v.outputs.version }}
       tag: ${{ steps.v.outputs.tag }}
       source: ${{ steps.v.outputs.source }}
       publish: ${{ steps.v.outputs.publish }}
+      qualified_run: ${{ steps.v.outputs.qualified_run }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,8 +58,10 @@ jobs:
           fetch-depth: 0
       - id: v
         env:
+          GH_TOKEN: ${{ github.token }}
           REQUESTED_TAG: ${{ inputs.release_tag }}
           DRY_RUN: ${{ inputs.dry_run }}
+          QUALIFIED_RUN_ID: ${{ inputs.qualified_run_id }}
         run: |
           publish=false
           tag="$REQUESTED_TAG"
@@ -62,6 +72,11 @@ jobs:
             test "$GITHUB_REF" = refs/heads/main
             test -n "$tag"
             publish=true
+          fi
+          if [ -n "$QUALIFIED_RUN_ID" ]; then
+            test "$GITHUB_EVENT_NAME" = workflow_dispatch
+            test "$publish" = true
+            python3 scripts/registry/qualified-release.py run "$QUALIFIED_RUN_ID" "$tag"
           fi
           if [ -n "$tag" ]; then
             [[ "$tag" =~ ^umf-v[0-9]+\.[0-9]+\.[0-9]+$ ]]
@@ -74,21 +89,25 @@ jobs:
           fi
           version="$(python3 -c 'import json; print(json.load(open("spec/release.json"))["version"])')"
           tag="${tag:-umf-v$version}"
-          python3 scripts/check-release-versions.py --access --tag "$tag"
+          if [ -z "$QUALIFIED_RUN_ID" ]; then
+            python3 scripts/check-release-versions.py --access --tag "$tag"
+          fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "source=$source" >> "$GITHUB_OUTPUT"
           echo "publish=$publish" >> "$GITHUB_OUTPUT"
+          echo "qualified_run=$QUALIFIED_RUN_ID" >> "$GITHUB_OUTPUT"
 
   test:
     needs: verify
-    if: github.event_name == 'push' || (inputs.run_ci && inputs.release_tag == '')
+    if: needs.verify.outputs.qualified_run == '' && (github.event_name == 'push' || (inputs.run_ci && inputs.release_tag == ''))
     uses: ./.github/workflows/ci.yml
     permissions:
       contents: read
 
   build:
     needs: verify
+    if: needs.verify.outputs.qualified_run == ''
     name: build (${{ matrix.platform }})
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 120
@@ -264,6 +283,7 @@ jobs:
     needs: [verify, test, build, smoke]
     if: >-
       ${{ !cancelled() && needs.verify.outputs.publish == 'true' &&
+          needs.verify.outputs.qualified_run == '' &&
           needs.build.result == 'success' && needs.smoke.result == 'success' &&
           (needs.test.result == 'success' ||
            (github.event_name == 'workflow_dispatch' && needs.test.result == 'skipped')) }}
@@ -297,6 +317,10 @@ jobs:
 
   github-release:
     needs: [verify, publish]
+    if: >-
+      ${{ !cancelled() && needs.verify.result == 'success' && needs.verify.outputs.publish == 'true' &&
+          (needs.publish.result == 'success' ||
+           (needs.verify.outputs.qualified_run != '' && needs.publish.result == 'skipped')) }}
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -307,16 +331,23 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       TAG: ${{ needs.verify.outputs.tag }}
       VERSION: ${{ needs.verify.outputs.version }}
+      SOURCE: ${{ needs.verify.outputs.source }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.verify.outputs.source }}
+          ref: ${{ github.workflow_sha }}
+          fetch-depth: 0
           persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
+          github-token: ${{ github.token }}
+          run-id: ${{ needs.verify.outputs.qualified_run || github.run_id }}
           pattern: dist-*
           merge-multiple: true
           path: assets
+      - name: Verify the recovered files are public on PyPI
+        if: needs.verify.outputs.qualified_run != ''
+        run: python3 scripts/registry/qualified-release.py pypi-verify "$TAG" assets
       - name: SHA256SUMS
         run: cd assets && sha256sum * > SHA256SUMS && cat SHA256SUMS
       - uses: actions/attest-build-provenance@v2
@@ -324,7 +355,7 @@ jobs:
           subject-path: assets/*
       - name: Release notes from CHANGELOG.md
         run: |
-          awk -v v="$VERSION" '$0 ~ "^## \\[?"v"\\]?" {p=1; next} /^## / {p=0} p' CHANGELOG.md > notes.md
+          git show "$SOURCE:CHANGELOG.md" | awk -v v="$VERSION" '$0 ~ "^## \\[?"v"\\]?" {p=1; next} /^## / {p=0} p' > notes.md
           test -s notes.md || echo "UMF $VERSION" > notes.md
       - run: gh release create "$TAG" assets/* --repo "$GITHUB_REPOSITORY" --verify-tag --title "UMF $VERSION" --notes-file notes.md
       # Releases created with GITHUB_TOKEN do not start other workflows; ask for the site rebuild explicitly.

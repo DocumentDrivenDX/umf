@@ -1,0 +1,59 @@
+name: Publish qualified UMF Codegen to PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      qualified_run_id:
+        description: Exact successful, qualified release workflow run ID
+        required: true
+        type: string
+      release_tag:
+        description: Exact release tag qualified by that run
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  publish:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment: pypi
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RUN_ID: ${{ inputs.qualified_run_id }}
+      RELEASE_TAG: ${{ inputs.release_tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Verify the exact qualified release run
+        shell: bash
+        run: python3 scripts/registry/qualified-release.py run "$RUN_ID" "$RELEASE_TAG"
+
+      - name: Download distributions from the qualified run
+        uses: actions/download-artifact@v4
+        with:
+          pattern: dist-pure
+          merge-multiple: true
+          run-id: ${{ inputs.qualified_run_id }}
+          github-token: ${{ github.token }}
+          path: assets
+
+      - name: Stage only the qualified umf-codegen distributions
+        id: stage
+        shell: bash
+        run: python3 scripts/registry/qualified-release.py pypi-stage "$RELEASE_TAG" assets publish-dist umf-codegen
+
+      - name: Publish through PyPI trusted publishing
+        if: steps.stage.outputs.publish == 'true'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: publish-dist
