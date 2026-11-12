@@ -29,6 +29,13 @@ async function capture(command:string[]){
 const wasmTarget=join(root,'target');
 const steps:[string,()=>Promise<void>][]=[
  ['static',async()=>{await mkdir(dist,{recursive:true});await cp(join(root,'site'),dist,{recursive:true});}],
+ ['addon',async()=>{
+  // The Node entry (explorer build, loader schemas, reference) loads the native addon.
+  await run(['cargo','build','--release','--locked','-p','umf-core-node','--features','native-postgresql'],{CARGO_TARGET_DIR:wasmTarget});
+  const library=process.platform==='darwin'?'libumf_core_node.dylib':'libumf_core_node.so';
+  await cp(join(wasmTarget,'release',library),join(root,'bindings/core/node/umf_core_node.node'));
+ }],
+ ['wasm',()=>run(['bun','scripts/build-reference-wasm.ts'],{CARGO_TARGET_DIR:wasmTarget})],
  ['visuals',()=>run(['bun','scripts/visuals/render-static.ts'])],
  ['demo',()=>run(['bun','build','docs/helix/05-deploy/microsite/demo.ts','--target','browser','--minify','--outfile',join(dist,'demo.js')])],
  ['explorer',()=>run(['bun','docs/helix/05-deploy/microsite/build-explorer.ts'])],
