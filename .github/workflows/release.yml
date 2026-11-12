@@ -127,45 +127,45 @@ jobs:
       - run: bun install --frozen-lockfile
       - name: umf-core wheel
         run: |
-          mkdir -p raw dist
+          mkdir -p raw assets
           python -m build --wheel --outdir raw python
           if [ "$RUNNER_OS" = Linux ]; then
             auditwheel show raw/*.whl
-            auditwheel repair --plat auto --only-plat --wheel-dir dist raw/*.whl
+            auditwheel repair --plat auto --only-plat --wheel-dir assets raw/*.whl
           else
-            cp raw/*.whl dist/
+            cp raw/*.whl assets/
           fi
-          ls -l dist
+          ls -l assets
       - name: Source distributions, umf-codegen and umf-access (pure Python, built once)
         if: matrix.platform == 'linux-x86_64'
         run: |
-          mkdir -p dist-pure
-          python -m build --sdist --outdir dist-pure python
-          python -m build --outdir dist-pure python/umf_codegen
-          python -m build --outdir dist-pure python/umf_access
-          ls -l dist-pure
+          mkdir -p assets-pure
+          python -m build --sdist --outdir assets-pure python
+          python -m build --outdir assets-pure python/umf_codegen
+          python -m build --outdir assets-pure python/umf_access
+          ls -l assets-pure
       - name: SDK tarball (Node/Bun native addon and browser WASM)
         run: |
           bun run build:sdk
-          cp .cache/sdk-distribution/umf-sdk.tgz "dist/umf-sdk-$VERSION-${{ matrix.sdk }}.tgz"
+          cp .cache/sdk-distribution/umf-sdk.tgz "assets/umf-sdk-$VERSION-${{ matrix.sdk }}.tgz"
       - name: CLI tarball
         run: |
           cargo build --release --locked -p umf-cli --features native-postgresql --target ${{ matrix.target }}
           name="umf-v$VERSION-${{ matrix.target }}"
           mkdir -p "stage/$name"
           cp "target/${{ matrix.target }}/release/umf" LICENSE.md LICENSE-MIT LICENSE-APACHE "stage/$name/"
-          tar -C stage -czf "dist/$name.tar.gz" "$name"
+          tar -C stage -czf "assets/$name.tar.gz" "$name"
       - uses: actions/upload-artifact@v4
         with:
           name: dist-${{ matrix.platform }}
-          path: dist/*
+          path: assets/*
           if-no-files-found: error
           retention-days: 7
       - uses: actions/upload-artifact@v4
         if: matrix.platform == 'linux-x86_64'
         with:
           name: dist-pure
-          path: dist-pure/*
+          path: assets-pure/*
           if-no-files-found: error
           retention-days: 7
 
@@ -210,13 +210,13 @@ jobs:
         with:
           pattern: dist-*
           merge-multiple: true
-          path: dist
+          path: assets
       - name: Fresh venv, wheels by path, README quickstart
         run: |
-          ls -l dist
+          ls -l assets
           python -m venv "$RUNNER_TEMP/venv"
-          core="$(ls dist/umf_core-$VERSION-${{ matrix.wheel }})"
-          "$RUNNER_TEMP/venv/bin/python" -m pip install "$core" "dist/umf_codegen-$VERSION-py3-none-any.whl" "dist/umf_access-$VERSION-py3-none-any.whl"
+          core="$(ls assets/umf_core-$VERSION-${{ matrix.wheel }})"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install "$core" "assets/umf_codegen-$VERSION-py3-none-any.whl" "assets/umf_access-$VERSION-py3-none-any.whl"
           "$RUNNER_TEMP/venv/bin/python" -m pip list
           # Run from an empty directory so the checkout cannot shadow the installed packages.
           mkdir "$RUNNER_TEMP/empty"
@@ -226,17 +226,17 @@ jobs:
         if: matrix.platform == 'linux-x86_64'
         run: |
           python -m venv "$RUNNER_TEMP/venv-sdist"
-          "$RUNNER_TEMP/venv-sdist/bin/python" -m pip install "dist/umf_core-$VERSION.tar.gz"
+          "$RUNNER_TEMP/venv-sdist/bin/python" -m pip install "assets/umf_core-$VERSION.tar.gz"
           cd "$RUNNER_TEMP" && "$RUNNER_TEMP/venv-sdist/bin/python" -c "import umf; print(umf.__version__)"
       - name: Fresh directory, SDK tarball
         run: |
           mkdir "$RUNNER_TEMP/sdk" && cd "$RUNNER_TEMP/sdk"
-          tar -xzf "$GITHUB_WORKSPACE/dist/umf-sdk-$VERSION-${{ matrix.sdk }}.tgz"
+          tar -xzf "$GITHUB_WORKSPACE/assets/umf-sdk-$VERSION-${{ matrix.sdk }}.tgz"
           node "$GITHUB_WORKSPACE/scripts/test-native-sdk-install.mjs" "$PWD/package"
       - name: CLI tarball
         run: |
           mkdir "$RUNNER_TEMP/cli" && cd "$RUNNER_TEMP/cli"
-          tar -xzf "$GITHUB_WORKSPACE/dist/umf-v$VERSION-${{ matrix.target }}.tar.gz"
+          tar -xzf "$GITHUB_WORKSPACE/assets/umf-v$VERSION-${{ matrix.target }}.tar.gz"
           "umf-v$VERSION-${{ matrix.target }}/umf" --help | head -5
 
   publish:
