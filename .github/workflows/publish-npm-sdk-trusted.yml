@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: UMF version with a reviewed npm archive in its immutable GitHub release
+        description: UMF version with an admitted npm archive
         type: string
         required: true
+      candidate_release_id:
+        description: Optional draft release ID for the admitted registry archive
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -22,7 +26,9 @@ jobs:
     timeout-minutes: 6
     environment: npm-core
     permissions:
-      contents: read
+      # GitHub requires write access to read a draft release. The token is
+      # passed to the archive download step only.
+      contents: write
       id-token: write
     steps:
       - uses: actions/checkout@v6
@@ -34,12 +40,14 @@ jobs:
           node-version: '24'
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
-      - name: Download the exact archive from its public release
+      - name: Download the exact admitted archive
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ inputs.version }}
-        run: python3 scripts/registry/publish_npm_sdk_trusted.py stage "$VERSION"
+          RELEASE_ID: ${{ inputs.candidate_release_id }}
+        run: python3 scripts/registry/publish_npm_sdk_trusted.py stage "$VERSION" --candidate-release-id "$RELEASE_ID"
       - name: Publish with the short-lived npm identity
         env:
           VERSION: ${{ inputs.version }}
-        run: python3 scripts/registry/publish_npm_sdk_trusted.py publish "$VERSION"
+          RELEASE_ID: ${{ inputs.candidate_release_id }}
+        run: python3 scripts/registry/publish_npm_sdk_trusted.py publish "$VERSION" --candidate-release-id "$RELEASE_ID"

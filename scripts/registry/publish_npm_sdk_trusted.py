@@ -7,7 +7,10 @@ from pathlib import Path
 import re
 import subprocess
 
-from publish_01011 import NPM_NAME, REPO, SHA256, check_archive, gh_api, npm_visible, require
+from publish_01011 import (
+    NPM_NAME, REPO, SHA256, check_archive, gh_api, npm_visible, release_admission,
+    require, stage as stage_draft,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 CANDIDATES = Path("registry-candidates")
@@ -73,10 +76,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("stage", "publish", "verify"))
     parser.add_argument("version")
+    parser.add_argument("--candidate-release-id")
     args = parser.parse_args()
-    source, record = admission(args.version)
+    if args.candidate_release_id:
+        qualified = release_admission("npm", args.version)
+        source = qualified["source"]
+        record, = qualified["archives"]
+    else:
+        source, record = admission(args.version)
     if args.command == "stage":
-        stage(source, record)
+        if args.candidate_release_id:
+            stage_draft([record], CANDIDATES, args.candidate_release_id,
+                        version=args.version, source=source)
+        else:
+            stage(source, record)
     elif args.command == "publish":
         publish(record)
     else:

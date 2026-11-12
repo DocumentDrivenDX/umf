@@ -1,4 +1,4 @@
-name: Publish locally qualified UMF 0.10.11 registry archives
+name: Publish locally qualified UMF registry archives
 
 on:
   workflow_dispatch:
@@ -11,9 +11,13 @@ on:
           - npm
           - crates.io
       candidate_release_id:
-        description: Numeric ID of the 0.10.11 registry candidate draft release
+        description: Numeric ID of the registry candidate draft release
         type: string
         required: true
+      version:
+        description: UMF version with committed registry archive digests
+        type: string
+        default: '0.10.11'
 
 # GitHub requires push access to read a draft release. The ephemeral token is
 # passed only to the draft-download step. Checkout does not retain credentials.
@@ -21,7 +25,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: umf-01011-registry-${{ inputs.registry }}
+  group: umf-registry-${{ inputs.version }}-${{ inputs.registry }}
   cancel-in-progress: false
 
 jobs:
@@ -44,11 +48,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_ID: ${{ inputs.candidate_release_id }}
-        run: python3 scripts/registry/publish_01011.py stage npm --release-id "$RELEASE_ID"
+          VERSION: ${{ inputs.version }}
+        run: python3 scripts/registry/publish_01011.py stage npm --release-id "$RELEASE_ID" --version "$VERSION"
       - name: Publish the exact npm tarball and verify public bytes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: python3 scripts/registry/publish_01011.py publish npm
+          VERSION: ${{ inputs.version }}
+        run: python3 scripts/registry/publish_01011.py publish npm --version "$VERSION"
 
   crates-io:
     if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main' && inputs.registry == 'crates.io'
@@ -64,8 +70,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_ID: ${{ inputs.candidate_release_id }}
-        run: python3 scripts/registry/publish_01011.py stage crates --release-id "$RELEASE_ID"
+          VERSION: ${{ inputs.version }}
+        run: python3 scripts/registry/publish_01011.py stage crates --release-id "$RELEASE_ID" --version "$VERSION"
       - name: Publish the exact crate archives and verify public bytes
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: python3 scripts/registry/publish_01011.py publish crates
+          VERSION: ${{ inputs.version }}
+        run: python3 scripts/registry/publish_01011.py publish crates --version "$VERSION"
