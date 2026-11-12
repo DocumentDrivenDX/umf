@@ -216,30 +216,30 @@
               {
                 "id": "column:0",
                 "name": "provider_id",
+                "extensions": {},
                 "description": "Unique provider identifier",
-                "scalarType": "string",
-                "extensions": {}
+                "scalarType": "string"
               },
               {
                 "id": "column:1",
                 "name": "provider_name",
+                "extensions": {},
                 "description": "Provider full name",
-                "scalarType": "string",
-                "extensions": {}
+                "scalarType": "string"
               },
               {
                 "id": "column:2",
                 "name": "provider_npi",
+                "extensions": {},
                 "description": "National Provider Identifier",
-                "scalarType": "string",
-                "extensions": {}
+                "scalarType": "string"
               },
               {
                 "id": "column:3",
                 "name": "state_code",
+                "extensions": {},
                 "description": "Provider state code",
-                "scalarType": "string",
-                "extensions": {}
+                "scalarType": "string"
               }
             ]
           }
@@ -471,30 +471,30 @@
                 {
                   "id": "column:0",
                   "name": "provider_id",
+                  "extensions": {},
                   "description": "Unique provider identifier",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:1",
                   "name": "provider_name",
+                  "extensions": {},
                   "description": "Provider full name",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:2",
                   "name": "provider_npi",
+                  "extensions": {},
                   "description": "National Provider Identifier",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:3",
                   "name": "state_code",
+                  "extensions": {},
                   "description": "Provider state code",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 }
               ]
             }
@@ -529,9 +529,9 @@
             "element": {
               "id": "column:0",
               "name": "provider_id",
+              "extensions": {},
               "description": "Unique provider identifier",
-              "scalarType": "string",
-              "extensions": {}
+              "scalarType": "string"
             },
             "includedBy": "match"
           }
@@ -33857,139 +33857,139 @@
             "namespace": "",
             "elements": [
               {
+                "extensions": {},
                 "id": "schema:1",
                 "name": "id",
-                "scalarType": "integer",
-                "extensions": {}
+                "scalarType": "integer"
               },
               {
+                "extensions": {},
                 "id": "schema:2",
                 "name": "unsigned",
-                "scalarType": "integer",
-                "extensions": {}
+                "scalarType": "integer"
               },
               {
+                "extensions": {},
                 "id": "schema:3",
                 "name": "amount",
-                "scalarType": "decimal",
-                "extensions": {}
+                "scalarType": "decimal"
               },
               {
+                "extensions": {},
                 "id": "schema:4",
-                "name": "profile",
-                "extensions": {}
+                "name": "profile"
               },
               {
+                "extensions": {},
                 "id": "schema:5",
                 "name": "label",
-                "scalarType": "string",
-                "extensions": {}
+                "scalarType": "string"
               },
               {
+                "extensions": {},
                 "id": "schema:6",
                 "name": "score",
-                "scalarType": "float",
-                "extensions": {}
+                "scalarType": "float"
               },
               {
+                "extensions": {},
                 "id": "schema:7",
-                "name": "items",
-                "extensions": {}
+                "name": "items"
               },
               {
+                "extensions": {},
                 "id": "schema:8",
-                "name": "list",
-                "extensions": {}
+                "name": "list"
               },
               {
+                "extensions": {},
                 "id": "schema:9",
                 "name": "element",
-                "scalarType": "integer",
-                "extensions": {}
+                "scalarType": "integer"
               },
               {
+                "extensions": {},
                 "id": "schema:10",
-                "name": "lookup",
-                "extensions": {}
+                "name": "lookup"
               },
               {
+                "extensions": {},
                 "id": "schema:11",
-                "name": "key_value",
-                "extensions": {}
+                "name": "key_value"
               },
               {
+                "extensions": {},
                 "id": "schema:12",
                 "name": "key",
-                "scalarType": "integer",
-                "extensions": {}
+                "scalarType": "integer"
               },
               {
+                "extensions": {},
                 "id": "schema:13",
                 "name": "value",
-                "scalarType": "string",
-                "extensions": {}
+                "scalarType": "string"
               },
               {
+                "extensions": {},
                 "id": "schema:14",
-                "name": "matrix",
-                "extensions": {}
+                "name": "matrix"
               },
               {
+                "extensions": {},
                 "id": "schema:15",
-                "name": "list",
-                "extensions": {}
+                "name": "list"
               },
               {
+                "extensions": {},
                 "id": "schema:16",
-                "name": "element",
-                "extensions": {}
+                "name": "element"
               },
               {
+                "extensions": {},
                 "id": "schema:17",
-                "name": "list",
-                "extensions": {}
+                "name": "list"
               },
               {
+                "extensions": {},
                 "id": "schema:18",
                 "name": "element",
-                "scalarType": "integer",
-                "extensions": {}
+                "scalarType": "integer"
               },
               {
+                "extensions": {},
                 "id": "schema:19",
                 "name": "stamp",
-                "scalarType": "timestamp",
-                "extensions": {}
+                "scalarType": "timestamp"
               },
               {
+                "extensions": {},
                 "id": "schema:20",
                 "name": "local",
-                "scalarType": "timestamp",
-                "extensions": {}
+                "scalarType": "timestamp"
               },
               {
+                "extensions": {},
                 "id": "schema:21",
                 "name": "day",
-                "scalarType": "date",
-                "extensions": {}
+                "scalarType": "date"
               },
               {
+                "extensions": {},
                 "id": "schema:22",
                 "name": "clock",
-                "scalarType": "time",
-                "extensions": {}
+                "scalarType": "time"
               },
               {
+                "extensions": {},
                 "id": "schema:23",
                 "name": "bytes",
-                "scalarType": "binary",
-                "extensions": {}
+                "scalarType": "binary"
               },
               {
+                "extensions": {},
                 "id": "schema:24",
                 "name": "small",
-                "scalarType": "integer",
-                "extensions": {}
+                "scalarType": "integer"
               }
             ]
           }
@@ -34037,139 +34037,139 @@
               "namespace": "",
               "elements": [
                 {
+                  "extensions": {},
                   "id": "schema:1",
                   "name": "id",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "scalarType": "integer"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:2",
                   "name": "unsigned",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "scalarType": "integer"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:3",
                   "name": "amount",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "scalarType": "decimal"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:4",
-                  "name": "profile",
-                  "extensions": {}
+                  "name": "profile"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:5",
                   "name": "label",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:6",
                   "name": "score",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "scalarType": "float"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:7",
-                  "name": "items",
-                  "extensions": {}
+                  "name": "items"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:8",
-                  "name": "list",
-                  "extensions": {}
+                  "name": "list"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:9",
                   "name": "element",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "scalarType": "integer"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:10",
-                  "name": "lookup",
-                  "extensions": {}
+                  "name": "lookup"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:11",
-                  "name": "key_value",
-                  "extensions": {}
+                  "name": "key_value"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:12",
                   "name": "key",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "scalarType": "integer"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:13",
                   "name": "value",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:14",
-                  "name": "matrix",
-                  "extensions": {}
+                  "name": "matrix"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:15",
-                  "name": "list",
-                  "extensions": {}
+                  "name": "list"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:16",
-                  "name": "element",
-                  "extensions": {}
+                  "name": "element"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:17",
-                  "name": "list",
-                  "extensions": {}
+                  "name": "list"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:18",
                   "name": "element",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "scalarType": "integer"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:19",
                   "name": "stamp",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "scalarType": "timestamp"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:20",
                   "name": "local",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "scalarType": "timestamp"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:21",
                   "name": "day",
-                  "scalarType": "date",
-                  "extensions": {}
+                  "scalarType": "date"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:22",
                   "name": "clock",
-                  "scalarType": "time",
-                  "extensions": {}
+                  "scalarType": "time"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:23",
                   "name": "bytes",
-                  "scalarType": "binary",
-                  "extensions": {}
+                  "scalarType": "binary"
                 },
                 {
+                  "extensions": {},
                   "id": "schema:24",
                   "name": "small",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "scalarType": "integer"
                 }
               ]
             }
@@ -34202,10 +34202,10 @@
             "namespace": "",
             "path": "/modules/1/elements/1",
             "element": {
+              "extensions": {},
               "id": "schema:2",
               "name": "unsigned",
-              "scalarType": "integer",
-              "extensions": {}
+              "scalarType": "integer"
             },
             "includedBy": "match"
           }
