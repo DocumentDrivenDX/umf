@@ -61,7 +61,7 @@ def publish(record):
     version = subprocess.check_output(["npm", "--version"], text=True).strip()
     match = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)(?:[-+].*)?", version)
     require(match and tuple(map(int, match.groups())) >= (11, 5, 1), "npm CLI 11.5.1 or later is required")
-    subprocess.run(["npm", "publish", str(archive), "--access=public", "--ignore-scripts",
+    subprocess.run(["npm", "publish", str(archive.resolve()), "--access=public", "--ignore-scripts",
                     "--registry=https://registry.npmjs.org"], check=True, env=environment)
     if npm_visible(record):
         print(f'Verified public {record["file"]}')

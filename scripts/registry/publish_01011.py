@@ -258,7 +258,7 @@ def main():
             if not visible(record):
                 if args.registry == "npm":
                     require(os.environ.get("NODE_AUTH_TOKEN"), "Set the npm-core environment's NPM_TOKEN secret")
-                    subprocess.run(["npm", "publish", str(archive), "--access=public", "--ignore-scripts",
+                    subprocess.run(["npm", "publish", str(archive.resolve()), "--access=public", "--ignore-scripts",
                                     "--registry=https://registry.npmjs.org"], check=True)
                 else:
                     upload_crate(payloads[archive.name], record)
