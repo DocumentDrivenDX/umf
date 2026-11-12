@@ -248,18 +248,23 @@ jobs:
       - name: Reference site (the reference tests read the built site)
         run: bun run build:reference && bun run build:docs
       - name: Every Bun test file except the quarantined ones
+        if: ${{ !cancelled() }}
         run: bun scripts/run-tests.ts --jobs 4 --keep-going --exclude-file scripts/known-failures.txt
       - name: Quarantined Bun test files (informational, see scripts/known-failures.txt)
+        if: ${{ !cancelled() }}
         continue-on-error: true
         run: bun scripts/run-tests.ts --jobs 4 --keep-going --only-file scripts/known-failures.txt
       - name: Browser suites
+        if: ${{ !cancelled() }}
         run: |
           bun run test:browser
           bun run test:reference:browser
           bun run test:visuals:browser
       - run: bun run test:sdk
+        if: ${{ !cancelled() }}
       # rdf_parity's blank-node case is a known failure (see the PR); every other test runs.
       - run: cargo test --locked --workspace -- --skip production_rdf_wire_matches_frozen_predecessor_outcomes
+        if: ${{ !cancelled() }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
