@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
+import {expectAccessorRefusal} from './admission-refusal';
 import {validateDocument} from '../../src/validation/document';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {type Document,SCALAR_TYPES} from '../../src/model/types';
@@ -31,5 +32,5 @@ test('unknown future kind and other open metadata survive without semantic compl
 test('future envelope versions and unsafe getter inputs cannot be interpreted',()=>{
  const doc=document('0.10.0',{});expect(validateDocument({...doc,umf:'0.11.0'} as any).valid).toBe(false);
  let calls=0;Object.defineProperty(doc.modules[0]!.elements[0]!,'kind',{enumerable:true,get(){calls++;return 'field';}});
- expect(validateDocument(doc).valid).toBe(false);expect(calls).toBe(0);
+ expectAccessorRefusal(()=>validateDocument(doc));expect(calls).toBe(0);
 });

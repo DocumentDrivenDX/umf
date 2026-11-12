@@ -6,7 +6,7 @@ import json
 import math
 import re
 import struct
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal, InvalidOperation, getcontext
 from uuid import UUID
 
@@ -425,3 +425,124 @@ def _read_frame_cardinality_rust(kind, row_count, bound):
     if refusal is None:
         raise SessionError('native read-frame capability returned an invalid result')
     raise SessionError(refusal)
+
+
+def reason_code(error: BaseException) -> str:
+    """Map native failures to the fixed public response vocabulary."""
+    if getattr(error, "public_code", None) == "WRITE_OUTCOME_UNKNOWN":
+        return "WRITE_OUTCOME_UNKNOWN"
+    current: BaseException | None = error
+    seen: set[int] = set()
+    for _ in range(8):
+        if current is None or id(current) in seen:
+            break
+        seen.add(id(current))
+        code = getattr(current, "sqlstate", None) or getattr(current, "pgcode", None)
+        if code == "42501":
+            return "DENIED"
+        if code in {"23505", "23503"}:
+            return "CONFLICT"
+        if code in {"23502", "22001", "22003", "22P02"}:
+            return "INVALID"
+        if code == "23514":
+            return "PRECONDITION_FAILED"
+        if code == "22012":
+            return "LIMIT_EXCEEDED"
+        message = str(current)
+        if "cursor" in message:
+            return "INVALID_CURSOR"
+        if message in {"required row not found", "native single-row cardinality exceeded"}:
+            return "PRECONDITION_FAILED"
+        if message == "native result row bound exceeded":
+            return "TOO_MANY_ROWS"
+        if "subject has no grant" in message:
+            return "DENIED"
+        if message.endswith("-mismatch") or message in {
+            "native write authority changed during execution",
+            "native write authority changed while waiting",
+        }:
+            return "SCHEMA_MISMATCH"
+        if message in {
+            "declared read compilation refused",
+            "declared read source check refused",
+            "operation is not declared in this module",
+            "declared query result type differs",
+            "declared query description unavailable",
+        }:
+            return "INVALID"
+        current = (
+            getattr(current, "orig", None)
+            or current.__cause__
+            or current.__context__
+        )
+    return "BUSY"
+
+
+def tagged_value_from_native(value, output):
+    """Return an exact UMF literal for positional generated-read frames."""
+    decoded = value_from_native(value, output)
+    if value is None:
+        return None
+    carrier = output["carrier"]
+    if carrier in ("boolean", "string"):
+        return {carrier: decoded}
+    return decoded
+
+
+def generated_read_value_from_native(value, output, native_type, oid):
+    """Decode a direct PostgreSQL cell using its issued native type and exact OID."""
+    if value is None:
+        if output.get("nullable") is True:
+            return None
+        raise SessionError("native result omitted a required value")
+    kind = native_type.get("kind")
+    carrier = output.get("carrier")
+    expected = {
+        "boolean": (16, "boolean"),
+        "text": (25, "string"),
+        "varchar": (1043, "string"),
+        "char": (1042, "string"),
+        "int2": (21, "integer"),
+        "int4": (23, "integer"),
+        "int8": (20, "integer"),
+        "numeric": (1700, "decimal"),
+        "date": (1082, "date"),
+        "timestamptz": (1184, "timestamp"),
+        "uuid": (2950, "uuid"),
+        "bytea": (17, "bits128"),
+    }.get(kind)
+    if expected is None or expected != (oid, carrier):
+        raise SessionError("native result type differs from the issued native column")
+    if kind == "boolean" and type(value) is bool:
+        return {"boolean": value}
+    if kind in ("text", "varchar", "char") and type(value) is str:
+        value.encode("utf-8", errors="strict")
+        return {"string": value}
+    if kind in ("int2", "int4", "int8") and type(value) is int:
+        bounds = {
+            "int2": (-(1 << 15), (1 << 15) - 1),
+            "int4": (-(1 << 31), (1 << 31) - 1),
+            "int8": (-(1 << 63), (1 << 63) - 1),
+        }[kind]
+        if bounds[0] <= value <= bounds[1]:
+            return {"integerToken": str(value)}
+    if kind == "numeric" and type(value) is Decimal and value.is_finite():
+        return {"decimalToken": str(value)}
+    if kind == "date" and type(value) is date:
+        return {"date": value.isoformat()}
+    if (
+        kind == "timestamptz"
+        and type(value) is datetime
+        and value.utcoffset() is not None
+    ):
+        normalized = value.astimezone(UTC)
+        return {
+            "timestamp": normalized.isoformat(timespec="microseconds").replace(
+                "+00:00", "Z"
+            )
+        }
+    if kind == "uuid" and type(value) is UUID:
+        return {"uuid": str(value)}
+    if kind == "bytea" and type(value) is bytes and len(value) == 16:
+        return {"bits128Hex": value.hex()}
+    raise SessionError("native result value differs from the issued native carrier")

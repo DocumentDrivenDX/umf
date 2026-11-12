@@ -150,3 +150,40 @@ def verify_role(row: object, expected: str, session_user: str | None = None) -> 
             or row[2] is not False or row[3] is not False):
         raise SessionError("effective role differs or bypasses native row security")
     return row[1]
+
+
+GeneratedNativeErrorCode = Literal[
+    "DENIED",
+    "INVALID",
+    "INVALID_CURSOR",
+    "UNSUPPORTED",
+    "LIMIT_EXCEEDED",
+    "SCHEMA_MISMATCH",
+    "PRECONDITION_FAILED",
+    "BUSY",
+]
+
+
+class GeneratedNativeError(SessionError):
+    """A sanitized fixed-code refusal from a generated native read."""
+
+    __slots__ = ("_code",)
+
+    def __init__(self, code: GeneratedNativeErrorCode) -> None:
+        if code not in {
+            "DENIED",
+            "INVALID",
+            "INVALID_CURSOR",
+            "UNSUPPORTED",
+            "LIMIT_EXCEEDED",
+            "SCHEMA_MISMATCH",
+            "PRECONDITION_FAILED",
+            "BUSY",
+        }:
+            raise ValueError("invalid generated native error code")
+        self._code = code
+        super().__init__(code)
+
+    @property
+    def code(self) -> GeneratedNativeErrorCode:
+        return self._code

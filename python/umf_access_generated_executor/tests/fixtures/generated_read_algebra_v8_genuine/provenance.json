@@ -1,0 +1,51 @@
+{
+  "profile": "umf.generated-read-algebra-v8-genuine-admission-fixtures/1",
+  "sourceCandidateReport": "/private/tmp/umf-join8-profile8-artifacts-20261105/candidate-report.json",
+  "candidateReportSha256": "195a972e3614f8f541fb11a4671477067233bfc69a1dfd06f92abcdd3121e87b",
+  "provenanceStatement": "Exact generated artifact files and host reference inputs copied without modification from Weft67/Build28 task-local packaging candidate. Receipt is local task evidence, not production trust. No generated descriptor patch, native execution, database connection, or SQL execution.",
+  "packages": {
+    "umf-access": "0.1.0.dev18",
+    "umf-access-build": "0.1.0.dev28",
+    "umf-access-generated-executor": "0.1.0a10",
+    "umf-codegen": "0.1.0a8",
+    "weft-sql": "0.4.67.dev1"
+  },
+  "codegenPackageInventorySha256": "8c01f37b5b28a17cacf632cbb6f0cd83a1c99120f3d1926924be2396f9664fdb",
+  "weftWheelSha256": "6a7ced914f99467b02aa0b49af10153d1b22dbc8156702432ed6400e2ddf6bbd",
+  "weftBinarySha256": "b59282c79f1853ab1566cdefb864557dfd63620ffbbeeb9609c77e7ffbbed53d",
+  "fixtures": [
+    {
+      "name": "root-positive",
+      "acceptedCandidateFolder": "/private/tmp/umf-join8-profile8-artifacts-20261105/root-positive",
+      "sourceSha256": "a0489fea5ce87b3ca294007a9987d681ebefa07d52ed26beb83f4f76b55dcb5d",
+      "artifactDigest": "10a01ec8848b9518cf39af31a3fe605833049732b6226de616c64d5e332270d9",
+      "manifestSha256": "619e5b02f40dd7e9ca05b8c02b08571505568928cca68bc416231def4af1d4d7",
+      "algebraSha256": "b7fdb33e8ae7865f498631041cf6a5ff58daa1c772cd3b48639d178728febf4a",
+      "nativeSourceSha256": "a482c0a2929f14883c334bad9e7b7bd2835797338e55efadaab76c55acc18e8e",
+      "receiptDigest": "65261c0f3a85501beacc0aab9d1bb5fa27598b414a18637562d3aacc228abd41",
+      "targetBindingDigest": "03b686dbda489d3d5b795091add476a53fce2e06d625d058d8952722cff029f1"
+    },
+    {
+      "name": "nonpk-source-fk",
+      "acceptedCandidateFolder": "/private/tmp/umf-join8-profile8-artifacts-20261105/nonpk-source-fk",
+      "sourceSha256": "e70064ba804f3fc55fc999a71ac421f35aa96b327aca115a6350560712ffe91d",
+      "artifactDigest": "23194bcd1862b536e22356f858278f2a295cb525ca5966d656baaea6e3c608fd",
+      "manifestSha256": "9ddd785179d08932c9e31246f4553875c50d51d8a7cb97037bb459ad984d1b9d",
+      "algebraSha256": "1f0cfea32bbd18a87320e1a7b7ac4dbb4bada0a0784afe9461f4d9279af10de8",
+      "nativeSourceSha256": "565022b695289d7106049f81fe10fa98ceb34222d75f645a06bf00946d4780de",
+      "receiptDigest": "7756ca6a79add29586fdc5d5638a81a0687229ff219d53ef6d6781ced2ff12ab",
+      "targetBindingDigest": "42f3db2a9362aba8357fda6b32ee9c77d7bb244a63803d09d1d4653892e7904a"
+    },
+    {
+      "name": "same-name-fields",
+      "acceptedCandidateFolder": "/private/tmp/umf-join8-profile8-artifacts-20261105/same-name-fields",
+      "sourceSha256": "e31d5c9740f9a53ca686aa9852ba76667778dd68ceaedbc8920c557575d0ff86",
+      "artifactDigest": "4f812db1d2c46b1972e80a7471e1aa5b013306c341980c190d114b2f8476a789",
+      "manifestSha256": "df2b5ac37d69feea758a74744ecc252cb7569edd8e4bd9aa1781587ac0adb754",
+      "algebraSha256": "9ceeea3703e351a6310ef4915d6258bc6e9735e532f6bb56141dfc1c60cf697a",
+      "nativeSourceSha256": "ec94d421a22265e09eed46e7d1b248cfceef29c5b2678aad63accb33704193aa",
+      "receiptDigest": "4819536deac598c977c52e24a591b1d0477c76b72e9ad23dc5e6f68e4e4b5f24",
+      "targetBindingDigest": "5577dc9e0fe3400b344d8ec5539aaa80b43f7320337ff5cbd4c80e820fb04c75"
+    }
+  ]
+}

@@ -192,10 +192,14 @@ jobs:
           python -m pip install ./python ./python/umf_codegen
           # umf-access still pins its umf-core release; install it against the source-built core.
           python -m pip install --no-deps ./python/umf_access
+          python -m pip install --no-deps ./python/umf_access_generated_executor
           python -m pip install 'pydantic>=2.13,<3' 'typing-extensions>=4.16,<5'
       - run: ruff check --select E9,F63,F7,F82 python  # real errors only (syntax, undefined names); style rules are not gated
       # xdist, one worker per file: the serial run took 13-15 minutes.
       - run: python -m pytest -q -p no:cacheprovider -n 4 --dist loadfile python/tests python/umf_codegen/tests python/umf_access/tests tools/tests
+      # The generated-access executor package (formerly its own workflow); stdlib only.
+      - working-directory: python/umf_access_generated_executor
+        run: PYTHONPATH=src python -m unittest discover -s tests
 
   # Slow suites: the full Bun inventory, browsers, WASM/SDK packaging, every Rust test.
   nightly:
