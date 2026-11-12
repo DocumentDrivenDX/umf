@@ -1,31 +1,19 @@
 # Working in UMF
 
-This repository uses HELIX. Read `.helix.yml` and engage the installed
-`helix` skill for governed planning and documentation work.
+UMF is a metamodel and schema interchange fabric. The Rust workspace (`crates/`) owns document validation,
+registry semantics and adapters; `bindings/` expose it to Python (PyO3), Node/Bun (native addon) and browsers (WASM);
+`src/` is the TypeScript host layer; `python/` holds `umf-core`, `umf_codegen` and `umf_access`; `spec/` and
+`fixtures/` are the specification data; `docs/helix/` has the requirements, design (ADRs, contracts) and guides.
 
-- Keep project artifacts under `docs/helix/` in the matching activity.
-- Resolve the graph, templates, and prompts from the installed HELIX plugin;
-  do not copy the methodology catalog into this repository.
-- Read governing upstream artifacts before authoring downstream documents.
-- Preserve artifact IDs, frontmatter, and deliberate `ddx.links` traceability.
-- Record unknowns explicitly. Do not infer UMF's purpose from its name.
-
-Start with `docs/helix/README.md`. Product direction, functional requirements,
-and cross-cutting requirements are captured separately. Architecture and the
-project test plan target a JSON Schema + Protobuf spike. The core
-envelope and JSON Schema Draft 2020-12 adapter have Bun, Chromium and scoped
-independent native-oracle evidence. A Protobuf descriptor foundation also has
-compiler and browser evidence, optional WASM source import and native behavior
-checks. Edited-source round trips also pass; Edition 2024 source operations and broader
-adapters remain unfinished.
-Read CONTRACT-001 through CONTRACT-011 and the
-implementation plan execution evidence before extending the implementation.
-
-Never silently lose meaning. Preserve native semantics and unknown extension
-content, make cross-system loss explicit, and qualify every support claim with
-its versions, subset, and evidence. Prefer TypeScript compiled to browser-compatible
-JavaScript; use Bun for development and testing (ADR-002). Keep Bun/Node-specific
-APIs outside the browser library and verify behavior in a real browser.
-DDD is an early semantic extension, not UMF's governing worldview. Core plus
-extensions must support programmatic metadata consumers and preserve competing
-storage/compute meanings, including content not yet understood.
+- Never silently lose meaning: preserve native semantics and unknown content, and make cross-system loss explicit.
+- Tests: `cargo test --locked`; `python -m pytest python/tests`; Bun tests need the native addon, so build it first
+  (`cargo build -p umf-core-node --features native-postgresql`, copy the library to
+  `bindings/core/node/umf_core_node.node`) and run `bun scripts/run-tests.ts --exclude-file scripts/slow-tests.txt`.
+- CI is `.github/workflows/ci.yml` (Linux only; slow suites run nightly). Keep it green; do not skip tests to make
+  it green without a one-line reason in `scripts/known-failures.txt`.
+- Do not commit run output, receipts, evidence, screenshots-as-proof or built artifacts; CI keeps run output as
+  workflow artifacts. A size guard fails the build for large tracked files.
+- Versions: `python scripts/set-version.py X.Y.Z` edits every manifest and regenerates derived files; then
+  `python scripts/check-release-versions.py --access`.
+- Releases: push tag `umf-vX.Y.Z` from main; `.github/workflows/release.yml` does the rest. Never publish from a laptop.
+- Docs: edit sources under `docs/helix/` and `site/`; `pages.yml` builds the site. Keep claims to what CI tests.

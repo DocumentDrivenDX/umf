@@ -511,7 +511,7 @@ record-to-table identity convention within the same pack/version.
 ## Praxis request: typed SDK joins and aggregates (2026-10-15)
 
 Source: owner-supplied Praxis feature request in this chat. Capture status:
-accepted capability; the first implementation has [scoped execution evidence](../04-build/evidence/typed-reporting/README.md). Praxis hosts first-party apps in a Databricks App,
+accepted capability; the first implementation has scoped execution evidence. Praxis hosts first-party apps in a Databricks App,
 with each app owning tables declared in UMF in its own PostgreSQL 18 schema.
 Prebill needs report reads and totals; named statements are the current stopgap.
 The SDK was located in checkout `39bf/umf`, subsequently archived as source snapshot `8c9d0fb6`; its implementation foundation is restored here.

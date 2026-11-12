@@ -72,7 +72,7 @@ Use the exact finite item/byte/node/deadline/result-capacity bounds in the contr
 
 ## Testing
 
-[STP-903](../../03-test/test-plans/STP-903-frozen-action-manifests.md) allocates each criterion once to a planned test with canonical citation. Command: `bun test tests/actions-manifest.test.ts`. Current scoped portable replay evidence is retained under `docs/helix/04-build/evidence/bulk-update/`; native execution remains unqualified. Independent exact effects/refusals are the oracle, not generated output snapshots alone.
+STP-903 allocates each criterion once to a planned test with canonical citation. Command: `bun test tests/actions-manifest.test.ts`. Current scoped portable replay evidence is retained under `docs/helix/04-build/evidence/bulk-update/`; native execution remains unqualified. Independent exact effects/refusals are the oracle, not generated output snapshots alone.
 
 ## Migration & Rollback
 
@@ -93,7 +93,7 @@ US-903 additionally owns assessActionManifest, validateBulkOutcome, the complete
 
 ## Initial implementation execution
 
-Implemented public manifest inspection/assessment and bulk result validation in `manifests.ts`, `bulk.ts`, `manifest-types.ts` and `framed-json.ts`. Reusable original tx result shapes are in `tx-results.schema.json`; manifest/inspection/bulk resources accompany them. [US-903 evidence](../../04-build/evidence/bulk-update/us903-implementation.md) records the framing/core distinction, negative controls, browser/Python verification and independent review. Native admission/authority/execution remains separate.
+Implemented public manifest inspection/assessment and bulk result validation in `manifests.ts`, `bulk.ts`, `manifest-types.ts` and `framed-json.ts`. Reusable original tx result shapes are in `tx-results.schema.json`; manifest/inspection/bulk resources accompany them. US-903 evidence records the framing/core distinction, negative controls, browser/Python verification and independent review. Native admission/authority/execution remains separate.
 
 ## Construction implementation boundary — 2026-10-15
 

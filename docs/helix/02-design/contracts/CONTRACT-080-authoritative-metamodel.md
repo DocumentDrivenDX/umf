@@ -646,7 +646,7 @@ false-schema diagnostics and exact target controls remain separately qualified.
 
 
 The exact unordered-extra rule is recorded as
-[R2-SOL-CORRECTION-003](../../04-build/evidence/rust-migration/r2/approved-python-schema-unordered-extras-correction.json),
+R2-SOL-CORRECTION-003,
 with unchanged seed-dependent predecessor evidence and a separately frozen
 insertion-order target corpus. Only schema-valued `additionalProperties` replaces
 native `set(extras)` traversal; false-schema aggregates retain deterministic
@@ -666,14 +666,14 @@ metadata from path spellings. These are Python record fields; public core
 Diagnostic and Value/wire shapes remain unchanged.
 
 
-[R2-SOL-PYTHON-SCHEMA-ERROR-ORIGIN-001](../../04-build/evidence/rust-migration/r2/sol-python-schema-error-origin-decision.json)
+R2-SOL-PYTHON-SCHEMA-ERROR-ORIGIN-001
 qualifies the exposed validator, validator_value, instance and path fields. The
 normalized Rust error envelope remains in use; exact native exception class,
 message formatting and the entire jsonschema exception API are not claimed.
 
 
 The supplemental
-[subject-phase receipt](../../04-build/evidence/rust-migration/r2/sol-python-schema-error-subject-phases.json)
+subject-phase receipt
 separates 11 construction refusals from two legally admitted Draft 3 schemas whose
 boolean reference targets raise at evaluation. Preserve that phase. The latter
 maps to `PYTHON_SCHEMA_EVALUATION` with deterministic reason `Draft 3 reference

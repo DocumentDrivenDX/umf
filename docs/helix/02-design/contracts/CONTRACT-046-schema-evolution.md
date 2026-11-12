@@ -143,7 +143,7 @@ retargeting the primary key. A cycle is reported but is not itself an error.
 
 The owner's field migration request is planned in
 [SD-007](../solution-designs/SD-007-schema-migrations.md) and the
-[migration build plan](../../04-build/schema-migration-plan.md). This contract
+migration build plan. This contract
 remains a read-only comparison interface. Its report is an input to migration
 planning, never execution authority or proof that stored data satisfies a target.
 A separate migration contract must bind intent, backend capabilities, data-check

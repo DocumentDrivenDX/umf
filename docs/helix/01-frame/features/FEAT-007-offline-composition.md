@@ -69,7 +69,7 @@ way to identify both type and revision. Its data execution remains outside UMF.
 
 Owner direction, 2026-10-21, extends FR-18 planning to the complete field-change
 lifecycle. These requirements govern [SD-007](../../02-design/solution-designs/SD-007-schema-migrations.md)
-and the [migration build plan](../../04-build/schema-migration-plan.md).
+and the migration build plan.
 
 - COMP-06: Describe additions, optional-to-required changes, removals and type
   changes using stable identities and exact before/after sources. Retain unknown

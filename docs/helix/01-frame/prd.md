@@ -597,7 +597,7 @@ Acceptance sketches:
 | READ-ROLE | Two caller roles with different visible orders/customers; joins and grouped totals; query exceeding timeout or row cap | Each sees only role-visible data; same caller connection/role throughout; typed timeout; capped results; no required app-schema stored code |
 | READ-TYPE | Full generated package and positive/negative join/aggregate examples | ty accepts package; all three checkers accept valid uses and reject each intended misuse |
 
-Delivery references: WR-B7 (schema-neutral binding) and WR-A14 (relationship join lowering) are in the typed SDK's Weft requirements in checkout `20bc/umf`. US-081-AC9 checks the whole generated commerce package on Python 3.11 under ty, pyright and mypy; generated joins are included. The first implementation and its qualified limits are recorded in [reporting execution evidence](../04-build/evidence/typed-reporting/README.md). This is a refinement of FR-53, with FR-52 typing and FR-54 execution obligations. The owner-selected three-edge limit supersedes the earlier four-edge proposal for this slice.
+Delivery references: WR-B7 (schema-neutral binding) and WR-A14 (relationship join lowering) are in the typed SDK's Weft requirements in checkout `20bc/umf`. US-081-AC9 checks the whole generated commerce package on Python 3.11 under ty, pyright and mypy; generated joins are included. The first implementation and its qualified limits are recorded in reporting execution evidence. This is a refinement of FR-53, with FR-52 typing and FR-54 execution obligations. The owner-selected three-edge limit supersedes the earlier four-edge proposal for this slice.
 
 ## Acceptance Test Sketches
 
@@ -793,10 +793,10 @@ Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.act
 
 | Story | Owned output | Design/test allocation |
 | --- | --- | --- |
-| [US-902](user-stories/US-902-portable-action-plans.md) | 6 planned criteria: bulk-update-portable-action-plans | [TD-902](../02-design/technical-designs/TD-902-portable-action-plans.md) / [STP-902](../03-test/test-plans/STP-902-portable-action-plans.md) |
-| [US-903](user-stories/US-903-frozen-action-manifests.md) | 6 planned criteria: bulk-update-frozen-action-manifests | [TD-903](../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../03-test/test-plans/STP-903-frozen-action-manifests.md) |
+| [US-902](user-stories/US-902-portable-action-plans.md) | 6 planned criteria: bulk-update-portable-action-plans | [TD-902](../02-design/technical-designs/TD-902-portable-action-plans.md) / STP-902 |
+| [US-903](user-stories/US-903-frozen-action-manifests.md) | 6 planned criteria: bulk-update-frozen-action-manifests | [TD-903](../02-design/technical-designs/TD-903-frozen-action-manifests.md) / STP-903 |
 
-The [machine-readable bulk allocation](../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
+The machine-readable bulk allocation is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
 
 ## Browser-local action demo — owner clarification, 2026-10-15
 

@@ -24,7 +24,7 @@ ddx:
 The initial implementation has scoped Bun, browser and native carrier evidence.
 The later uuid-model1 profile passes separate qualified ideal-admission and
 five-priority delivery gates; native equivalence and downstream adoption remain
-separate. See [adapter qualification](../../04-build/evidence/uuid-adapter-completion.md).
+separate. See adapter qualification.
 
 ## Purpose
 
@@ -314,7 +314,7 @@ extension responsibility; opaque bit preservation is complete without it.
 
 The following bounded APIs refine the implementation interface without widening
 native execution claims. Evidence and remaining delivery gates are recorded in
-[the execution record](../../04-build/evidence/uuid-implementation.md).
+the execution record.
 
 `SCALAR_TYPES` retains the earlier nine-family inventory; both versioned
 inventories are immutable at runtime as well as readonly in TypeScript. `SCALAR_TYPES_V09` and

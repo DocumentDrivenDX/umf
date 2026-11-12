@@ -6,4 +6,4 @@ Native metadata and original binary retention only. The public CT slice is an in
 
 Use the shared `export-domain-pack.ts --include-sources` command with this pack, then TableSpec `sample-data ingest`. Sources and schemas are local and checksum-pinned. Remote/licensed references remain metadata.
 
-See `licenses/NOTICE.txt`, source provenance and [governed evidence](../../../docs/helix/04-build/evidence/medical-subpacks.md).
+See `licenses/NOTICE.txt`, source provenance and governed evidence.

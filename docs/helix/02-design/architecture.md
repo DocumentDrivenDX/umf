@@ -43,7 +43,7 @@ entire implemented scope.
 This inventory describes the implementation merged through `0f20d2e4` and cites scoped feature evidence.
 The [integrated acceptance](../../../fixtures/validation/relationship-integrated-acceptance-evidence.json) records the fresh native/browser replay, repository regression and six separate concept gates. Relationship ideal admission and qualified five-system delivery pass independently; native equivalence remains unclaimed.
 Subsequent core 0.8.0 changes have separate
-[scoped execution evidence](../04-build/evidence/schema-properties-core.md#current-only-key-tuple-correction-2026-10-06).
+scoped execution evidence.
 The earlier integrated acceptance qualifies its recorded source; fresh repository
 regression and native qualification after API simplification and the current-only
 Key tuple correction remain incomplete.
@@ -69,7 +69,7 @@ Logical Field retirement, physical deletion and historical purge are separate.
 Type conversion requires explicit meaning/loss rules and complete target checks.
 No shared online, atomic or reversible guarantee is inferred across backends.
 CONTRACT-046 remains observational; CONTRACT-081 governs the first table host
-profile. The [migration plan](../04-build/schema-migration-plan.md) sequences
+profile. The migration plan sequences
 exact contracts, module/checker adoption and native qualification before support.
 
 | Participant | Relationship to UMF | Boundary |
@@ -198,7 +198,7 @@ The schemas in [spec/core](../../../spec/core/) and operations preserve older
 versions through explicit migration/rollback receipts rather than silently
 reinterpreting earlier documents. These envelopes remain experimental. Field
 through Key have dated admission/five-system evidence, including the
-[Key admission record](../04-build/evidence/key-gate-admission.md).
+Key admission record.
 Relationship [core acceptance](../../../fixtures/validation/relationship-core-acceptance-evidence.json)
 and individual bindings are delivered. The separate [relationship gate](../../../fixtures/validation/relationship-conformance.json) admits the authored ideal and qualified five-priority delivery with explicit residuals and refusals.
 
@@ -327,10 +327,10 @@ evidence. Their native classification and authored projection remain separate:
 | Target and pinned evidence | Delivered relationship subset and limits |
 | --- | --- |
 | [TableSpec revision `647e8e566ad78b864282ec65c0b0b2237aa63084`](../../../fixtures/validation/relationship-tablespec-acceptance-evidence.json) | Declared metadata classification and outgoing Key metadata; no referential enforcement; heterogeneous/keyed association layouts refuse |
-| [PostgreSQL 17.4](../04-build/evidence/postgresql-relationship-acceptance.md) | New keyed ordinary tables with explicit FK/junction carriers; catalog/DDL classification retains actions, NOT VALID and MATCH SIMPLE refinements |
-| [SQL Server 2022, 16.0.4295.3](../04-build/evidence/sqlserver-relationship-acceptance.md) | Integral-Key new-table FK/junction carriers; native trust/enabled/actions and unknown catalog observations remain explicit |
+| PostgreSQL 17.4 | New keyed ordinary tables with explicit FK/junction carriers; catalog/DDL classification retains actions, NOT VALID and MATCH SIMPLE refinements |
+| SQL Server 2022, 16.0.4295.3 | Integral-Key new-table FK/junction carriers; native trust/enabled/actions and unknown catalog observations remain explicit |
 | [Avro 1.12.0 / fastavro 1.12.2](../../../fixtures/validation/relationship-avro-acceptance-evidence.json) | Grammar observations and explicit target-Key record carriers; no reference/participation enforcement |
-| [Parquet / PyArrow 21.0.0](../04-build/evidence/parquet-relationship-acceptance.md) | Physical-schema observations and nested target-Key schema carriers; no dataset referential enforcement |
+| Parquet / PyArrow 21.0.0 | Physical-schema observations and nested target-Key schema carriers; no dataset referential enforcement |
 
 Additional [GraphQL/RDF/LinkML relationship evidence](../../../fixtures/validation/relationship-extras/acceptance.json)
 uses graphql-js 17.0.2 with graphql-core 3.2.12, RDFLib 7.6.0, and LinkML
@@ -344,7 +344,7 @@ Key resolution.
 
 `projectDddToPostgresql` composes DDD, core relationships and separate binding
 under [CONTRACT-043](contracts/CONTRACT-043-ddd-postgresql.md). Its
-[PostgreSQL17.4 whole-generator evidence](../04-build/evidence/ddd-postgresql.md)
+PostgreSQL17.4 whole-generator evidence
 covers bound tables/scalars/JSONB checks, exact ordered Keys, FK/junction/keyed
 association attributes, homogeneous shared discriminator-edge tables, eligible
 LIST/default partitions and each declared index's emitted or residual outcome.
@@ -353,7 +353,7 @@ widened. Heterogeneous endpoints and association-edge layouts refuse. DDD
 invariants, lifecycle, comparator/domain differences and inline storage remain
 explicit residuals; generated SQL is not a deployed database migration.
 
-The [SQL Server 2022 physical generator](../04-build/evidence/sqlserver-physical-binding-acceptance.md)
+The SQL Server 2022 physical generator
 composes ordinary tables, JSON text carriers, exact Keys, FKs, keyed associations,
 anonymous pair-unique junctions, bounded shared edges and supported rowstore
 indexes against 16.0.4295.3. Partitioned-Key layouts remain blocked. Its pair
@@ -540,7 +540,7 @@ HELIX plugin rather than being copied into the repository.
 The delivered inventory does not settle all product requirements. New adapter
 subsets still require explicit native/browser evidence, unknown-content edit
 rules and resource bounds. Native-equivalence graduation remains separate from
-implemented classification and useful lossy projection. The relationship gate and final integrated refresh are recorded separately in [the implementation plan](../04-build/implementation-plan.md). Earlier feature acceptance records retain their original scopes and counts; they are not relabeled as the fresh combined result.
+implemented classification and useful lossy projection. The relationship gate and final integrated refresh are recorded separately in the implementation plan. Earlier feature acceptance records retain their original scopes and counts; they are not relabeled as the fresh combined result.
 
 ## Shared Exact JSON Helper (2026-09-20)
 
@@ -579,7 +579,7 @@ Older envelopes require collision-archiving upgrade and retained rollback.
 Document read/write and element selection recognize 0.8.0; previous versioned
 native bindings and authoring APIs keep their scoped versions and refusal rules.
 This is a core task, not a native-admission or TableSpec-port claim.
-See [the execution evidence](../04-build/evidence/schema-properties-core.md).
+See the execution evidence.
 
 ### Routine metadata API amendment (2026-10-05)
 
@@ -589,7 +589,7 @@ and schema-property declaration receipts. Selection returns copied snapshots;
 and native-conversion preservation records remain. Unknown length units make
 validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
-are recorded in [schema-property execution evidence](../04-build/evidence/schema-properties-core.md).
+are recorded in schema-property execution evidence.
 
 ### Official Python package and consumer extensions
 
@@ -653,7 +653,7 @@ currently a TypeScript generator, migrating to the shared Rust engine under
 ADR-006; `umf_access` supplies Python host integration and existing compatibility
 surfaces in this repository. Weft owns
 all SQL lowering; Truss and Ashlar own their adapters.
-[Design entry point](../04-build/typed-persistence-design.md).
+Design entry point.
 
 FR-56 and [FEAT-033](../01-frame/features/FEAT-033-generated-ontology-access.md)
 add typed ontology access generated directly from current UMF schemas. A shared
@@ -815,7 +815,7 @@ Its scope must not imply that the existing access-SDK checker covers these paths
 [CONTRACT-076](contracts/CONTRACT-076-128-bit-uuid.md) extend the portable core
 under FEAT-005 IDEAL-09. The experimental0.9.0 profile implements bits128 and UUID
 meaning; integer width facets retain arithmetic meaning. Scoped implementation
-and native limitations are in [the execution record](../04-build/evidence/uuid-implementation.md).
+and native limitations are in the execution record.
 
 | Module | Owns | Dependencies and exclusions |
 | --- | --- | --- |

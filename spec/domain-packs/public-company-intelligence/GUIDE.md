@@ -70,7 +70,7 @@ Twenty-five selected original primary-document requests returned HTTP 403. Those
 
 A downstream application may implement incremental remote collection, Databricks/Unity Catalog tables, typed research tools, a config/admin UI, evaluated model routing and a scheduled email digest. The pack grants none of those permissions and implements no deployed service. S&P licensing, GLEIF mappings, FTC/DOJ material, court corpora and CUAD/MAUD benchmark rights remain separate source-selection work. Private client/conflicts data and outreach are excluded.
 
-Scoped build evidence: [public-company-intelligence](../../../docs/helix/04-build/evidence/public-company-intelligence.md).
+Scoped build evidence: public-company-intelligence.
 
 ## Shared acquisition companion
 

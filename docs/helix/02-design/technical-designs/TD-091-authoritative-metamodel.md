@@ -57,7 +57,7 @@ compiler/runtime/Python/browser boundaries and generated authority direction.
 
 STP-091 supplies acceptance checks. The ordered work packages, file retirement
 ledger, ownership, risks and continuation live in
-[the implementation plan](../../04-build/metamodel-authority-plan.md).
+the implementation plan.
 No historical native evidence is automatically renewed. Publish only after
 independent review and complete required gates; use existing CI build signing,
 then verify actual live bytes, claims and browser journeys.

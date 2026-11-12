@@ -154,7 +154,7 @@ DDD graph and PostgreSQL layout proposal, adding alternate UNIQUE, nullable
 composite, anonymous junction and edge variants. Association identity and
 attributes remain mandatory. The full generator will consume this policy;
 the current candidate is metadata only. See
-[the checkpoint evidence](../../04-build/evidence/postgresql-relationship-layout.md).
+the checkpoint evidence.
 
 ## Whole-generator implementation (2026-10-01)
 
@@ -174,4 +174,4 @@ SQL/catalog and exercises eligible/ineligible partition Keys, cyclic FKs,
 explicit text comparator collation, JSONB checks, association identity/attributes,
 and shared edge discrimination. The complete result schema and verified two-way
 recovery do not promote native structure to authored meaning. See
-[execution evidence](../../04-build/evidence/ddd-postgresql.md).
+execution evidence.

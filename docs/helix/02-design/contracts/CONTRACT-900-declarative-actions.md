@@ -28,11 +28,11 @@ ddx:
 **Type:** extension schema/library and executor obligations.
 **Version:** `umf.actions` 0.1.0 over current core 0.10.0.
 **Status:** draft; package and public APIs are implemented experimentally.
-The [historical certificate](../../04-build/evidence/actions-certification.md)
+The historical certificate
 records completed qualification for its exact sources and bounded PostgreSQL
 reference consumer. Integrated-source qualification and production/downstream
 executor support remain separate; see the
-[documentation delivery record](../../04-build/evidence/actions-documentation-execution.md).
+documentation delivery record.
 
 ## Purpose
 

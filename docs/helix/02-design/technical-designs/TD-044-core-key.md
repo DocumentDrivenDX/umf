@@ -222,7 +222,7 @@ unknown qualifiers, no-getter behavior and Bun/Chromium parity.
 Internal `upgradeKeyEnvelope` and `rollbackKeyEnvelope` now implement the chosen
 0.5.0/0.6.0 collision boundary with complete operation schemas and Bun/Chromium
 evidence. Receipts are checked by recomputation; the original and later envelopes
-remain separately recoverable. See the [implementation evidence](../../04-build/evidence/key-core-implementation.md#explicit-key-migration-and-rollback-candidate).
+remain separately recoverable. See the implementation evidence.
 Public activation and versioned operations remain pending; this checkpoint does
 not substitute for their compatibility refresh or native Key bindings.
 
@@ -252,4 +252,4 @@ The gate covers 118 authored cases, 85 emitted targets, 170 ideal recoveries,
 Fresh native/browser qualification, negative evidence checks, core tests,
 typechecking and schema/package audits pass. Native equivalence remains
 unclaimed; source payloads and unknown semantics remain attached. See the
-[Key gate admission record](../../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
+Key gate admission record for commands, versions, profiles and limits.

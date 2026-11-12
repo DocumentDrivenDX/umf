@@ -272,7 +272,7 @@ and unknown numeric tokens must stay attached to any classification/projection.
 ### TableSpec facet binding decisions
 
 The native discovery supplement at
-[TableSpec facet discovery](../../04-build/evidence/tablespec-facet-discovery.md)
+TableSpec facet discovery
 requires explicit consumer profiles. The classifier accepts `declared-metadata`,
 `json-schema`, `pyspark-schema`, `gx-spark`, `ingest-cast` or `unresolved`, plus
 `raw` or `model-normalized` input and `value-domain` or `exact-input` obligation.
@@ -372,7 +372,7 @@ this does not infer absent facets or prove exact input conversion. A 540-case
 projection corpus covers seven profiles, raw/normalized forms, strict/report
 modes, unsupported bounds and facetless exactness controls. Native model/schema,
 consumer-generator, emitted GX value and Chromium evidence is recorded in
-[the projection checkpoint](../../04-build/evidence/tablespec-facet-projection.md).
+the projection checkpoint.
 Complete binding acceptance remains gated by the full compatibility refresh and
 all three previously qualified concept gates. No native-equivalence claim changes.
 
@@ -415,7 +415,7 @@ gate, and Key remain required. Native-equivalence graduation is not claimed.
 
 The native discovery checkpoint uses PostgreSQL 17.4, UTF8, 28 scalar/domain/array
 catalog examples and 74 value/type probes. See
-[the discovery evidence](../../04-build/evidence/postgresql-facet-discovery.md).
+the discovery evidence.
 This is an internal native decoder and evidence foundation, not a public facet
 classifier, authored projector or accepted binding.
 
@@ -469,7 +469,7 @@ strict/report handling. Native catalog/SQL/analyzed-tree consistency precedes
 facet interpretation; unknown metadata and execution refinements remain native.
 Verified author receipts prevent inferred facets from overwriting author intent.
 Exact native catalog/supplement text can be recovered through verified receipts.
-See [the classification evidence](../../04-build/evidence/postgresql-facet-discovery.md).
+See the classification evidence.
 
 This is an up-classification checkpoint. Authored down-projection, its operation
 schema, independent emitted-native/value evidence, and the full compatibility
@@ -491,7 +491,7 @@ universal PostgreSQL capacity. Other source concepts, unknown facet qualifiers,
 character NUL/padding differences and unrepresentable comments remain residuals.
 A facetless Field-kind receipt does not authorize existing facet members.
 
-Native and Chromium evidence is in the [projection checkpoint](../../04-build/evidence/postgresql-facet-discovery.md).
+Native and Chromium evidence is in the projection checkpoint.
 The classifier/projector pair still requires aggregate acceptance and refreshed
 prior binding/concept gates before PostgreSQL facet qualification is complete.
 
@@ -560,7 +560,7 @@ remain required. No native-equivalence graduation is claimed.
 
 ### SQL Server facet binding rules from native discovery
 
-The [SQL Server discovery evidence](../../04-build/evidence/sqlserver-facet-discovery.md)
+The SQL Server discovery evidence
 qualifies native counterexamples on SQL Server 2022 16.0.4295.3 before public facet
 schema/API work. Direct base-type decoding is internal; alias, CLR and unsupported
 types retain their native identity. Preserve the existing distinction between
@@ -595,7 +595,7 @@ The bounded internal CHECK inspector now implements syntax recognition with exac
 literal retention and atomic refusal of unknown conjuncts. Its result explicitly
 requires catalog/type/column association, enforcement and collation qualification;
 none of its candidates is a core guarantee. Captured disabled/untrusted predicates
-exercise this boundary. See the [syntax checkpoint](../../04-build/evidence/sqlserver-facet-discovery.md#bounded-check-syntax-checkpoint).
+exercise this boundary. See the syntax checkpoint.
 Public schemas and APIs remain pending that qualification.
 
 Internal catalog interpretation now binds CHECK candidates to validated native
@@ -607,7 +607,7 @@ Character predicates and table-level association remain explicit residuals. Othe
 versions and modified captures yield no interpreted facts. Source authenticity and
 complete inventory remain unverified. This is implementation groundwork for the
 public receipt/schema design, not public binding acceptance; see the
-[catalog interpretation checkpoint](../../04-build/evidence/sqlserver-facet-discovery.md#catalog-check-interpretation-checkpoint).
+catalog interpretation checkpoint.
 
 ### SQL Server facet classification API
 
@@ -704,7 +704,7 @@ is invented. Untrusted checks retain ordinary-checked-write scope only.
 
 Bun and Chromium verify both composed recovery paths, native-versus-authored
 refinements and the association counterexamples. See the
-[composition evidence](../../04-build/evidence/sqlserver-facet-discovery.md#composed-recovery-and-association-checkpoint).
+composition evidence.
 Full compatibility refresh and binding acceptance remain required. Cross-column
 predicate interpretation remains outside this qualified subset with explicit
 residuals, rather than disappearing from native metadata.
@@ -779,7 +779,7 @@ tree codec preserves exact numeric tokens but does not preserve whitespace.
 Public classification/projection schemas and the extension package must precede
 their exports. Both strict/report projections need explicit obligations and both
 retained recovery directions, followed by composed native recapture and Chromium
-parity. The [native discovery checkpoint](../../04-build/evidence/avro-facet-discovery.md)
+parity. The native discovery checkpoint
 is groundwork only; it does not qualify the binding or widen earlier receipts to
 core 0.5.0. Java exploratory results use a different version and are not part of
 this binding's evidence.
@@ -791,7 +791,7 @@ decimal capacity arithmetic is bounded to 4096 bytes. Exact integer metadata use
 integer lexical tokens; unsafe, fractional and exponent spellings are retained
 but uninterpreted. This avoids parser-specific normalization. Whole-schema name
 resolution, field selection and public receipts remain separate pending work.
-See the [interpreter checkpoint](../../04-build/evidence/avro-facet-discovery.md#internal-declaration-interpreter).
+See the interpreter checkpoint.
 
 An internal facet-specific selection profile now reuses structural name/union
 validation with exact fixed-size tokens and size-zero support. Earlier Cardinality
@@ -800,7 +800,7 @@ branch and the separate resolved declaration location; it does not merge widths
 or logical meanings across branches. Array/map item paths must be selected
 explicitly. Defaults and custom metadata are never registered as type syntax.
 Named recursion terminates at the definition location rather than expanding it.
-The [selection evidence](../../04-build/evidence/avro-facet-discovery.md#native-selection-checkpoint)
+The selection evidence
 records a duplicate-union parser disagreement, so structural selection is not
 described as universal native parser agreement or full schema validity.
 
@@ -838,7 +838,7 @@ dependency texts, including whitespace and numeric spellings. This is retained
 archive recovery, not original-text reconstruction or source authentication.
 
 Authored Avro projection, emitted-target composition and final binding acceptance
-remain required. The [classification checkpoint](../../04-build/evidence/avro-facet-discovery.md#classification-checkpoint)
+remain required. The classification checkpoint
 records scoped tests and Chromium evidence, not facet admission or equivalence.
 
 ### Authored Avro facet projection decisions
@@ -935,7 +935,7 @@ The public Chromium matrix covers 558 projection cases, 388 emitted targets and
 238 facet comparisons match directly, including 162 facetless controls and only
 76 nonempty authored facet sets. The other 150 cases retain explicit residuals.
 
-The [Avro evidence record](../../04-build/evidence/avro-facet-discovery.md) owns
+The Avro evidence record owns
 current binding qualification status. Native codec evidence, browser evidence,
 compatibility regression and refreshed prior concept gates are all required
 before acceptance. A package description or a direct facet comparison alone
@@ -945,5 +945,5 @@ separate work; native equivalence is unclaimed.
 ## Facet gate acceptance checkpoint
 
 Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
-[admission evidence](../../04-build/evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
+admission evidence for exact counts, qualified versions, retained
 failures and scope limits. Earlier pending checkpoints above remain historical.

@@ -342,7 +342,7 @@ SQL. Strict mode blocks every non-exact obligation. Report mode returns only a
 complete qualified candidate with copied sources. Receipt recomputation and
 current native-text/tree comparison protect both ideal and native recovery.
 
-[PostgreSQL acceptance evidence](../../04-build/evidence/postgresql-relationship-acceptance.md)
+PostgreSQL acceptance evidence
 records PostgreSQL 17.4 generated-constraint/write probes and Chromium recovery.
 This is a useful FK/junction binding, not complete DDD generation, relationship
 ideal admission, all-five delivery or native-equivalence graduation.

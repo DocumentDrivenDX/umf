@@ -164,11 +164,11 @@ Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.act
 
 | Story | Owned output | Design/test allocation |
 | --- | --- | --- |
-| [US-902](../user-stories/US-902-portable-action-plans.md) | 7 planned criteria including local profile pairing: bulk-update-portable-action-plans | [TD-902](../../02-design/technical-designs/TD-902-portable-action-plans.md) / [STP-902](../../03-test/test-plans/STP-902-portable-action-plans.md) |
-| [US-903](../user-stories/US-903-frozen-action-manifests.md) | 8 planned criteria including construction/local companion: bulk-update-frozen-action-manifests | [TD-903](../../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../../03-test/test-plans/STP-903-frozen-action-manifests.md) |
-| [US-907](../user-stories/US-907-bulk-action-coordination.md) | 8 planned criteria: bulk-update-bulk-action-coordination | [TD-907](../../02-design/technical-designs/TD-907-bulk-action-coordination.md) / [STP-907](../../03-test/test-plans/STP-907-bulk-action-coordination.md) |
+| [US-902](../user-stories/US-902-portable-action-plans.md) | 7 planned criteria including local profile pairing: bulk-update-portable-action-plans | [TD-902](../../02-design/technical-designs/TD-902-portable-action-plans.md) / STP-902 |
+| [US-903](../user-stories/US-903-frozen-action-manifests.md) | 8 planned criteria including construction/local companion: bulk-update-frozen-action-manifests | [TD-903](../../02-design/technical-designs/TD-903-frozen-action-manifests.md) / STP-903 |
+| [US-907](../user-stories/US-907-bulk-action-coordination.md) | 8 planned criteria: bulk-update-bulk-action-coordination | [TD-907](../../02-design/technical-designs/TD-907-bulk-action-coordination.md) / STP-907 |
 
-The [machine-readable bulk allocation](../../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
+The machine-readable bulk allocation is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
 
 ## Browser-local profile addition — 2026-10-15
 

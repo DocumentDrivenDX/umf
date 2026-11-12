@@ -29,7 +29,7 @@ qualification. Current native admission and priority delivery remain
 acceptance ledger. Earlier qualified-delivery statements describe their original
 source and artifact pins and do not establish the current qualification.
 
-The [current qualification policy](../../04-build/evidence/metamodel-authority/current-native-qualification.json)
+The current qualification policy
 records the exact criteria and evidence. Historical core upgrade/rollback
 observations remain historical; the current runtime refuses retired core markers
 and does not expose a migration dispatch path. This note does not downgrade
@@ -251,5 +251,5 @@ is unclaimed; native payloads and unknown content remain recoverable.
 ## Facet gate acceptance checkpoint
 
 Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
-[admission evidence](../../04-build/evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
+admission evidence for exact counts, qualified versions, retained
 failures and scope limits. Earlier pending checkpoints above remain historical.

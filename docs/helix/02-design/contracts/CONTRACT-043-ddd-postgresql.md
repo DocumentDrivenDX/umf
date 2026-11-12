@@ -272,7 +272,7 @@ all residuals; strict mode blocks every non-exact obligation. Both retain
 copied logical, binding and policy sources.
 
 The schemas and Bun/Chromium evidence are documented in
-[the layout validation record](../../04-build/evidence/postgresql-relationship-layout.md).
+the layout validation record.
 No FK DDL generator, native constraint enforcement or Relationship admission
 is claimed by this stage.
 
@@ -313,4 +313,4 @@ binding and policy sources. `recoverDddPostgresqlNative` verifies the native
 archive and restores exact emitted source bytes. Unclaimed native DDL remains
 available through the PostgreSQL archive; native import does not infer author
 intent. This is generated reviewable schema, not deployed migration support.
-See [whole-generator evidence](../../04-build/evidence/ddd-postgresql.md).
+See whole-generator evidence.

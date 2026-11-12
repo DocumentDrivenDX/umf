@@ -52,7 +52,7 @@ CONTRACT-904 defines the protocol but until this story no story owned its behavi
 
 ## Implementation evidence
 
-The pure reference model and shared fixture exist and AC1–AC6 execute; AC7 is partial; AC8 now also runs in Chromium. See [US-907 evidence](../../04-build/evidence/bulk-update/us907-implementation.md). No native execution or release acceptance is claimed.
+The pure reference model and shared fixture exist and AC1–AC6 execute; AC7 is partial; AC8 now also runs in Chromium. See US-907 evidence. No native execution or release acceptance is claimed.
 
 ## Edge Cases
 

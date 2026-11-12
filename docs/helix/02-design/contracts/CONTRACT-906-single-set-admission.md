@@ -259,6 +259,6 @@ no recipe or Key decoding is required in the consumer.
 
 ## Non-Normative Notes
 
-[The bounded delivery plan](../../04-build/single-set-binding-plan.md) records
+The bounded delivery plan records
 implementation ownership, source/installed verification and candidate artifacts.
 Portable semantic admission does not establish native execution or publication.

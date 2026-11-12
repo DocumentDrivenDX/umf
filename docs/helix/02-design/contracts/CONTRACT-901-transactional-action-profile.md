@@ -25,12 +25,12 @@ ddx:
 **Version:** proposed `umf.actions.tx` / `1`, with `umf.actions.rules` / `1`
 and `umf.actions.keys` / `1`, optional `umf.actions.roles` / `1`; core 0.10.0, actions 0.1.0.
 **Status:** draft; the bounded transactional reference consumer is implemented.
-The [historical certificate](../../04-build/evidence/actions-certification.md)
+The historical certificate
 records its exact source, native/browser witnesses, versions and exclusions.
 Earlier design experiments do not substitute for those implementation witnesses.
 Qualification of changed integrated sources and production/downstream executors
 remains separate; see the
-[documentation delivery record](../../04-build/evidence/actions-documentation-execution.md).
+documentation delivery record.
 
 ## Purpose
 

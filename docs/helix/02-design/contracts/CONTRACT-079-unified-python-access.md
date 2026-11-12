@@ -178,7 +178,7 @@ No second SQL compiler is generated or embedded in the client.
 
 The graph fixture implements the transport independently with nodes and edges.
 Native qualification currently covers PostgreSQL 18 and the isolated Weft build
-with UMF 0.10 admission, UUID and bits128. See the [execution evidence](../../04-build/evidence/unified-python-access.md)
+with UMF 0.10 admission, UUID and bits128. See the execution evidence
 for commands, coverage and feature requirements that remain open.
 
 ## Proposed native per-call session surface (P1-04)

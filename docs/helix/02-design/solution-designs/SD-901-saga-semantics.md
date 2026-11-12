@@ -125,7 +125,7 @@ core metamodel rewrite.
 
 ## Traceability
 
-[STP-906](../../03-test/test-plans/STP-906-author-and-assess-sagas.md) maps every
+STP-906 maps every
 portable story criterion. [STP-905](../../03-test/test-plans/STP-905-saga-recovery-conformance.md)
 maps every consumer criterion. Portable semantic checks use the shared corpus and
 independent expected diagnostics and obligation inventories across the selected

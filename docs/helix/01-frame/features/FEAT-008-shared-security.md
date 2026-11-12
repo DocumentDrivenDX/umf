@@ -63,7 +63,7 @@ Source-level policy declarations currently do not establish installed enforcemen
   determinism, reversibility, information-disclosure profile and per-operator
   query use; unknown transforms are preserved and block interpretation.
   (Added 2026-10-14 by owner direction; proposal P-A of the
-  [field-protection plan](../../04-build/security-field-protection-plan.md).)
+  field-protection plan.)
 - SEC-14: Tokenization and encryption are field-protection declarations that
   change stored data; detokenization and decryption are separate privileged
   actions. Joinability, format preservation, key/vault custody and propagation

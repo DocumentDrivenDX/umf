@@ -272,4 +272,4 @@ The synthetic dashboard example attaches dataset meaning to a core Record and
 references its core Fields from visuals and filters. Its validator is fixture
 code; generic production code contains no dashboard discriminator. Execution
 commands, outcomes and support limits are recorded in
-[the implementation evidence](../04-build/evidence/extension-kinds/README.md).
+the implementation evidence.

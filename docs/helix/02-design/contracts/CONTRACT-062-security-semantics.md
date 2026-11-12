@@ -452,7 +452,7 @@ An original-source diagnostic demonstrates that all five operators can select a 
 ## Field protection catalog and 0.2.0 disposition reference — 2026-10-14
 
 **Status:** proposed normative text applied by owner direction on 2026-10-14
-(proposal P-D of the [field-protection plan](../../04-build/security-field-protection-plan.md)).
+(proposal P-D of the field-protection plan).
 It governs FEAT-008 SEC-13, SEC-14 and SEC-15. Catalog and transform interpretation in this section remain unimplemented.
 The internal `protection/source.ts` foundation now preserves unknown source
 content through the existing bounded JSON/YAML profile; it neither validates a

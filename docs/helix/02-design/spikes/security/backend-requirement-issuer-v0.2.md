@@ -282,7 +282,7 @@ open. Expected hashes/backend association are explicit trusted premises, not an
 authentication mechanism. Test template-to-case mappings are synthetic. Full132
 acceptance and historical26/132 remain unchanged.
 
-The catalog binding checkpoint is merged directly into Weft main at `f7a682e27db5d3530678bea3312a5ea2211d4f28`: 573 workspace tests /44 groups, 230 core, 833 unchanged declared inputs, and an independent Astra ultra receipt audit. Retained evidence: [checkpoint](../../../04-build/evidence/security/weft-case-catalog/checkpoint.json). This component result does not promote any original native acceptance case.
+The catalog binding checkpoint is merged directly into Weft main at `f7a682e27db5d3530678bea3312a5ea2211d4f28`: 573 workspace tests /44 groups, 230 core, 833 unchanged declared inputs, and an independent Astra ultra receipt audit. Retained evidence: checkpoint. This component result does not promote any original native acceptance case.
 
 ### Explicit deployment duty catalog candidate
 
@@ -323,7 +323,7 @@ prove any test sufficient. Original assertions, including S10:disclosure, remain
 unaltered and pending. The strict result does not emit SQL, activate a public
 transport or promote any of132 acceptance cases. The full goal remains active.
 
-The candidate-duty checkpoint is merged directly into Weft main at `60e82559941ff124fa38e248adb49af4f0a77a18`. [Retained evidence](../../../04-build/evidence/security/weft-deployment-catalog/checkpoint.json) records578 workspace tests/44 groups,235 core,837 unchanged declared inputs and an independent Astra ultra source/receipt audit. This does not promote any original acceptance case.
+The candidate-duty checkpoint is merged directly into Weft main at `60e82559941ff124fa38e248adb49af4f0a77a18`. Retained evidence records578 workspace tests/44 groups,235 core,837 unchanged declared inputs and an independent Astra ultra source/receipt audit. This does not promote any original acceptance case.
 
 
 #### Typed payload applicability candidate — template0.2
@@ -359,10 +359,10 @@ acceptance cases remain binding; historical required acceptance stays26/132.
 
 The candidate is merged directly into Weft main at
 `c6d8c531b9a467aaabeaf8daf6ae6e6ad3735f72`. The
-[retained checkpoint](../../../04-build/evidence/security/weft-payload-applicability/checkpoint.json)
+retained checkpoint
 records584 workspace tests/44 groups,241 core,840 unchanged input pins and
 independent Astra ultra review. The
-[integration receipt](../../../04-build/evidence/security/weft-payload-applicability/integration.json)
+integration receipt
 keeps the Weft source-pin namespace explicit. No original acceptance case is
 promoted.
 
@@ -398,9 +398,9 @@ acceptance obligations remain open. Historical acceptance stays26/132.
 
 The template0.3 candidate is merged directly into Weft main at
 `5120c54f76acbd17e2ac0a6a53721fdd16a4d274`. The
-[retained checkpoint](../../../04-build/evidence/security/weft-rule-payload/checkpoint.json)
+retained checkpoint
 records588 workspace tests/44 groups,245 core,842 unchanged input pins and
 independent Astra ultra source/receipt review. The
-[integration receipt](../../../04-build/evidence/security/weft-rule-payload/integration.json)
+integration receipt
 preserves the explicit Weft source-pin namespace. All original acceptance
 qualifications remain unchanged.

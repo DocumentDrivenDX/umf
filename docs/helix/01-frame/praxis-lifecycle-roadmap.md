@@ -25,7 +25,7 @@ ddx:
 
 This draft sequences three candidate delivery cuts: P1 (portable clients and packaging), P2 (direct-table lifecycle), and P3 (graph-host integration). These are dependency gates, not calendar commitments. No approved delivery dates or Hohfeld integration date were found. Proposed package versions below reserve no release number and must be reconciled against the release heads before tagging. Publish prereleases at each passing gate; never use a future version label as evidence of delivery.
 
-The user reports testing UMF SDK 0.5.0, umf_access 0.1.0.dev2, umf_core 0.9.0 and Weft 0.4.44. Current-source findings below are qualified separately from those installed artifacts. This planning exercise does not rerun Praxis or establish Lakebase deployment acceptance. The separately authorized licensing implementation is recorded in [licensing evidence](../04-build/evidence/stack-licensing.md).
+The user reports testing UMF SDK 0.5.0, umf_access 0.1.0.dev2, umf_core 0.9.0 and Weft 0.4.44. Current-source findings below are qualified separately from those installed artifacts. This planning exercise does not rerun Praxis or establish Lakebase deployment acceptance. The separately authorized licensing implementation is recorded in licensing evidence.
 
 Review after each native gate or a dependency/release change. Beyond P3, broader dialects and temporal qualification retain their existing backlog and HELD status. This roadmap does not reorder the TableSpec finalization priority or waive current native qualification gaps.
 
@@ -59,12 +59,12 @@ WS-1 through WS-4 are already allocated by the domain-pack roadmap and remain un
 ## Original P1 implementation checkpoint — historical baseline
 
 The owner authorized P1 implementation after publication of the licensing work.
-[The build plan](../04-build/praxis-p1-plan.md) sequences the implementation.
+The build plan sequences the implementation.
 Portable generated SyncClient/SyncActions and explicit async aliases are now
 implemented, with unchanged wire/codec semantics. The host Pydantic dependency
 admits >=2.13,<3, including the shared sentinel compatibility import; installed
 2.13.5 and 2.14.1 checks are recorded in
-[P1 evidence](../04-build/evidence/praxis-p1.md).
+P1 evidence.
 Native connection/session/driver qualification, the Bun-free generator and index
 publication remain open. No P1 release or complete-P1 acceptance is claimed.
 The table below retains the original baseline audit and proposed landing cuts.
@@ -103,7 +103,7 @@ are not evidence that the posted wheels contain the successor changes.
 
 1. **WS-6/7 — promote the bounded candidate:** retain exact installed source and
    wheel custody through hosted CI and publication. The
-   [candidate packet](../04-build/evidence/praxis-u123-adoption/README.md) records
+   candidate packet records
    accepted mixed-phase, reviewed-operation and owner+via results; independent
    source/evidence review closes MIG-R01–R06 for the recorded maintenance profile.
 2. **WS-6/5 — consumer authoring acceptance:** row_scope normalization and native
@@ -213,15 +213,15 @@ observations, not remote-head or installed-package claims.
 Read-only assessment; no new functional/native tests were run. Relevant retained
 component evidence, each with its own immutable cohort and limitations:
 
-- [P1 clients/packaging](../04-build/evidence/praxis-p1.md),
-  [native sessions](../04-build/evidence/praxis-p1/session-native-postgresql.json),
-  [Python generator](../04-build/evidence/praxis-p1/python-codegen.json).
-- [Generated native modules](../04-build/evidence/praxis-p2/generated-modules/receipt.json),
-  [durable outcomes](../04-build/evidence/praxis-p2/durable-outcomes/receipt.json),
-  [finite temporal/scalar domains](../04-build/evidence/praxis-p2/scalar-domains/receipt.json).
-- [Related native policies](../04-build/evidence/praxis-p2/related-policies/README.md),
-  [mixed-direction paging/deletes](../04-build/evidence/praxis-p2/related-operations/receipt.json),
-  [seeds/additive evolution](../04-build/evidence/praxis-p2/seed-migrations/receipt.json).
+- P1 clients/packaging,
+  native sessions,
+  Python generator.
+- Generated native modules,
+  durable outcomes,
+  finite temporal/scalar domains.
+- Related native policies,
+  mixed-direction paging/deletes,
+  seeds/additive evolution.
 
 These are not one integrated release certificate. The seed/evolution packet
 explicitly excludes required-column backfill/type/key/FK evolution and states

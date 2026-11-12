@@ -30,7 +30,7 @@ compilation and emission are available through explicit compiler/emitter interfa
 `spec/extensions/protobuf/schema.json` contains 34 descriptor message
 definitions and one shared unknown-field definition, exactly closing the
 @bufbuild/protobuf 2.15.0 runtime descriptor message graph. The additive
-[R5 descriptor-schema closure evidence](../../04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/README.md#descriptor-schema-graph-closure)
+R5 descriptor-schema closure evidence
 records the exact runtime/schema set and source-bound field-closure test. This
 qualifies schema generation for the pinned runtime graph; it does not establish
 Node or browser JSON Schema evaluation. Unknown wire fields include custom

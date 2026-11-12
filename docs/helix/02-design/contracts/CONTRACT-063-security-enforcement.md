@@ -355,7 +355,7 @@ Retained native counterexample and integrated composition: [Truss main3bce4c77 e
 ## Field protection receipt members — 2026-10-14
 
 **Status:** proposed normative text applied by owner direction on 2026-10-14
-(proposal P-E of the [field-protection plan](../../04-build/security-field-protection-plan.md)).
+(proposal P-E of the field-protection plan).
 No receipt carrying these members exists yet; the binding profiles named here
 (`postgresql-raw/0.2.0`, `unity-delta-raw/0.1.0`) are proposed and `not-run`.
 

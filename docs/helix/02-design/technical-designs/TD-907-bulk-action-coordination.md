@@ -68,11 +68,11 @@ Pure and bounded by the fixture; no throughput claim.
 
 ## Testing
 
-[STP-907](../../03-test/test-plans/STP-907-bulk-action-coordination.md) allocates each criterion once. Command: `bun test tests/actions-bulk-state.test.ts`.
+STP-907 allocates each criterion once. Command: `bun test tests/actions-bulk-state.test.ts`.
 
 ## Initial implementation execution
 
-`bulk-state.ts` implements `applyBulkEvent`, `bulkDecisionOrder`, `nextBulkFence`, `bulkItemToken`, `parseBulkItemToken`, `isReservedBulkKey` and `checkBulkKeyUse`, exported from the public index. See the [execution evidence](../../04-build/evidence/bulk-update/us907-implementation.md); the Truss formal correspondence and the Chromium consumer remain open.
+`bulk-state.ts` implements `applyBulkEvent`, `bulkDecisionOrder`, `nextBulkFence`, `bulkItemToken`, `parseBulkItemToken`, `isReservedBulkKey` and `checkBulkKeyUse`, exported from the public index. See the execution evidence; the Truss formal correspondence and the Chromium consumer remain open.
 
 ## Migration & Rollback
 
