@@ -118,6 +118,141 @@ pub fn execute_security_functions_wire_with_control(
             let mut output_context = Context::ordinary().with_host_control(control);
             return encode(&output, &mut output_context);
         }
+        if operation.as_deref() == Some("catalogRecipe") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail("REQUEST", "Closed catalog recipe request required"));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Catalog recipe input is required"))?;
+            let result = umf_core::security_catalog_recipe::catalog_recipe(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("compareCatalogWrite") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write comparison request required",
+                ));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Catalog write comparison input is required"))?;
+            let result =
+                umf_core::security_catalog_write::compare_catalog_write(input, &mut context)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("foldCatalogWriteDecisions") {
+            if !closed_object(&request, &["profile", "op", "decisions"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write decision request required",
+                ));
+            }
+            let decisions = field(&request, "decisions")
+                .ok_or_else(|| fail("REQUEST", "Catalog write decisions are required"))?;
+            let result = umf_core::security_catalog_write::fold_catalog_write_decisions(decisions)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("catalogWriteReadNeeds") {
+            if !closed_object(&request, &["profile", "op", "decisions"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write read-needs request required",
+                ));
+            }
+            let input = field(&request, "decisions")
+                .ok_or_else(|| fail("REQUEST", "Blind decisions are required"))?;
+            let result = umf_core::security_catalog_write::catalog_write_read_needs(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("resolveCatalogWriteRead") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write read-resolution request required",
+                ));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Read fallback evidence is required"))?;
+            let result = umf_core::security_catalog_write::resolve_catalog_write_read(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("planCatalogWriteActions") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write action-plan request required",
+                ));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Action-plan input is required"))?;
+            let result = umf_core::security_catalog_write::plan_catalog_write_actions(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("validateCatalogWriteDependencies") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write dependency request required",
+                ));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Dependency input is required"))?;
+            let result =
+                umf_core::security_catalog_write::validate_catalog_write_dependencies(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("admitCatalogWriteAssociations") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write association request required",
+                ));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Association admission input is required"))?;
+            let result = umf_core::security_catalog_write::admit_catalog_write_associations(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("validateCatalogWriteCoverage") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write coverage request required",
+                ));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Coverage input is required"))?;
+            let result = umf_core::security_catalog_write::validate_catalog_write_coverage(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("planCatalogWriteIncidence") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write incidence request required",
+                ));
+            }
+            let input = field(&request, "input")
+                .ok_or_else(|| fail("REQUEST", "Catalog write incidence input is required"))?;
+            let result = umf_core::security_catalog_write::plan_catalog_write_incidence(input)?;
+            return encode(&result, &mut context);
+        }
+        if operation.as_deref() == Some("admitCatalogWriteProfiles") {
+            if !closed_object(&request, &["profile", "op", "input"]) {
+                return Err(fail(
+                    "REQUEST",
+                    "Closed catalog write profile admission request required",
+                ));
+            }
+            let input = field(&request, "input").ok_or_else(|| {
+                fail(
+                    "REQUEST",
+                    "Catalog write profile admission input is required",
+                )
+            })?;
+            let result = umf_core::security_catalog_write::admit_catalog_write_profiles(input)?;
+            return encode(&result, &mut context);
+        }
         let evaluate = match operation.as_deref() {
             Some("inspectProtectionFunction") => false,
             Some("evaluateProtectionValue") => true,

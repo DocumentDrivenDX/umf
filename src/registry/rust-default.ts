@@ -13,10 +13,11 @@ interface RegistryRustEngine extends ExtensionKindRuntime {
  validateExtensionPayload(id:string,version:string,payload:unknown,registry?:Parameters<ExtensionKindRuntime['listKinds']>[0]):unknown;
  readDocument(source:string,format:'json'|'yaml'):unknown;
  writeDocument(document:unknown,format:'json'|'yaml'):string;
+ registryPolicy?:{decide(input:Record<string,unknown>):unknown};
 }
 
 /** Host registry storage and callbacks over the initialized shared Rust engine. */
-export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean,registerActionsNative:(registry:BaseRegistry)=>BaseRegistry){
+export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfCoreError:(error:unknown)=>boolean,registerActionsNative:(registry:BaseRegistry)=>BaseRegistry,registryPolicy?:{decide(input:Record<string,unknown>):unknown}){
  const invoke=<T>(operation:()=>T):T=>{
   try{return operation();}
   catch(error){
@@ -35,7 +36,10 @@ export function createRegistryRustDefault(engine:RegistryRustEngine,isNativeUmfC
  };
  Object.freeze(runtime);
  const Registry:new (kindRuntime?:ExtensionKindRuntime)=>BaseRegistry=class Registry extends BaseRegistry {
-  constructor(kindRuntime:ExtensionKindRuntime=runtime){super(kindRuntime);}
+  constructor(kindRuntime:ExtensionKindRuntime=runtime){super(kindRuntime,input=>{
+   if(!registryPolicy)throw new UmfError('EXTENSION_KIND_RUNTIME_REQUIRED','Rust registry policy operation is unavailable');
+   return invoke(()=>registryPolicy.decide(input)) as {decision:'admit'|'replace';callbacks:string[]};
+  });}
  };
  const validateDocument=(input:unknown,registry:BaseRegistry=new Registry(),meter?:ConstraintMeter):Validation=>{
   if(meter)throw new UmfError('EXTENSION_KIND_RUNTIME_CONTROLS','Use the shared engine controls for native work metering');

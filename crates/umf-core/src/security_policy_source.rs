@@ -115,6 +115,47 @@ fn fail_at(code: &str, message: &str, path: &Utf16) -> EngineError {
     EngineError::new(code, path.clone(), message)
 }
 
+fn variant_possible<'a>(value: &Value, mut shape: &'a Value, root: &'a Value) -> bool {
+    for _ in 0..8 {
+        let Some(reference) = text(get(shape, "$ref")) else {
+            break;
+        };
+        let Some(name) = reference.strip_prefix("#/$defs/") else {
+            break;
+        };
+        let Some(definition) = get(root, "$defs").and_then(|definitions| get(definitions, name))
+        else {
+            break;
+        };
+        shape = definition;
+    }
+    if let Some(constant) = get(shape, "const") {
+        return value == constant;
+    }
+    if let Value::Object(members) = value {
+        let has = |name: &Utf16| members.iter().any(|(key, _)| key == name);
+        if arr(get(shape, "required"))
+            .iter()
+            .any(|required| matches!(required, Value::String(name) if !has(name)))
+        {
+            return false;
+        }
+        if let Some(Value::Object(properties)) = get(shape, "properties") {
+            for (name, property) in properties {
+                if let Some(constant) = get(property, "const") {
+                    if members
+                        .iter()
+                        .any(|(key, actual)| key == name && actual != constant)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    true
+}
+
 /// Collect paths whose members are not declared by the selected wire schema.
 /// A schema validation pass precedes this walk, so oneOf selection is unique.
 fn unknown_paths(
@@ -147,10 +188,19 @@ fn unknown_paths(
         _ => None,
     };
     if let Some(variants) = variants {
+        let possible: Vec<_> = variants
+            .iter()
+            .filter(|variant| variant_possible(value, variant, root))
+            .collect();
+        // The containing instance already passed schema validation. Required
+        // members and discriminator constants can only eliminate variants.
+        if let [variant] = possible.as_slice() {
+            return unknown_paths(value, variant, root, path, out, depth + 1, ctx);
+        }
         let defs = get(root, "$defs").cloned().unwrap_or(Value::Null);
         let dialect = get(root, "$schema").cloned().unwrap_or(Value::Null);
         let mut selected = None;
-        for variant in variants {
+        for variant in possible {
             let candidate = object([
                 ("$schema", dialect.clone()),
                 ("$defs", defs.clone()),

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {createSecurityLogicEngine} from '../../bindings/core/node';
-import {securityAnd as referenceAnd,securityOr as referenceOr,type SecurityTruth} from '../../src/extensions/security/logic';
+import type {SecurityTruth} from '../../src/extensions/security/logic';
 import {UmfError} from '../../src/model/types';
 import {createSecurityLogicRustAdapter} from '../../src/extensions/security/rust-logic-adapter';
 
@@ -27,9 +27,10 @@ test('Rust adapter preserves truth tables and dispatches valid values to Rust',(
     securityAnd(values){andCalls++;return rust.securityAnd(values);},
     securityOr(values){orCalls++;return rust.securityOr(values);},
   });
-  for(const a of states)for(const b of states){
-    expect(observed.securityAnd([a,b])).toBe(referenceAnd([a,b]));
-    expect(observed.securityOr([a,b])).toBe(referenceOr([a,b]));
+  const and=['TFU','FFF','UFU'],or=['TTT','TFU','TUU'];
+  for(const [i,a] of states.entries())for(const [j,b] of states.entries()){
+    expect(observed.securityAnd([a,b])).toBe(and[i]![j]! as SecurityTruth);
+    expect(observed.securityOr([a,b])).toBe(or[i]![j]! as SecurityTruth);
   }
   expect(observed.securityAnd(Array(64).fill('T'))).toBe('T');
   expect(observed.securityOr(Array(64).fill('F'))).toBe('F');

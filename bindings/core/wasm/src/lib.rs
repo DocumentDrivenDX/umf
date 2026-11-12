@@ -28,6 +28,7 @@ mod protobuf_document;
 mod protobuf_source;
 mod record_members_inspection;
 mod sec_projection;
+mod security_candidate_condition;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
@@ -263,6 +264,15 @@ pub fn execute_graphql_edit_wire(
         &mut editor_hook,
         &mut control_hook,
     )
+}
+
+#[wasm_bindgen(js_name = executeSecurityCandidateConditionWire)]
+pub fn execute_security_candidate_condition_wire(
+    wire_json: &str,
+    dispatcher: Function,
+    control_dispatcher: Option<Function>,
+) -> String {
+    security_candidate_condition::execute(wire_json, dispatcher, control_dispatcher)
 }
 #[wasm_bindgen(js_name = executeAccessRrfWire)]
 pub fn execute_access_rrf_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
@@ -1001,7 +1011,18 @@ pub fn execute_javascript_numeric_wire(
 pub fn execute_security_logic_wire(
     wire_json: &str,
     control_dispatcher: Option<Function>,
+    candidate: Option<bool>,
 ) -> String {
+    if candidate == Some(true) {
+        let mut control = control_dispatcher.map(|dispatcher| WasmControl { dispatcher });
+        return umf_core_wire::security_logic_binding::execute_candidate_security_logic_wire(
+            wire_json,
+            &mut |amount| match &mut control {
+                Some(control) => control.check(amount),
+                None => Ok(()),
+            },
+        );
+    }
     if let Some(dispatcher) = control_dispatcher {
         let mut control = WasmControl { dispatcher };
         let mut hook = |amount| control.check(amount);

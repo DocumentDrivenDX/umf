@@ -8,6 +8,12 @@ export interface SemanticValidatorComposition {
  readonly callers:readonly SemanticValidator[];
 }
 const compositions=new WeakMap<SemanticValidator,SemanticValidatorComposition>();
+const callbackIds=new WeakMap<SemanticValidator,string>();
+let nextCallbackId=1;
+export function semanticCallbackId(callback:SemanticValidator):string {
+ let id=callbackIds.get(callback);if(!id){id=`cb:${nextCallbackId++}`;callbackIds.set(callback,id);}return id;
+}
+export function semanticCallbacksForIds(ids:readonly string[],available:ReadonlyMap<string,SemanticValidator>):SemanticValidator[]{return ids.map(id=>{const callback=available.get(id);if(!callback)throw new Error('REGISTRY_CALLBACK_ID_UNKNOWN');return callback;});}
 
 /** Compose retained caller checks around a native semantic owner without coupling Registry to an ecosystem package. */
 export function composeOwnedSemanticValidator(owner:SemanticOwnerIdentity,native:SemanticValidator,callers:readonly SemanticValidator[]=[]):SemanticValidator {

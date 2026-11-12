@@ -94,6 +94,12 @@ export interface UmfSecurityLogicEngine {
   securityRefIdentity(ref: {documentId:string;moduleId:string;elementId:string}): string;
 }
 export declare function createSecurityLogicEngine(module: any, options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
+export interface SecurityCandidateConditionEngine {
+  evaluateCandidateCondition(expression: unknown, resourceIndex: number, dispatch: (event: unknown) => unknown): 'T'|'F'|'U';
+  preflightCandidateCondition(expression: unknown, target: unknown, dispatch: (event: unknown) => unknown, associations?:readonly unknown[]): true;
+  normalizeCandidateCondition(expression: unknown, dispatch: (event: unknown) => unknown): unknown;
+}
+export declare function createSecurityCandidateConditionEngine(module: any): SecurityCandidateConditionEngine;
 export declare const SECURITY_FUNCTIONS_PROFILE: 'umf.security-functions/1';
 export declare const SECURITY_PROTECTION_SOURCE_PROFILE: 'umf.security-protection-source/1';
 export declare const SECURITY_POLICY_SOURCE_PROFILE: 'umf.security-policy-source/1';
@@ -164,8 +170,20 @@ export interface UmfSecurityFunctionsEngine {
   evaluateProtectionValue(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
   /** Internal candidate support; not re-exported by either UMF SDK root. */
   inspectCandidateLiteral(source: unknown, field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number};
+  catalogRecipe(input: unknown): unknown;
   /** Private actions-reference comparison under ordinary core value limits. */
   inspectCoreCandidateLiteral(source: unknown, field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number};
+  /** Private normalized catalog write snapshot comparison. */
+  compareCatalogWrite(input: unknown): {mutations:readonly {key:string;operation:'create'|'update'|'delete';changed:readonly string[];ownership:boolean;policy:boolean}[];workUnits:number;literalUnits:number};
+  foldCatalogWriteDecisions(decisions: readonly ('permit'|'deny'|'indeterminate'|'conflict')[]): 'permit'|'deny'|'indeterminate';
+  planCatalogWriteIncidence(input: unknown): {mutations: readonly {key:string;ownership:boolean;policy:boolean}[];workUnits:number};
+  admitCatalogWriteProfiles(input: unknown): true;
+  catalogWriteReadNeeds(decisions: readonly ('permit'|'deny'|'indeterminate'|'conflict')[]): readonly number[];
+  resolveCatalogWriteRead(input: readonly {blind:'permit'|'deny'|'indeterminate'|'conflict';read:'permit'|'deny'|'indeterminate'|'conflict';original:boolean}[]): readonly ('permit'|'deny'|'indeterminate')[];
+  planCatalogWriteActions(input: unknown): readonly {key:string;state:'before'|'after';action:string}[];
+  validateCatalogWriteDependencies(input: unknown): {dependencyAssociations:readonly number[];workUnits:number};
+  admitCatalogWriteAssociations(input: unknown): readonly number[];
+  validateCatalogWriteCoverage(input: unknown): number;
 }
 export declare function createSecurityFunctionsEngine(module: any): UmfSecurityFunctionsEngine;
 export interface SecurityProtectionSourceResult {
@@ -555,6 +573,13 @@ export interface IcebergSchemaEngine {
 export interface JsonSchemaResource {uri: string; source: string}
 export type JsonSchemaNativeJson = {kind: 'null'} | {kind: 'boolean'; value: boolean} | {kind: 'string'; value: string} | {kind: 'number'; value: string} | {kind: 'array'; items: JsonSchemaNativeJson[]} | {kind: 'object'; members: Record<string, JsonSchemaNativeJson>};
 export interface JsonSchemaValidation {valid: boolean; complete: boolean; diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[]}
+export interface PreparedJsonSchemaEngine extends JsonSchemaEngine {
+  copyValidatorSchema(value: unknown): unknown;
+  validatorSchemasEqual(left: unknown, right: unknown): boolean;
+  registerValidatorSchema(identities: string[], schema: unknown): void;
+  compileValidator(key: string, schema: unknown, resources?: {uri: string; schema: unknown}[], strict?: boolean): true;
+  validateValidator(key: string, data: unknown): {instancePath: string; schemaPath: string; keyword: string; params: unknown; message: string}[];
+}
 export interface JsonSchemaEngine {
   importJsonSchema(source: string, options: {id: string; baseUri: string; resources?: Record<string, string>}): unknown;
   inspectJsonSchema(document: unknown): JsonSchemaValidation;
@@ -653,7 +678,7 @@ export interface JsonSchemaStagedImportEngine extends Pick<JsonSchemaEngine, 'im
   importJsonSchemaHostCoercion(source: unknown, options: {id: string; baseUri: string; resources?: Record<string, unknown>}): unknown;
 }
 export declare function createJsonSchemaStagedImportEngine(module: any): JsonSchemaStagedImportEngine;
-export declare function createPreparedJsonSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): JsonSchemaEngine;
+export declare function createPreparedJsonSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): PreparedJsonSchemaEngine;
 export declare function initializeJsonSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<JsonSchemaEngine>;
 /** Initialize the opt-in standalone Iceberg schema JSON engine in a browser. */
 export declare function initializeIcebergSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<IcebergSchemaEngine>;
@@ -779,6 +804,7 @@ export declare function createGraphqlEngine(module: any, options?: {profile?: 'c
 export declare const NATIVE_FAMILY_PROFILE: 'umf.native-family-dispatch/1';
 export type NativeFamilyOperation = (fields?: Record<string, unknown>) => unknown;
 export interface NativeFamilyOperations {
+ readonly ['registry-policy']: Readonly<Record<'decide', NativeFamilyOperation>>;
  readonly ['pack-tools']: Readonly<Record<'generatePackTools', NativeFamilyOperation>>;
  readonly ['bulk-actions']: Readonly<Record<'applyBulkEvent'|'bulkDecisionOrder'|'nextBulkFence'|'bulkItemToken'|'parseBulkItemToken'|'isReservedBulkKey'|'checkBulkKeyUse', NativeFamilyOperation>>;
  readonly ['lakeview-legacy-projection']: Readonly<Record<'projectLakeviewToLegacyDashboard', NativeFamilyOperation>>;

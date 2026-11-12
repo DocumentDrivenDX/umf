@@ -185,7 +185,7 @@ fn policy_unknowns(value: &Value) -> Vec<Value> {
     // The 0.2 schema makes unknown object members retainable. This walk covers
     // the policy root and the source case families frozen in the packet; the
     // interpretation remains unimplemented regardless of warning count.
-    unknown_object_members(
+    let mut diagnostics = unknown_object_members(
         value,
         &[
             "vocabulary",
@@ -198,7 +198,17 @@ fn policy_unknowns(value: &Value) -> Vec<Value> {
             "protection",
         ],
         "",
-    )
+    );
+    if let Some(Value::Array(rules)) = json_member(value, "rules") {
+        for (index, rule) in rules.iter().enumerate() {
+            diagnostics.extend(unknown_object_members(
+                rule,
+                &["id", "effect", "actions", "target", "condition", "obligations", "disclosure"],
+                &format!("/rules/{index}"),
+            ));
+        }
+    }
+    diagnostics
 }
 
 fn policy_has_catalog_disposition(value: &Value) -> bool {

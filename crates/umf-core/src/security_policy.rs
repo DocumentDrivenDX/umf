@@ -7,11 +7,11 @@ use crate::{
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
     serialization::{self, Format},
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
 use std::{cmp::Ordering, sync::OnceLock};
 
-const CORE_VERSION: &str = "0.10.0";
+pub(crate) const CORE_VERSION: &str = "0.10.0";
 fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     let Value::Object(fields) = value else {
         return None;
@@ -1511,7 +1511,7 @@ pub fn inspect_security_policy(
                         .unwrap_or("Invalid JSON value"),
                     "error",
                 )],
-            ))
+            ));
         }
     };
     let mut ds = schema_diagnostics(&policy_schema()?, &source, "", "SECURITY_STRUCTURE", ctx)?;
@@ -1550,6 +1550,98 @@ pub fn inspect_security_policy(
 /// Validate authored 0.2 action-purpose declarations against the same pinned
 /// ontology/document semantics used by the executable 0.1 policy inspector.
 /// The returned labels are source declarations only and confer no authority.
+/// Parse the source-owned action purpose closure independently of the older
+/// ontology/domain inspector. Catalog compilation already admitted this graph.
+fn check_action_purposes(ontology: &Value) -> (Vec<Value>, Vec<Value>) {
+    let actions = array(get(ontology, "actions"));
+    let declarations = array(get(ontology, "actionPurposes"));
+    let mut action_ids = std::collections::BTreeSet::new();
+    let mut declared = std::collections::BTreeSet::new();
+    let allowed: [&str; 6] = [
+        "read",
+        "field",
+        "original-authorized",
+        "reverse",
+        "vault-write",
+        "other",
+    ];
+    let mut purposes = Vec::with_capacity(declarations.len());
+    let mut diagnostics = Vec::new();
+    let mut purpose_error = false;
+    if !(1..=256).contains(&actions.len()) || !(1..=256).contains(&declarations.len()) {
+        purpose_error = true;
+    }
+    for action in actions {
+        match text(Some(action)) {
+            Some(value) if !value.is_empty() && value.encode_utf16().count() <= 4096 => {
+                if !action_ids.insert(value) {
+                    purpose_error = true;
+                }
+            }
+            _ => purpose_error = true,
+        }
+    }
+    for (index, declaration) in declarations.iter().enumerate() {
+        let action = text(get(declaration, "action"));
+        let values = array(get(declaration, "purposes"));
+        let exact = matches!(declaration, Value::Object(fields) if fields.len() == 2 && get(declaration,"action").is_some() && get(declaration,"purposes").is_some());
+        let mut selected = Vec::new();
+        let mut seen = std::collections::BTreeSet::new();
+        if !exact || values.is_empty() || values.len() > 6 {
+            purpose_error = true;
+        }
+        for value in values {
+            match text(Some(value)) {
+                Some(value) if allowed.contains(&value.as_str()) && seen.insert(value.clone()) => {
+                    selected.push(value)
+                }
+                _ => purpose_error = true,
+            }
+        }
+        if selected
+            .iter()
+            .any(|value| matches!(value.as_str(), "reverse" | "vault-write" | "other"))
+            && selected.len() != 1
+        {
+            purpose_error = true;
+        }
+        if let Some(action) = action {
+            if !action_ids.contains(&action) || !declared.insert(action.clone()) {
+                purpose_error = true;
+            }
+            purposes.push(object(vec![
+                ("action", string(&action)),
+                (
+                    "purposes",
+                    Value::Array(selected.iter().map(|value| string(value)).collect()),
+                ),
+            ]));
+        } else {
+            purpose_error = true;
+        }
+        if !exact {
+            diagnostics.push(diag(
+                "SECURITY_ACTION_PURPOSES",
+                &format!("/actionPurposes/{index}"),
+                "Exact action/purpose declaration required",
+                "error",
+            ));
+        }
+    }
+    if declared != action_ids {
+        purpose_error = true;
+    }
+    if purpose_error {
+        diagnostics.push(diag(
+            "SECURITY_ACTION_PURPOSES",
+            "/actionPurposes",
+            "Complete exact known action-purpose closure required",
+            "error",
+        ));
+    }
+    (purposes, diagnostics)
+}
+
 pub fn inspect_security_action_purposes(
     ontology_input: &Value,
     documents_input: &Value,
@@ -1633,91 +1725,8 @@ pub fn inspect_security_action_purposes(
             diagnostics,
         ));
     }
-    let actions = array(get(&ontology, "actions"));
-    let declarations = array(get(&ontology, "actionPurposes"));
-    let mut action_ids = std::collections::BTreeSet::new();
-    let mut declared = std::collections::BTreeSet::new();
-    let allowed: [&str; 6] = [
-        "read",
-        "field",
-        "original-authorized",
-        "reverse",
-        "vault-write",
-        "other",
-    ];
-    let mut purposes = Vec::with_capacity(declarations.len());
-    let mut purpose_error = false;
-    if !(1..=256).contains(&actions.len()) || !(1..=256).contains(&declarations.len()) {
-        purpose_error = true;
-    }
-    for action in actions {
-        match text(Some(action)) {
-            Some(value) if !value.is_empty() && value.encode_utf16().count() <= 4096 => {
-                if !action_ids.insert(value) {
-                    purpose_error = true;
-                }
-            }
-            _ => purpose_error = true,
-        }
-    }
-    for (index, declaration) in declarations.iter().enumerate() {
-        let action = text(get(declaration, "action"));
-        let values = array(get(declaration, "purposes"));
-        let exact = matches!(declaration, Value::Object(fields) if fields.len() == 2 && get(declaration,"action").is_some() && get(declaration,"purposes").is_some());
-        let mut selected = Vec::new();
-        let mut seen = std::collections::BTreeSet::new();
-        if !exact || values.is_empty() || values.len() > 6 {
-            purpose_error = true;
-        }
-        for value in values {
-            match text(Some(value)) {
-                Some(value) if allowed.contains(&value.as_str()) && seen.insert(value.clone()) => {
-                    selected.push(value)
-                }
-                _ => purpose_error = true,
-            }
-        }
-        if selected
-            .iter()
-            .any(|value| matches!(value.as_str(), "reverse" | "vault-write" | "other"))
-            && selected.len() != 1
-        {
-            purpose_error = true;
-        }
-        if let Some(action) = action {
-            if !action_ids.contains(&action) || !declared.insert(action.clone()) {
-                purpose_error = true;
-            }
-            purposes.push(object(vec![
-                ("action", string(&action)),
-                (
-                    "purposes",
-                    Value::Array(selected.iter().map(|value| string(value)).collect()),
-                ),
-            ]));
-        } else {
-            purpose_error = true;
-        }
-        if !exact {
-            diagnostics.push(diag(
-                "SECURITY_ACTION_PURPOSES",
-                &format!("/actionPurposes/{index}"),
-                "Exact action/purpose declaration required",
-                "error",
-            ));
-        }
-    }
-    if declared != action_ids {
-        purpose_error = true;
-    }
-    if purpose_error {
-        diagnostics.push(diag(
-            "SECURITY_ACTION_PURPOSES",
-            "/actionPurposes",
-            "Complete exact known action-purpose closure required",
-            "error",
-        ));
-    }
+    let (purposes, purpose_diagnostics) = check_action_purposes(&ontology);
+    diagnostics.extend(purpose_diagnostics);
     if !diagnostics.is_empty() {
         return Ok(action_purpose_result(
             ontology,
@@ -1897,6 +1906,106 @@ pub fn inspect_security_action_purposes(
         ));
     }
     diagnostics.push(diag("SECURITY_ACTION_PURPOSE_DECLARATIONS_ONLY", "", "Authored classifications only; actual owner-profile compatibility, route completeness, policy grants and native/current authority remain separate", "warning"));
+    Ok(action_purpose_result(
+        ontology,
+        documents,
+        purposes,
+        diagnostics,
+    ))
+}
+
+/// Build the narrow source-purpose report for an already resolved private
+/// catalog ontology. The catalog compiler owns the graph/document checks; this
+/// leaf validates the exact complete action-purpose declaration set only.
+fn inspect_candidate_catalog_action_purposes(
+    ontology_input: &Value,
+    documents_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let packet = object(vec![
+        ("ontology", ontology_input.clone()),
+        ("documents", documents_input.clone()),
+    ]);
+    let packet = match copy_json(&packet, ctx) {
+        Ok(value) => value,
+        Err(error) if error.is_control_failure() => return Err(error),
+        Err(error) => {
+            return Ok(action_purpose_result(
+                Value::Null,
+                Value::Null,
+                Vec::new(),
+                vec![diag_u16(
+                    &error.code,
+                    error.path,
+                    error
+                        .message
+                        .to_utf8()
+                        .as_deref()
+                        .unwrap_or("Invalid JSON value"),
+                    "error",
+                )],
+            ));
+        }
+    };
+    let ontology = get(&packet, "ontology").cloned().unwrap_or(Value::Null);
+    let documents = get(&packet, "documents").cloned().unwrap_or(Value::Null);
+    let mut text_units = 0usize;
+    let mut pending = vec![&packet];
+    while let Some(value) = pending.pop() {
+        let size = match value {
+            Value::String(value) => value.units().len(),
+            Value::Array(values) => {
+                pending.extend(values.iter());
+                0
+            }
+            Value::Object(fields) => {
+                for (key, child) in fields {
+                    text_units = text_units.saturating_add(key.units().len());
+                    pending.push(child);
+                }
+                0
+            }
+            _ => 0,
+        };
+        text_units = text_units.saturating_add(size);
+        if text_units > 4_000_000 {
+            return Ok(action_purpose_result(
+                ontology,
+                documents,
+                Vec::new(),
+                vec![diag(
+                    "SECURITY_ACTION_PURPOSE_BOUND",
+                    "",
+                    "Resource-exhausted: source key/string text exceeds 4000000 UTF-16 units",
+                    "error",
+                )],
+            ));
+        }
+    }
+    let schema = action_purpose_ontology_schema()?;
+    let mut diagnostics = schema_diagnostics(
+        &schema,
+        &ontology,
+        "",
+        "SECURITY_ACTION_PURPOSE_STRUCTURE",
+        ctx,
+    )?;
+    let (purposes, purpose_diagnostics) = check_action_purposes(&ontology);
+    diagnostics.extend(purpose_diagnostics);
+    if !diagnostics.is_empty() {
+        return Ok(action_purpose_result(
+            ontology,
+            documents,
+            Vec::new(),
+            diagnostics,
+        ));
+    }
+    diagnostics.push(diag(
+        "SECURITY_ACTION_PURPOSE_DECLARATIONS_ONLY",
+        "",
+        "Authored classifications only; actual owner-profile compatibility, route completeness, policy grants and native/current authority remain separate",
+        "warning",
+    ));
     Ok(action_purpose_result(
         ontology,
         documents,
@@ -2237,13 +2346,47 @@ pub fn inspect_protection_obligations(
     let parameters = crate::security_parameters::validate_security_protection_parameters_candidate(
         policy, catalog, closure, ctx,
     )?;
+    inspect_protection_obligations_from_sources(
+        parameters,
+        ontology_input,
+        "validated-parameters",
+        ctx,
+    )
+}
+
+/// Candidate catalog fold for inputs whose parameter semantics were already
+/// checked by the catalog compiler. Resolve exact domains here, but do not
+/// impose the public parameter validator's narrower scalar profile again.
+pub fn inspect_candidate_catalog_protection_obligations(
+    policy: &Value,
+    catalog: &Value,
+    closure: &Value,
+    ontology_input: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let domains = crate::security_domains::resolve_security_protection_domains_candidate(
+        policy, catalog, closure, ctx,
+    )?;
+    inspect_protection_obligations_from_sources(domains, ontology_input, "resolved-domains", ctx)
+}
+
+fn inspect_protection_obligations_from_sources(
+    parameters: Value,
+    ontology_input: &Value,
+    required_status: &str,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     let retained_policy = get(&parameters, "policy").cloned().unwrap_or(Value::Null);
     let retained_catalog = get(&parameters, "catalog").cloned().unwrap_or(Value::Null);
     let retained_closure = get(&parameters, "closure").cloned().unwrap_or(Value::Null);
     let documents = get(&retained_closure, "documents")
         .cloned()
         .unwrap_or(Value::Null);
-    let purposes = inspect_security_action_purposes(ontology_input, &documents, ctx)?;
+    let purposes = if required_status == "resolved-domains" {
+        inspect_candidate_catalog_action_purposes(ontology_input, &documents, ctx)?
+    } else {
+        inspect_security_action_purposes(ontology_input, &documents, ctx)?
+    };
     let ontology = get(&purposes, "ontology").cloned().unwrap_or(Value::Null);
     let action_purposes = array(get(&purposes, "purposes")).to_vec();
     let mut diagnostics = array(get(&parameters, "diagnostics")).to_vec();
@@ -2273,7 +2416,7 @@ pub fn inspect_protection_obligations(
             ("diagnostics", Value::Array(diagnostics)),
         ])
     };
-    if text(get(&parameters, "status")).as_deref() != Some("validated-parameters")
+    if text(get(&parameters, "status")).as_deref() != Some(required_status)
         || text(get(&purposes, "status")).as_deref() != Some("resolved-purposes")
     {
         return Ok(finish(false, diagnostics, obligations));
@@ -2399,19 +2542,42 @@ pub fn inspect_protection_obligations(
                 add(
                     "dictionary-attack-warning",
                     object(vec![
-                        (
-                            "code",
-                            string("UNSALTED_HASH_DICTIONARY_ATTACK"),
-                        ),
+                        ("code", string("UNSALTED_HASH_DICTIONARY_ATTACK")),
                         (
                             "warning",
-                            string("Unsalted hashes expose equality and need assessment for dictionary attacks; no algorithm or custody enforcement is verified."),
+                            string(
+                                "Unsalted hashes expose equality and need assessment for dictionary attacks; no algorithm or custody enforcement is verified.",
+                            ),
                         ),
                     ]),
                 );
             }
         }
         if let Some(custody) = get(transform, "custody") {
+            if let Value::Object(fields) = custody {
+                if fields.iter().any(|(key, _)| {
+                    ![
+                        "owner",
+                        "vaultRef",
+                        "keyRef",
+                        "formatPreserving",
+                        "storageEffect",
+                        "propagation",
+                        "vaultWriteAction",
+                    ]
+                    .contains(&key.to_utf8().ok().as_deref().unwrap_or(""))
+                }) {
+                    reject("Uninterpreted custody declaration member");
+                }
+            }
+            if let Value::Object(fields) = get(custody, "propagation").unwrap_or(&Value::Null) {
+                if fields.iter().any(|(key, _)| {
+                    !["history", "snapshots", "exports", "feeds", "caches"]
+                        .contains(&key.to_utf8().ok().as_deref().unwrap_or(""))
+                }) {
+                    reject("Uninterpreted propagation declaration member");
+                }
+            }
             add("stored-custody", custody.clone());
             for channel in ["history", "snapshots", "exports", "feeds", "caches"] {
                 add(

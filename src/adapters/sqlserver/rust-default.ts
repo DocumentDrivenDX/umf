@@ -9,7 +9,7 @@ import {sqlserverKeysPackage} from '../../core-ideals/key-sqlserver-package';
 import {sqlserverRelationshipsPackage} from '../../core-ideals/relationship-sqlserver-package';
 import type {SqlServerColumnMetadata,SqlServerConstraintMetadata,SqlServerIndexMetadata} from './index';
 import type {SqlServerFacetTypeInspection,inspectSqlServerFacetType} from './facet-type';
-import type {SqlServerFacetPredicateInspection,inspectSqlServerFacetPredicate} from './facet-predicate';
+import type {SqlServerFacetPredicateInspection} from './facet-predicate-types';
 import type {SqlServerFacetConstraintsInspection} from './facet-constraints';
 import type {SqlServerFieldClassification,SqlServerFieldRequest} from '../../core-ideals/sqlserver-field';
 import type {SqlServerRecordClassification,SqlServerRecordRequest} from '../../core-ideals/sqlserver-record';
@@ -92,7 +92,7 @@ export function createSqlServerRustDefault(engine:SqlServerNativeFamilyEngine,is
   getSqlServerIndexMetadata(document:Parameters<GetSqlServerIndexMetadata>[0]):SqlServerIndexMetadata{return call(()=>engine.sqlserver.indexes({document}) as SqlServerIndexMetadata);},
   proposeSqlServerCatalogEdit(document:Parameters<ProposeSqlServerCatalogEdit>[0],path:Parameters<ProposeSqlServerCatalogEdit>[1],text:Parameters<ProposeSqlServerCatalogEdit>[2]):ReturnType<ProposeSqlServerCatalogEdit>{return call(()=>engine.sqlserver.edit({document,path,text}) as ReturnType<ProposeSqlServerCatalogEdit>);},
   inspectSqlServerFacetType(input:Parameters<typeof inspectSqlServerFacetType>[0]):SqlServerFacetTypeInspection{return call(()=>engine.sqlserver.facetType({native:input}) as SqlServerFacetTypeInspection);},
-  inspectSqlServerFacetPredicate(input:Parameters<typeof inspectSqlServerFacetPredicate>[0],columnName:Parameters<typeof inspectSqlServerFacetPredicate>[1]):SqlServerFacetPredicateInspection{
+  inspectSqlServerFacetPredicate(input:unknown,columnName:string):SqlServerFacetPredicateInspection{
    return call(()=>engine.sqlserver.facetPredicate({source:input,columnName}) as SqlServerFacetPredicateInspection);
   },
   inspectSqlServerFacetConstraints(document:Parameters<InspectSqlServerFacetConstraints>[0],columnPath:Parameters<InspectSqlServerFacetConstraints>[1]):SqlServerFacetConstraintsInspection{return call(()=>engine.sqlserver.facetConstraints({document,columnPath}) as SqlServerFacetConstraintsInspection);},

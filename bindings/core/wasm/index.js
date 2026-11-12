@@ -17,6 +17,7 @@ export {SMITHY_SESSION_PROFILE};
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
+import {createSecurityCandidateConditionOperations} from './src/security-candidate-condition.js';
 import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
 import {createSecurityProtectionSourceEngine as createSecurityProtectionSourceEngineWithWire, SECURITY_PROTECTION_SOURCE_PROFILE} from './src/security-protection-source.js';
 import {createSecurityPolicySourceEngine as createSecurityPolicySourceEngineWithWire, SECURITY_POLICY_SOURCE_PROFILE} from './src/security-policy-source.js';
@@ -1780,7 +1781,19 @@ export function createPreparedJsonSchemaEngine(module, options = {}) {
     if (failure) throw jsonSchemaFailureError(failure, UmfCoreError);
     return fromWire(JSON.parse(response.wire), work);
   };
-  return createJsonSchemaOperations(call, preflight);
+  const operations = createJsonSchemaOperations(call, preflight);
+  return Object.freeze(Object.assign({}, operations, {
+    copyValidatorSchema(value) {
+      const result = JSON.parse(module.copyJsonWire(encodeWire(value)));
+      const failure = resultError(result);
+      if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+      return fromWire(JSON.parse(result.wire));
+    },
+    validatorSchemasEqual(left, right) { return call('validatorSchemaEqual', {left, right}, preflight()); },
+    registerValidatorSchema(identities, schema) { return call('validatorRegisterSchema', {identities, schema}, preflight()); },
+    compileValidator(key, schema, resources = [], strict = true) { return call('validatorCompile', {key, schema, resources, strict}, preflight()); },
+    validateValidator(key, data) { return call('validatorValidate', {key, data}, preflight()); },
+  }));
 }
 
 /** Create the opt-in structural document comparison adapter. */
@@ -2021,7 +2034,13 @@ export function createJavascriptNumericEngine(module, resources, options = {}) {
 /** Create the opt-in Rust engine for bounded CONTRACT-062 truth/composition operations. */
 export function createSecurityLogicEngine(module, options = {}) {
   if (typeof module?.executeSecurityLogicWire !== 'function' || typeof module?.securityNotScalar !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
-  return createSecurityLogicEngineWithWire((wire, control) => module.executeSecurityLogicWire(wire, control), options, UmfCoreError, (value, control) => module.securityNotScalar(value, control));
+  return createSecurityLogicEngineWithWire((wire, control, candidate) => module.executeSecurityLogicWire(wire, control, candidate), options, UmfCoreError, (value, control) => module.securityNotScalar(value, control));
+}
+
+/** Create the private Rust compact-condition evaluator with lazy host reads. */
+export function createSecurityCandidateConditionEngine(module) {
+  if (typeof module?.executeSecurityCandidateConditionWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createSecurityCandidateConditionOperations((wire, callback) => module.executeSecurityCandidateConditionWire(wire, callback), UmfCoreError);
 }
 
 /** Create the opt-in pure protection-function reference engine. */

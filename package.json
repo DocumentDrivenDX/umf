@@ -18,6 +18,16 @@
       "bun": "./src/index-node-v4.ts",
       "node": "./src/index-node-v4.ts",
       "default": "./src/index-browser-v4.ts"
+    },
+    "#security-candidate-condition": {
+      "types": {
+        "browser": "./src/extensions/security/candidate-condition-host-browser.ts",
+        "default": "./src/extensions/security/candidate-condition-host-node.ts"
+      },
+      "browser": "./src/extensions/security/candidate-condition-host-browser.ts",
+      "bun": "./src/extensions/security/candidate-condition-host-node.ts",
+      "node": "./src/extensions/security/candidate-condition-host-node.ts",
+      "default": "./src/extensions/security/candidate-condition-host-browser.ts"
     }
   },
   "exports": {

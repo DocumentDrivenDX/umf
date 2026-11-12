@@ -9,6 +9,7 @@ export const LAKEVIEW_EXTENSION='umf.lakeview';
 export const lakeviewPackage=manifest as unknown as ExtensionPackage;
 export interface LakeviewOptions {id:string;title?:string;namespace?:string;}
 export interface LakeviewImport {document:Document;issues:LakeviewIssue[];}
+export type RegistryConstructor=new(runtime:ExtensionKindRuntime)=>RegistryBase;
 /** Host capability only: all native retention and data-shape semantics run in Rust. */
 export interface LakeviewRuntime extends ExtensionKindRuntime {
   importLakeviewDashboard(source:string,options:LakeviewOptions):unknown;
@@ -19,12 +20,12 @@ function required(runtime:LakeviewRuntime|undefined):LakeviewRuntime {
   if(!runtime)throw new UmfError('LAKEVIEW_RUNTIME_REQUIRED','Initialize the shared native/WASM engine and pass it to the Lakeview adapter');
   return runtime;
 }
-export function lakeviewRegistry(runtime:LakeviewRuntime):RegistryBase {
+export function lakeviewRegistry(runtime:LakeviewRuntime,Registry:RegistryConstructor):RegistryBase {
   const engine=required(runtime);
-  return new RegistryBase(engine).register(lakeviewPackage,undefined,{kinds:true,nativeValidator:'lakeview/0.2.0'});
+  return new Registry(engine).register(lakeviewPackage,undefined,{kinds:true,nativeValidator:'lakeview/0.2.0'});
 }
-export function inspectLakeview(document:Document,runtime:LakeviewRuntime){
-  const registry=lakeviewRegistry(runtime);
+export function inspectLakeview(document:Document,runtime:LakeviewRuntime,Registry:RegistryConstructor){
+  const registry=lakeviewRegistry(runtime,Registry);
   return runtime.validateDocument(document,registry.registrations());
 }
 export function importLakeviewDashboard(text:string,options:LakeviewOptions,runtime:LakeviewRuntime):LakeviewImport {

@@ -33,7 +33,7 @@
     {
       "source": "bindings/core/node/src/native-family.js",
       "generated": "bindings/core/wasm/src/native-family.js",
-      "sha256": "28f06be4ae357fc134467e1d1f23c049afb445e742d5aaf46624f34f0cf1f108"
+      "sha256": "c3d726a289b306a82846db623a0a67a56e37228fd537456f11d2736628adf88b"
     },
     {
       "source": "bindings/core/node/src/postgresql-parser-session.js",
@@ -48,7 +48,7 @@
     {
       "source": "bindings/core/node/src/smithy-session.js",
       "generated": "bindings/core/wasm/src/smithy-session.js",
-      "sha256": "49d32751b8803ff99eb5767cf66d2bed09558b2f060c0a0cf5ba83493e6279e6"
+      "sha256": "136a1190b38ac6758984640d1faf19d1edae90dd42de56dff800b4df56e1b20f"
     },
     {
       "source": "bindings/core/node/src/action-plan-session.js",
@@ -73,12 +73,17 @@
     {
       "source": "bindings/core/node/src/security-logic.js",
       "generated": "bindings/core/wasm/src/security-logic.js",
-      "sha256": "34c07c41fec5ba3fb3aa135a6d7de7f58aec476c978bcc6d3388fe6a587b4531"
+      "sha256": "9e3eff0178c81f1311edbbbc4a9bc68eb394ed54f16080d231f669a25e385597"
+    },
+    {
+      "source": "bindings/core/node/src/security-candidate-condition.js",
+      "generated": "bindings/core/wasm/src/security-candidate-condition.js",
+      "sha256": "1de878a47f667f948de7f9b811e5e99497fd2440ba87df6013b28a8a9de196c7"
     },
     {
       "source": "bindings/core/node/src/security-functions.js",
       "generated": "bindings/core/wasm/src/security-functions.js",
-      "sha256": "e306ea52f0ef682b43cf752a50798169093d5a50b0fe6d45b205276581648638"
+      "sha256": "c8da5e0d1fae1ea8b9fcfd4a800157901b24929c0afce4e3c3171d063fba1282"
     },
     {
       "source": "bindings/core/node/src/security-protection-source.js",
@@ -88,7 +93,7 @@
     {
       "source": "bindings/core/node/src/security-policy-source.js",
       "generated": "bindings/core/wasm/src/security-policy-source.js",
-      "sha256": "015c64e0b9dfde6df583386e3a63f05e373182983298a2b301bff0d8884aa0ef"
+      "sha256": "83e4b684d863748221d095d70db1d1e69acfe789399f5416ef9357b61c6ce35b"
     },
     {
       "source": "bindings/core/node/src/security-read-registration.js",

@@ -7,6 +7,7 @@ use umf_core::{Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf.native-family-dispatch/1";
 pub const FAMILIES: &[&str] = &[
+    "registry-policy",
     #[cfg(feature = "codegen")]
     "pack-tools",
     "bulk-actions",
@@ -86,6 +87,7 @@ fn bad_family() -> String {
 /// Describe callable family operations without a host-owned profile table.
 pub fn metadata_wire(family: &str) -> String {
     let (profile, operations): (&str, &[&str]) = match family {
+        "registry-policy" => (crate::registry_policy_binding::PROFILE, &["decide"]),
         #[cfg(feature = "codegen")]
         "pack-tools" => (crate::pack_tools_binding::PROFILE, &["generatePackTools"]),
         "bulk-actions" => (
@@ -949,6 +951,7 @@ pub fn execute_wire_with_control(
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
     match family {
+        "registry-policy" => crate::registry_policy_binding::execute_wire(wire),
         "bulk-actions" => crate::bulk_actions_binding::execute_wire_with_control(wire, control),
         "lakeview-legacy-projection" => {
             crate::lakeview_legacy_projection_binding::execute_wire_with_control(wire, control)

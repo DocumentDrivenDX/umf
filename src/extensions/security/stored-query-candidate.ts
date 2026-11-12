@@ -32,7 +32,7 @@ export function inspectCandidateStoredQueryProperties(handle:unknown,ownerInput:
   while(pending.length){budget.step();const x=pending.pop();if(typeof x==='string')units+=x.length;else if(x&&typeof x==='object')for(const [key,value] of Object.entries(x)){units+=key.length;pending.push(value);}if(units>4_000_000)fail('Source text budget exhausted');}
   const o=owner as any,u=use as any,c=catalog as any;
   if(!check(use)||!c)fail('Exact stored-query source profile required');
-  const storage=validateCandidateCatalogStorage(program,o,()=>budget.step());
+  const storage=validateCandidateCatalogStorage(program,o,units=>budget.step(units),budget.remainingWork);
   const entry=storage.get(JSON.stringify([id(u.type),id(u.field)]));if(entry?.storageEffect!=='stored-transformed')fail('Selected live stored Field required');
   const transform=c.transforms.find((t:any)=>t.id===entry.storageTransform.id&&t.version===entry.storageTransform.version);
   const parameters=checkProtectionParametersWithinBudget(policy,catalog,closure,budget);if(parameters.status==='refused')fail('Parameter validation refused');

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 /** Private selected-source correspondence; no policy/domain/runtime admission. */
 import {copyJson} from '../../model/json';
 import {readCandidateCoreSource,isIssuedCandidateCoreSource} from './core-source-candidate';
+import {resolveCandidateRecordAssociation as resolveNativeAssociation} from '#security-candidate-condition';
 import type {SecurityRef} from './types';
-const sources=new WeakMap<object,any>(),sourceHandles=new WeakMap<object,unknown>();
+const sources=new WeakMap<object,any>(),sourceHandles=new WeakMap<object,unknown>(),sourceClassifications=new WeakMap<object,unknown>(),nativeDomainChecks=new WeakSet<object>();
 const fail=():never=>{throw Error('SECURITY_ASSOCIATION_CANDIDATE_UNSUPPORTED');};
 const id=(r:SecurityRef)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
 function shape(v:any,keys:string[]){if(!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!Object.hasOwn(v,k)))fail();}
@@ -16,54 +16,22 @@ export interface CandidateRecordAssociationPlan {
  readonly type:SecurityRef;readonly key:unknown;readonly sourceRecord:unknown;
  readonly endpoints:readonly {role:string;target:SecurityRef;key:unknown;fields:readonly SecurityRef[]}[];
 }
-export function resolveCandidateRecordAssociation(input:unknown,document:unknown,entities:unknown):CandidateRecordAssociationPlan {
+export function resolveCandidateRecordAssociation(input:unknown,document:unknown,entities:unknown,classifications?:unknown):CandidateRecordAssociationPlan {
  const s:any=copyJson(input),d:any=readCandidateCoreSource(document),choices:any=copyJson(entities);
- shape(s,['kind','type','keyId','endpoints']);if(s.kind!=='record-members')fail();ref(s.type);text(s.keyId);
- if(d.umf!==CURRENT_CORE_VERSION||!Array.isArray(d.modules)||!Array.isArray(choices)||choices.length>256)fail();
- const keys=new Map<string,string>();for(const e of choices){shape(e,['type','keyId']);ref(e.type);text(e.keyId);if(keys.has(id(e.type)))fail();keys.set(id(e.type),e.keyId);}
- function record(r:SecurityRef){ref(r);if(r.documentId!==d.id)fail();const ms=d.modules.filter((m:any)=>m.id===r.moduleId);if(ms.length!==1||!Array.isArray(ms[0].elements))return fail();const rs=ms[0].elements.filter((e:any)=>e.id===r.elementId);if(rs.length!==1||rs[0].kind!=='record'||!Array.isArray(rs[0].members)||!Array.isArray(rs[0].keys))return fail();return rs[0];}
- function selected(r:any,keyId:string){text(keyId);const ks=r.keys.filter((k:any)=>k.id===keyId);if(ks.length!==1)return fail();const k=ks[0];if(Object.keys(k).some(n=>!['id','name','fields','primary'].includes(n))||('primary'in k&&typeof k.primary!=='boolean')||!Array.isArray(k.fields)||!k.fields.length)return fail();const seen=new Set<string>();for(const f of k.fields){shape(f,['module','element']);text(f.module);text(f.element);const token=JSON.stringify([f.module,f.element]);if(seen.has(token)||!r.members.some((m:any)=>m.module===f.module&&m.element===f.element))fail();seen.add(token);}return k;}
- const source=record(s.type),key=selected(source,s.keyId),roles=new Set<string>();
- if(!Array.isArray(s.endpoints)||!s.endpoints.length||s.endpoints.length>256)fail();
- const endpoints=s.endpoints.map((e:any)=>{
-  shape(e,['role','target','fields']);text(e.role);ref(e.target);if(roles.has(e.role))fail();roles.add(e.role);
-  const keyId=keys.get(id(e.target));if(!keyId)return fail();const target=record(e.target),key=selected(target,keyId);
-  if(!Array.isArray(e.fields)||!e.fields.length||e.fields.length>256||e.fields.length!==key.fields.length)fail();const fields=new Set<string>();
-  for(const f of e.fields){ref(f);if(f.documentId!==s.type.documentId||fields.has(id(f))||!source.members.some((m:any)=>m.module===f.moduleId&&m.element===f.elementId))fail();fields.add(id(f));}
-  return {role:e.role,target:e.target,key,fields:e.fields};
- });
- const plan=freeze({kind:'candidate-record-association/0.1',type:s.type,key,sourceRecord:source,endpoints});sources.set(plan,d);if(isIssuedCandidateCoreSource(document))sourceHandles.set(plan,document);return plan;
+ const result:any=resolveNativeAssociation({selector:s,document:d,entities:choices,...(classifications===undefined?{}:{classifications})});const plan=freeze(result?.plan);if(!plan||plan.kind!=='candidate-record-association/0.1')return fail();if(result.classifications!==undefined)sourceClassifications.set(plan,freeze(result.classifications));
+ sources.set(plan,d);nativeDomainChecks.add(plan);if(isIssuedCandidateCoreSource(document))sourceHandles.set(plan,document);return plan;
 }
 
-function canonical(v:any):string{return Array.isArray(v)?'['+v.map(canonical).join(',')+']':v&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);}
 /** Exact selected-field equality-domain correspondence within the issuance
  * snapshot. Not full core validity, classification or authority admission. */
 export function requireCandidateEndpointDomainCorrespondence(plan:CandidateRecordAssociationPlan):void {
- const document=sources.get(plan);if(!document)return fail();
- function domain(r:SecurityRef):string{
-  const modules=document.modules.filter((m:any)=>m.id===r.moduleId);if(r.documentId!==document.id||modules.length!==1)return fail();
-  const fields=modules[0].elements.filter((f:any)=>f.id===r.elementId);if(fields.length!==1)return fail();const f=fields[0];
-  const known=['id','kind','name','description','title','aliases','examples','extensions','scalarType','nullability','cardinality','facets','allowedValues','references'];
-  if(Object.keys(f).some(k=>!known.includes(k))||f.kind!=='field'||!['boolean','string','integer','decimal','binary'].includes(f.scalarType)||f.cardinality!=='one'||f.nullability!=='required'||(f.extensions&&Object.keys(f.extensions).length))return fail();
-  if(f.references!==undefined){if(!Array.isArray(f.references))return fail();for(const reference of f.references){shape(reference,['role','module','element']);Object.values(reference).forEach(text);if(reference.role==='record-type')return fail();}}
-  // Opaque link metadata does not alter the primitive equality domain.
-  const facets=f.facets??{};if(!facets||typeof facets!=='object'||Array.isArray(facets))return fail();
-  if(Object.keys(facets).some(k=>!['length','precision','scale','integerWidth','range'].includes(k)))return fail();
-  for(const [group,allowed] of Object.entries({length:['min','max','unit'],integerWidth:['bits','signed'],range:['min','max','minInclusive','maxInclusive']})){
-   const value=facets[group];if(value!==undefined&&(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).some(k=>!allowed.includes(k))))return fail();
-  }
-  if(f.scalarType==='decimal'&&(!Number.isSafeInteger(facets.precision)||!Number.isSafeInteger(facets.scale)||facets.precision<1||facets.scale<0))return fail();
-  return canonical({scalarType:f.scalarType,cardinality:f.cardinality,nullability:f.nullability,facets,allowedValues:f.allowedValues??null});
- }
- for(const endpoint of plan.endpoints){
-  const fields=(endpoint.key as any).fields;
-  endpoint.fields.forEach((field,i)=>{const target={documentId:endpoint.target.documentId,moduleId:fields[i].module,elementId:fields[i].element};if(domain(field)!==domain(target))fail();});
- }
+ if(!sources.has(plan)||!nativeDomainChecks.has(plan))return fail();
 }
 
 /** Explicit classification coverage for every member of selected Records.
  * Retained query-use declarations are not compiler or runtime authorization. */
 export function requireCandidateAssociationClassifications(plan:CandidateRecordAssociationPlan,input:unknown):unknown {
+ const native=sourceClassifications.get(plan);if(native!==undefined)return native;
  const document=sources.get(plan);if(!document)return fail();
  return checkCandidateRecordClassifications(sourceHandles.get(plan)??document,[plan.type,...plan.endpoints.map(e=>e.target)],input);
 }

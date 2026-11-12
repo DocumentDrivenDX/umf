@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
-use std::collections::BTreeSet;
+use std::{collections::{BTreeSet, HashMap}, sync::{Arc, Mutex}};
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -63,6 +63,7 @@ pub mod medical_projection_binding;
 pub mod native_contract_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod native_family_binding;
+pub mod registry_policy_binding;
 #[cfg(feature = "embedded-adapters")]
 pub mod lakeview_legacy_projection_binding;
 #[cfg(feature = "codegen")]
@@ -391,6 +392,7 @@ pub mod security_disclosure_literal_binding;
 pub mod security_domains_binding;
 pub mod security_functions_binding;
 pub mod security_logic_binding;
+pub mod security_candidate_condition_binding;
 pub mod security_parameters_binding;
 pub mod security_policy_source_binding;
 pub mod security_protection_source_binding;
@@ -1125,11 +1127,20 @@ pub fn execute_document_comparison_wire_with_control(
 /// Context as request decoding, the operation, and result encoding.
 pub const JSON_SCHEMA_PROFILE: &str = "umf-r5-json-schema/0.1.0";
 
+#[cfg(feature = "embedded-adapters")]
+fn check_validator_schema_id(id: &Value) -> Result<(), EngineError> {
+    if matches!(id, Value::String(value) if value == &Utf16::from("https://json-schema.org/draft/2020-12/schema")) {
+        return Err(fail("SCHEMA_ID", "The JSON Schema metaschema identity is reserved"));
+    }
+    Ok(())
+}
+
 /// Retained immutable resources for a prepared JSON Schema binding. The inner
 /// runtime is private so callers cannot replace pinned schemas or registries.
 #[cfg(feature = "embedded-adapters")]
 pub struct PreparedJsonSchemaRuntime {
     runtime: umf_core::json_schema_adapter::JsonSchemaRuntime,
+    validators: Mutex<HashMap<String, Arc<umf_core::schema::CompiledSchema>>>,
 }
 
 #[cfg(feature = "embedded-adapters")]
@@ -1137,6 +1148,7 @@ pub fn prepare_json_schema_runtime() -> Result<PreparedJsonSchemaRuntime, Engine
     let mut setup = Context::ordinary();
     Ok(PreparedJsonSchemaRuntime {
         runtime: umf_core::json_schema_adapter::JsonSchemaRuntime::new(&mut setup)?,
+        validators: Mutex::new(HashMap::new()),
     })
 }
 
@@ -1147,6 +1159,7 @@ pub fn prepare_json_schema_runtime_with_control(
     let mut setup = Context::ordinary().with_host_control(setup_control);
     Ok(PreparedJsonSchemaRuntime {
         runtime: umf_core::json_schema_adapter::JsonSchemaRuntime::new(&mut setup)?,
+        validators: Mutex::new(HashMap::new()),
     })
 }
 
@@ -1161,7 +1174,7 @@ pub fn execute_json_schema_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    execute_json_schema_wire_inner(wire_json, control, None)
+    execute_json_schema_wire_inner(wire_json, control, None, None)
 }
 
 /// Execute through a factory-prepared immutable runtime. One new Context
@@ -1172,7 +1185,7 @@ pub fn execute_prepared_json_schema_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    execute_json_schema_wire_inner(wire_json, control, Some(&runtime.runtime))
+    execute_json_schema_wire_inner(wire_json, control, Some(&runtime.runtime), Some(&runtime.validators))
 }
 
 #[cfg(feature = "embedded-adapters")]
@@ -1189,6 +1202,7 @@ fn execute_json_schema_wire_inner(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
     runtime: Option<&umf_core::json_schema_adapter::JsonSchemaRuntime>,
+    validator_cache: Option<&Mutex<HashMap<String, Arc<umf_core::schema::CompiledSchema>>>>,
 ) -> String {
     use umf_core::json_schema_adapter as schema;
     let result = (|| {
@@ -1207,6 +1221,68 @@ fn execute_json_schema_wire_inner(
                 .ok_or_else(|| fail("REQUEST", "JSON Schema document is required"))
         };
         let value = match op.as_str() {
+            "validatorRegisterSchema" => {
+                if let Some(Value::Array(identities)) = field(&request, "identities") {
+                    for id in identities {
+                        check_validator_schema_id(id)?;
+                    }
+                }
+                let schema = field(&request, "schema").ok_or_else(|| fail("REQUEST", "Validator schema is required"))?;
+                if let Some(id) = field(schema, "$id") {
+                    check_validator_schema_id(id)?;
+                }
+                umf_core::schema::CompiledSchema::validate_consumer_metaschema_only(schema, &mut ctx)?;
+                Value::Bool(true)
+            }
+            "validatorSchemaEqual" => {
+                let left = field(&request, "left").ok_or_else(|| fail("REQUEST", "Left schema is required"))?;
+                let right = field(&request, "right").ok_or_else(|| fail("REQUEST", "Right schema is required"))?;
+                Value::Bool(umf_core::python_value::instances_equal(left, right, &mut ctx)?)
+            }
+            "validatorCompile" => {
+                let key = string_field(&request, "key")?;
+                let schema_value = field(&request, "schema")
+                    .ok_or_else(|| fail("REQUEST", "Validator schema is required"))?;
+                if let Some(id) = field(schema_value, "$id") {
+                    check_validator_schema_id(id)?;
+                }
+                let strict = match field(&request, "strict") { Some(Value::Bool(value)) => *value, _ => true };
+                let mut resources = umf_core::schema::SchemaResources::default();
+                if let Some(Value::Array(items)) = field(&request, "resources") {
+                    for item in items {
+                        let uri = field(item, "uri").and_then(as_utf16)
+                            .ok_or_else(|| fail("REQUEST", "Validator resource URI is required"))?;
+                        let schema = field(item, "schema")
+                            .ok_or_else(|| fail("REQUEST", "Validator resource schema is required"))?;
+                        resources.entries.push((uri.clone(), schema.clone()));
+                    }
+                }
+                let compiled = umf_core::schema::CompiledSchema::compile_consumer(
+                    schema_value, &resources, strict, &mut ctx,
+                )?;
+                let mut cache = validator_cache.ok_or_else(|| fail("RUNTIME", "Prepared validator runtime is required"))?
+                    .lock().map_err(|_| fail("RUNTIME", "Validator cache is unavailable"))?;
+                if !cache.contains_key(&key) && cache.len() >= 4096 {
+                    return Err(fail("SCHEMA_CACHE_LIMIT", "Prepared validator cache reached its 4096-schema limit"));
+                }
+                cache.insert(key, Arc::new(compiled));
+                Value::Bool(true)
+            }
+            "validatorValidate" => {
+                let key = string_field(&request, "key")?;
+                let compiled = validator_cache.ok_or_else(|| fail("RUNTIME", "Prepared validator runtime is required"))?
+                    .lock().map_err(|_| fail("RUNTIME", "Validator cache is unavailable"))?
+                    .get(&key).cloned().ok_or_else(|| fail("SCHEMA_NOT_FOUND", "Compiled validator is not registered"))?;
+                let data = field(&request, "data").ok_or_else(|| fail("REQUEST", "Validator data is required"))?;
+                let errors = compiled.validate(data, &mut ctx)?;
+                Value::Array(errors.into_iter().map(|error| object(vec![
+                    ("instancePath", Value::String(error.instance_path)),
+                    ("schemaPath", Value::String(error.schema_path)),
+                    ("keyword", Value::String(error.keyword.into())),
+                    ("params", error.params),
+                    ("message", Value::String(error.message)),
+                ])).collect())
+            }
             "importJsonSchema" => {
                 let items = match field(&request, "resources") {
                     Some(Value::Array(items)) => items,
@@ -4201,6 +4277,7 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
             .collect(),
     )
 }
+
 fn validation_value(validation: umf_core::Validation) -> Value {
     Value::Object(vec![
         (Utf16::from("valid"), Value::Bool(validation.valid)),

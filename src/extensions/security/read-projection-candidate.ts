@@ -20,7 +20,7 @@ export function inspectCandidateReadProjection(handle:unknown,ownerInput:unknown
   const budget=new ProtectionLiteralBudget(),pending=[packet];let text=0,retained=0;
   while(pending.length){budget.step();const x=pending.pop();if(typeof x==='string')text+=x.length;else if(x&&typeof x==='object')for(const [key,v]of Object.entries(x)){text+=key.length;pending.push(v);}if(text>4_000_000)fail();}
   shape(selection,['type','field']);const s:any=selection;ref(s.type);ref(s.field);
-  const storage=validateCandidateCatalogStorage(program,owner,()=>budget.step());if(!owner.disclosure)fail();
+  const storage=validateCandidateCatalogStorage(program,owner,units=>budget.step(units),budget.remainingWork);if(!owner.disclosure)fail();
   const entity=program.ontology.ontology.entities.find((e:any)=>id(e.type)===id(s.type)),member=entity?.fields.find((f:any)=>id(f.ref)===id(s.field));if(!member)fail();
   const own=storage.get(JSON.stringify([id(s.type),id(s.field)]));if(!own)fail();
   const parameters=program.catalog?checkProtectionParametersWithinBudget(program.policy,program.catalog,program.closure,budget):null;if(parameters?.status==='refused')fail();

@@ -10,7 +10,6 @@ const bundles: Record<string, string> = {
  'postgresql-facet-catalog': 'scripts/core-ideals/postgresql-facet-catalog.ts',
  'postgresql-facet-predicate': 'scripts/core-ideals/postgresql-facet-predicate.ts',
  'postgresql-facet-type': 'scripts/core-ideals/postgresql-facet-typmod.ts',
- 'sqlserver-facet-predicate': 'src/adapters/sqlserver/facet-predicate.ts',
  'sqlserver-facet-type': 'src/adapters/sqlserver/facet-type.ts',
 };
 export async function buildAdapterBrowserFixtures() {

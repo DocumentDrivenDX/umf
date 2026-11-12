@@ -30,7 +30,7 @@ export function inspectCandidateQueryValueRoutes(handle:unknown,ownerInput:unkno
   const budget=new ProtectionLiteralBudget(),pending=[packet];let sourceText=0,retained=0;
   while(pending.length){budget.step();const x=pending.pop();if(typeof x==='string')sourceText+=x.length;else if(x&&typeof x==='object')for(const [key,v]of Object.entries(x)){sourceText+=key.length;pending.push(v);}if(sourceText>4000000)fail();}
   if(!check(use))fail();const u:any=use,ontology=program.ontology.ontology;if(u.scan.trim()!==u.scan)fail();
-  const storage=validateCandidateCatalogStorage(program,owner,()=>budget.step());if(!owner.disclosure)fail();
+  const storage=validateCandidateCatalogStorage(program,owner,units=>budget.step(units),budget.remainingWork);if(!owner.disclosure)fail();
   const entity=ontology.entities.find((e:any)=>id(e.type)===id(u.type)),member=entity?.fields.find((f:any)=>id(f.ref)===id(u.field));if(!member)fail();
   const own=storage.get(JSON.stringify([id(u.type),id(u.field)]));if(!own)fail();
   const retain=(v:any)=>{budget.step();retained+=JSON.stringify(v).length+2;if(retained>4000000)fail();return v;};

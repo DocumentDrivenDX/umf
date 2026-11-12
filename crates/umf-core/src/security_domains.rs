@@ -9,7 +9,7 @@ use crate::{
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
     serialization::{self, Format},
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
 use std::sync::OnceLock;
 
@@ -60,6 +60,53 @@ fn errors(items: &[Value]) -> bool {
     items
         .iter()
         .any(|item| member(item, "severity").and_then(text).as_deref() == Some("error"))
+}
+
+fn has_unknown_core_meaning(document: &Value) -> bool {
+    let vocabularies = member(document, "vocabularies");
+    if matches!(vocabularies, Some(Value::Object(fields)) if !fields.is_empty()) {
+        return true;
+    }
+    let Some(Value::Array(modules)) = member(document, "modules") else {
+        return false;
+    };
+    for module in modules {
+        let Some(Value::Array(elements)) = member(module, "elements") else {
+            continue;
+        };
+        for element in elements {
+            let Value::Object(fields) = element else {
+                continue;
+            };
+            if fields.iter().any(|(key, _)| {
+                ![
+                    "id",
+                    "name",
+                    "description",
+                    "scalarType",
+                    "extensions",
+                    "references",
+                    "kind",
+                    "nullability",
+                    "cardinality",
+                    "itemType",
+                    "facets",
+                    "members",
+                    "keys",
+                    "title",
+                    "aliases",
+                    "examples",
+                    "allowedValues",
+                    "default",
+                    "semanticTypes",
+                ]
+                .contains(&key.to_utf8().ok().as_deref().unwrap_or(""))
+            }) {
+                return true;
+            }
+        }
+    }
+    false
 }
 
 fn parse_resource(source: &str, context: &mut Context<'_>) -> Result<Value, EngineError> {
@@ -417,6 +464,7 @@ pub fn resolve_security_protection_domains_candidate(
             engine.validate_document(document, &Registry::new(), &mut capabilities, context)?;
         let is_v010 = member(document, "umf").and_then(text).as_deref() == Some("0.10.0");
         let accepted = is_v010
+            && !has_unknown_core_meaning(document)
             && validation.valid
             && validation.diagnostics.iter().all(|item| {
                 item.code.to_utf8().ok().as_deref() == Some("EXPERIMENTAL_CORE_SEMANTIC_TYPES")
@@ -593,8 +641,8 @@ fn domain_result(
 mod tests {
     use super::{member, resolve_security_protection_domains_candidate};
     use crate::{
-        serialization::{read_json_value, Format},
         Context, Utf16, Value,
+        serialization::{Format, read_json_value},
     };
 
     fn parse(source: &str) -> Value {

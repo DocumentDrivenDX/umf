@@ -6,14 +6,13 @@ import {cp,mkdir,mkdtemp,readFile,readdir,rename,rm,symlink,writeFile} from 'nod
 import {join,relative,resolve} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {tmpdir} from 'node:os';
-import type {BunPlugin} from 'bun';
 import {buildNodeWasmRuntime} from '../bindings/core/wasm/node-package-build';
 import {checkCoreDistribution} from './check-core-authority';
 import {rustCompileResources} from './metamodel/source-closure';
 import {assertSameSourceInventory} from './rust-migration/r8/source-inventory.mjs';
 import {copySourceSnapshotFile} from './rust-migration/r8/copy-source-snapshot';
 import {normalizeSdkDeclarations} from './sdk-declarations';
-import {writeLoaderContractRuntimeAssets} from './loader-contract-assets';
+import {sharedSdkBrowserWasm,writeLoaderContractRuntimeAssets} from './loader-contract-assets';
 
 const workspaceRoot=process.cwd();
 let root=workspaceRoot;
@@ -319,7 +318,6 @@ try{
  await cp(join(root,'dist/postgresql'),join(dist,'postgresql'),{recursive:true});
  await cp(join(wasmOut,'umf_core_wasm.js'),join(dist,'umf_core_wasm.js'));
  await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(dist,'umf_core_wasm.d.ts'));
- await writeLoaderContractRuntimeAssets(dist);
 
  const host=process.platform==='darwin'?'darwin':process.platform;
  const arch=process.arch;
@@ -338,20 +336,13 @@ try{
  const packageVersion=(JSON.parse(await readFile(join(root,'package.json'),'utf8')) as {version:string}).version;
  const native=join(nativeCargoTarget,nativeTarget,'release',host==='darwin'?'libumf_core_node.dylib':'libumf_core_node.so');
  await cp(native,join(dist,'umf_core_node.node'));
+ await writeLoaderContractRuntimeAssets(dist);
 
- // The browser root bundle inlines the generated wasm-bindgen glue; its
- // import.meta.url therefore resolves the binary beside that root bundle.
+ // The browser root and loader subpath share the generated glue. It resolves
+ // the binary beside itself and initializes only one WASM module.
  await cp(join(wasmOut,'umf_core_wasm_bg.wasm'),join(dist,'umf_core_wasm_bg.wasm'));
  const freshWasmImports=new Set<string>();
- const wasmPlugin:BunPlugin={name:'fresh-built-wasm-glue',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>{
-  if(args.importer.endsWith('bindings/core/wasm/loader.js')&&args.path==='./pkg/umf_core_wasm.js'){
-   freshWasmImports.add('wasm-index');return {path:join(wasmOut,'umf_core_wasm.js')};
-  }
-  if(args.importer.endsWith('src/index-browser-v4.ts')&&args.path==='../bindings/core/wasm/pkg/umf_core_wasm.js'){
-   freshWasmImports.add('browser-root');return {path:join(wasmOut,'umf_core_wasm.js')};
-  }
-  return undefined;
- })}};
+ const wasmPlugin=sharedSdkBrowserWasm(source=>freshWasmImports.add(source));
  await buildNodeWasmRuntime(root,sagaWasm);
  const builds=[
   await Bun.build({entrypoints:['src/index-node-v4.ts'],outdir:dist,naming:'umf-node.js',target:'node',format:'esm'}),

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectSqlServerFacetPredicate as inspect} from '../../src/adapters/sqlserver/facet-predicate';
+import {inspectSqlServerFacetPredicate as inspect} from '../../src/index-node-v4';
 import {predicateCases,unsupportedPredicates} from '../../scripts/core-ideals/facets-sqlserver-predicate-cases';
 
 test('bounded expressions retain exact literals and delimit identifiers',()=>{

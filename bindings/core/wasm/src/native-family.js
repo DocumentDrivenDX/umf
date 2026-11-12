@@ -4,6 +4,7 @@ import {encodeRequestWire,fromWire,resultError} from './wire.js';
 export const NATIVE_FAMILY_PROFILE='umf.native-family-dispatch/1';
 
 const FAMILIES=Object.freeze({
+ 'registry-policy':{profile:'umf.registry-policy-wire/1',operations:['decide']},
  'pack-tools':{profile:'umf.pack-tools-wire/1',operations:['generatePackTools']},
  'bulk-actions':{profile:'umf.bulk-actions-wire/1',operations:['applyBulkEvent','bulkDecisionOrder','nextBulkFence','bulkItemToken','parseBulkItemToken','isReservedBulkKey','checkBulkKeyUse']},
  'lakeview-legacy-projection':{profile:'umf.lakeview-legacy-projection-wire/1',operations:['projectLakeviewToLegacyDashboard']},

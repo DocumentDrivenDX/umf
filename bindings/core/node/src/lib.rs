@@ -23,6 +23,7 @@ mod read_json_value;
 mod read_json_value_host;
 mod record_members_inspection;
 mod sec_projection;
+mod security_candidate_condition;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
@@ -155,6 +156,16 @@ pub fn execute_graphql_wire(
     } else {
         umf_core_wire::graphql_binding::execute_wire(&wire_json)
     }
+}
+
+#[napi(js_name = "executeSecurityCandidateConditionWire")]
+pub fn execute_security_candidate_condition_wire(
+    env: Env,
+    wire_json: String,
+    dispatcher: JsFunction,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    security_candidate_condition::execute(env, &wire_json, dispatcher, control_dispatcher)
 }
 
 /// Run the native GraphQL editor with the host callback invoked between Rust's
@@ -1207,7 +1218,18 @@ pub fn execute_security_logic_wire(
     env: Env,
     wire_json: String,
     control_dispatcher: Option<JsFunction>,
+    candidate: Option<bool>,
 ) -> NapiResult<String> {
+    if candidate == Some(true) {
+        let mut control = control_dispatcher.map(|dispatcher| NodeControl { env, dispatcher });
+        return Ok(umf_core_wire::security_logic_binding::execute_candidate_security_logic_wire(
+            &wire_json,
+            &mut |amount| match &mut control {
+                Some(control) => control.check(amount),
+                None => Ok(()),
+            },
+        ));
+    }
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);

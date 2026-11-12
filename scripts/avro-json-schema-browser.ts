@@ -8,6 +8,7 @@ if(!(await wasmFile.exists()))throw new Error(`Missing built Rust/WASM asset: ${
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){
  const path=new URL(request.url).pathname;
  if(path==='/umf-browser.js')return new Response(Bun.file('dist/umf-browser.js'),{headers:{'content-type':'text/javascript'}});
+ if(path==='/umf_core_wasm.js')return new Response(Bun.file('dist/umf_core_wasm.js'),{headers:{'content-type':'text/javascript'}});
  if(path==='/umf_core_wasm_bg.wasm')return new Response(wasmFile,{headers:{'content-type':'application/wasm'}});
  return new Response('<!doctype html><title>UMF Avro projection</title>');
 }});

@@ -56,6 +56,10 @@ fn parse_resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineEr
     )
 }
 pub(crate) fn core_engine() -> Result<Engine, EngineError> {
+    core_engine_ref().cloned()
+}
+
+pub(crate) fn core_engine_ref() -> Result<&'static Engine, EngineError> {
     static ENGINE: OnceLock<Result<Engine, EngineError>> = OnceLock::new();
     ENGINE
         .get_or_init(|| {
@@ -82,7 +86,8 @@ pub(crate) fn core_engine() -> Result<Engine, EngineError> {
                 &mut ctx,
             )
         })
-        .clone()
+        .as_ref()
+        .map_err(Clone::clone)
 }
 fn diagnostic(code: &str, path: &str, message: &str, severity: &str) -> Value {
     Value::Object(vec![
