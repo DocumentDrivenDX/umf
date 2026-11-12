@@ -1,48 +1,19 @@
-# Check support and evidence
+# Check support and tested scope
 
-Support follows the exact source, inputs and bounded profile recorded by each qualification. Governed specifications remain drafts. Release availability and artifact approval are different from executed qualification.
+Support means a test that CI runs. Governed specifications remain drafts, and release availability is different from tested behaviour.
 
-## Current integration
+## What is tested
 
-The current model migration passes all 62 security test files (324 tests) and all 41 action-reference files (123 tests), including their declared local native checks. The complete per-file inventories and logs identify these integration observations. Frozen certificates below remain bound to their original source. Current Truss native preparation awaits an upstream compiler/profile upgrade and renewed observations; its scoped gate records that boundary.
+- Portable declarations, inspection, editing, profile comparison and the bounded `rules/1` and `keys/1` interpretation: `tests/actions`, `tests/actions-manifest*.test.ts` and `tests/actions-plan*.test.ts` (Bun, every pull request), and the Rust crates' tests (`cargo nextest`).
+- The native reference consumer (owned PostgreSQL, command processes, browser tutorial): `tests/actions-reference` and the browser suites, which need prepared prerequisites and run in the nightly job.
+- Python access to admission: `python/tests`.
+- Tests that currently fail are listed with a reason in `scripts/known-failures.txt`; behaviour covered only by those tests is not supported until they pass.
 
-## Frozen integrated qualification
-
-The retained merged acceptance certificate qualifies its recorded core and action profiles on frozen source `1fa21f6ea1d7a3e1009746da99f1a61d444cd489`. Its machine-readable certificate and independent audit bind the actual commands, inputs, runtime versions and retained results.
-
-- Fresh behavior regression: 2,448 distinct tests across 450 files, zero failures or skips; eight separate semantic checks also pass.
-- Actual PostgreSQL reference execution: 119 tests; 216 histories and 648 transitions with zero mismatches. All five implementation mutants are detected.
-- Public browser interpretation: 44 cases with Bun parity. The tutorial observes commit, SQL rollback, durable refusal and replay, query visibility and revoked-replay denial.
-- Integration checks: 371 schemas, 63 extension packages, type and browser builds, 43 Python tests, CSV controls and five affected browser integrations.
-- Bounded design checks: 22 SMT outcomes and 13 TLC runs using the pinned public Java runtime. These check the stated model bounds, not arbitrary deployments.
-- All 21 action acceptance criteria have executed passing witnesses. Seven audit controls reject omitted or forged inputs and invalid execution claims.
-
-The immutable strict baseline separately records 174 native/browser commands and 2,458 tests, including 17 admission tests, at source `5be80ab9`. These are inherited baseline results. They do not manufacture current strict admission for the merged source. The integration certificate states that boundary explicitly.
-
-Two sessions with beginner readers remain a usability follow-up. The executable demonstrations are verified independently of those sessions.
-
-## Subsequent main integration
-
-Earlier integration added shared security metadata and core inspection. They have a separate integration record; they do not change the frozen certificate above.
-
-Fresh checks passed for the native action consumer, public browser behavior, the beginner native tutorial and affected core/facet operations. The record identifies actual versions, supported subsets and refusals. Shared security backend acceptance remains open, and security declarations do not automatically become executable action authorization.
-
-The retained qualification records identify the source revision and profile they verify. Consult the release delivery record for CI and deployed-site verification. An older strict gate refusing changed source is a qualification boundary, not a passing current certification.
-
-## Historical qualification
-
-- Exact core/action profiles and source fingerprints are recorded in the linked certificate.
-- Portable declarations: public registration, authoring, inspection, editing and profile comparison; 54 portable tests in the recorded campaign.
-- Explicit interpretation: bounded rules/1 and keys/1, with separately supplied state for evaluation.
-- Native reference consumer: the fixed owned PostgreSQL 17.9/Bun 1.4.2 profile; 119 recorded native tests.
-- Browser: Chromium 153.0.8010.12, 44 shared cases with Bun parity and no external requests.
-- Final snapshot regression and admission: 2,314 distinct tests, zero failures; the certificate records the exact disjoint gates and inputs.
+Earlier qualification packets, certificates and result counts were removed from the repository with the evidence archive and remain in git history. They are not current claims.
 
 <!-- generated:evidence-links:start -->
 - [Original prior-art decisions](../../../02-design/actions-prior-art-decisions.md)
 <!-- generated:evidence-links:end -->
-
-These results describe the frozen replay source and recorded inputs; the original certificate lives in the `evidence-archive-2026-11` release and in git history.
 
 ## Important boundaries
 

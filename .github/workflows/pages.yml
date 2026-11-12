@@ -16,9 +16,6 @@ on:
       - 'bindings/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
-  # TEMPORARY: build (never deploy) from the pull request. Remove before merge.
-  pull_request:
-    paths: ['.github/workflows/pages.yml', 'scripts/site/**']
 
 permissions:
   contents: read
