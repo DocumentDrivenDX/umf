@@ -4,8 +4,9 @@ import {compileCandidateCatalogProgram} from '../../src/extensions/security/cata
 import {inspectCandidateStoredQueryProperties} from '../../src/extensions/security/stored-query-candidate';
 import {runStoredQueryCorpus,storedQueryFixture} from './stored-query-corpus';
 test('stored Field source resolution preserves original sources and conditional properties',()=>{
- for(const row of runStoredQueryCorpus()){expect(Boolean(row.passed),row.id).toBe(true);if(row.result.status==='refused'){expect(row.result.selection).toBe(null);expect(row.result.report).toBe(null);}}
- const row=runStoredQueryCorpus().find(r=>r.id==='implied-unauthored-equality')!;expect(row.result.report.authoredProperties).toEqual([]);expect(row.result.report.impliedProperties).toEqual(['equality']);
+ const corpus=runStoredQueryCorpus();
+ for(const row of corpus){expect(Boolean(row.passed),row.id).toBe(true);if(row.result.status==='refused'){expect(row.result.selection).toBe(null);expect(row.result.report).toBe(null);}}
+ const row=corpus.find(r=>r.id==='implied-unauthored-equality')!;expect(row.result.report.authoredProperties).toEqual([]);expect(row.result.report.impliedProperties).toEqual(['equality']);
 });
 test('source snapshots resist mutation and getters refuse without execution',()=>{
  const f=storedQueryFixture(),program=compileCandidateCatalogProgram(f.policy,f.catalog,f.closure,f.ontology),use={type:f.owner.storage.at(-1).type,field:f.owner.storage.at(-1).field,operator:'join',required:['equality']};
