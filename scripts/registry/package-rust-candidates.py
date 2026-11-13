@@ -35,7 +35,6 @@ RENAMES = {
     ("json-syntax", "0.12.5"): "umf-json-syntax",
     ("json-ld-core", "0.21.4"): "umf-json-ld-core",
     ("json-ld-syntax", "0.21.4"): "umf-json-ld-syntax",
-    ("xsd-types", "0.9.6"): "umf-xsd-types",
     ("linked-data", "0.1.2"): "umf-linked-data",
     ("json-ld", "0.21.4"): "umf-json-ld",
     ("json-ld-compaction", "0.21.4"): "umf-json-ld-compaction",

@@ -13,7 +13,3 @@ are retained.
   disable hashbrown defaults and select the deterministic profile in their
   existing hashbrown dependencies. Parsing, equality, and JSON-LD algorithms
   are unchanged.
-- `xsd-types` 0.9.6 uses chrono with default features disabled and `std`
-  enabled. Its `host-clock` opt-in feature enables chrono's clock support;
-  the `DateTime::now`, `DateTime::now_ms`, `DateTimeStamp::now` and
-  `DateTimeStamp::now_ms` convenience methods are gated by that feature. Parsing, offsets, and date arithmetic remain enabled.
