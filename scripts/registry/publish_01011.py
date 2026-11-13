@@ -220,7 +220,7 @@ def crate_payload(archive, record):
 
 def upload_crate(payload, record):
     token = os.environ.get("CARGO_REGISTRY_TOKEN")
-    require(token, "Set the crates-io environment's CARGO_REGISTRY_TOKEN secret")
+    require(token, "The crates.io Trusted Publishing step did not supply a token")
     # HTTPSConnection sends the token only to crates.io and never follows redirects.
     connection = http.client.HTTPSConnection("crates.io", timeout=60)
     try:
