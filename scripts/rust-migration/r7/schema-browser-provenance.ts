@@ -12,16 +12,13 @@ const packages = [
   'crates/umf-core',
   'crates/umf-tagged-wire',
   'crates/umf-graphql',
-  'crates/umf-graphql/vendor/apollo-compiler',
   'crates/umf-core/vendor/saphyr-parser',
   'crates/umf-core/vendor/oxttl',
-  'crates/umf-core/vendor/oxrdf',
   'crates/umf-core/vendor/hashbrown-0.12.3',
   'crates/umf-core/vendor/hashbrown-0.13.2',
   'crates/umf-core/vendor/json-ld-core-0.21.4',
   'crates/umf-core/vendor/json-ld-syntax-0.21.4',
   'crates/umf-core/vendor/json-syntax-0.12.5',
-  'crates/umf-core/vendor/xsd-types-0.9.6',
 
 ];
 const sha256 = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');

@@ -11,7 +11,12 @@ path = "src/lib.rs"
 
 [dependencies]
 umf-core = { path = "../umf-core" }
-apollo-compiler = { path = "vendor/apollo-compiler" }
+apollo-compiler = "=1.33.1"
 
 serde_json = "=1.0.145"
 url = "=2.5.7"
+
+# Apollo uses aHash runtime seeding. Select the Web Crypto backend in
+# browser builds, including when UMF is a dependency of another workspace.
+[target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
+getrandom = { version = "0.3.4", features = ["wasm_js"] }

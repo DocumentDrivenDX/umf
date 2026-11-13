@@ -10,15 +10,11 @@ default-members = [
 exclude = [
   "crates/umf-core/vendor/saphyr-parser",
   "crates/umf-core/vendor/oxttl",
-  "crates/umf-core/vendor/oxrdf",
   "crates/umf-core/vendor/hashbrown-0.12.3",
   "crates/umf-core/vendor/hashbrown-0.13.2",
   "crates/umf-core/vendor/json-ld-core-0.21.4",
   "crates/umf-core/vendor/json-ld-syntax-0.21.4",
   "crates/umf-core/vendor/json-syntax-0.12.5",
-  "crates/umf-core/vendor/xsd-types-0.9.6",
-  "crates/umf-graphql/vendor/apollo-compiler",
-  "crates/umf-graphql/vendor/serde_json_bytes",
 ]
 members = [
   "crates/umf-core",
@@ -49,4 +45,3 @@ hashbrown-013 = { package = "hashbrown", path = "crates/umf-core/vendor/hashbrow
 json-ld-core = { path = "crates/umf-core/vendor/json-ld-core-0.21.4" }
 json-ld-syntax = { path = "crates/umf-core/vendor/json-ld-syntax-0.21.4" }
 json-syntax = { path = "crates/umf-core/vendor/json-syntax-0.12.5" }
-xsd-types = { path = "crates/umf-core/vendor/xsd-types-0.9.6" }
