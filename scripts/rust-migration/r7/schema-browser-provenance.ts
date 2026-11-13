@@ -14,7 +14,6 @@ const packages = [
   'crates/umf-graphql',
   'crates/umf-core/vendor/saphyr-parser',
   'crates/umf-core/vendor/oxttl',
-  'crates/umf-core/vendor/oxrdf',
   'crates/umf-core/vendor/hashbrown-0.12.3',
   'crates/umf-core/vendor/hashbrown-0.13.2',
   'crates/umf-core/vendor/json-ld-core-0.21.4',
