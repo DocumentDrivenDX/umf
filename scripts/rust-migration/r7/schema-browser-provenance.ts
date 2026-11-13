@@ -12,7 +12,6 @@ const packages = [
   'crates/umf-core',
   'crates/umf-tagged-wire',
   'crates/umf-graphql',
-  'crates/umf-graphql/vendor/apollo-compiler',
   'crates/umf-core/vendor/saphyr-parser',
   'crates/umf-core/vendor/oxttl',
   'crates/umf-core/vendor/oxrdf',
