@@ -94,7 +94,7 @@ fn malformed_codegen_cli_is_reported_as_json_with_exit_two() {
             "--input-format",
             "yaml",
         ],
-        b"{}",
+        b"",
     );
     assert_eq!(output.status.code(), Some(2));
     let envelope = String::from_utf8(output.stdout).unwrap();
