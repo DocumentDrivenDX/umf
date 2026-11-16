@@ -5,7 +5,7 @@ use std::collections::{BTreeMap, BTreeSet};
 
 use crate::{
     exact_duration::{Deadline, DurationUnit, ExactDuration},
-    rfc3339_exact_instant::Rfc3339ExactInstant,
+    rfc3339_exact_instant::{self, Rfc3339ExactInstant},
 };
 
 use super::{
@@ -117,9 +117,7 @@ impl EffectInvocation<'_> {
                 "unawaited effect has no resolution window",
             ));
         }
-        let deadline = nonnegative_duration(&self.declaration["timeout"], "/timeout")?
-            .deadline(at)
-            .map_err(|error| fail("DEADLINE", "/timeout", error.to_string()))?;
+        let deadline = observable_deadline(&self.declaration["timeout"], at, "/timeout")?;
         Ok(EffectAwait {
             invocation: self,
             deadline,
@@ -659,9 +657,7 @@ impl CompiledWorkflow {
             ));
         }
         let deadline = match step.get("for") {
-            Some(duration) => nonnegative_duration(duration, "/for")?
-                .deadline(previous)
-                .map_err(|error| fail("DEADLINE", "/for", error.to_string()))?,
+            Some(duration) => observable_deadline(duration, previous, "/for")?,
             None => instant_key(&instant(text(&step["until"]), "/until")?),
         };
         let event = step.get("event").map(|rule| {
@@ -842,6 +838,24 @@ fn checked_step<'a>(definition: &'a Json, id: &str, kind: &str) -> Result<&'a Js
         ));
     }
     Ok(step)
+}
+
+fn observable_deadline(
+    duration: &Json,
+    anchor: &Rfc3339ExactInstant,
+    path: &str,
+) -> Result<Deadline, WorkflowError> {
+    let deadline = nonnegative_duration(duration, path)?
+        .deadline(anchor)
+        .map_err(|error| fail("DEADLINE", path, error.to_string()))?;
+    if !rfc3339_exact_instant::can_reach(deadline.utc_seconds(), deadline.fractional_digits()) {
+        return Err(fail(
+            "DEADLINE",
+            path,
+            "deadline is beyond the latest supported observation instant",
+        ));
+    }
+    Ok(deadline)
 }
 
 fn instant_key(instant: &Rfc3339ExactInstant) -> Deadline {

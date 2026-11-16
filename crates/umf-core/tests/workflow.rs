@@ -886,3 +886,60 @@ fn typed_run_state_supports_checked_updates_and_branching() {
     };
     assert_eq!(error.0[0].code, "STATE");
 }
+
+#[test]
+fn relative_wait_rejects_an_unreachable_deadline() {
+    let workflow = built(&fixture());
+    let enrollment = enroll(&workflow, "one");
+    let record = record("body");
+    let near_end = at("9999-12-31T23:59:59Z");
+    let Err(error) = workflow.register_wait(
+        "pause",
+        false,
+        &record,
+        &enrollment,
+        0,
+        &near_end,
+        &near_end,
+    ) else {
+        panic!("the 90-day wait cannot time out from this anchor");
+    };
+    assert_eq!(
+        (error.0[0].code, error.0[0].path.as_str()),
+        ("DEADLINE", "/for")
+    );
+}
+
+#[test]
+fn effect_timeout_respects_the_last_observable_second() {
+    let workflow = built(&fixture());
+    let enrollment = enroll(&workflow, "one");
+    let EffectDecision::Invocation(intent) = workflow
+        .prepare_effect("send", true, &record("body"), &facts(false), &enrollment)
+        .unwrap()
+    else {
+        panic!("expected effect invocation");
+    };
+
+    let latest = at("9999-12-31T23:59:59-23:59");
+    let Err(error) = intent.begin_await(&latest) else {
+        panic!("the five-second timeout is beyond the observation range");
+    };
+    assert_eq!(
+        (error.0[0].code, error.0[0].path.as_str()),
+        ("DEADLINE", "/timeout")
+    );
+
+    let mut window = intent
+        .begin_await(&at("9999-12-31T23:59:54-23:59"))
+        .unwrap();
+    assert!(matches!(
+        window
+            .observe(&latest, EffectObservation::Watermark)
+            .unwrap(),
+        EffectResolution::Resolved {
+            outcome: "timeout",
+            ..
+        }
+    ));
+}

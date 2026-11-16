@@ -13,6 +13,22 @@ pub const RFC3339_EXACT_INSTANT_PROFILE: &str = "umf-rfc3339-exact-instant/1.0.0
 /// Maximum accepted token length, matching the retained TypeScript helper.
 pub const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES: usize = 1_048_576;
 
+/// Whether an admitted observation can reach this normalized instant or a later one.
+pub(crate) fn can_reach(utc_seconds: i64, fractional_digits: &str) -> bool {
+    // The last local second in year 9999 with the most negative allowed offset.
+    const LAST_SECOND: i64 =
+        (prior_year_days(10_000) - prior_year_days(1970)) * 86_400 - 1 + 23 * 3_600 + 59 * 60;
+    const MAX_FRACTION_DIGITS: usize =
+        RFC3339_EXACT_INSTANT_MAXIMUM_BYTES - "9999-12-31T23:59:59.-23:59".len();
+
+    utc_seconds < LAST_SECOND
+        || (utc_seconds == LAST_SECOND
+            && (fractional_digits.len() <= MAX_FRACTION_DIGITS
+                || fractional_digits.as_bytes()[..MAX_FRACTION_DIGITS]
+                    .iter()
+                    .any(|&digit| digit != b'9')))
+}
+
 /// Parsed instant while retaining the source spelling and offset knowledge.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Rfc3339ExactInstant {
@@ -253,8 +269,8 @@ fn leap(year: u32) -> bool {
     year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
 }
 
-fn prior_year_days(year: u32) -> i64 {
-    let prior = i64::from(year) - 1;
+const fn prior_year_days(year: u32) -> i64 {
+    let prior = year as i64 - 1;
     prior * 365 + prior / 4 - prior / 100 + prior / 400
 }
 
