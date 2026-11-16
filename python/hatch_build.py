@@ -260,6 +260,7 @@ SDIST_SOURCE_FILES = (
     "spec/extensions/tablespec/package.json",
     "spec/extensions/saga/package.json",
     "spec/extensions/workflow/workflow-1.schema.json",
+    "spec/extensions/workflow/evidence-1.schema.json",
     "spec/extensions/sqlserver/package.json",
     "spec/extensions/sqlserver/capture.schema.json",
     "spec/projections/sqlserver-relationship-layout.schema.json",

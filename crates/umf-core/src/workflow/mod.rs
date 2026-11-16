@@ -4,10 +4,14 @@
 mod evidence;
 mod predicates;
 mod routing;
+mod run_state;
 mod transitions;
 
-pub use evidence::{Evidence, EvidenceKind, EvidenceOutcome, EvidenceStatus, EVIDENCE_PROFILE};
-pub use predicates::{Record, Scalar};
+pub use evidence::{
+    Evidence, EvidenceKind, EvidenceOutcome, EvidenceStatus, EVIDENCE_PROFILE, EVIDENCE_SCHEMA,
+};
+pub use predicates::{GuardMatch, Record, Scalar};
+pub use run_state::SetDecision;
 pub use transitions::{
     Admission, Candidate, EffectAwait, EffectDecision, EffectInvocation, EffectObservation,
     EffectResolution, Enrollment, Event, History, Intervention, InterventionKind, RegisterWait,
@@ -117,6 +121,35 @@ impl CompiledWorkflow {
     pub fn entry(&self) -> &str {
         text(&self.definition["entry"])
     }
+}
+
+/// Executable workflow profiles supported by the typed Rust entry point.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum WorkflowProfile {
+    Base,
+    Correlated,
+}
+
+impl WorkflowProfile {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Base => PROFILE,
+            Self::Correlated => CORRELATED_PROFILE,
+        }
+    }
+}
+
+/// Inspect exact source bytes with the standard resource limits.
+pub fn inspect_source(bytes: &[u8]) -> Result<Inspection, WorkflowError> {
+    inspect(bytes, &mut Context::ordinary())
+}
+
+/// Compile exact source bytes with the standard resource limits.
+pub fn compile_source(
+    bytes: &[u8],
+    profile: WorkflowProfile,
+) -> Result<CompiledWorkflow, WorkflowError> {
+    compile(bytes, profile.as_str(), &mut Context::ordinary())
 }
 
 pub fn inspect(bytes: &[u8], ctx: &mut Context<'_>) -> Result<Inspection, WorkflowError> {

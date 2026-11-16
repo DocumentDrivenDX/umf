@@ -17,7 +17,8 @@
     "outcome": {
       "oneOf": [
         {"type": "object", "properties": {"status": {"const": "passed"}}, "required": ["status"], "additionalProperties": false},
-        {"type": "object", "properties": {"status": {"const": "failed"}, "counterexample": {"type": "string", "minLength": 1}}, "required": ["status", "counterexample"], "additionalProperties": false}
+        {"type": "object", "properties": {"status": {"const": "failed"}, "counterexample": {"type": "string", "minLength": 1}}, "required": ["status", "counterexample"], "additionalProperties": false},
+        {"type": "object", "properties": {"status": {"const": "inconclusive"}, "reason": {"type": "string", "minLength": 1}}, "required": ["status", "reason"], "additionalProperties": false}
       ]
     }
   }

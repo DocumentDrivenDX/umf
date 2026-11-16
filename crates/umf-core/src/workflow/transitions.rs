@@ -442,6 +442,8 @@ pub struct SuppressionWrite<'a> {
     pub store: &'a str,
     pub scope: &'a str,
     pub fact: &'a str,
+    /// Declared event type ID for this suppression reason.
+    pub reason: &'a str,
     pub key: &'a Scalar,
     pub max_staleness: ExactDuration,
 }
@@ -488,6 +490,8 @@ impl CompiledWorkflow {
     }
 
     /// Prepare an explicitly idempotent cancellation or queued-only repin.
+    /// The host sets `queued` only before entry starts. Once started, cancellation
+    /// retires routing while preserving durable effect observations for reconciliation.
     /// Authorization and atomic intervention custody belong to the consumer.
     pub fn prepare_intervention(
         &self,
@@ -574,6 +578,7 @@ impl CompiledWorkflow {
             store: text(&store["id"]),
             scope: text(&store["scope"]),
             fact: text(&store["fact"]),
+            reason: text(&event["id"]),
             key,
             max_staleness: nonnegative_duration(
                 &store["maxStaleness"],

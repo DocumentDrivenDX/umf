@@ -18,7 +18,8 @@ pub(crate) fn validate(definition: &Json) -> Result<(), WorkflowError> {
     if find(&definition["steps"], entry).is_none() {
         return Err(fail("ENTRY", "/entry", "entry step does not exist"));
     }
-    let fields = &definition["record"];
+    let snapshot_fields = super::run_state::validate_fields(definition)?;
+    let fields = &snapshot_fields;
     let fresh = definition
         .get("effectFacts")
         .cloned()
@@ -66,7 +67,7 @@ pub(crate) fn validate(definition: &Json) -> Result<(), WorkflowError> {
     for (index, step) in items(&definition["steps"]).iter().enumerate() {
         let path = format!("/steps/{index}");
         let id = text(&step["id"]);
-        let mut successors = validate_step(definition, step, &path)?;
+        let mut successors = validate_step(definition, fields, step, &path)?;
         for (scope, exit) in &guards {
             // Guard targets are terminal even when the suppressed exit is the
             // current step. Track these separately from ordinary routing.
@@ -357,6 +358,7 @@ fn validate_effect(definition: &Json, effect: &Json, path: &str) -> Result<(), W
 
 fn validate_step<'a>(
     definition: &'a Json,
+    snapshot_fields: &Json,
     step: &'a Json,
     path: &str,
 ) -> Result<Vec<(&'a str, String)>, WorkflowError> {
@@ -364,6 +366,10 @@ fn validate_step<'a>(
     let mut successors = Vec::new();
     match text(&step["kind"]) {
         "exit" => {}
+        "set" => {
+            super::run_state::validate_set(definition, snapshot_fields, step, path)?;
+            successors.push((text(&step["next"]), format!("{path}/next")));
+        }
         "effect" => {
             let effect = find(&definition["effects"], text(&step["effect"])).ok_or_else(|| {
                 fail(
@@ -417,7 +423,7 @@ fn validate_step<'a>(
             for (index, route) in items(&step["cases"]).iter().enumerate() {
                 predicates::validate(
                     &route["when"],
-                    fields,
+                    snapshot_fields,
                     &format!("{path}/cases/{index}/when"),
                 )?;
                 successors.push((text(&route["next"]), format!("{path}/cases/{index}/next")));

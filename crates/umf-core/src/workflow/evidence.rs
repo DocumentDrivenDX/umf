@@ -4,6 +4,8 @@ use super::{fail, CompiledWorkflow, WorkflowError};
 use serde_json::{json, Value};
 
 pub const EVIDENCE_PROFILE: &str = "umf.workflow.evidence/1";
+pub const EVIDENCE_SCHEMA: &str =
+    include_str!("../../../../spec/extensions/workflow/evidence-1.schema.json");
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum EvidenceKind {
@@ -18,6 +20,7 @@ pub enum EvidenceKind {
 pub enum EvidenceOutcome {
     Passed,
     Failed { counterexample: String },
+    Inconclusive { reason: String },
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -54,6 +57,9 @@ impl Evidence {
             EvidenceOutcome::Failed { counterexample } => {
                 json!({"status": "failed", "counterexample": counterexample})
             }
+            EvidenceOutcome::Inconclusive { reason } => {
+                json!({"status": "inconclusive", "reason": reason})
+            }
         };
         Ok(json!({
             "profile": EVIDENCE_PROFILE, "property": self.property, "kind": kind,
@@ -89,6 +95,15 @@ impl Evidence {
                     "EVIDENCE",
                     "/outcome/counterexample",
                     "failed evidence requires a finding",
+                ));
+            }
+        }
+        if let EvidenceOutcome::Inconclusive { reason } = &self.outcome {
+            if reason.trim().is_empty() {
+                return Err(fail(
+                    "EVIDENCE",
+                    "/outcome/reason",
+                    "inconclusive evidence requires a reason",
                 ));
             }
         }

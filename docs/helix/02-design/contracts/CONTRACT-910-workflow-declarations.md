@@ -90,6 +90,18 @@ evaluation. Values admitted to the predicate profile evaluate to true or false.
 
 Steps are an array with unique IDs. The graph uses declared successors and
 requires a reachable, acyclic path structure whose maximal paths end at exits.
+A workflow may declare enrollment-local `runState` entries. Each entry has
+a unique ID and a typed literal `initial` value. Its ID cannot shadow a
+record field or effect fact. New enrollments initialize all entries. Guards
+and branches read the combined record and run-state snapshot. A `set` step
+evaluates due guards before preparing a state update and its `next` route.
+`assign` takes a same-domain literal or required field. `increment` adds
+a same-domain integer operand with checked signed 128-bit arithmetic.
+The host commits the update and successor as one transition against that
+snapshot and reuses the committed result on retry. A suppressed or overflowing
+step writes nothing. State expires with its enrollment. Effects still bind
+their input and identity from the record, and waits correlate on record fields.
+
 A branch selects the first true case or the required `else`. Presentation
 `edges` is inert metadata and supplies no transitions or dependencies.
 
@@ -107,7 +119,14 @@ named suppression store. The compiler resolves the store, checks its key
 type, and requires a distinct required Boolean effect fact. Every store's
 fact must have an effect-scope guard that directly suppresses on true or
 contains that check in a disjunction. The portable write intent names the
-scope, store, fact, typed key and declared staleness. Hard bounce may be
+scope, store, fact, typed key and declared staleness. The host resolves the
+store key from authenticated context for the declared scope and supplies that
+key on the event. On reads the host resolves the same scoped identity before
+populating the effect fact. Consumers must not infer a store key from a
+recipient or any other record field. Use the declared event type ID as the
+portable suppression reason and the source event ID for audit and idempotency.
+A matched guard is identified by the pinned definition digest and its
+zero-based index in `guards`. Hard bounce may be
 emitted by an effect and inbound STOP can use the same suppression rule.
 Record the write idempotently and durably before event acknowledgment.
 Only an explicit authenticated consumer action can lift suppression.
@@ -182,7 +201,10 @@ the ID for audit and excludes that ID from the unresolved candidate set.
 Other events and the deadline stay eligible. Event arrival order is
 immaterial. The deadline wins ties. After resolution, the consumer can retain later events for audit
 without changing the route. Storage, watermark formation and event delivery
-remain consumer obligations.
+remain consumer obligations. The selected event changes routing only.
+Event payload writes and branches on event content are outside these profiles.
+The next step reads a validated host-supplied snapshot. A record field such
+as `response` has no declared causal connection to the selected event.
 
 ### Record admission, version drain and intervention
 
@@ -196,9 +218,15 @@ re-entry. `after` measures from the most recent terminal instant.
 `always` permits re-entry after each terminal enrollment. Consumer
 `after_duration` lowers to `after`.
 
+The consumer selects the audience or source, applies any per-record
+`where` filter and resolves stable record keys before handing candidates
+to admission. The definition's `entry` declares the first step.
+
 Distinct batch identities produce the same result as any permutation of
-singleton admissions over the same record-local histories. A repeated record
-in one batch has all its candidates dropped and reported. A duplicate
+singleton admissions over the same record-local histories. Consumers may
+validate distinct record keys at the boundary and reject the entire batch
+before any admissions. When a batch with a repeated record key is accepted
+for processing, all candidates for that key are dropped and reported. A duplicate
 enrollment ID fails admission. `bounce` retains an active enrollment.
 `reenroll` may replace a live earlier-version enrollment only through one
 consumer transition that terminates it and admits a new enrollment. A
@@ -210,7 +238,13 @@ require that exact pin. A definition can declare allowed operator dispositions
 `cancel` and `repin` under `interventions`. Each intervention ID is
 `id@key` and scoped to workflow and record key. An authorized operator
 can repin a queued enrollment to a different version of the same workflow.
-A dispatched enrollment drains or is cancelled. Repeating the same
+Queued means entry has never started. There is no pending deadline, open
+effect window or committed run-state update to carry across a repin. Initialize
+the target version's state when it starts. A started enrollment drains or is
+cancelled. Cancellation atomically retires routing eligibility and invalidates
+pending wait deadlines and effect continuations. Retain durable effect intent
+and late receipts for reconciliation. Cancellation alone supplies no evidence
+that an in-flight effect was unapplied. Repeating the same
 intervention ID and intent is idempotent. A changed target, original
 enrollment or disposition under the same scoped ID conflicts. The consumer owns atomic recording,
 authorization, provider obligations of cancellation and queue scheduling.
@@ -219,8 +253,11 @@ authorization, provider obligations of cancellation and queue scheduling.
 
 `umf.workflow.evidence/1` records a property, evidence kind, tool and version,
 checked profile, exact definition digest, bounds, assumptions and outcome.
-A failure needs a counterexample. A different digest or profile marks the
-record stale without hiding its outcome. Assessments describe compatibility.
+A `failed` verdict needs a counterexample. Use `inconclusive` with a reason
+when a cap, timeout, unsupported semantics or tool error prevents a verdict.
+A completed bounded check can pass within its declared assumptions and
+bounds. Record the actual model or interpreter revision in `toolVersion`.
+A different digest or profile marks the record stale without hiding its outcome. Assessments describe compatibility.
 Current evidence remains scoped to the reported model, properties,
 assumptions and bounds. Runtime records identify the actual build.
 
@@ -232,6 +269,25 @@ or metadata field cannot choose another runtime. The correlated profile adds
 event correlation to the same plain-pause syntax. Embedded action revision
 pins resolve before provider dispatch. The workflow profile is independently
 versioned from the transactional Action, Saga, predicate and duration profiles.
+
+### Rust consumers
+
+Use `umf_core::workflow::inspect_source` and `compile_source` to pass the
+original bytes and select a typed `WorkflowProfile` with standard limits.
+Callers supplying their own resource limits can use `inspect` and `compile`.
+The workflow module is available with Cargo default features disabled.
+The supported toolchain baseline for this change is Rust 1.90.0. The workflow
+profiles and Rust interfaces in this draft are subject to review. Definition
+and evidence versions are separate from the crate version, and consumers
+should check the profile in addition to the crate version. Incompatible
+changes to qualified wire semantics require a new profile identifier.
+Core's unpatched workflow dependencies use Cargo-compatible version ranges.
+Registry companion dependencies that carry UMF compatibility patches retain
+their qualified versions.
+
+The source tree currently uses the 0.10.12 version line. The existing
+0.10.12 registry release predates this workflow API. A workflow-bearing
+registry version must be assigned and qualified through the release pipeline.
 
 ## Error semantics
 

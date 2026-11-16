@@ -24,6 +24,21 @@
     "entry": {
       "$ref": "#/$defs/id"
     },
+    "runState": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "initial": {
+            "$ref": "#/$defs/term",
+            "properties": {"kind": {"const": "literal"}}
+          }
+        },
+        "required": ["id", "initial"],
+        "additionalProperties": false
+      }
+    },
     "record": {
       "type": "array",
       "items": {
@@ -1132,7 +1147,8 @@
             "exit",
             "effect",
             "branch",
-            "wait"
+            "wait",
+            "set"
           ]
         },
         "id": {
@@ -1144,6 +1160,21 @@
         "id"
       ],
       "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "set"}}},
+          "then": {
+            "properties": {
+              "id": true,
+              "kind": true,
+              "target": {"$ref": "#/$defs/id"},
+              "value": {"$ref": "#/$defs/term"},
+              "next": {"$ref": "#/$defs/id"},
+              "operation": {"enum": ["assign", "increment"]}
+            },
+            "required": ["target", "value", "next", "operation"],
+            "additionalProperties": false
+          }
+        },
         {
           "if": {
             "properties": {

@@ -19,6 +19,13 @@ pub enum Scalar {
 
 pub type Record = BTreeMap<String, Scalar>;
 
+/// A matched guard, identified by its index in the pinned definition.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct GuardMatch<'a> {
+    pub index: usize,
+    pub exit: &'a str,
+}
+
 impl Scalar {
     pub(crate) fn domain(&self) -> &'static str {
         match self {
@@ -86,6 +93,19 @@ impl CompiledWorkflow {
         record: &Record,
         fresh: &Record,
     ) -> Result<Option<&str>, WorkflowError> {
+        Ok(self
+            .matching_guard(step, entering, record, fresh)?
+            .map(|guard| guard.exit))
+    }
+
+    /// Evaluate due guards against a snapshot and report the matched declaration.
+    pub fn matching_guard(
+        &self,
+        step: &str,
+        entering: bool,
+        record: &Record,
+        fresh: &Record,
+    ) -> Result<Option<GuardMatch<'_>>, WorkflowError> {
         let step = super::routing::step(&self.definition, step)?;
         if entering && step["id"] != self.entry() {
             return Err(fail(
@@ -94,7 +114,7 @@ impl CompiledWorkflow {
                 "entry guards require the entry step",
             ));
         }
-        validate_record(items(&self.definition["record"]), record, "/record")?;
+        self.validate_snapshot(record)?;
         let is_effect = step["kind"] == "effect";
         if is_effect {
             let fields = self.definition.get("effectFacts").map_or(&[][..], items);
@@ -115,12 +135,16 @@ impl CompiledWorkflow {
             } else {
                 record
             };
-            for guard in items(&self.definition["guards"])
+            for (index, guard) in items(&self.definition["guards"])
                 .iter()
-                .filter(|guard| guard["scope"] == scope)
+                .enumerate()
+                .filter(|(_, guard)| guard["scope"] == scope)
             {
                 if evaluate(&guard["when"], snapshot) {
-                    return Ok(Some(text(&guard["exit"])));
+                    return Ok(Some(GuardMatch {
+                        index,
+                        exit: text(&guard["exit"]),
+                    }));
                 }
             }
         }
@@ -150,7 +174,11 @@ impl CompiledWorkflow {
     }
 }
 
-fn validate_record(fields: &[Json], record: &Record, path: &str) -> Result<(), WorkflowError> {
+pub(super) fn validate_record(
+    fields: &[Json],
+    record: &Record,
+    path: &str,
+) -> Result<(), WorkflowError> {
     for field in fields {
         let id = text(&field["id"]);
         match record.get(id) {
@@ -249,7 +277,7 @@ fn validate_with<'a>(
     Ok(guaranteed)
 }
 
-fn term_domain<'a>(
+pub(super) fn term_domain<'a>(
     term: &'a Json,
     fields: &'a Json,
     present: &BTreeSet<&str>,
@@ -272,7 +300,7 @@ fn term_domain<'a>(
     Ok(text(&field["type"]))
 }
 
-fn literal(domain: &str, value: &Json, path: &str) -> Result<Scalar, WorkflowError> {
+pub(super) fn literal(domain: &str, value: &Json, path: &str) -> Result<Scalar, WorkflowError> {
     Ok(match domain {
         "boolean" => Scalar::Boolean(value.as_bool().expect("validated boolean")),
         "text" => Scalar::Text(text(value).into()),
@@ -297,20 +325,20 @@ fn literal(domain: &str, value: &Json, path: &str) -> Result<Scalar, WorkflowErr
     })
 }
 
+pub(super) fn term_value(term: &Json, record: &Record) -> Scalar {
+    if term["kind"] == "field" {
+        record[text(&term["id"])].clone()
+    } else {
+        literal(text(&term["type"]), &term["value"], "").expect("compiled literal")
+    }
+}
+
 fn evaluate(predicate: &Json, record: &Record) -> bool {
     match text(&predicate["op"]) {
         "present" => record.contains_key(text(&predicate["field"])),
         "eq" | "lt" => {
             let terms = items(&predicate["terms"]);
-            let get = |term: &Json| {
-                if term["kind"] == "field" {
-                    record[text(&term["id"])].clone()
-                } else {
-                    literal(text(&term["type"]), &term["value"], "")
-                        .expect("compiled predicate literal")
-                }
-            };
-            let order = get(&terms[0]).compare(&get(&terms[1]));
+            let order = term_value(&terms[0], record).compare(&term_value(&terms[1], record));
             if predicate["op"] == "eq" {
                 order == Ordering::Equal
             } else {

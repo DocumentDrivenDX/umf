@@ -677,13 +677,25 @@ fn evidence_serializes_as_a_scoped_versioned_record() {
         },
     };
     let result = evidence.to_json().unwrap();
-    let schema = serde_json::from_str(include_str!(
-        "../../../spec/extensions/workflow/evidence-1.schema.json"
-    ))
-    .unwrap();
+    let schema = serde_json::from_str(umf_core::workflow::EVIDENCE_SCHEMA).unwrap();
     let validator = jsonschema::validator_for(&schema).unwrap();
     assert!(validator.is_valid(&result));
     assert_eq!(result["outcome"]["counterexample"], "event 2 duplicated");
+    let mut evidence = evidence;
+    evidence.outcome = EvidenceOutcome::Inconclusive {
+        reason: "state cap reached".into(),
+    };
+    let result = evidence.to_json().unwrap();
+    assert!(validator.is_valid(&result));
+    assert_eq!(result["outcome"]["status"], "inconclusive");
+    assert!(matches!(
+        evidence.assess(&workflow),
+        Ok(EvidenceStatus::Current(
+            EvidenceOutcome::Inconclusive { .. }
+        ))
+    ));
+    evidence.outcome = EvidenceOutcome::Inconclusive { reason: " ".into() };
+    assert!(evidence.to_json().is_err());
 }
 
 #[test]
@@ -728,6 +740,7 @@ fn suppression_events_and_operator_rights_are_declared_and_checked() {
             .unwrap();
         assert_eq!(write.store, "account-suppression");
         assert_eq!(write.scope, "account");
+        assert_eq!(write.reason, event);
         assert_eq!(write.fact, "blocked");
         assert_eq!(write.max_staleness.nanoseconds(), 2_000_000_000);
     }
@@ -780,4 +793,96 @@ fn suppression_events_and_operator_rights_are_declared_and_checked() {
         .unwrap();
         assert_eq!(error.0[0].code, expected);
     }
+}
+
+#[test]
+fn typed_run_state_supports_checked_updates_and_branching() {
+    use umf_core::workflow::{compile_source, inspect_source, SetDecision, WorkflowProfile};
+
+    let mut source = fixture();
+    source["runState"] = json!([
+        {"id":"attempts","initial":{"kind":"literal","type":"integer","value":"0"}}
+    ]);
+    source["entry"] = json!("count");
+    source["steps"].as_array_mut().unwrap().push(json!({
+        "kind":"set","id":"count","target":"attempts","operation":"increment",
+        "value":{"kind":"literal","type":"integer","value":"1"},"next":"send"
+    }));
+    source["steps"][2]["cases"][0]["when"] = json!({
+        "op":"eq","terms":[{"kind":"field","id":"attempts"},
+            {"kind":"literal","type":"integer","value":"1"}]
+    });
+    let bytes = serde_json::to_vec(&source).unwrap();
+    let inspected = inspect_source(&bytes).unwrap();
+    assert_eq!(inspected.source(), bytes);
+    assert!(compile_source(&bytes, WorkflowProfile::Base).is_err());
+    let workflow = compile_source(&bytes, WorkflowProfile::Correlated).unwrap();
+    let input = record("body");
+    let mut state = workflow.initial_run_state();
+    let snapshot = workflow.snapshot_with_run_state(&input, &state).unwrap();
+    let decision = workflow.prepare_set("count", true, &snapshot).unwrap();
+    let SetDecision::Update {
+        target,
+        value,
+        next,
+    } = decision
+    else {
+        panic!("expected prepared state update");
+    };
+    assert_eq!((target, next), ("attempts", "send"));
+    assert!(matches!(value, Scalar::Integer(1)));
+    assert!(matches!(state["attempts"], Scalar::Integer(0)));
+    state.insert(target.into(), value);
+    let snapshot = workflow.snapshot_with_run_state(&input, &state).unwrap();
+    assert_eq!(
+        workflow
+            .branch_destination("check", false, &snapshot)
+            .unwrap(),
+        "complete"
+    );
+    assert_eq!(
+        workflow
+            .matching_guard("send", false, &snapshot, &facts(true))
+            .unwrap()
+            .unwrap()
+            .index,
+        0
+    );
+    assert!(workflow.prepare_set("count", true, &input).is_err());
+
+    state.insert(target.into(), Scalar::Integer(i128::MAX));
+    let snapshot = workflow.snapshot_with_run_state(&input, &state).unwrap();
+    assert_eq!(
+        workflow
+            .prepare_set("count", true, &snapshot)
+            .unwrap_err()
+            .0[0]
+            .code,
+        "STATE_OVERFLOW"
+    );
+    assert!(matches!(state["attempts"], Scalar::Integer(i128::MAX)));
+    state.insert(target.into(), Scalar::Boolean(true));
+    assert!(workflow.snapshot_with_run_state(&input, &state).is_err());
+
+    source["guards"].as_array_mut().unwrap().push(json!({
+        "scope":"entry","when":{"op":"eq","terms":[
+            {"kind":"field","id":"attempts"},{"kind":"literal","type":"integer","value":"0"}
+        ]},"exit":"suppressed"
+    }));
+    let guarded = built(&source);
+    let snapshot = guarded
+        .snapshot_with_run_state(&input, &guarded.initial_run_state())
+        .unwrap();
+    assert!(matches!(
+        guarded.prepare_set("count", true, &snapshot).unwrap(),
+        SetDecision::Suppressed { exit: "suppressed" }
+    ));
+
+    let steps = source["steps"].as_array_mut().unwrap();
+    steps.last_mut().unwrap()["target"] = json!("recipient");
+    let bytes = serde_json::to_vec(&source).unwrap();
+    let Err(error) = compile_source(&bytes, WorkflowProfile::Correlated) else {
+        panic!("set wrote a record field");
+    };
+    assert_eq!(error.0[0].code, "STATE");
 }
