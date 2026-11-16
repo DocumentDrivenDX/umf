@@ -368,26 +368,21 @@ impl<'a> WaitRegistration<'a> {
                         "a correlated observation requires an event ID",
                     ));
                 }
-                let payload = (
-                    at,
-                    event.ordinal,
-                    event.kind,
-                    event.key.domain(),
-                    event.key.canonical(),
-                );
-                if seen
-                    .get(event.id)
-                    .is_some_and(|previous| previous != &payload)
-                {
+                let payload = (at, event.kind, event.key.domain(), event.key.canonical());
+                let (previous, ordinal) = seen
+                    .entry(event.id)
+                    .or_insert_with(|| (payload.clone(), event.ordinal));
+                if previous == &payload {
+                    *ordinal = (*ordinal).min(event.ordinal);
+                } else {
                     conflicts.insert(event.id.to_owned());
                 }
-                seen.entry(event.id).or_insert(payload);
             }
             self.conflicts.extend(conflicts);
             let first = seen
                 .into_iter()
                 .filter(|(id, _)| !self.conflicts.contains(*id))
-                .filter_map(|(id, (at, ordinal, kind, domain, key))| {
+                .filter_map(|(id, ((at, kind, domain, key), ordinal))| {
                     (ordinal > self.ordinal
                         && at >= self.registration
                         && at < self.deadline

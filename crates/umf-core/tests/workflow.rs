@@ -334,6 +334,18 @@ fn full_trace_uses_previous_completion_and_a_complete_unordered_event_set() {
     );
 
     let mut wait = start_wait();
+    let redelivery = || event("replied", "first", &key, registered_pin, &first, 17);
+    assert_eq!(
+        wait.resolve(&tie, &[redelivery(), b(), a()]).unwrap(),
+        WaitDecision::Event {
+            id: "first".into(),
+            next: "check"
+        }
+    );
+    assert!(wait.conflicting_event_ids().is_empty());
+    assert!(wait.resolve(&tie, &[redelivery()]).is_err());
+
+    let mut wait = start_wait();
     let conflicting = || event("replied", "first", &other, registered_pin, &first, 11);
     assert_eq!(
         wait.resolve(&tie, &[a(), conflicting(), b()]).unwrap(),

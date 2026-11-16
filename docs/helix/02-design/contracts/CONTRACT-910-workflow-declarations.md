@@ -102,7 +102,7 @@ register with the declared maximum staleness. A lift must reach every copy
 before it re-enables sends. The guard snapshot does not establish atomicity
 with the provider call.
 
-An event's declared disposition either has no write or monotonically sets a
+Every event requires a disposition. It either has no write or monotonically sets a
 named suppression store. The compiler resolves the store, checks its key
 type, and requires a distinct required Boolean effect fact. Every store's
 fact must have an effect-scope guard that directly suppresses on true or
@@ -175,8 +175,9 @@ A record-only key without trusted enrollment provenance cannot qualify.
 The consumer supplies the complete set up to a logical watermark. An event
 must follow registration and precede the deadline. The least matching event
 by instant, ordinal and event ID wins. Within an enrollment, repeated
-observations with the same event ID and identical kind, typed key, instant
-and ordinal collapse. If any of those values differ, the resolver reports
+observations with the same event ID and identical kind, typed key and
+provider instant collapse to the earliest observation ordinal. If the kind,
+typed key or provider instant differs, the resolver reports
 the ID for audit and excludes that ID from the unresolved candidate set.
 Other events and the deadline stay eligible. Event arrival order is
 immaterial. The deadline wins ties. After resolution, the consumer can retain later events for audit
