@@ -905,10 +905,13 @@ class _ContextJournal:
         if fresh and marker is None:
             ledger_lock = ledger.path.with_name(ledger.path.name + '.lock')
             if ledger.path.exists() or ledger_lock.exists():
-                _logical_fail('generation-authority-original-context-missing')
-            marker = self._write_birth_marker(
-                context_id, projection, entry, ledger, str(uuid.uuid4()), str(uuid.uuid4()),
-                'pending', create=True)
+                # A contender can finish birth between the marker read and
+                # this check. Use its marker if one has appeared.
+                marker = self._read_birth_marker(context_id)
+            else:
+                marker = self._write_birth_marker(
+                    context_id, projection, entry, ledger, str(uuid.uuid4()), str(uuid.uuid4()),
+                    'pending', create=True)
         if marker is None:
             _logical_fail('generation-authority-original-context-missing')
         if (marker['projection'] != projection
@@ -916,11 +919,9 @@ class _ContextJournal:
                 or marker['configurationDigest'] != _sha(entry._configuration_bytes)
                 or marker['ledgerPath'] != str(ledger.path)):
             _logical_fail('generation-authority-context-rebound')
-        if fresh and marker['state'] != 'pending':
+        create_registry = not self._path.exists()
+        if create_registry and marker['state'] != 'pending':
             _logical_fail('generation-authority-original-context-missing')
-        if not self._path.exists() and marker['state'] != 'pending':
-            _logical_fail('generation-authority-original-context-missing')
-        create_registry = fresh or (not self._path.exists() and marker['state'] == 'pending')
         with self._locked(create=create_registry, exclusive=True):
             events = self._load_locked(create=create_registry)
             context_id = projection['contextId']

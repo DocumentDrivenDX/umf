@@ -5,11 +5,12 @@ import json
 import os
 from pathlib import Path
 import re
+import runpy
 import subprocess
 
 from publish_01011 import (
-    NPM_NAME, REPO, SHA256, check_archive, gh_api, npm_visible, release_admission,
-    require, stage as stage_draft,
+    NPM_NAME, REPO, SHA256, check_archive, digest, gh_api, npm_visible, release_admission,
+    require, stage as stage_draft, verify_release_tag, wait_visible,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -50,6 +51,42 @@ def stage(source, record):
     check_archive(archive, record)
 
 
+def stage_platform_release(version, source):
+    require(re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version)
+            and re.fullmatch(r"[a-f0-9]{40}", source), "Invalid release version or source")
+    verify_release_tag(version, source)
+    repo = f"repos/{REPO}"
+    tag = f"umf-v{version}"
+    release = json.loads(gh_api(f"{repo}/releases/tags/{tag}"))
+    require(release["tag_name"] == tag and release["immutable"] is True
+            and not release["draft"] and not release["prerelease"],
+            "Expected an immutable public release")
+    targets = {
+        "linux-x86_64": ("linux", "x64"),
+        "linux-aarch64": ("linux", "arm64"),
+        "macos-aarch64": ("darwin", "arm64"),
+    }
+    archives = {key: (f"umf-sdk-{version}-{key}.tgz", *target) for key, target in targets.items()}
+    digests = {}
+    inputs = CANDIDATES / "platforms"
+    inputs.mkdir(parents=True)
+    for key, (filename, _, _) in archives.items():
+        asset, = (asset for asset in release["assets"] if asset["name"] == filename)
+        algorithm, _, checksum = asset.get("digest", "").partition(":")
+        require(asset["state"] == "uploaded" and algorithm == "sha256" and SHA256.fullmatch(checksum),
+                f"Missing verified release digest for {filename}")
+        path = inputs / filename
+        with path.open("xb") as stream:
+            gh_api(f'{repo}/releases/assets/{asset["id"]}', binary=True, output=stream)
+        check_archive(path, {"bytes": asset["size"], "sha256": checksum})
+        digests[key] = checksum
+    assemble = runpy.run_path(str(ROOT / "scripts/registry/package-npm-candidate.py"))["assemble"]
+    archive = assemble(version, inputs, CANDIDATES, archives, digests)
+    record = {"name": NPM_NAME, "version": version, "file": archive.name,
+              "bytes": archive.stat().st_size, "sha256": digest(archive)}
+    (CANDIDATES / "release-npm.json").write_text(json.dumps(record))
+
+
 def publish(record):
     archive = CANDIDATES / record["file"]
     check_archive(archive, record)
@@ -66,10 +103,8 @@ def publish(record):
     require(match and tuple(map(int, match.groups())) >= (11, 5, 1), "npm CLI 11.5.1 or later is required")
     subprocess.run(["npm", "publish", str(archive.resolve()), "--access=public", "--ignore-scripts",
                     "--registry=https://registry.npmjs.org"], check=True, env=environment)
-    if npm_visible(record):
-        print(f'Verified public {record["file"]}')
-    else:
-        print("::notice::npm accepted the archive. Verify its public bytes after indexing before any retry.")
+    require(wait_visible(npm_visible, record, 120),
+            "npm accepted the archive but the public bytes are not visible yet")
 
 
 def main():
@@ -77,7 +112,21 @@ def main():
     parser.add_argument("command", choices=("stage", "publish", "verify"))
     parser.add_argument("version")
     parser.add_argument("--candidate-release-id")
+    parser.add_argument("--source-sha")
     args = parser.parse_args()
+    require(not (args.source_sha and args.candidate_release_id), "Select one archive source")
+    if args.source_sha:
+        if args.command == "stage":
+            stage_platform_release(args.version, args.source_sha)
+            return
+        record = json.loads((CANDIDATES / "release-npm.json").read_text())
+        require(record["version"] == args.version and record["name"] == NPM_NAME,
+                "Unexpected staged release package")
+        if args.command == "publish":
+            publish(record)
+        else:
+            require(npm_visible(record), "npm has not exposed the release version")
+        return
     if args.candidate_release_id:
         qualified = release_admission("npm", args.version)
         source = qualified["source"]
