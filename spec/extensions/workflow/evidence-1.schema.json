@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:workflow:evidence:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile", "property", "kind", "tool", "toolVersion", "definitionProfile", "definitionDigest", "bounds", "assumptions", "outcome"],
+  "properties": {
+    "profile": {"const": "umf.workflow.evidence/1"},
+    "property": {"type": "string", "minLength": 1},
+    "kind": {"enum": ["static-check", "bounded-model-check", "differential-test", "mutation-control", "runtime-run"]},
+    "tool": {"type": "string", "minLength": 1},
+    "toolVersion": {"type": "string", "minLength": 1},
+    "definitionProfile": {"type": "string", "minLength": 1},
+    "definitionDigest": {"type": "string", "pattern": "^[a-f0-9]{64}$(?![\\s\\S])"},
+    "bounds": {"type": "string", "minLength": 1},
+    "assumptions": {"type": "array", "items": {"type": "string"}},
+    "outcome": {
+      "oneOf": [
+        {"type": "object", "properties": {"status": {"const": "passed"}}, "required": ["status"], "additionalProperties": false},
+        {"type": "object", "properties": {"status": {"const": "failed"}, "counterexample": {"type": "string", "minLength": 1}}, "required": ["status", "counterexample"], "additionalProperties": false},
+        {"type": "object", "properties": {"status": {"const": "inconclusive"}, "reason": {"type": "string", "minLength": 1}}, "required": ["status", "reason"], "additionalProperties": false}
+      ]
+    }
+  }
+}

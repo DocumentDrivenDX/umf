@@ -30,7 +30,6 @@ pub mod avro_nullability_classification;
 pub mod avro_facet_type;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_facets_classification;
-#[cfg(feature = "embedded-adapters")]
 pub mod avro_document;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_field_classifier;
@@ -119,6 +118,7 @@ pub mod dataset_values;
 pub mod dbt;
 #[cfg(feature = "embedded-adapters")]
 pub mod ddd_json_schema_projection;
+#[cfg(feature = "embedded-adapters")]
 pub mod ddd_graphql_projection;
 pub mod delta_actions;
 #[cfg(feature = "embedded-adapters")]
@@ -281,6 +281,8 @@ pub mod registry_policy;
 pub mod resource_cache;
 pub mod reviewed_parameters;
 pub mod rfc3339_exact_instant;
+pub mod exact_duration;
+pub mod workflow;
 pub mod scalar_type_inspection;
 pub mod schema;
 pub mod schema_properties;
@@ -338,7 +340,6 @@ pub mod sqlserver_ddl_projection;
 pub mod structural_diff;
 pub mod tablespec_adapter;
 pub(crate) mod tablespec_authored_key_facets;
-#[cfg(feature = "embedded-adapters")]
 pub mod tablespec_authored_projection;
 pub(crate) mod tablespec_field_classification;
 pub(crate) mod tablespec_record_classification;
