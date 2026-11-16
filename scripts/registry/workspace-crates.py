@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Package, qualify, and publish UMF's seven downstream Rust crates."""
+"""Package, qualify, and publish UMF's Rust release crates."""
 import argparse
 from graphlib import TopologicalSorter
 import json
@@ -17,7 +17,15 @@ from publish_01011 import (
     upload_crate, wait_visible,
 )
 
+CORE = "umf-core"
+CORE_REGISTRY_DEPENDENCIES = {
+    "saphyr-parser": ("=0.1.0", "vendor/saphyr-parser"),
+    "oxttl": ("=0.2.5", "vendor/oxttl"),
+    "oxrdf": ("=0.3.5", None),
+    "json-ld": ("=0.21.4", None),
+}
 DESCRIPTIONS = {
+    CORE: "Host-independent Unified Metadata Format core library.",
     "umf-cli": "Command-line interface for Unified Metadata Format.",
     "umf-codegen": "Unified Metadata Format code generation library.",
     "umf-core-wire": "Wire bindings for the Unified Metadata Format core.",
@@ -31,7 +39,8 @@ INCLUDE = re.compile(r'(include(?:_str|_bytes)?!\s*\(\s*")([^"]+)')
 
 def stage_sources(root, destination, name):
     crate = root / "crates" / name
-    shutil.copytree(crate, destination)
+    ignore = shutil.ignore_patterns("vendor") if name == CORE else None
+    shutil.copytree(crate, destination, ignore=ignore)
     for license_file in ("LICENSE-APACHE", "LICENSE-MIT"):
         shutil.copyfile(root / license_file, destination / license_file)
     for path in sorted(destination.rglob("*.rs")):
@@ -53,7 +62,22 @@ def stage_sources(root, destination, name):
             path.write_text(relocated)
 
 
-def normalize_manifest(path, name, version):
+def normalize_core_dependencies(manifest, source):
+    # These published companion crates preserve UMF's patched dependency graph.
+    # OxRDF must be the same package used by the published Turtle adapter.
+    for name, (version, vendor) in CORE_REGISTRY_DEPENDENCIES.items():
+        entry = manifest["dependencies"][name]
+        require(entry.get("path") == vendor, f"Review the core registry mapping for {name}")
+        if vendor:
+            vendor_manifest = tomllib.loads((source / vendor / "Cargo.toml").read_text())
+            require(vendor_manifest["package"]["version"] == version.removeprefix("="),
+                    f"Review the core registry version for {name}")
+            entry.pop("path")
+        require(entry.get("version", version) == version, f"Review the core registry version for {name}")
+        entry.update(package=f"umf-{name}", version=version)
+
+
+def normalize_manifest(path, name, version, source, selected):
     manifest = tomllib.loads(path.read_text())
     package = manifest["package"]
     require((package["name"], package["version"]) == (name, version),
@@ -61,6 +85,12 @@ def normalize_manifest(path, name, version):
     package.pop("publish", None)
     package["description"] = DESCRIPTIONS[name]
     package["repository"] = f"https://github.com/{REPO}"
+    if name == CORE:
+        normalize_core_dependencies(manifest, source / "crates" / CORE)
+        package["readme"] = "README.md"
+        (path.parent / "README.md").write_text(
+            f"# UMF Core\n\nThe host-independent Rust library from UMF {version}.\n\n"
+            f"https://github.com/{REPO}/releases/tag/umf-v{version}\n")
     dependencies = set()
     for section in [manifest, *manifest.get("target", {}).values()]:
         for kind in ("dependencies", "build-dependencies", "dev-dependencies"):
@@ -68,25 +98,26 @@ def normalize_manifest(path, name, version):
                 if not isinstance(entry, dict) or "path" not in entry:
                     continue
                 dependency = entry.get("package", alias)
-                require(dependency in DESCRIPTIONS or dependency == "umf-core",
+                require(dependency in DESCRIPTIONS,
                         f"Unexpected local dependency {dependency} in {name}")
                 expected = path.parent.parent / dependency
                 require((path.parent / entry["path"]).resolve() == expected.resolve(),
                         f"Unexpected source path for {dependency} in {name}")
                 del entry["path"]
                 entry["version"] = f"={version}"
-                if dependency in DESCRIPTIONS and kind != "dev-dependencies":
+                if dependency in selected and kind != "dev-dependencies":
                     dependencies.add(dependency)
     return manifest, sorted(dependencies)
 
 
-def package_crates(source, directory, version):
+def package_crates(source, directory, version, include_core):
+    selected = [name for name in DESCRIPTIONS if include_core or name != CORE]
     packages = {}
     graph = {}
-    for name in DESCRIPTIONS:
+    for name in selected:
         crate = directory / "sources" / name
         stage_sources(source, crate, name)
-        packages[name], graph[name] = normalize_manifest(crate / "Cargo.toml", name, version)
+        packages[name], graph[name] = normalize_manifest(crate / "Cargo.toml", name, version, source, selected)
 
     records = []
     for name in TopologicalSorter(graph).static_order():
@@ -100,7 +131,7 @@ def package_crates(source, directory, version):
 
 
 def qualify(directory, records):
-    # Cargo gets core and third-party dependencies from crates.io.
+    # Patch the staged crates into Cargo resolution and fetch other dependencies from crates.io.
     workspace = directory / "qualification"
     workspace.mkdir()
     members = []
@@ -119,24 +150,28 @@ def qualify(directory, records):
         subprocess.run(["cargo", "check", "-p", record["name"]], cwd=workspace, check=True)
 
 
-def prepare(source, directory, version):
+def prepare(source, directory, version, include_core):
     require(SEMVER.fullmatch(version), "Invalid UMF version")
-    # Check before packaging or uploading to prevent a partial release.
-    with public_request("https://index.crates.io/um/f-/umf-core") as response:
-        require(any(entry["vers"] == version and not entry["yanked"]
-                    for entry in map(json.loads, response) if entry),
-                f"Publish umf-core {version} before releasing its workspace dependents")
+    if not include_core:
+        with public_request("https://index.crates.io/um/f-/umf-core") as response:
+            require(any(entry["vers"] == version and not entry["yanked"]
+                        for entry in map(json.loads, response) if entry),
+                    f"Publish umf-core {version} before releasing its workspace dependents")
     directory.mkdir()
-    records = package_crates(source, directory, version)
+    records = package_crates(source, directory, version, include_core)
     qualify(directory, records)
     (directory / "manifest.json").write_text(json.dumps(records, indent=2) + "\n")
 
 
-def execute(directory, dry_run):
+def execute(directory, dry_run, include_core):
     records = json.loads((directory / "manifest.json").read_text())
-    require(len(records) == len(DESCRIPTIONS) and
-            {record["name"] for record in records} == DESCRIPTIONS.keys(),
-            "Expected all seven workspace crates")
+    selected = set(DESCRIPTIONS)
+    if not include_core:
+        selected.remove(CORE)
+    require(len(records) == len(selected) and {record["name"] for record in records} == selected,
+            "Incomplete workspace crate archive set")
+    if include_core:
+        require(records[0]["name"] == CORE, "umf-core must be the first archive")
     versions = {record["version"] for record in records}
     require(len(versions) == 1, "Workspace archives must share one release version")
     payloads = []
@@ -149,7 +184,7 @@ def execute(directory, dry_run):
         check_archive(archive, record)
         for dependency in crate_metadata(archive, record)["deps"]:
             name = dependency["name"]
-            if name in DESCRIPTIONS and dependency["kind"] != "dev":
+            if name in selected and dependency["kind"] != "dev":
                 require(name in seen and dependency["version_req"] == f'={record["version"]}',
                         f'{record["name"]} must follow {name} at the same version')
         payloads.append(crate_payload(archive, record))
@@ -175,14 +210,17 @@ def main():
     prepare_args.add_argument("--source", type=Path, required=True)
     prepare_args.add_argument("--directory", type=Path, required=True)
     prepare_args.add_argument("--version", required=True)
+    prepare_args.add_argument("--include-core", action="store_true")
     for command in ("dry-run", "publish"):
-        commands.add_parser(command).add_argument("--directory", type=Path, required=True)
+        subcommand = commands.add_parser(command)
+        subcommand.add_argument("--directory", type=Path, required=True)
+        subcommand.add_argument("--include-core", action="store_true")
     args = parser.parse_args()
     try:
         if args.command == "prepare":
-            prepare(args.source.resolve(), args.directory.resolve(), args.version)
+            prepare(args.source.resolve(), args.directory.resolve(), args.version, args.include_core)
         else:
-            execute(args.directory, args.command == "dry-run")
+            execute(args.directory, args.command == "dry-run", args.include_core)
     except (ValueError, OSError, KeyError, subprocess.CalledProcessError) as error:
         raise SystemExit(str(error)) from None
 

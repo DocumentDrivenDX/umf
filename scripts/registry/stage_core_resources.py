@@ -22,9 +22,9 @@ def copy_git_tree(revision: str, destination: Path, paths: list[str]) -> None:
         archive.extractall(destination, filter="data")
 
 
-def stage_core_resources(source_root: Path, package: Path) -> int:
+def stage_core_resources(source_root: Path, package: Path, revision: str = SOURCE) -> int:
     """Resolve relative resource paths inside the release tree, then copy and rebase them."""
-    copy_git_tree(SOURCE, source_root, [str(CORE), "Cargo.toml", "Cargo.lock", *LICENSES])
+    copy_git_tree(revision, source_root, [str(CORE), "Cargo.toml", "Cargo.lock", *LICENSES])
     paths = {}
     external = set()
     internal = set()
@@ -46,7 +46,7 @@ def stage_core_resources(source_root: Path, package: Path) -> int:
         contents = path.read_bytes().decode("utf-8")
         paths[original.relative_to(CORE)] = INCLUDE.sub(relocate, contents)
 
-    copy_git_tree(SOURCE, source_root, sorted(external))
+    copy_git_tree(revision, source_root, sorted(external))
     for relative, contents in paths.items():
         destination = package / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -68,9 +68,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
     parser.add_argument("package", type=Path)
+    parser.add_argument("--revision", default=SOURCE, help="Git revision to stage locally")
     args = parser.parse_args()
-    count = stage_core_resources(args.source, args.package)
-    print(f"Staged {count} exact compile-time resources from {SOURCE}")
+    count = stage_core_resources(args.source, args.package, args.revision)
+    print(f"Staged {count} exact compile-time resources from {args.revision}")
 
 
 if __name__ == "__main__":

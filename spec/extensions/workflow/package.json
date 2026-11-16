@@ -1,0 +1,32 @@
+{
+  "id": "umf.workflow",
+  "version": "0.1.0",
+  "coreVersion": "0.10.0",
+  "description": "Portable workflow definition source with independently selected prepare profiles.",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:workflow:0.1.0",
+    "type": "object",
+    "properties": {
+      "source": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "source"
+    ]
+  },
+  "semantics": "CONTRACT-910. The source string retains the UTF-8 JSON definition. Compile eligibility requires explicit profile selection.",
+  "scopes": [
+    "module"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [],
+    "evidence": [
+      "crates/umf-core/tests/workflow.rs",
+      "scripts/workflow-browser.ts"
+    ]
+  }
+}

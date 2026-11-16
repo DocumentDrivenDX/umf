@@ -2307,3 +2307,14 @@ export function createSecurityAuthorityGuardEngine(module) {
     return wire => session.executeSecurityAuthorityGuardWire(wire);
   }, NativeCoreErrorType);
 }
+
+export function createWorkflowEngine(module) {
+  if (typeof module?.compileWorkflowJson !== 'function') {
+    throw new Error('RUST_WORKFLOW_PROFILE_MISSING');
+  }
+  return {
+    inspectWorkflow: source => JSON.parse(module.inspectWorkflowJson(source)),
+    compileWorkflow: (source, profile) => JSON.parse(module.compileWorkflowJson(source, profile)),
+    parseElapsedDuration: token => JSON.parse(module.parseElapsedDurationJson(token)),
+  };
+}

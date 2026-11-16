@@ -2167,3 +2167,15 @@ export {JSON_SCHEMA_STAGED_IMPORT_PROFILE};
 export function createJsonSchemaStagedImportSessionEngine() {
   return createJsonSchemaStagedImportSession(addon);
 }
+
+export function inspectWorkflow(source) {
+  return JSON.parse(addon.inspectWorkflowJson(Buffer.from(source)));
+}
+
+export function compileWorkflow(source, profile) {
+  return JSON.parse(addon.compileWorkflowJson(Buffer.from(source), profile));
+}
+
+export function parseElapsedDuration(token) {
+  return JSON.parse(addon.parseElapsedDurationJson(token));
+}
