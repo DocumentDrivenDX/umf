@@ -18,6 +18,10 @@ on:
         description: Package and check the seven workspace crates without requesting a publishing token or uploading
         type: boolean
         default: true
+      auth_only:
+        description: Test the crates.io OIDC exchange without packaging or publishing
+        type: boolean
+        default: false
       version:
         description: UMF release version. The matching umf-core must already be on crates.io for the seven workspace crates.
         type: string
@@ -34,7 +38,7 @@ concurrency:
 
 jobs:
   npm:
-    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main' && inputs.registry == 'npm' && !inputs.dry_run
+    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main' && inputs.registry == 'npm' && !inputs.dry_run && !inputs.auth_only
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     environment: npm-core
@@ -60,8 +64,19 @@ jobs:
           VERSION: ${{ inputs.version }}
         run: python3 scripts/registry/publish_01011.py publish npm --version "$VERSION"
 
+  crates-io-auth-check:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main' && inputs.auth_only
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment: crates-io
+    permissions:
+      id-token: write
+    steps:
+      - name: Authenticate to crates.io with Trusted Publishing
+        uses: rust-lang/crates-io-auth-action@3268eb413133e2960fa4ae0e963ca76380c54cd9 # v1.0.6
+
   crates-io:
-    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main' && inputs.registry == 'crates.io'
+    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == 'refs/heads/main' && inputs.registry == 'crates.io' && !inputs.auth_only
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: crates-io
