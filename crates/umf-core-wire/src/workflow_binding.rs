@@ -23,6 +23,7 @@ pub fn compile(source: &[u8], profile: &str) -> String {
             "entry": prepared.entry(),
             "sourceDigest": prepared.digest(),
             "definitionDigest": prepared.lowered_digest(),
+            "loweredSource": std::str::from_utf8(prepared.lowered_source()).expect("canonical UTF-8"),
             "effectRevisions": prepared.effect_revisions(),
         })
     });

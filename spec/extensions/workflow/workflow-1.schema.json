@@ -15,7 +15,7 @@
     },
     "version": {
       "type": "string",
-      "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.-]*$",
+      "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.-]*$(?![\\s\\S])",
       "maxLength": 128
     },
     "versionPolicy": {
@@ -79,6 +79,9 @@
     "edges": {
       "type": "array",
       "maxItems": 1024
+    },
+    "predicateProfile": {
+      "const": "umf.workflow.predicates/1"
     }
   },
   "required": [
@@ -92,13 +95,14 @@
     "events",
     "guards",
     "steps",
-    "inFlight"
+    "inFlight",
+    "predicateProfile"
   ],
   "additionalProperties": false,
   "$defs": {
     "id": {
       "type": "string",
-      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$(?![\\s\\S])",
       "maxLength": 128
     },
     "duration": {
@@ -370,13 +374,17 @@
             },
             "revision": {
               "type": "string",
-              "pattern": "^[a-f0-9]{64}$"
+              "pattern": "^[a-f0-9]{64}$(?![\\s\\S])"
+            },
+            "profile": {
+              "const": "umf.workflow.external-effect/1"
             }
           },
           "required": [
             "kind",
             "action",
-            "revision"
+            "revision",
+            "profile"
           ],
           "additionalProperties": false
         },
@@ -399,7 +407,7 @@
             },
             "maxRetries": {
               "type": "string",
-              "pattern": "^(0|[1-9][0-9]{0,2})$"
+              "pattern": "^(0|[1-9][0-9]{0,2})$(?![\\s\\S])"
             }
           },
           "required": [

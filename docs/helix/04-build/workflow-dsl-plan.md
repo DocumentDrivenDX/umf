@@ -33,6 +33,8 @@ ddx:
       kind: informed_by
     - id: CONTRACT-910
       kind: informed_by
+    - id: STP-910
+      kind: informed_by
 ---
 
 # Workflow DSL implementation plan
@@ -129,7 +131,9 @@ artifacts, their revision, license and runnable vectors is unconfirmed. The curr
 4. Ship the named elapsed scalar profile for workflow timing. W1b evaluates core
    admission after the W6 timing vectors and W8 reuse results. If admitted, amend
    the authored metamodel, generate derived outputs and qualify explicit migration
-   and rollback. Native replacement requires separate FR-28 evidence.
+   and rollback. Native replacement requires separate FR-28 evidence. The
+   existing proof covers elapsed workflow timing and a bounded reference replay.
+   W1b retains the scalar at the workflow profile until broader reuse qualifies.
 5. Compose with CONTRACT-065 exact instants for `until`, comparisons and
    `anchor + duration`. Specify a deadline range and retain anchor precision.
    Reject overflow explicitly. Prove equivalent offsets, sub-nanosecond anchor
@@ -151,12 +155,11 @@ artifacts, their revision, license and runnable vectors is unconfirmed. The curr
   `crates/umf-core/tests/fixtures/workflow/reply.json`. It includes eight steps,
   a 90-fixed-day pause, an exact deadline tie, a stale enrollment event and
   alternate effects, suppression and branch exits. The Rust integration tests
-  attach these cases to the issues above.
+  attach these cases to the issues above. [STP-910](../03-test/test-plans/STP-910-workflow-declarations.md)
 - External qualification requires the workflow consumer owner to identify the
   consumer build, ratify the workflow and effect ABI, and supply the cited
-  interpreter and model revision, fixture license and run bounds. The consumer
-  reviewer offered the extension/effect source in PR #171. External runtime
-  claims depend on that input. [Review decisions](https://github.com/DocumentDrivenDX/umf/pull/171#issuecomment-6906678167)
+  interpreter and model revision, fixture license and run bounds. External
+  runtime claims depend on those inputs.
 
 ## Execution contract
 
@@ -189,7 +192,7 @@ runtime metering are unknown and no execution budget has been assigned.
 ## Continuation evidence
 
 Record plan revision, completed slice IDs, commands, tool and profile versions,
-evidence paths, remaining decisions, blockers and the next action on PR #171 and use CI artifacts for run output. Verify the recorded results
+evidence paths, remaining decisions, blockers and the next action on the implementation pull request and use CI artifacts for run output. Verify the recorded results
 against the source and tests before resuming.
 
 ## Risks and rollbacks

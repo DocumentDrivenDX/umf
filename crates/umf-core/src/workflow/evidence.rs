@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use super::{fail, CompiledWorkflow, WorkflowError};
 
+use serde_json::{json, Value};
+
 pub const EVIDENCE_PROFILE: &str = "umf.workflow.evidence/1";
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -38,7 +40,30 @@ pub enum EvidenceStatus<'a> {
 }
 
 impl Evidence {
-    pub fn assess(&self, workflow: &CompiledWorkflow) -> Result<EvidenceStatus<'_>, WorkflowError> {
+    pub fn to_json(&self) -> Result<Value, WorkflowError> {
+        self.validate()?;
+        let kind = match self.kind {
+            EvidenceKind::StaticCheck => "static-check",
+            EvidenceKind::BoundedModelCheck => "bounded-model-check",
+            EvidenceKind::Differential => "differential-test",
+            EvidenceKind::MutationControl => "mutation-control",
+            EvidenceKind::RuntimeRun => "runtime-run",
+        };
+        let outcome = match &self.outcome {
+            EvidenceOutcome::Passed => json!({"status": "passed"}),
+            EvidenceOutcome::Failed { counterexample } => {
+                json!({"status": "failed", "counterexample": counterexample})
+            }
+        };
+        Ok(json!({
+            "profile": EVIDENCE_PROFILE, "property": self.property, "kind": kind,
+            "tool": self.tool, "toolVersion": self.tool_version,
+            "definitionProfile": self.profile, "definitionDigest": self.definition_digest,
+            "bounds": self.bounds, "assumptions": self.assumptions, "outcome": outcome,
+        }))
+    }
+
+    fn validate(&self) -> Result<(), WorkflowError> {
         for (path, value) in [
             ("/property", &self.property),
             ("/tool", &self.tool),
@@ -67,6 +92,11 @@ impl Evidence {
                 ));
             }
         }
+        Ok(())
+    }
+
+    pub fn assess(&self, workflow: &CompiledWorkflow) -> Result<EvidenceStatus<'_>, WorkflowError> {
+        self.validate()?;
         if self.definition_digest != workflow.lowered_digest() || self.profile != workflow.profile()
         {
             return Ok(EvidenceStatus::Stale(&self.outcome));

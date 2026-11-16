@@ -1006,7 +1006,7 @@ export type WorkflowResult<T> = { ok: true; value: T } | { ok: false; findings: 
 export interface WorkflowInspection { source: string; complete: boolean; findings: WorkflowFinding[] }
 export interface PreparedWorkflow {
   id: string; version: string; profile: WorkflowProfile; entry: string;
-  sourceDigest: string; definitionDigest: string; effectRevisions: [action: string, revision: string][];
+  sourceDigest: string; definitionDigest: string; loweredSource: string; effectRevisions: [action: string, revision: string][];
 }
 export interface ElapsedDuration {
   profile: 'umf.exact-duration/1'; originalText: string; nanoseconds: string;

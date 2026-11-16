@@ -480,3 +480,202 @@ fn lowered_identity_normalizes_fixed_spans_without_changing_source_pins() {
     let changed = built(&changed);
     assert_ne!(base.lowered_digest(), changed.lowered_digest());
 }
+
+#[test]
+fn result_mode_keeps_acceptance_and_unawaited_effects_use_only_next() {
+    let mut source = fixture();
+    source["effects"][0]["await"] = json!("result");
+    source["effects"][0]["outcomes"][0]["id"] = json!("finished");
+    source["steps"][0]["routes"][0]["outcome"] = json!("finished");
+    let workflow = built(&source);
+    let pin = enroll(&workflow, "new");
+    let EffectDecision::Invocation(intent) = workflow
+        .prepare_effect("send", true, &record("text"), &facts(false), &pin)
+        .unwrap()
+    else {
+        panic!("expected effect intent")
+    };
+    let start = at("2026-01-01T00:00:00Z");
+    let accepted = at("2026-01-01T00:00:03Z");
+    let mut window = intent.begin_await(&start).unwrap();
+    assert!(window
+        .observe(&at("2025-12-31T23:59:59Z"), EffectObservation::Acceptance)
+        .is_err());
+    assert_eq!(
+        window
+            .observe(&accepted, EffectObservation::Acceptance)
+            .unwrap(),
+        EffectResolution::Pending
+    );
+    assert!(window
+        .observe(
+            &accepted,
+            EffectObservation::Outcome {
+                id: "rejected",
+                output: &Scalar::Text("contradiction".into()),
+            }
+        )
+        .is_err());
+    assert_eq!(
+        window
+            .observe(&at("2026-01-01T00:00:05Z"), EffectObservation::Watermark)
+            .unwrap(),
+        EffectResolution::Resolved {
+            outcome: "timeout",
+            next: "held",
+            was_accepted: true
+        }
+    );
+
+    source["effects"][0]["await"] = json!("none");
+    source["effects"][0]
+        .as_object_mut()
+        .unwrap()
+        .remove("timeout");
+    source["effects"][0]["outcomes"]
+        .as_array_mut()
+        .unwrap()
+        .remove(3);
+    source["steps"][0].as_object_mut().unwrap().remove("routes");
+    source["steps"][0]["next"] = json!("pause");
+    source["steps"].as_array_mut().unwrap().remove(6);
+    let workflow = built(&source);
+    let pin = enroll(&workflow, "new");
+    let EffectDecision::Invocation(intent) = workflow
+        .prepare_effect("send", true, &record("text"), &facts(false), &pin)
+        .unwrap()
+    else {
+        panic!("expected effect intent")
+    };
+    assert_eq!(intent.dispatch_destination(), Some("pause"));
+    assert!(intent.begin_await(&start).is_err());
+    assert_eq!(
+        intent
+            .outcome_destination("finished", &Scalar::Text("result".into()))
+            .unwrap(),
+        None
+    );
+}
+
+#[test]
+fn base_profile_handles_absolute_pauses_and_reports_replacement_intents() {
+    let mut source = fixture();
+    source["profile"] = json!(PROFILE);
+    let wait = source["steps"][1].as_object_mut().unwrap();
+    wait.remove("for");
+    wait.remove("event");
+    wait.insert("until".into(), json!("2026-05-01T00:00:00Z"));
+    source["steps"][1]["timeout"] = json!("check");
+    source["steps"].as_array_mut().unwrap().remove(4);
+    source.as_object_mut().unwrap().remove("reentry");
+    let older = built(&source);
+    let existing = enroll(&older, "old");
+    let start = at("2026-01-01T00:00:00Z");
+    let mut new_source = source;
+    new_source["version"] = json!("2.0.0");
+    new_source["inFlight"] = json!("reenroll");
+    let newer = built(&new_source);
+    let candidates = &[Candidate {
+        record: "record-a",
+        enrollment_id: "new",
+    }];
+    let active = [History {
+        enrollment: &existing,
+        terminal_at: None,
+    }];
+    let finished = [History {
+        enrollment: &existing,
+        terminal_at: Some(&start),
+    }];
+    let decisions = newer.admit_batch(candidates, &active, &start).unwrap();
+    assert!(
+        matches!(&decisions[0], Admission::Replace { previous, next }
+        if previous == &existing && next.version == newer.version() && next.id == "new")
+    );
+    assert_eq!(
+        newer.admit_batch(candidates, &finished, &start).unwrap(),
+        vec![Admission::ReentryDenied]
+    );
+    let RegisterWait::Registered(mut wait) = older
+        .register_wait(
+            "pause",
+            false,
+            &record("text"),
+            &existing,
+            1,
+            &start,
+            &start,
+        )
+        .unwrap()
+    else {
+        panic!("expected pause")
+    };
+    assert_eq!(wait.resolve(&start, &[]).unwrap(), WaitDecision::Pending);
+    assert_eq!(
+        wait.resolve(&at("2026-05-01T00:00:00Z"), &[]).unwrap(),
+        WaitDecision::Deadline("check")
+    );
+
+    new_source["version"] = json!(older.version());
+    let conflicting = built(&new_source);
+    assert!(conflicting
+        .admit_batch(candidates, &active, &start)
+        .is_err());
+}
+
+#[test]
+fn evidence_serializes_as_a_scoped_versioned_record() {
+    let workflow = built(&fixture());
+    let evidence = Evidence {
+        property: "wait-resolution".into(),
+        kind: EvidenceKind::BoundedModelCheck,
+        tool: "bounded comparator".into(),
+        tool_version: "1.0.0".into(),
+        definition_digest: workflow.lowered_digest().into(),
+        profile: workflow.profile().into(),
+        bounds: "five events, one enrollment".into(),
+        assumptions: vec!["complete watermark set".into()],
+        outcome: EvidenceOutcome::Failed {
+            counterexample: "event 2 duplicated".into(),
+        },
+    };
+    let result = evidence.to_json().unwrap();
+    let schema = serde_json::from_str(include_str!(
+        "../../../spec/extensions/workflow/evidence-1.schema.json"
+    ))
+    .unwrap();
+    let validator = jsonschema::validator_for(&schema).unwrap();
+    assert!(validator.is_valid(&result));
+    assert_eq!(result["outcome"]["counterexample"], "event 2 duplicated");
+}
+
+#[test]
+fn total_predicates_compare_exact_instants_and_elapsed_spans() {
+    let mut source = fixture();
+    source["steps"][2]["cases"][0]["when"] = json!({"op":"and","clauses":[
+        {"op":"eq","terms":[
+            {"kind":"literal","type":"instant","value":"2026-01-01T00:00:00.0000000001Z"},
+            {"kind":"literal","type":"instant","value":"2025-12-31T19:00:00.000000000100-05:00"}
+        ]},
+        {"op":"lt","terms":[
+            {"kind":"literal","type":"duration","value":{"kind":"elapsed","text":"PT1S"}},
+            {"kind":"literal","type":"duration","value":{"kind":"count","count":"1000000001","unit":"ns"}}
+        ]}
+    ]});
+    let workflow = built(&source);
+    assert_eq!(
+        workflow
+            .branch_destination("check", false, &record("text"))
+            .unwrap(),
+        "complete"
+    );
+    source["steps"][2]["cases"][0]["when"]["clauses"][0]["terms"][1]["value"] =
+        json!("2025-12-31T19:00:00.000000000101-05:00");
+    let workflow = built(&source);
+    assert_eq!(
+        workflow
+            .branch_destination("check", false, &record("text"))
+            .unwrap(),
+        "held"
+    );
+}

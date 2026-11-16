@@ -96,7 +96,6 @@ impl EffectInvocation<'_> {
             .expect("compiled retry bound");
         Ok(!was_accepted
             && self.against(original) == Replay::SameBody
-            && self.action_revision() == original.action_revision()
             && matches!(
                 text(&declared["class"]),
                 "unknown" | "engine-timeout" | "retriable"
@@ -126,6 +125,7 @@ impl EffectInvocation<'_> {
             deadline,
             resolved: false,
             accepted: false,
+            last: instant_key(at),
         })
     }
 
@@ -137,7 +137,10 @@ impl EffectInvocation<'_> {
     pub fn against(&self, original: &Self) -> Replay {
         if self.identity != original.identity {
             Replay::DifferentIdentity
-        } else if self.body_digest == original.body_digest {
+        } else if self.body_digest == original.body_digest
+            && self.action() == original.action()
+            && self.action_revision() == original.action_revision()
+        {
             Replay::SameBody
         } else {
             Replay::ConflictingBody
@@ -176,6 +179,7 @@ pub struct EffectAwait<'invocation, 'definition> {
     deadline: Deadline,
     resolved: bool,
     accepted: bool,
+    last: Deadline,
 }
 
 pub enum EffectObservation<'a> {
@@ -206,7 +210,15 @@ impl EffectAwait<'_, '_> {
         if self.resolved {
             return Ok(EffectResolution::Late);
         }
-        if instant_key(at) >= self.deadline {
+        let at = instant_key(at);
+        if at < self.last {
+            return Err(fail(
+                "OBSERVATION_ORDER",
+                "/time",
+                "effect observation precedes prior admitted logical time",
+            ));
+        }
+        if at >= self.deadline {
             let timeout = items(&self.invocation.declaration["outcomes"])
                 .iter()
                 .find(|outcome| outcome["class"] == "engine-timeout")
@@ -226,6 +238,7 @@ impl EffectAwait<'_, '_> {
 
         match observation {
             EffectObservation::Acceptance if self.invocation.await_mode() == "result" => {
+                self.last = at;
                 self.accepted = true;
                 Ok(EffectResolution::Pending)
             }
@@ -238,7 +251,7 @@ impl EffectAwait<'_, '_> {
                         "engine timeout is produced only by the deadline",
                     ));
                 }
-                if self.accepted && outcome["class"] == "definitive-failure" {
+                if self.accepted && id == "rejected" {
                     return Err(fail(
                         "OUTCOME",
                         "/outcome",
@@ -249,6 +262,7 @@ impl EffectAwait<'_, '_> {
                     .invocation
                     .outcome_destination(id, output)?
                     .expect("compiled outcome route");
+                self.last = at;
                 self.resolved = true;
                 Ok(EffectResolution::Resolved {
                     outcome: text(&outcome["id"]),
@@ -256,7 +270,10 @@ impl EffectAwait<'_, '_> {
                     was_accepted: self.accepted || id == "accepted",
                 })
             }
-            EffectObservation::Watermark => Ok(EffectResolution::Pending),
+            EffectObservation::Watermark => {
+                self.last = at;
+                Ok(EffectResolution::Pending)
+            }
             EffectObservation::Acceptance => Err(fail(
                 "OUTCOME",
                 "/outcome",
@@ -341,6 +358,13 @@ impl<'a> WaitRegistration<'a> {
                     || at >= self.deadline
                 {
                     continue;
+                }
+                if event.id.is_empty() {
+                    return Err(fail(
+                        "EVENT_ID",
+                        "/events",
+                        "a correlated observation requires an event ID",
+                    ));
                 }
                 let identity = (at, event.ordinal, event.id);
                 let payload = (event.kind, event.key.domain(), event.key.canonical());
@@ -528,7 +552,7 @@ impl CompiledWorkflow {
             .collect();
         let canonical: BTreeMap<_, _> = body
             .iter()
-            .map(|(key, value)| (key, value.canonical()))
+            .map(|(key, value)| (key, serde_json::json!([value.domain(), value.canonical()])))
             .collect();
         let body_digest = digest(&serde_json::to_vec(&canonical).expect("canonical scalar body"));
         Ok(EffectDecision::Invocation(EffectInvocation {
@@ -611,6 +635,7 @@ impl CompiledWorkflow {
         }
         let mut index: BTreeMap<&str, Vec<&History<'_>>> = BTreeMap::new();
         let mut unique = BTreeSet::new();
+        let mut versions = BTreeMap::from([(self.version(), self.digest())]);
         let now_key = instant_key(now);
         for row in history
             .iter()
@@ -630,6 +655,16 @@ impl CompiledWorkflow {
                     "HISTORY",
                     "/history",
                     "invalid or duplicate workflow history",
+                ));
+            }
+            if versions
+                .insert(&pin.version, &pin.definition_digest)
+                .is_some_and(|old| old != pin.definition_digest)
+            {
+                return Err(fail(
+                    "HISTORY",
+                    "/history",
+                    "one definition version label binds exactly one digest",
                 ));
             }
             index.entry(&pin.record).or_default().push(row);
@@ -760,7 +795,10 @@ fn retry_identity(
                 "enrollment" => Json::from(enrollment.id.as_str()),
                 "step" => Json::from(step),
                 "effect" => declaration["id"].clone(),
-                "field" => record[text(&part["field"])].canonical(),
+                "field" => {
+                    let value = &record[text(&part["field"])];
+                    serde_json::json!([value.domain(), value.canonical()])
+                }
                 _ => unreachable!("compiled effect identity part"),
             };
             let label = part["field"]

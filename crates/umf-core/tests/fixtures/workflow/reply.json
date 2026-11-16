@@ -1,5 +1,6 @@
 {
   "profile": "umf.workflow.correlated/1",
+  "predicateProfile": "umf.workflow.predicates/1",
   "id": "follow-up",
   "version": "1.0.0",
   "versionPolicy": "drain",
@@ -13,7 +14,7 @@
   "effectFacts": [{"id": "blocked", "type": "boolean", "optional": false}],
   "effects": [{
     "id": "sendMessage",
-    "binding": {"kind": "external", "action": "mail.send", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    "binding": {"kind": "external", "profile": "umf.workflow.external-effect/1", "action": "mail.send", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
     "inputs": [
       {"id": "recipient", "type": "text", "optional": false},
       {"id": "body", "type": "text", "optional": false}

@@ -167,11 +167,11 @@ fn admit(
     bytes: &[u8],
     ctx: &mut Context<'_>,
 ) -> Result<(NativeJsonTree, Json, Vec<Finding>), WorkflowError> {
-    let source = std::str::from_utf8(bytes)
-        .map_err(|_| fail("SOURCE", "", "definition must be UTF-8 JSON"))?;
     if bytes.len() > ctx.limits().max_text_units {
         return Err(fail("SOURCE", "", "definition exceeds source byte limit"));
     }
+    let source = std::str::from_utf8(bytes)
+        .map_err(|_| fail("SOURCE", "", "definition must be UTF-8 JSON"))?;
     let tree = NativeJsonTree::parse_json(&source.encode_utf16().collect::<Vec<_>>(), ctx)
         .map_err(|error| fail("SOURCE", "", error.to_string()))?;
     let definition = validation_view(tree.root())?;

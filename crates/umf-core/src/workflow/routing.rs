@@ -194,6 +194,13 @@ fn validate_effect(definition: &Json, effect: &Json, path: &str) -> Result<(), W
             "success, definitive failure and unknown outcomes are required",
         ));
     }
+    if !find(outcomes, "rejected").is_some_and(|outcome| outcome["class"] == "definitive-failure") {
+        return Err(fail(
+            "OUTCOME",
+            format!("{path}/outcomes"),
+            "rejected denotes definitive non-acceptance",
+        ));
+    }
     let awaits = effect["await"] != "none";
     if awaits != classes.contains("engine-timeout") || awaits != effect.get("timeout").is_some() {
         return Err(fail(
@@ -228,6 +235,13 @@ fn validate_effect(definition: &Json, effect: &Json, path: &str) -> Result<(), W
         ));
     }
     let idempotency = &effect["idempotency"];
+    if retry["class"] == "idempotent" && idempotency["enforcement"] == "ledger" {
+        return Err(fail(
+            "RETRY",
+            format!("{path}/retry"),
+            "idempotent retry requires provider enforcement",
+        ));
+    }
     let mut parts = BTreeSet::new();
     for part in items(&idempotency["parts"]) {
         let source = text(&part["source"]);

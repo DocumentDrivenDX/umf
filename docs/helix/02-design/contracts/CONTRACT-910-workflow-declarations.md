@@ -26,11 +26,29 @@ ddx:
       title: Workflow compile profiles
       path: spec/extensions/workflow/workflow-1.schema.json
       schemaFormat: json-schema
+    - id: umf.workflow.evidence
+      version: "1"
+      title: Scoped workflow conformance evidence
+      path: spec/extensions/workflow/evidence-1.schema.json
+      schemaFormat: json-schema
 ---
 
 # CONTRACT-910 Workflow declarations
 
-## Source and digests
+## Purpose
+
+Describe a portable per-record workflow with typed effects, guards, pauses
+and explicit exits. Consumers can inspect or prepare the same declaration.
+
+## Scope and boundaries
+
+UMF owns the declaration, validation and pure decisions over supplied state.
+The consumer owns the authorized snapshot, runtime clocks, dispatch,
+scheduling, state custody and provider integration under ADR-007.
+
+## Normative surface
+
+### Source and digests
 
 The registered module payload carries the original UTF-8 JSON definition as
 `source`. Compilation accepts that exact byte sequence and a selected profile.
@@ -53,7 +71,7 @@ with no network discovery or implicit revision selection. Runtime binding must
 use the selected action and verify the pinned revision before dispatch. The
 consumer owns availability, provenance and authenticity of bound actions.
 
-## Values, guards and routing
+### Values, guards and routing
 
 Workflow values are Boolean, Unicode text, signed 128-bit integers encoded as
 canonical decimal strings, exact elapsed spans and exact instants. Absence is
@@ -62,7 +80,7 @@ spans use nanoseconds. Instant equality and order use normalized seconds and
 canonical fractions. Text compares in Unicode scalar order without normalization.
 Boolean supports equality only.
 
-Predicates have a closed function set. `and` and `or` short-circuit in author
+The `umf.workflow.predicates/1` profile has a closed function set. `and` and `or` short-circuit in author
 order. Optional fields require a dominating `present` test within that predicate.
 Disjunction exports only facts common to all true branches. No field-presence
 fact carries over an effect or a wait. Invalid snapshots refuse before predicate
@@ -82,10 +100,10 @@ provider call. Suppression updates from bounce or STOP events are a host
 obligation: record them monotonically, idempotently and durably before event
 acknowledgment. Reopening requires an explicit authenticated consumer action.
 
-## External actions and outcome windows
+### External actions and outcome windows
 
-An effect declares the input and outcome signature of one open-ended action
-binding of kind `external`. This companion signature does not change the
+The `umf.workflow.external-effect/1` companion profile declares the input and
+outcome signature of an open-ended action binding of kind `external`. This companion signature does not change the
 transactional action or Saga profile. An emitted event must name a locally
 declared event type. Typed parameters map by name from compatible record
 fields. Missing optional inputs remain absent.
@@ -96,12 +114,12 @@ scope adds the enrollment ID, making an effect distinct upon re-entry.
 Record scope omits it, allowing identity to recur across enrollments.
 Additional parts may name the effect or required typed record fields.
 The identity is a JSON array of label/value pairs, preserving order. Field
-values use the scalar profile's canonical form.
+values use domain/value pairs with the scalar profile's canonical form.
 
 Before any provider call, a consumer durably records send intent, including
 identity, declared action revision and the captured input body. Body comparison
 uses SHA-256 over compact UTF-8 JSON with parameters sorted by ID and scalar
-values encoded canonically. A replay requires the same captured body and pinned
+values encoded as canonical domain/value pairs. A replay requires the same captured body and pinned
 action revision. A conflicting body under the same identity refuses. The
 consumer owns the ledger and its pending, retryable, accepted and held states.
 
@@ -119,11 +137,11 @@ Unknown remains a separately routed outcome. An engine timeout proves only
 that the observation window elapsed. Neither authorizes an automatic resend.
 A consumer may propose a retry after an eligible retriable, unknown, or timeout
 outcome under a declared idempotent or reconcile-first class, within its
-declared bound. The original body and revision must match, and known acceptance
+declared bound. Idempotent retry requires provider enforcement. The original body and revision must match, and known acceptance
 blocks retry. Reconcile-first requires current reconciliation. The contract
 does not certify provider delivery, ordering or external atomicity.
 
-## Waits and event correlation
+### Waits and event correlation
 
 Both profiles allow a plain pause with exactly one of `for` and `until`.
 Relative waits add exact elapsed time to the previous step's logical completion
@@ -143,7 +161,7 @@ wins ties. After resolution, the consumer can retain later events for audit
 without changing the route. Storage, watermark formation and event delivery
 remain consumer obligations.
 
-## Record admission, version drain and intervention
+### Record admission, version drain and intervention
 
 Enrollment identity is scoped to workflow and record. A new enrollment
 has a unique enrollment ID. The consumer allocates logical ordinals for
@@ -171,7 +189,7 @@ intervention ID and disposition returns the original intent. A conflicting
 disposition under the same ID refuses. The consumer owns atomic recording,
 authorization, provider obligations of cancellation and queue scheduling.
 
-## Evidence
+### Evidence
 
 `umf.workflow.evidence/1` records a property, evidence kind, tool and version,
 checked profile, exact definition digest, bounds, assumptions and outcome.
@@ -179,3 +197,28 @@ A failure needs a counterexample. A different digest or profile marks the
 record stale without hiding its outcome. Assessments describe compatibility.
 Current evidence remains scoped to the reported model, properties,
 assumptions and bounds. Runtime records identify the actual build.
+
+
+## Precedence and compatibility
+
+An explicit compile-profile selection controls preparation. A source profile
+or metadata field cannot choose another runtime. The correlated profile adds
+event correlation to the same plain-pause syntax. Embedded action revision
+pins resolve before provider dispatch. The workflow profile is independently
+versioned from the transactional Action, Saga, predicate and duration profiles.
+
+## Error semantics
+
+Inspection labels each unknown member unchecked at its JSON Pointer.
+Compilation refuses those findings. A source or shape error stops preparation.
+A semantic finding identifies the offending step, member or obligation.
+Runtime helpers refuse malformed inputs without changing admitted state. An
+already resolved window records later observations as late. A wait rejects
+a second resolution attempt. The consumer owns durable audit records.
+
+## Examples
+
+The [Follow-up reply declaration](../../../../crates/umf-core/tests/fixtures/workflow/reply.json)
+contains an accepted external send, a 90-fixed-day correlated wait and a
+branch that guards an optional reply before sampling it. Its timeout,
+unknown, suppression and stale-event cases are allocated in [STP-910](../../03-test/test-plans/STP-910-workflow-declarations.md).
