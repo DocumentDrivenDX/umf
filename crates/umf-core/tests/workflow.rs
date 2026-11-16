@@ -334,6 +334,31 @@ fn full_trace_uses_previous_completion_and_a_complete_unordered_event_set() {
     );
 
     let mut wait = start_wait();
+    let conflicting = || event("replied", "first", &other, registered_pin, &first, 11);
+    assert_eq!(
+        wait.resolve(&tie, &[a(), conflicting(), b()]).unwrap(),
+        WaitDecision::Event {
+            id: "next".into(),
+            next: "check"
+        }
+    );
+    assert_eq!(
+        wait.conflicting_event_ids()
+            .iter()
+            .cloned()
+            .collect::<Vec<_>>(),
+        vec!["first"]
+    );
+    let mut wait = start_wait();
+    assert_eq!(
+        wait.resolve(&tie, &[b(), conflicting(), a()]).unwrap(),
+        WaitDecision::Event {
+            id: "next".into(),
+            next: "check"
+        }
+    );
+
+    let mut wait = start_wait();
     assert_eq!(
         wait.resolve(
             &tie,
@@ -425,18 +450,18 @@ fn admission_and_evidence_keep_cross_version_identity() {
         .is_err());
 
     let repinned = old
-        .prepare_intervention("operator-1", &enrolled, Some(&new), true)
+        .prepare_intervention("operator-1@record-a", &enrolled, Some(&new), true)
         .unwrap();
     let replay = old
-        .prepare_intervention("operator-1", &enrolled, Some(&new), true)
+        .prepare_intervention("operator-1@record-a", &enrolled, Some(&new), true)
         .unwrap();
     let changed = old
-        .prepare_intervention("operator-1", &enrolled, None, true)
+        .prepare_intervention("operator-1@record-a", &enrolled, None, true)
         .unwrap();
     assert_eq!(repinned.against(&replay), Replay::SameBody);
     assert_eq!(repinned.against(&changed), Replay::ConflictingBody);
     assert!(old
-        .prepare_intervention("operator-1", &enrolled, Some(&new), false)
+        .prepare_intervention("operator-1@record-a", &enrolled, Some(&new), false)
         .is_err());
 
     let evidence = Evidence {
@@ -466,7 +491,7 @@ fn admission_and_evidence_keep_cross_version_identity() {
 fn lowered_identity_normalizes_fixed_spans_without_changing_source_pins() {
     let base = built(&fixture());
     let mut equivalent = fixture();
-    equivalent["steps"][1]["for"] = json!({"kind":"elapsed","text":"P90D"});
+    equivalent["steps"][1]["for"] = json!({"kind":"elapsed","text":"PT2160H"});
     equivalent["edges"] = json!([{"from":"held","to":"send"}]);
     let equivalent = built(&equivalent);
     assert_ne!(base.source(), equivalent.source());
@@ -678,4 +703,69 @@ fn total_predicates_compare_exact_instants_and_elapsed_spans() {
             .unwrap(),
         "held"
     );
+}
+
+#[test]
+fn suppression_events_and_operator_rights_are_declared_and_checked() {
+    let workflow = built(&fixture());
+    let account = Scalar::Text("account-1".into());
+    for event in ["hardBounce", "stop"] {
+        let write = workflow
+            .suppression_write(event, &account)
+            .unwrap()
+            .unwrap();
+        assert_eq!(write.store, "account-suppression");
+        assert_eq!(write.scope, "account");
+        assert_eq!(write.fact, "blocked");
+        assert_eq!(write.max_staleness.nanoseconds(), 2_000_000_000);
+    }
+    assert!(workflow
+        .suppression_write("replied", &account)
+        .unwrap()
+        .is_none());
+    assert!(workflow
+        .suppression_write("stop", &Scalar::Integer(1))
+        .is_err());
+
+    let pin = enroll(&workflow, "current");
+    assert!(workflow
+        .prepare_intervention("cancel@other-record", &pin, None, false)
+        .is_err());
+    let mut source = fixture();
+    source.as_object_mut().unwrap().remove("interventions");
+    let restricted = built(&source);
+    let pin = enroll(&restricted, "current");
+    assert!(restricted
+        .prepare_intervention("cancel@record-a", &pin, None, false)
+        .is_err());
+
+    for edit in ["store", "guard", "staleness", "day"] {
+        let mut source = fixture();
+        let expected = match edit {
+            "store" => {
+                source["events"][1]["disposition"]["store"] = json!("missing");
+                "SUPPRESSION"
+            }
+            "guard" => {
+                source["guards"][0]["when"]["terms"][1]["value"] = json!(false);
+                "SUPPRESSION"
+            }
+            "staleness" => {
+                source["suppressionStores"][0]["maxStaleness"]["text"] = json!("-PT1S");
+                "DURATION"
+            }
+            "day" => {
+                source["steps"][1]["for"] = json!({"kind":"elapsed","text":"P3D"});
+                "DURATION"
+            }
+            _ => unreachable!(),
+        };
+        let error = inspect(
+            &serde_json::to_vec(&source).unwrap(),
+            &mut Context::ordinary(),
+        )
+        .err()
+        .unwrap();
+        assert_eq!(error.0[0].code, expected);
+    }
 }

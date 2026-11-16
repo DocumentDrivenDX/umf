@@ -33,9 +33,18 @@
       {"id": "unknown", "type": "text", "class": "unknown"},
       {"id": "timeout", "type": "text", "class": "engine-timeout"}
     ],
-    "emits": ["replied"]
+    "emits": ["replied", "hardBounce"]
   }],
-  "events": [{"id": "replied", "keyType": "text"}],
+  "events": [
+    {"id": "replied", "keyType": "text", "disposition": {"kind": "none"}},
+    {"id": "hardBounce", "keyType": "text", "disposition": {"kind": "suppresses", "store": "account-suppression"}},
+    {"id": "stop", "keyType": "text", "disposition": {"kind": "suppresses", "store": "account-suppression"}}
+  ],
+  "suppressionStores": [{
+    "id": "account-suppression", "scope": "account", "keyType": "text", "fact": "blocked",
+    "maxStaleness": {"kind": "elapsed", "text": "PT2S"}
+  }],
+  "interventions": {"idScope": "record", "idFormat": "id@key", "dispositions": ["cancel", "repin"]},
   "guards": [{
     "scope": "effect",
     "when": {"op": "eq", "terms": [{"kind": "field", "id": "blocked"}, {"kind": "literal", "type": "boolean", "value": true}]},

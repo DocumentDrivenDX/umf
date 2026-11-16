@@ -60,6 +60,8 @@ pub(crate) fn validate(definition: &Json) -> Result<(), WorkflowError> {
         guards.push((text(&guard["scope"]), exit));
     }
 
+    validate_suppression(definition, &fresh)?;
+
     let mut graph = BTreeMap::new();
     for (index, step) in items(&definition["steps"]).iter().enumerate() {
         let path = format!("/steps/{index}");
@@ -115,6 +117,70 @@ pub(crate) fn validate(definition: &Json) -> Result<(), WorkflowError> {
         nonnegative_duration(&definition["reentry"]["minimum"], "/reentry/minimum")?;
     }
     Ok(())
+}
+
+fn validate_suppression(definition: &Json, facts: &Json) -> Result<(), WorkflowError> {
+    let stores = definition.get("suppressionStores");
+    if let Some(stores) = stores {
+        unique(stores, "id", "/suppressionStores")?;
+        let mut names = BTreeSet::new();
+        for (index, store) in items(stores).iter().enumerate() {
+            let path = format!("/suppressionStores/{index}");
+            let fact = text(&store["fact"]);
+            if !names.insert(fact)
+                || !find(facts, fact)
+                    .is_some_and(|field| field["type"] == "boolean" && field["optional"] == false)
+            {
+                return Err(fail(
+                    "SUPPRESSION",
+                    format!("{path}/fact"),
+                    "store requires a distinct required Boolean effect fact",
+                ));
+            }
+            nonnegative_duration(&store["maxStaleness"], &format!("{path}/maxStaleness"))?;
+            if !items(&definition["guards"])
+                .iter()
+                .any(|guard| guard["scope"] == "effect" && covers_suppression(&guard["when"], fact))
+            {
+                return Err(fail(
+                    "SUPPRESSION",
+                    format!("{path}/fact"),
+                    "effect guards must directly suppress when the declared fact is true",
+                ));
+            }
+        }
+    }
+    for (index, event) in items(&definition["events"]).iter().enumerate() {
+        let rule = &event["disposition"];
+        if rule["kind"] == "suppresses" {
+            let store = stores.and_then(|stores| find(stores, text(&rule["store"])));
+            if !store.is_some_and(|store| store["keyType"] == event["keyType"]) {
+                return Err(fail(
+                    "SUPPRESSION",
+                    format!("/events/{index}/disposition/store"),
+                    "suppressing event must resolve a store with the same key type",
+                ));
+            }
+        }
+    }
+    Ok(())
+}
+
+fn covers_suppression(predicate: &Json, fact: &str) -> bool {
+    if predicate["op"] == "or" {
+        return items(&predicate["clauses"])
+            .iter()
+            .any(|clause| covers_suppression(clause, fact));
+    }
+    if predicate["op"] != "eq" {
+        return false;
+    }
+    let terms = items(&predicate["terms"]);
+    let reads_fact = |term: &Json| term["kind"] == "field" && term["id"] == fact;
+    let is_true = |term: &Json| {
+        term["kind"] == "literal" && term["type"] == "boolean" && term["value"] == true
+    };
+    (reads_fact(&terms[0]) && is_true(&terms[1])) || (reads_fact(&terms[1]) && is_true(&terms[0]))
 }
 
 fn acyclic(graph: &BTreeMap<&str, Vec<&str>>, definition: &Json) -> Result<(), WorkflowError> {

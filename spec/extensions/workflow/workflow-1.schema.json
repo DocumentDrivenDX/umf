@@ -98,6 +98,42 @@
     },
     "predicateProfile": {
       "const": "umf.workflow.predicates/1"
+    },
+    "suppressionStores": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/suppressionStore"
+      },
+      "maxItems": 256
+    },
+    "interventions": {
+      "type": "object",
+      "properties": {
+        "idScope": {
+          "const": "record"
+        },
+        "idFormat": {
+          "const": "id@key"
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "cancel",
+              "repin"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "idScope",
+        "idFormat",
+        "dispositions"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
@@ -460,11 +496,74 @@
             "text",
             "integer"
           ]
+        },
+        "disposition": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "none",
+                "suppresses"
+              ]
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "none"
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "none"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "suppresses"
+                  }
+                }
+              },
+              "then": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "suppresses"
+                  },
+                  "store": {
+                    "$ref": "#/$defs/id"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "store"
+                ],
+                "additionalProperties": false
+              }
+            }
+          ]
         }
       },
       "required": [
         "id",
-        "keyType"
+        "keyType",
+        "disposition"
       ],
       "additionalProperties": false
     },
@@ -1215,6 +1314,40 @@
           }
         }
       ]
+    },
+    "suppressionStore": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "scope": {
+          "enum": [
+            "record",
+            "account"
+          ]
+        },
+        "keyType": {
+          "enum": [
+            "text",
+            "integer"
+          ]
+        },
+        "fact": {
+          "$ref": "#/$defs/id"
+        },
+        "maxStaleness": {
+          "$ref": "#/$defs/duration"
+        }
+      },
+      "required": [
+        "id",
+        "scope",
+        "keyType",
+        "fact",
+        "maxStaleness"
+      ],
+      "additionalProperties": false
     }
   }
 }

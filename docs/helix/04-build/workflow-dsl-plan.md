@@ -112,9 +112,9 @@ artifacts, their revision, license and runnable vectors is unconfirmed. The curr
 
 1. Specify the scalar before changing the core version. The proposed domain is a
    signed elapsed span with exact nanosecond resolution. Candidate inputs include
-   fixed-duration spellings such as `PT1.25S`, `P3D` and `P1W`, and an exact
-   integer count with an explicit fixed unit. Days are 86,400 seconds and
-   weeks are seven fixed days.
+   `PT` text and exact counts with explicit units. The standalone scalar helper
+   can read `P3D` or `P1W`. Workflow authoring lowers those spellings to
+   fixed counts. Days are 86,400 seconds and weeks are seven fixed days.
    Require workflow delays and minimum re-entry intervals to be nonnegative.
 2. Compare the proposal against native elapsed and calendar-bearing forms.
    Include Arrow's unit-qualified duration and at least one calendar-bearing
@@ -143,14 +143,16 @@ artifacts, their revision, license and runnable vectors is unconfirmed. The curr
 
 - CONTRACT-910 records the identity recipe, fresh suppression guards, durable
   intent, explicit timeout, bounded retry and one-time outcome resolution.
-  Unawaited effects have a single successor.
+  Unawaited effects have a single successor. Declared account or record
+  suppression writes resolve to an effect guard and a bounded-staleness fact.
 - The base profile uses plain pauses anchored to previous completion.
   The correlated profile resolves over a complete unordered event set with
-  stable deduplication and enrollment provenance. Record-only late events and
+  stable deduplication and enrollment provenance. Conflicting IDs produce audit
+  findings while other candidates can resolve the wait. Record-only late events and
   deadline ties have refusal or timeout vectors.
 - Version drain pins definition and action revisions. Each definition selects
   bounce or atomic replacement for an active earlier enrollment. Queued repins
-  or cancellations are explicit, idempotent operator interventions.
+  or cancellations are declared, record-scoped `id@key` interventions.
 - The initial in-tree scenario is **Follow-up reply**, defined by
   `crates/umf-core/tests/fixtures/workflow/reply.json`. It includes eight steps,
   a 90-fixed-day pause, an exact deadline tie, a stale enrollment event and

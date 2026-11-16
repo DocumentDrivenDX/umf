@@ -11,7 +11,7 @@ pub use predicates::{Record, Scalar};
 pub use transitions::{
     Admission, Candidate, EffectAwait, EffectDecision, EffectInvocation, EffectObservation,
     EffectResolution, Enrollment, Event, History, Intervention, InterventionKind, RegisterWait,
-    Replay, RetryIdentity, WaitDecision, WaitRegistration,
+    Replay, RetryIdentity, SuppressionWrite, WaitDecision, WaitRegistration,
 };
 
 use std::{error::Error, fmt, sync::OnceLock};
@@ -279,7 +279,15 @@ fn find<'a>(values: &'a Json, id: &str) -> Option<&'a Json> {
 
 fn duration(value: &Json, path: &str) -> Result<ExactDuration, WorkflowError> {
     let result = if value["kind"] == "elapsed" {
-        ExactDuration::parse(text(&value["text"]))
+        let token = text(&value["text"]);
+        let unsigned = token.strip_prefix('-').unwrap_or(token);
+        if unsigned.starts_with('P')
+            && !unsigned.starts_with("PT")
+            && unsigned.ends_with(['D', 'W'])
+        {
+            return Err(fail("DURATION", path, "lower day and week spellings to count with fixed-day or fixed-week, or use PT hours"));
+        }
+        ExactDuration::parse(token)
     } else {
         let unit = match text(&value["unit"]) {
             "ns" => DurationUnit::Nanosecond,

@@ -78,7 +78,9 @@ canonical decimal strings, exact elapsed spans and exact instants. Absence is
 distinct from Boolean false and an empty string. Equality and order for elapsed
 spans use nanoseconds. Instant equality and order use normalized seconds and
 canonical fractions. Text compares in Unicode scalar order without normalization.
-Boolean supports equality only.
+Boolean supports equality only. For orderable values, `le(a,b)` is
+`not(lt(b,a))`, `gt(a,b)` is `lt(b,a)`, and `ge(a,b)` is
+`not(lt(a,b))`. Consumers lower these derived forms into the closed set.
 
 The `umf.workflow.predicates/1` profile has a closed function set. `and` and `or` short-circuit in author
 order. Optional fields require a dominating `present` test within that predicate.
@@ -94,11 +96,21 @@ A branch selects the first true case or the required `else`. Presentation
 An entering record checks entry, then step, then applicable effect guards.
 Within each due scope, the first true guard selects its declared suppressed
 terminal exit. An entry guard sees the entry snapshot. Before claiming an effect,
-the consumer supplies fresh record-local facts under `effectFacts` and rechecks
-the effect guard. The guard's snapshot does not establish atomicity with the
-provider call. Suppression updates from bounce or STOP events are a host
-obligation: record them monotonically, idempotently and durably before event
-acknowledgment. Reopening requires an explicit authenticated consumer action.
+the consumer supplies the declared facts under `effectFacts` and rechecks
+the effect guard. A suppression fact may be a copy of an account-scoped
+register with the declared maximum staleness. A lift must reach every copy
+before it re-enables sends. The guard snapshot does not establish atomicity
+with the provider call.
+
+An event's declared disposition either has no write or monotonically sets a
+named suppression store. The compiler resolves the store, checks its key
+type, and requires a distinct required Boolean effect fact. Every store's
+fact must have an effect-scope guard that directly suppresses on true or
+contains that check in a disjunction. The portable write intent names the
+scope, store, fact, typed key and declared staleness. Hard bounce may be
+emitted by an effect and inbound STOP can use the same suppression rule.
+Record the write idempotently and durably before event acknowledgment.
+Only an explicit authenticated consumer action can lift suppression.
 
 ### External actions and outcome windows
 
@@ -139,7 +151,9 @@ A consumer may propose a retry after an eligible retriable, unknown, or timeout
 outcome under a declared idempotent or reconcile-first class, within its
 declared bound. Idempotent retry requires provider enforcement. The original body and revision must match, and known acceptance
 blocks retry. Reconcile-first requires current reconciliation. The contract
-does not certify provider delivery, ordering or external atomicity.
+does not certify provider delivery, ordering or external atomicity. The
+consumer owns send permission and per-contact and per-account caps. A cap
+is atomic only within the consumer group whose store enforces it.
 
 ### Waits and event correlation
 
@@ -148,16 +162,24 @@ Relative waits add exact elapsed time to the previous step's logical completion
 instant. An entry wait uses the enrollment instant. Absolute waits use the
 declared instant. A caller supplies registration time and a logical ordinal
 for the registration. A newly registered wait whose deadline already passed
-can time out immediately. Month-scale elapsed waits can use fixed days.
+can time out immediately. The workflow source's elapsed-text carrier accepts
+`PT` time components. Consumer authoring can lower `PnD` and `PnW` to the
+count carrier with `fixed-day` or `fixed-week`. Raw workflow source refuses
+those text forms with a lowering diagnostic. A standalone CONTRACT-909
+scalar helper can read them explicitly as fixed spans. Calendar years and
+months require a separate profile.
 
 The opt-in `umf.workflow.correlated/1` profile accepts early exit on a declared
 event. It compares the event type, typed key and exact enrollment pin.
 A record-only key without trusted enrollment provenance cannot qualify.
 The consumer supplies the complete set up to a logical watermark. An event
 must follow registration and precede the deadline. The least matching event
-by instant, ordinal and event ID wins. Identical duplicates collapse and
-conflicting duplicates fail. Event arrival order is immaterial. The deadline
-wins ties. After resolution, the consumer can retain later events for audit
+by instant, ordinal and event ID wins. Within an enrollment, repeated
+observations with the same event ID and identical kind, typed key, instant
+and ordinal collapse. If any of those values differ, the resolver reports
+the ID for audit and excludes that ID from the unresolved candidate set.
+Other events and the deadline stay eligible. Event arrival order is
+immaterial. The deadline wins ties. After resolution, the consumer can retain later events for audit
 without changing the route. Storage, watermark formation and event delivery
 remain consumer obligations.
 
@@ -170,7 +192,8 @@ IDs index history across versions. The active version reads the full
 prior history for that record. Omitted re-entry policy defaults to
 `never`: one lifetime admission. `once` permits one additional terminal
 re-entry. `after` measures from the most recent terminal instant.
-`always` permits re-entry after each terminal enrollment.
+`always` permits re-entry after each terminal enrollment. Consumer
+`after_duration` lowers to `after`.
 
 Distinct batch identities produce the same result as any permutation of
 singleton admissions over the same record-local histories. A repeated record
@@ -182,11 +205,13 @@ version label binds one digest. Never overwrite a label with different bytes.
 
 Retain definition and referenced action revisions while pinned enrollments
 remain live. Admission pins version and digest. Dispatch and wait preparation
-require that exact pin. An authorized operator intervention can cancel or
-repin a queued enrollment to a different version of the same workflow.
+require that exact pin. A definition can declare allowed operator dispositions
+`cancel` and `repin` under `interventions`. Each intervention ID is
+`id@key` and scoped to workflow and record key. An authorized operator
+can repin a queued enrollment to a different version of the same workflow.
 A dispatched enrollment drains or is cancelled. Repeating the same
-intervention ID and disposition returns the original intent. A conflicting
-disposition under the same ID refuses. The consumer owns atomic recording,
+intervention ID and intent is idempotent. A changed target, original
+enrollment or disposition under the same scoped ID conflicts. The consumer owns atomic recording,
 authorization, provider obligations of cancellation and queue scheduling.
 
 ### Evidence

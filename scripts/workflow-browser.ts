@@ -44,7 +44,7 @@ try {
       const encode = (text: string) => new TextEncoder().encode(text);
       const bytes = encode(original);
       const unknown = original.replace('"kind": "count"', '"kind": "count", "unknown": 900719925474099300001');
-      const equivalent = original.replace('{"kind": "count", "count": "90", "unit": "fixed-day"}', '{"kind": "elapsed", "text": "P90D"}');
+      const equivalent = original.replace('{"kind": "count", "count": "90", "unit": "fixed-day"}', '{"kind": "elapsed", "text": "PT2160H"}');
       const cycle = original.replace('"timeout": "expired"', '"timeout": "send"');
       const accepted = engine.compileWorkflow(bytes, 'umf.workflow.correlated/1');
       const inspected = engine.inspectWorkflow(encode(unknown));

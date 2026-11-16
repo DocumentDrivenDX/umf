@@ -295,6 +295,7 @@ pub struct WaitRegistration<'a> {
     ordinal: u64,
     timeout: &'a str,
     event: Option<WaitEvent<'a>>,
+    conflicts: BTreeSet<String>,
     resolved: bool,
 }
 
@@ -326,6 +327,11 @@ impl<'a> WaitRegistration<'a> {
         &self.deadline
     }
 
+    /// Conflicting delivery IDs to record in the consumer audit.
+    pub fn conflicting_event_ids(&self) -> &BTreeSet<String> {
+        &self.conflicts
+    }
+
     /// The host supplies the complete set up to its watermark. The first
     /// matching event in logical order wins strictly before the deadline.
     pub fn resolve(
@@ -345,18 +351,14 @@ impl<'a> WaitRegistration<'a> {
             ));
         }
         if let Some(rule) = &self.event {
-            let mut first = None;
             let mut seen = BTreeMap::new();
+            let mut conflicts = BTreeSet::new();
             for event in events
                 .iter()
                 .filter(|event| event.enrollment == Some(self.enrollment))
             {
                 let at = instant_key(event.at);
-                if event.ordinal <= self.ordinal
-                    || at < self.registration
-                    || at > through
-                    || at >= self.deadline
-                {
+                if at > through {
                     continue;
                 }
                 if event.id.is_empty() {
@@ -366,26 +368,35 @@ impl<'a> WaitRegistration<'a> {
                         "a correlated observation requires an event ID",
                     ));
                 }
-                let identity = (at, event.ordinal, event.id);
-                let payload = (event.kind, event.key.domain(), event.key.canonical());
-                if let Some(previous) = seen.insert(identity.clone(), payload.clone()) {
-                    if previous != payload {
-                        return Err(fail(
-                            "EVENT_CONFLICT",
-                            "/events",
-                            "same event identity has conflicting payloads",
-                        ));
-                    }
-                    continue;
-                }
-                if event.kind == rule.kind
-                    && event.key.domain() == rule.domain
-                    && payload.2 == rule.key
-                    && first.as_ref().is_none_or(|previous| identity < *previous)
+                let payload = (
+                    at,
+                    event.ordinal,
+                    event.kind,
+                    event.key.domain(),
+                    event.key.canonical(),
+                );
+                if seen
+                    .get(event.id)
+                    .is_some_and(|previous| previous != &payload)
                 {
-                    first = Some(identity);
+                    conflicts.insert(event.id.to_owned());
                 }
+                seen.entry(event.id).or_insert(payload);
             }
+            self.conflicts.extend(conflicts);
+            let first = seen
+                .into_iter()
+                .filter(|(id, _)| !self.conflicts.contains(*id))
+                .filter_map(|(id, (at, ordinal, kind, domain, key))| {
+                    (ordinal > self.ordinal
+                        && at >= self.registration
+                        && at < self.deadline
+                        && kind == rule.kind
+                        && domain == rule.domain
+                        && key == rule.key)
+                        .then_some((at, ordinal, id))
+                })
+                .min();
             if let Some((_, _, id)) = first {
                 self.resolved = true;
                 return Ok(WaitDecision::Event {
@@ -421,7 +432,6 @@ impl Intervention {
         if self.id != original.id
             || self.original.workflow != original.original.workflow
             || self.original.record != original.original.record
-            || self.original.id != original.original.id
         {
             Replay::DifferentIdentity
         } else if self == original {
@@ -430,6 +440,15 @@ impl Intervention {
             Replay::ConflictingBody
         }
     }
+}
+
+/// Portable intent to monotonically set account or record suppression.
+pub struct SuppressionWrite<'a> {
+    pub store: &'a str,
+    pub scope: &'a str,
+    pub fact: &'a str,
+    pub key: &'a Scalar,
+    pub max_staleness: ExactDuration,
 }
 
 pub struct Candidate<'a> {
@@ -483,11 +502,27 @@ impl CompiledWorkflow {
         queued: bool,
     ) -> Result<Intervention, WorkflowError> {
         self.verify_enrollment(enrollment)?;
-        if id.is_empty() {
+        if !id
+            .split_once('@')
+            .is_some_and(|(name, key)| !name.is_empty() && key == enrollment.record)
+        {
             return Err(fail(
                 "INTERVENTION",
                 "/id",
-                "intervention identity is required",
+                "expected id@key with the enrollment's record key",
+            ));
+        }
+        let disposition = if target.is_some() { "repin" } else { "cancel" };
+        let permitted = self.definition.get("interventions").is_some_and(|rule| {
+            items(&rule["dispositions"])
+                .iter()
+                .any(|value| value == disposition)
+        });
+        if !permitted {
+            return Err(fail(
+                "INTERVENTION",
+                "/disposition",
+                "operator disposition is not declared",
             ));
         }
         let kind = match target {
@@ -514,6 +549,42 @@ impl CompiledWorkflow {
             original: enrollment.clone(),
             kind,
         })
+    }
+
+    /// Resolve the declared write for a typed event. Store I/O and durable
+    /// acknowledgment are consumer responsibilities.
+    pub fn suppression_write<'a>(
+        &'a self,
+        event: &str,
+        key: &'a Scalar,
+    ) -> Result<Option<SuppressionWrite<'a>>, WorkflowError> {
+        let event = find(&self.definition["events"], event)
+            .ok_or_else(|| fail("EVENT", "/event", "undeclared event type"))?;
+        if event["keyType"] != key.domain() {
+            return Err(fail(
+                "EVENT",
+                "/key",
+                "event correlation key type differs from declaration",
+            ));
+        }
+        if event["disposition"]["kind"] == "none" {
+            return Ok(None);
+        }
+        let store = find(
+            &self.definition["suppressionStores"],
+            text(&event["disposition"]["store"]),
+        )
+        .expect("compiled suppression store reference");
+        Ok(Some(SuppressionWrite {
+            store: text(&store["id"]),
+            scope: text(&store["scope"]),
+            fact: text(&store["fact"]),
+            key,
+            max_staleness: nonnegative_duration(
+                &store["maxStaleness"],
+                "/suppressionStores/maxStaleness",
+            )?,
+        }))
     }
 
     /// Resolved action revisions covered by this definition's immutable digest.
@@ -609,6 +680,7 @@ impl CompiledWorkflow {
             ordinal,
             timeout: text(&step["timeout"]),
             event,
+            conflicts: BTreeSet::new(),
             resolved: false,
         }))
     }
