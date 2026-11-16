@@ -13,7 +13,7 @@ const INSPECTION_SCHEMA: &str =
     include_str!("../../../spec/core/scalar-type-inspection-v0.3.schema.json");
 /// Current generated core vocabulary order. The generated core schema is the
 /// authority; the Rust integration test checks this mirror for drift.
-const SCALARS: [&str; 11] = [
+const SCALARS: [&str; 12] = [
     "boolean",
     "integer",
     "decimal",
@@ -25,6 +25,7 @@ const SCALARS: [&str; 11] = [
     "timestamp",
     "bits128",
     "uuid",
+    "json",
 ];
 
 /// Return the generated core scalar vocabulary only for the exact current

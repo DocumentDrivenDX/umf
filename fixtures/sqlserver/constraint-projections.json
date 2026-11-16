@@ -1725,35 +1725,35 @@
             "path": "/tables/0/keys/0",
             "code": "KEY_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Key \"PK_Child\" (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
+            "detail": "Key \"PK_Child\"\n (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
             "retainedInSource": true
           },
           {
             "path": "/tables/0/foreign_keys/0",
             "code": "FOREIGN_KEY_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Foreign key \"FK_Child_Parent\" is not enforced; referenced columns, CASCADE/CASCADE actions, trust, disabled and replication state remain native",
+            "detail": "Foreign key \"FK_Child_Parent\"\n is not enforced; referenced columns, CASCADE/CASCADE actions, trust, disabled and replication state remain native",
             "retainedInSource": true
           },
           {
             "path": "/tables/0/checks/0",
             "code": "CHECK_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Check \"CK_Child_disabled\" is not evaluated; SQL null/UNKNOWN behavior, trust, disabled, replication and collation state remain native",
+            "detail": "Check \"CK_Child_disabled\"\n is not evaluated; SQL null/UNKNOWN behavior, trust, disabled, replication and collation state remain native",
             "retainedInSource": true
           },
           {
             "path": "/tables/0/checks/1",
             "code": "CHECK_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Check \"CK_Child_other\" is not evaluated; SQL null/UNKNOWN behavior, trust, disabled, replication and collation state remain native",
+            "detail": "Check \"CK_Child_other\"\n is not evaluated; SQL null/UNKNOWN behavior, trust, disabled, replication and collation state remain native",
             "retainedInSource": true
           },
           {
             "path": "/tables/0/checks/2",
             "code": "CHECK_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Check \"CK_Child_qty\" is not evaluated; SQL null/UNKNOWN behavior, trust, disabled, replication and collation state remain native",
+            "detail": "Check \"CK_Child_qty\"\n is not evaluated; SQL null/UNKNOWN behavior, trust, disabled, replication and collation state remain native",
             "retainedInSource": true
           }
         ],
@@ -1789,7 +1789,6 @@
             "representation": "value"
           }
         ],
-        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Child\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"parent_b\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"parent_a\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"qty\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"other\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "avro-Child",
@@ -1973,7 +1972,8 @@
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Child\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"parent_b\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"parent_a\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"qty\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"other\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n"
       },
       "exports": [
         {
@@ -3695,21 +3695,21 @@
             "path": "/tables/1/keys/0",
             "code": "KEY_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Key \"PK_Parent\" (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
+            "detail": "Key \"PK_Parent\"\n (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
             "retainedInSource": true
           },
           {
             "path": "/tables/1/keys/1",
             "code": "KEY_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Key \"UQ_Parent_code\" (UQ) is not enforced across Avro records; column order, index behavior and disabled state remain native",
+            "detail": "Key \"UQ_Parent_code\"\n (UQ) is not enforced across Avro records; column order, index behavior and disabled state remain native",
             "retainedInSource": true
           },
           {
             "path": "/tables/1/keys/2",
             "code": "KEY_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Key \"UQ_Parent_reverse\" (UQ) is not enforced across Avro records; column order, index behavior and disabled state remain native",
+            "detail": "Key \"UQ_Parent_reverse\"\n (UQ) is not enforced across Avro records; column order, index behavior and disabled state remain native",
             "retainedInSource": true
           },
           {
@@ -3740,7 +3740,6 @@
             "representation": "value"
           }
         ],
-        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Parent\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"b\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "avro-Parent",
@@ -3859,7 +3858,8 @@
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Parent\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"a\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"b\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n"
       },
       "exports": [
         {
@@ -5573,14 +5573,14 @@
             "path": "/tables/2/keys/0",
             "code": "KEY_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Key \"PK_Untrusted\" (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
+            "detail": "Key \"PK_Untrusted\"\n (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
             "retainedInSource": true
           },
           {
             "path": "/tables/2/foreign_keys/0",
             "code": "FOREIGN_KEY_NOT_ENFORCED",
             "classification": "not-enforced",
-            "detail": "Foreign key \"FK_Untrusted_Parent\" is not enforced; referenced columns, NO_ACTION/NO_ACTION actions, trust, disabled and replication state remain native",
+            "detail": "Foreign key \"FK_Untrusted_Parent\"\n is not enforced; referenced columns, NO_ACTION/NO_ACTION actions, trust, disabled and replication state remain native",
             "retainedInSource": true
           },
           {
@@ -5605,7 +5605,6 @@
             "representation": "value"
           }
         ],
-        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Untrusted\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"parent_code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "avro-Untrusted",
@@ -5705,7 +5704,8 @@
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Untrusted\",\n  \"namespace\": \"example.constraints\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"parent_code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n"
       },
       "exports": [
         {

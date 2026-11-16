@@ -103,8 +103,8 @@
               {
                 "id": "column:0",
                 "name": "id",
-                "scalarType": "integer",
                 "extensions": {},
+                "scalarType": "integer",
                 "consumer.field": {
                   "keep": true
                 }
@@ -112,8 +112,8 @@
               {
                 "id": "column:1",
                 "name": "context",
-                "scalarType": "string",
-                "extensions": {}
+                "extensions": {},
+                "scalarType": "string"
               }
             ],
             "consumer.metadata": {
@@ -224,10 +224,10 @@
                 "id": "column:0",
                 "name": "order_id",
                 "extensions": {},
+                "scalarType": "integer",
                 "consumer.field": {
                   "keep": true
-                },
-                "scalarType": "integer"
+                }
               },
               {
                 "id": "column:1",
@@ -344,10 +344,10 @@
                 "id": "column:0",
                 "name": "order_id",
                 "extensions": {},
+                "scalarType": "integer",
                 "consumer.field": {
                   "keep": true
-                },
-                "scalarType": "integer"
+                }
               },
               {
                 "id": "column:1",
@@ -511,8 +511,8 @@
               {
                 "id": "column:0",
                 "name": "id",
-                "scalarType": "integer",
                 "extensions": {},
+                "scalarType": "integer",
                 "consumer.field": {
                   "keep": true
                 }
@@ -520,8 +520,8 @@
               {
                 "id": "column:1",
                 "name": "context",
-                "scalarType": "string",
-                "extensions": {}
+                "extensions": {},
+                "scalarType": "string"
               }
             ],
             "consumer.metadata": {
@@ -638,10 +638,10 @@
                 "id": "column:0",
                 "name": "order_id",
                 "extensions": {},
+                "scalarType": "integer",
                 "consumer.field": {
                   "keep": true
-                },
-                "scalarType": "integer"
+                }
               },
               {
                 "id": "column:1",
@@ -764,10 +764,10 @@
                 "id": "column:0",
                 "name": "order_id",
                 "extensions": {},
+                "scalarType": "integer",
                 "consumer.field": {
                   "keep": true
-                },
-                "scalarType": "integer"
+                }
               },
               {
                 "id": "column:1",
@@ -936,14 +936,14 @@
               {
                 "id": "column:0",
                 "name": "id",
-                "scalarType": "integer",
-                "extensions": {}
+                "extensions": {},
+                "scalarType": "integer"
               },
               {
                 "id": "column:1",
                 "name": "context",
-                "scalarType": "string",
-                "extensions": {}
+                "extensions": {},
+                "scalarType": "string"
               }
             ]
           }
@@ -1299,14 +1299,14 @@
               {
                 "id": "column:0",
                 "name": "id",
-                "scalarType": "integer",
-                "extensions": {}
+                "extensions": {},
+                "scalarType": "integer"
               },
               {
                 "id": "column:1",
                 "name": "context",
-                "scalarType": "string",
-                "extensions": {}
+                "extensions": {},
+                "scalarType": "string"
               }
             ]
           }

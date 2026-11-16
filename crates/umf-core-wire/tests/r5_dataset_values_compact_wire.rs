@@ -389,7 +389,7 @@ fn compact_dataset_wire_matches_all_frozen_envelopes_and_refusals() {
 }
 
 #[test]
-fn compact_dataset_wire_preserves_349_350_limit_and_host_cancellation() {
+fn compact_dataset_wire_preserves_344_345_limit_and_host_cancellation() {
     let accepted = parse(include_str!(
         "../../../tests/rust-core/fixtures/r5-dataset-values-compact/frozen-near-threshold-accepted.json"
     ));
@@ -414,7 +414,7 @@ fn compact_dataset_wire_preserves_349_350_limit_and_host_cancellation() {
     assert_success(
         &accepted_response,
         get(&accepted, "result").unwrap(),
-        "349 accepted",
+        "344 accepted",
     );
 
     let refused = parse(include_str!(
@@ -441,7 +441,7 @@ fn compact_dataset_wire_preserves_349_350_limit_and_host_cancellation() {
     assert_refusal(
         &refused_response,
         get(&refused, "thrown").unwrap(),
-        "350 refused",
+        "345 refused",
     );
 
     let commerce = parse(include_str!(

@@ -280,62 +280,62 @@
                 {
                   "id": "column:0",
                   "name": "flag",
-                  "scalarType": "boolean",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "boolean"
                 },
                 {
                   "id": "column:1",
                   "name": "count",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:2",
                   "name": "large",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:3",
                   "name": "single",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:4",
                   "name": "wide",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:5",
                   "name": "amount",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:6",
                   "name": "day",
-                  "scalarType": "date",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "date"
                 },
                 {
                   "id": "column:7",
                   "name": "date_text",
-                  "scalarType": "date",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "date"
                 },
                 {
                   "id": "column:8",
                   "name": "instant",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:9",
                   "name": "local_time",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:10",
@@ -345,8 +345,8 @@
                 {
                   "id": "column:11",
                   "name": "title",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 }
               ]
             }
@@ -510,7 +510,7 @@
           {
             "path": "/columns/7",
             "code": "TEXT_REPRESENTATION",
-            "classification": "representation-change",
+            "classification": "not-enforced",
             "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
             "retainedInSource": true
           },
@@ -532,7 +532,7 @@
             "path": "/columns/10",
             "code": "EMBEDDING_DIMENSION",
             "classification": "not-enforced",
-            "detail": "Avro array does not enforce native dimension 3",
+            "detail": "Avro array does not enforce native dimension",
             "retainedInSource": true
           },
           {
@@ -636,7 +636,6 @@
             "nullable": false
           }
         ],
-        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"large\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": \"double\"\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"date\"\n      }\n    },\n    {\n      \"name\": \"date_text\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"local_time\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"local-timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"vector\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"float\"\n        ]\n      }\n    },\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "target",
@@ -978,7 +977,8 @@
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"large\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": \"double\"\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"date\"\n      }\n    },\n    {\n      \"name\": \"date_text\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"local_time\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"local-timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"vector\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"float\"\n        ]\n      }\n    },\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    }\n  ]\n}\n"
       },
       "exports": [
         {
@@ -1211,30 +1211,30 @@
                 {
                   "id": "column:0",
                   "name": "provider_id",
+                  "extensions": {},
                   "description": "Unique provider identifier",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:1",
                   "name": "provider_name",
+                  "extensions": {},
                   "description": "Provider full name",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:2",
                   "name": "provider_npi",
+                  "extensions": {},
                   "description": "National Provider Identifier",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:3",
                   "name": "state_code",
+                  "extensions": {},
                   "description": "Provider state code",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "scalarType": "string"
                 }
               ]
             }
@@ -1399,7 +1399,6 @@
             "nullable": true
           }
         ],
-        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"provider_id\",\n      \"type\": \"string\",\n      \"doc\": \"Unique provider identifier\"\n    },\n    {\n      \"name\": \"provider_name\",\n      \"type\": \"string\",\n      \"doc\": \"Provider full name\"\n    },\n    {\n      \"name\": \"provider_npi\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"National Provider Identifier\"\n    },\n    {\n      \"name\": \"state_code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"Provider state code\"\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "target",
@@ -1566,7 +1565,8 @@
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"provider_id\",\n      \"type\": \"string\",\n      \"doc\": \"Unique provider identifier\"\n    },\n    {\n      \"name\": \"provider_name\",\n      \"type\": \"string\",\n      \"doc\": \"Provider full name\"\n    },\n    {\n      \"name\": \"provider_npi\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"National Provider Identifier\"\n    },\n    {\n      \"name\": \"state_code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"Provider state code\"\n    }\n  ]\n}\n"
       },
       "exports": [
         {

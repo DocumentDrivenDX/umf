@@ -8,12 +8,12 @@ for (const [host, factory] of [['Node/Bun', nodeOperations], ['WASM', wasmOperat
     const api = factory((...args) => {
       calls.push(args);
       return args[1].version === '0.10.0'
-        ? ['boolean', 'integer', 'decimal', 'float', 'string', 'binary', 'date', 'time', 'timestamp', 'bits128', 'uuid']
+        ? ['boolean', 'integer', 'decimal', 'float', 'string', 'binary', 'date', 'time', 'timestamp', 'bits128', 'uuid', 'json']
         : [];
     });
 
     expect(api.scalarTypesForVersion('0.10.0')).toEqual([
-      'boolean', 'integer', 'decimal', 'float', 'string', 'binary', 'date', 'time', 'timestamp', 'bits128', 'uuid',
+      'boolean', 'integer', 'decimal', 'float', 'string', 'binary', 'date', 'time', 'timestamp', 'bits128', 'uuid', 'json',
     ]);
     expect(api.scalarTypesForVersion('0.10.1')).toEqual([]);
     expect(calls).toEqual([

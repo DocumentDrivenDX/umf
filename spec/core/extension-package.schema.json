@@ -201,7 +201,7 @@
       "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
     },
     "knownScalarType": {
-      "description": "Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1. Native refinements remain attached.",
+      "description": "Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1; json is one arbitrary JSON value (CONTRACT-084). Native refinements remain attached.",
       "enum": [
         "boolean",
         "integer",
@@ -213,7 +213,8 @@
         "time",
         "timestamp",
         "bits128",
-        "uuid"
+        "uuid",
+        "json"
       ]
     },
     "scalarType": {
@@ -308,7 +309,7 @@
           "minLength": 1
         },
         "cardinality": {
-          "description": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, or no assertion. Unknown labels remain uninterpreted.",
+          "description": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, finite unordered collection of distinct items, or no assertion. Unknown labels remain uninterpreted.",
           "type": "string",
           "minLength": 1
         },
@@ -465,7 +466,8 @@
               "cardinality": {
                 "enum": [
                   "array",
-                  "map"
+                  "map",
+                  "set"
                 ]
               }
             }
@@ -502,7 +504,8 @@
               "cardinality": {
                 "enum": [
                   "array",
-                  "map"
+                  "map",
+                  "set"
                 ]
               }
             }
@@ -892,6 +895,7 @@
         "one",
         "array",
         "map",
+        "set",
         "unspecified"
       ]
     },
@@ -1429,6 +1433,16 @@
             }
           },
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "json"
+          ],
+          "properties": {
+            "json": {}
+          },
+          "additionalProperties": false
         }
       ]
     },
@@ -1903,5 +1917,5 @@
       "additionalProperties": false
     }
   },
-  "$comment": "Generated from spec/metamodel/umf.yaml; model fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f; compiler c6edd02a853602eb1ee2894656227c7751e6438bb21ebdf8c9a66617417ff9f2"
+  "$comment": "Generated from spec/metamodel/umf.yaml; model 394ded5ee6ffd8ae4465fcedaefb1ccd6eae4da5c259ffddf36b1077a73c11bf; compiler f06963f9eb707647fc4cf94c3f8ff95a5e34f9e77ff136cd8fc381d0f242a1b8"
 }

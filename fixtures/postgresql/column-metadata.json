@@ -8,6 +8,12 @@
         "name": "events",
         "kind": "p"
       },
+      "element": {
+        "id": "/snapshot/relations/0/columns/0",
+        "name": "at",
+        "scalarType": "timestamp",
+        "extensions": {}
+      },
       "nativeColumn": {
         "kind": "object",
         "members": {
@@ -85,12 +91,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/0/columns/0",
-        "name": "at",
-        "scalarType": "timestamp",
-        "extensions": {}
       }
     },
     {
@@ -100,6 +100,11 @@
         "name": "events",
         "kind": "p"
       },
+      "element": {
+        "id": "/snapshot/relations/0/columns/1",
+        "name": "payload",
+        "extensions": {}
+      },
       "nativeColumn": {
         "kind": "object",
         "members": {
@@ -177,11 +182,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/0/columns/1",
-        "name": "payload",
-        "extensions": {}
       }
     },
     {
@@ -190,6 +190,12 @@
         "schema": "public",
         "name": "events_2026",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/1/columns/0",
+        "name": "at",
+        "scalarType": "timestamp",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -268,12 +274,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/1/columns/0",
-        "name": "at",
-        "scalarType": "timestamp",
-        "extensions": {}
       }
     },
     {
@@ -282,6 +282,11 @@
         "schema": "public",
         "name": "events_2026",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/1/columns/1",
+        "name": "payload",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -360,11 +365,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/1/columns/1",
-        "name": "payload",
-        "extensions": {}
       }
     },
     {
@@ -373,6 +373,12 @@
         "schema": "public",
         "name": "recent_events",
         "kind": "v"
+      },
+      "element": {
+        "id": "/snapshot/relations/2/columns/0",
+        "name": "at",
+        "scalarType": "timestamp",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -451,12 +457,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/2/columns/0",
-        "name": "at",
-        "scalarType": "timestamp",
-        "extensions": {}
       }
     },
     {
@@ -465,6 +465,11 @@
         "schema": "public",
         "name": "recent_events",
         "kind": "v"
+      },
+      "element": {
+        "id": "/snapshot/relations/2/columns/1",
+        "name": "payload",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -543,11 +548,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/2/columns/1",
-        "name": "payload",
-        "extensions": {}
       }
     },
     {
@@ -556,6 +556,12 @@
         "schema": "sales",
         "name": "inventory",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/3/columns/0",
+        "name": "code",
+        "scalarType": "string",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -635,12 +641,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/3/columns/0",
-        "name": "code",
-        "scalarType": "string",
-        "extensions": {}
       }
     },
     {
@@ -649,6 +649,11 @@
         "schema": "sales",
         "name": "inventory",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/3/columns/1",
+        "name": "address",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -727,11 +732,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/3/columns/1",
-        "name": "address",
-        "extensions": {}
       }
     },
     {
@@ -740,6 +740,11 @@
         "schema": "sales",
         "name": "inventory",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/3/columns/2",
+        "name": "prices",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -818,11 +823,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/3/columns/2",
-        "name": "prices",
-        "extensions": {}
       }
     },
     {
@@ -831,6 +831,11 @@
         "schema": "sales",
         "name": "inventory",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/3/columns/3",
+        "name": "history",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -909,11 +914,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/3/columns/3",
-        "name": "history",
-        "extensions": {}
       }
     },
     {
@@ -922,6 +922,12 @@
         "schema": "sales",
         "name": "inventory",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/3/columns/4",
+        "name": "normalized",
+        "scalarType": "string",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1001,12 +1007,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/3/columns/4",
-        "name": "normalized",
-        "scalarType": "string",
-        "extensions": {}
       }
     },
     {
@@ -1015,6 +1015,12 @@
         "schema": "sales",
         "name": "inventory_totals",
         "kind": "m"
+      },
+      "element": {
+        "id": "/snapshot/relations/4/columns/0",
+        "name": "total",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1093,12 +1099,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/4/columns/0",
-        "name": "total",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -1107,6 +1107,12 @@
         "schema": "sales",
         "name": "order_lines",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/5/columns/0",
+        "name": "order_id",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1185,12 +1191,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/5/columns/0",
-        "name": "order_id",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -1199,6 +1199,12 @@
         "schema": "sales",
         "name": "order_lines",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/5/columns/1",
+        "name": "line_no",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1277,12 +1283,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/5/columns/1",
-        "name": "line_no",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -1291,6 +1291,12 @@
         "schema": "sales",
         "name": "order_lines",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/5/columns/2",
+        "name": "quantity",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1369,12 +1375,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/5/columns/2",
-        "name": "quantity",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -1383,6 +1383,12 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/0",
+        "name": "id",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1461,12 +1467,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/0",
-        "name": "id",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -1475,6 +1475,11 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/1",
+        "name": "external_id",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1553,11 +1558,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/1",
-        "name": "external_id",
-        "extensions": {}
       }
     },
     {
@@ -1566,6 +1566,11 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/2",
+        "name": "state",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1645,11 +1650,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/2",
-        "name": "state",
-        "extensions": {}
       }
     },
     {
@@ -1658,6 +1658,12 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/3",
+        "name": "total",
+        "description": "Exact amount — café",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1738,12 +1744,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/3",
-        "name": "total",
-        "description": "Exact amount — café",
-        "extensions": {}
       }
     },
     {
@@ -1752,6 +1752,11 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/4",
+        "name": "details",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1830,11 +1835,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/4",
-        "name": "details",
-        "extensions": {}
       }
     },
     {
@@ -1843,6 +1843,11 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/5",
+        "name": "tags",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -1923,11 +1928,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/5",
-        "name": "tags",
-        "extensions": {}
       }
     },
     {
@@ -1936,6 +1936,12 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/6",
+        "name": "created_at",
+        "scalarType": "timestamp",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2015,12 +2021,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/6",
-        "name": "created_at",
-        "scalarType": "timestamp",
-        "extensions": {}
       }
     },
     {
@@ -2029,6 +2029,12 @@
         "schema": "sales",
         "name": "orders",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/6/columns/7",
+        "name": "subtotal",
+        "scalarType": "decimal",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2108,12 +2114,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/6/columns/7",
-        "name": "subtotal",
-        "scalarType": "decimal",
-        "extensions": {}
       }
     },
     {
@@ -2122,6 +2122,12 @@
         "schema": "sales",
         "name": "orders_id_seq",
         "kind": "S"
+      },
+      "element": {
+        "id": "/snapshot/relations/7/columns/0",
+        "name": "last_value",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2200,12 +2206,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/7/columns/0",
-        "name": "last_value",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -2214,6 +2214,12 @@
         "schema": "sales",
         "name": "orders_id_seq",
         "kind": "S"
+      },
+      "element": {
+        "id": "/snapshot/relations/7/columns/1",
+        "name": "log_cnt",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2292,12 +2298,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/7/columns/1",
-        "name": "log_cnt",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -2306,6 +2306,12 @@
         "schema": "sales",
         "name": "orders_id_seq",
         "kind": "S"
+      },
+      "element": {
+        "id": "/snapshot/relations/7/columns/2",
+        "name": "is_called",
+        "scalarType": "boolean",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2384,12 +2390,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/7/columns/2",
-        "name": "is_called",
-        "scalarType": "boolean",
-        "extensions": {}
       }
     },
     {
@@ -2398,6 +2398,12 @@
         "schema": "sales",
         "name": "row_encodings",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/8/columns/0",
+        "name": "id",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2476,12 +2482,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/8/columns/0",
-        "name": "id",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -2490,6 +2490,12 @@
         "schema": "sales",
         "name": "row_encodings",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/8/columns/1",
+        "name": "active",
+        "scalarType": "boolean",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2568,12 +2574,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/8/columns/1",
-        "name": "active",
-        "scalarType": "boolean",
-        "extensions": {}
       }
     },
     {
@@ -2582,6 +2582,12 @@
         "schema": "sales",
         "name": "row_encodings",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/8/columns/2",
+        "name": "optional_flag",
+        "scalarType": "boolean",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2660,12 +2666,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/8/columns/2",
-        "name": "optional_flag",
-        "scalarType": "boolean",
-        "extensions": {}
       }
     },
     {
@@ -2674,6 +2674,11 @@
         "schema": "sales",
         "name": "row_encodings",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/8/columns/3",
+        "name": "nullable_json",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2752,11 +2757,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/8/columns/3",
-        "name": "nullable_json",
-        "extensions": {}
       }
     },
     {
@@ -2765,6 +2765,11 @@
         "schema": "sales",
         "name": "row_encodings",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/8/columns/4",
+        "name": "required_json",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2843,11 +2848,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/8/columns/4",
-        "name": "required_json",
-        "extensions": {}
       }
     },
     {
@@ -2856,6 +2856,12 @@
         "schema": "sales",
         "name": "row_encodings",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/8/columns/5",
+        "name": "label",
+        "scalarType": "string",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -2935,12 +2941,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/8/columns/5",
-        "name": "label",
-        "scalarType": "string",
-        "extensions": {}
       }
     },
     {
@@ -2949,6 +2949,12 @@
         "schema": "sales",
         "name": "row_encodings",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/8/columns/6",
+        "name": "small_value",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3027,12 +3033,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/8/columns/6",
-        "name": "small_value",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -3041,6 +3041,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/0",
+        "name": "flag",
+        "scalarType": "boolean",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3119,12 +3125,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/0",
-        "name": "flag",
-        "scalarType": "boolean",
-        "extensions": {}
       }
     },
     {
@@ -3133,6 +3133,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/1",
+        "name": "small",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3211,12 +3217,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/1",
-        "name": "small",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -3225,6 +3225,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/2",
+        "name": "ordinary",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3303,12 +3309,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/2",
-        "name": "ordinary",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -3317,6 +3317,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/3",
+        "name": "large",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3395,12 +3401,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/3",
-        "name": "large",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -3409,6 +3409,13 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/4",
+        "name": "exact",
+        "description": "Exact amount with native precision and scale",
+        "scalarType": "decimal",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3488,13 +3495,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/4",
-        "name": "exact",
-        "description": "Exact amount with native precision and scale",
-        "scalarType": "decimal",
-        "extensions": {}
       }
     },
     {
@@ -3503,6 +3503,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/5",
+        "name": "single",
+        "scalarType": "float",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3581,12 +3587,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/5",
-        "name": "single",
-        "scalarType": "float",
-        "extensions": {}
       }
     },
     {
@@ -3595,6 +3595,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/6",
+        "name": "wide",
+        "scalarType": "float",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3673,12 +3679,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/6",
-        "name": "wide",
-        "scalarType": "float",
-        "extensions": {}
       }
     },
     {
@@ -3687,6 +3687,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/7",
+        "name": "words",
+        "scalarType": "string",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3766,12 +3772,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/7",
-        "name": "words",
-        "scalarType": "string",
-        "extensions": {}
       }
     },
     {
@@ -3780,6 +3780,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/8",
+        "name": "bounded",
+        "scalarType": "string",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3859,12 +3865,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/8",
-        "name": "bounded",
-        "scalarType": "string",
-        "extensions": {}
       }
     },
     {
@@ -3873,6 +3873,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/9",
+        "name": "padded",
+        "scalarType": "string",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -3952,12 +3958,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/9",
-        "name": "padded",
-        "scalarType": "string",
-        "extensions": {}
       }
     },
     {
@@ -3966,6 +3966,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/10",
+        "name": "data",
+        "scalarType": "binary",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4044,12 +4050,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/10",
-        "name": "data",
-        "scalarType": "binary",
-        "extensions": {}
       }
     },
     {
@@ -4058,6 +4058,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/11",
+        "name": "day",
+        "scalarType": "date",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4136,12 +4142,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/11",
-        "name": "day",
-        "scalarType": "date",
-        "extensions": {}
       }
     },
     {
@@ -4150,6 +4150,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/12",
+        "name": "clock",
+        "scalarType": "time",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4228,12 +4234,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/12",
-        "name": "clock",
-        "scalarType": "time",
-        "extensions": {}
       }
     },
     {
@@ -4242,6 +4242,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/13",
+        "name": "zoned_clock",
+        "scalarType": "time",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4320,12 +4326,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/13",
-        "name": "zoned_clock",
-        "scalarType": "time",
-        "extensions": {}
       }
     },
     {
@@ -4334,6 +4334,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/14",
+        "name": "local_stamp",
+        "scalarType": "timestamp",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4412,12 +4418,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/14",
-        "name": "local_stamp",
-        "scalarType": "timestamp",
-        "extensions": {}
       }
     },
     {
@@ -4426,6 +4426,12 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/15",
+        "name": "instant",
+        "scalarType": "timestamp",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4504,12 +4510,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/15",
-        "name": "instant",
-        "scalarType": "timestamp",
-        "extensions": {}
       }
     },
     {
@@ -4518,6 +4518,11 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/16",
+        "name": "items",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4596,11 +4601,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/16",
-        "name": "items",
-        "extensions": {}
       }
     },
     {
@@ -4609,6 +4609,11 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/17",
+        "name": "domain_value",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4687,11 +4692,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/17",
-        "name": "domain_value",
-        "extensions": {}
       }
     },
     {
@@ -4700,6 +4700,11 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/18",
+        "name": "document",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4778,11 +4783,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/18",
-        "name": "document",
-        "extensions": {}
       }
     },
     {
@@ -4791,6 +4791,11 @@
         "schema": "sales",
         "name": "scalar_types",
         "kind": "r"
+      },
+      "element": {
+        "id": "/snapshot/relations/9/columns/19",
+        "name": "identifier",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4869,11 +4874,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/9/columns/19",
-        "name": "identifier",
-        "extensions": {}
       }
     },
     {
@@ -4882,6 +4882,12 @@
         "schema": "sales",
         "name": "ticket_numbers",
         "kind": "S"
+      },
+      "element": {
+        "id": "/snapshot/relations/10/columns/0",
+        "name": "last_value",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -4960,12 +4966,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/10/columns/0",
-        "name": "last_value",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -4974,6 +4974,12 @@
         "schema": "sales",
         "name": "ticket_numbers",
         "kind": "S"
+      },
+      "element": {
+        "id": "/snapshot/relations/10/columns/1",
+        "name": "log_cnt",
+        "scalarType": "integer",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -5052,12 +5058,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/10/columns/1",
-        "name": "log_cnt",
-        "scalarType": "integer",
-        "extensions": {}
       }
     },
     {
@@ -5066,6 +5066,12 @@
         "schema": "sales",
         "name": "ticket_numbers",
         "kind": "S"
+      },
+      "element": {
+        "id": "/snapshot/relations/10/columns/2",
+        "name": "is_called",
+        "scalarType": "boolean",
+        "extensions": {}
       },
       "nativeColumn": {
         "kind": "object",
@@ -5144,12 +5150,6 @@
             "value": ""
           }
         }
-      },
-      "element": {
-        "id": "/snapshot/relations/10/columns/2",
-        "name": "is_called",
-        "scalarType": "boolean",
-        "extensions": {}
       }
     }
   ],

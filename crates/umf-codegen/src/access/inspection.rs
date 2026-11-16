@@ -1610,6 +1610,11 @@ pub(super) fn inspect_access_views(
             let cardinality_value = member(field, "cardinality");
             if let Some(Value::String(cardinality)) = cardinality_value {
                 ctx.charge_work(cardinality.len(), Utf16::default())?;
+                // Core sets (CONTRACT-084) are not yet an access shape. Report
+                // them instead of letting the descriptor below read as unspecified.
+                if cardinality == &Utf16::from("set") {
+                    push_unknown_diag(&mut out.diagnostics, &source, fp16.clone(), ctx)?;
+                }
             }
             let mut field_value = vec![
                 (Utf16::from("ref"), ref_value(&fr.0, &fr.1)),

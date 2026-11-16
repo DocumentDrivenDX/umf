@@ -1040,24 +1040,10 @@
         },
         "issues": [
           {
-            "path": "/root/owner",
-            "code": "AVRO_METADATA",
+            "path": "/modules/0/elements/0/extensions/umf.avro",
+            "code": "SEMANTICS_UNCHECKED",
             "classification": "not-enforced",
-            "detail": "Uninterpreted native metadata retained",
-            "retainedInSource": true
-          },
-          {
-            "path": "/root/fields/6/type/logicalType",
-            "code": "AVRO_LOGICAL_TYPE",
-            "classification": "not-enforced",
-            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-            "retainedInSource": true
-          },
-          {
-            "path": "/root/fields/7/type/logicalType",
-            "code": "AVRO_LOGICAL_TYPE",
-            "classification": "not-enforced",
-            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+            "detail": "Structure checked; semantics not validated",
             "retainedInSource": true
           },
           {
@@ -1322,7 +1308,6 @@
             "nullable": false
           }
         ],
-        "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"description\": \"Original UMF fixture: recursive order with native Avro defaults and metadata.\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"status\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"token\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"tags\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"labels\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"parent\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 9,\n      \"scale\": 2\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": false,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"payload\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"active\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"ratio\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "tablespec-result",
@@ -1597,85 +1582,86 @@
                 {
                   "id": "column:0",
                   "name": "id",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:1",
                   "name": "status",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:2",
                   "name": "token",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:3",
                   "name": "tags",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:4",
                   "name": "labels",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:5",
                   "name": "parent",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:6",
                   "name": "amount",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:7",
                   "name": "created",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:8",
                   "name": "payload",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:9",
                   "name": "active",
-                  "scalarType": "boolean",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "boolean"
                 },
                 {
                   "id": "column:10",
                   "name": "score",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:11",
                   "name": "ratio",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:12",
                   "name": "count",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 }
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"description\": \"Original UMF fixture: recursive order with native Avro defaults and metadata.\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"status\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"token\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"tags\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"labels\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"parent\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 9,\n      \"scale\": 2\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": false,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"payload\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"active\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"ratio\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n"
       },
       "exports": [
         {
@@ -1954,10 +1940,10 @@
         },
         "issues": [
           {
-            "path": "/dependencies/0/root/logicalType",
-            "code": "AVRO_LOGICAL_TYPE",
+            "path": "/modules/0/elements/0/extensions/umf.avro",
+            "code": "SEMANTICS_UNCHECKED",
             "classification": "not-enforced",
-            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+            "detail": "Structure checked; semantics not validated",
             "retainedInSource": true
           },
           {
@@ -2005,7 +1991,6 @@
             "nullable": true
           }
         ],
-        "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"amount\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 15,\n      \"scale\": 3\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "tablespec-result",
@@ -2072,13 +2057,14 @@
                 {
                   "id": "column:0",
                   "name": "amount",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 }
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"amount\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 15,\n      \"scale\": 3\n    }\n  ]\n}\n"
       },
       "exports": [
         {
@@ -2473,31 +2459,10 @@
         },
         "issues": [
           {
-            "path": "/root/fields/0/type/logicalType",
-            "code": "AVRO_LOGICAL_TYPE",
+            "path": "/modules/0/elements/0/extensions/umf.avro",
+            "code": "SEMANTICS_UNCHECKED",
             "classification": "not-enforced",
-            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-            "retainedInSource": true
-          },
-          {
-            "path": "/root/fields/1/type/logicalType",
-            "code": "AVRO_LOGICAL_TYPE",
-            "classification": "not-enforced",
-            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-            "retainedInSource": true
-          },
-          {
-            "path": "/root/fields/2/type/logicalType",
-            "code": "AVRO_LOGICAL_TYPE",
-            "classification": "not-enforced",
-            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-            "retainedInSource": true
-          },
-          {
-            "path": "/root/fields/3/type/logicalType",
-            "code": "AVRO_LOGICAL_TYPE",
-            "classification": "not-enforced",
-            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+            "detail": "Structure checked; semantics not validated",
             "retainedInSource": true
           },
           {
@@ -2573,7 +2538,6 @@
             "nullable": false
           }
         ],
-        "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"day\",\n      \"nullable\": false,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"local\",\n      \"nullable\": false,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": false,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"whole\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 4,\n      \"scale\": 0\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "tablespec-result",
@@ -2691,31 +2655,32 @@
                 {
                   "id": "column:0",
                   "name": "day",
-                  "scalarType": "date",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "date"
                 },
                 {
                   "id": "column:1",
                   "name": "local",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:2",
                   "name": "instant",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:3",
                   "name": "whole",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 }
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"day\",\n      \"nullable\": false,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"local\",\n      \"nullable\": false,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": false,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"whole\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 4,\n      \"scale\": 0\n    }\n  ]\n}\n"
       },
       "exports": [
         {

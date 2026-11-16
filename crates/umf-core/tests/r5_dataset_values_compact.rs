@@ -556,12 +556,11 @@ fn frozen_typescript_near_threshold_controls_are_adjacent_and_source_bound() {
         _ => panic!("refused records"),
     };
     assert_eq!(accepted_count + 1, refused_count);
-    assert_eq!(accepted_count, 349);
-    assert_eq!(refused_count, 350);
-    assert_eq!(
-        get(get(&accepted, "work").unwrap(), "used"),
-        Some(&Value::Number(998_489.0))
-    );
+    // Re-calibrated from 349/350 when core 0.10.0 gained json and set
+    // (CONTRACT-084): the larger core literal schema costs more work per
+    // record. The predecessor's 349-record work ledger no longer applies.
+    assert_eq!(accepted_count, 344);
+    assert_eq!(refused_count, 345);
     let thrown = get(&refused, "thrown").unwrap();
     assert_eq!(text(get(thrown, "code")), "LIMIT");
     assert_eq!(

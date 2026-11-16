@@ -8681,93 +8681,6 @@
               }
             }
           ]
-        },
-        {
-          "instanceId": "compact-near-265",
-          "identity": {
-            "module": "domain",
-            "element": "customers"
-          },
-          "values": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "value": {
-                "string": "[42,0,\"C1\"]"
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "value": {
-                "string": "Synthetic café"
-              }
-            }
-          ]
-        },
-        {
-          "instanceId": "compact-near-266",
-          "identity": {
-            "module": "domain",
-            "element": "customers"
-          },
-          "values": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "value": {
-                "string": "[42,0,\"C1\"]"
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "value": {
-                "string": "Synthetic café"
-              }
-            }
-          ]
-        },
-        {
-          "instanceId": "compact-near-267",
-          "identity": {
-            "module": "domain",
-            "element": "customers"
-          },
-          "values": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "value": {
-                "string": "[42,0,\"C1\"]"
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "value": {
-                "string": "Synthetic café"
-              }
-            }
-          ]
         }
       ],
       "relationships": [
@@ -30973,255 +30886,6 @@
           ],
           "sourceRef": "#/source"
         }
-      },
-      {
-        "instanceId": "compact-near-265",
-        "result": {
-          "operation": "validate-core-record-values",
-          "version": "2.0.0",
-          "identity": {
-            "module": "domain",
-            "element": "customers"
-          },
-          "values": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "value": {
-                "string": "[42,0,\"C1\"]"
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "value": {
-                "string": "Synthetic café"
-              }
-            }
-          ],
-          "documentValidation": {
-            "valid": true,
-            "complete": true,
-            "diagnostics": []
-          },
-          "validation": {
-            "valid": true,
-            "complete": false,
-            "diagnostics": [
-              {
-                "code": "RECORD_KEY_CONTEXT_REQUIRED",
-                "path": "/identity",
-                "message": "Dataset key equality/uniqueness needs a separately qualified check",
-                "severity": "warning"
-              },
-              {
-                "code": "RECORD_RELATIONSHIP_CONTEXT_REQUIRED",
-                "path": "/identity",
-                "message": "Relationship/endpoint constraints need a separately qualified dataset check",
-                "severity": "warning"
-              }
-            ]
-          },
-          "fields": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "validation": {
-                "valid": true,
-                "complete": true,
-                "diagnostics": []
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "validation": {
-                "valid": true,
-                "complete": true,
-                "diagnostics": []
-              }
-            }
-          ],
-          "sourceRef": "#/source"
-        }
-      },
-      {
-        "instanceId": "compact-near-266",
-        "result": {
-          "operation": "validate-core-record-values",
-          "version": "2.0.0",
-          "identity": {
-            "module": "domain",
-            "element": "customers"
-          },
-          "values": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "value": {
-                "string": "[42,0,\"C1\"]"
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "value": {
-                "string": "Synthetic café"
-              }
-            }
-          ],
-          "documentValidation": {
-            "valid": true,
-            "complete": true,
-            "diagnostics": []
-          },
-          "validation": {
-            "valid": true,
-            "complete": false,
-            "diagnostics": [
-              {
-                "code": "RECORD_KEY_CONTEXT_REQUIRED",
-                "path": "/identity",
-                "message": "Dataset key equality/uniqueness needs a separately qualified check",
-                "severity": "warning"
-              },
-              {
-                "code": "RECORD_RELATIONSHIP_CONTEXT_REQUIRED",
-                "path": "/identity",
-                "message": "Relationship/endpoint constraints need a separately qualified dataset check",
-                "severity": "warning"
-              }
-            ]
-          },
-          "fields": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "validation": {
-                "valid": true,
-                "complete": true,
-                "diagnostics": []
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "validation": {
-                "valid": true,
-                "complete": true,
-                "diagnostics": []
-              }
-            }
-          ],
-          "sourceRef": "#/source"
-        }
-      },
-      {
-        "instanceId": "compact-near-267",
-        "result": {
-          "operation": "validate-core-record-values",
-          "version": "2.0.0",
-          "identity": {
-            "module": "domain",
-            "element": "customers"
-          },
-          "values": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "value": {
-                "string": "[42,0,\"C1\"]"
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "value": {
-                "string": "Synthetic café"
-              }
-            }
-          ],
-          "documentValidation": {
-            "valid": true,
-            "complete": true,
-            "diagnostics": []
-          },
-          "validation": {
-            "valid": true,
-            "complete": false,
-            "diagnostics": [
-              {
-                "code": "RECORD_KEY_CONTEXT_REQUIRED",
-                "path": "/identity",
-                "message": "Dataset key equality/uniqueness needs a separately qualified check",
-                "severity": "warning"
-              },
-              {
-                "code": "RECORD_RELATIONSHIP_CONTEXT_REQUIRED",
-                "path": "/identity",
-                "message": "Relationship/endpoint constraints need a separately qualified dataset check",
-                "severity": "warning"
-              }
-            ]
-          },
-          "fields": [
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.id"
-              },
-              "state": "present",
-              "validation": {
-                "valid": true,
-                "complete": true,
-                "diagnostics": []
-              }
-            },
-            {
-              "field": {
-                "module": "domain",
-                "element": "customers.name"
-              },
-              "state": "present",
-              "validation": {
-                "valid": true,
-                "complete": true,
-                "diagnostics": []
-              }
-            }
-          ],
-          "sourceRef": "#/source"
-        }
       }
     ],
     "keys": [
@@ -36789,69 +36453,6 @@
           "bytesHex": "554d464b3101040b5b34322c302c224331225d",
           "sourceRef": "#/source"
         }
-      },
-      {
-        "instanceId": "compact-near-265",
-        "result": {
-          "operation": "encode-core-key-tuple",
-          "version": "4.0.0",
-          "profile": "umf-key-tuple-v1",
-          "identity": {
-            "module": "domain",
-            "element": "customers",
-            "key": "identity"
-          },
-          "values": [
-            {
-              "string": "[42,0,\"C1\"]"
-            }
-          ],
-          "keyPath": "/modules/0/elements/0/keys/0",
-          "bytesHex": "554d464b3101040b5b34322c302c224331225d",
-          "sourceRef": "#/source"
-        }
-      },
-      {
-        "instanceId": "compact-near-266",
-        "result": {
-          "operation": "encode-core-key-tuple",
-          "version": "4.0.0",
-          "profile": "umf-key-tuple-v1",
-          "identity": {
-            "module": "domain",
-            "element": "customers",
-            "key": "identity"
-          },
-          "values": [
-            {
-              "string": "[42,0,\"C1\"]"
-            }
-          ],
-          "keyPath": "/modules/0/elements/0/keys/0",
-          "bytesHex": "554d464b3101040b5b34322c302c224331225d",
-          "sourceRef": "#/source"
-        }
-      },
-      {
-        "instanceId": "compact-near-267",
-        "result": {
-          "operation": "encode-core-key-tuple",
-          "version": "4.0.0",
-          "profile": "umf-key-tuple-v1",
-          "identity": {
-            "module": "domain",
-            "element": "customers",
-            "key": "identity"
-          },
-          "values": [
-            {
-              "string": "[42,0,\"C1\"]"
-            }
-          ],
-          "keyPath": "/modules/0/elements/0/keys/0",
-          "bytesHex": "554d464b3101040b5b34322c302c224331225d",
-          "sourceRef": "#/source"
-        }
       }
     ],
     "relationships": [],
@@ -36859,24 +36460,6 @@
       "valid": false,
       "complete": false,
       "diagnostics": [
-        {
-          "code": "DUPLICATE_DATASET_KEY",
-          "path": "/modules/0/elements/0/keys",
-          "message": "Declared Key tuple duplicates within supplied Record collection",
-          "severity": "error"
-        },
-        {
-          "code": "DUPLICATE_DATASET_KEY",
-          "path": "/modules/0/elements/0/keys",
-          "message": "Declared Key tuple duplicates within supplied Record collection",
-          "severity": "error"
-        },
-        {
-          "code": "DUPLICATE_DATASET_KEY",
-          "path": "/modules/0/elements/0/keys",
-          "message": "Declared Key tuple duplicates within supplied Record collection",
-          "severity": "error"
-        },
         {
           "code": "DUPLICATE_DATASET_KEY",
           "path": "/modules/0/elements/0/keys",
@@ -47213,93 +46796,6 @@
             }
           }
         ]
-      },
-      {
-        "instanceId": "compact-near-265",
-        "identity": {
-          "module": "domain",
-          "element": "customers"
-        },
-        "values": [
-          {
-            "field": {
-              "module": "domain",
-              "element": "customers.id"
-            },
-            "state": "present",
-            "value": {
-              "string": "[42,0,\"C1\"]"
-            }
-          },
-          {
-            "field": {
-              "module": "domain",
-              "element": "customers.name"
-            },
-            "state": "present",
-            "value": {
-              "string": "Synthetic café"
-            }
-          }
-        ]
-      },
-      {
-        "instanceId": "compact-near-266",
-        "identity": {
-          "module": "domain",
-          "element": "customers"
-        },
-        "values": [
-          {
-            "field": {
-              "module": "domain",
-              "element": "customers.id"
-            },
-            "state": "present",
-            "value": {
-              "string": "[42,0,\"C1\"]"
-            }
-          },
-          {
-            "field": {
-              "module": "domain",
-              "element": "customers.name"
-            },
-            "state": "present",
-            "value": {
-              "string": "Synthetic café"
-            }
-          }
-        ]
-      },
-      {
-        "instanceId": "compact-near-267",
-        "identity": {
-          "module": "domain",
-          "element": "customers"
-        },
-        "values": [
-          {
-            "field": {
-              "module": "domain",
-              "element": "customers.id"
-            },
-            "state": "present",
-            "value": {
-              "string": "[42,0,\"C1\"]"
-            }
-          },
-          {
-            "field": {
-              "module": "domain",
-              "element": "customers.name"
-            },
-            "state": "present",
-            "value": {
-              "string": "Synthetic café"
-            }
-          }
-        ]
       }
     ],
     "relationships": [
@@ -47511,69 +47007,69 @@
     "path": ""
   },
   "work": {
-    "used": 1000000,
+    "used": 999981,
     "categories": {
-      "copy": 91502,
-      "compact-schema-meter-branch": 62434,
-      "compact-schema-validator-branch": 62434,
-      "compact-schema-meter-property": 73214,
-      "compact-schema-validator-property": 73214,
-      "compact-schema-meter-canonical": 16784,
-      "compact-schema-validator-canonical": 16784,
+      "copy": 90521,
+      "compact-schema-meter-branch": 62849,
+      "compact-schema-validator-branch": 62849,
+      "compact-schema-meter-property": 73476,
+      "compact-schema-validator-property": 73476,
+      "compact-schema-meter-canonical": 16906,
+      "compact-schema-validator-canonical": 16906,
       "compact-schema-meter-key-sort": 176,
       "compact-schema-validator-key-sort": 176,
-      "verify-canonical-visit": 56420,
-      "verify-canonical-key-sort": 121143,
-      "count": 43628,
-      "preflight-byte-traversal": 6291,
+      "verify-canonical-visit": 55941,
+      "verify-canonical-key-sort": 120116,
+      "count": 43178,
+      "preflight-byte-traversal": 6231,
       "source-schema-meter-branch": 4492,
       "source-schema-validator-branch": 4492,
       "source-schema-meter-property": 1492,
       "source-schema-validator-property": 1492,
-      "source-schema-meter-canonical": 3314,
-      "source-schema-validator-canonical": 3314,
+      "source-schema-meter-canonical": 3586,
+      "source-schema-validator-canonical": 3586,
       "source-schema-meter-key-sort": 176,
       "source-schema-validator-key-sort": 176,
       "source-key-reference-scans": 0,
       "source-index-collision-bound": 2602,
       "document-copy": 781,
       "constraint-copy": 781,
-      "constraint-instruction": 23162,
+      "constraint-instruction": 23250,
       "constraint-enumeration": 699,
       "constraint-value-visit": 7721,
       "constraint-sort": 10,
-      "context-freeze": 6291,
+      "context-freeze": 6231,
       "validation-freeze": 4,
       "context-key-index": 781,
-      "input-schema-meter-branch": 18739,
-      "input-schema-validator-branch": 18739,
-      "input-schema-meter-property": 20680,
-      "input-schema-validator-property": 20680,
-      "input-schema-meter-canonical": 2146,
-      "input-schema-validator-canonical": 2146,
+      "input-schema-meter-branch": 19062,
+      "input-schema-validator-branch": 19062,
+      "input-schema-meter-property": 20982,
+      "input-schema-validator-property": 20982,
+      "input-schema-meter-canonical": 2122,
+      "input-schema-validator-canonical": 2122,
       "dataset-source-composition": 3124,
-      "dataset-input-composition": 44080,
-      "aggregate-byte-traversal": 56654,
-      "record-index": 6164,
-      "record-values": 4020,
-      "record-document-diagnostics": 1072,
-      "record-member-lookup": 2412,
-      "literal-schema-meter-branch": 8576,
-      "literal-schema-validator-branch": 8576,
-      "literal-schema-meter-property": 7504,
-      "literal-schema-validator-property": 7504,
-      "field-identity": 1608,
-      "literal-field-access": 28944,
-      "literal-value": 6432,
-      "dataset-field-index": 1608,
-      "dataset-key-component": 804,
-      "key-index-identity": 1072,
-      "key-component-index": 268,
+      "dataset-input-composition": 43600,
+      "aggregate-byte-traversal": 56042,
+      "record-index": 6095,
+      "record-values": 3975,
+      "record-document-diagnostics": 1060,
+      "record-member-lookup": 2385,
+      "literal-schema-meter-branch": 9010,
+      "literal-schema-validator-branch": 9010,
+      "literal-schema-meter-property": 7950,
+      "literal-schema-validator-property": 7950,
+      "field-identity": 1590,
+      "literal-field-access": 28620,
+      "literal-value": 6360,
+      "dataset-field-index": 1590,
+      "dataset-key-component": 795,
+      "key-index-identity": 1060,
+      "key-component-index": 265,
       "key-relevant-diagnostic-scans": 0,
-      "key-values": 804,
-      "key-document-diagnostics": 1072,
+      "key-values": 795,
+      "key-document-diagnostics": 1060,
       "dataset-relationship-diagnostic-scans": 0,
-      "dataset-multiplicity-scans": 38592
+      "dataset-multiplicity-scans": 38160
     }
   }
 }

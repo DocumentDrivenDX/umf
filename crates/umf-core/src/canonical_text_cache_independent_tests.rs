@@ -134,10 +134,10 @@ fn cache01_real_first_copy_repeated_arc_return_and_last_owner_cleanup() {
 
 #[test]
 fn cache02_fresh_constructors_and_dictionary_binding_never_inherit_global_warmth() {
-    assert_eq!(data::TEXTS.len(), 888);
+    assert_eq!(data::TEXTS.len(), 902);
     assert_eq!(
         data::TEXTS.iter().map(|units| units.len()).sum::<usize>(),
-        16114
+        16447
     );
     const A: &[&[u16]] = &[&[65]];
     const B: &[&[u16]] = &[&[66]];

@@ -11,7 +11,7 @@ use crate::{
     value::{array_items, member, object_members, string_member},
 };
 use std::collections::BTreeSet;
-use umf_core::{Context, EngineError, Utf16, Value};
+use umf_core::{Capabilities, Context, EngineError, Utf16, Value};
 
 #[derive(Debug)]
 enum Refusal {
@@ -63,7 +63,30 @@ impl CodegenEngine<'_> {
         input: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        match self.compile_deployment_inner(input, ctx, false) {
+        self.compile_table_deployment_host(input, None, ctx)
+    }
+
+    /// [`Self::compile_table_deployment`] for documents that declare host
+    /// extensions registered with
+    /// [`crate::CodegenResources::register_host_extension`]. `host` validates
+    /// their semantics; the configuration's `independentExtensions` names the
+    /// ones whose payloads do not change the generated DDL.
+    pub fn compile_table_deployment_with_host(
+        &self,
+        input: &Value,
+        host: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        self.compile_table_deployment_host(input, Some(host), ctx)
+    }
+
+    fn compile_table_deployment_host(
+        &self,
+        input: &Value,
+        host: Option<&mut dyn Capabilities>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        match self.compile_deployment_inner(input, ctx, false, host) {
             Ok(bundle) => Ok(object(vec![
                 ("status", s("compiled")),
                 ("bundle", bundle),
@@ -84,6 +107,26 @@ impl CodegenEngine<'_> {
     pub fn verify_table_deployment(
         &self,
         input: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        self.verify_table_deployment_host(input, None, ctx)
+    }
+
+    /// [`Self::verify_table_deployment`] with the same host capabilities the
+    /// bundle was compiled with.
+    pub fn verify_table_deployment_with_host(
+        &self,
+        input: &Value,
+        host: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        self.verify_table_deployment_host(input, Some(host), ctx)
+    }
+
+    fn verify_table_deployment_host(
+        &self,
+        input: &Value,
+        host: Option<&mut dyn Capabilities>,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
         let value = crate::value::admit_json(input, ctx)?;
@@ -134,6 +177,7 @@ impl CodegenEngine<'_> {
             &request,
             ctx,
             version == "umf.table-deployment/0.1",
+            host,
         ) {
             Ok(bundle) => object(vec![
                 ("status", s("compiled")),
@@ -166,6 +210,7 @@ impl CodegenEngine<'_> {
         input: &Value,
         ctx: &mut Context<'_>,
         legacy_comments: bool,
+        host: Option<&mut dyn Capabilities>,
     ) -> Result<Value, Refusal> {
         let input = crate::value::admit_json(input, ctx).map_err(Refusal::from_error)?;
         let text = string_member(&input, "text").ok_or_else(|| Refusal::Semantic {
@@ -233,7 +278,7 @@ impl CodegenEngine<'_> {
             }
         };
         let inspection = self
-            .inspect_table_lifecycle(&document, ctx)
+            .inspect_table_lifecycle_host(&document, host, ctx)
             .map_err(Refusal::terminal)?;
         if member(&inspection, "valid") != Some(&Value::Bool(true))
             || member(&inspection, "complete") != Some(&Value::Bool(true))
@@ -457,12 +502,15 @@ fn parse_configuration(value: &Value, ctx: &mut Context<'_>) -> Result<Value, Re
         "batchRole",
         "groupRoles",
     ];
-    if members.len() != keys.len() || keys.iter().any(|key| member(&value, key).is_none()) {
+    let optional = usize::from(member(&value, "independentExtensions").is_some());
+    if members.len() != keys.len() + optional || keys.iter().any(|key| member(&value, key).is_none())
+    {
         return Err(Refusal::unsupported(
             "/configuration",
             "Unknown or missing deployment configuration member",
         ));
     }
+    independent_extensions(&value, ctx)?;
     let module = string_member(&value, "module")
         .filter(|s| !s.is_empty())
         .ok_or_else(|| {
@@ -575,6 +623,67 @@ fn parse_configuration(value: &Value, ctx: &mut Context<'_>) -> Result<Value, Re
     Ok(value)
 }
 
+/// Host-asserted extension identities whose payloads do not change generated
+/// DDL (CONTRACT-081). Each entry is an exact `{id,version}`; `umf.tables`
+/// itself and duplicate IDs refuse.
+fn independent_extensions(
+    configuration: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<(Utf16, Utf16)>, Refusal> {
+    let path = "/configuration/independentExtensions";
+    let Some(entries) = member(configuration, "independentExtensions") else {
+        return Ok(Vec::new());
+    };
+    let entries = array_items(entries)
+        .filter(|entries| entries.len() <= 64)
+        .ok_or_else(|| Refusal::unsupported(path, "Expected at most64 {id,version} entries"))?;
+    let mut out: Vec<(Utf16, Utf16)> = Vec::with_capacity(entries.len());
+    for entry in entries {
+        ctx.charge_work(64, Utf16::default())
+            .map_err(Refusal::from_error)?;
+        let exact = object_members(entry).is_some_and(|members| members.len() == 2);
+        let id = string_member(entry, "id").filter(|id| !id.is_empty());
+        let version = string_member(entry, "version").filter(|version| !version.is_empty());
+        let (Some(id), Some(version), true) = (id, version, exact) else {
+            return Err(Refusal::unsupported(path, "Expected exact {id,version} entries"));
+        };
+        if id == &Utf16::from("umf.tables") || out.iter().any(|(seen, _)| seen == id) {
+            return Err(Refusal::unsupported(
+                path,
+                "Independent extensions exclude umf.tables and repeat no ID",
+            ));
+        }
+        out.push((id.clone(), version.clone()));
+    }
+    Ok(out)
+}
+
+/// True when every member of `extensions` is `also_allowed` or a
+/// host-asserted independent extension the document declares at that version.
+fn only_independent(
+    extensions: Option<&Value>,
+    independent: &[(Utf16, Utf16)],
+    document: &Value,
+    also_allowed: Option<&str>,
+) -> bool {
+    let vocabularies = member(document, "vocabularies").unwrap_or(&Value::Null);
+    object_members(extensions.unwrap_or(&Value::Null))
+        .unwrap_or(&[])
+        .iter()
+        .all(|(key, _)| {
+            also_allowed.is_some_and(|allowed| key == &Utf16::from(allowed))
+                || independent.iter().any(|(id, version)| {
+                    id == key
+                        && object_members(vocabularies)
+                            .unwrap_or(&[])
+                            .iter()
+                            .any(|(name, declaration)| {
+                                name == key && string_member(declaration, "version") == Some(version)
+                            })
+                })
+        })
+}
+
 fn build_deployment_bundle(
     document: &Value,
     payload: &Value,
@@ -641,16 +750,20 @@ fn build_deployment_bundle(
     let owner_module = modules
         .get(module_index)
         .ok_or_else(|| Refusal::unsupported("/modules", "Configured module is missing"))?;
+    let independent = independent_extensions(configuration, ctx)?;
     if array_items(member(owner_module, "elements").unwrap_or(&Value::Null))
         .unwrap_or(&[])
         .iter()
         .any(|e| {
             string_member(e, "kind") == Some(&Utf16::from("record"))
-                && object_members(member(e, "extensions").unwrap_or(&Value::Null))
-                    .is_some_and(|items| !items.is_empty())
+                && !only_independent(member(e, "extensions"), &independent, document, None)
         })
-        || object_members(member(owner_module, "extensions").unwrap_or(&Value::Null))
-            .is_some_and(|members| members.iter().any(|(k, _)| k != &Utf16::from("umf.tables")))
+        || !only_independent(
+            member(owner_module, "extensions"),
+            &independent,
+            document,
+            Some("umf.tables"),
+        )
     {
         return Err(Refusal::unsupported(
             format!("/modules/{module_index}"),
@@ -724,8 +837,7 @@ fn build_deployment_bundle(
             let field_ref = member(column, "field").unwrap_or(&Value::Null);
             let field = resolve_ref(document, field_ref)
                 .ok_or_else(|| Refusal::unsupported(&col_path, "Missing original Field"))?;
-            if object_members(member(field, "extensions").unwrap_or(&Value::Null))
-                .is_some_and(|items| !items.is_empty())
+            if !only_independent(member(field, "extensions"), &independent, document, None)
                 || !array_items(member(field, "semanticTypes").unwrap_or(&Value::Null))
                     .unwrap_or(&[])
                     .is_empty()
@@ -736,11 +848,18 @@ fn build_deployment_bundle(
             let (type_sql, type_name, type_mod) = native_type(native)
                 .map_err(|msg| Refusal::unsupported(append_path(&col_path, "nativeType"), msg))?;
             let kind = u8ext(native, "kind").unwrap_or_default();
-            if ["char", "float4", "float8", "timestamp"].contains(&kind.as_str()) {
+            let element_kind = (kind == "array")
+                .then(|| u8ext(member(native, "element").unwrap_or(&Value::Null), "kind"))
+                .flatten();
+            let scalar_kind = element_kind.clone().unwrap_or_else(|| kind.clone());
+            if ["char", "float4", "float8", "timestamp"].contains(&scalar_kind.as_str()) {
                 return Err(Refusal::unsupported(
                     &col_path,
                     "Native padding/float/time codec is not yet qualified",
                 ));
+            }
+            if kind == "array" {
+                check_array_column(column, field, document, &col_path, ctx)?;
             }
             if kind == "numeric"
                 && (number_member(native, "precision")
@@ -761,7 +880,8 @@ fn build_deployment_bundle(
                 ));
             }
             let mut definition = format!("{} {}", quote_ident(&name), type_sql);
-            if kind == "text" || kind == "varchar" {
+            let collated = scalar_kind == "text" || scalar_kind == "varchar";
+            if collated {
                 definition.push_str(" COLLATE pg_catalog.\"C\"");
             }
             let nullable = string_member(field, "nullability") != Some(&Utf16::from("required"));
@@ -806,7 +926,7 @@ fn build_deployment_bundle(
                 ("nullable", Value::Bool(nullable)),
                 (
                     "collation",
-                    if kind == "text" || kind == "varchar" {
+                    if collated {
                         s("C")
                     } else {
                         Value::Null
@@ -889,7 +1009,7 @@ fn build_deployment_bundle(
         for (ci, column) in columns.iter().enumerate() {
             let field = resolve_ref(document, member(column, "field").unwrap_or(&Value::Null))
                 .unwrap_or(&Value::Null);
-            let predicates = domain_predicates(column, field, ctx)?;
+            let predicates = domain_predicates(column, field, document, ctx)?;
             if !predicates.is_empty() {
                 let field_ref = member(column, "field").cloned().unwrap_or(Value::Null);
                 let name_hash = hash_value(
@@ -1051,12 +1171,45 @@ fn build_deployment_bundle(
             let ip = append_path(&append_path(&table_path, "indexes"), &ii.to_string());
             let id = u8ext(index, "id").unwrap_or_default();
             let name = u8ext(index, "name").unwrap_or_default();
+            let method = match u8ext(index, "method").as_deref() {
+                None | Some("btree") => "btree",
+                Some("gin") => "gin",
+                Some(_) => return Err(Refusal::unsupported(&ip, "Unknown index method")),
+            };
+            let directions = array_items(member(index, "directions").unwrap_or(&Value::Null))
+                .unwrap_or(&[]);
             let mut fields = Vec::new();
-            for r in array_items(member(index, "fields").unwrap_or(&Value::Null)).unwrap_or(&[]) {
-                fields.push(quote_ident(&column_name(table, r).ok_or_else(|| {
+            for (fi, r) in array_items(member(index, "fields").unwrap_or(&Value::Null))
+                .unwrap_or(&[])
+                .iter()
+                .enumerate()
+            {
+                let mut key = quote_ident(&column_name(table, r).ok_or_else(|| {
                     Refusal::unsupported(&ip, "Missing exact column mapping")
-                })?));
+                })?);
+                match directions.get(fi) {
+                    None if directions.is_empty() => {}
+                    Some(Value::String(d)) if d == &Utf16::from("asc") => {}
+                    Some(Value::String(d)) if d == &Utf16::from("desc") => key.push_str(" DESC"),
+                    _ => {
+                        return Err(Refusal::unsupported(
+                            append_path(&ip, "directions"),
+                            "Index directions must name one direction per key field",
+                        ))
+                    }
+                }
+                fields.push(key);
             }
+            if !directions.is_empty() && directions.len() != fields.len() {
+                return Err(Refusal::unsupported(
+                    append_path(&ip, "directions"),
+                    "Index directions must name one direction per key field",
+                ));
+            }
+            let predicate = match member(index, "where") {
+                Some(expression) => format!(" WHERE ({})", expression_sql(expression, table, ctx)?),
+                None => String::new(),
+            };
             let mut included = Vec::new();
             for r in array_items(member(index, "include").unwrap_or(&Value::Null)).unwrap_or(&[]) {
                 included.push(quote_ident(&column_name(table, r).ok_or_else(|| {
@@ -1064,7 +1217,7 @@ fn build_deployment_bundle(
                 })?));
             }
             let definition = format!(
-                "USING btree ({}){}",
+                "USING {method} ({}){}{predicate}",
                 fields.join(", "),
                 if included.is_empty() {
                     String::new()
@@ -1355,6 +1508,15 @@ fn hash_value(value: &Value, ctx: &mut Context<'_>) -> Result<String, EngineErro
 }
 fn native_type(value: &Value) -> Result<(String, String, i32), String> {
     let kind = u8ext(value, "kind").unwrap_or_default();
+    if kind == "array" {
+        // One-dimensional PostgreSQL array of a scalar native element.
+        let element = member(value, "element").unwrap_or(&Value::Null);
+        if u8ext(element, "kind").as_deref() == Some("array") {
+            return Err("Nested native arrays are not in this profile".into());
+        }
+        let (sql, name, tm) = native_type(element)?;
+        return Ok((format!("{sql}[]"), format!("_{name}"), tm));
+    }
     let name = match kind.as_str() {
         "boolean" => "bool",
         "text" => "text",
@@ -1371,6 +1533,7 @@ fn native_type(value: &Value) -> Result<(String, String, i32), String> {
         "timestamptz" => "timestamptz",
         "uuid" => "uuid",
         "bytea" => "bytea",
+        "jsonb" => "jsonb",
         _ => return Err("Unknown native type".into()),
     };
     let tm = match kind.as_str() {
@@ -1465,10 +1628,120 @@ fn literal_sql(value: &Value, ctx: &mut Context<'_>) -> Result<String, Refusal> 
     if let Some(v) = u8ext(value, "binaryHex").or_else(|| u8ext(value, "bits128Hex")) {
         return Ok(format!("pg_catalog.decode({},'hex')", quote_text(&v)?));
     }
+    if let (Some(json), true) = (member(value, "json"), object_members(value).is_some_and(|m| m.len() == 1)) {
+        // CONTRACT-084 json literal as PostgreSQL jsonb. jsonb cannot hold
+        // U+0000 in strings or member names; refuse instead of altering it.
+        if json_contains_nul(json) {
+            return Err(Refusal::unsupported(
+                "",
+                "PostgreSQL jsonb cannot store U+0000; the JSON value is not representable",
+            ));
+        }
+        let text = umf_core::serialization::stringify_compact_metered(json, ctx)
+            .map_err(Refusal::from_error)?
+            .to_utf8()
+            .map_err(|_| Refusal::unsupported("", "Invalid JSON Unicode"))?;
+        return Ok(format!("{}::pg_catalog.jsonb", quote_text(&text)?));
+    }
     Err(Refusal::unsupported(
         "",
         "Literal carrier is not qualified for deployment expressions",
     ))
+}
+
+fn json_contains_nul(value: &Value) -> bool {
+    match value {
+        Value::String(text) => text.units().contains(&0),
+        Value::Array(items) => items.iter().any(json_contains_nul),
+        Value::Object(members) => members
+            .iter()
+            .any(|(name, item)| name.units().contains(&0) || json_contains_nul(item)),
+        _ => false,
+    }
+}
+
+/// Element kinds qualified for native array columns in this cut.
+const ARRAY_ELEMENT_KINDS: &[&str] = &[
+    "boolean",
+    "text",
+    "int8",
+    "uuid",
+    "date",
+    "timestamptz",
+    "numeric",
+    "bytea",
+    "jsonb",
+];
+
+/// Refuse array/set column shapes whose element refinements or defaults this
+/// profile cannot enforce natively (CONTRACT-081/084).
+fn check_array_column(
+    column: &Value,
+    field: &Value,
+    document: &Value,
+    path: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<(), Refusal> {
+    precharge_tree(field, ctx, path).map_err(Refusal::from_error)?;
+    let element = member(member(column, "nativeType").unwrap_or(&Value::Null), "element")
+        .unwrap_or(&Value::Null);
+    let element_kind = u8ext(element, "kind").unwrap_or_default();
+    if !ARRAY_ELEMENT_KINDS.contains(&element_kind.as_str()) {
+        return Err(Refusal::unsupported(
+            path,
+            "Native array element type is not yet qualified",
+        ));
+    }
+    if member(column, "default").is_some() {
+        return Err(Refusal::unsupported(
+            append_path(path, "default"),
+            "Native array defaults are not yet qualified",
+        ));
+    }
+    let item = member(field, "itemType")
+        .and_then(|item| resolve_ref(document, item))
+        .ok_or_else(|| Refusal::unsupported(path, "Missing original itemType Field"))?;
+    if object_members(member(item, "extensions").unwrap_or(&Value::Null))
+        .is_some_and(|items| !items.is_empty())
+        || !array_items(member(item, "semanticTypes").unwrap_or(&Value::Null))
+            .unwrap_or(&[])
+            .is_empty()
+        || member(item, "allowedValues").is_some()
+        || member(item, "default").is_some()
+    {
+        return Err(Refusal::unsupported(
+            path,
+            "Array/set item extensions, semantic types, allowed values and defaults require a qualified native interpretation",
+        ));
+    }
+    let facets = member(item, "facets").unwrap_or(&Value::Null);
+    for (key, _) in object_members(facets).unwrap_or(&[]) {
+        if !(element_kind == "numeric"
+            && (key == &Utf16::from("precision") || key == &Utf16::from("scale")))
+        {
+            return Err(Refusal::unsupported(
+                path,
+                "Array/set item facets require a qualified native element constraint",
+            ));
+        }
+    }
+    if element_kind == "numeric"
+        && (number_member(element, "precision") != number_member(facets, "precision")
+            || number_member(element, "scale") != number_member(facets, "scale"))
+    {
+        return Err(Refusal::unsupported(
+            path,
+            "Native numeric element capacity must equal the item's logical precision/scale",
+        ));
+    }
+    if element_kind == "bytea" && string_member(item, "scalarType") != Some(&Utf16::from("binary"))
+    {
+        return Err(Refusal::unsupported(
+            path,
+            "bits128 bytea elements require a separately qualified width constraint",
+        ));
+    }
+    Ok(())
 }
 
 /// Reuse deployment literal admission/emission in migration plans without
@@ -1686,6 +1959,7 @@ pub(crate) fn validate_native_date(value: &str) -> Result<(), &'static str> {
 fn domain_predicates(
     column: &Value,
     field: &Value,
+    document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<String>, Refusal> {
     let path = Utf16::default();
@@ -1697,6 +1971,30 @@ fn domain_predicates(
     let scalar = u8ext(field, "scalarType").unwrap_or_default();
     let facets = member(field, "facets").unwrap_or(&Value::Null);
     let mut out = Vec::new();
+    if kind == "array" {
+        // A UMF array/set is one-dimensional and one-based. Required items
+        // exclude NULL elements. CASE orders the checks because
+        // array_position refuses multidimensional input. Set distinctness and
+        // canonical order are writer obligations, not native constraints.
+        let item_required = member(field, "itemType")
+            .and_then(|item| resolve_ref(document, item))
+            .is_some_and(|item| string_member(item, "nullability") == Some(&Utf16::from("required")));
+        let elements = if item_required {
+            format!("pg_catalog.array_position({quoted}, NULL) IS NULL")
+        } else {
+            "TRUE".to_string()
+        };
+        out.push(format!(
+            "CASE WHEN pg_catalog.array_ndims({quoted}) IS NULL THEN TRUE WHEN pg_catalog.array_ndims({quoted}) = 1 AND pg_catalog.array_lower({quoted}, 1) = 1 THEN {elements} ELSE FALSE END"
+        ));
+        if let Some(bounds) = member(facets, "collectionSize") {
+            for (key, op) in [("min", ">="), ("max", "<=")] {
+                if let Some(n) = member(bounds, key).and_then(value_number_text) {
+                    out.push(format!("pg_catalog.cardinality({quoted}) {op} {n}"));
+                }
+            }
+        }
+    }
     if kind == "numeric" {
         out.push(format!("{quoted} NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric)"));
     }
@@ -1711,7 +2009,9 @@ fn domain_predicates(
             let key = key
                 .to_utf8()
                 .map_err(|_| Refusal::unsupported(&path, "Invalid facet key Unicode"))?;
-            if !["precision", "scale", "integerWidth", "range", "length"].contains(&key.as_str()) {
+            if !["precision", "scale", "integerWidth", "range", "length"].contains(&key.as_str())
+                && !(kind == "array" && key == "collectionSize")
+            {
                 return Err(Refusal::unsupported(
                     &path,
                     "Logical facet requires a qualified native constraint",

@@ -6,6 +6,13 @@ Earlier detail is in git history and on the GitHub Releases page.
 
 ## [0.10.12] - unreleased
 
+- Core 0.10.0 gains the `json` scalar family (one arbitrary JSON value, literal `{json: ...}`) and the `set`
+  cardinality (distinct items, no order meaning, literal `{array: [...]}`); see CONTRACT-084.
+- `umf.tables` (CONTRACT-081) maps `json` to `jsonb` and array/set Fields to `{kind:"array",element}` columns
+  such as `text[]`, and adds GIN indexes, per-field btree directions and partial indexes (`where`).
+- `umf-codegen` lets a host register its own extension beside `umf.tables`
+  (`CodegenResources::register_host_extension`, `*_with_host` inspection, compile and verify); deployment
+  configuration `independentExtensions` names host extensions that do not change the generated DDL.
 - `umf-access` joins the unified release line: it now has the release version and depends on
   `umf-core>=0.10.12,<0.11` (it was `0.1.0.dev10`, pinned to an older core). It will be published to PyPI
   from the release workflow together with `umf-core` and `umf-codegen`.

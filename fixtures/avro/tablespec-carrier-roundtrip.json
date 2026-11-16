@@ -371,6 +371,13 @@
     },
     "issues": [
       {
+        "path": "/modules/0/elements/0/extensions/umf.avro",
+        "code": "SEMANTICS_UNCHECKED",
+        "classification": "not-enforced",
+        "detail": "Structure checked; semantics not validated",
+        "retainedInSource": true
+      },
+      {
         "path": "",
         "code": "RECORD_IDENTITY",
         "classification": "not-enforced",
@@ -443,7 +450,6 @@
         "nullable": true
       }
     ],
-    "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"title\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"optional\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
     "target": {
       "umf": "0.10.0",
       "id": "tablespec-result",
@@ -570,37 +576,38 @@
             {
               "id": "column:0",
               "name": "title",
-              "scalarType": "string",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "string"
             },
             {
               "id": "column:1",
               "name": "count",
-              "scalarType": "integer",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "integer"
             },
             {
               "id": "column:2",
               "name": "flag",
-              "scalarType": "boolean",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "boolean"
             },
             {
               "id": "column:3",
               "name": "score",
-              "scalarType": "float",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "float"
             },
             {
               "id": "column:4",
               "name": "optional",
-              "scalarType": "string",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "string"
             }
           ]
         }
       ]
-    }
+    },
+    "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"title\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"optional\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n"
   },
   "reverse": {
     "status": "projected",
@@ -730,32 +737,32 @@
             {
               "id": "column:0",
               "name": "title",
-              "scalarType": "string",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "string"
             },
             {
               "id": "column:1",
               "name": "count",
-              "scalarType": "integer",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "integer"
             },
             {
               "id": "column:2",
               "name": "flag",
-              "scalarType": "boolean",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "boolean"
             },
             {
               "id": "column:3",
               "name": "score",
-              "scalarType": "float",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "float"
             },
             {
               "id": "column:4",
               "name": "optional",
-              "scalarType": "string",
-              "extensions": {}
+              "extensions": {},
+              "scalarType": "string"
             }
           ]
         }
@@ -889,7 +896,6 @@
         "nullable": true
       }
     ],
-    "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Simple\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"score\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"optional\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
     "target": {
       "umf": "0.10.0",
       "id": "back",
@@ -1046,6 +1052,7 @@
           ]
         }
       ]
-    }
+    },
+    "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Simple\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"score\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"optional\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n"
   }
 }

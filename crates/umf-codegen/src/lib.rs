@@ -24,4 +24,4 @@ pub use release_resources::{
     release_manifest_json, release_manifest_sha256, release_resource, release_resource_digests,
     release_resources, ReleaseResource,
 };
-pub use resources::{CodegenEngine, CodegenResources};
+pub use resources::{CodegenEngine, CodegenResources, HOST_EXTENSION_TOKEN_MIN};

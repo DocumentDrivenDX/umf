@@ -4,6 +4,8 @@ import type {TableDeclaration,TableLifecyclePayload,TableRef} from '../extension
 export interface TableDeploymentConfiguration {
  module:string;schema:string;ownerRole:string;personRole:string;batchRole:string;
  groupRoles:Record<string,string>;
+ /** Host-asserted extensions whose payloads do not change the generated DDL (CONTRACT-081). */
+ independentExtensions?:{id:string;version:string}[];
 }
 export interface TableDeploymentStep {
  id:string;kind:'table'|'foreignKey'|'index'|'policy'|'grant'|'comment';sourcePath:string;

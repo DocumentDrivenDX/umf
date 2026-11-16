@@ -226,7 +226,7 @@ pub fn check_policy(input: &Value, ctx: &mut Context<'_>) -> Result<(), EngineEr
         fields(declaration, &["carrier", "mechanic"], &[])?;
         string_field(declaration, "carrier")?;
         let mechanic = string_field(declaration, "mechanic")?;
-        if mechanic != "sequence" && mechanic != "mapping" {
+        if mechanic != "sequence" && mechanic != "mapping" && mechanic != "set" {
             return Err(err("Unknown container mechanic"));
         }
     }
@@ -239,7 +239,7 @@ pub fn check_policy(input: &Value, ctx: &mut Context<'_>) -> Result<(), EngineEr
         )?;
         let mechanic = string_field(declaration, "mechanic")?;
         if ![
-            "boolean", "integer", "decimal", "unicode", "hex", "bits128", "uuid", "text",
+            "boolean", "integer", "decimal", "unicode", "hex", "bits128", "uuid", "text", "json",
         ]
         .contains(&mechanic.as_str())
         {
@@ -276,6 +276,23 @@ pub fn check_policy(input: &Value, ctx: &mut Context<'_>) -> Result<(), EngineEr
     }
     for diagnostic in DIAGNOSTICS {
         if !has_error(errors, diagnostic) {
+            return Err(err("Missing literal diagnostic"));
+        }
+    }
+    // CONTRACT-084 mechanics need their diagnostics only where declared, so
+    // policies retained from before them stay admissible.
+    let declares = |group: &Value, mechanic: &str| {
+        record_entries(group).is_ok_and(|entries| {
+            entries
+                .iter()
+                .any(|(_, d)| get(d, "mechanic").and_then(text).as_deref() == Some(mechanic))
+        })
+    };
+    for (group, mechanic, diagnostic) in [
+        (containers, "set", "set-duplicate"),
+        (families, "json", "json"),
+    ] {
+        if declares(group, mechanic) && !has_error(errors, diagnostic) {
             return Err(err("Missing literal diagnostic"));
         }
     }

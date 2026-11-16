@@ -1,0 +1,391 @@
+{
+  "umf": "0.10.0",
+  "id": "fireweed-space-example",
+  "vocabularies": {
+    "umf.tables": {
+      "version": "0.1.0"
+    },
+    "fireweed.space": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "space",
+      "namespace": "space",
+      "elements": [
+        {
+          "id": "id",
+          "kind": "field",
+          "scalarType": "uuid",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "owner",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "state",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "allowedValues": [
+            {
+              "string": "pending"
+            },
+            {
+              "string": "leased"
+            },
+            {
+              "string": "done"
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "due_at",
+          "kind": "field",
+          "scalarType": "timestamp",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "priority",
+          "kind": "field",
+          "scalarType": "integer",
+          "cardinality": "one",
+          "nullability": "required",
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "extensions": {}
+        },
+        {
+          "id": "body",
+          "kind": "field",
+          "scalarType": "json",
+          "cardinality": "one",
+          "nullability": "required",
+          "default": {
+            "value": {
+              "json": {}
+            },
+            "on": "missing"
+          },
+          "extensions": {}
+        },
+        {
+          "id": "await_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "await_keys",
+          "kind": "field",
+          "cardinality": "set",
+          "itemType": {
+            "module": "space",
+            "element": "await_key"
+          },
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "QueueItem",
+          "kind": "record",
+          "members": [
+            {
+              "module": "space",
+              "element": "id"
+            },
+            {
+              "module": "space",
+              "element": "owner"
+            },
+            {
+              "module": "space",
+              "element": "state"
+            },
+            {
+              "module": "space",
+              "element": "due_at"
+            },
+            {
+              "module": "space",
+              "element": "priority"
+            },
+            {
+              "module": "space",
+              "element": "body"
+            },
+            {
+              "module": "space",
+              "element": "await_keys"
+            }
+          ],
+          "keys": [
+            {
+              "id": "primary",
+              "name": "primary",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "space",
+                  "element": "id"
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "fireweed.space": {
+              "role": "queue-item"
+            }
+          }
+        }
+      ],
+      "extensions": {
+        "umf.tables": {
+          "profile": "postgresql18/0.1",
+          "tables": [
+            {
+              "id": "queue_items",
+              "record": {
+                "module": "space",
+                "element": "QueueItem"
+              },
+              "name": "queue_items",
+              "columns": [
+                {
+                  "field": {
+                    "module": "space",
+                    "element": "id"
+                  },
+                  "name": "id",
+                  "nativeType": {
+                    "kind": "uuid"
+                  },
+                  "default": {
+                    "kind": "randomUuid"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "space",
+                    "element": "owner"
+                  },
+                  "name": "owner",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "space",
+                    "element": "state"
+                  },
+                  "name": "state",
+                  "nativeType": {
+                    "kind": "text"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "space",
+                    "element": "due_at"
+                  },
+                  "name": "due_at",
+                  "nativeType": {
+                    "kind": "timestamptz"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "space",
+                    "element": "priority"
+                  },
+                  "name": "priority",
+                  "nativeType": {
+                    "kind": "int4"
+                  }
+                },
+                {
+                  "field": {
+                    "module": "space",
+                    "element": "body"
+                  },
+                  "name": "body",
+                  "nativeType": {
+                    "kind": "jsonb"
+                  },
+                  "default": {
+                    "kind": "literal",
+                    "value": {
+                      "json": {}
+                    }
+                  }
+                },
+                {
+                  "field": {
+                    "module": "space",
+                    "element": "await_keys"
+                  },
+                  "name": "await_keys",
+                  "nativeType": {
+                    "kind": "array",
+                    "element": {
+                      "kind": "text"
+                    }
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "id": "claim",
+                  "name": "queue_items_claim",
+                  "fields": [
+                    {
+                      "module": "space",
+                      "element": "due_at"
+                    },
+                    {
+                      "module": "space",
+                      "element": "priority"
+                    },
+                    {
+                      "module": "space",
+                      "element": "id"
+                    }
+                  ],
+                  "directions": [
+                    "asc",
+                    "desc",
+                    "asc"
+                  ],
+                  "unique": false,
+                  "include": [],
+                  "where": {
+                    "op": "in",
+                    "arg": {
+                      "op": "field",
+                      "field": {
+                        "module": "space",
+                        "element": "state"
+                      }
+                    },
+                    "values": [
+                      {
+                        "string": "pending"
+                      },
+                      {
+                        "string": "leased"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "await_keys",
+                  "name": "queue_items_await_keys",
+                  "method": "gin",
+                  "fields": [
+                    {
+                      "module": "space",
+                      "element": "await_keys"
+                    }
+                  ],
+                  "unique": false,
+                  "include": []
+                },
+                {
+                  "id": "body",
+                  "name": "queue_items_body",
+                  "method": "gin",
+                  "fields": [
+                    {
+                      "module": "space",
+                      "element": "body"
+                    }
+                  ],
+                  "unique": false,
+                  "include": []
+                }
+              ],
+              "checks": [],
+              "foreignKeys": [],
+              "policy": {
+                "mode": "native-rls",
+                "person": {
+                  "select": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "space",
+                      "element": "owner"
+                    }
+                  },
+                  "insert": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "space",
+                      "element": "owner"
+                    }
+                  },
+                  "update": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "space",
+                      "element": "owner"
+                    }
+                  },
+                  "delete": {
+                    "kind": "owner",
+                    "field": {
+                      "module": "space",
+                      "element": "owner"
+                    }
+                  }
+                },
+                "batch": {
+                  "select": {
+                    "kind": "allow"
+                  },
+                  "insert": {
+                    "kind": "allow"
+                  },
+                  "update": {
+                    "kind": "allow"
+                  },
+                  "delete": {
+                    "kind": "allow"
+                  }
+                }
+              }
+            }
+          ],
+          "seedSets": [],
+          "commands": []
+        },
+        "fireweed.space": {
+          "queues": [
+            {
+              "id": "jobs",
+              "table": "queue_items"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

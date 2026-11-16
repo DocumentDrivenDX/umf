@@ -1734,6 +1734,173 @@
                     "message": "Item/value definition must be an explicit Field",
                     "severity": "error"
                   }
+                },
+                {
+                  "op": "emit",
+                  "when": {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "e"
+                              },
+                              [
+                                "cardinality"
+                              ]
+                            ]
+                          },
+                          "set"
+                        ]
+                      },
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "op": "get",
+                            "args": [
+                              {
+                                "var": "item"
+                              },
+                              [
+                                "node",
+                                "kind"
+                              ]
+                            ]
+                          },
+                          "field"
+                        ]
+                      },
+                      {
+                        "op": "or",
+                        "args": [
+                          {
+                            "op": "ne",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "item"
+                                  },
+                                  [
+                                    "node",
+                                    "cardinality"
+                                  ]
+                                ]
+                              },
+                              "one"
+                            ]
+                          },
+                          {
+                            "op": "ne",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "item"
+                                  },
+                                  [
+                                    "node",
+                                    "nullability"
+                                  ]
+                                ]
+                              },
+                              "required"
+                            ]
+                          },
+                          {
+                            "op": "not",
+                            "args": [
+                              {
+                                "op": "in",
+                                "args": [
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "item"
+                                      },
+                                      [
+                                        "node",
+                                        "scalarType"
+                                      ]
+                                    ]
+                                  },
+                                  {
+                                    "op": "get",
+                                    "args": [
+                                      {
+                                        "var": "policy"
+                                      },
+                                      [
+                                        "keys",
+                                        "equalityFamilies"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "some",
+                            "args": [
+                              {
+                                "op": "get",
+                                "args": [
+                                  {
+                                    "var": "item"
+                                  },
+                                  [
+                                    "node",
+                                    "references"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "as": "itemReference",
+                            "value": {
+                              "op": "eq",
+                              "args": [
+                                {
+                                  "op": "get",
+                                  "args": [
+                                    {
+                                      "var": "itemReference"
+                                    },
+                                    [
+                                      "role"
+                                    ]
+                                  ]
+                                },
+                                "record-type"
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "diagnostic": {
+                    "code": "SET_ITEM_EQUALITY",
+                    "path": {
+                      "op": "concat",
+                      "args": [
+                        {
+                          "var": "ep"
+                        },
+                        "/itemType"
+                      ]
+                    },
+                    "message": "Set items require a required singleton Field with exact core equality",
+                    "severity": "error"
+                  }
                 }
               ]
             }
@@ -4992,7 +5159,8 @@
                           },
                           [
                             "array",
-                            "map"
+                            "map",
+                            "set"
                           ]
                         ]
                       }
@@ -5011,7 +5179,7 @@
                     "/facets/collectionSize"
                   ]
                 },
-                "message": "Collection bounds require array/map Field",
+                "message": "Collection bounds require array/map/set Field",
                 "severity": "error"
               }
             }
@@ -6128,7 +6296,7 @@
     }
   ],
   "provenance": {
-    "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-    "compilerSha256": "c6edd02a853602eb1ee2894656227c7751e6438bb21ebdf8c9a66617417ff9f2"
+    "modelSha256": "394ded5ee6ffd8ae4465fcedaefb1ccd6eae4da5c259ffddf36b1077a73c11bf",
+    "compilerSha256": "f06963f9eb707647fc4cf94c3f8ff95a5e34f9e77ff136cd8fc381d0f242a1b8"
   }
 }

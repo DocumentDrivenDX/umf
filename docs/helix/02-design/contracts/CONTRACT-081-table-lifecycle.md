@@ -102,7 +102,7 @@ writes. Forged wire requests MUST receive the same check as generated methods.
 | Table | `{id,record,name,columns,indexes,checks,foreignKeys,policy}` | Stable unique `id`; exact core Record; explicit native table name; complete mappings of its stored singleton members |
 | Column | `{field:Ref,name,nativeType,default?,generated?,immutable?}` | Exact member Field; explicit native column name; required/nullable comes from core; no hidden copy of logical identity |
 | NativeType | tagged object, below | Explicit PostgreSQL capacity; typed inspection and client/runtime checks retain its bounds |
-| Index | `{id,name,fields:Ref[],unique:boolean,include:Ref[]}` | Nonempty ordered fields, no duplicates; include cannot overlap; v1 is nonconcurrent btree unless a separately declared migration step selects concurrency |
+| Index | `{id,name,fields:Ref[],unique:boolean,include:Ref[],method?,directions?,where?}` | Nonempty ordered fields, no duplicates; include cannot overlap; nonconcurrent unless a separately declared migration step selects concurrency; method, direction and predicate rules below |
 | Check | `{id,name,expression:Expr}` | Typed, bounded predicate; PostgreSQL CHECK accepts null/unknown, independently of NOT NULL |
 | ForeignKey | `{id,name,fields:Ref[],target:KeyRef,onUpdate,onDelete,deferrable,relationship?}` | Exact ordered matching domains and Key; actions `restrict`, `noAction`, `cascade`, `setNull`; `deferrable` is `false`, `immediate` or `deferred` |
 | Policy | `{mode:"native-rls",person:CommandRules,batch:CommandRules}` | All four commands are explicit in each CommandRules map; omitted policy never means public access |
@@ -112,9 +112,11 @@ writes. Forged wire requests MUST receive the same check as generated methods.
 | FieldValue | `{field:Ref,value:Literal}` | Existing exact core literal carrier and domain; null/absence remain distinct |
 
 NativeType is exactly one of `{kind:"boolean"|"text"|"int2"|"int4"|"int8"|
-"float4"|"float8"|"date"|"timestamp"|"timestamptz"|"uuid"|"bytea"}`,
-`{kind:"varchar"|"char",length:positiveInteger}` or
-`{kind:"numeric",precision:positiveInteger,scale:integer}`. Numeric precision is
+"float4"|"float8"|"date"|"timestamp"|"timestamptz"|"uuid"|"bytea"|"jsonb"}`,
+`{kind:"varchar"|"char",length:positiveInteger}`,
+`{kind:"numeric",precision:positiveInteger,scale:integer}` or
+`{kind:"array",element:ScalarNativeType}`, where ScalarNativeType is any of the
+preceding non-array forms (see "JSON, arrays and index access" below). Numeric precision is
 at most1000 and scale is from0 through precision in this profile. Native
 capacity does not widen a logical domain. A backend MUST explicitly refuse any
 selected carrier or facet it cannot preserve/execute; mere enumeration here is
@@ -141,6 +143,72 @@ MUST derive deterministically from stable source identities, with collision
 checking, rather than truncating display names. Type/Key/relationship mismatches,
 ambiguous identity, unknown applicable facets and unresolved dependencies block
 compilation before SQL is emitted.
+
+### JSON, arrays and index access
+
+These additions serve core `json` values and sets (CONTRACT-084). They keep the
+`umf.tables`0.1.0 version and `postgresql18/0.1` profile: every addition is a new
+optional member or a new NativeType branch, so existing declarations, their
+inspection and their compiled bundles are unchanged. An older inspector reports
+the new members as unknown (incomplete) or the new branches as invalid; neither
+compiles.
+
+**Column shapes.** `jsonb` maps a singleton `json` Field. `{kind:"array",
+element}` maps one Field whose cardinality is `array` or `set`; the element maps
+the Field's `itemType`, which must be a singleton Field, not record-valued,
+whose family matches the element under the scalar rules (`text` and `varchar`
+for string, and so on). Arrays do not nest. Array columns of strings use
+`COLLATE "C"`. A json or array column cannot be a Key component (core requires
+singleton equality domains).
+
+| Logical | Native | Generated constraint | Residual |
+| --- | --- | --- | --- |
+| `json` | `jsonb` | none | Number spelling, whitespace and member order are not kept; U+0000 is not representable and refuses |
+| `set` of an equality family | `element[]`, e.g. `text[]` | one-dimensional, one-based; no NULL elements | Distinctness and canonical order are writer obligations, not native constraints |
+| `array` | `element[]` | one-dimensional, one-based; no NULL elements when the item is required | none |
+
+The generated domain constraint is `CASE WHEN array_ndims(c) IS NULL THEN TRUE
+WHEN array_ndims(c) = 1 AND array_lower(c, 1) = 1 THEN array_position(c, NULL)
+IS NULL ELSE FALSE END` (schema-qualified), with `cardinality(c)` bounds when the
+Field declares `facets.collectionSize`. The CASE fixes evaluation order because
+`array_position` refuses multidimensional input.
+
+This compiler cut admits array elements `boolean`, `text`, `int8`, `uuid`,
+`date`, `timestamptz`, `numeric` (precision and scale equal to the item's
+facets), `bytea` (binary items) and `jsonb`. It refuses array defaults, item
+facets other than numeric precision/scale, and item allowed values, defaults,
+extensions or semantic types, because it cannot yet enforce them per element.
+A `jsonb` default is a core `{json:...}` literal rendered as `'...'::jsonb`.
+Typed expressions cannot compare `json` values; `isNull` remains available.
+
+**Index method.** `method` is `"btree"` (default when omitted) or `"gin"`. A GIN
+index is not unique, has no `include` and no `directions`, and every key field
+maps an array or `jsonb` column. It uses PostgreSQL's default operator class
+(`array_ops`, `jsonb_ops`), which serves `@>`, `<@`, `&&` and the jsonb key
+operators.
+
+**Direction.** `directions`, when present, has one `"asc"` or `"desc"` per key
+field and applies to btree only. `desc` emits `DESC`; NULL placement is
+PostgreSQL's default for that direction (NULLS FIRST for DESC), which is
+irrelevant for required fields.
+
+**Partial index.** `where` is an `Expr` with the existing typing rules: Boolean,
+over this table's fields, no coercion. It renders as `WHERE (...)` with the same
+literal encoding as checks; every operator in `Expr` is immutable, as PostgreSQL
+requires for index predicates. A claim index such as
+`(due_at, priority DESC, id) WHERE state IN ('pending','leased')` is
+`{fields:[due_at,priority,id],directions:["asc","desc","asc"],where:{op:"in",
+arg:{op:"field",field:state},values:[{string:"pending"},{string:"leased"}]}}`.
+
+An index declared on a table in its initial deployment, or on a table created
+by a migration, needs no further declaration: initial DDL creates it after the
+table, nonconcurrently, in the same transaction. Method, direction and predicate
+are part of the index's `definitionSql`, so migration discovery treats a change
+to any of them as an index replacement requiring review.
+
+Diagnostics: `TABLES_INDEX_METHOD`, `TABLES_INDEX_DIRECTIONS`,
+`TABLES_INDEX_PREDICATE`, and `TABLES_NATIVE_TYPE` for a json/array mapping
+mismatch.
 
 ### Typed expressions and row rules
 
@@ -211,7 +279,7 @@ and uncertain write outcome, without returning raw database diagnostics.
 ### Binding, output and installed authority
 
 Deployment configuration is trusted host input:
-`{module,schema,ownerRole,personRole,batchRole,groupRoles}`. The selected module owns every generated table in the bundle. Native schema and role names
+`{module,schema,ownerRole,personRole,batchRole,groupRoles,independentExtensions?}`. The selected module owns every generated table in the bundle. Native schema and role names
 are not supplied by generated wire calls. The owner is a separate non-login
 install role. Runtime roles MUST NOT own plugin tables or have superuser,
 BYPASSRLS, CREATEROLE, database/schema creation or access to another plugin's
@@ -219,6 +287,36 @@ objects. Effective person/batch identities remain distinct; group memberships
 and SET ROLE reachability MUST be inspected transitively. Person/batch grant
 sets cannot overlap through inheritance. Installation MUST NOT alter unrelated
 schemas, roles or default privileges. No module can name arbitrary grant targets.
+
+**Host extensions.** A host may register its own extension package beside
+`umf.tables` (Fireweed registers its queue vocabulary this way; that extension
+and its semantics live in the host's repository, not in UMF). Lifecycle
+inspection then validates the host extension's semantics through host
+capabilities supplied by token; without them the extension is reported
+`SEMANTICS_UNCHECKED` and inspection is incomplete. Deployment still refuses a
+selected module, Record or column Field that carries any extension other than
+`umf.tables`, unless the trusted configuration lists it in
+`independentExtensions:[{id,version}]` (at most64 entries, no repeated ID, never
+`umf.tables`), with the version the document declares. That entry is the host's
+assertion that the extension's payloads change no generated table, column,
+constraint, index, policy or grant. It is part of the retained configuration
+and its digest, so verification recompiles under the same assertion. Array/set
+item Fields still refuse every extension.
+
+The Rust API in the published `umf-codegen` crate:
+
+```rust
+let mut ctx = umf_core::Context::catalog();
+let mut resources = umf_codegen::CodegenResources::release(&mut ctx)?;
+resources.register_host_extension(&package, token /* >= 1024 */, &mut ctx)?;
+let engine = umf_codegen::CodegenEngine::new(&resources);
+let inspection = engine.inspect_table_lifecycle_with_host(&document, &mut host, &mut ctx)?;
+let result = engine.compile_table_deployment_with_host(&request, &mut host, &mut ctx)?;
+let bundle = engine.verify_table_deployment_with_host(&bundle, &mut host, &mut ctx)?;
+```
+
+`host` implements `umf_core::Capabilities` for the registered tokens. The
+methods without `_with_host` keep their behavior.
 
 A compiled bundle follows `spec/extensions/tables/deployment.schema.json`:
 `{version:"umf.table-deployment/0.1",canonicalization:"RFC8785",source,

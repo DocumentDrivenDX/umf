@@ -1362,6 +1362,44 @@ fn unicode_count(value: &Utf16) -> Result<usize, LiteralFault> {
     }
     Ok(count)
 }
+/// Admit one JSON value of the core `json` family: Unicode scalar strings and
+/// member names, unique member names and finite numbers, within the depth limit.
+fn check_json_value(
+    value: &Value,
+    depth: usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), LiteralFault> {
+    ctx.charge_work(1, Utf16::default())
+        .map_err(LiteralFault::from_engine)?;
+    if depth > ctx.limits().max_depth {
+        return Err(fail("depth"));
+    }
+    match value {
+        Value::Null | Value::Bool(_) => Ok(()),
+        Value::Number(number) if number.is_finite() => Ok(()),
+        Value::Number(_) => Err(fail("json")),
+        Value::String(text) => unicode_count(text).map(|_| ()),
+        Value::Array(items) => {
+            for item in items {
+                check_json_value(item, depth + 1, ctx)?;
+            }
+            Ok(())
+        }
+        Value::Object(members) => {
+            let mut names = std::collections::BTreeSet::new();
+            for (name, item) in members {
+                unicode_count(name)?;
+                ctx.charge_work(name.len().saturating_add(1), Utf16::default())
+                    .map_err(LiteralFault::from_engine)?;
+                if !names.insert(name.units().to_vec()) {
+                    return Err(fail("json"));
+                }
+                check_json_value(item, depth + 1, ctx)?;
+            }
+            Ok(())
+        }
+    }
+}
 fn check_wrapper(value: &Value, wrapper_keys: usize) -> Result<(), LiteralFault> {
     let Some(m) = object(value) else {
         return Err(fail("wrapper"));
@@ -1631,7 +1669,12 @@ fn evaluate(
     if let Some(container) = get(containers, &card) {
         let carrier_name = str_at(container, "carrier").unwrap_or_default();
         let items = get(value, &carrier_name).ok_or_else(|| fail("container"))?;
-        let sequence = str_at(container, "mechanic").as_deref() == Some("sequence");
+        let container_mechanic = str_at(container, "mechanic").unwrap_or_default();
+        let set = container_mechanic == "set";
+        let sequence = container_mechanic == "sequence" || set;
+        if !sequence && container_mechanic != "mapping" {
+            return Err(fail("mechanic"));
+        }
         if sequence && !matches!(items, Value::Array(_))
             || !sequence && !matches!(items, Value::Object(_))
         {
@@ -1698,6 +1741,19 @@ fn evaluate(
                     ctx,
                 )?
             }
+            if set {
+                // CONTRACT-084: set items are distinct under the item Field's
+                // exact core equality; order carries no meaning.
+                let mut seen = std::collections::BTreeSet::new();
+                for child_value in array(items).unwrap() {
+                    let identity = exact_identity(child, child_value, policy, ctx)?;
+                    ctx.charge_work(identity.len().saturating_add(1), Utf16::default())
+                        .map_err(LiteralFault::from_engine)?;
+                    if !seen.insert(identity) {
+                        return Err(fail("set-duplicate"));
+                    }
+                }
+            }
         } else {
             for (_, child_value) in object(items).unwrap() {
                 evaluate(
@@ -1733,6 +1789,15 @@ fn evaluate(
     }
     let fam = family(field, policy).ok_or_else(|| fail("family"))?;
     let raw = carrier(value, fam).ok_or_else(|| fail("family"))?;
+    if str_at(fam, "mechanic").as_deref() == Some("json") {
+        // CONTRACT-084: one exact JSON value. No core refinement applies, so
+        // defaults may carry it; allowed values still need equality and refuse.
+        if get(field, "allowedValues").is_some() {
+            return Err(fail("equality"));
+        }
+        check_json_value(raw, depth, ctx)?;
+        return Ok(());
+    }
     if !truth_at(fam, "refinements") {
         if enabled {
             return Err(fail("refinements"));

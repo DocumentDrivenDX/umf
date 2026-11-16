@@ -165,8 +165,8 @@
       {
         "code": "OPENAPI_SCHEMA_DIALECT",
         "path": "/components/schemas/Value/properties/value",
-        "severity": "warning",
-        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect"
+        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect",
+        "severity": "warning"
       },
       {
         "code": "OPENAPI_VALIDATION_LIMIT",
@@ -198,8 +198,8 @@
       {
         "code": "OPENAPI_SCHEMA_DIALECT",
         "path": "/components/schemas/Value",
-        "severity": "warning",
-        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect"
+        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect",
+        "severity": "warning"
       },
       {
         "code": "OPENAPI_VALIDATION_LIMIT",
@@ -256,8 +256,8 @@
       {
         "code": "OPENAPI_SCHEMA_DIALECT",
         "path": "/components/schemas/Value/dependencies/value",
-        "severity": "warning",
-        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect"
+        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect",
+        "severity": "warning"
       },
       {
         "code": "OPENAPI_VALIDATION_LIMIT",

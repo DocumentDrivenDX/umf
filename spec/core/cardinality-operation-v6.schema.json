@@ -8,6 +8,7 @@
         "one",
         "array",
         "map",
+        "set",
         "unspecified"
       ]
     },
@@ -98,7 +99,8 @@
                       "cardinality": {
                         "enum": [
                           "array",
-                          "map"
+                          "map",
+                          "set"
                         ]
                       }
                     }
@@ -209,7 +211,8 @@
               "cardinality": {
                 "enum": [
                   "array",
-                  "map"
+                  "map",
+                  "set"
                 ]
               }
             }
