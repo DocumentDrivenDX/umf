@@ -281,6 +281,7 @@ pub mod registry_policy;
 pub mod resource_cache;
 pub mod reviewed_parameters;
 pub mod rfc3339_exact_instant;
+pub mod exact_duration;
 pub mod scalar_type_inspection;
 pub mod schema;
 pub mod schema_properties;
