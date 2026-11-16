@@ -31,10 +31,11 @@ interchange bytes independent of YAML or JSON envelope formatting.
 CONTRACT-909 adds an explicit elapsed scalar for the workflow profile.
 CONTRACT-065 continues to own exact instant parsing.
 
-Validation uses the bundled closed declaration schema and a static pass
-for resolved references, predicates and graph invariants. Interchange
-retains unknown fields and diagnoses them. Preparation rejects them before
-minting its private compiled declaration and lowerings.
+The Rust compiler validates references, predicates, typed run state and
+graph constraints against the bundled schema and semantic rules. The
+compiled definition prepares guarded state updates, effect intents and
+wait registrations from caller-supplied snapshots. The host commits a
+state update and its successor together.
 
 ## Component changes
 
@@ -45,10 +46,8 @@ minting its private compiled declaration and lowerings.
 | TD-910-03 | `umf-core-wire::workflow_binding` | Converts prepared results and diagnostics to wire shapes. JavaScript bindings marshal input bytes and decode results without interpreting DSL semantics. |
 | TD-910-04 | `spec/extensions/workflow` | Owns the module source payload, closed compile schema and property evidence shape. Effect binding and predicate profiles use explicit version identifiers. |
 
-CONTRACT-900 and CONTRACT-908 remain the authorities for their own action
-and Saga semantics. External actions use the new companion profile because
-atomic transactional action declarations have different execution promises.
-The release and package version remains managed by normal UMF release flow.
+CONTRACT-910 owns the external-effect profile. CONTRACT-900 and CONTRACT-908
+own transactional actions and sagas.
 
 ## Testing
 

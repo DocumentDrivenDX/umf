@@ -54,6 +54,9 @@ seconds followed by lexicographic ordering of canonical fraction digits.
 
 ## Precedence and compatibility
 
+Workflow profiles use this separately versioned scalar. Core metamodel
+admission requires demonstrated reuse under [ADR-007](../adr/ADR-007-workflow-declaration-scope.md).
+
 A consumer selects this profile explicitly. Arrow's elapsed duration also
 carries a native physical width and unit. Conversion requires an explicit
 mapping and retains the native representation.

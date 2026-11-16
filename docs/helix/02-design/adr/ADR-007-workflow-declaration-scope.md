@@ -29,8 +29,8 @@ identity, logical clock, state storage, scheduling, event ingestion, provider
 execution and recovery. Pure decision helpers can operate over explicit inputs.
 This allocation follows NFR-50. [#169](https://github.com/DocumentDrivenDX/umf/issues/169)
 
-The initial profile has an acyclic graph, single record scope, external effect
-declarations, guarded steps and correlated waits. Saga remains the sequential
+Workflow profiles use an acyclic graph and a single record scope. The
+correlated profile adds event-driven waits. Saga remains the sequential
 transactional-action and compensation profile under CONTRACT-908. Registry or
 provider configuration cannot reinterpret a workflow definition version.
 
@@ -46,5 +46,4 @@ The reuse bar is unchanged input bytes and shared vectors consumed by two
 independent implementations, including a workflow runtime or interpreter
 exercising the complete trace and a separately implemented validator or
 compiler. Static schema acceptance alone is insufficient. Claims name the exact
-profile, implementations, properties, failed findings and test bounds. The
-consumer model and interpreter cited in the issue set have unconfirmed custody.
+profile, implementations, properties, findings and test bounds.

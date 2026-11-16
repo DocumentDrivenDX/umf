@@ -137,8 +137,12 @@ UMF does not need to:
 
 UMF remains an interchange and semantic representation layer. Query execution,
 storage services, workflow orchestration, application execution, and
-general-purpose inference belong to consuming systems (NFR-50). No product
-requirement has been silently moved to a deferred backlog.
+general-purpose inference belong to consuming systems (NFR-50).
+
+UMF supports portable per-record workflow declarations. Consumers can preserve
+the original definition, validate it offline, and prepare decisions for effects,
+waits, branches, and typed run state. The consumer owns scheduling, state, and
+provider execution. [Workflow contract](../02-design/contracts/CONTRACT-910-workflow-declarations.md)
 
 ## Users and Scope
 
