@@ -15,6 +15,13 @@ ddx:
 
 # ADR-007 Workflow declaration scope
 
+## Problem
+
+Consumer workflows need portable external effects, waits and branching. The
+existing Saga contract allocates sequential transactional action coordination.
+
+## Decision
+
 UMF defines versioned workflow declarations, their offline interchange,
 static semantics, portable transition obligations and scoped evidence. Consumer
 runtimes supply the authorized record snapshot, stable record and enrollment
@@ -26,6 +33,14 @@ The initial profile has an acyclic graph, single record scope, external effect
 declarations, guarded steps and correlated waits. Saga remains the sequential
 transactional-action and compensation profile under CONTRACT-908. Registry or
 provider configuration cannot reinterpret a workflow definition version.
+
+## Why we chose this
+
+The profile has explicit preparation semantics and leaves operational decisions
+to a consumer with custody of the authorized record. This allows independent
+implementations to check the same declarations.
+
+## Consequences
 
 The reuse bar is unchanged input bytes and shared vectors consumed by two
 independent implementations, including a workflow runtime or interpreter

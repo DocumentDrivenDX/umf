@@ -78,7 +78,23 @@
     },
     "edges": {
       "type": "array",
-      "maxItems": 1024
+      "maxItems": 1024,
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "$ref": "#/$defs/id"
+          },
+          "to": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ],
+        "additionalProperties": false
+      }
     },
     "predicateProfile": {
       "const": "umf.workflow.predicates/1"
