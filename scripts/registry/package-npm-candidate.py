@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a local dual-platform npm candidate from the two pinned SDK archives."""
+"""Assemble a registry SDK from verified platform release archives."""
 import gzip
 import hashlib
 import io
@@ -42,45 +42,65 @@ def main():
     parser.add_argument('--assets', type=Path, required=True, help='directory containing the two pinned SDK archives')
     parser.add_argument('--output', type=Path, required=True, help='directory for the candidate tarball')
     args = parser.parse_args()
-    inputs = {key: read_archive(args.assets / spec[0]) for key, spec in ARCHIVES.items()}
-    for key, spec in ARCHIVES.items():
-        actual = sha((args.assets / spec[0]).read_bytes())
-        if actual != ARCHIVE_SHA256[key]: raise ValueError(f'{key} SDK archive SHA-256 mismatch: {actual}')
-    names = [set(x) for x in inputs.values()]
-    if names[0] != names[1]: raise ValueError('SDK archive member sets differ')
-    mac, linux = inputs['macos-aarch64'], inputs['linux-x86_64']
-    if not mac[ADDON][1] or not linux[ADDON][1] or mac[ADDON][1] == linux[ADDON][1]:
-        raise ValueError('native addon inputs are empty or unexpectedly identical')
-    ignored = {ADDON, MANIFEST, RUST_MANIFEST}
-    for same in (NODE, PKG):
-        if mac[same][1] != linux[same][1]: raise ValueError(f'expected identical source member: {same}')
-    differing = [n for n in names[0] - ignored if mac[n][1] != linux[n][1]]
-    if differing: raise ValueError(f'non-platform SDK bytes differ: {differing[:20]}')
-    if {n for n in names[0] if mac[n][1] != linux[n][1]} != ignored:
-        raise ValueError('input archives must differ in exactly the addon and two platform manifests')
-    if not mac[MANIFEST][1] or not linux[MANIFEST][1]: raise ValueError('input archive manifest missing')
-    base = {n: value[1] for n, value in mac.items()}
+    out = assemble("0.10.11", args.assets, args.output, ARCHIVES, ARCHIVE_SHA256)
+    print(f'{out}\n{sha(out.read_bytes())}  {out.name}')
+
+
+def assemble(version, assets, output, archives, archive_digests):
+    inputs = {}
+    for key, (filename, _, _) in archives.items():
+        path = assets / filename
+        if sha(path.read_bytes()) != archive_digests[key]:
+            raise ValueError(f'{key} SDK archive SHA-256 mismatch')
+        inputs[key] = read_archive(path)
+        if json.loads(inputs[key][PKG][1])['version'] != version:
+            raise ValueError(f'{key} SDK package version mismatch')
+    primary = inputs['linux-x86_64']
+    source_tree = json.loads(primary[MANIFEST][1])['sourceTreeSha256']
+    addon_routes = {}
+    for key, members in inputs.items():
+        if members.keys() != primary.keys() or members[PKG][1] != primary[PKG][1]:
+            raise ValueError(f'{key} SDK archive layout or package metadata differs')
+        _, platform, arch = archives[key]
+        distribution = json.loads(members[MANIFEST][1])
+        runtime = json.loads(members[RUST_MANIFEST][1])
+        if (distribution['sourceTreeSha256'] != source_tree
+                or runtime['sourceClosure']['sha256'] != source_tree
+                or runtime['packageVersion'] != version
+                or runtime['platform']['os'] != platform
+                or runtime['platform']['nodeArch'] != arch):
+            raise ValueError(f'{key} SDK source, version or target differs')
+        for name, digest in distribution['sha256'].items():
+            if sha(members[f'package/{name}'][1]) != digest:
+                raise ValueError(f'{key} SDK member checksum mismatch: {name}')
+        if runtime['assets']['dist/umf_core_node.node'] != sha(members[ADDON][1]):
+            raise ValueError(f'{key} native addon checksum mismatch')
+        addon = members[ADDON][1]
+        if not addon or any(addon == other for other in addon_routes.values()):
+            raise ValueError(f'{key} native addon is empty or duplicated')
+        addon_routes[f'{platform}-{arch}'] = addon
+    base = {name: value[1] for name, value in primary.items()}
     node = base[NODE].decode('utf-8')
-    if node.count(LOAD) != 1: raise ValueError('expected unique narrow native-addon require seam')
+    if node.count(LOAD) != 1:
+        raise ValueError('expected unique native-addon require seam')
     base[NODE] = node.replace(LOAD, 'addon = require2("./native-addon.cjs");').encode()
-    base['package/dist/native-addon.cjs'] = (
-        "'use strict';\n" +
-        "const p = process.platform, a = process.arch;\n" +
-        "if (p === 'darwin' && a === 'arm64') module.exports = require('./umf_core_node-darwin-arm64.node');\n" +
-        "else if (p === 'linux' && a === 'x64') module.exports = require('./umf_core_node-linux-x64.node');\n" +
-        "else throw new Error(`@documentdrivendx/umf-core has no native addon for ${p}-${a}`);\n"
-    ).encode()
-    base['package/dist/umf_core_node-darwin-arm64.node'] = mac[ADDON][1]
-    base['package/dist/umf_core_node-linux-x64.node'] = linux[ADDON][1]
+    selector = ["'use strict';", "const platform = process.platform + '-' + process.arch;"]
+    for route, addon in sorted(addon_routes.items()):
+        filename = f'umf_core_node-{route}.node'
+        selector.append(f'if (platform === "{route}") module.exports = require("./{filename}");')
+        base[f'package/dist/{filename}'] = addon
+    selector.append('else throw new Error(`@documentdrivendx/umf-core has no native addon for ${platform}`);')
+    base['package/dist/native-addon.cjs'] = ('\n'.join(selector) + '\n').encode()
     del base[ADDON]
     # The upstream build manifest describes one native build host. Rebase only
     # its packaging-facing asset closure onto the combined registry package.
     runtime_manifest = json.loads(base[RUST_MANIFEST])
-    runtime_manifest['platform'] = {'scope': 'registry package supports darwin-arm64 and linux-x64'}
-    runtime_manifest['nativeBuild'] = {'scope': 'two verified, prebuilt release addons; no rebuild performed'}
+    runtime_manifest['platform'] = {'scope': 'registry package', 'targets': sorted(addon_routes)}
+    runtime_manifest['nativeBuild'] = {'scope': 'verified platform addons from release archives'}
     runtime_manifest['assets'].pop('dist/umf_core_node.node', None)
-    runtime_manifest['assets']['dist/umf_core_node-darwin-arm64.node'] = sha(base['package/dist/umf_core_node-darwin-arm64.node'])
-    runtime_manifest['assets']['dist/umf_core_node-linux-x64.node'] = sha(base['package/dist/umf_core_node-linux-x64.node'])
+    for route, addon in addon_routes.items():
+        runtime_manifest['assets'][f'dist/umf_core_node-{route}.node'] = sha(addon)
+    runtime_manifest['assets']['dist/native-addon.cjs'] = sha(base['package/dist/native-addon.cjs'])
     runtime_manifest['assets'][NODE.removeprefix('package/')] = sha(base[NODE])
     base[RUST_MANIFEST] = (json.dumps(runtime_manifest, indent=2) + '\n').encode()
     metadata = json.loads(base[PKG])
@@ -92,22 +112,22 @@ def main():
     manifest = json.loads(base[MANIFEST])
     manifest['sha256'] = {n.removeprefix('package/'): sha(b) for n,b in sorted(base.items()) if n != MANIFEST}
     manifest['registryAssembly'] = {
-        'profile': 'umf.npm.dual-native-addon/1',
-        'sourceArchives': {k: {'file': v[0], 'sha256': ARCHIVE_SHA256[k]} for k,v in ARCHIVES.items()},
-        'nativeAddons': {k: sha(inputs[k][ADDON][1]) for k in ARCHIVES},
-        'sharedMembersByteIdenticalExcept': sorted(ignored),
+        'profile': 'umf.npm.platform-native-addons/1',
+        'sourceArchives': {k: {'file': v[0], 'sha256': archive_digests[k]} for k,v in archives.items()},
+        'nativeAddons': {k: sha(inputs[k][ADDON][1]) for k in archives},
+        'sharedRuntimeArchive': archives['linux-x86_64'][0],
         'selector': 'dist/native-addon.cjs',
     }
     base[MANIFEST] = (json.dumps(manifest, indent=2) + '\n').encode()
-    out = args.output / 'documentdrivendx-umf-core-0.10.11.tgz'
-    args.output.mkdir(parents=True, exist_ok=True)
+    out = output / f'documentdrivendx-umf-core-{version}.tgz'
+    output.mkdir(parents=True, exist_ok=True)
     # Preserve source archive member metadata for inherited files; use stable metadata for additions.
     with out.open('wb') as raw:
-        with gzip.GzipFile(fileobj=raw, mode='wb', mtime=0) as gz:
+        with gzip.GzipFile(filename="", fileobj=raw, mode='wb', mtime=0) as gz:
             with tarfile.open(fileobj=gz, mode='w') as tf:
                 for name, data in sorted(base.items()):
                     original_name = name
-                    original = mac.get(original_name, (None,))[0]
+                    original = primary.get(original_name, (None,))[0]
                     info = tarfile.TarInfo(name)
                     if original is not None:
                         info.mode, info.mtime, info.uid, info.gid = original.mode, original.mtime, original.uid, original.gid
@@ -116,10 +136,10 @@ def main():
                         info.mode, info.mtime, info.uid, info.gid = 0o644, 0, 0, 0
                     info.size = len(data)
                     tf.addfile(info, io.BytesIO(data))
-    verify(out, base)
-    print(f'{out}\n{sha(out.read_bytes())}  {out.name}')
+    verify(out, base, version, len(addon_routes))
+    return out
 
-def verify(path, expected):
+def verify(path, expected, version, route_count):
     actual = read_archive(path)
     if set(actual) != set(expected): raise ValueError('candidate archive member set mismatch')
     for n, b in expected.items():
@@ -130,12 +150,12 @@ def verify(path, expected):
         if member not in actual or sha(actual[member][1]) != expected_hash:
             raise ValueError(f'rust-default-manifest asset mismatch: {rel}')
     package = json.loads(actual[PKG][1])
-    if package['name'] != '@documentdrivendx/umf-core' or package['version'] != '0.10.11' or package.get('private'):
+    if package['name'] != '@documentdrivendx/umf-core' or package['version'] != version or package.get('private'):
         raise ValueError('registry package metadata mismatch')
     if package.get('license') != 'MIT OR Apache-2.0' or package.get('repository', {}).get('url') != 'https://github.com/DocumentDrivenDX/umf':
         raise ValueError('license/repository metadata mismatch')
-    if actual['package/dist/native-addon.cjs'][1].count(b'require(') != 2:
-        raise ValueError('selector does not have exactly the two addon routes')
+    if actual['package/dist/native-addon.cjs'][1].count(b'require(') != route_count:
+        raise ValueError('selector route count mismatch')
     node = actual[NODE][1].decode()
     if LOAD in node or 'require2("./native-addon.cjs")' not in node: raise ValueError('Node entry seam mismatch')
 
