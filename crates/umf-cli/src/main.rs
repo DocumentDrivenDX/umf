@@ -380,7 +380,6 @@ fn resource_manifest_sha256() -> String {
     umf_codegen::release_manifest_sha256()
 }
 
-#[cfg(feature = "codegen")]
 fn output_encoding_error() -> umf_core::EngineError {
     umf_core::EngineError::new(
         "OUTPUT_ENCODING",
@@ -539,7 +538,7 @@ fn codegen_operation(
 fn request_error(message: &str) -> umf_core::EngineError {
     umf_core::EngineError::new("REQUEST", Utf16::default(), message)
 }
-#[cfg(feature = "codegen")]
+#[cfg(any(feature = "codegen", feature = "embedded-adapters"))]
 fn engine_error(error: umf_core::EngineError) -> String {
     let mut ctx = Context::ordinary();
     let fields = vec![
@@ -706,7 +705,10 @@ fn run(args: Vec<String>) -> Result<(), String> {
         return Ok(());
     }
     if args.first().map(String::as_str) == Some("dbt") {
+        #[cfg(feature = "embedded-adapters")]
         return dbt_run(&args[1..]);
+        #[cfg(not(feature = "embedded-adapters"))]
+        return Err("dbt requires the embedded-adapters CLI feature".into());
     }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("graphql") {
@@ -1158,6 +1160,7 @@ fn avro_cardinality_run(args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
+#[cfg(feature = "embedded-adapters")]
 fn dbt_run(args: &[String]) -> Result<(), String> {
     let profile = umf_core_wire::dbt_binding::PROFILE;
     if args == ["--version"] {
