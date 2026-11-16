@@ -836,6 +836,39 @@ class GenerationEnrollmentAuthorityTests(unittest.TestCase):
         self.assertIs(recovered._trust, self.trust)
         self.assertTrue(recovered.public_reference['sourceTestOnly'])
 
+    def test_context_reservation_accepts_a_concurrently_confirmed_birth(self) -> None:
+        registry = self.root / 'contexts.jsonl'
+        expected = registry.read_bytes()
+        exists = Path.exists
+        read_marker = authority._ContextJournal._read_birth_marker
+
+        for marker_already_visible in (True, False):
+            with self.subTest(marker_already_visible=marker_already_visible):
+                absent_before_birth = {registry, registry.with_name(registry.name + '.lock')}
+
+                def exists_during_birth(path):
+                    if path in absent_before_birth:
+                        absent_before_birth.remove(path)
+                        return False
+                    return exists(path)
+
+                marker_visible = marker_already_visible
+
+                def read_during_birth(journal, context_id):
+                    nonlocal marker_visible
+                    if not marker_visible:
+                        marker_visible = True
+                        return None
+                    return read_marker(journal, context_id)
+
+                with (mock.patch.object(Path, 'exists', exists_during_birth),
+                      mock.patch.object(authority._ContextJournal, '_read_birth_marker',
+                                        read_during_birth)):
+                    context = self.issuer.enroll_generation_authority(
+                        self.trust, self.supervisor, self.custodian, self.ingress)
+                self.assertIs(context, self.context)
+                self.assertEqual(registry.read_bytes(), expected)
+
     @unittest.skipUnless('fork' in multiprocessing.get_all_start_methods(),
                          'cross-process flock control requires fork')
     def test_concurrent_context_reservation_has_one_original_record(self) -> None:
