@@ -290,6 +290,8 @@ jobs:
           bun run test:browser
           bun run test:reference:browser
           bun run test:visuals:browser
+          bun scripts/workflow-browser.ts
+          python3 scripts/workflow-reference.py
       - run: bun run test:sdk
         if: ${{ !cancelled() }}
       # rdf_parity's blank-node case is a known failure (see the PR); every other test runs.

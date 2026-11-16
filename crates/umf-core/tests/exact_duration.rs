@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 use umf_core::{
-    Value,
     exact_duration::{DurationError, DurationSource, DurationUnit, ExactDuration},
     rfc3339_exact_instant::parse_rfc3339_exact_instant,
+    Value,
 };
 
 #[test]
@@ -31,10 +31,6 @@ fn duration_value_identity_is_independent_of_source() {
 #[test]
 fn duration_rejects_calendar_meaning_and_inexact_or_overflowing_values() {
     for token in [
-        "P1Y",
-        "P1M",
-        "P1D",
-        "P1W",
         "PT",
         "PT1.5H",
         "PT1.0000000001S",
@@ -52,6 +48,22 @@ fn duration_rejects_calendar_meaning_and_inexact_or_overflowing_values() {
             "{token}"
         );
     }
+    assert_eq!(
+        ExactDuration::parse("P1M").unwrap_err(),
+        DurationError::Calendar
+    );
+    assert_eq!(
+        ExactDuration::parse("P1Y").unwrap_err(),
+        DurationError::Calendar
+    );
+    assert_eq!(
+        ExactDuration::parse("P3D").unwrap().nanoseconds(),
+        ExactDuration::parse("PT72H").unwrap().nanoseconds()
+    );
+    assert_eq!(
+        ExactDuration::parse("P1W").unwrap().nanoseconds(),
+        ExactDuration::parse("P7D").unwrap().nanoseconds()
+    );
     let min = "-PT170141183460469231731687303715.884105728S";
     assert_eq!(ExactDuration::parse(min).unwrap().nanoseconds(), i128::MIN);
     assert_eq!(

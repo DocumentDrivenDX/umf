@@ -22,17 +22,21 @@ integer string. Original input remains available independently from value identi
 The text carrier is ASCII with optional leading minus, then `PT`, then one
 or more of hours, minutes and seconds in that order, each at most once.
 Each component begins with one or more decimal digits. Seconds alone can
-carry a dot and one through nine fraction digits. The suffixes are `H`,
+carry a dot and one through nine fraction digits. A standalone `PnD` or
+`PnW` form with an optional leading minus is also admitted. These are fixed
+24-hour days and seven-day weeks. The suffixes are `H`,
 `M` and `S`. Leading zeros are allowed. Component magnitude is bounded by
 the total signed span. A negative zero has value identity `0`.
 
 The count carrier supplies a signed ASCII integer string and an explicit
 unit. Units are nanosecond, microsecond, millisecond, second, minute, hour
-and fixed day. A fixed day is exactly 86,400 seconds. Each input text is
+fixed day and fixed week. A fixed day is exactly 86,400 seconds and a fixed
+week is 604,800 seconds. Each input text is
 limited to 128 bytes. Arithmetic is exact and refuses out-of-range results.
 
-`PT2160H` and 90 fixed days express the same elapsed span. `P1M` requires a
-calendar and anchor. `P1D` can carry civil-day meaning. Arrow's elapsed
+`PT2160H`, `P90D` and 90 fixed days express the same elapsed span. `P1M` and
+`P1Y` are refused with a calendar-profile diagnostic. A native interval can
+attach civil-day meaning to the same spelling. Arrow's elapsed
 duration also carries a native physical integer width and unit. Conversion
 requires an explicit mapping and retains the native representation.
 

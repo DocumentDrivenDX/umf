@@ -943,3 +943,20 @@ export declare function createSecurityReadRegistrationEngine(module: unknown): S
 export interface SecurityAuthorityGuardSession { beginRead():string; beginChange(generation:string):number; completeChange(token:number,committed:boolean):void; close():void; }
 export interface SecurityAuthorityGuardEngine { createSession(generation:string):SecurityAuthorityGuardSession; }
 export declare function createSecurityAuthorityGuardEngine(module:unknown):SecurityAuthorityGuardEngine;
+
+export type WorkflowProfile = 'umf.workflow/1' | 'umf.workflow.correlated/1';
+export interface WorkflowFinding { code: string; path: string; message: string }
+export type WorkflowResult<T> = { ok: true; value: T } | { ok: false; findings: WorkflowFinding[] };
+export interface WorkflowInspection { source: string; complete: boolean; findings: WorkflowFinding[] }
+export interface PreparedWorkflow {
+  id: string; version: string; profile: WorkflowProfile; entry: string;
+  sourceDigest: string; definitionDigest: string; effectRevisions: [action: string, revision: string][];
+}
+export interface ElapsedDuration {
+  profile: 'umf.exact-duration/1'; originalText: string; nanoseconds: string;
+}
+export function createWorkflowEngine(module: unknown): {
+  inspectWorkflow(source: Uint8Array): WorkflowResult<WorkflowInspection>;
+  compileWorkflow(source: Uint8Array, profile: WorkflowProfile): WorkflowResult<PreparedWorkflow>;
+  parseElapsedDuration(token: string): WorkflowResult<ElapsedDuration>;
+};

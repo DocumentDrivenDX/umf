@@ -27,6 +27,12 @@ ddx:
       kind: informed_by
     - id: CONTRACT-902
       kind: informed_by
+    - id: ADR-007
+      kind: informed_by
+    - id: CONTRACT-909
+      kind: informed_by
+    - id: CONTRACT-910
+      kind: informed_by
 ---
 
 # Workflow DSL implementation plan
@@ -57,17 +63,14 @@ effect delivery and operational recovery under NFR-50.
 
 The eight issues form one workflow proposal. The issue set supplies one consumer
 use case and describes external formal models and an interpreter. Access to those
-artifacts, their revision, license and runnable vectors is unconfirmed. The saga
-draft cited by the issues is also an external input to obtain before deciding how
-its declarations relate to workflows. Current UMF action and plan contracts
-provide the baseline for the review.
+artifacts, their revision, license and runnable vectors is unconfirmed. The current PR base contains [CONTRACT-908](../02-design/contracts/CONTRACT-908-saga-semantics.md). Its sequential transactional action and compensation contract informed the workflow scope boundary.
 
 | Issue | Finding | Allocation |
 | --- | --- | --- |
-| [#163](https://github.com/DocumentDrivenDX/umf/issues/163) | Waits need exact duration/instant operands, correlation and race rules. Month-scale elapsed waits and calendar-month arithmetic are distinct requirements. | W1, W6 |
+| [#163](https://github.com/DocumentDrivenDX/umf/issues/163) | Waits need exact duration/instant operands, correlation and race rules. Month-scale elapsed waits and calendar-month arithmetic are distinct requirements. | W1a, W6 |
 | [#164](https://github.com/DocumentDrivenDX/umf/issues/164) | Explicit routing and graph termination can ship before predicate-based branching. Effect-outcome coverage depends on the effect contract. | W4, W5 |
 | [#165](https://github.com/DocumentDrivenDX/umf/issues/165) | Batch equivalence concerns record-local behavior and needs a deterministic policy for duplicate identities. | W7 |
-| [#166](https://github.com/DocumentDrivenDX/umf/issues/166) | Transaction-frame rules have different types and assumptions. Presence facts can expire across blocking steps. | W1, W5 |
+| [#166](https://github.com/DocumentDrivenDX/umf/issues/166) | Transaction-frame rules have different types and assumptions. Presence facts can expire across blocking steps. | W1a, W5 |
 | [#167](https://github.com/DocumentDrivenDX/umf/issues/167) | Property evidence needs its own identity and freshness rules. Existing compatibility assessments can reference records without changing their verification semantics. | W2, W8 |
 | [#168](https://github.com/DocumentDrivenDX/umf/issues/168) | Interchange preservation and strict compilation can share input. Original bytes need explicit custody to meet the round-trip criterion. | W2 |
 | [#169](https://github.com/DocumentDrivenDX/umf/issues/169) | Drain policy and cross-version re-entry history need distinct rules. The scope decision can precede enrollment implementation. | W2, W7 |
@@ -93,21 +96,23 @@ provide the baseline for the review.
 
 | Slice | Depends on | Work and ownership | Completion evidence |
 | --- | --- | --- | --- |
-| **W1. Scalar duration** | — | Core/metamodel owner defines exact elapsed duration and companion deadline arithmetic. Freeze grammar, carrier, bounds, comparison and migration before integration. | Parser and arithmetic vectors, public source round trips, native semantic counterexamples, clean generation and real-browser parity. |
-| **W2. Scope, interchange and evidence shape** | — | Workflow owner records the NFR-50 ADR and demonstrated-reuse bar. Define the extension package, byte custody, compile eligibility and versioned evidence record. | Same byte fixture passes interchange unchecked and fails compile at the unknown path. Evidence binds to a definition hash and preserves failed and stale findings. |
-| **W3. External effects** | W2 | Define typed input and closed typed outcomes, including outcome unknown. Freeze `none`, `accepted` and `result` continuation semantics and what each mode makes available for downstream decisions. | Missing, duplicate or undeclared outcomes reject. Same-body replay retains identity. Changed body conflicts. Unknown remains distinct from acceptance and rejection. |
-| **W4. Acyclic routing** | W3 | Define keyed steps, explicit successors, total effect-outcome mapping and terminal exits. Reserve presentation edges for metadata. | Reject duplicate IDs, dangling successors, unreachable steps, cycles, missing else and undeclared or unmapped outcomes. Every maximal route ends at an exit. |
-| **W5. Predicates and guards** | W1, W4 | Add a separately versioned typed, total predicate profile with exact temporal operands, a closed function set and flow-sensitive presence checking. Define ordered guards at entry, before steps and before effects. | Reject unsafe optional reads across joins and waits. Exercise overlapping guards, suppressed exits and invalid inputs. Show that each route to an effect passes the guard scopes due at that point. |
-| **W6. Waits and events** | W1, W4, W5 | Add exactly one deadline operand, `for` or `until`, optional typed correlation, and explicit event and timeout successors. Freeze logical clock, ordering and anchoring. | Test exactly-once resolution, early and stale events, mismatched type/key, duplicate events, ties and overflow. Replaying the same logical trace gives the same resolution. |
-| **W7. Enrollment and drain** | W1, W3, W6 | Define record identity, re-entry modes and history, deterministic duplicate admission, version pinning and version retention through drain. | Compare a batch with permutations of singleton admissions and step traces for distinct identities. Exercise duplicate identities, active-version switches and cross-version re-entry. |
+| **W1a. Portable scalar duration** | — | Implement CONTRACT-909 exact elapsed duration and deadline arithmetic for the workflow extension. | Parser and arithmetic vectors, source preservation, native counterexamples and browser parity. |
+| **W2. Scope, interchange and evidence shape** | — | Workflow owner records the NFR-50 ADR and demonstrated-reuse bar. Define the extension package, byte custody, compile eligibility, enrollment identity and observation ordinal, and versioned evidence record. | Same byte fixture passes interchange unchecked and fails compile at the unknown path. Evidence binds to a definition hash and preserves failed and stale findings. |
+| **W3. External effects** | W2 | Define typed input and closed typed outcomes, including outcome unknown. Freeze continuation modes, idempotency parts, durable send intent, classed outcomes, timeouts, explicit retry and late evidence. | Missing, duplicate or undeclared outcomes reject. Same-body replay retains identity. Changed body conflicts. Unknown remains distinct from acceptance and rejection. |
+| **W4. Acyclic routing** | W3 | Define an array of uniquely identified steps, explicit successors, total awaited effect-outcome mapping and terminal exits. Reserve presentation edges for metadata. | Reject duplicate IDs, dangling successors, unreachable steps, cycles, missing else and undeclared or unmapped outcomes. Every maximal route ends at an exit. |
+| **W5. Predicates and guards** | W1a, W4 | Add a separately versioned typed, total predicate profile with exact temporal operands, a closed function set and flow-sensitive presence checking. Define ordered guards at entry, before steps and before effects. | Reject unsafe optional reads across predicate joins. W6 covers reads after waits. Exercise overlapping guards, suppressed exits and invalid inputs. Show that each route to an effect passes the guard scopes due at that point. |
+| **W6. Waits and events** | W1a, W4, W5 | Add exactly one deadline operand, `for` or `until`, optional typed correlation, and explicit event and timeout successors. Use previous completion time. Keep event waits in the opt-in correlated profile. | Test exactly-once resolution, early and stale events, mismatched type/key, duplicate events, ties and overflow. Permutations and duplicate events yield the same result for a complete event set. |
+| **W7. Enrollment and drain** | W1a, W3, W6 | Define record identity, re-entry modes and history, drop and report duplicate identities, explicit in-flight policy, version/action retention through drain and recorded interventions. | Compare a batch with permutations of singleton admissions and step traces for distinct identities. Exercise duplicate identities, active-version switches and cross-version re-entry. |
 | **W8. Consumer conformance** | W2, W7 | Replay a complete send/wait/branch/exit scenario with the consumer interpreter and capture property-level evidence. Exercise the second reuse case defined by the scope ADR. | Match independent expected traces, detect deliberate semantic mutations and publish versioned evidence with bounds, assumptions, hashes, failures and runtime identity. |
+| **W1b. Core admission assessment** | W6, W8 | Evaluate demonstrated reuse and decide whether to admit the scalar into core. | Separate promotion record, explicit migration and rollback gate if admitted. |
 
-### W1 delivery order
+### W1a delivery order
 
 1. Specify the scalar before changing the core version. The proposed domain is a
    signed elapsed span with exact nanosecond resolution. Candidate inputs include
-   fixed-duration spellings such as `PT1.25S` and an exact integer count with an
-   explicit fixed unit. A fixed day, if admitted, is exactly 86,400 seconds.
+   fixed-duration spellings such as `PT1.25S`, `P3D` and `P1W`, and an exact
+   integer count with an explicit fixed unit. Days are 86,400 seconds and
+   weeks are seven fixed days.
    Require workflow delays and minimum re-entry intervals to be nonnegative.
 2. Compare the proposal against native elapsed and calendar-bearing forms.
    Include Arrow's unit-qualified duration and at least one calendar-bearing
@@ -121,41 +126,37 @@ provide the baseline for the review.
    zero, equivalent units, zero, fraction and range limits, and overflow without
    rounding. Define duration eligibility for literals, examples, defaults,
    allowed values, bounds and keys explicitly.
-4. Prove reuse in workflow timing and one independent consumer or representation
-   before core admission. If the scope fits only workflow, ship the named scalar
-   profile inside the extension and retain the proposed core change as a separate
-   gate. A core admission amends the authored metamodel and generates validators,
-   public shapes and reference outputs. Provide explicit migration and rollback
-   for the changed profile. Native replacement requires separate FR-28 evidence.
+4. Ship the named elapsed scalar profile for workflow timing. W1b evaluates core
+   admission after the W6 timing vectors and W8 reuse results. If admitted, amend
+   the authored metamodel, generate derived outputs and qualify explicit migration
+   and rollback. Native replacement requires separate FR-28 evidence.
 5. Compose with CONTRACT-065 exact instants for `until`, comparisons and
    `anchor + duration`. Specify a deadline range and retain anchor precision.
    Reject overflow explicitly. Prove equivalent offsets, sub-nanosecond anchor
    fractions and boundary crossing without native timestamp coercion.
 
-### Decisions to ratify in workflow contracts
+### Decisions from PR review
 
-- **Effects and routing.** Propose effect identity scoped by workflow, record,
-  enrollment and step, with stable identity across retries within an enrollment.
-  Declare a body-equivalence rule and distinguish `accepted` from the final
-  result. State provider delivery and ordering as consumer obligations.
-- **Guards.** Propose first true in declaration order within each due scope.
-  A true guard selects its declared suppressed exit. A blocking transition kills
-  refinements over mutable fields. Choose a declared evaluation-failure outcome
-  or a total evaluation contract over explicitly admitted input values.
-- **Waits.** Propose anchoring relative waits at step entry, using the caller's
-  logical clock. Events must be associated with the current enrollment and arrive
-  after registration in the defined input order. Deadline wins at equal logical
-  time. Define how consumers establish that order, enforce single resolution and
-  represent enrollment provenance when a provider supplies only a record key.
-- **Drain and admission.** Propose retaining history under stable workflow and
-  record identity across versions, applying the active definition's policy to
-  that history. Freeze the meaning of each re-entry mode and relevant history
-  timestamp. Pin each admitted enrollment to its definition version. Propose
-  rejecting all candidates for a duplicate identity within the same batch.
-- **Reuse.** Propose a consumer interpreter and an independent validator or
-  compiler consuming the same unchanged definition and fixtures. The ADR must
-  identify the second consumer and record the observed reuse before claiming
-  general interchange support.
+- CONTRACT-910 records the identity recipe, fresh suppression guards, durable
+  intent, explicit timeout, bounded retry and one-time outcome resolution.
+  Unawaited effects have a single successor.
+- The base profile uses plain pauses anchored to previous completion.
+  The correlated profile resolves over a complete unordered event set with
+  stable deduplication and enrollment provenance. Record-only late events and
+  deadline ties have refusal or timeout vectors.
+- Version drain pins definition and action revisions. Each definition selects
+  bounce or atomic replacement for an active earlier enrollment. Queued repins
+  or cancellations are explicit, idempotent operator interventions.
+- The initial in-tree scenario is **Follow-up reply**, defined by
+  `crates/umf-core/tests/fixtures/workflow/reply.json`. It includes eight steps,
+  a 90-fixed-day pause, an exact deadline tie, a stale enrollment event and
+  alternate effects, suppression and branch exits. The Rust integration tests
+  attach these cases to the issues above.
+- External qualification requires the workflow consumer owner to identify the
+  consumer build, ratify the workflow and effect ABI, and supply the cited
+  interpreter and model revision, fixture license and run bounds. The consumer
+  reviewer offered the extension/effect source in PR #171. External runtime
+  claims depend on that input. [Review decisions](https://github.com/DocumentDrivenDX/umf/pull/171#issuecomment-6906678167)
 
 ## Execution contract
 
@@ -188,8 +189,7 @@ runtime metering are unknown and no execution budget has been assigned.
 ## Continuation evidence
 
 Record plan revision, completed slice IDs, commands, tool and profile versions,
-evidence paths, remaining decisions, blockers and the next action under
-`04-build/evidence/workflow-dsl/` as slices land. Verify the recorded results
+evidence paths, remaining decisions, blockers and the next action on PR #171 and use CI artifacts for run output. Verify the recorded results
 against the source and tests before resuming.
 
 ## Risks and rollbacks
@@ -203,11 +203,13 @@ against the source and tests before resuming.
 
 ## Exit criteria
 
-- The scalar profile, version, compatibility path and exactness evidence are
-  recorded. Any core admission has its own passing cross-system and migration gates.
-- The workflow scope ADR, contracts and story test allocations resolve the
-  pending decisions and trace all eight issues to passing validation gates.
-- The same source bytes survive interchange and produce path-specific compile
-  diagnostics when they contain unknown content.
-- The qualified browser build and named consumer pass the full scenario and
-  negative controls, with source-bound evidence and documented limits.
+- W1a passes `cargo test --locked -p umf-core --test exact_duration` and the
+  browser duration vectors. W1b requires a distinct promotion disposition.
+- W2–W7 pass `cargo test --locked -p umf-core --test workflow`. The suite covers
+  unknown source bytes, evidence freshness, classed effects, total routing,
+  fresh suppression, optional reads, a month-scale wait and version drain.
+- `bun scripts/workflow-browser.ts` passes against a freshly built Rust WASM
+  module and tests the packaged browser entry points.
+- W8 passes an independent replay of the Follow-up reply vector, mutation
+  controls and the external consumer's identified build and declared model
+  bounds. Review W8 with the consumer owner before claiming its conformance.

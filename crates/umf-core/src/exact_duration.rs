@@ -17,6 +17,7 @@ pub enum DurationUnit {
     Minute,
     Hour,
     FixedDay,
+    FixedWeek,
 }
 
 impl DurationUnit {
@@ -29,6 +30,7 @@ impl DurationUnit {
             Self::Minute => 60 * NANOS_PER_SECOND,
             Self::Hour => 3600 * NANOS_PER_SECOND,
             Self::FixedDay => 86400 * NANOS_PER_SECOND,
+            Self::FixedWeek => 604800 * NANOS_PER_SECOND,
         }
     }
 }
@@ -50,6 +52,7 @@ pub struct ExactDuration {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum DurationError {
     Syntax,
+    Calendar,
     Limit,
     Overflow,
 }
@@ -58,6 +61,7 @@ impl fmt::Display for DurationError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(match self {
             Self::Syntax => "unsupported elapsed duration syntax",
+            Self::Calendar => "calendar years and months require a calendar profile; use fixed days, weeks, or hours for elapsed delays",
             Self::Limit => "elapsed duration token limit exceeded",
             Self::Overflow => "elapsed duration or deadline out of range",
         })
@@ -68,12 +72,32 @@ impl Error for DurationError {}
 
 impl ExactDuration {
     /// Admit the time-only grammar `-?PT([0-9]+H)?([0-9]+M)?([0-9]+(.[0-9]{1,9})?S)?`,
-    /// with at least one component.
+    /// with at least one component, or a fixed day/week `-?P[0-9]+[DW]`.
     pub fn parse(text: &str) -> Result<Self, DurationError> {
         use DurationError::{Overflow, Syntax};
         check_limit(text)?;
         let (negative, unsigned) = split_sign(text);
-        let mut remainder = unsigned.strip_prefix("PT").ok_or(Syntax)?;
+        let Some(mut remainder) = unsigned.strip_prefix("PT") else {
+            let (digits, suffix) = take_digits(unsigned.strip_prefix('P').ok_or(Syntax)?);
+            if digits.is_empty() {
+                return Err(Syntax);
+            }
+            let unit = match suffix {
+                "D" => DurationUnit::FixedDay,
+                "W" => DurationUnit::FixedWeek,
+                "Y" | "M" => return Err(DurationError::Calendar),
+                _ => return Err(Syntax),
+            };
+            let magnitude = digits
+                .parse::<u128>()
+                .ok()
+                .and_then(|count| count.checked_mul(unit.nanoseconds() as u128))
+                .ok_or(Overflow)?;
+            return Ok(Self {
+                nanoseconds: signed_value(magnitude, negative)?,
+                source: DurationSource::ElapsedText(text.into()),
+            });
+        };
         if remainder.is_empty() {
             return Err(Syntax);
         }

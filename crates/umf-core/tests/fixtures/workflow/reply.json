@@ -1,0 +1,59 @@
+{
+  "profile": "umf.workflow.correlated/1",
+  "id": "follow-up",
+  "version": "1.0.0",
+  "versionPolicy": "drain",
+  "inFlight": "bounce",
+  "entry": "send",
+  "record": [
+    {"id": "recipient", "type": "text", "optional": false},
+    {"id": "body", "type": "text", "optional": false},
+    {"id": "response", "type": "text", "optional": true}
+  ],
+  "effectFacts": [{"id": "blocked", "type": "boolean", "optional": false}],
+  "effects": [{
+    "id": "sendMessage",
+    "binding": {"kind": "external", "action": "mail.send", "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    "inputs": [
+      {"id": "recipient", "type": "text", "optional": false},
+      {"id": "body", "type": "text", "optional": false}
+    ],
+    "await": "accepted",
+    "timeout": {"kind": "elapsed", "text": "PT5S"},
+    "retry": {"class": "reconcile-first", "maxRetries": "2"},
+    "idempotency": {
+      "scope": "enrollment",
+      "enforcement": "ledger",
+      "parts": [{"source": "workflow"}, {"source": "record"}, {"source": "enrollment"}, {"source": "step"}, {"source": "effect"}]
+    },
+    "outcomes": [
+      {"id": "accepted", "type": "text", "class": "success"},
+      {"id": "rejected", "type": "text", "class": "definitive-failure"},
+      {"id": "unknown", "type": "text", "class": "unknown"},
+      {"id": "timeout", "type": "text", "class": "engine-timeout"}
+    ],
+    "emits": ["replied"]
+  }],
+  "events": [{"id": "replied", "keyType": "text"}],
+  "guards": [{
+    "scope": "effect",
+    "when": {"op": "eq", "terms": [{"kind": "field", "id": "blocked"}, {"kind": "literal", "type": "boolean", "value": true}]},
+    "exit": "suppressed"
+  }],
+  "steps": [
+    {"id": "send", "kind": "effect", "effect": "sendMessage", "input": [{"parameter": "recipient", "field": "recipient"}, {"parameter": "body", "field": "body"}],
+     "routes": [{"outcome": "accepted", "next": "pause"}, {"outcome": "rejected", "next": "failed"}, {"outcome": "unknown", "next": "held"}, {"outcome": "timeout", "next": "held"}]},
+    {"id": "pause", "kind": "wait", "for": {"kind": "count", "count": "90", "unit": "fixed-day"},
+     "event": {"event": "replied", "keyField": "recipient", "next": "check"}, "timeout": "expired"},
+    {"id": "check", "kind": "branch", "cases": [{"next": "complete", "when": {"op": "and", "clauses": [
+      {"op": "present", "field": "response"},
+      {"op": "eq", "terms": [{"kind": "field", "id": "response"}, {"kind": "literal", "type": "text", "value": "yes"}]}
+    ]}}], "else": "held"},
+    {"id": "complete", "kind": "exit", "disposition": "complete"},
+    {"id": "expired", "kind": "exit", "disposition": "complete"},
+    {"id": "held", "kind": "exit", "disposition": "failed"},
+    {"id": "failed", "kind": "exit", "disposition": "failed"},
+    {"id": "suppressed", "kind": "exit", "disposition": "suppressed"}
+  ],
+  "reentry": {"mode": "after", "minimum": {"kind": "elapsed", "text": "PT24H"}}
+}
