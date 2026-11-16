@@ -1,15 +1,10 @@
 name: release
 
-# Cut a release by pushing a tag `umf-vX.Y.Z` from main. The tag must equal the version in every manifest
-# (python scripts/check-release-versions.py --access --tag ...). The run tests, builds wheels, sdists,
-# SDK and CLI tarballs on Linux x86_64, Linux aarch64 and macOS arm64, installs them into fresh environments,
-# and only then publishes to PyPI (trusted publishing, environment `pypi`) and creates the GitHub Release
-# with SHA256SUMS and a build-provenance attestation. The crates.io workflow runs
-# on main under its registered Trusted Publishing identity before the GitHub Release.
-#
-# Manual runs default to build and smoke. Set dry_run=false and give an existing
-# release tag on main to publish an already locally qualified source revision.
-# The macOS arm64 runner is used here only; push and pull request CI stays Linux only.
+# A tag umf-vX.Y.Z on main builds, tests and smoke-checks the release artifacts.
+# Publish Python through the three registered PyPI workflows on main using that
+# run ID. Then dispatch this workflow on main with the tag and qualified run ID
+# to verify PyPI, publish the Rust workspace, create the GitHub Release and
+# dispatch the registered npm Trusted Publishing workflow on main.
 on:
   push:
     tags: ['umf-v*']
@@ -24,7 +19,7 @@ on:
         type: string
         default: ''
       qualified_run_id:
-        description: 'Completed release run with verified artifacts to finalize after PyPI publication'
+        description: 'Completed tagged release run to finalize after PyPI publication'
         type: string
         default: ''
       run_ci:
@@ -68,10 +63,10 @@ jobs:
           tag="$REQUESTED_TAG"
           if [ "$GITHUB_REF_TYPE" = tag ]; then
             tag="$GITHUB_REF_NAME"
-            publish=true
           elif [ "$DRY_RUN" = false ]; then
             test "$GITHUB_REF" = refs/heads/main
             test -n "$tag"
+            test -n "$QUALIFIED_RUN_ID"
             publish=true
           fi
           if [ -n "$QUALIFIED_RUN_ID" ]; then
@@ -280,58 +275,37 @@ jobs:
           tar -xzf "$GITHUB_WORKSPACE/assets/umf-v$VERSION-${{ matrix.target }}.tar.gz"
           "umf-v$VERSION-${{ matrix.target }}/umf" --help | head -5
 
-  publish:
-    needs: [verify, test, build, smoke]
-    if: >-
-      ${{ !cancelled() && needs.verify.outputs.publish == 'true' &&
-          needs.verify.outputs.qualified_run == '' &&
-          needs.build.result == 'success' && needs.smoke.result == 'success' &&
-          (needs.test.result == 'success' ||
-           (github.event_name == 'workflow_dispatch' && needs.test.result == 'skipped')) }}
-    runs-on: ubuntu-24.04
-    environment: pypi
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: dist-*
-          merge-multiple: true
-          path: all
-      - name: Sort the distributions by project
-        run: |
-          mkdir -p dist/umf-core dist/umf-codegen dist/umf-access
-          mv all/umf_core-* dist/umf-core/
-          mv all/umf_codegen-* dist/umf-codegen/
-          mv all/umf_access-* dist/umf-access/
-          ls -l dist/*
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages-dir: dist/umf-core
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages-dir: dist/umf-codegen
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages-dir: dist/umf-access
-
   crates:
-    needs: [verify, publish]
+    needs: verify
     if: >-
       ${{ !cancelled() && github.repository == 'DocumentDrivenDX/umf' &&
           needs.verify.result == 'success' && needs.verify.outputs.publish == 'true' &&
-          (needs.publish.result == 'success' ||
-           (needs.verify.outputs.qualified_run != '' && needs.publish.result == 'skipped')) }}
+          needs.verify.outputs.qualified_run != '' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
       actions: write
+      contents: read
     env:
       GH_TOKEN: ${{ github.token }}
       VERSION: ${{ needs.verify.outputs.version }}
       SOURCE: ${{ needs.verify.outputs.source }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ needs.verify.outputs.qualified_run }}
+          pattern: dist-*
+          merge-multiple: true
+          path: assets
+      - name: Verify public PyPI distributions before releasing the Rust crates
+        env:
+          TAG: ${{ needs.verify.outputs.tag }}
+        run: python3 scripts/registry/qualified-release.py pypi-verify "$TAG" assets
       - name: Dispatch Trusted Publishing on main and wait for crates.io
         run: |
           request=$(jq -nc --arg version "$VERSION" --arg source "$SOURCE" \
@@ -353,12 +327,11 @@ jobs:
           done
 
   github-release:
-    needs: [verify, publish, crates]
+    needs: [verify, crates]
     if: >-
       ${{ !cancelled() && needs.verify.result == 'success' && needs.verify.outputs.publish == 'true' &&
           needs.crates.result == 'success' &&
-          (needs.publish.result == 'success' ||
-           (needs.verify.outputs.qualified_run != '' && needs.publish.result == 'skipped')) }}
+          needs.verify.outputs.qualified_run != '' }}
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -383,9 +356,6 @@ jobs:
           pattern: dist-*
           merge-multiple: true
           path: assets
-      - name: Verify the recovered files are public on PyPI
-        if: needs.verify.outputs.qualified_run != ''
-        run: python3 scripts/registry/qualified-release.py pypi-verify "$TAG" assets
       - name: SHA256SUMS
         run: cd assets && sha256sum * > SHA256SUMS && cat SHA256SUMS
       - uses: actions/attest-build-provenance@v2

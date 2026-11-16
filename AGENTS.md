@@ -15,5 +15,5 @@ registry semantics and adapters; `bindings/` expose it to Python (PyO3), Node/Bu
   workflow artifacts. A size guard fails the build for large tracked files.
 - Versions: `python scripts/set-version.py X.Y.Z` edits every manifest and regenerates derived files; then
   `python scripts/check-release-versions.py --access`.
-- Releases: push tag `umf-vX.Y.Z` from main; `.github/workflows/release.yml` does the rest. Never publish from a laptop.
+- Releases: push tag `umf-vX.Y.Z` from main to qualify the artifacts. Dispatch the PyPI publishers on main, then finalize with `.github/workflows/release.yml` using the tagged run ID. Never publish from a laptop.
 - Docs: edit sources under `docs/helix/` and `site/`; `pages.yml` builds the site. Keep claims to what CI tests.

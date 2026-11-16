@@ -84,12 +84,12 @@ def assemble(version, assets, output, archives, archive_digests):
     if node.count(LOAD) != 1:
         raise ValueError('expected unique native-addon require seam')
     base[NODE] = node.replace(LOAD, 'addon = require2("./native-addon.cjs");').encode()
-    selector = ["'use strict';", "const platform = process.platform + '-' + process.arch;"]
+    selector = ["'use strict';", "const platform = process.platform + '-' + process.arch;", "switch (platform) {"]
     for route, addon in sorted(addon_routes.items()):
         filename = f'umf_core_node-{route}.node'
-        selector.append(f'if (platform === "{route}") module.exports = require("./{filename}");')
+        selector.append(f'  case "{route}": module.exports = require("./{filename}"); break;')
         base[f'package/dist/{filename}'] = addon
-    selector.append('else throw new Error(`@documentdrivendx/umf-core has no native addon for ${platform}`);')
+    selector.extend(['  default: throw new Error(`@documentdrivendx/umf-core has no native addon for ${platform}`);', '}'])
     base['package/dist/native-addon.cjs'] = ('\n'.join(selector) + '\n').encode()
     del base[ADDON]
     # The upstream build manifest describes one native build host. Rebase only
