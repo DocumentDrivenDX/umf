@@ -87,7 +87,7 @@ def write_archive(source, output, manifest):
         0o644,
     )
     name = manifest["package"]["name"]
-    if name == CORE:
+    if name == CORE and "README.md" not in files:
         files["README.md"] = (
             b"# UMF Core\n\nThe host-independent Rust library from UMF 0.10.11.\n\n"
             b"https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.11\n",
