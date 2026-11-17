@@ -5206,15 +5206,17 @@ fn owl_list(
             }
             break;
         }
-        if out.len() >= 10_000
-            || text(member(&current, "kind")) == Some(&u("literal"))
-            || !seen.insert(term_key_metered(&current, ctx)?)
-        {
-            return Err(EngineError::new(
-                "OWL_EXPRESSION",
-                Utf16::default(),
-                "Malformed, literal, cyclic, or overlong expression list",
-            ));
+        let reason = if out.len() >= 10_000 {
+            Some("List exceeds 10,000 members")
+        } else if text(member(&current, "kind")) == Some(&u("literal")) {
+            Some("List cell must be a resource")
+        } else if !seen.insert(term_key_metered(&current, ctx)?) {
+            Some("Cyclic list")
+        } else {
+            None
+        };
+        if let Some(reason) = reason {
+            return Err(EngineError::new("OWL_EXPRESSION", Utf16::default(), reason));
         }
         let mut first = Vec::new();
         let mut rest = Vec::new();
@@ -5247,7 +5249,11 @@ fn owl_list(
             return Err(EngineError::new(
                 "OWL_EXPRESSION",
                 Utf16::default(),
-                "List cell requires exactly one rdf:first and rdf:rest",
+                if first.len() != 1 {
+                    "List cell requires exactly one http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                } else {
+                    "List cell requires exactly one http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                },
             ));
         }
         reserve_items(&mut out, 1, ctx)?;
@@ -5449,11 +5455,17 @@ pub fn get_owl_list_axioms(
             }
         };
         let min = if kind == "key" { 1 } else { 2 };
-        if members.len() < min
-            || members
-                .iter()
-                .any(|term| text(member(term, "kind")) == Some(&u("literal")))
+        let reason = if members.len() < min {
+            Some("Too few list axiom members")
+        } else if members
+            .iter()
+            .any(|term| text(member(term, "kind")) == Some(&u("literal")))
         {
+            Some("List axiom member must be a resource")
+        } else {
+            None
+        };
+        if let Some(reason) = reason {
             reserve_items(&mut malformed, 1, ctx)?;
             malformed.push(Value::Object(vec![
                 (u("kind"), Value::string_utf8(kind)),
@@ -5462,7 +5474,7 @@ pub fn get_owl_list_axioms(
                 (u("quadIndexes"), indexes),
                 (
                     u("reason"),
-                    Value::string_utf8("List has too few or non-resource members"),
+                    Value::string_utf8(reason),
                 ),
             ]));
             continue;

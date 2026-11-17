@@ -783,16 +783,31 @@ impl RuleRecognizer for TriGRecognizer {
                         self.emit_quad(results);
                         self
                     } else {
-                        self.cur_subject.push(context.generated_blank_node().into());
-                        self.stack.push(TriGState::ObjectBlankNodePropertyListEnd);
+                        let node = context.generated_blank_node();
+                        let linked = context.umf_blank_labels
+                            && matches!(
+                                self.stack.last(),
+                                Some(TriGState::ObjectCollectionPossibleEnd { .. }
+                                    | TriGState::SubjectCollectionPossibleEnd)
+                            );
+                        if linked {
+                            // The predecessor emitted rdf:first before the item's own properties.
+                            self.cur_object.push(node.clone().into());
+                            self.emit_quad(results);
+                        }
+                        self.cur_subject.push(node.into());
+                        self.stack.push(TriGState::ObjectBlankNodePropertyListEnd { linked });
                         self.stack.push(TriGState::PredicateObjectList);
                         self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
                     }
                 }
-                TriGState::ObjectBlankNodePropertyListEnd => {
+                TriGState::ObjectBlankNodePropertyListEnd { linked } => {
                     if token == N3Token::Punctuation("]") {
-                        self.cur_object.push(self.cur_subject.pop().unwrap().into());
-                        self.emit_quad(results);
+                        let node = self.cur_subject.pop().unwrap();
+                        if !linked {
+                            self.cur_object.push(node.into());
+                            self.emit_quad(results);
+                        }
                         self
                     } else {
                         self.error(errors, "blank node property lists should end with a ']'")
@@ -919,10 +934,19 @@ impl RuleRecognizer for TriGRecognizer {
                     _ => {
                         self.cur_object
                             .push(Literal::new_simple_literal(value).into());
+                        let first = results.len();
                         if emit {
                             self.emit_quad(results);
                         }
-                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        let recognizer = self.recognize_next(
+                            TokenOrLineJump::Token(token), context, results, errors,
+                        );
+                        if emit && context.umf_blank_labels {
+                            // The next token can close a list or property list. Drain
+                            // the completed literal before any links that close it.
+                            results[first..].rotate_left(1);
+                        }
+                        recognizer
                     }
                 },
                 TriGState::LiteralExpectDatatype { value, emit } => match token {
@@ -1428,7 +1452,7 @@ enum TriGState {
     Verb,
     Object,
     ObjectBlankNodePropertyListCurrent,
-    ObjectBlankNodePropertyListEnd,
+    ObjectBlankNodePropertyListEnd { linked: bool },
     ObjectCollectionBeginning,
     ObjectCollectionPossibleEnd { nested_list_item: bool },
     LiteralPossibleSuffix {
