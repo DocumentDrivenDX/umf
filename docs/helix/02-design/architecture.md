@@ -21,34 +21,18 @@ ddx:
 
 ## Scope
 
-UMF is a lossless, extensible semantic interchange representation with a small
-common core and independently versioned vocabularies. This design follows the
-owner's bootstrap brief and [PRD](../01-frame/prd.md), constrained by
-[NFR-1–NFR-50](../01-frame/cross-cutting-requirements.md).
+UMF defines a machine-readable metamodel, native schema interchange and
+generation from authored models. Core 0.10.0 derives its schemas, types and
+validation rules from the authored metamodel. Versioned extensions retain
+native meaning and unknown content. The PRD and cross-cutting requirements
+govern these behaviors. See [requirements](../01-frame/prd.md) and
+[CONTRACT-080](contracts/CONTRACT-080-authoritative-metamodel.md).
 
-The initial design and spike targeted the JSON Schema + Protobuf slice in FR-37.
-JSON Schema is the JSON Schema project's schema vocabulary and validation
-standard for JSON data. Protobuf is Google's Protocol Buffers serialization
-and schema system. Native semantic models remain authoritative for native
-meaning; neither system defines the worldview of UMF core.
-
-The repository now implements a browser-compatible TypeScript library, compiled
-to JavaScript, with Bun development/testing under
-[ADR-002](adr/ADR-002-bun-development-runtime.md). Native compiler and database
-oracles remain host-side evidence tools; optional native parsers use separately
-built browser WASM. No production service or downstream execution engine is
-specified. The initial spike is historical context, not the current library's
-entire implemented scope.
-
-This inventory describes the implementation merged through `0f20d2e4` and cites scoped feature evidence.
-The [integrated acceptance](../../../fixtures/validation/relationship-integrated-acceptance-evidence.json) records the fresh native/browser replay, repository regression and six separate concept gates. Relationship ideal admission and qualified five-system delivery pass independently; native equivalence remains unclaimed.
-Subsequent core 0.8.0 changes have separate
-scoped execution evidence.
-The earlier integrated acceptance qualifies its recorded source; fresh repository
-regression and native qualification after API simplification and the current-only
-Key tuple correction remain incomplete.
-Package presence, structural validation, target generation and native equivalence
-remain different claims.
+The Rust workspace owns shared validation, registry semantics, serialization,
+native adapters and code generation. The CLI and the Python, Node/Bun and
+browser WebAssembly bindings expose that engine. TypeScript supplies the
+JavaScript host layer. Each interoperability claim names the operation,
+native version, supported subset and verification.
 
 ## Level 1: System Context
 
@@ -126,7 +110,7 @@ database, cloud runtime, or network registry is required by the brief.
 
 | Unit | Technology Direction | Responsibility | Boundary |
 | --- | --- | --- | --- |
-| UMF shared engine and tooling | Rust engine, native CLI/Python/Node/Bun bindings and browser WASM under ADR-006; current TS engine migrates by qualified operation family | Model access, operations, diagnostics and generation | Generated metamodel rules; host I/O outside core; explicit native capability dependencies |
+| UMF shared engine and tooling | Rust engine with CLI, Python, Node/Bun and browser WASM bindings | Model access, operations, diagnostics and generation | Generated metamodel rules; host I/O outside core; explicit native capability dependencies |
 | Vocabulary packages | JSON Schema structural definitions plus semantic specifications | Versions, validation, capabilities, fixtures | Package metadata is data; it does not authorize code execution |
 | Native adapters | Selected ecosystem parsers/compiler APIs | Import/export through native semantic representations | Native output must pass native validation |
 | Conformance harness | Bun test runner; separate browser execution and pinned native oracles | Round-trip and projection evidence | Evidence generation is separate from support declarations |
@@ -503,26 +487,12 @@ resource limits and transparent expensive operations remain required.
 | Runtime execution outside UMF | Required by NFR-50 | Preserve interchange boundary | Axon/TableSpec execution remains downstream |
 | Self-description | Current descriptive core projection, FR-35 | Test the model with its own vocabulary | Retain exact bootstrap constraints; no authority transition |
 
-### Ecosystem direction and remaining expansion
+### Interchange scope
 
-The sequence below records the owner's original pressure on the model; it is not
-a current unimplemented backlog or release schedule. Several named systems now
-have the qualified packages above. Each new support claim requires versions,
-subsets and evidence; native equivalence requires its separate gate. The first
-spike used JSON Schema and Protobuf.
-
-| Phase | Candidates | New pressure on the model |
-| --- | --- | --- |
-| 1: Structural | JSON Schema, Avro, Protobuf | Primitives, records, enums, unions, presence, defaults, annotations, evolution |
-| Early semantic slice, after JSON Schema + Protobuf | DDD (`umf.ddd`) | Context-specific identity/equality, aggregates, invariants, events, context maps; no storage dependency |
-| 2: Graph/API | GraphQL schema definition language, OpenAPI, TypeSpec, Smithy | References, interfaces, operations, services, traits/decorators |
-| 3: Physical data | PostgreSQL catalog/SQL, Spark StructType, Arrow, Delta, Iceberg, dbt | Keys, relationships, physical types/storage, indexes, table metadata |
-| 4: Semantic | LinkML, Resource Description Framework (RDF), Web Ontology Language (OWL), Shapes Constraint Language (SHACL) | Class and graph models, logical semantics, constraints |
-| 5: Operational | Palantir Ontology, Axon | Identity, authority, interfaces, bindings, query/action descriptions, policies |
-
-Parquet and Open Data Contract Standard (ODCS) now have qualified packages; CUE
-remains an additional candidate from the brief. Their position in this historical
-sequence does not expand any current support subset.
+Native adapter contracts set supported operations and versions. Package
+registration, structural validation, native round trips and cross-system
+equivalence are separate claims. The roadmap tracks remaining integrations.
+See the [roadmap](../../../ROADMAP.md).
 
 ### Repository responsibilities
 
@@ -645,23 +615,15 @@ Unknown third-party redistribution rights block full source export.
 
 [SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.
 
-## Proposed typed data access SDK
+## Generated data access
 
-FR-52 to FR-55 and FEAT-028 to FEAT-031 add a schema-first Python data access SDK.
-[ADR-004](adr/ADR-004-typed-data-access-sdk.md) records the decision. Stage one is
-currently a TypeScript generator, migrating to the shared Rust engine under
-ADR-006; `umf_access` supplies Python host integration and existing compatibility
-surfaces in this repository. Weft owns
-all SQL lowering; Truss and Ashlar own their adapters.
-Design entry point.
-
-FR-56 and [FEAT-033](../01-frame/features/FEAT-033-generated-ontology-access.md)
-add typed ontology access generated directly from current UMF schemas. A shared
-API description drives standard-library Python and TypeScript clients; consumers
-implement transport and execution. [SD-033](solution-designs/SD-033-generated-ontology-access.md)
-explains generation, async plugin calls, values and failures. Tables and ontologies share the generated model/query/action API; the binding
-owns storage-specific execution. ADR-004 replaces mandatory query capture with
-direct expression composition and optional backend preparation.
+The Rust generator produces typed clients from current UMF. FR-52–FR-56
+govern typed models, reads, search, actions and bindings. The shared API
+description supports standard-library Python clients for tables and ontologies.
+Applications compose ordinary reads directly and supply the transport and
+binding. Target integrations own preparation, connections, authorization
+and transaction effects. See [ADR-004](adr/ADR-004-typed-data-access-sdk.md)
+and [CONTRACT-079](contracts/CONTRACT-079-unified-python-access.md).
 
 ## Module Boundaries
 
@@ -873,15 +835,11 @@ stays under `scripts/uuid/`; public-bundle Chromium execution and current-source
 fingerprint refusal controls verify portability and proof freshness. Library
 functions do not execute transactions or claim native lifecycle equivalence.
 
-## Core0.10 semantic-reference composition — 2026-10-17
+## Semantic references
 
-CONTRACT-078 adds semantic references over CONTRACT-076's unchanged core0.9.0
-UUID/128-bit envelope. New structural validation inherits the complete core0.9.0
-constraints through a private view; extension callbacks observe the full actual
-core0.10.0 source. No view is a native downgrade or public version conversion.
-Semantic checks use separately supplied exact registries, never remote loading.
-Migration and rollback preserve all source bytes as JSON values and explicit
-residuals. Existing native/version-specific APIs retain their declared limits.
+CONTRACT-078 defines exact vocabulary, release and term references. The
+generated core validates these references. External interpretation requires
+a supplied registry and keeps its own support scope.
 
 ## Authoritative metamodel boundary — 2026-10-18
 
@@ -919,50 +877,22 @@ in the explicit CLI/prefix preparation, and leaves portable application clients
 unchanged. Existing negative controls remain required. Generic host-applier and mixed-phase profiles are revision2
 next-release work; no adapter-independent native guarantee follows here.
 
-## Shared Rust engine target
+## Shared Rust engine
 
-[ADR-006](adr/ADR-006-shared-rust-implementation.md) governs the target structure.
-Earlier TypeScript/Python module inventories describe existing implementation and
-migration inputs. The authored metamodel stays authoritative; shared compiler and
-execution mechanics move to Rust. Host wrappers and generated clients retain
-language ergonomics. Browser JavaScript loads Rust WebAssembly (WASM); Bun remains
-the JavaScript development/test host. No existing native qualification transfers
-without a replay against the new implementation.
+The authored metamodel remains the authority for core rules. The Rust
+workspace implements shared semantics and the native compiler. Wrappers
+handle host values, loading and explicit capabilities. The core has no
+ambient filesystem, network, process, clock or database state. Generated
+Python clients use the standard library and call an injected binding.
 
-```mermaid
-flowchart BT
-    Model[Authored UMF metamodel] --> Compiler[Rust model compiler]
-    Compiler --> Data[Generated schemas, shapes and inert rules]
-    Data --> Engine[Rust shared engine]
-    Engine --> CLI[Native Rust CLI]
-    Engine --> Python[Python native binding]
-    Engine --> Node[Node and Bun native binding]
-    Engine --> Browser[Browser WASM binding]
-    Engine --> Generation[Generated Python and TypeScript clients]
-    Generation --> Transport[Consumer transport and execution]
-```
+| Source | Responsibility |
+| --- | --- |
+| `spec/metamodel/umf.yaml` | Authored model and rules |
+| `crates/umf-core` | Portable core, validation, registry and shared adapter entry points |
+| `crates/umf-metamodel` | Compile authored model definitions |
+| `crates/umf-codegen` | Native client generation |
+| `bindings/core` | Python, Node/Bun and browser WASM interfaces |
+| `src/` | TypeScript host APIs and integrations |
 
-Proposed modules below are target ownership, not established crate names or an
-already enforced boundary. R0/R1 freezes their public API and dependency map.
-
-| Module | Responsibility | Permitted dependencies | Forbidden dependencies |
-| --- | --- | --- | --- |
-| `crates/umf-core` | Exact representation, model admission, registry, rule/literal kernels, serialization and operations | Generated inert rules/data, portable libraries and trusted capability interfaces | Host runtimes, filesystem/network/process, DB drivers, compiler bootstrap |
-| `crates/umf-metamodel` | Independent bounded model parser/compiler, generated schema/type/rule outputs | Closed compiler vocabulary and portable representation primitives | Generated document validator during bootstrap; authored schema rules as authority |
-| `crates/umf-compiler` | Access generation, compilation IR/emission, bundles, deployment/migration planning | Core public API, generated data, explicit external compiler capabilities | Host I/O, consumer storage/authorization, reimplementation of Weft SQL semantics |
-| `crates/umf-adapters` | Extension/native profiles and directed projections, partitioned by dependency family | Core public APIs, declared feature-gated native libraries/capabilities | Binding runtimes, undeclared network/process fallback, hidden JS execution |
-| `crates/umf-cli` | Commands, filesystem, atomic output/check, process/resource boundary | Public engine/compiler/adapter APIs and host services | Separate semantic kernels or hidden Python/JS engine dependency |
-| `bindings/{python,node,wasm}` | Native loading, exact host admission, exceptions, callbacks, lifecycle and typed presentation | Public Rust APIs and host runtime adapters | Duplicate validation/projection/generation semantics or direct consumer storage |
-
-Construction policy: CLI/bindings assemble explicit registries and capabilities;
-core never discovers plugins from artifact data. Weft owns SQL lowering; driver,
-authorization and transaction capabilities remain with consumers. Python host
-connections and async behavior use thin explicit glue. Generated clients remain
-stdlib-only and call injected bindings, independently of the Rust distribution.
-
-The proposed `bun run check:rust-boundaries` combines Cargo/cross-language graph
-checks with existing boundary checks, with allowed/forbidden controls and CI wiring
-before semantic ports. It is a planning requirement. Loading APIs, exact string
-carriers, callbacks, resource isolation and platform ABI choices remain R1 outputs.
-The [migration plan](../04-build/rust-migration-plan.md) owns sequencing, qualified
-cutovers, retirement census and completion evidence.
+Native parity and platform support follow the tests and release for each
+operation. See [ADR-006](adr/ADR-006-shared-rust-implementation.md).
