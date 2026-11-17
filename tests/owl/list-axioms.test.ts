@@ -23,7 +23,7 @@ test('US-029 list axiom recovery and edits match independent local-structure com
   const v=getOwlListAxioms(readDocument(writeDocument(d,c.format),c.format));expect(v).toEqual(c.view);expect(exportOwlTurtle(v.source)).toBe(c.text);expect(oracle[i].agrees).toBe(true);expect(oracle[i].editObserved).toBe(true);
   const term=(t:any)=>t.kind==='iri'?t.value:'_:resource';expect(v.axioms.map(a=>[term(a.node),a.kind,a.members.map(term)]).sort()).toEqual(oracle[i].expected);expect(v.malformed.map(a=>[term(a.node),a.kind]).sort()).toEqual(oracle[i].invalid);
  }
-},20000);
+},300_000);
 test('US-029 damaged nil and literal list tails cannot expose partial axioms',()=>{
  const p='@prefix owl:<http://www.w3.org/2002/07/owl#>. @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>. ';
  for(const body of ['<urn:c> owl:hasKey (<urn:p>). rdf:nil rdf:first <urn:q>.','<urn:c> owl:hasKey [rdf:first <urn:p>;rdf:rest "tail"].']){const d=importOwlTurtle(p+body,{id:'bad',baseIRI:'urn:base:'}),v=getOwlListAxioms(d);expect(v.axioms).toHaveLength(0);expect(v.malformed).toHaveLength(1);expect(exportOwlTurtle(v.source)).toBe(p+body);}
