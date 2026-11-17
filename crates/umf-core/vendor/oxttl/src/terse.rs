@@ -848,19 +848,27 @@ impl RuleRecognizer for TriGRecognizer {
                         self
                     } else {
                         let new = context.generated_blank_node();
-                        results.push(Quad::new(
+                        let rest = Quad::new(
                             old,
                             rdf::REST,
                             new.clone(),
                             self.cur_graph.clone(),
-                        ));
+                        );
                         self.cur_subject.push(new.into());
                         self.stack.push(TriGState::ObjectCollectionPossibleEnd { nested_list_item });
                         self.stack.push(TriGState::Object);
-                        // The parser consumes queued quads LIFO. Leaving this
-                        // REST quad below quads produced by the next item
-                        // preserves collection source order.
-                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        // The parser drains this buffer in reverse order.
+                        // Emit the link to a list cell before that cell's first item.
+                        if context.umf_blank_labels {
+                            let recognizer = self.recognize_next(
+                                TokenOrLineJump::Token(token), context, results, errors,
+                            );
+                            results.push(rest);
+                            recognizer
+                        } else {
+                            results.push(rest);
+                            self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        }
                     }
                 }
                 TriGState::LiteralPossibleSuffix { value, emit } => match token {

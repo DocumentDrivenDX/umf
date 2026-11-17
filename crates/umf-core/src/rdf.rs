@@ -282,7 +282,11 @@ impl Callbacks<'_> {
                         } else {
                             "GENERALIZED_RDF_ENCODING"
                         },
-                        "Unknown encoding fields are retained",
+                        if token == RDF_TOKEN {
+                            "Unknown encoding fields are retained and block native export"
+                        } else {
+                            "Unknown encoding fields retained; native export and interpretation blocked"
+                        },
                         Severity::Warning,
                     ));
                     break;
@@ -2492,8 +2496,8 @@ pub fn propose_rdf_dataset_merge(
                 ("profile", Value::string_utf8("rdf11-trig")),
                 ("baseIRI", Value::string_utf8("urn:umf:merge:")),
                 ("blankNodeScope", Value::String(id.clone())),
-                ("namedGraphs", Value::Array(all_graphs.clone())),
                 ("quads", Value::Array(all_quads.clone())),
+                ("namedGraphs", Value::Array(all_graphs.clone())),
                 (
                     "originalSource",
                     Value::String(Utf16::from(trig_text(
