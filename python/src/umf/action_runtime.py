@@ -14,7 +14,7 @@ from typing import Any
 
 from .rust_codegen import CodegenEngine, UmfCodegenError
 
-_MANIFEST_SHA256 = "c02f3a8429d51d670ca0991a0d3b92e760f892a4c61dbb33eb4051036d8cb5d1"
+_MANIFEST_SHA256 = "33d28513cc5a0dc8e9481248b14f578c31c37913ae5b5a1ba0d5d99c10765ca8"
 _RESOURCE_FILES = {
     "coreSchema": ("coreSchema.json", "spec/core/schema.json"),
     "referenceSchema": (

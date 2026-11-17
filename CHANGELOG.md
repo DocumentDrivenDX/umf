@@ -4,7 +4,7 @@ Releases are cut by pushing a tag `umf-vX.Y.Z` (see AGENTS.md). Rust, SDK, `umf-
 `umf-access` share one version. The UMF document format version (currently 0.10.0) is separate.
 Earlier detail is in git history and on the GitHub Releases page.
 
-## [0.10.12] - unreleased
+## [Unreleased]
 
 - Core 0.10.0 gains the `json` scalar family (one arbitrary JSON value, literal `{json: ...}`) and the `set`
   cardinality (distinct items, no order meaning, literal `{array: [...]}`); see CONTRACT-084.
@@ -13,6 +13,17 @@ Earlier detail is in git history and on the GitHub Releases page.
 - `umf-codegen` lets a host register its own extension beside `umf.tables`
   (`CodegenResources::register_host_extension`, `*_with_host` inspection, compile and verify); deployment
   configuration `independentExtensions` names host extensions that do not change the generated DDL.
+
+## [0.10.13]
+
+- Add portable workflow declarations with exact elapsed durations, typed run
+  state, effect outcomes, and correlated waits. Consumers own execution.
+- Publish the Python packages, Rust release crates, and npm SDK using Trusted
+  Publishing. The npm SDK includes native addons for Linux x64, Linux arm64,
+  and macOS arm64.
+
+## [0.10.12] - 2026-11-12
+
 - `umf-access` joins the unified release line: it now has the release version and depends on
   `umf-core>=0.10.12,<0.11` (it was `0.1.0.dev10`, pinned to an older core). It will be published to PyPI
   from the release workflow together with `umf-core` and `umf-codegen`.

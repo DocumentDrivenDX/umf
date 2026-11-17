@@ -176,7 +176,9 @@ is atomic only within the consumer group whose store enforces it.
 
 ### Waits and event correlation
 
-Both profiles allow a plain pause with exactly one of `for` and `until`.
+The base and correlated profiles both accept a pause with exactly one of
+`for` and `until`. Relative waits and effect timeout windows reject computed
+deadlines later than the latest observation instant supported by CONTRACT-065.
 Relative waits add exact elapsed time to the previous step's logical completion
 instant. An entry wait uses the enrollment instant. Absolute waits use the
 declared instant. A caller supplies registration time and a logical ordinal
@@ -257,10 +259,9 @@ A `failed` verdict needs a counterexample. Use `inconclusive` with a reason
 when a cap, timeout, unsupported semantics or tool error prevents a verdict.
 A completed bounded check can pass within its declared assumptions and
 bounds. Record the actual model or interpreter revision in `toolVersion`.
-A different digest or profile marks the record stale without hiding its outcome. Assessments describe compatibility.
-Current evidence remains scoped to the reported model, properties,
-assumptions and bounds. Runtime records identify the actual build.
-
+A different lowered digest or profile marks the evidence stale and preserves
+its outcome. A model result applies within its stated properties, assumptions
+and bounds. Runtime evidence identifies the build that executed the fixture.
 
 ## Precedence and compatibility
 
@@ -276,18 +277,9 @@ Use `umf_core::workflow::inspect_source` and `compile_source` to pass the
 original bytes and select a typed `WorkflowProfile` with standard limits.
 Callers supplying their own resource limits can use `inspect` and `compile`.
 The workflow module is available with Cargo default features disabled.
-The supported toolchain baseline for this change is Rust 1.90.0. The workflow
-profiles and Rust interfaces in this draft are subject to review. Definition
-and evidence versions are separate from the crate version, and consumers
-should check the profile in addition to the crate version. Incompatible
-changes to qualified wire semantics require a new profile identifier.
-Core's unpatched workflow dependencies use Cargo-compatible version ranges.
-Registry companion dependencies that carry UMF compatibility patches retain
-their qualified versions.
-
-The source tree currently uses the 0.10.12 version line. The existing
-0.10.12 registry release predates this workflow API. A workflow-bearing
-registry version must be assigned and qualified through the release pipeline.
+The Rust toolchain baseline is 1.90. Wire profile versions are independent
+of the crate version. Incompatible changes to qualified wire semantics
+require a new profile identifier.
 
 ## Error semantics
 
