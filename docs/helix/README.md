@@ -1,5 +1,12 @@
 # UMF project documentation
 
+UMF 0.10.0 is a machine-readable metamodel and schema interchange layer.
+The authored model drives core schemas and validation. Versioned extensions
+preserve native and unknown meaning, and projections expose translation
+limits. The shared Rust engine supports the CLI and Python, Node/Bun and
+browser bindings. Generated clients provide typed access to tables and
+ontologies through host bindings.
+
 Start with the repository [README](../../README.md); release history is in the [CHANGELOG](../../CHANGELOG.md) and
 open work in the [ROADMAP](../../ROADMAP.md).
 
