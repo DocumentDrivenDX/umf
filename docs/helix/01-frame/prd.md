@@ -184,14 +184,9 @@ seven mandatory product capabilities without demoting any to optional status:
 | Identity, composition, and evolution | FR-15, FR-16, FR-17, FR-18, FR-19 |
 | Validation and compatibility evidence | FR-11, FR-12, FR-13, FR-14, FR-23, FR-32, FR-37 |
 
-FR-8 governs tradeoffs across every group. This is a product baseline, not a
-launch commitment. The bootstrap brief supplies an initial slice: extension
-registration, unknown-content preservation, extension structural validation,
-native JSON Schema and Protobuf import/export, semantic round-trip evidence,
-and a JSON Schema-to-Protobuf projection with fidelity diagnostics. The first
-spike investigates this slice; exact dialects and subsets must be declared before
-implementation. Broader self-description and additional ecosystem support remain
-product obligations beyond that slice, not first-milestone promises.
+FR-8 governs tradeoffs across every group. FR-37 records the original
+JSON Schema and Protobuf fidelity demonstration. Current integrations define
+and verify their support scope through their own contracts.
 
 ### Should Have (P1)
 
@@ -543,18 +538,18 @@ and target qualification.
   instance-view, native-column and search choices in the `umf.access` extension
   and generate, deterministically and offline, statically inspectable Python
   models, Key DTOs, typed column and index expressions and action types from
-  pinned UMF documents. Presence uses Pydantic `MISSING`; exact values are never
+  pinned UMF documents. Presence distinguishes omission from null; exact values are never
   rounded; unknown content and a complete assertion report are retained; output
-  is checked in and drift-checked. Generated code is a thin typed layer over the
-  `umf_access` runtime and type-checks cleanly on Python 3.11 under pyright, mypy
+  supports drift checking and package digest verification. Generated Python
+  uses the standard library and type-checks on Python 3.11 under pyright, mypy
   and ty. FEAT-028, US-080 and US-081 govern this.
-- **FR-53 — Precompiled typed queries and search.** An application developer
+- **FR-53 — Typed queries and search.** An application developer
   must be able to declare reads, ranked semantic/keyword/hybrid searches and bulk
   commands in a schema-first, expression-first Python DSL with no string column
   references, have a pinned type checker reject type, column, record and argument
-  errors, and have every declaration compiled at build time through Weft for each
-  selected target into a checked-in catalog. At runtime only catalog entries
-  execute, with validated values bound as parameters. The DSL also covers exact
+  errors, and compose ordinary reads directly from generated model expressions.
+  Bind validated values as parameters. Declared command and search build profiles
+  can use a checked catalog and Weft lowering for the selected SQL target. The DSL also covers exact
   aggregates and buckets, prefix and term filters, null-safe distinctness and
   to-one joins; reads offer snapshot pages where the platform supports them,
   bounded streams, per-call timeouts and async calls; catalogs can be
@@ -659,18 +654,10 @@ are not completed tests or substitutes for downstream feature and story coverage
 
 ## Technical Context
 
-The bootstrap brief selects YAML-first, JSON-compatible documents and JSON
-Schema as the starting structural validator. These are recorded in
-[ADR-001](../02-design/adr/ADR-001-bootstrap-representation.md). The
-[architecture](../02-design/architecture.md) places semantic validation beyond
-that structural boundary. The owner's subsequent 2026-09-20 direction requires
-browser execution through JavaScript or WebAssembly (WASM), with TypeScript
-preferred for implementation simplicity. High performance is not a primary
-driver. The architecture records this implementation direction; UMF semantics
-remain independent of the host language under NFR-12–NFR-14.
-Bun is the default development/test runtime under
-[ADR-002](../02-design/adr/ADR-002-bun-development-runtime.md); actual-browser
-verification remains mandatory. Exact tooling versions await the scaffold.
+UMF 0.10.0 core schemas and validation rules derive from the authored
+metamodel. The Rust workspace supplies shared semantics through native and
+WebAssembly bindings. FR-39 requires browser execution for supported
+operations. See the [architecture](../02-design/architecture.md).
 
 ## Constraints, Assumptions, Dependencies
 
@@ -714,9 +701,6 @@ be inspected.
 - What versioned DDD profile and external tool formats establish the initial
   FR-40 oracle? Owner: extension authors; blocks tool-specific support claims.
 
-- Which JSON Schema dialects and Protobuf language versions/subsets enter the
-  first slice? Owner: product owner and adapter authors; blocks the exact
-  support manifest. The two initial ecosystems are now selected.
 - What establishes semantic equivalence for each native system? Owner:
   integration authors with native-domain reviewers; blocks conformance criteria.
 - How should operations handle unknown content dependent on edited known content?
@@ -805,57 +789,6 @@ The machine-readable bulk allocation is a separate new-slice inventory; planned 
 ## Browser-local action demo — owner clarification, 2026-10-15
 
 Keep GitHub Pages. Compilation runs in the browser with original Weft WASM; Bun builds static assets. The first no-service executable demo uses actual Truss browser-local sample storage through a separately qualified local-owner actor/policy/invocation profile. Do not simulate native authenticated people/services or weaken the unchanged person-required cohort. CONTRACT-905 defines the explicit additive branch; native protected sealing/execution remains separately required.
-### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
-
-Owner-directed design extension; release sequencing remains separately selected.
-This subsystem adds an **Application Developer** persona: a Python developer who
-reads, searches and changes data described by UMF without writing SQL. The
-Schema Integration Maintainer remains responsible for authored models, bindings
-and target qualification.
-
-- **FR-52 — Generated typed models.** A maintainer must be able to author
-  instance-view, native-column and search choices in the `umf.access` extension
-  and generate, deterministically and offline, statically inspectable Python
-  models, Key DTOs, typed column and index expressions and action types from
-  pinned UMF documents. Presence uses Pydantic `MISSING`; exact values are never
-  rounded; unknown content and a complete assertion report are retained; output
-  is checked in and drift-checked. Generated code is a thin typed layer over the
-  `umf_access` runtime and type-checks cleanly on Python 3.11 under pyright, mypy
-  and ty. FEAT-028, US-080 and US-081 govern this.
-- **FR-53 — Precompiled typed queries and search.** An application developer
-  must be able to declare reads, ranked semantic/keyword/hybrid searches and bulk
-  commands in a schema-first, expression-first Python DSL with no string column
-  references, have a pinned type checker reject type, column, record and argument
-  errors, and have every declaration compiled at build time through Weft for each
-  selected target into a checked-in catalog. At runtime only catalog entries
-  execute, with validated values bound as parameters. The DSL also covers exact
-  aggregates and buckets, prefix and term filters, null-safe distinctness and
-  to-one joins; reads offer snapshot pages where the platform supports them,
-  bounded streams, per-call timeouts and async calls; catalogs can be
-  schema-neutral, and the build writes a least-privilege report per target.
-  FEAT-029 and US-082 to US-084 govern this.
-- **FR-54 — Typed actions and native execution targets.** An application developer
-  must be able to invoke UMF actions through generated typed clients with typed
-  outcomes, and run catalog entries on raw Postgres, Lakebase, Unity Catalog and
-  local Spark/Delta tables through the host's native SQL connection. The native
-  SQL action profile states which action guarantees hold per platform and refuses
-  the rest. Actions can be validated without effect, return the Keys they created
-  and changed, take per-call timeouts (a timeout before commit commits nothing),
-  run async on Postgres and Lakebase, and compose related changes as one
-  multi-effect action. FEAT-030, US-085 and US-086 govern this.
-- **FR-55 — Engine target adapters.** Truss and Ashlar must be able to adopt the
-  SDK by implementing its target protocols over their own protected paths: Truss
-  for reads, actions and bulk commands; Ashlar for publication-pinned reads.
-  Generated code never reaches engine storage directly. FEAT-031, US-087 and
-  US-088 govern this.
-
-Acceptance for FR-52 requires deterministic generation, static positive/negative
-corpora and exact-value/presence counterexamples. FR-53 requires static corpora
-on pinned pyright and mypy, catalog refusals for Weft-unsupported forms, and
-native read and search witnesses per target. FR-54 requires native action and
-bulk witnesses per target and the shared conformance suite. FR-55 requires
-engine-local adoption designs and engine witnesses. Specifications and
-local-only tests establish none of those native support claims.
 
 ## Native 128-bit values and UUIDs — owner direction, 2026-10-15
 
