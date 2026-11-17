@@ -205,6 +205,7 @@ fn invoke(
             }
             engine.reviewed_value_digest(field(request, "value").ok_or_else(missing_argument)?, ctx)
         }
+        "applyJsonPatch" => engine.apply_json_patch(request, ctx),
         "compileTableDeployment" => engine.compile_table_deployment(request, ctx),
         "inspectTableLifecyclePayload" => {
             if !exact_fields(request, &["payload", "document", "path", "scope"]) {

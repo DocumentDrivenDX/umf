@@ -20,10 +20,9 @@ ddx:
 **Type:** semantic schema/library contract. **Version:** additive amendment to
 core 0.10.0. **Status:** draft. Core meaning, literal validation and the
 PostgreSQL 18 mapping through `umf.tables` (CONTRACT-081) are implemented and
-tested. Other native bindings refuse these meanings explicitly; they are not
-delivered. Neither meaning is an admitted ideal under CONTRACT-040: that needs
-useful projections to at least two of the five priority systems, and only the
-PostgreSQL mapping exists.
+tested. Cross-system projections below retain native enforcement and encoding
+limits explicitly. A reported mapping does not imply native equality, value
+conversion or promotion under CONTRACT-040.
 
 ## Purpose
 
@@ -126,10 +125,10 @@ make `[a,b]` and `[b,a]` the same value.
 | System | json | set | Status |
 | --- | --- | --- | --- |
 | PostgreSQL 18 (`umf.tables`, CONTRACT-081) | `jsonb` | `{kind:"array",element}` column, e.g. `text[]` | Implemented |
-| Parquet | `JSON` logical type over UTF-8 `BYTE_ARRAY` | `LIST` with residual uniqueness | Design only; refuses |
-| SQL Server | `json` (2025) or `nvarchar(max)` with `ISJSON` | none native | Design only; refuses |
-| Avro | `string` with residual JSON meaning | `array` with residual uniqueness | Design only; refuses |
-| TableSpec | none | none | Refuses |
+| Parquet | `JSON` logical type over UTF-8 `BYTE_ARRAY` | `LIST` with residual uniqueness | Explicit mapping with retained residuals |
+| SQL Server 2022 | Explicit `nvarchar(max)` JSON text with `ISJSON(...,VALUE)` | Checked JSON array, with uniqueness and item residuals | Explicit mapping with retained residuals |
+| Avro | `string` with residual JSON meaning | `array` with residual uniqueness | Explicit mapping with retained residuals |
+| TableSpec | Explicit JSON text in `TEXT` | Explicit JSON array text in `TEXT`, with shape/item/uniqueness residuals | Explicit mapping with retained residuals |
 
 PostgreSQL `jsonb` residuals, recorded rather than hidden:
 
@@ -203,3 +202,53 @@ declaration, is `crates/umf-codegen/tests/fixtures/fireweed-space.json`.
 - The metamodel (`spec/metamodel/umf.yaml`) is the authority for the
   vocabulary, the structural rules and `SET_ITEM_EQUALITY`;
   `bun run check:metamodel` checks the generated outputs.
+
+## Explicit JSON text and set projections
+
+Avro, SQL Server and TableSpec Field requests accept optional
+`jsonEncoding:boolean`. It defaults to false. A JSON Field mapped to a native
+string requires `jsonEncoding:true`; a plain string carrier never establishes
+JSON meaning implicitly. SQL Server uses `nvarchar(max)` and checks
+`ISJSON(column,VALUE)=1`, admitting JSON null and scalar JSON documents.
+TableSpec collection requests use `TEXT`, `jsonEncoding:true` and mapping
+`encoding:"json-text"`. Avro set requests select a native array; Parquet selects
+LIST. Native-only import observes the native string/list representation.
+
+These encodings report writer obligations for valid JSON, unique object keys,
+Unicode scalar strings, finite numbers and native text capacity. Set list/text
+encodings additionally report uniqueness and canonical-order obligations. Strict
+mode blocks residual meaning; report mode retains the complete source, request
+and residuals for verified recovery. Native JSON null remains distinct from SQL
+NULL or an absent Field.
+
+## RFC 6902 JSON Patch
+
+`applyJsonPatch(document,patch)` in TypeScript and
+`apply_json_patch(document,patch)` in Python apply the same Rust value operation.
+The engine request is `{document:Json,patch:Operation[]}`. Supported operations are
+`{op:"add"|"replace"|"test",path:string,value:Json}`,
+`{op:"remove",path:string}` and `{op:"move"|"copy",from:string,path:string}`.
+Operation-specific unknown members are ignored as RFC 6902 requires.
+
+Operations execute in order on a private admitted copy. A failure returns an
+error and no partial result; the input remains unchanged. Successful results are
+`{present:true,value:Json}` or `{present:false}` after removing the root.
+`test` uses structural JSON equality: object key order is irrelevant, array order
+is significant, JSON numbers compare numerically, and booleans remain distinct.
+
+Paths follow RFC 6901: empty string selects the root, `/` selects an empty member
+name, and `~0`/`~1` decode tilde/slash once. Array indices have no leading zeros;
+`-` is valid only for insertion. `move` removes before resolving the destination
+and cannot move a value into its descendant. Missing parents or targets fail.
+Errors use `JSON_PATCH` at `/patch/{index}`; resource and cooperative controls
+propagate through the original engine boundary.
+
+This operation transforms JSON values. It grants no row-write authority or
+concurrency guarantee. A host persists its successful result through its existing
+transaction and write-admission contract.
+
+Normative sources: [RFC 6902](https://www.rfc-editor.org/rfc/rfc6902),
+[RFC 6901](https://www.rfc-editor.org/rfc/rfc6901),
+[Parquet logical types](https://parquet.apache.org/docs/file-format/types/logicaltypes/),
+[Avro 1.12.0](https://avro.apache.org/docs/1.12.0/specification/), and
+[SQL Server ISJSON](https://learn.microsoft.com/en-us/sql/t-sql/functions/isjson-transact-sql).

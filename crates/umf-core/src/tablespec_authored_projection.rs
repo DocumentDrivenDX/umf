@@ -603,9 +603,15 @@ fn project(
         if req("profile").as_deref() == Some("unresolved") {
             push_loss(&mut residuals,format!("{path}/cardinality"),&cardinality_value,"No execution profile selected; carrier acceptance does not establish shape enforcement","unknown",ctx)?;
         }
-        if card == "map"
+        let json_encoding = get(&request, "jsonEncoding") == Some(&Value::Bool(true)) && native == "TEXT" && (matches!(card.as_str(), "array" | "set" | "map") || card == "one" && txt(get(element, "scalarType")).as_deref() == Some("json"));
+        if json_encoding {
+            set(&mut mapping, "encoding", s("json-text"));
+            push_loss(&mut residuals, format!("{path}/cardinality"), &cardinality_value,
+                "Explicit JSON text collection encoding; writers enforce shape, item semantics and set uniqueness/canonical order; TableSpec TEXT does not enforce them", "approximated", ctx)?;
+        }
+        if !json_encoding && (card == "map" || card == "set"
             || (card == "array" && native != "EMBEDDING")
-            || (card == "one" && native == "EMBEDDING")
+            || (card == "one" && native == "EMBEDDING"))
         {
             set(&mut mapping, "encoding", s("carrier-only"));
             push_loss(&mut residuals,format!("{path}/cardinality"),&cardinality_value,"Selected native carrier cannot express this shape; no map/text or child-table encoding is implied","not-expressible",ctx)?;
@@ -645,7 +651,7 @@ fn project(
             );
             push_loss(&mut residuals, format!("{path}/itemType"), item_ref,
                 "Item reference and its full definition require retained recovery; no recursive native type is fabricated",
-                if native == "EMBEDDING" { "approximated" } else { "not-expressible" }, ctx)?;
+                if native == "EMBEDDING" || json_encoding { "approximated" } else { "not-expressible" }, ctx)?;
             if native == "EMBEDDING" {
                 let scalar = txt(get(item, "scalarType"));
                 if scalar.as_deref().is_some_and(|v| v != "float") {

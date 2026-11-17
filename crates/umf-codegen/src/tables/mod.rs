@@ -548,43 +548,60 @@ fn inspect_column_literals(
     }
     if member(field, "default").is_some() {
         let logical = member(field, "default").unwrap_or(&Value::Null);
-        let native_identity = if let Some(native) = member(column, "default")
-            .filter(|native| string_member(native, "kind") == Some(&Utf16::from("literal")))
-        {
-            member(native, "value")
-                .map(|v| literal_identity(field, v, policy, ctx))
-                .transpose()?
-                .flatten()
-        } else {
-            None
-        };
-        let logical_identity = member(logical, "value")
-            .map(|v| literal_identity(field, v, policy, ctx))
-            .transpose()?
-            .flatten();
-        // Core json has no domain equality (CONTRACT-084); identical canonical
-        // JSON is still the same value, so it is an exact match.
-        let json_match = string_member(field, "scalarType") == Some(&Utf16::from("json"))
-            && match (
-                member(column, "default")
-                    .filter(|native| string_member(native, "kind") == Some(&Utf16::from("literal")))
-                    .and_then(|native| member(native, "value"))
-                    .and_then(|v| member(v, "json")),
-                member(logical, "value").and_then(|v| member(v, "json")),
-            ) {
-                (Some(native), Some(logical)) => {
-                    crate::canonical::canonical_json_admitted(native, ctx)?
-                        == crate::canonical::canonical_json_admitted(logical, ctx)?
-                }
+        let matches = member(logical, "on") == Some(&Value::String(Utf16::from("missing")))
+            && match (member(column, "default").filter(|d| string_member(d, "kind") == Some(&Utf16::from("literal"))).and_then(|d| member(d, "value")), member(logical, "value")) {
+                (Some(a), Some(b)) => stored_defaults_equal(document, field, a, b, policy, ctx)?,
                 _ => false,
             };
-        let matches = member(logical, "on") == Some(&Value::String(Utf16::from("missing")))
-            && (native_identity.is_some() && native_identity == logical_identity || json_match);
         if !matches {
             out.push_capped(core_diag("TABLES_LOGICAL_DEFAULT", &append_path(path, "default"), "Logical and native defaults require an explicit matching missing-only literal; other default behavior is not qualified", Severity::Warning));
         }
     }
     Ok(())
+}
+
+// Matching defaults use logical item equality, not literal token spelling.
+// Sets disregard order; ordered arrays preserve it. Validation independently
+// rejects duplicate sets, invalid literals and native capacity loss.
+fn stored_defaults_equal(document: &Value, field: &Value, a: &Value, b: &Value,
+    policy: &umf_core::literal_policy::PreparedPolicy, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
+    if a == &Value::Null || b == &Value::Null { return Ok(a == b); }
+    let card = string_member(field, "cardinality").and_then(|s| s.to_utf8().ok()).unwrap_or_default();
+    if matches!(card.as_str(), "array" | "set") {
+        let (Some(a), Some(b), Some(item)) = (member(a, "array").and_then(array_items), member(b, "array").and_then(array_items), member(field, "itemType").and_then(|r| resolve_ref(document, r))) else { return Ok(false); };
+        if a.len() != b.len() { return Ok(false); }
+        for (index, value) in a.iter().enumerate() {
+            if card == "array" {
+                if !stored_defaults_equal(document, item, value, &b[index], policy, ctx)? { return Ok(false); }
+            } else {
+                let mut found = false;
+                for other in b {
+                    if stored_defaults_equal(document, item, value, other, policy, ctx)? { found = true; break; }
+                }
+                if !found { return Ok(false); }
+            }
+        }
+        return Ok(true);
+    }
+    if string_member(field, "scalarType") == Some(&Utf16::from("json")) {
+        return match (member(a, "json"), member(b, "json")) {
+            (Some(a), Some(b)) => Ok(crate::canonical::canonical_json_admitted(a, ctx)? == crate::canonical::canonical_json_admitted(b, ctx)?),
+            _ => Ok(false),
+        };
+    }
+    if string_member(field, "scalarType") == Some(&Utf16::from("timestamp")) {
+        return match (string_member(a, "timestamp").and_then(|s| s.to_utf8().ok()), string_member(b, "timestamp").and_then(|s| s.to_utf8().ok())) {
+            (Some(a), Some(b)) => Ok(crate::deployment::native_instant(&a).ok().zip(crate::deployment::native_instant(&b).ok()).is_some_and(|(a,b)| a == b)),
+            _ => Ok(false),
+        };
+    }
+    if string_member(field, "scalarType") == Some(&Utf16::from("date")) {
+        return Ok(string_member(a, "date").is_some() && string_member(a, "date") == string_member(b, "date"));
+    }
+    let a = literal_identity(field, a, policy, ctx)?;
+    let b = literal_identity(field, b, policy, ctx)?;
+    Ok(a.is_some() && a == b)
 }
 
 fn numeric_capacity_message(
@@ -668,6 +685,28 @@ fn validate_stored_literal(
     let kind = string_member(native, "kind")
         .and_then(|text| text.to_utf8().ok())
         .unwrap_or_default();
+    if kind == "array" {
+        if let (Some(items), Some(item), Some(element)) = (
+            member(literal, "array").and_then(array_items),
+            member(field, "itemType").and_then(|r| resolve_ref(document, r)),
+            member(native, "element"),
+        ) {
+            for (index, value) in items.iter().enumerate() {
+                validate_stored_literal(document, item, value, element,
+                    &Utf16::from(format!("{}/array/{index}", path.to_utf8().unwrap_or_default())), policy, ctx, out)?;
+            }
+        }
+    }
+    if kind == "timestamptz" {
+        if let (Some(value), Some(precision)) = (string_member(literal, "timestamp"), number_member(native, "precision")) {
+            if let Some(value) = value.to_utf8().ok().and_then(|v| crate::deployment::native_instant(&v).ok()) {
+                let fractional = value.split_once('.').map(|(_, f)| f.trim_end_matches('Z')).unwrap_or("");
+                if fractional.bytes().skip(precision as usize).any(|b| b != b'0') {
+                    out.push_capped(core_diag("TABLES_NATIVE_CAPACITY", path, "Instant would round at the declared timestamp precision", Severity::Error));
+                }
+            }
+        }
+    }
     if let Some(token) = string_member(literal, "integerToken") {
         if ["int2", "int4", "int8"].contains(&kind.as_str()) {
             match exact_coefficient(token, 0, None, ctx) {
@@ -4806,6 +4845,24 @@ fn inspect_index_access(
             }
         }
     }
+    if let Some(classes) = member(item, "operatorClasses") {
+        let classes = array_items(classes).unwrap_or(&[]);
+        if !gin || classes.len() != selected.len() {
+            out.push_capped(core_diag("TABLES_INDEX_OPERATOR_CLASSES", &append_path(location, "operatorClasses"), "GIN operator classes must name one compatible class per key field", Severity::Error));
+        }
+        for (index, (class, reference)) in classes.iter().zip(selected).enumerate() {
+            ctx.charge_work(columns.len().saturating_add(1), location.clone())?;
+            let native = columns.iter().find(|column| member(column, "field").is_some_and(|f| refs_equal(f, reference)))
+                .and_then(|column| member(column, "nativeType")).and_then(|n| string_member(n, "kind"));
+            let valid = matches!((native.and_then(|s| s.to_utf8().ok()).as_deref(), class),
+                (Some("array"), Value::String(c)) if c == &Utf16::from("array_ops"))
+                || matches!((native.and_then(|s| s.to_utf8().ok()).as_deref(), class),
+                (Some("jsonb"), Value::String(c)) if c == &Utf16::from("jsonb_ops") || c == &Utf16::from("jsonb_path_ops"));
+            if !valid {
+                out.push_capped(core_diag("TABLES_INDEX_OPERATOR_CLASSES", &append_path(&append_path(location, "operatorClasses"), &index.to_string()), "Operator class does not match the native GIN key type", Severity::Error));
+            }
+        }
+    }
     if let Some(directions) = member(item, "directions") {
         if array_items(directions).map_or(true, |d| d.len() != selected.len()) {
             out.push_capped(core_diag(
@@ -5203,6 +5260,15 @@ fn inspect_unknown(
                             .map(|(_, value)| value)
                     });
                 if let Some(child) = child {
+                    // The closed core JSON literal carrier explicitly admits
+                    // arbitrary JSON data. Its member names are values, not
+                    // unrecognized table vocabulary; core/native literal
+                    // validation still checks that data independently.
+                    if key == &Utf16::from("json")
+                        && (*child == Value::Bool(true) || object_members(child).is_some_and(|m| m.is_empty()))
+                        && member(schema, "additionalProperties") == Some(&Value::Bool(false))
+                        && member(schema, "required").and_then(array_items).is_some_and(|r| r == [Value::string_utf8("json")])
+                    { continue; }
                     inspect_unknown(
                         item,
                         root_schemas,

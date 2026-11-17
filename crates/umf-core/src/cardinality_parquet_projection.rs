@@ -208,6 +208,7 @@ fn scalar(native: &str) -> Result<(i32, Option<i32>), EngineError> {
         "float64" => Ok((5, None)),
         "binary" => Ok((6, None)),
         "string" => Ok((6, Some(0))),
+        "json" => Ok((6, Some(19))),
         "date" => Ok((1, Some(6))),
         "time-millis" => Ok((1, Some(7))),
         "time-micros" => Ok((2, Some(8))),
@@ -605,9 +606,12 @@ fn lower(
             "/author/identity",
         ));
     }
-    let id = text(get(&request, "id")).unwrap();
-    let record = text(get(&request, "recordName")).unwrap();
-    let field = text(get(&request, "fieldName")).unwrap();
+    let required_text = |key: &str| text(get(&request, key)).ok_or_else(|| {
+        err("CARDINALITY_PARQUET_REQUEST", "Unicode scalar text is required", &format!("/request/{key}"))
+    });
+    let id = required_text("id")?;
+    let record = required_text("recordName")?;
+    let field = required_text("fieldName")?;
     let carrier = get(&request, "nativeType").unwrap();
     let (bytes, indices) = make_file(&record, &field, carrier, c)?;
     let target = import_parquet_schema(&bytes, &k(&id), &rt.engine, &rt.registry, &mut caps, c)?;
@@ -698,6 +702,9 @@ fn lower(
         let ideal = text(get(e, "cardinality")).unwrap_or_else(|| "unspecified".into());
         if ideal == "unspecified" {
             residuals.push(residual(&format!("{p}/cardinality"),&s(&ideal),"No ideal shape is asserted; the selected native type remains an explicit refinement","unknown",c)?)
+        } else if ideal == "set" && shape == "array" {
+            residuals.push(residual(&format!("{p}/cardinality"), get(e, "cardinality").unwrap(),
+                "LIST encodes set items; writers must enforce uniqueness and canonical order; native-only import observes an array", "approximated", c)?);
         } else if ideal != shape {
             residuals.push(residual(
                 &format!("{p}/cardinality"),
@@ -775,7 +782,7 @@ fn lower(
                 }
             }
         }
-        if matches!(ideal.as_str(), "array" | "map") && ideal == shape {
+        if (matches!(ideal.as_str(), "array" | "map") && ideal == shape || ideal == "set" && shape == "array") {
             if let Some(item) = get(e, "itemType") {
                 if let Value::Object(fields) = item {
                     for (key, value) in fields {

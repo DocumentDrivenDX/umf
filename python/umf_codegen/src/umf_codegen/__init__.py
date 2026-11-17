@@ -118,13 +118,18 @@ def discover_table_migration_changes(previous_bundle: dict[str, object], next_bu
     """
     request = {"previous": previous_bundle, "next": next_bundle}
     if options is not None:
-        request["options"] = options
+        request["selector"] = options
     result = execute(request, timeout_seconds,
                      operation="discover_changes")
     changes = result.get("changes")
     if not isinstance(changes, list) or any(not isinstance(item, dict) for item in changes):
         raise GenerationError("PAYLOAD_INVALID", "Embedded compiler returned invalid reviewed changes")
     return cast(list[ReviewedChangeCandidate], changes)
+
+
+def apply_json_patch(document: object, patch: list[dict[str, object]], *, timeout_seconds: float = 30) -> dict[str, object]:
+    """Apply RFC 6902 atomically to an admitted JSON value; no database write."""
+    return execute({"document": document, "patch": patch}, timeout_seconds, operation="json_patch")
 
 
 def compile_table_deployment(text: str, *, configuration: TableDeploymentConfiguration,
@@ -187,6 +192,7 @@ __all__ = [
     "TableMigrationDiscoveryOptions",
     "TableMigrationPredecessor",
     "__version__",
+    "apply_json_patch",
     "compile_table_deployment",
     "compile_table_migration",
     "discover_table_migration_changes",

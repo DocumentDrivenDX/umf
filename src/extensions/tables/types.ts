@@ -3,7 +3,7 @@ import type {CoreLiteral} from '../../model/schema-literals';
 import type {Json,Validation} from '../../model/types';
 export interface TableRef {module:string;element:string}
 export interface TableKeyRef {record:TableRef;key:string}
-export type TableScalarNativeType={kind:'boolean'|'text'|'int2'|'int4'|'int8'|'float4'|'float8'|'date'|'timestamp'|'timestamptz'|'uuid'|'bytea'|'jsonb'}|{kind:'varchar'|'char';length:number}|{kind:'numeric';precision:number;scale:number};
+export type TableScalarNativeType={kind:'boolean'|'text'|'int2'|'int4'|'int8'|'float4'|'float8'|'date'|'uuid'|'bytea'|'jsonb'}|{kind:'timestamp'|'timestamptz';precision?:number}|{kind:'varchar'|'char';length:number}|{kind:'numeric';precision:number;scale:number};
 /** A one-dimensional PostgreSQL array column holding one core array or set Field. */
 export type TableNativeType=TableScalarNativeType|{kind:'array';element:TableScalarNativeType};
 export type TableDefault={kind:'literal';value:CoreLiteral}|{kind:'currentTimestamp'}|{kind:'randomUuid'};
@@ -16,7 +16,7 @@ export type TableCommand='select'|'insert'|'update'|'delete';
 export type TableCommandRules=Record<TableCommand,TableRowRule>;
 export interface TablePolicy {mode:'native-rls';person:TableCommandRules;batch:TableCommandRules}
 /** `method` defaults to btree; `directions` gives one btree direction per key field; `where` makes a partial index. */
-export interface TableIndex {id:string;name:string;fields:TableRef[];unique:boolean;include:TableRef[];method?:'btree'|'gin';directions?:('asc'|'desc')[];where?:TableExpression}
+export interface TableIndex {id:string;name:string;fields:TableRef[];unique:boolean;include:TableRef[];method?:'btree'|'gin';operatorClasses?:('array_ops'|'jsonb_ops'|'jsonb_path_ops')[];directions?:('asc'|'desc')[];where?:TableExpression}
 export interface TableCheck {id:string;name:string;expression:TableExpression}
 export interface TableForeignKey {id:string;name:string;fields:TableRef[];target:TableKeyRef;onUpdate:'restrict'|'noAction'|'cascade'|'setNull';onDelete:'restrict'|'noAction'|'cascade'|'setNull';deferrable:false|'immediate'|'deferred';relationship?:TableRelationshipRef}
 export interface TableDeclaration {id:string;record:TableRef;name:string;columns:TableColumn[];indexes:TableIndex[];checks:TableCheck[];foreignKeys:TableForeignKey[];policy:TablePolicy}

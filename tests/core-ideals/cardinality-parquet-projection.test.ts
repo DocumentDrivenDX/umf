@@ -32,7 +32,7 @@ test('nested item Fields retain independent availability; MAP uniqueness and exa
  const r=projectCardinalityToParquet(a,{...base,nativeType});expect(r.status).toBe('projected');expect(r.residuals).toEqual([]);expect(r.mapping.items.map(i=>i.nativeIndex)).toEqual([1,3,5]);
  expect(recoverCardinalityFromParquet(r,exportParquetCapture(r.target!))).toEqual(a.target);
  expect(projectCardinalityToParquet(a,{...base,nativeType,availability:'unresolved'}).status).toBe('blocked');
- expect(projectCardinalityToParquet(a,{...base,nativeType,requireExactValues:true}).residuals.some(r=>r.reason.includes('1.0000000000000002'))).toBe(true);
+ const exact=projectCardinalityToParquet(a,{...base,nativeType,requireExactValues:true});expect(exact.status).toBe('blocked');expect(exact.residuals.some(r=>r.reason.includes('binary32 narrows values'))).toBe(true);
  const mismatched=structuredClone(nativeType);mismatched.item.nullable=false;
  expect(projectCardinalityToParquet(a,{...base,nativeType:mismatched}).status).toBe('blocked');
  source.modules[0]!.elements[1]!.cardinality='map';const mapAuthor=declareCoreCardinality(source,{module:'m',element:'f'},{cardinality:'array',itemType:{module:'m',element:'inner'}});

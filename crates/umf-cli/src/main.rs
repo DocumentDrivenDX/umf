@@ -401,6 +401,7 @@ struct CodegenArgs {
 fn parse_codegen_args(args: &[String]) -> Result<CodegenArgs, String> {
     let valid_ops = [
         "pack-tools",
+        "json-patch",
         "generate",
         "deployment",
         "verify-deployment",
@@ -474,6 +475,7 @@ fn codegen_operation(
     let engine = umf_codegen::CodegenEngine::new(&resources);
     match operation {
         "generate" => engine.generate_python_client(request, ctx),
+        "json-patch" => engine.apply_json_patch(request, ctx),
         "deployment" => engine.compile_table_deployment(request, ctx),
         "verify-deployment" => {
             let bundle =
@@ -486,9 +488,9 @@ fn codegen_operation(
             engine.verify_table_migration(plan, ctx)
         }
         "discover-changes" => {
-            if !matches!(request, Value::Object(members) if members.len() == 2)
-                || field(request, "previous").is_none()
-                || field(request, "next").is_none()
+            let allowed = if field(request, "selector").is_some() { ["previous", "next", "selector"].as_slice() } else { ["previous", "next"].as_slice() };
+            if !matches!(request, Value::Object(members) if members.len() == allowed.len()
+                && allowed.iter().all(|name| members.iter().filter(|(key, _)| key == &Utf16::from(*name)).count() == 1))
             {
                 return Err(umf_core::EngineError::new(
                     "MIGRATION_CHANGES_FAILED",
@@ -499,7 +501,7 @@ fn codegen_operation(
             let previous =
                 field(request, "previous").ok_or_else(|| request_error("previous is required"))?;
             let next = field(request, "next").ok_or_else(|| request_error("next is required"))?;
-            let changes = engine.discover_table_migration_changes(previous, next, ctx)?;
+            let changes = engine.discover_table_migration_changes_selected(previous, next, field(request, "selector"), ctx)?;
             Ok(object(vec![("changes", changes)]))
         }
         "row-scope" => engine.normalize_row_scope(request, ctx),

@@ -417,6 +417,7 @@ fn enum_type(value: &Utf16) -> Result<(i32, Option<i32>), EngineError> {
         Some("float64") => Ok((5, None)),
         Some("binary") => Ok((6, None)),
         Some("string") => Ok((6, Some(0))),
+        Some("json") => Ok((6, Some(19))),
         Some("date") => Ok((1, Some(6))),
         Some("time-millis") => Ok((1, Some(7))),
         Some("time-micros") => Ok((2, Some(8))),

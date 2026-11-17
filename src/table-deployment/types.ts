@@ -31,3 +31,6 @@ export interface TableDeploymentBundle {
 }
 export type TableDeploymentResult={status:'compiled';bundle:TableDeploymentBundle;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
 export interface TableDeploymentRequest {text:string;format?:'json'|'yaml';configuration:unknown}
+
+export type JsonPatchOperation={op:'add'|'replace'|'test';path:string;value:import('../model/types').Json}|{op:'remove';path:string}|{op:'move'|'copy';from:string;path:string};
+export type JsonPatchResult={present:true;value:import('../model/types').Json}|{present:false};

@@ -115,6 +115,10 @@
         },
         "requireExactValues": {
           "type": "boolean"
+        },
+        "jsonEncoding": {
+          "type": "boolean",
+          "description": "Explicit JSON text encoding; native enforcement limits are retained in projection residuals."
         }
       },
       "allOf": [
@@ -184,6 +188,7 @@
           "enum": [
             "one",
             "array",
+            "set",
             "map",
             "unspecified"
           ]

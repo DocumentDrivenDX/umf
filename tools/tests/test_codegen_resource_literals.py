@@ -252,7 +252,7 @@ class CodegenLiteralCorrespondenceTests(unittest.TestCase):
             self.assertEqual(row["sha256"],hashlib.sha256(raw).hexdigest())
             self.assertEqual(row["bytes"],len(raw))
             self.assertEqual(row["value"],oracle(raw),name)
-        self.assertEqual(total,403175)
+        self.assertEqual(total,403853)
         # Independent RAW parser traversal, keys before children, across all9.
         expected_pool = []; seen = set()
         def remember(units):
@@ -266,8 +266,8 @@ class CodegenLiteralCorrespondenceTests(unittest.TestCase):
                 for key, child in value[1]: remember(key); visit(child)
         for _, relative in INPUTS: visit(oracle((REPO/relative).read_bytes()))
         self.assertEqual(self.dictionary,tuple(expected_pool))
-        self.assertEqual(len(self.dictionary),902)
-        self.assertEqual(sum(map(len,self.dictionary)),16447)
+        self.assertEqual(len(self.dictionary),906)
+        self.assertEqual(sum(map(len,self.dictionary)),16494)
 
     def test_authored_order_unknown_data_and_exact_utf16_units(self):
         raw=r'{"z":null,"unknown":{"a":[true,false,"\u0000\r\n\ud800\ud83d\ude00"]},"2":2,"1":1}'.encode()

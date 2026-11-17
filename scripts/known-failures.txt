@@ -42,8 +42,6 @@ tests/binding/table-query.test.ts
 tests/catalog-resource-profile.test.ts
 # semantic work exhaustion no longer refuses: returns 900+ 'Existing definition or unsupported structure differs' diagnostics instead
 tests/core-evolution.test.ts
-# [rust-panic] Rust panics at crates/umf-core/src/cardinality_parquet_projection.rs:610 (Option::unwrap on None) and aborts the process (exit 134)
-tests/core-ideals/cardinality-parquet-projection.test.ts
 # qualified catalog result differs from the expected value (toEqual at cardinality-postgresql-catalog.test.ts:26)
 tests/core-ideals/cardinality-postgresql-catalog.test.ts
 # fixed bounds preserve lower-bound losses and refuse impossib: UmfError: 3

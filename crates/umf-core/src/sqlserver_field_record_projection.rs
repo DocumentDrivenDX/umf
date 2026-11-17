@@ -680,8 +680,10 @@ fn field_project(
             }
         }
     }
-    let mut sql =
-        format!("CREATE TABLE {namespace_sql}.{table_sql} ({column_sql} {native} NULL);\n");
+    let json_encoding = get(&request, "jsonEncoding") == Some(&Value::Bool(true))
+        && native == "nvarchar(max)" && text(get(element, "scalarType")) == Some(&k("json"));
+    let check = if json_encoding { format!(" CHECK (ISJSON({column_sql},VALUE)=1)") } else { String::new() };
+    let mut sql = format!("CREATE TABLE {namespace_sql}.{table_sql} ({column_sql} {native} NULL{check});\n");
     if let Some(description) = text(get(element, "description")) {
         if description.len() > 3750 {
             push_residual(
@@ -697,7 +699,10 @@ fn field_project(
         }
     }
     if let Some(scalar) = text(get(element, "scalarType")) {
-        if field_native_family(&native).is_none_or(|family| scalar != &k(family)) {
+        if json_encoding {
+            push_residual(&mut residuals, format!("{path}/scalarType"), &Value::String(scalar.clone()),
+                "Explicit JSON text encoding with ISJSON VALUE; writers additionally enforce unique keys, Unicode scalars and finite numbers within NVARCHAR limits", "approximated", ctx)?;
+        } else if field_native_family(&native).is_none_or(|family| scalar != &k(family)) {
             push_residual(
                 &mut residuals,
                 format!("{path}/scalarType"),

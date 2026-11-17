@@ -900,7 +900,7 @@ fn build_deployment_bundle(
             if let Some(default) = member(column, "default") {
                 let sql = match u8ext(default, "kind").as_deref() {
                     Some("literal") => {
-                        literal_sql(member(default, "value").unwrap_or(&Value::Null), ctx)?
+                        stored_literal_sql(member(default, "value").unwrap_or(&Value::Null), native, field, ctx)?
                     }
                     Some("randomUuid") => "pg_catalog.gen_random_uuid()".to_string(),
                     Some("currentTimestamp") => "CURRENT_TIMESTAMP".to_string(),
@@ -1178,6 +1178,7 @@ fn build_deployment_bundle(
             };
             let directions = array_items(member(index, "directions").unwrap_or(&Value::Null))
                 .unwrap_or(&[]);
+            let classes = array_items(member(index, "operatorClasses").unwrap_or(&Value::Null)).unwrap_or(&[]);
             let mut fields = Vec::new();
             for (fi, r) in array_items(member(index, "fields").unwrap_or(&Value::Null))
                 .unwrap_or(&[])
@@ -1187,6 +1188,15 @@ fn build_deployment_bundle(
                 let mut key = quote_ident(&column_name(table, r).ok_or_else(|| {
                     Refusal::unsupported(&ip, "Missing exact column mapping")
                 })?);
+                if let Some(class) = classes.get(fi) {
+                    let name = match (method, class) {
+                        ("gin", Value::String(c)) if c == &Utf16::from("array_ops") => "array_ops",
+                        ("gin", Value::String(c)) if c == &Utf16::from("jsonb_ops") => "jsonb_ops",
+                        ("gin", Value::String(c)) if c == &Utf16::from("jsonb_path_ops") => "jsonb_path_ops",
+                        _ => return Err(Refusal::unsupported(append_path(&ip, "operatorClasses"), "Unqualified GIN operator class")),
+                    };
+                    key.push_str(&format!(" pg_catalog.{}", quote_ident(name)));
+                }
                 match directions.get(fi) {
                     None if directions.is_empty() => {}
                     Some(Value::String(d)) if d == &Utf16::from("asc") => {}
@@ -1199,6 +1209,9 @@ fn build_deployment_bundle(
                     }
                 }
                 fields.push(key);
+            }
+            if member(index, "operatorClasses").is_some() && classes.len() != fields.len() {
+                return Err(Refusal::unsupported(append_path(&ip, "operatorClasses"), "One operator class is required per key field"));
             }
             if !directions.is_empty() && directions.len() != fields.len() {
                 return Err(Refusal::unsupported(
@@ -1543,6 +1556,7 @@ fn native_type(value: &Value) -> Result<(String, String, i32), String> {
                 + number_member(value, "scale").unwrap_or(0.0) as i32
                 + 4
         }
+        "timestamp" | "timestamptz" => number_member(value, "precision").map_or(-1, |p| p as i32),
         _ => -1,
     };
     let sql = match kind.as_str() {
@@ -1557,6 +1571,7 @@ fn native_type(value: &Value) -> Result<(String, String, i32), String> {
             number_member(value, "precision").unwrap_or(0.0) as usize,
             number_member(value, "scale").unwrap_or(0.0) as usize
         ),
+        "timestamp" | "timestamptz" if number_member(value, "precision").is_some() => format!("pg_catalog.{}({})", quote_ident(name), tm),
         _ => format!("pg_catalog.{}", quote_ident(name)),
     };
     Ok((sql, name.to_string(), tm))
@@ -1649,6 +1664,43 @@ fn literal_sql(value: &Value, ctx: &mut Context<'_>) -> Result<String, Refusal> 
     ))
 }
 
+fn stored_literal_sql(value: &Value, native: &Value, field: &Value, ctx: &mut Context<'_>) -> Result<String, Refusal> {
+    let literal = column_literal_sql(value, native, ctx)?;
+    if u8ext(field, "cardinality").as_deref() == Some("set") {
+        let text = member(native, "element").and_then(|e| u8ext(e, "kind")).as_deref() == Some("text");
+        Ok(format!("pg_catalog.array_sort({literal}{})", if text { " COLLATE pg_catalog.\"C\"" } else { "" }))
+    } else { Ok(literal) }
+}
+
+pub(crate) fn stored_literal_sql_for_migration(value: &Value, native: &Value, field: &Value, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+    match stored_literal_sql(value, native, field, ctx) {
+        Ok(sql) => Ok(sql),
+        Err(Refusal::Terminal(error)) => Err(error),
+        Err(Refusal::Semantic { code, path, message }) => Err(EngineError::new(code, path, message)),
+        Err(Refusal::Diagnostics(_)) => Err(EngineError::new("TABLE_DEPLOYMENT_UNSUPPORTED", Utf16::default(), "Literal is not qualified")),
+    }
+}
+
+/// Render a literal with its exact native capacity, including typed empty arrays.
+fn column_literal_sql(value: &Value, native: &Value, ctx: &mut Context<'_>) -> Result<String, Refusal> {
+    if value == &Value::Null { return Ok("NULL".into()); }
+    if u8ext(native, "kind").as_deref() == Some("array") {
+        let items = member(value, "array").and_then(array_items).ok_or_else(|| Refusal::unsupported("", "Expected an array literal"))?;
+        let element = member(native, "element").unwrap_or(&Value::Null);
+        let parts = items.iter().map(|item| column_literal_sql(item, element, ctx)).collect::<Result<Vec<_>, _>>()?;
+        let ty = native_type_sql(native).map_err(|m| Refusal::unsupported("", m))?;
+        return Ok(format!("ARRAY[{}]::{ty}", parts.join(", ")));
+    }
+    if let (Some(timestamp), Some(precision)) = (u8ext(value, "timestamp"), number_member(native, "precision")) {
+        let instant = native_instant(&timestamp).map_err(|m| Refusal::unsupported("", m))?;
+        let fraction = instant.split_once('.').map(|(_, fraction)| fraction.trim_end_matches('Z')).unwrap_or("");
+        if fraction.bytes().skip(precision as usize).any(|b| b != b'0') {
+            return Err(Refusal::unsupported("", "Instant would round at the declared timestamp precision"));
+        }
+    }
+    literal_sql(value, ctx)
+}
+
 fn json_contains_nul(value: &Value) -> bool {
     match value {
         Value::String(text) => text.units().contains(&0),
@@ -1692,12 +1744,6 @@ fn check_array_column(
             "Native array element type is not yet qualified",
         ));
     }
-    if member(column, "default").is_some() {
-        return Err(Refusal::unsupported(
-            append_path(path, "default"),
-            "Native array defaults are not yet qualified",
-        ));
-    }
     let item = member(field, "itemType")
         .and_then(|item| resolve_ref(document, item))
         .ok_or_else(|| Refusal::unsupported(path, "Missing original itemType Field"))?;
@@ -1706,17 +1752,17 @@ fn check_array_column(
         || !array_items(member(item, "semanticTypes").unwrap_or(&Value::Null))
             .unwrap_or(&[])
             .is_empty()
-        || member(item, "allowedValues").is_some()
         || member(item, "default").is_some()
     {
         return Err(Refusal::unsupported(
             path,
-            "Array/set item extensions, semantic types, allowed values and defaults require a qualified native interpretation",
+            "Array/set item extensions, semantic types and defaults require a qualified native interpretation",
         ));
     }
     let facets = member(item, "facets").unwrap_or(&Value::Null);
     for (key, _) in object_members(facets).unwrap_or(&[]) {
-        if !(element_kind == "numeric"
+        if !["integerWidth", "range", "length"].iter().any(|name| key == &Utf16::from(*name))
+            && !(element_kind == "numeric"
             && (key == &Utf16::from("precision") || key == &Utf16::from("scale")))
         {
             return Err(Refusal::unsupported(
@@ -2021,6 +2067,53 @@ fn domain_predicates(
         out.push(format!(
             "CASE WHEN pg_catalog.array_ndims({quoted}) IS NULL THEN TRUE WHEN pg_catalog.array_ndims({quoted}) = 1 AND pg_catalog.array_lower({quoted}, 1) = 1 THEN {elements} ELSE FALSE END"
         ));
+        let item = member(field, "itemType").and_then(|r| resolve_ref(document, r))
+            .ok_or_else(|| Refusal::unsupported("", "Missing array item"))?;
+        let native = member(column, "nativeType").unwrap();
+        let element = member(native, "element").unwrap();
+        let mut item_domain = item.clone();
+        if let Value::Object(fields) = &mut item_domain {
+            fields.retain(|(key, _)| key != &Utf16::from("allowedValues"));
+            if let Some((_, Value::Object(facets))) = fields.iter_mut().find(|(k, _)| k == &Utf16::from("facets")) {
+                facets.retain(|(key, _)| key != &Utf16::from("length"));
+            }
+        }
+        let scalar_column = object(vec![("name", s("__umf_item")), ("nativeType", element.clone())]);
+        // Scalar ordered predicates hold for every item iff they hold at both
+        // extrema. Native sorting preserves exact numeric ordering and NaN;
+        // NULL is governed separately by item availability above.
+        let sorted = format!("pg_catalog.array_sort(pg_catalog.array_remove({quoted}, NULL))");
+        let first = format!("({sorted})[1]");
+        let last = format!("({sorted})[pg_catalog.cardinality({sorted})]");
+        let mut checks = Vec::new();
+        for predicate in domain_predicates(&scalar_column, &item_domain, document, ctx)? {
+            checks.push(predicate.replace("\"__umf_item\"", &first));
+            checks.push(predicate.replace("\"__umf_item\"", &last));
+        }
+        if let Some(values) = member(item, "allowedValues").and_then(array_items) {
+            if !values.is_empty() {
+                let allowed = object(vec![("array", Value::Array(values.iter().filter(|v| **v != Value::Null).cloned().collect()))]);
+                let sql = column_literal_sql(&allowed, native, ctx)?;
+                checks.push(format!("pg_catalog.array_remove({quoted}, NULL) <@ {sql}"));
+            }
+        }
+        if let Some(length) = member(item, "facets").and_then(|f| member(f, "length")) {
+            if u8ext(item, "scalarType").as_deref() != Some("string") || u8ext(length, "unit").as_deref() != Some("unicode-scalar") {
+                return Err(Refusal::unsupported("", "Array item length requires Unicode scalar text"));
+            }
+            for (key, lower) in [("min", true), ("max", false)] {
+                if let Some(bound) = number_member(length, key) {
+                    if bound > 254.0 { return Err(Refusal::unsupported("", "Array item regex length bound exceeds the qualified 254 scalar profile")); }
+                    let n = bound as usize + usize::from(!lower);
+                    let regex = format!("^.{{{n}}}");
+                    let path = format!("$[*] ? (@ != null && {}(@ like_regex \"{regex}\" flag \"s\"))", if lower { "!" } else { "" });
+                    checks.push(format!("NOT pg_catalog.jsonb_path_exists(pg_catalog.to_jsonb({quoted}), {}::pg_catalog.jsonpath)", quote_text(&path)?));
+                }
+            }
+        }
+        for check in checks {
+            out.push(format!("CASE WHEN pg_catalog.array_ndims({quoted}) IS NULL THEN TRUE WHEN pg_catalog.array_ndims({quoted}) = 1 AND pg_catalog.array_lower({quoted}, 1) = 1 THEN ({check}) ELSE FALSE END"));
+        }
         if let Some(bounds) = member(facets, "collectionSize") {
             for (key, op) in [("min", ">="), ("max", "<=")] {
                 if let Some(n) = member(bounds, key).and_then(value_number_text) {

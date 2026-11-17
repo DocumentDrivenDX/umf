@@ -307,6 +307,9 @@ fn visit(
             "unknown",
             ctx,
         )?);
+    } else if authored_shape == "set" && native_shape == "array" {
+        residuals.push(residual(&format!("{path}/cardinality"), get(element, "cardinality").unwrap(),
+            "Avro array encodes set items; writers must enforce uniqueness and canonical order; native-only import observes an array", "approximated", ctx)?);
     } else if authored_shape != native_shape {
         residuals.push(residual(
             &format!("{path}/cardinality"),
@@ -383,7 +386,10 @@ fn visit(
         }
     }
     if let Some(scalar) = get(element, "scalarType") {
-        if txt(Some(scalar)) != txt(get(&observation, "scalarFamily")) {
+        if txt(Some(scalar)).as_deref() == Some("json") && txt(get(&observation, "scalarFamily")).as_deref() == Some("string") && get(request, "jsonEncoding") == Some(&Value::Bool(true)) {
+            residuals.push(residual(&format!("{path}/scalarType"), scalar,
+                "Explicit JSON text encoding: writers validate JSON, Unicode, duplicate keys and finite numbers; Avro string does not enforce JSON", "approximated", ctx)?);
+        } else if txt(Some(scalar)) != txt(get(&observation, "scalarFamily")) {
             residuals.push(residual(
                 &format!("{path}/scalarType"),
                 scalar,
@@ -394,7 +400,7 @@ fn visit(
         }
     }
     let item_type = get(element, "itemType");
-    if matches!(authored_shape.as_str(), "array" | "map") && native_shape == authored_shape {
+    if (matches!(authored_shape.as_str(), "array" | "map") && native_shape == authored_shape || authored_shape == "set" && native_shape == "array") {
         if let Some(reference) = item_type {
             let module = txt(get(reference, "module")).ok_or_else(|| {
                 err(

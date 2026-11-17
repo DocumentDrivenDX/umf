@@ -112,7 +112,8 @@ writes. Forged wire requests MUST receive the same check as generated methods.
 | FieldValue | `{field:Ref,value:Literal}` | Existing exact core literal carrier and domain; null/absence remain distinct |
 
 NativeType is exactly one of `{kind:"boolean"|"text"|"int2"|"int4"|"int8"|
-"float4"|"float8"|"date"|"timestamp"|"timestamptz"|"uuid"|"bytea"|"jsonb"}`,
+"float4"|"float8"|"date"|"uuid"|"bytea"|"jsonb"}`,
+`{kind:"timestamp"|"timestamptz",precision?:integer0Through6}`,
 `{kind:"varchar"|"char",length:positiveInteger}`,
 `{kind:"numeric",precision:positiveInteger,scale:integer}` or
 `{kind:"array",element:ScalarNativeType}`, where ScalarNativeType is any of the
@@ -175,17 +176,33 @@ Field declares `facets.collectionSize`. The CASE fixes evaluation order because
 
 This compiler cut admits array elements `boolean`, `text`, `int8`, `uuid`,
 `date`, `timestamptz`, `numeric` (precision and scale equal to the item's
-facets), `bytea` (binary items) and `jsonb`. It refuses array defaults, item
-facets other than numeric precision/scale, and item allowed values, defaults,
-extensions or semantic types, because it cannot yet enforce them per element.
+facets), `bytea` (binary items) and `jsonb`. Array defaults use the core
+`{array:[Literal,...]}` carrier, recursively validate each item's logical and
+native capacity, and emit a typed array, including `ARRAY[]::type[]` for empty
+arrays. Set defaults sort in canonical order; ordered-array defaults retain order.
+
+Item `allowedValues`, integer widths and exact numeric ranges generate native
+checks on every non-NULL item. Text length checks use Unicode scalar counts,
+with `min`/`max` from 0 through 254 in this qualified regex profile. Wider bounds,
+other length units, item defaults, extensions and semantic types refuse compilation.
+Dimensional guards precede item checks, including for multidimensional inputs.
+Native numeric/date/instant arrays also exclude nonfinite or out-of-profile values.
+
+`timestamptz(3)` declares millisecond native precision; omitted precision retains
+the native default of six digits. Stored literals that would round at the declared
+precision are refused. Unix milliseconds require an explicit conversion to the
+instant domain; no bigint timestamp variant is inferred.
 A `jsonb` default is a core `{json:...}` literal rendered as `'...'::jsonb`.
 Typed expressions cannot compare `json` values; `isNull` remains available.
 
 **Index method.** `method` is `"btree"` (default when omitted) or `"gin"`. A GIN
 index is not unique, has no `include` and no `directions`, and every key field
-maps an array or `jsonb` column. It uses PostgreSQL's default operator class
-(`array_ops`, `jsonb_ops`), which serves `@>`, `<@`, `&&` and the jsonb key
-operators.
+maps an array or `jsonb` column. Optional `operatorClasses` has exactly one
+entry per key field. `array_ops` requires an array; `jsonb_ops` and
+`jsonb_path_ops` require `jsonb`. Omission selects PostgreSQL defaults.
+`jsonb_path_ops` supports containment and JSON path queries, but not key-existence
+operators. Other methods or mismatched classes produce
+`TABLES_INDEX_OPERATOR_CLASSES` before SQL emission.
 
 **Direction.** `directions`, when present, has one `"asc"` or `"desc"` per key
 field and applies to btree only. `desc` emits `DESC`; NULL placement is
@@ -8611,3 +8628,16 @@ recompiles the complete source/history request; serialization returns those
 verified canonical plan bytes without a terminal newline. These API statements
 do not mean runtime, browser, schema, native, installed-artifact, or release
 qualification has passed.
+
+## JSON and array migration capacities
+
+Existing tables admit appended nullable `jsonb` and array columns through the
+same reviewed, source-bound migration plans as scalar columns. Required additions
+still require scoped backfills. Deployment and migration default installation
+share typed literal rendering and set canonicalization.
+
+A reviewed `pg-cast-v1` conversion admits recursive native-array widening where
+the element conversion is qualified, including increased timestamp precision.
+Narrowing, implicit JSON/array conversion and unreviewed changes remain blocked.
+Plans retain verification, recovery metadata and approval requirements; compiling
+SQL does not execute it or establish native history.

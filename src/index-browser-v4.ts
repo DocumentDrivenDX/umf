@@ -206,7 +206,7 @@ const reviewedValueDigest=createReviewedValueDigestRustDefault(()=>createCodegen
 const tableMigration=createTableMigrationRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
 const {compileTableMigration,verifyTableMigration}=tableMigration;
 const {compileTableInventoryMigration,discoverTableInventoryMigrationChanges,verifyTableInventoryMigration,serializeTableInventoryMigration,irreversiblePurgeDisclosure}=createTableInventoryRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
-const {compileTableDeployment,verifyTableDeployment}=tableDeployment;
+const {applyJsonPatch,compileTableDeployment,verifyTableDeployment}=tableDeployment;
 const {inspectTableLifecycle}=createTableLifecycleRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
 const deltaDdlOperations=nativeFamilyDispatcher['delta-ddl'];
 const deltaParquetOperations=nativeFamilyDispatcher['delta-parquet'];
@@ -606,7 +606,7 @@ export { deltaLogPackage };
 
 export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpoint,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint};
 
-export {evaluateActionRule,compileTableDeployment,verifyTableDeployment,inspectTableLifecycle,normalizeRowScope,discoverTableMigrationChanges,reviewedValueDigest,compileTableMigration,verifyTableMigration};
+export {applyJsonPatch,evaluateActionRule,compileTableDeployment,verifyTableDeployment,inspectTableLifecycle,normalizeRowScope,discoverTableMigrationChanges,reviewedValueDigest,compileTableMigration,verifyTableMigration};
 export {SPARK_EXTENSION,sparkPackage,sparkRegistry,inspectSpark,importSparkSchema,exportSparkSchema,getSparkNode,proposeSparkNodeEdit,renameSparkField};
 
 export {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties,inspectProtectionCatalog,requireProtectionInterpretation,resolveSecurityProtectionSources,resolveSecurityProtectionDomains,validateProtectionParameters};
@@ -632,3 +632,5 @@ export type {DeltaCommit,DeltaReconciliation} from './adapters/delta/reconcile';
 export type {FacetsParquetProjection,FacetsParquetRequest} from './core-ideals/facets-parquet-projection';
 
 export type {KeyParquetProjection,KeyParquetRequest} from './core-ideals/key-parquet-projection';
+
+export type {JsonPatchOperation,JsonPatchResult} from './table-deployment/types';

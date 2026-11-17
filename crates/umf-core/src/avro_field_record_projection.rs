@@ -598,7 +598,10 @@ pub fn project_field(
         } else {
             Value::Null
         };
-        if !same(scalar, &actual, ctx)? {
+        if text(Some(scalar)) == Some(&k("json")) && text(Some(&actual)) == Some(&k("string")) && get(&request, "jsonEncoding") == Some(&Value::Bool(true)) {
+            field_loss!(&mut residuals, format!("{path}/scalarType"), scalar,
+                "Explicit JSON text encoding: writers validate JSON, Unicode, duplicate keys and finite numbers; Avro string does not enforce JSON", "approximated",)?;
+        } else if !same(scalar, &actual, ctx)? {
             field_loss!(
                 &mut residuals,
                 format!("{path}/scalarType"),

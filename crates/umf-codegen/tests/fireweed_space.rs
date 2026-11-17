@@ -462,3 +462,42 @@ fn json_literal_comparisons_are_rejected_in_checks_and_partial_indexes() {
     let is_null = r#""checks":[{"id":"json_presence","name":"json_presence","expression":{"op":"isNull","arg":{"op":"literal","value":{"json":null}}}}]"#;
     assert!(inspect_codes(&engine, &text.replacen(r#""checks":[]"#, is_null, 1)).is_empty());
 }
+
+#[test]
+fn gin_operator_classes_are_typed_and_recompiled_from_source() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let original = stringify_compact_metered(&parse(&fixture_text("fireweed-space.json")), &mut Context::catalog()).unwrap().to_utf8().unwrap();
+    let marker = r#""method":"gin","fields":[{"module":"space","element":"body"}]"#;
+    assert_eq!(original.matches(marker).count(), 1);
+    let text = original.replace(marker, &format!(r#"{marker},"operatorClasses":["jsonb_path_ops"]"#));
+    let mut host = FireweedHost { calls: 0 };
+    let result = engine.compile_table_deployment_with_host(&request(&text, true), &mut host, &mut Context::ordinary()).unwrap();
+    assert_eq!(member(&result, "status"), Some(&s("compiled")), "{result:?}");
+    let bundle = member(&result, "bundle").unwrap();
+    assert!(steps_sql(bundle).join("\n").contains(r#"USING gin ("body" pg_catalog."jsonb_path_ops")"#));
+    assert_eq!(engine.verify_table_deployment_with_host(bundle, &mut host, &mut Context::ordinary()).unwrap(), *bundle);
+    for bad in [
+        text.replace("jsonb_path_ops", "array_ops"),
+        text.replace(r#""operatorClasses":["jsonb_path_ops"]"#, r#""operatorClasses":["jsonb_ops","jsonb_path_ops"]"#),
+        text.replace(marker, &marker.replace("gin", "btree")),
+    ] {
+        assert!(inspect_codes(&engine, &bad).contains(&"TABLES_INDEX_OPERATOR_CLASSES".to_string()));
+    }
+}
+
+#[test]
+fn millisecond_timestamp_uses_native_precision_without_silent_default_rounding() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let original = stringify_compact_metered(&parse(&fixture_text("fireweed-space.json")), &mut Context::catalog()).unwrap().to_utf8().unwrap();
+    let marker = r#""nativeType":{"kind":"timestamptz"}"#;
+    assert_eq!(original.matches(marker).count(), 1);
+    let text = original.replace(marker, r#""nativeType":{"kind":"timestamptz","precision":3}"#);
+    let mut host = FireweedHost { calls: 0 };
+    let result = engine.compile_table_deployment_with_host(&request(&text, true), &mut host, &mut Context::ordinary()).unwrap();
+    assert_eq!(member(&result, "status"), Some(&s("compiled")), "{result:?}");
+    let bundle = member(&result, "bundle").unwrap();
+    assert!(steps_sql(bundle).join("\n").contains(r#""due_at" pg_catalog."timestamptz"(3)"#));
+    assert_eq!(engine.verify_table_deployment_with_host(bundle, &mut host, &mut Context::ordinary()).unwrap(), *bundle);
+}

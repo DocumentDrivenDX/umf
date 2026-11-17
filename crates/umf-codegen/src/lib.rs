@@ -12,6 +12,7 @@ pub mod deployment;
 pub mod generation;
 pub(crate) mod grant_columns;
 pub mod inventory;
+pub mod json_patch;
 pub mod migration;
 pub mod pack_tools;
 pub mod release_resources;

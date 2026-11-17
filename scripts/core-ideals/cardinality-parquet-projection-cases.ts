@@ -4,7 +4,7 @@ import {CURRENT_CORE_VERSION} from '../../src/model/types';
 import {declareCoreCardinality, type Document, type Element, type ScalarType} from '../../src/index-node-v4';
 import type {CardinalityParquetRequest, ParquetCardinalityCarrier} from '../../src/core-ideals/cardinality-parquet-projection';
 import {parquetCardinalityCarrierCases} from './cardinality-parquet-carrier-cases';
-const families:Record<string,ScalarType>={boolean:'boolean',int32:'integer',int64:'integer',float32:'float',float64:'float',binary:'binary',string:'string',date:'date','time-millis':'time','time-micros':'time','timestamp-millis-utc':'timestamp','timestamp-micros-utc':'timestamp'};
+const families:Record<string,ScalarType>={boolean:'boolean',int32:'integer',int64:'integer',float32:'float',float64:'float',binary:'binary',string:'string',json:'json',date:'date','time-millis':'time','time-micros':'time','timestamp-millis-utc':'timestamp','timestamp-micros-utc':'timestamp'};
 export function parquetCardinalityProjectionCases(){
  return parquetCardinalityCarrierCases().flatMap(row=>{
   const source:Document={umf:CURRENT_CORE_VERSION,id:'ideal-'+row.id,vocabularies:{},modules:[{id:'m',namespace:'',elements:[]}]};

@@ -304,8 +304,6 @@
                   "float4",
                   "float8",
                   "date",
-                  "timestamp",
-                  "timestamptz",
                   "uuid",
                   "bytea",
                   "jsonb"
@@ -357,6 +355,25 @@
               "kind",
               "precision",
               "scale"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "timestamp",
+                  "timestamptz"
+                ]
+              },
+              "precision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 6
+              }
+            },
+            "required": [
+              "kind"
             ]
           }
         ]
@@ -830,6 +847,18 @@
           },
           "where": {
             "$ref": "#/$defs/expression"
+          },
+          "operatorClasses": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "array_ops",
+                "jsonb_ops",
+                "jsonb_path_ops"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 32
           }
         },
         "required": [

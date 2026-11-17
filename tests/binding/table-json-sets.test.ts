@@ -2,7 +2,7 @@
 // CONTRACT-081/084: core json and set Fields mapped to jsonb and text[] with
 // GIN, per-field direction and partial indexes, through the public TS API.
 import {expect,test} from 'bun:test';
-import {compileTableDeployment,inspectTableLifecycle,verifyTableDeployment} from '../../src/index-node-v4';
+import {applyJsonPatch,compileTableDeployment,inspectTableLifecycle,verifyTableDeployment} from '../../src/index-node-v4';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
 import tableSchema from '../../spec/extensions/tables/schema.json';
 import {createValidator} from '../../src/validation/schema';
@@ -55,4 +55,31 @@ test('invalid index and set declarations are diagnosed',()=>{
   [doc=>{doc.modules[0].elements.find((e:any)=>e.id==='await_key').nullability='absent-allowed';},'SET_ITEM_EQUALITY'],
  ];
  for(const [mutate,code] of cases){const doc=source();mutate(doc);expect(inspectTableLifecycle(doc).diagnostics.map(d=>d.code)).toContain(code);}
+});
+
+test('GIN operator classes are explicit and type checked through the public binding',()=>{
+ const doc=source();table(doc).indexes[2].operatorClasses=['jsonb_path_ops'];
+ const result=compileTableDeployment({text:JSON.stringify(doc),configuration});
+ if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
+ expect(result.bundle.steps.map(s=>s.sql).join('\n')).toContain('USING gin ("body" pg_catalog."jsonb_path_ops")');
+ expect(verifyTableDeployment(result.bundle)).toEqual(result.bundle);
+ for(const classes of [['array_ops'],['jsonb_ops','jsonb_path_ops']]){
+  const bad=source();table(bad).indexes[2].operatorClasses=classes;
+  expect(inspectTableLifecycle(bad).diagnostics.map(d=>d.code)).toContain('TABLES_INDEX_OPERATOR_CLASSES');
+ }
+});
+
+test('RFC 6902 applies all operations atomically through the public binding',()=>{
+ const document={items:[1,3],source:{a:1}};
+ expect(applyJsonPatch(document,[
+  {op:'add',path:'/items/1',value:2},
+  {op:'copy',from:'/source',path:'/copied'},
+  {op:'replace',path:'/source/a',value:2},
+  {op:'move',from:'/items/0',path:'/items/2'},
+  {op:'remove',path:'/source'},
+  {op:'test',path:'/copied',value:{a:1}},
+ ])).toEqual({present:true,value:{items:[2,3,1],copied:{a:1}}});
+ expect(()=>applyJsonPatch(document,[{op:'add',path:'/new',value:true},{op:'test',path:'/items',value:[]}])).toThrow();
+ expect(document).toEqual({items:[1,3],source:{a:1}});
+ expect(applyJsonPatch(null,[{op:'remove',path:''}])).toEqual({present:false});
 });

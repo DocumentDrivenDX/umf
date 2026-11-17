@@ -491,7 +491,8 @@ fn project_inner(
         "json-array" => "array",
         _ => "map",
     };
-    let shape_mismatch = cardinality != "unspecified" && cardinality != expected;
+    let set_encoding = cardinality == "set" && expected == "array";
+    let shape_mismatch = cardinality != "unspecified" && cardinality != expected && !set_encoding;
     let mut encoding = storage.clone();
     let mut mapping_outcome = "exact".to_string();
     if shape_mismatch {
@@ -512,6 +513,10 @@ fn project_inner(
             "approximated",
             ctx,
         )?;
+    }
+    if set_encoding {
+        loss(&mut residuals, format!("{path}/cardinality"), get(element, "cardinality").unwrap(),
+            "JSON ARRAY encodes set items; writers enforce uniqueness and canonical order", "approximated", ctx)?;
     }
     if storage != "scalar" {
         loss(&mut residuals,format!("{path}/cardinality"),get(get(&author,"provenance").unwrap_or(&Value::Null),"cardinality").unwrap_or(&Value::Null),"JSON text storage requires JSON-compatible values within native text limits; arbitrary ideal member domains are not implicitly converted","approximated",ctx)?;
@@ -549,7 +554,9 @@ fn project_inner(
             }
         }
     }
+    let json_encoding = storage == "scalar" && native == "nvarchar(max)" && txt(get(element, "scalarType")).as_deref() == Some("json") && get(&request, "jsonEncoding") == Some(&Value::Bool(true));
     let clause = match storage.as_str() {
+        "scalar" if json_encoding => format!(" CHECK (ISJSON({column_sql},VALUE)=1)"),
         "scalar" => String::new(),
         "json-array" => format!(" CHECK (ISJSON({column_sql},ARRAY)=1)"),
         _ => format!(" CHECK (ISJSON({column_sql},OBJECT)=1)"),
@@ -585,7 +592,10 @@ fn project_inner(
         }
     }
     if let Some(stated) = txt(get(element, "scalarType")) {
-        if stated != family {
+        if json_encoding {
+            loss(&mut residuals, format!("{path}/scalarType"), get(element, "scalarType").unwrap(),
+                "Explicit JSON text encoding with ISJSON VALUE; writers additionally enforce unique keys, Unicode scalars and finite numbers within NVARCHAR limits", "approximated", ctx)?;
+        } else if stated != family {
             loss(
                 &mut residuals,
                 format!("{path}/scalarType"),
