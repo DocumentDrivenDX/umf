@@ -981,6 +981,7 @@ fn literal_kind(value: &Value) -> String {
         return "boolean".into();
     }
     for (key, kind) in [
+        ("json", "json"),
         ("integerToken", "integer"),
         ("decimalToken", "decimal"),
         ("floatToken", "float"),

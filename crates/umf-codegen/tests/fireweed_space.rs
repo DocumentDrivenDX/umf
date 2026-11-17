@@ -320,3 +320,145 @@ fn set_and_json_literals_follow_core_meaning() {
     assert!(errors(&json, r#"{"json":null}"#).is_empty(), "JSON null is a present value");
     assert!(!errors(&json, r#"{"string":"{}"}"#).is_empty(), "a JSON text string is not a json carrier");
 }
+
+#[test]
+fn array_ddl_enforces_scalar_item_domains() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let text = compact_space();
+    let mut native_ddl = Vec::new();
+    for (scalar, facets, native, bounds) in [
+        (
+            "decimal",
+            r#","facets":{"precision":8,"scale":2}"#,
+            r#"{"kind":"numeric","precision":8,"scale":2}"#,
+            vec![r#"array_position("await_keys", 'NaN'::pg_catalog.numeric) IS NULL"#],
+        ),
+        (
+            "date",
+            "",
+            r#"{"kind":"date"}"#,
+            vec![
+                "'0001-01-01'::pg_catalog.date",
+                "'9999-12-31'::pg_catalog.date",
+            ],
+        ),
+        (
+            "timestamp",
+            "",
+            r#"{"kind":"timestamptz"}"#,
+            vec![
+                "'0001-01-01T00:00:00Z'::pg_catalog.timestamptz",
+                "'9999-12-31T23:59:59.999999Z'::pg_catalog.timestamptz",
+            ],
+        ),
+    ] {
+        let doc = text
+            .replace(
+                r#""id":"await_key","kind":"field","scalarType":"string""#,
+                &format!(r#""id":"await_key","kind":"field","scalarType":"{scalar}"{facets}"#),
+            )
+            .replace(r#""cardinality":"set""#, r#""cardinality":"array""#)
+            .replace(
+                r#""element":{"kind":"text"}"#,
+                &format!(r#""element":{native}"#),
+            );
+        let result = engine
+            .compile_table_deployment_with_host(
+                &request(&doc, true),
+                &mut FireweedHost { calls: 0 },
+                &mut Context::ordinary(),
+            )
+            .unwrap();
+        assert_eq!(
+            member(&result, "status"),
+            Some(&s("compiled")),
+            "{result:?}"
+        );
+        let bundle = member(&result, "bundle").unwrap();
+        let ddl = steps_sql(bundle)
+            .into_iter()
+            .find(|sql| sql.starts_with(r#"CREATE TABLE "fireweed_space"."queue_items""#))
+            .unwrap();
+        for predicate in [
+            r#"pg_catalog.array_ndims("await_keys") = 1"#,
+            r#"pg_catalog.array_lower("await_keys", 1) = 1"#,
+            r#"pg_catalog.array_position("await_keys", NULL) IS NULL"#,
+        ]
+        .into_iter()
+        .chain(bounds)
+        {
+            assert!(
+                ddl.contains(predicate),
+                "{scalar} array is missing {predicate}: {ddl}"
+            );
+        }
+        let catalog = member(bundle, "expectedCatalog").unwrap();
+        let keys = array_items(member(catalog, "keys").unwrap()).unwrap();
+        let key_name = string_member(&keys[0], "name").unwrap().to_utf8().unwrap();
+        native_ddl.push(
+            ddl.replace(
+                r#""fireweed_space"."queue_items""#,
+                &format!("pg_temp.{scalar}_items"),
+            )
+            // All three variants share a logical table ID. Give their primary
+            // key indexes distinct names in the temporary schema.
+            .replace(&key_name, &format!("{scalar}_test_pk")),
+        );
+    }
+    // Opt in with UMF_TEST_POSTGRES_18=1 and standard libpq connection
+    // variables. Only temporary tables are created on that connection.
+    if std::env::var_os("UMF_TEST_POSTGRES_18").is_some() {
+        use std::io::Write;
+        use std::process::{Command, Stdio};
+        let sql = native_ddl.join(";\n") + ";\n" + include_str!("fixtures/array-domains.pg.sql");
+        let mut psql = Command::new("psql")
+            .args(["-X", "-w", "-v", "ON_ERROR_STOP=1"])
+            .stdin(Stdio::piped())
+            .spawn()
+            .expect("start PostgreSQL oracle");
+        psql.stdin.take().unwrap().write_all(sql.as_bytes()).unwrap();
+        assert!(psql.wait().unwrap().success(), "PostgreSQL array domain checks");
+    }
+}
+
+fn compact_space() -> String {
+    stringify_compact_metered(
+        &parse(&fixture_text("fireweed-space.json")),
+        &mut Context::catalog(),
+    )
+    .unwrap()
+    .to_utf8()
+    .unwrap()
+}
+
+#[test]
+fn json_literal_comparisons_are_rejected_in_checks_and_partial_indexes() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let text = compact_space();
+    for expr in [
+        r#"{"op":"eq","left":{"op":"literal","value":{"json":null}},"right":{"op":"literal","value":{"json":null}}}"#,
+        r#"{"op":"lt","left":{"op":"literal","value":{"json":1}},"right":{"op":"literal","value":{"json":2}}}"#,
+        r#"{"op":"in","arg":{"op":"literal","value":{"json":{}}},"values":[{"json":{}}]}"#,
+    ] {
+        let check = format!(
+            r#""checks":[{{"id":"json_compare","name":"json_compare","expression":{expr}}}]"#,
+        );
+        let index = format!(r#""name":"queue_items_body","where":{expr}"#);
+        for (from, to) in [
+            (r#""checks":[]"#, check),
+            (r#""name":"queue_items_body""#, index),
+        ] {
+            assert_eq!(text.matches(from).count(), 1);
+            let codes = inspect_codes(&engine, &text.replacen(from, &to, 1));
+            assert!(
+                codes.iter().any(|code| code == "TABLES_EXPRESSION_TYPE"),
+                "{expr}: {codes:?}"
+            );
+        }
+    }
+
+    let is_null = r#""checks":[{"id":"json_presence","name":"json_presence","expression":{"op":"isNull","arg":{"op":"literal","value":{"json":null}}}}]"#;
+    assert!(inspect_codes(&engine, &text.replacen(r#""checks":[]"#, is_null, 1)).is_empty());
+}

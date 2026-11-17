@@ -1956,6 +1956,20 @@ pub(crate) fn validate_native_date(value: &str) -> Result<(), &'static str> {
     Ok(())
 }
 
+fn temporal_domain_bounds(kind: &str) -> Option<(&'static str, &'static str)> {
+    match kind {
+        "date" => Some((
+            "'0001-01-01'::pg_catalog.date",
+            "'9999-12-31'::pg_catalog.date",
+        )),
+        "timestamptz" => Some((
+            "'0001-01-01T00:00:00Z'::pg_catalog.timestamptz",
+            "'9999-12-31T23:59:59.999999Z'::pg_catalog.timestamptz",
+        )),
+        _ => None,
+    }
+}
+
 fn domain_predicates(
     column: &Value,
     field: &Value,
@@ -1979,10 +1993,30 @@ fn domain_predicates(
         let item_required = member(field, "itemType")
             .and_then(|item| resolve_ref(document, item))
             .is_some_and(|item| string_member(item, "nullability") == Some(&Utf16::from("required")));
-        let elements = if item_required {
-            format!("pg_catalog.array_position({quoted}, NULL) IS NULL")
-        } else {
+        let mut element_checks = Vec::new();
+        if item_required {
+            element_checks.push(format!("pg_catalog.array_position({quoted}, NULL) IS NULL"));
+        }
+        let native = member(column, "nativeType").unwrap_or(&Value::Null);
+        let element = member(native, "element").unwrap_or(&Value::Null);
+        let element_kind = u8ext(element, "kind").unwrap_or_default();
+        if element_kind == "numeric" {
+            // The required numeric typmod rejects infinities but still accepts NaN.
+            element_checks.push(format!(
+                "pg_catalog.array_position({quoted}, 'NaN'::pg_catalog.numeric) IS NULL"
+            ));
+        }
+        if let Some((lo, hi)) = temporal_domain_bounds(&element_kind) {
+            // Check the extreme non-null values. Empty and all-null arrays
+            // have no out-of-domain item. The outer CASE checks shape first.
+            element_checks.push(format!(
+                "COALESCE((pg_catalog.array_sort({quoted}, false, false))[1] >= {lo} AND (pg_catalog.array_sort({quoted}, true, false))[1] <= {hi}, TRUE)"
+            ));
+        }
+        let elements = if element_checks.is_empty() {
             "TRUE".to_string()
+        } else {
+            element_checks.join(" AND ")
         };
         out.push(format!(
             "CASE WHEN pg_catalog.array_ndims({quoted}) IS NULL THEN TRUE WHEN pg_catalog.array_ndims({quoted}) = 1 AND pg_catalog.array_lower({quoted}, 1) = 1 THEN {elements} ELSE FALSE END"
@@ -1998,11 +2032,8 @@ fn domain_predicates(
     if kind == "numeric" {
         out.push(format!("{quoted} NOT IN ('NaN'::pg_catalog.numeric, 'Infinity'::pg_catalog.numeric, '-Infinity'::pg_catalog.numeric)"));
     }
-    if kind == "date" {
-        out.push(format!("{quoted} >= '0001-01-01'::pg_catalog.date AND {quoted} <= '9999-12-31'::pg_catalog.date"));
-    }
-    if kind == "timestamptz" {
-        out.push(format!("{quoted} >= '0001-01-01T00:00:00Z'::pg_catalog.timestamptz AND {quoted} <= '9999-12-31T23:59:59.999999Z'::pg_catalog.timestamptz"));
+    if let Some((lo, hi)) = temporal_domain_bounds(&kind) {
+        out.push(format!("{quoted} >= {lo} AND {quoted} <= {hi}"));
     }
     if let Some(members) = object_members(facets) {
         for (key, _) in members {
