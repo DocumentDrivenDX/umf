@@ -160,8 +160,6 @@ tests/openapi/dynamic.test.ts
 tests/openapi/references.test.ts
 # US-029 declaration corpus agrees with independent explicit R: assertion fails @ arations(readDocument(writeDocument(d,c.format),c.format));expect(v).toEqual(c.view);expect(exportOw
 tests/owl/declarations.test.ts
-# [blank-node-ids] blank node labels differ (g_15 vs g_14): the label counter is not reset per case (same cause as the Rust rdf_parity failure)
-tests/owl/list-axioms.test.ts
 # CONTRACT-035 Arrow refinements require explicit losses even : assertion fails @ ult.issues.filter(i=>i.code.startsWith('ARROW_')))expect(issue.path).toMatch(/^\/key_value_metadata\
 tests/parquet/avro-arrow-loss.test.ts
 # CONTRACT-035 nested Parquet shapes preserve nullable lists, : expected true, got false @ .toBe('null');else expect(Array.isArray(type.items.fields[1].type)).toBe(c.native.type.valueNullable

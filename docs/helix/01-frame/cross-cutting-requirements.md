@@ -348,15 +348,12 @@ requirement does not select or assert an existing license.
 
 ### NFR-50 — Architectural boundary
 
-UMF must remain an interchange and semantic representation layer, resisting
-unrelated responsibilities such as query execution, storage services, workflow
-orchestration, application runtime, and general-purpose inference. Those belong
-in consuming systems such as TableSpec or Axon, whose identities remain to be
-confirmed. Describing storage or inference semantics does not require executing
-the storage or inference system.
-
-The scope test is: does the capability describe or transform meaning, or execute
-the business system? The latter generally belongs outside UMF.
+UMF owns model semantics, interchange and generated artifacts and bindings.
+Consumers own connections, authorization, transactions and application
+effects. Generated access can validate values, prepare supported operations
+and check native metadata through explicit host capabilities. Storage,
+workflow orchestration and general-purpose inference services remain
+consumer responsibilities.
 
 ## Verification Sketches
 
