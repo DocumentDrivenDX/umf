@@ -36,8 +36,9 @@ def verify_run(run_id, tag):
                 f"Qualified release run lacks a successful {name} job")
     artifacts = json.loads(gh_api(root + "/artifacts"))["artifacts"]
     expected = {"dist-pure"} | {f"dist-{platform}" for platform in PLATFORMS}
-    require({artifact["name"] for artifact in artifacts if not artifact["expired"]} == expected,
-            "The qualified release run does not have all four release artifacts")
+    available = {artifact["name"] for artifact in artifacts
+                 if not artifact["expired"] and artifact["name"].startswith("dist-")}
+    require(available == expected, "The qualified release run does not have all four release artifacts")
     print(f"Verified the release artifacts for {tag} at {run['head_sha']}")
 
 
