@@ -466,8 +466,18 @@ pub fn write_units(units: &[u16], output: &mut String) {
         if index > 0 {
             output.push(',');
         }
-        use std::fmt::Write as _;
-        write!(output, "{unit}").expect("writing to String cannot fail");
+        // This closed grammar needs only unsigned decimal code units, without
+        // the general formatter's flags/padding dispatch for every character.
+        let mut digits = [0u8; 5];
+        let mut cursor = digits.len();
+        let mut value = *unit;
+        loop {
+            cursor -= 1;
+            digits[cursor] = b'0' + (value % 10) as u8;
+            value /= 10;
+            if value == 0 { break; }
+        }
+        output.push_str(std::str::from_utf8(&digits[cursor..]).expect("decimal digits are ASCII"));
     }
     output.push(']');
 }
@@ -825,6 +835,23 @@ fn preflight(source: &[u8], ctx: &mut Context<'_>) -> Result<(), EngineError> {
 
 #[cfg(test)]
 mod pointer_path_tests {
+    #[test]
+    fn decimal_unit_writer_matches_original_formatter_for_every_code_unit() {
+        use std::fmt::Write as _;
+        let units: Vec<u16> = (0..=u16::MAX).collect();
+        let mut expected = String::from("prefix[");
+        for (index, unit) in units.iter().enumerate() {
+            if index > 0 { expected.push(','); }
+            write!(&mut expected, "{unit}").unwrap();
+        }
+        expected.push(']');
+        let mut actual = String::from("prefix");
+        write_units(&units, &mut actual);
+        assert_eq!(actual, expected);
+        let mut empty = String::from("prefix");
+        write_units(&[], &mut empty);
+        assert_eq!(empty, "prefix[]");
+    }
     use super::*;
 
     fn unsafe_number_error(wire: &str) -> EngineError {

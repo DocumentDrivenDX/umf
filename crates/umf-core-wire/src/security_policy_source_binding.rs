@@ -8,16 +8,18 @@ use crate::{decode, encode, fail, field, result_envelope};
 pub const SECURITY_POLICY_SOURCE_PROFILE: &str = "umf.security-policy-source/1";
 
 pub fn execute_security_policy_source_wire(wire_json: &str) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_security_policy_source_wire_with_control(wire_json, &mut no_control)
+    execute_context(wire_json, Context::ordinary_construction())
 }
 
 pub fn execute_security_policy_source_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire_json, Context::ordinary().with_host_control(control))
+}
+
+fn execute_context(wire_json: &str, mut context: Context<'_>) -> String {
     let result = (|| {
-        let mut context = Context::ordinary().with_host_control(control);
         let request = decode(wire_json, &mut context)?;
         if text(field(&request, "profile"))? != SECURITY_POLICY_SOURCE_PROFILE {
             return Err(fail(

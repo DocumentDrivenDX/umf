@@ -36,6 +36,11 @@ pub struct RdfRuntime {
 }
 
 impl RdfRuntime {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static RESOURCES: std::sync::OnceLock<crate::resource_cache::Fixed<RdfRuntime>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&RESOURCES, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             let units: Vec<u16> = source.encode_utf16().collect();
@@ -282,7 +287,11 @@ impl Callbacks<'_> {
                         } else {
                             "GENERALIZED_RDF_ENCODING"
                         },
-                        "Unknown encoding fields are retained",
+                        if token == RDF_TOKEN {
+                            "Unknown encoding fields are retained and block native export"
+                        } else {
+                            "Unknown encoding fields retained; native export and interpretation blocked"
+                        },
                         Severity::Warning,
                     ));
                     break;
@@ -764,7 +773,7 @@ fn valid_ipv6(value: &str) -> bool {
             groups.len() == 8
         }
 }
-fn valid_language(v: &Utf16, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+pub(crate) fn valid_language(v: &Utf16, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
     ctx.charge_work(v.len(), Utf16::default())?;
     let Ok(s) = v.to_utf8() else { return Ok(false) };
     if s.is_empty() || !s.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-') {
@@ -1575,6 +1584,12 @@ fn node_from_value(v: &Value) -> Result<NamedOrBlankNode, EngineError> {
         _ => Err(error("RDF_TERM", "Expected IRI or blank node")),
     }
 }
+/// Validate an externally supplied RDF term with the same lexical rules as
+/// archived quad values before using it as a path-evaluation focus.
+pub(crate) fn validate_term_value(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    let admitted = copy_json(value, ctx)?;
+    term_from_value(&admitted).map(|_| ())
+}
 fn term_from_value(v: &Value) -> Result<Term, EngineError> {
     match text(get(v, "kind")) {
         Some(k) if k == &key("iri") => Ok(node_from_value(v)?.into()),
@@ -2361,6 +2376,9 @@ pub fn propose_rdf_iri_rename(
             }
         }
     }
+    if matches!(get(&report, "status"), Some(Value::String(status)) if status == &Utf16::from("blocked")) {
+        *get_mut(&mut report, "changes").unwrap() = Value::Array(Vec::new());
+    }
     *get_mut(&mut report, "diagnostics").unwrap() = Value::Array(diags);
     Ok(report)
 }
@@ -2492,8 +2510,8 @@ pub fn propose_rdf_dataset_merge(
                 ("profile", Value::string_utf8("rdf11-trig")),
                 ("baseIRI", Value::string_utf8("urn:umf:merge:")),
                 ("blankNodeScope", Value::String(id.clone())),
-                ("namedGraphs", Value::Array(all_graphs.clone())),
                 ("quads", Value::Array(all_quads.clone())),
+                ("namedGraphs", Value::Array(all_graphs.clone())),
                 (
                     "originalSource",
                     Value::String(Utf16::from(trig_text(

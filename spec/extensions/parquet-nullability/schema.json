@@ -20,7 +20,9 @@
     "binding": {
       "const": {
         "id": "umf.parquet.nullability",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence"
       }
     },
     "scope": {

@@ -274,7 +274,7 @@ fn key(s: &str) -> Utf16 {
 }
 fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     match value {
-        Value::Object(m) => m.iter().find(|(k, _)| k == &key(name)).map(|(_, v)| v),
+        Value::Object(m) => m.iter().find(|(k, _)| k.equals_str(name)).map(|(_, v)| v),
         _ => None,
     }
 }
@@ -450,6 +450,23 @@ fn public_string_carrier_count(
 #[cfg(test)]
 mod public_carrier_tests {
     use super::*;
+
+    #[test]
+    fn literal_lookup_preserves_exact_utf16_and_first_duplicate() {
+        let names = ["", "id", "é", "e\u{301}", "𝄞", "\u{fffd}", "a\0b"];
+        let mut keys: Vec<Utf16> = names.iter().map(|name| Utf16::from(*name)).collect();
+        keys.extend([Utf16::new(vec![0xd800]), Utf16::new(vec![0xdc00])]);
+        for key in keys {
+            let value = Value::Object(vec![(key.clone(), Value::Bool(true)), (key, Value::Bool(false))]);
+            for name in names {
+                let expected = match &value {
+                    Value::Object(fields) => fields.iter().find(|(key, _)| key == &Utf16::from(name)).map(|(_, value)| value),
+                    _ => unreachable!(),
+                };
+                assert_eq!(get(&value, name), expected);
+            }
+        }
+    }
 
     struct ErrorProbeHost(Vec<super::host_json::HostJsonEvent>);
     impl HostJsonReflection for ErrorProbeHost {

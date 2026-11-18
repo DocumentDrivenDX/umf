@@ -76,6 +76,7 @@ export function createOpenapiRustDefault(engine:OpenapiNativeFamilyEngine,isNati
    return call(()=>engine.openapi.lookupResource({document,reference,...(fromUri===undefined?{}:{fromUri})}) as ReturnType<LookupOpenapiResource>);
   },
   extractOpenapiSchema(document:Parameters<ExtractOpenapiSchema>[0],input:Parameters<ExtractOpenapiSchema>[1]):ReturnType<ExtractOpenapiSchema>{
+   if(!input||typeof input!=='object'||Reflect.ownKeys(input).some(key=>key!=='pointer'&&key!=='resourceUri'))throw new UmfError('REQUEST','Expected schema pointer and optional resource URI');
    const {pointer,resourceUri}=input;
    return call(()=>engine.openapi.extractSchema({document,pointer,...(resourceUri===undefined?{}:{resourceUri})}) as ReturnType<ExtractOpenapiSchema>);
   },

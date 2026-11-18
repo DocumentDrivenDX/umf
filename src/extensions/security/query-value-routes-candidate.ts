@@ -21,14 +21,20 @@ export interface CandidateQueryValueRouteInspection {
  status:'inspected'|'refused';complete:false;authority:false;use:Json;
  sources:Json;domains:readonly Json[];transforms:readonly Json[];branches:readonly Json[];composition:Json;diagnostics:readonly string[];
 }
+// A single completed source plan per privately issued immutable program. The
+// key is detached, admitted owner/use data, never a caller object identity.
+// Actual fact cuts and rule truth are always evaluated again.
+const completedPlans=new WeakMap<object,{key:string;plan:CandidateQueryValueRouteInspection}>();
 /** Original source program only; caller scan/path labels and completeness remain unverified. */
 export function inspectCandidateQueryValueRoutes(handle:unknown,ownerInput:unknown,useInput:unknown):CandidateQueryValueRouteInspection {
+ let programIdentity:object|undefined,cacheKey:string|undefined;
  let use:Json=null,sources:Json=null,composition:Json=null;const domains:Json[]=[],transforms:Json[]=[],branches:Json[]=[],diagnostics:string[]=[];
- const finish=(ok:boolean)=>freeze<CandidateQueryValueRouteInspection>({status:ok?'inspected':'refused',complete:false,authority:false,use,sources:ok?sources:null,domains:ok?domains:[],transforms:ok?transforms:[],branches:ok?branches:[],composition:ok?composition:null,diagnostics});
+ const finish=(ok:boolean)=>{const plan=freeze<CandidateQueryValueRouteInspection>({status:ok?'inspected':'refused',complete:false,authority:false,use,sources:ok?sources:null,domains:ok?domains:[],transforms:ok?transforms:[],branches:ok?branches:[],composition:ok?composition:null,diagnostics});if(ok&&programIdentity&&cacheKey!==undefined)completedPlans.set(programIdentity,{key:cacheKey,plan});return plan;};
  try{
   const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,use:useInput}),{owner}=packet;use=packet.use;
   const budget=new ProtectionLiteralBudget(),pending=[packet];let sourceText=0,retained=0;
   while(pending.length){budget.step();const x=pending.pop();if(typeof x==='string')sourceText+=x.length;else if(x&&typeof x==='object')for(const [key,v]of Object.entries(x)){sourceText+=key.length;pending.push(v);}if(sourceText>4000000)fail();}
+  programIdentity=program;const key=canonicalSchemaJson(packet);cacheKey=key.length<=4000000?key:undefined;const completed=completedPlans.get(program);if(cacheKey!==undefined&&completed?.key===cacheKey)return completed.plan;
   if(!check(use))fail();const u:any=use,ontology=program.ontology.ontology;if(u.scan.trim()!==u.scan)fail();
   const storage=validateCandidateCatalogStorage(program,owner,units=>budget.step(units),budget.remainingWork);if(!owner.disclosure)fail();
   const entity=ontology.entities.find((e:any)=>id(e.type)===id(u.type)),member=entity?.fields.find((f:any)=>id(f.ref)===id(u.field));if(!member)fail();

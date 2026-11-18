@@ -33,7 +33,7 @@ fn obj(v: Vec<(&str, Value)>) -> Value {
 }
 fn get<'a>(v: &'a Value, name: &str) -> Option<&'a Value> {
     match v {
-        Value::Object(m) => m.iter().find(|(key, _)| key == &k(name)).map(|(_, v)| v),
+        Value::Object(m) => m.iter().find(|(key, _)| key.equals_str(name)).map(|(_, v)| v),
         _ => None,
     }
 }
@@ -118,7 +118,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
     }
     Ok(value)
 }
-fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+fn schemas(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let op = json(RESULT_SCHEMA, ctx)?;
     let resources = SchemaResources {
         entries: vec![
@@ -140,6 +142,7 @@ fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), En
     let req = get(get(&op, "properties").unwrap_or(&Value::Null), "request")
         .ok_or_else(|| err("CARDINALITY_SQLSERVER_RESULT", "Missing request schema", ""))?;
     Ok((result, CompiledSchema::compile(req, &resources, ctx)?))
+    })
 }
 fn identifier(value: &str, path: &str) -> Result<String, EngineError> {
     if value.is_empty()
@@ -222,7 +225,8 @@ fn project_inner(
 ) -> Result<Value, EngineError> {
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
-    let (result_schema, request_schema) = schemas(ctx)?;
+    let prepared_schemas = schemas(ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     if let Some(d) = request_schema.validate(&request, ctx)?.first() {
         return Err(EngineError::new(
             "CARDINALITY_SQLSERVER_REQUEST",

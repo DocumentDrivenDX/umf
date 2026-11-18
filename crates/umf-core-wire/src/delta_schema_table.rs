@@ -14,8 +14,7 @@ pub const PROFILE: &str = "umf-r8-delta-source/0.1.0";
 /// Execute one of the ten opt-in Delta schema/table source operations.
 /// Requests use the ordinary closed `umf.core-wire/1` tagged value grammar.
 pub fn execute_json(wire_json: &str) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_json_with_control(wire_json, &mut no_control)
+    execute_context(wire_json, Context::ordinary_construction())
 }
 
 /// Execute with an invocation-local control hook covering request admission,
@@ -24,8 +23,10 @@ pub fn execute_json_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire_json, Context::ordinary().with_host_control(control))
+}
+fn execute_context(wire_json: &str, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request = super::decode(wire_json, &mut ctx)?;
         if text(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(fail(
@@ -58,10 +59,10 @@ pub fn execute_json_with_control(
         }
         let schema = schema_ops.contains(&op.as_str());
         let value = if schema {
-            let resources = DeltaSchemaResources::new(&mut ctx)?;
+            let resources = DeltaSchemaResources::prepared(&mut ctx)?;
             execute_schema(&op, &request, &resources, &mut ctx)?
         } else {
-            let resources = DeltaTableResources::new(&mut ctx)?;
+            let resources = DeltaTableResources::prepared(&mut ctx)?;
             execute_table(&op, &request, &resources, &mut ctx)?
         };
         super::encode(&value, &mut ctx)
@@ -190,7 +191,7 @@ fn execute_table(
             schema_id_units.extend_from_slice(id.units());
             schema_id_units.extend_from_slice(suffix.units());
             let schema_id = Utf16::new(schema_id_units);
-            let schema_resources = DeltaSchemaResources::new(ctx)?;
+            let schema_resources = DeltaSchemaResources::prepared(ctx)?;
             Ok(delta_schema::import_delta_schema(
                 source.units(),
                 &schema_id,

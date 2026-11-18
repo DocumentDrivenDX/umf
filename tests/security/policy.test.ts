@@ -16,7 +16,7 @@ test('Staff/Project nested correlated policy resolves exact qualified types and 
   const result=requireSecurityInterpretation(policy,resolution);
   expect(result.valid).toBe(true);expect(result.complete).toBe(true);expect(result.diagnostics).toEqual([]);
   expect(JSON.stringify({policy,resolution})).toBe(before);
-  (result.source as any).id='changed';expect(policy.id).toBe('project-access');
+  expect(Reflect.set(result.source as any,'id','changed')).toBe(false);expect(policy.id).toBe('project-access');
 });
 
 test('display labels cannot resolve a different document and revisions must match',()=>{
@@ -94,7 +94,7 @@ test('registered policy preserves extension but core inspection requires explici
 test('typed entrypoint never invokes hostile accessors',()=>{
   // @covers US-079-AC3
   let calls=0;const source={get vocabulary(){calls++;return 'umf.security';}};
-  expect(inspectSecurityPolicy(source).valid).toBe(false);expect(calls).toBe(0);
+  expect(()=>inspectSecurityPolicy(source)).toThrow('Accessor properties are not invoked during admission');expect(calls).toBe(0);
 });
 
 test('browser corpus has independent valid/incomplete/refusal and preservation expectations',()=>{

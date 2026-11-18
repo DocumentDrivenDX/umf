@@ -138,7 +138,9 @@ impl Capabilities for NoCallbacks {
         Ok(Vec::new())
     }
 }
-fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
+fn runtime(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Runtime>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<Runtime>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let core = |s: &str, c: &mut Context<'_>| read_json(s, c);
     let engine = Engine::new(
         ResourceSet::new(
@@ -206,6 +208,7 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
         result,
         request,
         supplement_schema: read_json(SUPPLEMENT_SCHEMA, ctx)?,
+    })
     })
 }
 fn validate_document(
@@ -364,17 +367,20 @@ fn correlate_from_parser(
                 "Parser AST is required",
             )
         })?;
-        if id != expected_id
-            || sql != expected_sql
-            || trees
-                .insert(expected_sql.clone(), copy_json(tree, ctx)?)
-                .is_some()
-        {
+        if id != expected_id || sql != expected_sql {
             return Err(err(
                 "POSTGRESQL_BACKEND_RESPONSE",
                 "/responses",
                 "Parser response does not match the ordered prepared CHECK requests",
             ));
+        }
+        let tree = copy_json(tree, ctx)?;
+        if let Some(previous) = trees.get(expected_sql) {
+            if !equal(previous, &tree, ctx)? {
+                return Err(err("POSTGRESQL_BACKEND_RESPONSE", "/responses/ast", "Repeated prepared SQL returned conflicting parser trees"));
+            }
+        } else {
+            trees.insert(expected_sql.clone(), tree);
         }
     }
     let backend = PreparedParser { trees };

@@ -4,15 +4,16 @@ use umf_core::{delta_log, Context, EngineError, Utf16, Value};
 
 pub const PROFILE: &str = "umf-r8-delta-log/0.1.0";
 pub fn execute_json(input: &str) -> String {
-    let mut control = |_n: usize| Ok(());
-    execute_json_with_control(input, &mut control)
+    execute_context(input, Context::ordinary_construction())
 }
 pub fn execute_json_with_control(
     input: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(input, Context::ordinary().with_host_control(control))
+}
+fn execute_context(input: &str, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request = super::decode(input, &mut ctx)?;
         if text(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(fail(
@@ -22,7 +23,7 @@ pub fn execute_json_with_control(
         }
         let op = text(&request, "op")
             .ok_or_else(|| fail("REQUEST", "Delta log operation is required"))?;
-        let resources = delta_log::DeltaLogResources::new(&mut ctx)?;
+        let resources = delta_log::DeltaLogResources::prepared(&mut ctx)?;
         let value = match op.as_str() {
             "delta/log.capture" => delta_log::capture_delta_log(
                 required(&request, "source")?.units(),
@@ -44,7 +45,7 @@ pub fn execute_json_with_control(
             )?,
             "delta/log.inspectActions" => {
                 let action_resources =
-                    umf_core::delta_actions::DeltaActionResources::new(&mut ctx)?;
+                    umf_core::delta_actions::DeltaActionResources::prepared(&mut ctx)?;
                 umf_core::delta_actions::inspect_delta_actions(
                     field(&request, "document")
                         .ok_or_else(|| fail("REQUEST", "Delta document is required"))?,
@@ -55,7 +56,7 @@ pub fn execute_json_with_control(
             }
             "delta/log.reconcileCommits" => {
                 let action_resources =
-                    umf_core::delta_actions::DeltaActionResources::new(&mut ctx)?;
+                    umf_core::delta_actions::DeltaActionResources::prepared(&mut ctx)?;
                 umf_core::delta_reconcile::reconcile_delta_commits(
                     field(&request, "commits")
                         .ok_or_else(|| fail("REQUEST", "Delta commits array is required"))?,
@@ -66,7 +67,7 @@ pub fn execute_json_with_control(
             }
             "delta/log.reconcileCheckpoint" => {
                 let action_resources =
-                    umf_core::delta_actions::DeltaActionResources::new(&mut ctx)?;
+                    umf_core::delta_actions::DeltaActionResources::prepared(&mut ctx)?;
                 let spec = text(&request, "spec").unwrap_or_else(|| "v2".to_owned());
                 umf_core::delta_reconcile::reconcile_delta_checkpoint(
                     field(&request, "checkpoint")
@@ -88,7 +89,7 @@ pub fn execute_json_with_control(
                     .ok_or_else(|| fail("REQUEST", "Delta sidecars array is required"))?;
                 let parquet = super::parquet_capture_binding::Resources::shared(&mut ctx)?;
                 let action_resources =
-                    umf_core::delta_actions::DeltaActionResources::new(&mut ctx)?;
+                    umf_core::delta_actions::DeltaActionResources::prepared(&mut ctx)?;
                 let mut parquet_capabilities = super::parquet_capture_binding::Accept;
                 umf_core::delta_jsonl_sidecars::reconcile_delta_jsonl_checkpoint_sidecars(
                     checkpoint,

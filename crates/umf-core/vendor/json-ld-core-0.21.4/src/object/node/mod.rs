@@ -38,6 +38,8 @@ pub struct Node<T = IriBuf, B = BlankIdBuf> {
 	///
 	/// This is the `@id` field.
 	pub id: Option<Id<T, B>>,
+    /// Explicit null identifier produced by JSON-LD keyword-like IRI expansion.
+    pub null_id: bool,
 
 	/// Types.
 	///
@@ -78,7 +80,7 @@ impl<T, B> Node<T, B> {
 	pub fn new() -> Self {
 		Self {
 			id: None,
-			types: None,
+            null_id: false,			types: None,
 			graph: None,
 			included: None,
 			properties: Properties::new(),
@@ -91,7 +93,7 @@ impl<T, B> Node<T, B> {
 	pub fn with_id(id: Id<T, B>) -> Self {
 		Self {
 			id: Some(id),
-			types: None,
+            null_id: false,			types: None,
 			graph: None,
 			included: None,
 			properties: Properties::new(),
@@ -103,7 +105,7 @@ impl<T, B> Node<T, B> {
 	pub fn new_graph(id: Id<T, B>, graph: Graph<T, B>) -> Self {
 		Self {
 			id: Some(id),
-			types: None,
+            null_id: false,			types: None,
 			graph: Some(graph),
 			included: None,
 			properties: Properties::new(),
@@ -485,6 +487,7 @@ impl<T, B> Node<T, B> {
 	{
 		Node {
 			id: self.id.map(&mut *map_id),
+            null_id: self.null_id,
 			types: self
 				.types
 				.map(|t| t.into_iter().map(&mut *map_id).collect()),
@@ -706,7 +709,7 @@ impl<T, B> Relabel<T, B> for Node<T, B> {
 
 impl<T: Eq + Hash, B: Eq + Hash> PartialEq for Node<T, B> {
 	fn eq(&self, other: &Self) -> bool {
-		self.id.eq(&other.id)
+		self.id.eq(&other.id) && self.null_id == other.null_id
 			&& multiset::compare_unordered_opt(self.types.as_deref(), other.types.as_deref())
 			&& self.graph.as_ref() == other.graph.as_ref()
 			&& self.included.as_ref() == other.included.as_ref()
@@ -1201,6 +1204,7 @@ impl<T: Hash, B: Hash> Hash for Node<T, B> {
 	#[inline]
 	fn hash<H: Hasher>(&self, h: &mut H) {
 		self.id.hash(h);
+        self.null_id.hash(h);
 		utils::hash_set_opt(self.types.as_ref(), h);
 		utils::hash_set_opt(self.graph.as_ref(), h);
 		utils::hash_set_opt(self.included.as_ref(), h);
@@ -1236,11 +1240,13 @@ impl<T: Eq + Hash, B: Eq + Hash> TryFromJsonObject<T, B> for Node<T, B> {
 		vocabulary: &mut impl VocabularyMut<Iri = T, BlankId = B>,
 		mut object: json_syntax::Object,
 	) -> Result<Self, InvalidExpandedJson> {
+		let mut null_id = false;
 		let id = match object
 			.remove_unique("@id")
 			.map_err(InvalidExpandedJson::duplicate_key)?
 		{
-			Some(entry) => Some(Id::try_from_json_in(vocabulary, entry.value)?),
+			Some(entry) if entry.value.is_null() => { null_id = true; None },
+            Some(entry) => Some(Id::try_from_json_in(vocabulary, entry.value)?),
 			None => None,
 		};
 
@@ -1283,6 +1289,7 @@ impl<T: Eq + Hash, B: Eq + Hash> TryFromJsonObject<T, B> for Node<T, B> {
 
 		Ok(Self {
 			id,
+            null_id,
 			types,
 			graph,
 			included,
@@ -1298,7 +1305,9 @@ impl<T, B, N: Vocabulary<Iri = T, BlankId = B>> IntoJsonWithContext<N> for Node<
 
 		if let Some(id) = self.id {
 			obj.insert("@id".into(), id.into_with(vocabulary).into_json());
-		}
+		} else if self.null_id {
+            obj.insert("@id".into(), json_syntax::Value::Null);
+        }
 
 		if let Some(types) = self.types {
 			if !types.is_empty() {
@@ -1319,7 +1328,7 @@ impl<T, B, N: Vocabulary<Iri = T, BlankId = B>> IntoJsonWithContext<N> for Node<
 
 		if let Some(included) = self.included {
 			obj.insert(
-				"@include".into(),
+				"@included".into(),
 				included.into_with(vocabulary).into_json(),
 			);
 		}

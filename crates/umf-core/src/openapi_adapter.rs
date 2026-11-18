@@ -97,6 +97,11 @@ pub struct OpenapiRuntime {
 }
 
 impl OpenapiRuntime {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<OpenapiRuntime>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&CACHE, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             let units: Vec<u16> = source.encode_utf16().collect();
@@ -543,7 +548,7 @@ pub fn extract_openapi_schema(
     if !validation.valid { return Err(error("OPENAPI_SCHEMA_SOURCE", "Invalid owning OpenAPI description")); }
     let payload = read_payload(document, runtime, ctx)?;
     let root_tree = select_resource(&payload, resource_uri, ctx)?;
-    let root_value = tree_value(root_tree.root, ctx)?;
+    let root_value = crate::native_json::structural_projection(root_tree.root.root(), ctx)?;
     let version = field(&root_value, "openapi").and_then(as_text)
         .ok_or_else(|| error("OPENAPI_SCHEMA_VERSION", "Schema extraction requires OpenAPI 3.1 or 3.2"))?;
     if !version.starts_with("3.1.") && !version.starts_with("3.2.") {
@@ -553,7 +558,7 @@ pub fn extract_openapi_schema(
         return Err(error("OPENAPI_SCHEMA_POSITION", "Selection is not a declared top-level Schema Object position"));
     }
     let schema = root_tree.root.subtree_clone(pointer, ctx)?;
-    let schema_value = tree_value(&schema, ctx)?;
+    let schema_value = crate::native_json::structural_projection(schema.root(), ctx)?;
     if !matches!(schema_value, Value::Bool(_) | Value::Object(_)) {
         return Err(error("OPENAPI_SCHEMA_POSITION", "Schema must be an object or boolean"));
     }

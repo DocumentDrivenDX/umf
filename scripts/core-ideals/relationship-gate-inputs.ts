@@ -2,7 +2,7 @@
 import {createHash} from 'node:crypto';
 import {readdir,readFile} from 'node:fs/promises';
 import {resolve,relative,sep} from 'node:path';
-export const relationshipTests=['tests/core/relationship-ideal.test.ts','tests/core/relationship-transition.test.ts','tests/core/relationship-operations.test.ts','tests/core-ideals/relationship-tablespec-projection.test.ts','tests/core-ideals/relationship-avro-projection.test.ts','tests/core-ideals/relationship-parquet.test.ts','tests/core-ideals/relationship-sqlserver.test.ts','tests/core-ideals/relationship-postgresql.test.ts','tests/core-ideals/relationship-extras.test.ts'];
+export const relationshipTests=['tests/core/relationship-ideal.test.ts','tests/core/relationship-public.test.ts','tests/core/relationship-operations.test.ts','tests/core-ideals/relationship-tablespec-projection.test.ts','tests/core-ideals/relationship-avro-projection.test.ts','tests/core-ideals/relationship-parquet.test.ts','tests/core-ideals/relationship-sqlserver.test.ts','tests/core-ideals/relationship-postgresql.test.ts','tests/core-ideals/relationship-extras.test.ts'];
 export const relationshipProofs=[
  'fixtures/validation/relationship-tablespec-projection-native.json','fixtures/validation/relationship-tablespec-projection-browser.json',
  'fixtures/validation/relationship-avro-projection-native.json','fixtures/validation/relationship-avro-projection-browser.json',

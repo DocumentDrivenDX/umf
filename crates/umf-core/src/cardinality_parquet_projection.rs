@@ -123,7 +123,9 @@ fn runtime(c: &mut Context<'_>) -> Result<Arc<Rt>, EngineError> {
     }
     Ok(x)
 }
-fn schemas(rt: &Rt, c: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+fn schemas(rt: &Rt, c: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, c, |c| {
     let schema = parse(RESULT, c)?;
     let mut resources: SchemaResources = rt.engine.schema_resources_with_context(c)?;
     resources.entries.push((
@@ -154,6 +156,7 @@ fn schemas(rt: &Rt, c: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSche
         result,
         CompiledSchema::compile(&request_schema, &resources, c)?,
     ))
+    })
 }
 fn wire_i32(x: i32) -> Value {
     obj(vec![("kind", s("i32")), ("value", s(&x.to_string()))])
@@ -540,7 +543,8 @@ fn lower(
     c: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(c)?;
-    let (result_schema, request_schema) = schemas(&rt, c)?;
+    let prepared_schemas = schemas(&rt, c)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let request = copy_json(request_input, c)?;
     if let Some(d) = request_schema.validate(&request, c)?.first() {
         return Err(EngineError::new(
@@ -1124,7 +1128,9 @@ pub fn recover_cardinality_from_parquet(
 fn nullability_schemas(
     rt: &Rt,
     c: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, c, |c| {
     let schema = parse(NULLABILITY_RESULT, c)?;
     let mut resources = rt.engine.schema_resources_with_context(c)?;
     resources
@@ -1144,6 +1150,7 @@ fn nullability_schemas(
     )
     .unwrap();
     Ok((result, CompiledSchema::compile(request, &resources, c)?))
+    })
 }
 
 pub fn project_nullability_to_parquet(
@@ -1152,7 +1159,8 @@ pub fn project_nullability_to_parquet(
     c: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(c)?;
-    let (result_schema, request_schema) = nullability_schemas(&rt, c)?;
+    let prepared_schemas = nullability_schemas(&rt, c)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let request = copy_json(request_input, c)?;
     if let Some(d) = request_schema.validate(&request, c)?.first() {
         return Err(EngineError::new(
@@ -1453,7 +1461,8 @@ pub fn recover_nullability_from_parquet(
     c: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(c)?;
-    let (result_schema, _) = nullability_schemas(&rt, c)?;
+    let prepared_schemas = nullability_schemas(&rt, c)?;
+    let (result_schema, _) = &*prepared_schemas;
     if let Some(d) = result_schema.validate(receipt, c)?.first() {
         return Err(EngineError::new(
             "NULLABILITY_PARQUET_RECEIPT",
@@ -2591,6 +2600,21 @@ fn key_wire_file(
             "/request/columns",
         ));
     }
+    let mut ids = std::collections::BTreeSet::new();
+    if record_name.is_empty() || record_name.contains('\0') {
+        return Err(err("PARQUET_FACET_CARRIER", "Record name must be nonempty well-formed text without NUL", "/request/recordName"));
+    }
+    for column in columns {
+        let name = text(get(column, "name")).unwrap_or_default();
+        if name.is_empty() || name.contains('\0') {
+            return Err(err("PARQUET_FACET_CARRIER", "Field name must be nonempty well-formed text without NUL", "/request/columns/name"));
+        }
+        if let Some(Value::Number(id)) = get(column, "fieldId") {
+            if !id.is_finite() || id.fract() != 0.0 || *id < i32::MIN as f64 || *id > i32::MAX as f64 || !ids.insert(*id as i32) {
+                return Err(err("PARQUET_FACET_CARRIER", "Field IDs must be unique int32 values", "/request/columns/fieldId"));
+            }
+        }
+    }
     let mut schema = vec![wire_struct(vec![
         (4, wire_binary(&k(record_name), c)?),
         (5, wire_i32(columns.len() as i32)),
@@ -2654,7 +2678,16 @@ fn key_wire_file(
                 "/request/columns",
             )
         })?;
-        schema.push(native_wire_to_value(leaf, 0, c)?);
+        let mut emitted_leaf = native_wire_to_value(leaf, 0, c)?;
+        // Generated SchemaElement fields have a stable ascending ID order.
+        // Retained input footer fields are never reordered by this emitter.
+        if let Value::Object(members) = &mut emitted_leaf {
+            if let Some((_, Value::Array(fields))) = members.iter_mut().find(|(key, _)| key == &k("fields")) {
+                c.charge_work(fields.len().saturating_mul(fields.len().max(1).ilog2() as usize + 1), k("/request/columns"))?;
+                fields.sort_unstable_by_key(|field| match get(field, "id") { Some(Value::Number(id)) => *id as i16, _ => 0 });
+            }
+        }
+        schema.push(emitted_leaf);
     }
     let footer = encode_parquet_wire(
         &wire_struct(vec![

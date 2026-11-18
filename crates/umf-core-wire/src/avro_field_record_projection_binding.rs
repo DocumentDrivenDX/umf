@@ -26,17 +26,21 @@ fn closed(value: &Value, allowed: &[&str], ctx: &mut Context<'_>) -> Result<(), 
     }
     Ok(())
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire, ctx)?;
         if text_field(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(request_error(
                 "Avro Field/Record projection profile is required",
@@ -60,29 +64,29 @@ pub fn execute_wire_with_control(
                 ))
             }
         };
-        closed(&request, allowed, &mut ctx)?;
+        closed(&request, allowed, ctx)?;
         let output = match op {
             "projectFieldToAvro" => umf_core::avro_field_record_projection::project_field(
                 field(&request, "author").ok_or_else(|| request_error("author is required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             "recoverFieldFromAvro" => umf_core::avro_field_record_projection::recover_field(
                 field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
                 field(&request, "nativeText")
                     .ok_or_else(|| request_error("nativeText is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             "projectRecordToAvro" => umf_core::avro_field_record_projection::project_record(
                 field(&request, "author").ok_or_else(|| request_error("author is required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             "recoverRecordFromAvro" => umf_core::avro_field_record_projection::recover_record(
                 field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
                 field(&request, "nativeText")
                     .ok_or_else(|| request_error("nativeText is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             _ => {
                 return Err(request_error(
@@ -90,7 +94,8 @@ pub fn execute_wire_with_control(
                 ))
             }
         };
-        encode(&output, &mut ctx)
-    })();
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

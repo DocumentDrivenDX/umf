@@ -70,6 +70,7 @@ pub struct Context<'a> {
     pub(crate) schema_construction: Option<std::rc::Rc<std::cell::RefCell<crate::schema::ConstructionState>>>,
     work_phase_observer: Option<&'a std::cell::Cell<&'static str>>,
     constructor_root_observer: Option<&'a std::cell::Cell<&'static str>>,
+    full_branch_diagnostics: bool,
 }
 
 /// Work accumulated by transport decoders for one host operation.
@@ -210,7 +211,18 @@ impl<'a> Context<'a> {
             evaluation_paths: None,
             work_phase_observer: None,
             constructor_root_observer: None,
+            full_branch_diagnostics: false,
         })
+    }
+
+    /// Fresh ordinary context for a binding-owned request without controls.
+    /// The construction state cannot outlive this request context.
+    #[doc(hidden)]
+    pub fn ordinary_construction() -> Self {
+        let mut ctx = Self::ordinary();
+        ctx.charged_work = 1;
+        ctx.schema_construction = Some(std::rc::Rc::new(std::cell::RefCell::new(crate::schema::ConstructionState::default())));
+        ctx
     }
 
     /// Internal owner construction scope. It conveys no caller-selectable proof:
@@ -396,6 +408,48 @@ impl<'a> Context<'a> {
 
     pub fn profile(&self) -> ResourceProfile {
         self.profile
+    }
+
+    /// Built-in resource owners may retain immutable, fully admitted plans
+    /// only on an ordinary uncontrolled construction call. This is never
+    /// permission to reuse caller input or to omit a live control callback.
+    #[doc(hidden)]
+    pub fn can_reuse_fixed_resources(&self) -> bool {
+        self.can_reuse_fixed_resource_profile(Limits::ordinary())
+    }
+
+    #[doc(hidden)]
+    pub fn can_reuse_fixed_resource_profile(&self, limits: Limits) -> bool {
+        self.profile == ResourceProfile::Cooperative && self.limits == limits
+            && self.schema_construction.is_some() && self.owned_core_operation.is_none()
+            && self.evaluation_paths.is_none() && self.work_phase_observer.is_none()
+            && self.constructor_root_observer.is_none() && self.meter.is_none()
+            && self.host_control.is_none() && self.cancellation.is_none()
+            && self.fallible_cancellation.is_none() && self.clock.is_none()
+            && self.fallible_clock.is_none() && self.deadline_ms.is_none()
+    }
+
+    // Exact work-only aggregation is independent of schema ownership or
+    // evaluator path custody. Without a live control capability, individual
+    // notifications cannot be observed; overflow still uses the original path.
+    pub(crate) fn can_batch_work(&self) -> bool {
+        self.meter.is_none() && self.host_control.is_none()
+            && self.cancellation.is_none() && self.fallible_cancellation.is_none()
+            && self.deadline_ms.is_none()
+    }
+
+    pub(crate) fn with_full_branch_diagnostics<T>(&mut self, operation: impl FnOnce(&mut Self) -> Result<T, EngineError>) -> Result<T, EngineError> {
+        struct Scope<'c, 'a> { ctx: &'c mut Context<'a>, prior: bool }
+        impl Drop for Scope<'_, '_> { fn drop(&mut self) { self.ctx.full_branch_diagnostics = self.prior; } }
+        let prior = std::mem::replace(&mut self.full_branch_diagnostics, true);
+        let scope = Scope { ctx: self, prior };
+        operation(scope.ctx)
+    }
+
+    pub(crate) fn can_optimize_discarded_schema_errors(&self) -> bool {
+        !self.full_branch_diagnostics && self.schema_construction.is_some() && self.owned_core_operation.is_none()
+            && self.work_phase_observer.is_none() && self.constructor_root_observer.is_none()
+            && self.can_batch_work()
     }
 
     pub fn charged_work(&self) -> u64 {
@@ -1029,3 +1083,32 @@ mod constructor_observation_tests {
 #[cfg(test)]
 #[path = "context_path_tests.rs"]
 mod context_path_tests;
+
+#[cfg(test)]
+mod branch_diagnostic_scope_tests {
+    use super::*;
+    #[test]
+    fn full_diagnostic_replay_restores_nested_error_and_unwind_state() {
+        let mut ctx = Context::ordinary();
+        ctx.with_codegen_construction(|ctx| {
+            assert!(ctx.can_optimize_discarded_schema_errors());
+            let error = ctx.with_full_branch_diagnostics(|ctx| {
+                assert!(!ctx.can_optimize_discarded_schema_errors());
+                ctx.with_full_branch_diagnostics(|ctx| {
+                    assert!(!ctx.can_optimize_discarded_schema_errors());
+                    Ok(())
+                })?;
+                assert!(!ctx.can_optimize_discarded_schema_errors());
+                Err::<(), _>(EngineError::new("CANCELLED", Utf16::from("/caller"), "stop"))
+            }).unwrap_err();
+            assert_eq!(error.path, Utf16::from("/caller"));
+            assert!(ctx.can_optimize_discarded_schema_errors());
+            let panic = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                let _ = ctx.with_full_branch_diagnostics::<()>(|_| panic!("scope unwind"));
+            }));
+            assert!(panic.is_err());
+            assert!(ctx.can_optimize_discarded_schema_errors());
+            Ok(())
+        }).unwrap();
+    }
+}

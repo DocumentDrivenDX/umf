@@ -19,13 +19,16 @@ pub struct Response {
     pub binary: Vec<u8>,
 }
 
-pub fn execute(
+pub fn execute<'a>(
     wire_json: &str,
     input_binary: &[u8],
-    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    control: impl Into<crate::protobuf_source::PhaseControl<'a>>,
 ) -> Response {
     let result = (|| {
-        let mut context = Context::ordinary().with_host_control(control);
+        let mut context = match control.into() {
+            crate::protobuf_source::PhaseControl::Uncontrolled => Context::ordinary_construction(),
+            crate::protobuf_source::PhaseControl::Controlled(control) => Context::ordinary().with_host_control(control),
+        };
         // Tagged transport can expand the contract's four-megabyte binary
         // ceiling into eight megabytes of descriptor hex. Keep that transport
         // allowance scoped to the envelope; descriptor/core operations apply

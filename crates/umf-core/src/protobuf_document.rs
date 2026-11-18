@@ -254,6 +254,8 @@ pub fn inspect(document: &Value, context: &mut Context<'_>) -> Result<Validation
 /// Run the same embedded core document validation used by the JSON Schema
 /// adapter before interpreting the Protobuf extension envelope.
 fn core_validation(document: &Value, context: &mut Context<'_>) -> Result<Validation, EngineError> {
+    static RESOURCES: std::sync::OnceLock<crate::resource_cache::Fixed<Engine>> = std::sync::OnceLock::new();
+    let engine = crate::resource_cache::prepare(&RESOURCES, context, |context| {
     fn resource(text: &str, context: &mut Context<'_>) -> Result<Value, EngineError> {
         context.charge_text(text.encode_utf16().count(), Utf16::default())?;
         serialization::read_json_value(
@@ -262,7 +264,7 @@ fn core_validation(document: &Value, context: &mut Context<'_>) -> Result<Valida
             context,
         )
     }
-    let engine = Engine::new(
+    Engine::new(
         ResourceSet::new(
             resource(include_str!("../../../spec/core/schema.json"), context)?,
             resource(
@@ -283,7 +285,8 @@ fn core_validation(document: &Value, context: &mut Context<'_>) -> Result<Valida
             )?,
         ),
         context,
-    )?;
+    )
+    })?;
     engine.validate_document(
         document,
         &Registry::new(),

@@ -50,7 +50,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     if let Value::Object(fields) = value {
         fields
             .iter()
-            .find(|(key, _)| key == &k(name))
+            .find(|(key, _)| key.equals_str(name))
             .map(|(_, value)| value)
     } else {
         None
@@ -128,7 +128,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
 fn schemas(
     rt: &Runtime,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema, Value), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema, Value)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema, Value)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let result_value = parse(RESULT, ctx)?;
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources.entries.push((
@@ -170,6 +172,7 @@ fn schemas(
         CompiledSchema::compile(request, &resources, ctx)?,
         binding,
     ))
+    })
 }
 fn validate(
     schema: &CompiledSchema,
@@ -191,7 +194,7 @@ fn set(target: &mut Value, name: &str, value: Value) -> Result<(), EngineError> 
     let Value::Object(fields) = target else {
         return Err(err("INVARIANT", "Expected object", ""));
     };
-    if let Some((_, slot)) = fields.iter_mut().find(|(key, _)| key == &k(name)) {
+    if let Some((_, slot)) = fields.iter_mut().find(|(key, _)| key.equals_str(name)) {
         *slot = value;
     } else {
         fields.push((k(name), value));
@@ -548,7 +551,8 @@ fn project_inner(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema, binding) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (result_schema, request_schema, binding) = &*prepared_schemas;
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
     validate(&request_schema, &request, "FACETS_SQLSERVER_REQUEST", ctx)?;
@@ -987,7 +991,8 @@ pub fn recover_facets_from_sqlserver(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, _, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (result_schema, _, _) = &*prepared_schemas;
     let receipt = copy_json(receipt_input, ctx)?;
     validate(&result_schema, &receipt, "FACETS_SQLSERVER_RECEIPT", ctx)?;
     if text_owned(get(&receipt, "status")).as_deref() != Some("projected")

@@ -14,7 +14,7 @@ fn member<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     match value {
         Value::Object(fields) => fields
             .iter()
-            .find(|(key, _)| key == &Utf16::from(name))
+            .find(|(key, _)| key.equals_str(name))
             .map(|(_, value)| value),
         _ => None,
     }

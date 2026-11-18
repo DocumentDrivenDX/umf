@@ -102,6 +102,7 @@ export interface UmfSecurityLogicEngine {
 }
 export declare function createSecurityLogicEngine(options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export interface SecurityCandidateConditionEngine {
+  prepareCandidateCondition(expression: unknown): (resourceIndex: number, dispatch: (event: unknown) => unknown) => 'T'|'F'|'U';
   evaluateCandidateCondition(expression: unknown, resourceIndex: number, dispatch: (event: unknown) => unknown): 'T'|'F'|'U';
   preflightCandidateCondition(expression: unknown, target: unknown, dispatch: (event: unknown) => unknown, associations?:readonly unknown[]): true;
   normalizeCandidateCondition(expression: unknown, dispatch: (event: unknown) => unknown): unknown;
@@ -176,6 +177,7 @@ export interface UmfSecurityFunctionsEngine {
   inspectProtectionFunction(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
   evaluateProtectionValue(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
   /** Internal candidate support; not re-exported by either UMF SDK root. */
+  prepareCandidateLiteralSource(source: unknown, controls?: UmfCoreControls): {inspectCandidateLiteral(field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number}};
   inspectCandidateLiteral(source: unknown, field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number};
   catalogRecipe(input: unknown): unknown;
   /** Private actions-reference comparison under ordinary core value limits. */
@@ -419,7 +421,7 @@ export interface CoreDatasetValuesHostInputEngine {
 export declare function createCoreDatasetValuesHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): CoreDatasetValuesHostInputEngine;
 export type CoreKeyTupleValue = {boolean: boolean} | {integerToken: string} | {decimalToken: string} | {string: string} | {binaryHex: string} | {bits128Hex: string} | {uuid: string};
 export interface CoreKeyTupleReceipt {operation: 'encode-core-key-tuple'; version: '4.0.0'; profile: 'umf-key-tuple-v1' | 'umf-key-tuple-v2'; source: unknown; identity: CoreKeyIdentity; values: CoreKeyTupleValue[]; keyPath: string; bytesHex: string}
-export interface PreparedCoreKeyTuples {readonly profile: 'umf.core.key-tuples.prepared/1'; readonly source: unknown; encode(identity: CoreKeyIdentity, values: CoreKeyTupleValue[]): CoreKeyTupleReceipt; verify(receipt: CoreKeyTupleReceipt): CoreKeyTupleReceipt}
+export interface PreparedCoreKeyTuples {readonly profile: 'umf.core.key-tuples.prepared/1'; readonly source: unknown; encode(identity: CoreKeyIdentity, values: CoreKeyTupleValue[]): CoreKeyTupleReceipt; encodeHex(identity: CoreKeyIdentity, values: CoreKeyTupleValue[]): string; verify(receipt: CoreKeyTupleReceipt): CoreKeyTupleReceipt}
 export declare function createCoreModelEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreModelEngine;
 export declare function createCoreRecordTypeEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; setupControls?: UmfCoreControls}): UmfCoreRecordTypeEngine;
 /** Create an opt-in retained Rust inspector with pinned resources and fresh per-call controls. */

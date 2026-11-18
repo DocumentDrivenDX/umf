@@ -27,5 +27,5 @@ test('collisions, duplicate names/order, ambiguity and stale archives cannot pub
 test('unknown composite refinements remain recoverable and future server versions are refused',()=>{
  const capture=JSON.parse(fixture.nativeSource);capture.snapshot.compositeTypes[0].futureMeaning={op:'opaque',values:['retain']};const nativeSource=' \n'+JSON.stringify(capture,null,2)+'\n',document=importPostgresqlCatalogCapture(nativeSource,{id:'future-detail'});
  const result=classifyPostgresqlComposite(document,{...request,nativeSource});expect(recoverPostgresqlCompositeCapture(result,result.target!)).toBe(nativeSource);
- capture.serverVersion=180000;const future=JSON.stringify(capture);expect(()=>classifyPostgresqlComposite(importPostgresqlCatalogCapture(future,{id:'future'}),{...request,nativeSource:future})).toThrow('17.4');
+ capture.serverVersion=180000;const future=JSON.stringify(capture);expect(()=>classifyPostgresqlComposite(importPostgresqlCatalogCapture(future,{id:'future'}),{...request,nativeSource:future})).toThrow('Expected a versioned PostgreSQL catalog capture');
 });

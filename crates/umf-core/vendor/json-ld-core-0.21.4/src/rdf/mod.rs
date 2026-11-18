@@ -18,6 +18,7 @@ pub const RDF_TYPE: &Iri = iri!("http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 pub const RDF_FIRST: &Iri = iri!("http://www.w3.org/1999/02/22-rdf-syntax-ns#first");
 pub const RDF_REST: &Iri = iri!("http://www.w3.org/1999/02/22-rdf-syntax-ns#rest");
 pub const RDF_VALUE: &Iri = iri!("http://www.w3.org/1999/02/22-rdf-syntax-ns#value");
+pub const RDF_LANGUAGE: &Iri = iri!("http://www.w3.org/1999/02/22-rdf-syntax-ns#language");
 pub const RDF_DIRECTION: &Iri = iri!("http://www.w3.org/1999/02/22-rdf-syntax-ns#direction");
 pub const RDF_JSON: &Iri = iri!("http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON");
 /// IRI of the `http://www.w3.org/1999/02/22-rdf-syntax-ns#nil` value.
@@ -101,6 +102,7 @@ pub struct CompoundLiteralTriples<T, B, L> {
 
 	/// Direction value.
 	direction: Option<Value<T, B, L>>,
+	language: Option<Value<T, B, L>>,
 }
 
 impl<T: Clone, B: Clone, L: Clone> CompoundLiteralTriples<T, B, L> {
@@ -121,6 +123,10 @@ impl<T: Clone, B: Clone, L: Clone> CompoundLiteralTriples<T, B, L> {
 			));
 		}
 
+        if let Some(language) = self.language.take() {
+            return Some(rdf_types::Triple(self.id.clone(), ValidId::Iri(vocabulary.insert(RDF_LANGUAGE)), language));
+        }
+
 		None
 	}
 }
@@ -140,6 +146,7 @@ impl<T: Clone> crate::object::Value<T> {
 	) -> Option<CompoundLiteral<T, V::BlankId, V::Literal>>
 	where
 		V: Vocabulary<Iri = T> + IriVocabularyMut + LiteralVocabularyMut,
+        V::BlankId: Clone,
 	{
 		match self {
 			Self::Json(json) => {
@@ -179,10 +186,14 @@ impl<T: Clone> crate::object::Value<T> {
 						}
 						Some(RdfDirection::CompoundLiteral) => {
 							let id = generator.next(vocabulary);
-							Some(CompoundLiteral {
-								value: id.into_term(),
-								triples: None,
-							})
+                            let string_type = vocabulary.insert(XSD_STRING);
+                            let literal_value = Value::Literal(vocabulary.insert_owned_literal(Literal::new(string.to_string(), rdf_types::LiteralType::Any(string_type.clone()))));
+                            let literal_direction = Value::Literal(vocabulary.insert_owned_literal(Literal::new(direction.to_string(), rdf_types::LiteralType::Any(string_type.clone()))));
+                            let literal_language = language.map(|tag| Value::Literal(vocabulary.insert_owned_literal(Literal::new(tag.as_str().to_ascii_lowercase(), rdf_types::LiteralType::Any(string_type)))));
+                            Some(CompoundLiteral {
+                                value: id.clone().into_term(),
+                                triples: Some(CompoundLiteralTriples { id, value: Some(literal_value), direction: Some(literal_direction), language: literal_language }),
+                            })
 						}
 						None => match language {
 							Some(tag) => Some(CompoundLiteral {
@@ -244,16 +255,17 @@ impl<T: Clone> crate::object::Value<T> {
 					}
 					value::Literal::Null => ("null".to_string(), None),
 					value::Literal::Number(n) => {
-						if n.is_i64()
+						if n.as_f64_lossy().fract() == 0.0
+                            && n.as_f64_lossy().abs() < 1e21
 							&& !ty
 								.as_ref()
 								.map(|t| vocabulary.iri(t).unwrap() == XSD_DOUBLE)
 								.unwrap_or(false)
 						{
-							(n.to_string(), Some(vocabulary.insert(XSD_INTEGER)))
+							(format!("{:.0}", n.as_f64_lossy()), Some(vocabulary.insert(XSD_INTEGER)))
 						} else {
 							(
-								pretty_dtoa::dtoa(n.as_f64_lossy(), XSD_CANONICAL_FLOAT),
+								canonical_double(n.as_f64_lossy()),
 								Some(vocabulary.insert(XSD_DOUBLE)),
 							)
 						}
@@ -291,6 +303,17 @@ impl<T: Clone> crate::object::Value<T> {
 const XSD_CANONICAL_FLOAT: pretty_dtoa::FmtFloatConfig = pretty_dtoa::FmtFloatConfig::default()
 	.force_e_notation()
 	.capitalize_e(true);
+
+/// Exact lexical formatter used by numeric-loss admission and RDF output.
+pub fn canonical_double(value: f64) -> String {
+    // The established RDF profile uses 15 fractional exponential digits.
+    // Keep one fractional zero and omit an exponent plus sign.
+    let text = format!("{value:.15e}");
+    let (mantissa, exponent) = text.split_once('e').unwrap();
+    let mantissa = mantissa.trim_end_matches('0');
+    let mantissa = if mantissa.ends_with('.') { format!("{mantissa}0") } else { mantissa.to_owned() };
+    format!("{mantissa}E{exponent}")
+}
 
 impl<T: Clone, B: Clone> Node<T, B> {
 	fn rdf_value<L>(&self) -> Option<Value<T, B, L>> {
@@ -627,8 +650,8 @@ where
 
 fn i18n(language: Option<LangTagBuf>, direction: Direction) -> IriBuf {
 	let iri = match &language {
-		Some(language) => format!("https://www.w3.org/ns/i18n#{language}_{direction}"),
-		None => format!("https://www.w3.org/ns/i18n#{direction}"),
+		Some(language) => format!("https://www.w3.org/ns/i18n#{}_{direction}", language.as_str().to_ascii_lowercase()),
+		None => format!("https://www.w3.org/ns/i18n#_{direction}"),
 	};
 
 	IriBuf::new(iri).unwrap()

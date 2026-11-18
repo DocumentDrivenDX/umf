@@ -6,7 +6,7 @@ import {UmfError} from '../model/errors';
 type NativeCoreErrorGuard=(error:unknown)=>boolean;
 export interface CoreKeyTupleDefaultEngine {
  readCoreKeyTupleBytes(receipt:CoreKeyTupleReceipt,current:unknown):Uint8Array;
- prepareCoreKeyTuples(source:unknown):{readonly profile:string;readonly source:unknown;encode(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):unknown;verify(receipt:CoreKeyTupleReceipt):unknown};
+ prepareCoreKeyTuples(source:unknown):{readonly profile:string;readonly source:unknown;encode(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):unknown;encodeHex(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):string;verify(receipt:CoreKeyTupleReceipt):unknown};
 }
 
 function rustCall<T>(operation:()=>T,isNativeUmfCoreError:NativeCoreErrorGuard):T {
@@ -32,6 +32,9 @@ export function bindCoreKeyTupleDefault(engine:CoreKeyTupleDefaultEngine,isNativ
     source:prepared.source as Json,
     encode(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):CoreKeyTupleReceipt {
      return rustCall(()=>prepared.encode(identity,values),isNativeUmfCoreError) as CoreKeyTupleReceipt;
+    },
+    encodeHex(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):string {
+     return rustCall(()=>prepared.encodeHex(identity,values),isNativeUmfCoreError);
     },
     verify(receipt:CoreKeyTupleReceipt):CoreKeyTupleReceipt {
      return rustCall(()=>prepared.verify(receipt),isNativeUmfCoreError) as CoreKeyTupleReceipt;

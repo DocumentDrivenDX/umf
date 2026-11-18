@@ -132,6 +132,11 @@ fn validate(
     ctx: &mut Context<'_>,
     code: &str,
 ) -> Result<(), EngineError> {
+    // All private call sites supply only these compile-time pinned schemas.
+    static REQUEST: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    static RESULT: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    let cache = if code.ends_with("_REQUEST") { &REQUEST } else { &RESULT };
+    let compiled = crate::resource_cache::prepare(cache, ctx, |ctx| {
     let mut resources = runtime.engine.schema_resources_with_context(ctx)?;
     schema(
         &mut resources,
@@ -145,7 +150,8 @@ fn validate(
         KINDS,
         ctx,
     )?;
-    let compiled = CompiledSchema::compile(schema_value, &resources, ctx)?;
+CompiledSchema::compile(schema_value, &resources, ctx)
+    })?;
     let diagnostics = compiled.validate_codegen_errors(value, ctx)?;
     if diagnostics.is_empty() {
         Ok(())
@@ -597,6 +603,13 @@ fn project_inner(
             if let Some(size) = number(get(&request, "fixedSize")) {
                 if size == 0 {
                     fatal = true;
+                    losses.push(residual(
+                        "/request/fixedSize",
+                        get(&request, "fixedSize").unwrap_or(&Value::Null),
+                        "A zero-byte fixed carrier cannot hold a positive-precision decimal",
+                        "not-expressible",
+                        ctx,
+                    )?);
                 } else if size <= 4096 {
                     let capacity =
                         (((8 * size - 1) as f64) * std::f64::consts::LOG10_2).floor() as u64;

@@ -203,6 +203,12 @@ fn validate_schema(
     c: &mut Context<'_>,
     code: &str,
 ) -> Result<(), EngineError> {
+    // Private callers supply only pinned subschemas; input validation runs below.
+    static REQUEST: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    static AUTHOR: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    static RESULT: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    let cache = if code.ends_with("_REQUEST") { &REQUEST } else if code.ends_with("_AUTHOR") { &AUTHOR } else { &RESULT };
+    let compiled = crate::resource_cache::prepare(cache, c, |c| {
     let mut resources = rt.engine.schema_resources_with_context(c)?;
     if text(get(schema, "$id")).as_deref() != Some("urn:umf:core:relationship-operation:1.0.0") {
         let relationship_schema = parse(RELATIONSHIP_OP, c)?;
@@ -211,7 +217,8 @@ fn validate_schema(
             relationship_schema,
         ));
     }
-    let compiled = crate::schema::CompiledSchema::compile(schema, &resources, c)?;
+crate::schema::CompiledSchema::compile(schema, &resources, c)
+    })?;
     if compiled.validate_codegen_errors(v, c)?.is_empty() {
         Ok(())
     } else {
@@ -388,8 +395,7 @@ fn table_root(
     Ok((tagged, tree))
 }
 fn native_value(tree: &NativeJsonTree, c: &mut Context<'_>) -> Result<Value, EngineError> {
-    let raw = tree.render_compact(c)?;
-    serialization::read_json_value(raw.units(), Format::Json, c)
+    tree.tagged_value_preserving_extras(c)
 }
 fn member<'a>(node: &'a NativeJsonNode, n: &str) -> Option<&'a NativeJsonNode> {
     if let NativeJsonNode::Object(m) = node {
@@ -445,12 +451,15 @@ fn strip_openapi_discriminator_annotations(value: &mut Value) {
 }
 
 fn schema_ok(
-    v: &Value,
+    v: &NativeJsonTree,
     schema: &Value,
     rt: &Runtime,
     c: &mut Context<'_>,
     code: &str,
 ) -> Result<bool, EngineError> {
+    // All private call sites supply only these compile-time pinned schemas.
+    static RESULT: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    let compiled = crate::resource_cache::prepare(&RESULT, c, |c| {
     let mut resources = rt.engine.schema_resources_with_context(c)?;
     if text(get(schema, "$id")).as_deref() != Some("urn:umf:core:relationship-operation:1.0.0") {
         let relationship_schema = parse(RELATIONSHIP_OP, c)?;
@@ -472,16 +481,18 @@ fn schema_ok(
     } else {
         None
     };
-    let compiled = crate::schema::CompiledSchema::compile(
+crate::schema::CompiledSchema::compile(
         native_validation_schema.as_ref().unwrap_or(schema),
         &resources,
         c,
-    )?;
-    Ok(compiled.validate_codegen_errors(v, c)?.is_empty())
+    )
+    })?;
+    Ok(compiled.validate_native_json_tree_codegen_errors(v, c)?.is_empty())
 }
 fn native_issues(
     node: &NativeJsonNode,
     value: &Value,
+    tree: &NativeJsonTree,
     label: &str,
     native_schema: &Value,
     domain_registry: &Value,
@@ -490,7 +501,7 @@ fn native_issues(
     losses: &mut Vec<Value>,
 ) -> Result<bool, EngineError> {
     let mut valid = true;
-    if !schema_ok(value, native_schema, rt, c, "RELATIONSHIP_TABLESPEC_NATIVE")? {
+    if !schema_ok(tree, native_schema, rt, c, "RELATIONSHIP_TABLESPEC_NATIVE")? {
         loss_str(losses,&format!("/{label}"),value,"Pinned native schema rejects supplied TableSpec table; original source remains retained","not-expressible",c)?;
         valid = false;
     }
@@ -863,6 +874,7 @@ fn projection(
     let from_ok = native_issues(
         from_root,
         &from_value,
+        &from_tree,
         "nativeSource",
         &native_schema,
         &domain_registry,
@@ -873,6 +885,7 @@ fn projection(
     let to_ok = native_issues(
         to_root,
         &to_value,
+        &to_tree,
         "nativeTarget",
         &native_schema,
         &domain_registry,
@@ -1147,9 +1160,8 @@ fn projection(
         let changes = obj(vec![("relationships", metadata)]);
         let candidate = rt.tablespec.edit_table(&native_source, &changes, c)?;
         let (_, candidate_tree) = table_root(&candidate, rt, c)?;
-        let candidate_value = native_value(&candidate_tree, c)?;
         if !schema_ok(
-            &candidate_value,
+            &candidate_tree,
             &native_schema,
             rt,
             c,

@@ -162,7 +162,7 @@ fn execute(request: &Value, ctx: &mut Context<'_>, family: Option<&str>) -> Resu
     // registries and the shared core Engine from embedded repository resources.
     // Caller-controlled LinkML import resources are passed only to importContext/importMerge.
     // No operation follows a URI or fetches a resource.
-    let runtime = contracts::ContractRuntime::new(ctx)?;
+    let runtime = contracts::ContractRuntime::prepared(ctx)?;
     let result = match op_name {
         "linkml.import" => {
             let source = required_string(request, "source")?;
@@ -216,29 +216,28 @@ fn execute(request: &Value, ctx: &mut Context<'_>, family: Option<&str>) -> Resu
     Ok(result)
 }
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_family_context(wire, None, Context::ordinary_construction())
 }
 pub fn execute_wire_with_control(wire: &str, control: &mut dyn FnMut(usize) -> Result<(), EngineError>) -> String {
     execute_family_wire_with_control(wire, None, control)
 }
 pub fn execute_linkml_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_linkml_wire_with_control(wire, &mut no_control)
+    execute_family_context(wire, Some("linkml."), Context::ordinary_construction())
 }
 pub fn execute_linkml_wire_with_control(wire: &str, control: &mut dyn FnMut(usize) -> Result<(), EngineError>) -> String {
     execute_family_wire_with_control(wire, Some("linkml."), control)
 }
 pub fn execute_odcs_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_odcs_wire_with_control(wire, &mut no_control)
+    execute_family_context(wire, Some("odcs."), Context::ordinary_construction())
 }
 pub fn execute_odcs_wire_with_control(wire: &str, control: &mut dyn FnMut(usize) -> Result<(), EngineError>) -> String {
     execute_family_wire_with_control(wire, Some("odcs."), control)
 }
 fn execute_family_wire_with_control(wire: &str, family: Option<&str>, control: &mut dyn FnMut(usize) -> Result<(), EngineError>) -> String {
+    execute_family_context(wire, family, Context::ordinary().with_host_control(control))
+}
+fn execute_family_context(wire: &str, family: Option<&str>, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let value = execute(&request, &mut ctx, family)?;
         encode(&value, &mut ctx)

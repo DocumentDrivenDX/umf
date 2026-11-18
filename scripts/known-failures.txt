@@ -30,52 +30,10 @@ tests/avro/native-schema.test.ts
 tests/avro/native.test.ts
 # [avro-semantics-unchecked] editing an Avro temporal annotation no longer throws 'All present semantics...' (expected a throw)
 tests/avro/temporal-metadata.test.ts
-# [unknown-facets] an unknown logical facet no longer makes inspectBinding(...).complete false (expected false, got true)
-tests/binding-uuid.test.ts
-# [admission-throws] : invalid index kind combinations and paths fail: AdmissionError: Unsupported JavaScript value type: undefined
-tests/binding/indexes.test.ts
-# [validation-missing] invalid table operation declarations are accepted: expected diagnostic TABLES_OPERATION_GENERATED, got none
-tests/binding/table-operations.test.ts
-# fixed query declared scope and derived frame identities are : expected false, got true @ tate(command(d));const i=inspectTableLifecycle(d);expect(i.complete).toBe(false);
-tests/binding/table-query.test.ts
 # [limits] catalog opt-in retains the ordinary profile and restores it : UmfError: Source structural limit exceeded
 tests/catalog-resource-profile.test.ts
 # semantic work exhaustion no longer refuses: returns 900+ 'Existing definition or unsupported structure differs' diagnostics instead
 tests/core-evolution.test.ts
-# qualified catalog result differs from the expected value (toEqual at cardinality-postgresql-catalog.test.ts:26)
-tests/core-ideals/cardinality-postgresql-catalog.test.ts
-# fixed bounds preserve lower-bound losses and refuse impossib: UmfError: 3
-tests/core-ideals/facets-avro-projection.test.ts
-# [avro-semantics-unchecked] original source texts, dependency order, unknown numeric tok: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked
-tests/core-ideals/facets-avro.test.ts
-# native carriers and qualified predicates classify width, dec: UmfError: Parser response does not match the ordered prepared CHECK requests
-tests/core-ideals/facets-postgresql.test.ts
-# diagnostics mirror disclosed loss and legacy receipts still : assertion fails @ Path='/tampered';expect(()=>recoverFieldFromTableSpec(legacy,native)).toThrow('does not match');
-tests/core-ideals/field-tablespec-projection.test.ts
-# missing authors, stale tuples, absent membership, invalid na: expected "blocked", got "projected" @ ojectKeysToAvro(c.source,c.authors,{...c.request,recordName}).status).toBe('blocked');
-tests/core-ideals/key-avro-projection.test.ts
-# named dependency archives and unknown document content recov: assertion fails @ unknown as typeof r;expect(recoverAvroKeySource(saved,saved.target!)).toEqual(nativeSource);}
-tests/core-ideals/key-avro.test.ts
-# missing or stale authors, changed tuples, ownership conflict: assertion fails @ c.source,c.authors,c.request);expect(exportParquetCapture(r.target!)).toEqual(new Uint8Array(await B
-tests/core-ideals/key-parquet-projection.test.ts
-# correlation refuses wrong column type: assertion fails @ latePostgresqlKeyCatalog(source(),JSON.stringify(s),backend)).rejects.toThrow();});
-tests/core-ideals/key-postgresql-correlation.test.ts
-# SQL Server authored keys: family-conflict: UmfError: Value does not match the pinned projection schema
-tests/core-ideals/key-sqlserver-projection.test.ts
-# [number-profile] unknown native numeric lexemes and core extensions remain un: UmfCoreError: Parsing would change the decimal value
-tests/core-ideals/key-sqlserver.test.ts
-# rejects missing, duplicate, forged, mismatched and stale aut: assertion fails @ ther';expect(()=>projectKeysToTableSpec(foreign,c.authors,c.request)).toThrow('author identity');
-tests/core-ideals/key-tablespec-projection.test.ts
-# [yaml-roundtrip] catalog composites expose ordered fields without formatted-t: UmfError: wrongly indented line in block scalar at line 3583, column 5:
-tests/core-ideals/postgresql-composite.test.ts
-# declared empty, nested, recursive and dependency records ret: assertion fails @ ypeof result;expect(recoverAvroRecordBundle(receipt,receipt.target!)).toEqual({schema:c.schema,depen
-tests/core-ideals/record-avro.test.ts
-# Parquet root records keep ordered value slots separate from : UmfError: SchemaElement parameters outside the candidate view are present
-tests/core-ideals/record-parquet.test.ts
-# [yaml-roundtrip] qualified relations remain distinct records and only selecte: UmfError: wrongly indented line in block scalar at line 2209, column 5:
-tests/core-ideals/record-postgresql.test.ts
-# [avro-semantics-unchecked] Avro relationship classification: unresolved-named-type: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked; sem
-tests/core-ideals/relationship-avro.test.ts
 # [yaml-roundtrip] YAML writer emits a block scalar without an indentation indicator, so a string with leading spaces reads back changed (data loss)
 tests/core/core.test.ts
 # [limits] deep unknown native content survives TableSpec receipt verif: UmfCoreError: Schema evaluation depth exceeded
@@ -86,8 +44,6 @@ tests/core/javascript-numeric.test.ts
 tests/core/key-ideals.test.ts
 # US-024-AC4: explicit YAML 1.1 preserves underscored boundari: expected "{"max":9223372036854775807,"min":-922337203685477, got "{"max":"9_223_372_036_854_775_807","min":"-9_223_ @ expect(renderTree(parseNativeYaml(text,{version:'1
 tests/core/native-json.test.ts
-# [number-profile] validateRelationshipCandidate throws UmfError 'Number outside the core interoperable numeric profile' where diagnostics[0].code 'NUMBER' is expected
-tests/core/relationship-ideal.test.ts
 # single exclusive bounds reject integer and decimal domain ex: expected false, got true @ expect(validateDocument(invalid).valid).toBe(false);
 tests/core/schema-properties-review.test.ts
 # CONTRACT-001 malformed queries and unresolved core sources f: assertion fails @ rn ['Customer'];}};expect(()=>selectCoreElements(mixed,query as any)).toThrow('accessors');expect(in
@@ -158,8 +114,6 @@ tests/openapi/dynamic.test.ts
 tests/openapi/references.test.ts
 # US-029 declaration corpus agrees with independent explicit R: assertion fails @ arations(readDocument(writeDocument(d,c.format),c.format));expect(v).toEqual(c.view);expect(exportOw
 tests/owl/declarations.test.ts
-# [blank-node-ids] blank node labels differ (g_15 vs g_14): the label counter is not reset per case (same cause as the Rust rdf_parity failure)
-tests/owl/list-axioms.test.ts
 # CONTRACT-035 Arrow refinements require explicit losses even : assertion fails @ ult.issues.filter(i=>i.code.startsWith('ARROW_')))expect(issue.path).toMatch(/^\/key_value_metadata\
 tests/parquet/avro-arrow-loss.test.ts
 # CONTRACT-035 nested Parquet shapes preserve nullable lists, : expected true, got false @ .toBe('null');else expect(Array.isArray(type.items.fields[1].type)).toBe(c.native.type.valueNullable
@@ -212,22 +166,12 @@ tests/sqlserver/integer-tokens.test.ts
 tests/typespec/semantic.test.ts
 # US-007-AC9 explicit Avro candidates preserve logical annotat: TypeError: undefined is not an object (evaluating 'unresolved.validation.complete')
 tests/avro/candidate-edit.test.ts
-# [admission-throws,limits] CONTRACT-081: malformed input, unknown revisions and bounded: AdmissionError: JSON nesting exceeds the admission limit
-tests/binding/tables.test.ts
-# dependency changes and large uninterpreted native tokens can: expected true, got false @ 3');expect(unknown.residuals.some(x=>x.path==='/request/nativeType')).toBe(true);
-tests/core-ideals/cardinality-avro-projection.test.ts
-# Avro nested, recursive, union and dependency fields retain s: assertion fails @ typeof result;expect(recoverAvroFieldBundle(receipt,receipt.target!)).toEqual({schema:c.schema,depen
-tests/core-ideals/field-avro.test.ts
-# [avro-semantics-unchecked] Avro relationship discovery preserves unresolved-named-type: UmfError: [{"code":"SEMANTICS_UNCHECKED","path":"/modules/0/elements/0/extensions/umf.avro","severity":"warning","message":"Structure checked;
-tests/core-ideals/relationship-avro-discovery.test.ts
 # [number-profile] facet tokens are checked before conversion; unsafe numbers a: UmfError: Number outside the core interoperable numeric profile
 tests/core/facet-ideals.test.ts
 # [number-profile] US-018-AC19: native multipart recovery preserves all parts a: UmfError: partCount must be a safe positive integer
 tests/delta/multipart.test.ts
 # US-026-AC16: Unicode IRIs retain their spelling across proce: assertion fails @ .toBe('candidate');expect(ordered(getRdfQuads(projected.candidate!))).toEqual(ordered(index===3?expe
 tests/jsonld/unicode-iri.test.ts
-# [number-profile] US-011-AC15: extraction retains exact numbers, references an: UmfCoreError: Parsing would change the decimal value
-tests/openapi/extraction.test.ts
 # US-011-AC2: candidate edits validate object structure and re: UmfCoreError: Unknown tagged representation fields prevent native rendering
 tests/openapi/native.test.ts
 # CONTRACT-015 DDL type inventory respects native edits, unkno: expected "blocked", got "observed" @ 80000').document;expect(getPostgresqlDdlDeclarations(version).status).toBe('blocked');expect(check(g

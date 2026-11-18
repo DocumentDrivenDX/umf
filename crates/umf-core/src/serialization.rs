@@ -469,7 +469,7 @@ impl YamlBuilder for NativeYamlBuilder {
         if self.yaml_11 && native_yaml_timestamp(raw) {
             return Err(fail("NATIVE_YAML_NODE", "Aliases and non-JSON YAML nodes are unsupported"));
         }
-        if let Some(number) = native_yaml_integer(raw) {
+        if let Some(number) = native_yaml_integer_profile(raw, self.yaml_11) {
             return Ok(Node::Number(number));
         }
         if native_yaml_float(raw) {
@@ -558,6 +558,7 @@ fn native_yaml_string_scalar_profile(raw: &str, yaml_11: bool, pyyaml_booleans: 
         let yaml11_bool = matches!(raw, "yes" | "Yes" | "YES" | "no" | "No" | "NO" | "true" | "True" | "TRUE" | "false" | "False" | "FALSE" | "on" | "On" | "ON" | "off" | "Off" | "OFF")
             || (!pyyaml_booleans && matches!(raw, "y" | "Y" | "n" | "N"));
         if yaml11_bool { return false; }
+        if native_yaml_integer_profile(raw, true).is_some() { return false; }
     }
     native_yaml_string_scalar(raw)
 }
@@ -578,6 +579,19 @@ fn native_yaml_timestamp(raw: &str) -> bool {
         && native_yaml_date_only(&raw[..10])
         && matches!(raw.as_bytes()[10], b'T' | b't' | b' ')
         && raw[11..].contains(':')
+}
+
+fn native_yaml_integer_profile(raw: &str, yaml_11: bool) -> Option<String> {
+    if yaml_11 && raw.contains('_') {
+        let digits = raw.strip_prefix('+').or_else(|| raw.strip_prefix('-')).unwrap_or(raw);
+        // YAML 1.1 decimal separators; quoted scalars and YAML 1.2 stay strings.
+        // Leave other unsupported numeric spellings uninterpreted, never round.
+        if digits.as_bytes().first().is_some_and(|b| matches!(b, b'1'..=b'9'))
+            && digits.bytes().all(|b| b.is_ascii_digit() || b == b'_') {
+            return native_yaml_integer(&raw.replace('_', ""));
+        }
+    }
+    native_yaml_integer(raw)
 }
 
 fn native_yaml_integer(raw: &str) -> Option<String> {
@@ -2397,12 +2411,14 @@ fn write_typescript_yaml_string<S: OutputSink>(
         // to the bounded sink.
         let trailing_breaks = text.chars().rev().take_while(|ch| *ch == '\n').count();
         let body_end = text.len() - trailing_breaks;
-        out.push_str(if trailing_breaks == 0 {
-            "|-"
-        } else if trailing_breaks == 1 && body_end > 0 {
-            "|"
-        } else {
-            "|+"
+        let explicit_indent = text.split('\n').find(|line| !line.is_empty()).is_some_and(|line| line.starts_with(' '));
+        out.push_str(match (explicit_indent, trailing_breaks == 0, trailing_breaks == 1 && body_end > 0) {
+            (true, true, _) => "|2-",
+            (true, false, true) => "|2",
+            (true, false, false) => "|2+",
+            (false, true, _) => "|-",
+            (false, false, true) => "|",
+            (false, false, false) => "|+",
         });
         out.push_char('\n');
         let body = &text[..body_end];
@@ -2413,11 +2429,8 @@ fn write_typescript_yaml_string<S: OutputSink>(
             if !line.is_empty() {
                 pad(
                     out,
-                    if root_document_marker {
-                        2
-                    } else {
-                        block_indent.expect("block scalar indentation")
-                    },
+                    if root_document_marker || explicit_indent && block_indent == Some(0) { 2 }
+                    else { block_indent.expect("block scalar indentation") },
                     ' ',
                 );
                 out.push_str(line);
@@ -5455,6 +5468,18 @@ mod tests {
     }
 
     #[test]
+    fn typescript_yaml_block_scalars_preserve_leading_whitespace_at_every_scope() {
+        for text in [" {\"x\":1}\n", "  first\nsecond", "\n  first\nsecond\n", "  \nfirst\n", " first\n\n"] {
+            let leaf = Value::String(Utf16::from(text));
+            for value in [leaf.clone(), Value::Array(vec![leaf.clone()]), Value::Object(vec![(Utf16::from("archive"), leaf)])] {
+                let yaml = write_typescript_json_value(&value, Some(Format::Yaml), &mut Context::ordinary()).unwrap();
+                let restored = read_typescript_json_value(yaml.units(), Some(Format::Yaml), &mut Context::ordinary()).unwrap();
+                assert_eq!(restored, value, "{:?}", yaml);
+            }
+        }
+    }
+
+    #[test]
     fn typescript_yaml_writer_matches_proven_scalar_corpus() {
         let cases = [
             (Value::String(Utf16::from("hello")), "hello\n"),
@@ -5898,3 +5923,23 @@ mod construction_array_index_admission_tests {
 #[cfg(test)]
 #[path="serialization_owned_decode_stack_independent_tests.rs"]
 mod owned_decode_stack_independent_tests;
+
+#[cfg(test)]
+mod native_yaml_11_integer_tests {
+    use super::*;
+    #[test]
+    fn explicit_yaml_11_keeps_separated_big_integers_exact_and_keys_closed() {
+        for (raw, exact) in [("9_223_372_036_854_775_807","9223372036854775807"),("-9_223_372_036_854_775_808","-9223372036854775808"),("18_446_744_073_709_551_615","18446744073709551615")] {
+            let units=raw.encode_utf16().collect::<Vec<_>>();
+            let tree=crate::native_json::NativeJsonTree::parse_yaml_with_options(&units,Some("1.1"),None,Some("pyyaml"),&mut Context::ordinary()).unwrap();
+            assert_eq!(tree.render_compact(&mut Context::ordinary()).unwrap(),Utf16::from(exact));
+            let default=crate::native_json::NativeJsonTree::parse_yaml(&units,&mut Context::ordinary()).unwrap();
+            assert!(matches!(default.root(),crate::native_json::NativeJsonNode::String(s) if s==&Utf16::from(raw)));
+            let quoted=format!("\"{raw}\"").encode_utf16().collect::<Vec<_>>();
+            let tree=crate::native_json::NativeJsonTree::parse_yaml_with_options(&quoted,Some("1.1"),None,None,&mut Context::ordinary()).unwrap();
+            assert!(matches!(tree.root(),crate::native_json::NativeJsonNode::String(s) if s==&Utf16::from(raw)));
+        }
+        let key="1_024: value".encode_utf16().collect::<Vec<_>>();
+        assert_eq!(crate::native_json::NativeJsonTree::parse_yaml_with_options(&key,Some("1.1"),None,None,&mut Context::ordinary()).unwrap_err().code,"NATIVE_YAML_KEY");
+    }
+}

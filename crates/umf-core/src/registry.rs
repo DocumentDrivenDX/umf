@@ -178,7 +178,7 @@ fn k(s: &str) -> Utf16 {
 }
 fn get<'a>(v: &'a Value, n: &str) -> Option<&'a Value> {
     match v {
-        Value::Object(m) => m.iter().find(|(x, _)| x == &k(n)).map(|(_, v)| v),
+        Value::Object(m) => m.iter().find(|(x, _)| x.equals_str(n)).map(|(_, v)| v),
         _ => None,
     }
 }

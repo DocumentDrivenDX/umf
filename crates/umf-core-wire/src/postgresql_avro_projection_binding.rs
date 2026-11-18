@@ -33,18 +33,23 @@ fn execute(v: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let policy = field(v, "policy").ok_or_else(|| req("policy is required"))?;
     postgresql_avro_projection::project_postgresql_to_avro(source, policy, ctx)
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let r = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let v = decode(wire, &mut ctx)?;
-        execute(&v, &mut ctx).and_then(|out| encode(&out, &mut ctx))
-    })();
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let v = decode(wire, ctx)?;
+        execute(&v, ctx).and_then(|out| encode(&out, ctx))
+        };
+    let r = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(r)
 }

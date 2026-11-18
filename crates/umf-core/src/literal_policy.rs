@@ -19,14 +19,11 @@ impl PreparedPolicy {
 fn err(message: &str) -> EngineError {
     EngineError::new("CONSTRAINT_POLICY", Utf16::default(), message)
 }
-fn key(name: &str) -> Utf16 {
-    Utf16::from(name)
-}
 fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     match value {
         Value::Object(members) => members
             .iter()
-            .find(|(k, _)| k == &key(name))
+            .find(|(k, _)| k.equals_str(name))
             .map(|(_, v)| v),
         _ => None,
     }

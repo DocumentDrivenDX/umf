@@ -188,7 +188,7 @@ pub fn validate_security_disclosure(
         }
         selected_keys.push(key);
     }
-    let engine: Engine = generic(crate::security_parameters::core_engine())?;
+    let engine: &Engine = generic(crate::security_parameters::core_engine())?;
     for row in rows {
         let Value::Array(cells) = row else {
             return Err(invalid());

@@ -219,7 +219,7 @@ pub fn prepare_arrow_schema_ipc(
     document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let resources = crate::arrow_schema::ArrowSchemaResources::new(ctx)?;
+    let resources = crate::arrow_schema::ArrowSchemaResources::prepared(ctx)?;
     let checked = crate::arrow_schema::inspect_arrow(document, &resources, ctx)?;
     if !checked.valid {
         return Err(error("ARROW_DOCUMENT", "Invalid Arrow schema"));
@@ -391,6 +391,17 @@ fn flatbuffer_field_value(
                 .ok_or_else(|| error("ARROW_IPC_SCHEMA", "Dictionary ID is required"))?,
             ctx,
         )?;
+        // Integration JSON uses safe numbers; FlatBuffer long literals use
+        // exact decimal text. Keep the source archive unchanged.
+        let Value::Number(number) = id else {
+            return Err(error("ARROW_IPC_SCHEMA", "Dictionary ID must be a safe integer"));
+        };
+        if !number.is_finite() || number.fract() != 0.0 || number.abs() > 9_007_199_254_740_991.0 {
+            return Err(error("ARROW_IPC_SCHEMA", "Dictionary ID must be a safe integer"));
+        }
+        let id_text = if number == 0.0 { "0".to_owned() } else { format!("{number:.0}") };
+        ctx.charge_text(id_text.len(), Utf16::default())?;
+        let id = string(&id_text);
         let index = field(dictionary, "indexType")
             .ok_or_else(|| error("ARROW_IPC_SCHEMA", "Dictionary index type is required"))?;
         let width = copy_json(
@@ -489,13 +500,16 @@ fn flatbuffer_type_value(
                 ("bitWidth", required("bitWidth")?),
             ]),
         ),
-        "timestamp" => (
-            "Timestamp",
-            object(vec![
-                ("unit", required("unit")?),
-                ("timezone", required("timezone")?),
-            ]),
-        ),
+        "timestamp" => {
+            let mut fields = vec![("unit", required("unit")?)];
+            let timezone = required("timezone")?;
+            // Arrow's empty integration timezone denotes an unzoned timestamp.
+            // Native IPC omits that optional string; retain named zones exactly.
+            if !matches!(&timezone, Value::String(zone) if zone.is_empty()) {
+                fields.push(("timezone", timezone));
+            }
+            ("Timestamp", object(fields))
+        },
         "duration" => ("Duration", object(vec![("unit", required("unit")?)])),
         "interval" => ("Interval", object(vec![("unit", required("unit")?)])),
         "fixedsizebinary" => (
@@ -662,7 +676,7 @@ pub fn complete_arrow_schema_ipc(
         ));
     }
     ctx.charge_work(bytes_text.len(), Utf16::default())?;
-    let resources = crate::arrow_schema::ArrowSchemaResources::new(ctx)?;
+    let resources = crate::arrow_schema::ArrowSchemaResources::prepared(ctx)?;
     let expected_text = crate::arrow_schema::export_arrow_schema(document, &resources, ctx)?;
     let expected_schema = serialization::read_json_value(expected_text.units(), Format::Json, ctx)?;
     let before = serialization::read_json_value(before_json.units(), Format::Json, ctx)?;
@@ -707,7 +721,7 @@ pub fn complete_arrow_schema_ipc(
             (nibble(pair[0]) << 4) | nibble(pair[1])
         })
         .collect::<Vec<_>>();
-    let ipc_resources = ArrowIpcResources::new(ctx)?;
+    let ipc_resources = ArrowIpcResources::prepared(ctx)?;
     let candidate = arrow_ipc_capture::capture_arrow_ipc(
         &bytes,
         &Utf16::from("arrow-schema-ipc-complete"),

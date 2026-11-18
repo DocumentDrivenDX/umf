@@ -3,7 +3,7 @@ import {encodeRequestWire, fromWire, resultError} from './wire.js';
 export const SECURITY_FUNCTIONS_PROFILE = 'umf.security-functions/1';
 
 /** Create an opt-in engine for the CONTRACT-062 pure protection reference subset. */
-export function createSecurityFunctionsEngine(execute, ErrorType = Error) {
+export function createSecurityFunctionsEngine(execute, ErrorType = Error, prepareSource) {
   if (typeof execute !== 'function') throw new Error('RUST_BINDING_MISSING');
   function invoke(op, body) {
     const wire = encodeRequestWire({profile: SECURITY_FUNCTIONS_PROFILE, op, ...body});
@@ -13,6 +13,15 @@ export function createSecurityFunctionsEngine(execute, ErrorType = Error) {
     return fromWire(JSON.parse(response.wire));
   }
   return Object.freeze({
+    prepareCandidateLiteralSource(source, controls) {
+      if (typeof prepareSource !== 'function') throw new Error('RUST_BINDING_MISSING');
+      const prepared = prepareSource(encodeRequestWire(source), controls);
+      return Object.freeze({inspectCandidateLiteral(field, value, limits) {
+        const response = JSON.parse(prepared.execute(encodeRequestWire({profile: SECURITY_FUNCTIONS_PROFILE, op: 'inspectCandidateLiteral', field, value, ...limits})));
+        const failure = resultError(response); if (failure) throw new ErrorType(failure.code, failure.message, failure.path);
+        return fromWire(JSON.parse(response.wire));
+      }});
+    },
     inspectProtectionFunction(policy, catalog, closure, selection) {
       return invoke('inspectProtectionFunction', {policy, catalog, closure, selection});
     },

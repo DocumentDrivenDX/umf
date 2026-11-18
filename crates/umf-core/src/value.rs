@@ -42,6 +42,16 @@ impl std::hash::Hash for Utf16 {
     }
 }
 impl Utf16 {
+    #[inline]
+    pub(crate) fn equals_str(&self, text: &str) -> bool {
+        if text.is_ascii() {
+            self.units().len() == text.len()
+                && self.units().iter().zip(text.as_bytes()).all(|(unit, byte)| *unit == u16::from(*byte))
+        } else {
+            self.units().iter().copied().eq(text.encode_utf16())
+        }
+    }
+
     pub fn new(units: Vec<u16>) -> Self {
         Self(TextStorage::Owned(units))
     }
@@ -421,16 +431,16 @@ fn copy_json_with_numbers(
     fn visit(
         value: &Value,
         ctx: &mut Context<'_>,
-        path: &Utf16,
+        path: &mut Utf16,
         depth: usize,
         tree_values: &mut usize,
         require_core_numbers: bool,
     ) -> Result<Value, EngineError> {
-        ctx.charge_work(1, path.clone())?;
+        ctx.charge_work_with_path(1, path)?;
         *tree_values = tree_values
             .checked_add(1)
             .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "JSON value count overflow"))?;
-        ctx.check_tree_value_count(*tree_values, path.clone())?;
+        ctx.check_tree_value_count_with_path(*tree_values, path)?;
         if depth > ctx.limits().max_depth {
             return Err(EngineError::new(
                 "LIMIT",
@@ -448,7 +458,7 @@ fn copy_json_with_numbers(
                 Ok(Value::Number(*value))
             }
             Value::String(value) => {
-                ctx.charge_work(value.len(), path.clone())?;
+                ctx.charge_work_with_path(value.len(), path)?;
                 Ok(Value::String(value.clone()))
             }
             Value::Array(items) => {
@@ -459,17 +469,12 @@ fn copy_json_with_numbers(
                         "JSON structural value limit exceeded",
                     ));
                 }
-                ctx.charge_work(items.len(), path.clone())?;
+                ctx.charge_work_with_path(items.len(), path)?;
                 let mut copy = Vec::with_capacity(items.len());
                 for (index, item) in items.iter().enumerate() {
-                    copy.push(visit(
-                        item,
-                        ctx,
-                        &append_path(path, &Utf16::from(index.to_string())),
-                        depth + 1,
-                        tree_values,
-                        require_core_numbers,
-                    )?);
+                    copy.push(with_copy_path_segment(path, &Utf16::from(index.to_string()), false, |path| {
+                        visit(item, ctx, path, depth + 1, tree_values, require_core_numbers)
+                    })?);
                 }
                 Ok(Value::Array(copy))
             }
@@ -481,12 +486,12 @@ fn copy_json_with_numbers(
                         "JSON structural value limit exceeded",
                     ));
                 }
-                ctx.charge_work(members.len(), path.clone())?;
+                ctx.charge_work_with_path(members.len(), path)?;
                 let mut seen = BTreeSet::new();
                 let mut copy = Vec::with_capacity(members.len());
                 for (key, item) in members {
-                    ctx.charge_work(key.len(), path.clone())?;
-                    if !seen.insert(key.units().to_vec()) {
+                    ctx.charge_work_with_path(key.len(), path)?;
+                    if !seen.insert(key.units()) {
                         return Err(EngineError::new(
                             "DUPLICATE_KEY",
                             path.clone(),
@@ -495,7 +500,7 @@ fn copy_json_with_numbers(
                     }
                     copy.push((
                         key.clone(),
-                        visit(item, ctx, &append_path(path, key), depth + 1, tree_values, require_core_numbers)?,
+                        with_copy_path_segment(path, key, false, |path| visit(item, ctx, path, depth + 1, tree_values, require_core_numbers))?,
                     ));
                 }
                 Ok(Value::Object(copy))
@@ -504,7 +509,7 @@ fn copy_json_with_numbers(
     }
 
     let mut tree_values = 0;
-    visit(value, ctx, &Utf16::default(), 0, &mut tree_values, require_core_numbers)
+    visit(value, ctx, &mut Utf16::default(), 0, &mut tree_values, require_core_numbers)
 
     })
 }
@@ -972,6 +977,29 @@ fn validate_json_at_observed(value:&Value,root:&Utf16,ctx:&mut Context<'_>,obser
     visit_json_with_collector(value,ctx,JsonAdmissionPath::Borrowed(root),0,&mut tree_values,observer,&mut NoJsonAdmissionCollector,None)
 }
 
+// Copy walkers own their private diagnostic buffer from the root. Reusing it
+// changes no admission, notification, or error boundary. A Context refusal can
+// move the buffer into its error; cleanup never reconstructs a moved path.
+pub(crate) fn with_copy_path_segment<T>(path: &mut Utf16, segment: &Utf16, schema_pointer: bool,
+    run: impl FnOnce(&mut Utf16) -> Result<T, EngineError>) -> Result<T, EngineError>
+{
+    struct Restore<'a> { path: &'a mut Utf16, length: usize }
+    impl Drop for Restore<'_> {
+        fn drop(&mut self) {
+            let TextStorage::Owned(units) = &mut self.path.0 else { unreachable!("copy diagnostic paths remain owned") };
+            units.truncate(self.length);
+        }
+    }
+    let length = path.len();
+    let TextStorage::Owned(units) = &mut path.0 else { unreachable!("copy diagnostic paths are privately rooted") };
+    if !schema_pointer || units.last() != Some(&0x2f) { units.push(0x2f); }
+    for unit in segment.units() {
+        match unit { 0x7e => units.extend([0x7e, 0x30]), 0x2f => units.extend([0x7e, 0x31]), other => units.push(*other) }
+    }
+    let scope = Restore { path, length };
+    run(scope.path)
+}
+
 fn append_path(path: &Utf16, key: &Utf16) -> Utf16 {
     let mut units = path.units().to_vec();
     units.push(b'/' as u16);
@@ -1083,3 +1111,136 @@ mod closed_metadata_independent_tests;
 
 #[path="value_decimal_path.rs"]
 pub(crate) mod decimal_path;
+
+#[cfg(test)]
+mod copy_allocation_equivalence_tests {
+    use super::*;
+fn reference_copy(
+    value: &Value,
+    ctx: &mut Context<'_>,
+    require_core_numbers: bool,
+) -> Result<Value, EngineError> {
+    ctx.with_work_phase("native-core-copy", |ctx| {
+    fn visit(
+        value: &Value,
+        ctx: &mut Context<'_>,
+        path: &Utf16,
+        depth: usize,
+        tree_values: &mut usize,
+        require_core_numbers: bool,
+    ) -> Result<Value, EngineError> {
+        ctx.charge_work(1, path.clone())?;
+        *tree_values = tree_values
+            .checked_add(1)
+            .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "JSON value count overflow"))?;
+        ctx.check_tree_value_count(*tree_values, path.clone())?;
+        if depth > ctx.limits().max_depth {
+            return Err(EngineError::new(
+                "LIMIT",
+                path.clone(),
+                "JSON nesting depth exceeded",
+            ));
+        }
+        match value {
+            Value::Null => Ok(Value::Null),
+            Value::Bool(value) => Ok(Value::Bool(*value)),
+            Value::Number(value) => {
+                if require_core_numbers {
+                    validate_number(*value, path.clone())?;
+                }
+                Ok(Value::Number(*value))
+            }
+            Value::String(value) => {
+                ctx.charge_work(value.len(), path.clone())?;
+                Ok(Value::String(value.clone()))
+            }
+            Value::Array(items) => {
+                if items.len() > ctx.limits().max_values.saturating_sub(*tree_values) {
+                    return Err(EngineError::new(
+                        "LIMIT",
+                        path.clone(),
+                        "JSON structural value limit exceeded",
+                    ));
+                }
+                ctx.charge_work(items.len(), path.clone())?;
+                let mut copy = Vec::with_capacity(items.len());
+                for (index, item) in items.iter().enumerate() {
+                    copy.push(visit(
+                        item,
+                        ctx,
+                        &append_path(path, &Utf16::from(index.to_string())),
+                        depth + 1,
+                        tree_values,
+                        require_core_numbers,
+                    )?);
+                }
+                Ok(Value::Array(copy))
+            }
+            Value::Object(members) => {
+                if members.len() > ctx.limits().max_values.saturating_sub(*tree_values) {
+                    return Err(EngineError::new(
+                        "LIMIT",
+                        path.clone(),
+                        "JSON structural value limit exceeded",
+                    ));
+                }
+                ctx.charge_work(members.len(), path.clone())?;
+                let mut seen = BTreeSet::new();
+                let mut copy = Vec::with_capacity(members.len());
+                for (key, item) in members {
+                    ctx.charge_work(key.len(), path.clone())?;
+                    if !seen.insert(key.units().to_vec()) {
+                        return Err(EngineError::new(
+                            "DUPLICATE_KEY",
+                            path.clone(),
+                            "Duplicate object key",
+                        ));
+                    }
+                    copy.push((
+                        key.clone(),
+                        visit(item, ctx, &append_path(path, key), depth + 1, tree_values, require_core_numbers)?,
+                    ));
+                }
+                Ok(Value::Object(copy))
+            }
+        }
+    }
+
+    let mut tree_values = 0;
+    visit(value, ctx, &Utf16::default(), 0, &mut tree_values, require_core_numbers)
+
+    })
+}
+
+    #[test]
+    fn complete_copy_matches_reference_controls_limits_numbers_and_error_origin() {
+        let cases = vec![
+            Value::Object(vec![(Utf16::from("a/~雪"), Value::Array(vec![Value::String(Utf16::new(vec![0xd800, 0x61])), Value::Number(1.5), Value::Bool(true)])), (Utf16::default(), Value::Null)]),
+            Value::Object(vec![(Utf16::from("same"), Value::Null), (Utf16::from("same"), Value::Bool(true))]),
+            Value::Array((0..20).map(|n| Value::Number(n as f64)).collect()),
+            Value::Number(-0.0), Value::Number(f64::NAN), Value::Number(f64::INFINITY), Value::Number(9007199254740992.0),
+        ];
+        for value in cases {
+            for core_numbers in [false, true] {
+                for bound in [0, 1, 2, 100_000] {
+                    for stop in [None, Some(0), Some(1), Some(3), Some(8)] {
+                        for seed in [0, u64::MAX - 2] {
+                            let run = |reference: bool| {
+                                let mut events = Vec::new();
+                                let mut hook = |n| { let index = events.len(); events.push(n); if stop == Some(index) { Err(EngineError::new("CANCELLED", Utf16::from("/caller/~雪"), "stop")) } else { Ok(()) } };
+                                let mut limits = crate::Limits::ordinary(); limits.max_values = bound; limits.max_depth = bound.min(128);
+                                let mut ctx = Context::with_limits(crate::ResourceProfile::Cooperative, limits).unwrap().with_host_control(&mut hook);
+                                ctx.carry_transport_usage(seed, 0);
+                                let result = if reference { reference_copy(&value, &mut ctx, core_numbers) } else { copy_json_with_numbers(&value, &mut ctx, core_numbers) };
+                                let result = result.map(|value| format!("{value:?}")).map_err(|error| { let control = error.is_control_failure(); (error.code, error.path, error.message, control) });
+                                let work = ctx.charged_work(); drop(ctx);
+                                (result, events, work)
+                            };
+                            assert_eq!(run(false), run(true));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

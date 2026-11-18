@@ -90,6 +90,38 @@ fn set(v: &mut Value, k: &str, n: Value) -> Result<(), EngineError> {
 fn read_json(s: &Utf16, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     serialization::read_json_value(s.units(), Format::Json, ctx)
 }
+// The catalog importer has checked every numeric field consumed below.
+// Unclaimed native tokens remain tagged rather than entering CoreJSON through
+// a rounded number. This private observation view is never a native archive;
+// residuals use the exact catalog metadata and original source text.
+fn observation_value(node: &crate::native_json::NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    use crate::native_json::NativeJsonNode as N;
+    ctx.charge_work(1, u(""))?;
+    Ok(match node {
+        N::Null => Value::Null,
+        N::Boolean(value) => Value::Bool(*value),
+        N::String(value) => { ctx.charge_text(value.len(), u(""))?; Value::String(value.clone()) },
+        N::Number(token) => {
+            ctx.charge_text(token.len(), u(""))?;
+            match read_json(&u(token), ctx) {
+                Ok(value) => value,
+                Err(error) if error.is_control_failure() || error.code == "LIMIT" => return Err(error),
+                Err(_) => obj(vec![("kind", t("native-number")), ("lexeme", t(token))]),
+            }
+        },
+        N::Array(items) => {
+            ctx.charge_work(items.len(), u(""))?;
+            Value::Array(items.iter().map(|item| observation_value(item, ctx)).collect::<Result<_, _>>()?)
+        },
+        N::Object(fields) => {
+            ctx.charge_work(fields.len(), u(""))?;
+            Value::Object(fields.iter().map(|(name, value)| {
+                ctx.charge_text(name.len(), u(""))?;
+                Ok((name.clone(), observation_value(value, ctx)?))
+            }).collect::<Result<_, EngineError>>()?)
+        },
+    })
+}
 fn equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
     fn canon(v: &Value, c: &mut Context<'_>) -> Result<Value, EngineError> {
         match v {
@@ -276,7 +308,8 @@ fn classify_body(
             "Native archive differs from retained catalog",
         ));
     }
-    let native = read_json(&canonical_native, ctx)?;
+    let native_tree = crate::native_json::NativeJsonTree::parse_json(canonical_native.units(), ctx)?;
+    let native = observation_value(native_tree.root(), ctx)?;
     if !text_eq(&native, "profile", "sqlserver-catalog-v3")
         || !text_eq(&native, "state", "captured")
         || text(&native, "serverVersion") != Some(&u(NATIVE_VERSION))

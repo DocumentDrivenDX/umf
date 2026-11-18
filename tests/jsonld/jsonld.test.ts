@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
+import {equalJsonLdText} from '../../scripts/jsonld-compare';
+import {assertDiagnosticContract} from './native-report-assertions';
 import {createHash} from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
@@ -9,8 +11,8 @@ import {importJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNod
 const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(reportSchema);
 test('US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons',async()=>{
  const manifest=await Bun.file('native/jsonld/sources/manifest.json').json(),fixture=await Bun.file('fixtures/jsonld/expansion/results.json').json(),oracle=await Bun.file('fixtures/jsonld/expansion/oracle-results.json').json();expect(fixture.cases.map((c:any)=>c.id)).toEqual(manifest.cases.map((c:any)=>c['@id'].slice(1)));expect(fixture.cases).toHaveLength(385);let candidates=0;
- for(const c of fixture.cases){const raw=await Bun.file(c.path).text();expect(createHash('sha256').update(raw).digest('hex')).toBe(manifest.files.find((f:any)=>f.path===c.path).sha256);const d=importJsonLdDocument(raw,c.inputs),r=await proposeJsonLdExpansion(d,{lossPolicy:'report'});expect(check(r)).toBe(true);expect(r.source).toEqual(d);expect(r.status).toBe(c.status);expect(r.diagnostics).toEqual(c.diagnostics);expect(r.resourcesUsed).toEqual(c.resourcesUsed);
- for(const format of ['json','yaml'] as const){expect(exportJsonLdDocument(readDocument(writeDocument(d,format),format))).toBe(raw);if(r.candidate){expect(exportJsonLdDocument(readDocument(writeDocument(r.candidate,format),format))).toBe(await Bun.file(c.exports.find((e:any)=>e.format===format).path).text());}}
+ for(const c of fixture.cases){const raw=await Bun.file(c.path).text();expect(createHash('sha256').update(raw).digest('hex')).toBe(manifest.files.find((f:any)=>f.path===c.path).sha256);const d=importJsonLdDocument(raw,c.inputs),r=await proposeJsonLdExpansion(d,{lossPolicy:'report'});expect(check(r)).toBe(true);expect(r.source).toEqual(d);expect(r.status).toBe(c.status);assertDiagnosticContract(r,c.diagnostics,'JSONLD_EXPANSION');expect(r.diagnostics).toEqual((await proposeJsonLdExpansion(d,{lossPolicy:'report'})).diagnostics);expect(r.resourcesUsed).toEqual(c.resourcesUsed);
+ for(const format of ['json','yaml'] as const){expect(exportJsonLdDocument(readDocument(writeDocument(d,format),format))).toBe(raw);if(r.candidate){const actual=exportJsonLdDocument(r.candidate);expect(exportJsonLdDocument(readDocument(writeDocument(r.candidate,format),format))).toBe(actual);expect(equalJsonLdText(actual,await Bun.file(c.exports.find((e:any)=>e.format===format).path).text())).toBe(true);}}
  if(r.candidate){candidates++;expect(c.positive).toBe(true);expect(c.matchesExpected).toBe(true);const native=oracle.results.find((n:any)=>n.id===c.id);if(['t0026','t0071'].includes(c.id)){expect(native.native).toBe('rejected');continue;}expect(native.native).toBe('accepted');expect(native.exports.every((e:any)=>e.officialEqual)).toBe(true);expect(native.exports.every((e:any)=>e.nativeEqual)).toBe(!['t0038','tc036','tc037','tc038'].includes(c.id));}}
  expect(candidates).toBe(276);
 },240000);

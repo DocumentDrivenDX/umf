@@ -174,7 +174,13 @@ export function createSecurityCandidateConditionEngine() {
 /** Create the opt-in pure protection-function reference engine. */
 export function createSecurityFunctionsEngine() {
   if (typeof addon.executeSecurityFunctionsWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
-  return createSecurityFunctionsEngineWithWire(wire => addon.executeSecurityFunctionsWire(wire), NativeCoreErrorType);
+  return createSecurityFunctionsEngineWithWire(wire => addon.executeSecurityFunctionsWire(wire), NativeCoreErrorType, (source, rawControls) => {
+    const {controls} = codegenOptions({controls: rawControls});
+    const bridge = () => hasControls(controls) ? createControlBridge(controls) : undefined;
+    let prepared;
+    try { prepared = new addon.PreparedSecurityLiteralSourceHandle(source, bridge()); } catch (error) { nativeKeyTupleFailure(error); }
+    return {execute(wire) { return prepared.execute(wire, bridge()); }};
+  });
 }
 
 /** Create the opt-in protection source identity and transform-reference resolver. */
@@ -602,6 +608,7 @@ function createNativeKeyTupleOperations(addon, resources, controls, setup = {}) 
       };
       return {source: freeze(retained),
         encode(identity, values) { return invoke(prepared.handle, 'encode', [identity, values]); },
+        encodeHex(identity, values) { return invoke(prepared.handle, 'encodeHex', [identity, values]); },
         verify(receipt) { return invoke(prepared.handle, 'verify', [receipt]); }};
     },
     prepareRead(receipt) {
@@ -2095,6 +2102,18 @@ export function createRetainedCodegenEngine(resources, options = {}) {
   }
   return Object.freeze({
     dispose() { if (!disposed) { disposed = true; runtime.dispose(); } },
+    inspectActions(source) { return result('inspectActions', {source}); },
+    declareAction(source, module, action) { return result('declareAction', {source, module, action}); },
+    editAction(source, identity, replacement) { return result('editAction', {source, identity, replacement}); },
+    assessAction(source, identity, profile) { return result('assessAction', {source, identity, profile}); },
+    validateBulkOutcome(artifact) { return result('validateBulkOutcome', {artifact}); },
+    compileActionRule(document, action, rule, phase) { return result('compileActionRule', {document, action, rule, phase}); },
+    admitActionDeclaration(document, action) { return result('admitActionDeclaration', {document, action}); },
+    admitActionInputs(document, action, inputs, outputs = false) { return result('admitActionInputs', {document, action, inputs, outputs}); },
+    selectActionIdentity(document, action, frame, inputs) { return result('selectActionIdentity', {document, action, frame, inputs}); },
+    actionFieldValueKey(reference) { return result('actionFieldValueKey', {reference}); },
+    compileActionSelector(document, action, frame) { return result('compileActionSelector', {document, action, frame}); },
+    evaluateActionRule(document, action, rule, phase, state) { return result('evaluateActionRule', {document, action, rule, phase, state}); },
     generatePythonClient(request) { return result('generatePythonClient', request); },
     call(operation, request) { return run(operation, request); },
     generatePythonClientWithHost(readHost, hostReadProfile) { return hostRead(readHost, hostReadProfile); },

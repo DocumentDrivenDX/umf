@@ -48,14 +48,14 @@ fn obj(fields: Vec<(&str, Value)>) -> Value {
 }
 fn get<'a>(v: &'a Value, k: &str) -> Option<&'a Value> {
     if let Value::Object(m) = v {
-        m.iter().find(|(x, _)| x == &u(k)).map(|(_, v)| v)
+        m.iter().find(|(x, _)| x.equals_str(k)).map(|(_, v)| v)
     } else {
         None
     }
 }
 fn get_mut<'a>(v: &'a mut Value, k: &str) -> Option<&'a mut Value> {
     if let Value::Object(m) = v {
-        m.iter_mut().find(|(x, _)| x == &u(k)).map(|(_, v)| v)
+        m.iter_mut().find(|(x, _)| x.equals_str(k)).map(|(_, v)| v)
     } else {
         None
     }
@@ -90,7 +90,7 @@ fn set(v: &mut Value, k: &str, value: Value) -> Result<(), EngineError> {
             "Expected an object",
         ));
     };
-    if let Some((_, old)) = m.iter_mut().find(|(x, _)| x == &u(k)) {
+    if let Some((_, old)) = m.iter_mut().find(|(x, _)| x.equals_str(k)) {
         *old = value
     } else {
         m.push((u(k), value));
@@ -157,7 +157,9 @@ struct Runtime {
     nullability: CompiledSchema,
     nullability_request: CompiledSchema,
 }
-fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
+fn runtime(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Runtime>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<Runtime>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let core = |source: &str, ctx: &mut Context<'_>| read_json(source, ctx);
     let engine = Engine::new(
         ResourceSet::new(
@@ -259,7 +261,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
         nullability,
         nullability_request,
     })
+    })
 }
+
 fn validate(
     v: &Value,
     s: &CompiledSchema,
@@ -2290,4 +2294,16 @@ pub fn recover_nullability(
             "Native source required",
         )
     })
+}
+
+#[cfg(test)]
+mod fixed_runtime_tests {
+    use super::*;
+    #[test]
+    fn built_in_preparation_is_reusable_without_omitting_semantic_steps() {
+        let mut ctx = Context::ordinary();
+        let prepared = ctx.with_codegen_construction(runtime).unwrap();
+        assert!(matches!(prepared, crate::resource_cache::Prepared::Shared(_)));
+        assert_eq!(ctx.constraint_steps(), 0);
+    }
 }

@@ -733,6 +733,13 @@ pub fn classify_avro_facets(
     let mut conflicts = Vec::<(Value, String)>::new();
     let mut residuals = Vec::new();
     let mut observations = Vec::new();
+    let dependencies = roots.iter().filter_map(|(id, tree)| id.as_ref().map(|id| crate::avro_semantics::Dependency { id, tree })).collect::<Vec<_>>();
+    let native_inspection = crate::avro_semantics::inspect_schema(&native, &dependencies, ctx)?;
+    if !native_inspection.valid {
+        loss_residual(&mut residuals, &mut observations, &request, &ideal_path,
+            get(&selection, "native").cloned().unwrap_or(Value::Null),
+            "Native structural inspection failed; inferred facets do not establish valid Avro meaning", "unknown", ctx)?;
+    }
     if let Some(message) = selection_failure {
         loss_residual(
             &mut residuals,
@@ -1084,7 +1091,7 @@ pub fn classify_avro_facets(
                 &mut NoCallbacks,
                 ctx,
             ) {
-                Ok(meaning) => meaning,
+                Ok(inspection) => get(&inspection, "meaning").cloned().unwrap_or(Value::Null),
                 Err(error) if error.is_control_failure() => return Err(error),
                 Err(error) => {
                     conflicts.push((
@@ -1116,12 +1123,17 @@ pub fn classify_avro_facets(
                             &mut residuals,
                             &mut observations,
                             &request,
-                            &Utf16::new(path),
+                            &Utf16::new(path.clone()),
                             declared.clone(),
                             "Authored bound is retained but not established by this native profile",
                             "unknown",
                             ctx,
                         )?;
+                        if let Some(Value::Object(fields)) = residuals.last_mut() {
+                            if let Some((_, value)) = fields.iter_mut().find(|(key, _)| key == &u("path")) {
+                                *value = Value::String(Utf16::new(path));
+                            }
+                        }
                     }
                 }
             }

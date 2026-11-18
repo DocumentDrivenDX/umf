@@ -1245,6 +1245,7 @@ struct RowShape {
     integral: usize,
     fractional: usize,
     statically_integral: bool,
+    instant_precision: Option<usize>,
 }
 fn row_native(native: &Value) -> String {
     match string_member(native, "kind")
@@ -1308,6 +1309,7 @@ fn row_literal_text_valid(value: &Value) -> bool {
 fn row_literal_shape(value: &Value) -> Option<RowShape> {
     if value == &Value::Null {
         return Some(RowShape {
+                instant_precision: None,
             scalar: None,
             nullable: true,
             native: "null".into(),
@@ -1341,7 +1343,12 @@ fn row_literal_shape(value: &Value) -> Option<RowShape> {
                 } else {
                     (unsigned, "0")
                 };
-            let exponent = exponent.parse::<i32>().ok()?;
+            // A syntactically valid zero is independent of exponent magnitude.
+            // Literal admission validates the grammar before shape inference.
+            let exponent_digits = exponent.strip_prefix(['+', '-']).unwrap_or(exponent);
+            let is_zero = (mantissa == "0" || mantissa.strip_prefix("0.").is_some_and(|digits| !digits.is_empty() && digits.bytes().all(|b| b == b'0')))
+                && !exponent_digits.is_empty() && exponent_digits.bytes().all(|b| b.is_ascii_digit());
+            let exponent = if is_zero { 0 } else { exponent.parse::<i32>().ok()? };
             let fraction = mantissa.split_once('.').map_or(0, |(_, tail)| tail.len());
             let mut digits = mantissa
                 .chars()
@@ -1367,6 +1374,7 @@ fn row_literal_shape(value: &Value) -> Option<RowShape> {
                 (scale.max(0) as usize).min(1001)
             };
             return Some(RowShape {
+                instant_precision: None,
                 scalar: Some(
                     (if kind == "integerToken" {
                         "integer"
@@ -1390,6 +1398,11 @@ fn row_literal_shape(value: &Value) -> Option<RowShape> {
         _ => return None,
     };
     Some(RowShape {
+        instant_precision: if native == "instant" {
+            string_member(value, "timestamp").and_then(|value| value.to_utf8().ok())
+                .and_then(|value| crate::deployment::native_instant(&value).ok())
+                .map(|value| value.split_once('.').map_or(0, |(_, tail)| tail.trim_end_matches('Z').trim_end_matches('0').len()))
+        } else { None },
         scalar: Some(scalar.into()),
         nullable: false,
         native: native.into(),
@@ -1544,7 +1557,7 @@ fn inspect_row_predicate(
             Severity::Error,
         ));
     }
-    if member(column, "generated") == Some(&Value::Bool(true))
+    if member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false))
         || array_items(member(field, "semanticTypes").unwrap_or(&Value::Null))
             .is_some_and(|a| !a.is_empty())
         || object_members(member(field, "extensions").unwrap_or(&Value::Null))
@@ -1725,7 +1738,7 @@ fn row_expression_infer(
                     Severity::Error,
                 ));
             }
-            if member(column, "generated") == Some(&Value::Bool(true))
+            if member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false))
                 || array_items(member(field, "semanticTypes").unwrap_or(&Value::Null))
                     .is_some_and(|a| !a.is_empty())
                 || object_members(member(field, "extensions").unwrap_or(&Value::Null))
@@ -1765,6 +1778,7 @@ fn row_expression_infer(
             }
             let (integral, fractional) = bounds.unwrap_or((0, 0));
             Ok(Some(RowShape {
+                instant_precision: if scalar.as_deref() == Some("timestamp") && row_native(native_type) == "instant" { Some(number_member(native_type, "precision").unwrap_or(6.0) as usize) } else { None },
                 scalar,
                 nullable: string_member(field, "nullability") != Some(&Utf16::from("required")),
                 native: row_native(member(column, "nativeType").unwrap_or(&Value::Null)),
@@ -1820,8 +1834,13 @@ fn row_expression_infer(
                     && field_scalar == &Utf16::from("integer"))
                 {
                     let literal_field = row_literal_field(target_field, &shape);
-                    let errors =
-                        literal_errors(document, &literal_field, literal, true, policy, ctx)?;
+                    if matches!(shape.scalar.as_deref(), Some("date" | "timestamp")) {
+                        let native = array_items(member(table, "columns").unwrap_or(&Value::Null)).unwrap_or(&[]).iter()
+                            .find(|column| member(column, "field").is_some_and(|field| refs_equal(field, target)))
+                            .and_then(|column| member(column, "nativeType")).unwrap_or(&Value::Null);
+                        validate_stored_literal(document, &literal_field, literal, native, path, policy, ctx, out)?;
+                    } else {
+                    let errors = literal_errors(document, &literal_field, literal, true, policy, ctx)?;
                     if let Some(first) = errors.first() {
                         out.push_capped(core_diag(
                             "TABLES_LITERAL",
@@ -1829,6 +1848,7 @@ fn row_expression_infer(
                             &first.message.to_utf8().unwrap_or_default(),
                             Severity::Error,
                         ));
+                    }
                     }
                 }
             }
@@ -1869,6 +1889,7 @@ fn row_expression_infer(
                     ));
                 }
                 return Ok(Some(RowShape {
+                instant_precision: None,
                     scalar: Some("string".into()),
                     nullable: shapes.iter().any(|s| s.nullable),
                     native: "string".into(),
@@ -1882,6 +1903,7 @@ fn row_expression_infer(
                 .filter(|shape| shape.scalar.is_some())
                 .collect::<Vec<_>>();
             let base = nonnull.first().map(|s| (*s).clone()).unwrap_or(RowShape {
+                instant_precision: None,
                 scalar: None,
                 nullable: true,
                 native: "null".into(),
@@ -1901,6 +1923,7 @@ fn row_expression_infer(
                 .iter()
                 .any(|s| s.scalar.as_deref() == Some("decimal"));
             Ok(Some(RowShape {
+                instant_precision: nonnull.iter().filter_map(|shape| shape.instant_precision).max(),
                 scalar: if decimal {
                     Some("decimal".into())
                 } else {
@@ -1962,6 +1985,7 @@ fn row_expression_infer(
             if left.scalar.is_none() || right.scalar.is_none() {
                 if left.scalar.is_none() && right.scalar.is_none() {
                     return Ok(Some(RowShape {
+                instant_precision: None,
                         scalar: Some("decimal".into()),
                         nullable: true,
                         native: "decimal".into(),
@@ -1995,6 +2019,7 @@ fn row_expression_infer(
             let decimal = left.scalar.as_deref() == Some("decimal")
                 || right.scalar.as_deref() == Some("decimal");
             Ok(Some(RowShape {
+                instant_precision: None,
                 scalar: Some(if decimal { "decimal" } else { "integer" }.into()),
                 nullable: left.nullable || right.nullable,
                 native: "decimal".into(),
@@ -2061,6 +2086,7 @@ fn row_expression_infer(
                 a.clone()
             };
             Ok(Some(RowShape {
+                instant_precision: a.instant_precision.max(b.instant_precision),
                 scalar: if decimal {
                     Some("decimal".into())
                 } else {
@@ -2151,7 +2177,7 @@ fn inspect_row_expression_operation(
             Severity::Error,
         ));
     }
-    if member(column, "generated") == Some(&Value::Bool(true)) {
+    if member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false)) {
         out.push_capped(core_diag(
             "TABLES_OPERATION_SOURCE",
             &target_path,
@@ -2291,7 +2317,7 @@ fn inspect_row_expression_operation(
                 "Identity-sensitive expression carrier must match target native storage exactly",
                 Severity::Error,
             ));
-        } else if !result_is_null
+        } else if !identity && !result_is_null
             && result.scalar.as_deref() != Some(target_native.as_str())
             && !(result.scalar.as_deref() == Some("integer") && target_native == "decimal")
             && !(result.scalar.as_deref() == Some("decimal")
@@ -2304,6 +2330,10 @@ fn inspect_row_expression_operation(
                 "Expression carrier does not match target native storage",
                 Severity::Error,
             ));
+        }
+        if result.native == "instant" && target_native == "instant"
+            && result.instant_precision.unwrap_or(6) > number_member(member(column, "nativeType").unwrap_or(&Value::Null), "precision").unwrap_or(6.0) as usize {
+            out.push_capped(core_diag("TABLES_OPERATION_DOMAIN", &expr_path, "Expression instant precision exceeds target native storage", Severity::Error));
         }
         if result.integral.saturating_add(result.fractional) > 1000 {
             out.push_capped(core_diag(
@@ -2419,7 +2449,7 @@ fn inspect_operation(
     let body_path = append_path(path, "body");
     if kind == "read" {
         if string_member(command, "replay") != Some(&Utf16::from("none"))
-            || member(command, "batch") == Some(&Value::Bool(true))
+            || member(command, "batch").is_some_and(|batch| batch != &Value::Bool(false))
         {
             out.push_capped(core_diag(
                 "TABLES_OPERATION_READ",
@@ -2677,7 +2707,7 @@ fn inspect_operation(
             let field = member(assignment, "field").unwrap_or(&Value::Null);
             let selected = operation_field(table, field, &append_path(&p, "field"), out, ctx)?;
             if selected
-                .is_some_and(|column| member(column, "generated") == Some(&Value::Bool(true)))
+                .is_some_and(|column| member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false)))
             {
                 out.push_capped(core_diag(
                     "TABLES_OPERATION_GENERATED",
@@ -2864,7 +2894,7 @@ fn inspect_unique_refs(
 
 fn operation_mutable(table: &Value, field: &Value, column: &Value, document: &Value) -> bool {
     if member(column, "immutable") == Some(&Value::Bool(true))
-        || member(column, "generated") == Some(&Value::Bool(true))
+        || member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false))
     {
         return false;
     }
@@ -2891,7 +2921,7 @@ fn inspect_query_operation(
 ) -> Result<(), EngineError> {
     let module_id = module_id_for_path(document, path);
     if string_member(command, "replay") != Some(&Utf16::from("none"))
-        || member(command, "batch") == Some(&Value::Bool(true))
+        || member(command, "batch").is_some_and(|batch| batch != &Value::Bool(false))
     {
         out.push_capped(core_diag(
             "TABLES_OPERATION_READ",

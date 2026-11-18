@@ -52,7 +52,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     if let Value::Object(fields) = value {
         fields
             .iter()
-            .find(|(key, _)| key == &k(name))
+            .find(|(key, _)| key.equals_str(name))
             .map(|(_, value)| value)
     } else {
         None
@@ -130,7 +130,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
 fn schemas(
     rt: &Runtime,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema, Value), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema, Value)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema, Value)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let result_value = parse(RESULT, ctx)?;
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources.entries.push((
@@ -172,6 +174,7 @@ fn schemas(
         CompiledSchema::compile(request, &resources, ctx)?,
         binding,
     ))
+    })
 }
 fn validate(
     schema: &CompiledSchema,
@@ -193,7 +196,7 @@ fn set(target: &mut Value, name: &str, value: Value) -> Result<(), EngineError> 
     let Value::Object(fields) = target else {
         return Err(err("INVARIANT", "Expected object", ""));
     };
-    if let Some((_, slot)) = fields.iter_mut().find(|(key, _)| key == &k(name)) {
+    if let Some((_, slot)) = fields.iter_mut().find(|(key, _)| key.equals_str(name)) {
         *slot = value;
     } else {
         fields.push((k(name), value));
@@ -562,7 +565,8 @@ fn project_inner(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema, binding) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (result_schema, request_schema, binding) = &*prepared_schemas;
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
     validate(&request_schema, &request, "FACETS_POSTGRESQL_REQUEST", ctx)?;
@@ -785,13 +789,10 @@ fn project_inner(
                 _ => None,
             };
             if let Some(carrier_bits) = carrier_bits {
-                let native_min = if signed {
-                    -(BigInt::one() << (carrier_bits - 1))
-                } else {
-                    BigInt::zero()
-                };
-                let native_max =
-                    (BigInt::one() << (carrier_bits - if signed { 1 } else { 0 })) - BigInt::one();
+                // PostgreSQL smallint/integer/bigint are always signed,
+                // independently of the requested logical integer domain.
+                let native_min = -(BigInt::one() << (carrier_bits - 1));
+                let native_max = (BigInt::one() << (carrier_bits - 1)) - BigInt::one();
                 if min >= native_min && max <= native_max {
                     if min == native_min && max == native_max {
                         expressed = true;
@@ -1065,7 +1066,8 @@ pub fn complete_facets_projection(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _, _) = &*prepared_schemas;
     let author = get(prepared, "author")
         .ok_or_else(|| err("FACETS_POSTGRESQL_RESULT", "Author is missing", "/author"))?;
     let request = get(prepared, "request")
@@ -1119,7 +1121,8 @@ pub fn verify_facets_projection(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _, _) = &*prepared_schemas;
     validate(&schema, receipt, "FACETS_POSTGRESQL_RECEIPT", ctx)?;
     if text_owned(get(receipt, "status")).as_deref() != Some("projected") {
         return Err(err(
@@ -1153,7 +1156,8 @@ pub fn prepare_facets_recovery(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _, _) = &*prepared_schemas;
     validate(&schema, receipt, "FACETS_POSTGRESQL_RECEIPT", ctx)?;
     if text_owned(get(receipt, "status")).as_deref() != Some("projected")
         || get(receipt, "target").is_none()
@@ -1174,7 +1178,8 @@ pub fn recover_facets_projection(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _, _) = &*prepared_schemas;
     validate(&schema, receipt, "FACETS_POSTGRESQL_RECEIPT", ctx)?;
     if text_owned(get(receipt, "status")).as_deref() != Some("projected") {
         return Err(err(

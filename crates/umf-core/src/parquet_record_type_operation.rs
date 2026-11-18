@@ -60,14 +60,14 @@ fn err(code: &str, message: &str, path: &str) -> EngineError {
 }
 fn replace(v: &mut Value, name: &str, new: Value) {
     if let Value::Object(m) = v {
-        if let Some((_, old)) = m.iter_mut().find(|(x, _)| x == &k(name)) {
+        if let Some((_, old)) = m.iter_mut().find(|(x, _)| x.equals_str(name)) {
             *old = new;
         }
     }
 }
 fn push(v: &mut Value, name: &str, new: Value) {
     if let Value::Object(m) = v {
-        if let Some((_, Value::Array(a))) = m.iter_mut().find(|(x, _)| x == &k(name)) {
+        if let Some((_, Value::Array(a))) = m.iter_mut().find(|(x, _)| x.equals_str(name)) {
             a.push(new);
         }
     }
@@ -410,7 +410,7 @@ pub fn classify_parquet_record_type(
     // blocked receipt using the retained decoded fragment.
     if record_mapping.is_none() {
         if mappings.is_empty() {
-            let captured = crate::parquet_document_capture::capture_parquet_document(
+            let captured = crate::parquet_document_capture::capture_parquet_document_retaining(
                 &source,
                 request.index,
                 engine,

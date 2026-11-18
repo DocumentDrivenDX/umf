@@ -169,12 +169,19 @@ fn validate_schema(
     c: &mut Context<'_>,
     code: &str,
 ) -> Result<(), EngineError> {
+    // Private callers supply only pinned subschemas; input validation runs below.
+    static REQUEST: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    static ARCHIVE: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    static RESULT: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    let cache = if code.ends_with("_REQUEST") { &REQUEST } else if code == "RELATIONSHIP_EXTRA" { &ARCHIVE } else { &RESULT };
+    let compiled = crate::resource_cache::prepare(cache, c, |c| {
     let mut resources = rt.engine.schema_resources_with_context(c)?;
     resources.entries.push((
         k("urn:umf:core:relationship-operation:1.0.0"),
         parse(RELATIONSHIP_OP, c)?,
     ));
-    let compiled = crate::schema::CompiledSchema::compile(schema, &resources, c)?;
+crate::schema::CompiledSchema::compile(schema, &resources, c)
+    })?;
     if compiled.validate_codegen_errors(v, c)?.is_empty() {
         Ok(())
     } else {
@@ -242,9 +249,8 @@ fn iri(v: &str) -> bool {
     matches!(chars.next(), Some(b'A'..=b'Z' | b'a'..=b'z'))
         && chars.all(|x| x.is_ascii_alphanumeric() || matches!(x, b'+' | b'.' | b'-'))
         && !rest.chars().any(|x| {
-            x.is_control() || matches!(x, '<' | '>' | '"' | '{' | '}' | '|' | '^' | '`' | '\\')
+            x.is_control() || x.is_whitespace() || matches!(x, '<' | '>' | '"' | '{' | '}' | '|' | '^' | '`' | '\\')
         })
-        && !rest.encode_utf16().any(|u| (0xD800..=0xDFFF).contains(&u))
 }
 fn ident(v: &Value) -> Option<(Utf16, Utf16)> {
     Some((

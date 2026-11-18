@@ -354,12 +354,7 @@ impl RuleRecognizer for TriGRecognizer {
                         self
                     } else {
                         let new = context.generated_blank_node();
-                        results.push(Quad::new(
-                            old,
-                            rdf::REST,
-                            new.clone(),
-                            self.cur_graph.clone(),
-                        ));
+                        let rest = Quad::new(old, rdf::REST, new.clone(), self.cur_graph.clone());
                         self.cur_subject.push(new.into());
                         self.stack.push(if context.umf_blank_labels {
                             TriGState::SubjectCollectionPossibleEnd
@@ -367,11 +362,14 @@ impl RuleRecognizer for TriGRecognizer {
                             TriGState::ObjectCollectionPossibleEnd { nested_list_item: false }
                         });
                         self.stack.push(TriGState::Object);
-                        // Keep the REST quad below any quads emitted by the
-                        // recursively parsed next item. Parser::parse_next
-                        // pops from the end, so the item is returned before
-                        // this REST edge, matching the source traversal order.
-                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        if context.umf_blank_labels {
+                            let recognizer = self.recognize_next(TokenOrLineJump::Token(token), context, results, errors);
+                            results.push(rest);
+                            recognizer
+                        } else {
+                            results.push(rest);
+                            self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        }
                     }
                 }
                 // [5]  wrappedGraph  ::=  '{' triplesBlock? '}'
@@ -783,16 +781,31 @@ impl RuleRecognizer for TriGRecognizer {
                         self.emit_quad(results);
                         self
                     } else {
-                        self.cur_subject.push(context.generated_blank_node().into());
-                        self.stack.push(TriGState::ObjectBlankNodePropertyListEnd);
+                        let node = context.generated_blank_node();
+                        let linked = context.umf_blank_labels
+                            && matches!(
+                                self.stack.last(),
+                                Some(TriGState::ObjectCollectionPossibleEnd { .. }
+                                    | TriGState::SubjectCollectionPossibleEnd)
+                            );
+                        if linked {
+                            // The predecessor emitted rdf:first before the item's own properties.
+                            self.cur_object.push(node.clone().into());
+                            self.emit_quad(results);
+                        }
+                        self.cur_subject.push(node.into());
+                        self.stack.push(TriGState::ObjectBlankNodePropertyListEnd { linked });
                         self.stack.push(TriGState::PredicateObjectList);
                         self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
                     }
                 }
-                TriGState::ObjectBlankNodePropertyListEnd => {
+                TriGState::ObjectBlankNodePropertyListEnd { linked } => {
                     if token == N3Token::Punctuation("]") {
-                        self.cur_object.push(self.cur_subject.pop().unwrap().into());
-                        self.emit_quad(results);
+                        let node = self.cur_subject.pop().unwrap();
+                        if !linked {
+                            self.cur_object.push(node.into());
+                            self.emit_quad(results);
+                        }
                         self
                     } else {
                         self.error(errors, "blank node property lists should end with a ']'")
@@ -848,19 +861,27 @@ impl RuleRecognizer for TriGRecognizer {
                         self
                     } else {
                         let new = context.generated_blank_node();
-                        results.push(Quad::new(
+                        let rest = Quad::new(
                             old,
                             rdf::REST,
                             new.clone(),
                             self.cur_graph.clone(),
-                        ));
+                        );
                         self.cur_subject.push(new.into());
                         self.stack.push(TriGState::ObjectCollectionPossibleEnd { nested_list_item });
                         self.stack.push(TriGState::Object);
-                        // The parser consumes queued quads LIFO. Leaving this
-                        // REST quad below quads produced by the next item
-                        // preserves collection source order.
-                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        // The parser drains this buffer in reverse order.
+                        // Emit the link to a list cell before that cell's first item.
+                        if context.umf_blank_labels {
+                            let recognizer = self.recognize_next(
+                                TokenOrLineJump::Token(token), context, results, errors,
+                            );
+                            results.push(rest);
+                            recognizer
+                        } else {
+                            results.push(rest);
+                            self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        }
                     }
                 }
                 TriGState::LiteralPossibleSuffix { value, emit } => match token {
@@ -911,10 +932,19 @@ impl RuleRecognizer for TriGRecognizer {
                     _ => {
                         self.cur_object
                             .push(Literal::new_simple_literal(value).into());
+                        let first = results.len();
                         if emit {
                             self.emit_quad(results);
                         }
-                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        let recognizer = self.recognize_next(
+                            TokenOrLineJump::Token(token), context, results, errors,
+                        );
+                        if emit && context.umf_blank_labels {
+                            // The next token can close a list or property list. Drain
+                            // the completed literal before any links that close it.
+                            results[first..].rotate_left(1);
+                        }
+                        recognizer
                     }
                 },
                 TriGState::LiteralExpectDatatype { value, emit } => match token {
@@ -1420,7 +1450,7 @@ enum TriGState {
     Verb,
     Object,
     ObjectBlankNodePropertyListCurrent,
-    ObjectBlankNodePropertyListEnd,
+    ObjectBlankNodePropertyListEnd { linked: bool },
     ObjectCollectionBeginning,
     ObjectCollectionPossibleEnd { nested_list_item: bool },
     LiteralPossibleSuffix {

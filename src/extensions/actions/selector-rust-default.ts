@@ -15,7 +15,7 @@ type Engine = {
 function nativeError(error: unknown, isNativeError: (error: unknown) => boolean): never {
   if (!isNativeError(error)) throw error;
   const native = error as {code?: unknown; message?: unknown; path?: unknown};
-  if (typeof native.code !== 'string' || !native.code.startsWith('ACTION_') && native.code !== 'LIMIT' && native.code !== 'CORE_SCHEMA_PROPERTIES') throw error;
+  if (typeof native.code !== 'string' || !native.code.startsWith('ACTION_') && !native.code.startsWith('KEY_') && native.code !== 'LIMIT' && native.code !== 'CORE_SCHEMA_PROPERTIES') throw error;
   throw new UmfError(native.code, String(native.message ?? ''), typeof native.path === 'string' ? native.path : '');
 }
 /** Public selector and identity operations over Rust-owned admission and key semantics. */

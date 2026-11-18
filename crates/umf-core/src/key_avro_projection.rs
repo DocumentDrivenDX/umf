@@ -123,11 +123,18 @@ fn validate_schema(
     ctx: &mut Context<'_>,
     code: &str,
 ) -> Result<(), EngineError> {
+    static REQUEST: OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = OnceLock::new();
+    static RESULT: OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = OnceLock::new();
+    // Both roots are private, fixed embedded schemas; caller schemas never
+    // select or populate these cells. Validation of caller values stays per-call.
+    let cell = if code.ends_with("_REQUEST") { &REQUEST } else { &RESULT };
+    let compiled = crate::resource_cache::prepare(cell, ctx, |ctx| {
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources
         .entries
         .push((k("urn:umf:core:key-operation:2.0.0"), parse(KEY_OP, ctx)?));
-    let compiled = crate::schema::CompiledSchema::compile(schema, &resources, ctx)?;
+    crate::schema::CompiledSchema::compile(schema, &resources, ctx)
+    })?;
     if compiled.validate_codegen_errors(v, ctx)?.is_empty() {
         Ok(())
     } else {
@@ -534,7 +541,8 @@ fn project_inner(
     let mut impossible = false;
     let record_name = text(get(&request, "recordName")).unwrap_or_default();
     let namespace = text(get(&request, "namespace")).unwrap_or_default();
-    if !native_name(&record_name)
+    if ["null", "boolean", "int", "long", "float", "double", "bytes", "string"].contains(&record_name.as_str())
+        || !native_name(&record_name)
         || (!namespace.is_empty() && !namespace.split('.').all(native_name))
     {
         impossible = true;

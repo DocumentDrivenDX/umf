@@ -6,7 +6,7 @@ use crate::{
     context::Context,
     engine::{Capabilities, Engine},
     error::EngineError,
-    parquet_document_capture::capture_parquet_document,
+    parquet_document_capture::capture_parquet_document_retaining,
     parquet_record_type_candidate::SchemaElement,
     registry::Registry,
     value::{copy_json, Utf16, Value},
@@ -88,7 +88,7 @@ fn has_unknown(value: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineError
 }
 fn replace(v: &mut Value, name: &str, value: Value) -> bool {
     if let Value::Object(m) = v {
-        if let Some((_, old)) = m.iter_mut().find(|(x, _)| x == &k(name)) {
+        if let Some((_, old)) = m.iter_mut().find(|(x, _)| x.equals_str(name)) {
             *old = value;
             return true;
         }
@@ -132,7 +132,7 @@ pub fn classify_parquet_record(
     let source = copy_json(input, ctx)?;
     // Capture validates the current envelope and the exact pinned source profile.
     let captured =
-        capture_parquet_document(&source, request.index, engine, registry, capabilities, ctx)?;
+        capture_parquet_document_retaining(&source, request.index, engine, registry, capabilities, ctx)?;
     let selected = captured.schema.get(request.index).ok_or_else(|| {
         err(
             "PARQUET_RECORD_IDENTITY",

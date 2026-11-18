@@ -117,7 +117,7 @@ fn parse_resource(source: &str, context: &mut Context<'_>) -> Result<Value, Engi
     )
 }
 
-fn closure_schema() -> Result<CompiledSchema, EngineError> {
+fn closure_schema() -> Result<&'static CompiledSchema, EngineError> {
     static SCHEMA: OnceLock<Result<CompiledSchema, EngineError>> = OnceLock::new();
     SCHEMA
         .get_or_init(|| {
@@ -130,10 +130,10 @@ fn closure_schema() -> Result<CompiledSchema, EngineError> {
             )?;
             CompiledSchema::compile_consumer(&value, &SchemaResources::default(), false, &mut setup)
         })
-        .clone()
+        .as_ref().map_err(Clone::clone)
 }
 
-fn core_engine() -> Result<Engine, EngineError> {
+fn core_engine() -> Result<&'static Engine, EngineError> {
     static ENGINE: OnceLock<Result<Engine, EngineError>> = OnceLock::new();
     ENGINE
         .get_or_init(|| {
@@ -160,7 +160,7 @@ fn core_engine() -> Result<Engine, EngineError> {
                 &mut setup,
             )
         })
-        .clone()
+        .as_ref().map_err(Clone::clone)
 }
 
 struct NoExtensions;

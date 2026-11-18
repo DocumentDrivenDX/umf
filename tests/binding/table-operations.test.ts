@@ -189,6 +189,16 @@ test('G02 expression typing admits every operator family and literal-only condit
   ['checked_display',lit({string:'ok'})],
  ];
  for(const [target,expression]of good){const result=typed(target,expression);expect(result.valid,`${target}:${JSON.stringify(expression)} ${JSON.stringify(result.diagnostics)}`).toBe(true);}
+ const precision=(source:number,target:number)=>(d:any)=>{
+  const columns=payload(d).tables[0].columns;
+  columns.find((c:any)=>c.field.element==='event_at').nativeType.precision=source;
+  columns.find((c:any)=>c.field.element==='instant_copy').nativeType.precision=target;
+ };
+ expect(typed('instant_copy',field('event_at'),precision(3,3)).valid).toBe(true);
+ expect(typed('instant_copy',field('event_at'),precision(6,3)).diagnostics.map((d:any)=>d.code)).toContain('TABLES_OPERATION_DOMAIN');
+ expect(typed('instant_copy',lit({timestamp:'2026-01-01T00:00:00.123Z'}),precision(3,3)).valid).toBe(true);
+ expect(typed('instant_copy',lit({timestamp:'2026-01-01T00:00:00.1234Z'}),precision(3,3)).valid).toBe(false);
+
 });
 
 test('G02 conditional predicates preserve NULL-safe equality and reject boolean/UUID ordering',()=>{

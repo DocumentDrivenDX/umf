@@ -15,6 +15,11 @@ pub struct GraphqlResources {
     registry: Registry,
 }
 impl GraphqlResources {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<umf_core::resource_cache::Prepared<Self>, EngineError> {
+        static RESOURCES: std::sync::OnceLock<umf_core::resource_cache::Fixed<GraphqlResources>> = std::sync::OnceLock::new();
+        umf_core::resource_cache::prepare(&RESOURCES, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(src: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             let u = src.encode_utf16().collect::<Vec<_>>();
@@ -310,7 +315,7 @@ impl Capabilities for GraphqlCallbacks {
     }
 }
 pub fn validate_document(
-    r: &mut GraphqlResources,
+    r: &GraphqlResources,
     d: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Validation, EngineError> {
@@ -318,7 +323,7 @@ pub fn validate_document(
         .validate_document(d, &r.registry, &mut GraphqlCallbacks, ctx)
 }
 pub fn import_sdl(
-    r: &mut GraphqlResources,
+    r: &GraphqlResources,
     source: &str,
     id: &str,
     mode: Option<&str>,
@@ -355,7 +360,7 @@ pub fn import_sdl(
     Ok(document)
 }
 pub fn export_sdl(
-    r: &mut GraphqlResources,
+    r: &GraphqlResources,
     d: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Utf16, EngineError> {
@@ -399,7 +404,7 @@ fn payload_document(p: &Json) -> Json {
     json!({"umf":"0.10.0","id":"graphql-validation","vocabularies":{(EXT):{"version":"0.1.0"}},"modules":[{"id":"schema","namespace":"","elements":[{"id":"schema","extensions":{(EXT):p}}]}]})
 }
 pub fn get_graphql_ast(
-    r: &mut GraphqlResources,
+    r: &GraphqlResources,
     d: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
@@ -413,7 +418,7 @@ pub fn get_graphql_ast(
     copy_json(ast, ctx)
 }
 pub fn edit_ast<F>(
-    r: &mut GraphqlResources,
+    r: &GraphqlResources,
     d: &Value,
     callback: F,
     ctx: &mut Context<'_>,
@@ -433,7 +438,7 @@ where
 /// the same cumulative resource context. The document is copied before the callback,
 /// so a callback error or failed postvalidation never mutates the caller's input.
 pub fn edit_ast_with_context<F>(
-    r: &mut GraphqlResources,
+    r: &GraphqlResources,
     d: &Value,
     callback: F,
     ctx: &mut Context<'_>,
@@ -530,7 +535,7 @@ pub struct GraphqlBundle {
     pub diagnostics: Vec<Diagnostic>,
 }
 pub fn export_graphql_bundle(
-    r: &mut GraphqlResources,
+    r: &GraphqlResources,
     d: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<GraphqlBundle, EngineError> {

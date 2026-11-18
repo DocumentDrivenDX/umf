@@ -233,7 +233,7 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
     // Type-check and UTF-16 admission of all caller text before compiling the
     // large pinned schema registry. Decode/tagged transport is already bounded.
     let prepared = validate_operation_input(op, request_value, ctx)?;
-    let runtime = OpenapiRuntime::new(ctx)?;
+    let runtime = OpenapiRuntime::prepared(ctx)?;
     let document =
         || field(request_value, "document").ok_or_else(|| request("document is required"));
     match op {
@@ -741,18 +741,19 @@ fn parse_resources(
 }
 
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary_construction())
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control))
+}
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request_value = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
-        let result = execute(&request_value, &mut ctx)?;
-        encode(&result, &mut ctx)
+        let result = execute(&request_value, ctx)?;
+        encode(&result, ctx)
     })();
     result_envelope(result)
 }

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+// @test-exclusive
 // @covers US-003-AC8
 import {test,expect} from 'bun:test';
 import {mkdtemp,rm,mkdir} from 'node:fs/promises';
@@ -43,11 +44,15 @@ test('US-003-AC8: native source emission recompiles without semantic loss and re
 },60000);
 
 test('US-003-AC8: source emission refuses unknown semantics with no source representation',async()=>{
- const doc=importProtobufDescriptorSet(await Bun.file('fixtures/protobuf/authored.pb').bytes(),{id:'unknown'});
- const changed=proposeProtobufDescriptorEdit(doc,set=>{(set.fields.file as unknown as DescriptorNode[]).find(f=>f.fields.name==='legacy.proto')!.unknown.push({number:50001,wireType:0,data:'07'});}).document;
- await expect(exportProtobufSources(changed,emitter)).rejects.toThrow('changed descriptor semantics');
- const opaque=proposeProtobufDescriptorEdit(doc,set=>{set.unknown.push({number:50001,wireType:0,data:'07'});}).document;
- await expect(exportProtobufSources(opaque,emitter)).rejects.toThrow('Unknown descriptor-set');
+ // The two authored unknown-wire cases are independent compiler operations.
+ // Reserve this file's packet and run exactly two bounded native workers.
+ const kinds=['file','set'] as const;
+ const children=kinds.map(kind=>Bun.spawn([process.execPath,'tests/protobuf/emission-refusal-worker.ts',kind],{stdin:'ignore',stdout:'pipe',stderr:'pipe'}));
+ try{
+  const results=await Promise.all(children.map(async(child,index)=>{const [stdout,stderr,exit]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);return {kind:kinds[index],stdout,stderr,exit};}));
+  for(const result of results){expect(result.exit,result.stderr).toBe(0);expect(JSON.parse(result.stdout)).toEqual({kind:result.kind,refused:true});}
+ }finally{for(const child of children)if(child.exitCode===null)child.kill();}
+
 },20000);
 
 test('US-003-AC8: standard corpus emission reports each native root and unsupported Editions',async()=>{

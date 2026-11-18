@@ -1,0 +1,3 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+type Row=Record<string,any>;
+export function dataset(model:any,rows:Row[]){const fields=model.modules[0].elements.filter((e:any)=>e.kind==='field');const carriers:any={string:'string',integer:'integerToken',decimal:'decimalToken',boolean:'boolean',date:'date',timestamp:'timestamp'};return {scope:{id:'typed-access-fixed',closure:'supplied-dataset-only' as const},records:rows.map(row=>({instanceId:row.id,identity:{module:'fixture',element:'Item'},values:fields.map((f:any)=>({field:{module:'fixture',element:f.id},...(!Object.hasOwn(row,f.id)?{state:'absent'}:{state:'present',value:row[f.id]===null?null:{[carriers[f.scalarType]]:row[f.id]}})}))})),relationships:[]};}

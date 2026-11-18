@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
+import {assertJsonDataEqual} from '../../scripts/core-ideals/json-data-assert';
 import {ordersModel,generateOrdersConsumers,compileOrdersTransform} from '../../scripts/examples/orders-consumers';
 import {projectAvroToJsonSchema,projectTableSpecToAvro} from '../../src/index-node-v4';
 const projectors={projectAvroToJsonSchema,projectTableSpecToAvro};
@@ -28,7 +29,9 @@ test('CONTRACT-036 seven authored consumers retain mixed native context across b
  // Refresh it deliberately with UMF_ORDERS_CONSUMERS_FIXTURE=fixtures/validation/orders-consumers.json.
  const generated=JSON.stringify({scope:'Authored mixed-model demonstrator; no general merge, domain enforcement, or delivery',cases},null,2)+'\n',refresh=process.env.UMF_ORDERS_CONSUMERS_FIXTURE;
  if(refresh)await Bun.write(refresh,generated);
- else expect(generated).toBe(await Bun.file('fixtures/validation/orders-consumers.json').text());
+ // CoreJSON object member order carries no meaning. Compare all admitted
+ // values and array positions; retained native source strings remain exact.
+ else assertJsonDataEqual(JSON.parse(generated),await Bun.file('fixtures/validation/orders-consumers.json').json());
 },30_000);
 
 test('CONTRACT-036 executable row transform rejects loss, coercion and overflow; snapshots remain isolated',()=>{

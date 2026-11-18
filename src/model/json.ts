@@ -36,13 +36,17 @@ export function copyJsonCharged(input: unknown,charge?:(visits:number)=>void,hoo
     const descriptors = Object.getOwnPropertyDescriptors(value);
     const result: Json[] | Record<string, Json> = Array.isArray(value) ? [] : Object.create(null);
     let arrayPropertyCount=0;
-    for (const [key, descriptor] of Object.entries(descriptors)) {
+    for (const key of Object.keys(descriptors)) {
+      const descriptor = descriptors[key]!;
       if (Array.isArray(value) && key === 'length') continue;
       if (!descriptor.enumerable || !('value' in descriptor)) throw new UmfError('NON_JSON', 'Hidden fields and accessors cannot be serialized faithfully', path + '/' + pointer(key));
       if (Array.isArray(value) && (!/^(0|[1-9][0-9]*)$/.test(key) || Number(key) >= 0xffff_ffff || Number(key) >= value.length)) throw new UmfError('NON_JSON', 'Non-index array property', path);
       if(Array.isArray(value))arrayPropertyCount++;
       const item = visit(descriptor.value, path + '/' + pointer(key), depth + 1);
-      Object.defineProperty(result, key, { value: item, enumerable: true, writable: true, configurable: true });
+      // Arrays retain the original own-property definition so inherited index
+      // setters cannot run. Fresh null-prototype object carriers can use assignment.
+      if (Array.isArray(result)) Object.defineProperty(result, key, {value:item,enumerable:true,writable:true,configurable:true});
+      else (result as Record<string, Json>)[key] = item;
     }
     if (Array.isArray(value) && arrayPropertyCount !== value.length) throw new UmfError('NON_JSON', 'Sparse arrays are not JSON values', path);
     active.delete(value);

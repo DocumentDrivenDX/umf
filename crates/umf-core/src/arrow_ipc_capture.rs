@@ -19,6 +19,11 @@ pub struct ArrowIpcResources {
     registry: Registry,
 }
 impl ArrowIpcResources {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<ArrowIpcResources>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&CACHE, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(s: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             serialization::read_json_value(&s.encode_utf16().collect::<Vec<_>>(), Format::Json, ctx)

@@ -102,6 +102,18 @@ struct SplitView {
 }
 
 impl TableSpecRuntime {
+    // This runtime is constructed only from fixed built-in resources. An
+    // externally supplied Engine, even with equal contents, has no custody.
+    pub(crate) fn owns_fixed_engine(&self, engine: &Engine) -> bool {
+        std::ptr::eq(&self.engine, engine)
+    }
+
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<TableSpecRuntime>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&CACHE, ctx, Self::new)
+    }
+
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             let unit_count = source.encode_utf16().count();
@@ -1494,13 +1506,13 @@ fn key(s: &str) -> Utf16 {
 }
 fn object_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     if let Value::Object(fields) = value {
-        fields.iter().find(|(k, _)| k == &key(name)).map(|(_, v)| v)
+        fields.iter().find(|(k, _)| k.equals_str(name)).map(|(_, v)| v)
     } else {
         None
     }
 }
 fn value_field<'a>(fields: &'a [(Utf16, Value)], name: &str) -> Option<&'a Value> {
-    fields.iter().find(|(k, _)| k == &key(name)).map(|(_, v)| v)
+    fields.iter().find(|(k, _)| k.equals_str(name)).map(|(_, v)| v)
 }
 fn string_field<'a>(value: &'a Value, name: &str) -> Option<&'a Utf16> {
     match object_field(value, name) {
@@ -1518,7 +1530,7 @@ fn object_field_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Valu
     if let Value::Object(fields) = value {
         fields
             .iter_mut()
-            .find(|(k, _)| k == &key(name))
+            .find(|(k, _)| k.equals_str(name))
             .map(|(_, v)| v)
     } else {
         None
@@ -1649,4 +1661,20 @@ fn remove_object_field(fields: &mut Vec<(Utf16, Value)>, name: &str) {
 }
 fn err(code: &str, message: &str) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
+}
+
+#[cfg(test)]
+mod fixed_engine_identity_tests {
+    use super::*;
+    #[test]
+    fn fixed_projection_custody_rejects_equal_foreign_engines() {
+        let first=TableSpecRuntime::new(&mut Context::ordinary()).unwrap();
+        let second=TableSpecRuntime::new(&mut Context::ordinary()).unwrap();
+        assert!(first.owns_fixed_engine(&first.engine));
+        assert!(!first.owns_fixed_engine(&second.engine));
+        let mut ctx = Context::ordinary_construction();
+        let prepared = TableSpecRuntime::prepared(&mut ctx).unwrap();
+        assert!(matches!(prepared, crate::resource_cache::Prepared::Shared(_)));
+        assert_eq!(ctx.constraint_steps(), 0);
+    }
 }

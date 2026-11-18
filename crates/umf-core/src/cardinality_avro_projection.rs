@@ -18,6 +18,24 @@ const CORE: &str = include_str!("../../../spec/core/schema.json");
 const AUTHOR: &str = include_str!("../../../spec/core/cardinality-operation-v4.schema.json");
 const RECOVERY: &str = "Recover source meaning with retained projection receipt; native-only import does not recover author intent";
 
+fn has_uninterpreted_native_members(node: &crate::native_json::NativeJsonNode, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+    use crate::native_json::NativeJsonNode;
+    ctx.charge_work(1, Utf16::default())?;
+    match node {
+        NativeJsonNode::Array(items) => { for item in items { if has_uninterpreted_native_members(item, ctx)? { return Ok(true); } } },
+        NativeJsonNode::Object(fields) => {
+            for (key, value) in fields {
+                ctx.charge_work(key.len(), Utf16::default())?;
+                let known = ["type","name","namespace","fields","symbols","size","items","values","aliases","doc","default","order","logicalType","precision","scale"].iter().any(|name| key.units().iter().copied().eq(name.encode_utf16()));
+                if !known { return Ok(true); }
+                if ["type","fields","items","values"].iter().any(|name| key.units().iter().copied().eq(name.encode_utf16())) && has_uninterpreted_native_members(value, ctx)? { return Ok(true); }
+            }
+        },
+        _ => {},
+    }
+    Ok(false)
+}
+
 fn k(value: &str) -> Utf16 {
     Utf16::from(value)
 }
@@ -36,7 +54,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     match value {
         Value::Object(m) => m
             .iter()
-            .find(|(key, _)| key == &k(name))
+            .find(|(key, _)| key.equals_str(name))
             .map(|(_, value)| value),
         _ => None,
     }
@@ -130,7 +148,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
 fn schemas(
     rt: &Runtime,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let operation = parse(RESULT, ctx)?;
     let resources = SchemaResources {
         entries: vec![
@@ -155,6 +175,7 @@ fn schemas(
     )
     .ok_or_else(|| err("CARDINALITY_AVRO_RESULT", "Request schema missing", ""))?;
     Ok((result, CompiledSchema::compile(request, &resources, ctx)?))
+    })
 }
 fn residual(
     path: &str,
@@ -475,7 +496,8 @@ fn project_inner(
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     if let Some(d) = request_schema.validate(&request, ctx)?.first() {
         return Err(EngineError::new(
             "CARDINALITY_AVRO_REQUEST",
@@ -628,6 +650,10 @@ fn project_inner(
     )?;
     let mut mapping_items = Vec::new();
     let mut residuals = Vec::new();
+    if has_uninterpreted_native_members(native_tree.root(), ctx)? {
+        residuals.push(residual("/request/nativeType", get(&request, "nativeType").unwrap(),
+            "Uninterpreted native properties remain in the exact requested schema; no meaning is inferred from them", "unknown", ctx)?);
+    }
     let native_inspection = crate::avro_document::inspect_avro_document(&target, ctx)?;
     if let Some(inspection) = native_inspection.native_inspection {
         for diagnostic in inspection.diagnostics {

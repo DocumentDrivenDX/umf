@@ -96,12 +96,19 @@ fn equal(a: &Value, b: &Value, ctx: &mut Context<'_>) -> Result<bool, EngineErro
     }
     Ok(canonical(a, ctx, 0)? == canonical(b, ctx, 0)?)
 }
+#[derive(Clone, Copy)]
+enum AuthoredSchemas { Keys, Facets }
 fn schema_pair(
-    root_src: &str,
-    authors: &[(&str, &str)],
+    kind: AuthoredSchemas,
+    runtime: &TableSpecRuntime,
     engine: &Engine,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema, Value), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema, Value)>, EngineError> {
+    let (root_src, authors): (&str, &[(&str, &str)]) = match kind {
+        AuthoredSchemas::Keys => (KEY_SCHEMA, &[("urn:umf:core:key-operation:2.0.0", KEY_AUTHOR_SCHEMA)]),
+        AuthoredSchemas::Facets => (FACET_SCHEMA, &[("urn:umf:core:facet-operation:3.0.0", FACET_AUTHOR_SCHEMA), ("urn:umf:core:kind-operation:6.0.0", KIND_AUTHOR_SCHEMA)]),
+    };
+    let build = |ctx: &mut Context<'_>| {
     let root = read(root_src, ctx)?;
     let mut resources: SchemaResources = engine.schema_resources_with_context(ctx)?;
     for (id, src) in authors {
@@ -127,6 +134,14 @@ fn schema_pair(
         CompiledSchema::compile(request, &resources, ctx)?,
         binding,
     ))
+    };
+    if runtime.owns_fixed_engine(engine) {
+        static KEYS: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema, Value)>> = std::sync::OnceLock::new();
+        static FACETS: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema, Value)>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(match kind { AuthoredSchemas::Keys => &KEYS, AuthoredSchemas::Facets => &FACETS }, ctx, build)
+    } else {
+        build(ctx).map(crate::resource_cache::Prepared::Owned)
+    }
 }
 fn validate(
     v: &Value,
@@ -346,12 +361,13 @@ pub fn project_keys(
     let source = copy(input, ctx)?;
     let authors_input = copy(author_input, ctx)?;
     let request = copy(request_input, ctx)?;
-    let (result_schema, request_schema, binding) = schema_pair(
-        KEY_SCHEMA,
-        &[("urn:umf:core:key-operation:2.0.0", KEY_AUTHOR_SCHEMA)],
+    let prepared_schemas = schema_pair(
+        AuthoredSchemas::Keys,
+        runtime,
         engine,
         ctx,
     )?;
+    let (result_schema, request_schema, binding) = &*prepared_schemas;
     validate(&request, &request_schema, "KEY_TABLESPEC_REQUEST", ctx)?;
     if text(get(&source, "umf")).as_deref() != Some("0.10.0")
         || !engine
@@ -700,7 +716,7 @@ pub fn project_keys(
         (u("source"), source),
         (u("authors"), Value::Array(checked_authors)),
         (u("request"), request),
-        (u("binding"), binding),
+        (u("binding"), binding.clone()),
     ];
     if status == "projected" {
         let native = Value::Object(native_fields);
@@ -729,12 +745,13 @@ pub fn verify_keys(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let copy_receipt = copy(receipt, ctx)?;
-    let (result_schema, _, _) = schema_pair(
-        KEY_SCHEMA,
-        &[("urn:umf:core:key-operation:2.0.0", KEY_AUTHOR_SCHEMA)],
+    let prepared_schemas = schema_pair(
+        AuthoredSchemas::Keys,
+        runtime,
         engine,
         ctx,
     )?;
+    let (result_schema, _, _) = &*prepared_schemas;
     validate(&copy_receipt, &result_schema, "KEY_TABLESPEC_RECEIPT", ctx)?;
     if text(get(&copy_receipt, "status")).as_deref() != Some("projected") {
         return Err(err(
@@ -797,15 +814,13 @@ pub fn project_facets(
 ) -> Result<Value, EngineError> {
     let author_copy = copy(author_input, ctx)?;
     let request = copy(request_input, ctx)?;
-    let (result_schema, request_schema, binding) = schema_pair(
-        FACET_SCHEMA,
-        &[
-            ("urn:umf:core:facet-operation:3.0.0", FACET_AUTHOR_SCHEMA),
-            ("urn:umf:core:kind-operation:6.0.0", KIND_AUTHOR_SCHEMA),
-        ],
+    let prepared_schemas = schema_pair(
+        AuthoredSchemas::Facets,
+        runtime,
         engine,
         ctx,
     )?;
+    let (result_schema, request_schema, binding) = &*prepared_schemas;
     validate(&request, &request_schema, "FACETS_TABLESPEC_REQUEST", ctx)?;
     let author = if text(get(&author_copy, "operation")).as_deref() == Some("declare-core-facets") {
         core_facet_author(&author_copy, engine, registry, caps, ctx)?
@@ -1234,7 +1249,7 @@ pub fn project_facets(
         (u("source"), source),
         (u("author"), author),
         (u("request"), request),
-        (u("binding"), binding),
+        (u("binding"), binding.clone()),
         (u("mapping"), mapping),
     ];
     if status == "projected" {
@@ -1310,15 +1325,13 @@ pub fn recover_facets(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let checked = copy(receipt, ctx)?;
-    let (result_schema, _, _) = schema_pair(
-        FACET_SCHEMA,
-        &[
-            ("urn:umf:core:facet-operation:3.0.0", FACET_AUTHOR_SCHEMA),
-            ("urn:umf:core:kind-operation:6.0.0", KIND_AUTHOR_SCHEMA),
-        ],
+    let prepared_schemas = schema_pair(
+        AuthoredSchemas::Facets,
+        runtime,
         engine,
         ctx,
     )?;
+    let (result_schema, _, _) = &*prepared_schemas;
     validate(&checked, &result_schema, "FACETS_TABLESPEC_RECEIPT", ctx)?;
     if text(get(&checked, "status")).as_deref() != Some("projected") {
         return Err(err(

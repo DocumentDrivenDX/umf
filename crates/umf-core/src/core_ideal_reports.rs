@@ -19,7 +19,7 @@ fn get<'a>(v: &'a Value, name: &str) -> Option<&'a Value> {
     let Value::Object(fields) = v else {
         return None;
     };
-    fields.iter().find(|(k, _)| k == &key(name)).map(|(_, v)| v)
+    fields.iter().find(|(k, _)| k.equals_str(name)).map(|(_, v)| v)
 }
 fn text<'a>(v: &'a Value, name: &str) -> Option<&'a Utf16> {
     match get(v, name) {
@@ -297,7 +297,7 @@ fn recompute_field_classification(
     })?;
     match text(receipt, "operation") {
         Some(operation) if operation == &key("classify-tablespec-field") => {
-            let adapter = TableSpecRuntime::new(ctx)?;
+            let adapter = TableSpecRuntime::prepared(ctx)?;
             adapter.classify_field(source, request, ctx)
         }
         Some(operation) if operation == &key("classify-postgresql-field") => {
@@ -426,7 +426,7 @@ fn recompute_field_projection(
         .ok_or_else(|| err("FIELD_REPORT_RECEIPT", "Receipt request is missing"))?;
     match text(receipt, "operation") {
         Some(op) if op == &key("project-field-tablespec") => {
-            TableSpecRuntime::new(ctx)?.project_field_to_tablespec(author, request, ctx)
+            TableSpecRuntime::prepared(ctx)?.project_field_to_tablespec(author, request, ctx)
         }
         Some(op) if op == &key("project-field-postgresql") => {
             let fresh = fresh.ok_or_else(|| {
@@ -648,7 +648,7 @@ fn recompute_record_projection(
         .ok_or_else(|| err("RECORD_REPORT_RECEIPT", "Receipt request is missing"))?;
     match text(receipt, "operation") {
         Some(op) if op == &key("project-record-tablespec") => {
-            TableSpecRuntime::new(ctx)?.project_record_to_tablespec(author, request, ctx)
+            TableSpecRuntime::prepared(ctx)?.project_record_to_tablespec(author, request, ctx)
         }
         Some(op) if op == &key("project-record-postgresql") => {
             let fresh = fresh.ok_or_else(|| {
@@ -843,7 +843,7 @@ fn recompute_structured_classification(
     })?;
     match text(receipt, "operation") {
         Some(op) if op == &key("classify-tablespec-record") => {
-            TableSpecRuntime::new(ctx)?.classify_record(source, request, ctx)
+            TableSpecRuntime::prepared(ctx)?.classify_record(source, request, ctx)
         }
         Some(op) if op == &key("classify-postgresql-record") => {
             crate::postgresql_classification::classify_record(source, request, ctx)

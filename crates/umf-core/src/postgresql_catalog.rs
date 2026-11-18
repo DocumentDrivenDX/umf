@@ -42,7 +42,7 @@ fn field<'a>(node: &'a NativeJsonNode, name: &str) -> Option<&'a NativeJsonNode>
     let NativeJsonNode::Object(fields) = node else {
         return None;
     };
-    fields.iter().find(|(k, _)| k == &key(name)).map(|(_, v)| v)
+    fields.iter().find(|(k, _)| k.equals_str(name)).map(|(_, v)| v)
 }
 fn as_text(node: Option<&NativeJsonNode>) -> Option<&Utf16> {
     match node {
@@ -233,7 +233,7 @@ fn schema_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     let Value::Object(fields) = value else {
         return None;
     };
-    fields.iter().find(|(k, _)| k == &key(name)).map(|(_, v)| v)
+    fields.iter().find(|(k, _)| k.equals_str(name)).map(|(_, v)| v)
 }
 fn schema_lookup<'a>(schema: &'a Value, rule: &'a Value) -> &'a Value {
     let Some(Value::String(reference)) = schema_field(rule, "$ref") else {
@@ -397,14 +397,19 @@ fn validate_capture_schema(
     root: &NativeJsonTree,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
+    static SCHEMA: std::sync::OnceLock<crate::resource_cache::Fixed<Value>> = std::sync::OnceLock::new();
+    let schema = crate::resource_cache::prepare(&SCHEMA, ctx, |ctx| {
     let source = Utf16::from(include_str!(
         "../../../spec/extensions/postgresql-catalog/capture.schema.json"
     ));
     ctx.charge_text(source.len(), Utf16::default())?;
     let schema = serialization::read_json_value(source.units(), Format::Json, ctx)?;
-    validate_declared_integers(root.root(), &schema, &schema, ctx)?;
-    let compiled =
-        CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), true, ctx)?;
+    Ok(schema)
+    })?;    validate_declared_integers(root.root(), &schema, &schema, ctx)?;
+    static COMPILED: std::sync::OnceLock<crate::resource_cache::Fixed<CompiledSchema>> = std::sync::OnceLock::new();
+    let compiled = crate::resource_cache::prepare(&COMPILED, ctx, |ctx| {
+        CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), true, ctx)
+    })?;
     let instance = schema_project(root.root(), &schema, &schema, ctx)?
         .ok_or_else(|| fail("POSTGRESQL_CATALOG_SCHEMA", "Invalid schema instance"))?;
     if !compiled.validate(&instance, ctx)?.is_empty() {
@@ -1069,6 +1074,7 @@ pub fn inspect_cardinality_catalog(
         }
     }
     let mut column_ids = BTreeSet::new();
+    let mut column_ordinals = BTreeSet::new();
     for column in columns {
         ctx.charge_work(1, Utf16::default())?;
         let mut cols = Vec::new();
@@ -1078,6 +1084,11 @@ pub fn inspect_cardinality_catalog(
                     .cloned()
                     .unwrap_or_default(),
             )
+        }
+        let ordinal = value_number_i64(value_field(column, "ordinal"))
+            .ok_or_else(|| fail("POSTGRESQL_CARDINALITY_CATALOG", "Column ordinal must be an exact integer"))?;
+        if !column_ordinals.insert((cols[0].clone(), cols[1].clone(), ordinal)) {
+            return Err(fail("POSTGRESQL_CARDINALITY_CATALOG", "Duplicate column ordinal in relation"));
         }
         if !column_ids.insert(cols) {
             return Err(fail(
@@ -2116,7 +2127,7 @@ fn set_value_field(value: &mut Value, name: &str, replacement: Value) -> Result<
             "Expected object while updating native capture",
         ));
     };
-    if let Some((_, existing)) = fields.iter_mut().find(|(k, _)| k == &key(name)) {
+    if let Some((_, existing)) = fields.iter_mut().find(|(k, _)| k.equals_str(name)) {
         *existing = replacement;
     } else {
         fields.push((key(name), replacement));

@@ -459,16 +459,17 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
 }
 
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_context(wire, Context::ordinary_construction())
 }
 
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire, Context::ordinary().with_host_control(control))
+}
+fn execute_context(wire: &str, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let output = execute(&request, &mut ctx)?;
         encode(&output, &mut ctx)

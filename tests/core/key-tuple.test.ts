@@ -77,3 +77,17 @@ test('prepared scope verifies current UUID v2 receipts with their retained codec
  const source=uuidDocument(),scope=prepareCoreKeyTuples(source),receipt=encodeCoreKeyTuple(source,KEY,[{uuid:UUID}],{profile:'umf-key-tuple-v2'});
  expect(receipt.profile).toBe('umf-key-tuple-v2');expect(scope.verify(receipt)).toEqual(receipt);
 });
+
+test('prepared v1 key hex matches complete receipts and retains atomic admission',()=>{
+ for(const scalarType of ['boolean','string','integer','binary'] as const){
+  const source=tupleDocument([{id:'x',scalarType}]),before=JSON.stringify(source),prepared=prepareCoreKeyTuples(source);
+  const value=scalarType==='boolean'?{boolean:true}:scalarType==='string'?{string:'😀'}:scalarType==='integer'?{integerToken:'9007199254740993'}:{binaryHex:'00fe'};
+  const expected=encodeCoreKeyTuple(source,tupleIdentity,[value]);
+  expect(prepared.encodeHex(tupleIdentity,[value])).toBe(expected.bytesHex);
+  expect(prepared.encodeHex(tupleIdentity,[value])).toBe(prepared.encode(tupleIdentity,[value]).bytesHex);
+  expect(()=>prepared.encodeHex(tupleIdentity,[])).toThrow();
+  expect(()=>prepared.encodeHex({...tupleIdentity,key:'missing'},[value])).toThrow();
+  let reads=0;const hostile:any={};Object.defineProperty(hostile,'string',{enumerable:true,get(){reads++;return 'unsafe';}});
+  expect(()=>prepared.encodeHex(tupleIdentity,[hostile])).toThrow();expect(reads).toBe(0);expect(JSON.stringify(source)).toBe(before);
+ }
+});

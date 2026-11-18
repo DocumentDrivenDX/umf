@@ -11,9 +11,11 @@ export function facetsAvroProjectionCases(){
  for(const nativeType of ['decimal-bytes','decimal-fixed'] as const)for(const precision of [3,4])seeds.push({id:`${nativeType}-${precision}`,family:'decimal',facets:{precision,scale:2},native:{nativeType,...(nativeType==='decimal-fixed'?{fixedName:'Decimal',fixedSize:2}:{})}});
  for(const [nativeType,family] of [['boolean','boolean'],['float','float'],['double','float'],['date','date'],['time-millis','time'],['time-micros','time'],['timestamp-millis','timestamp'],['timestamp-micros','timestamp'],['local-timestamp-micros','timestamp']] as const)seeds.push({id:nativeType,family,native:{nativeType}});
  const rows:{id:string;author:CoreFacetDeclaration|CoreKindDeclaration;request:FacetsAvroRequest}[]=[];
- for(const seed of seeds)for(const profile of ['declared-schema','apache-datum-writer','fastavro-schemaless-writer'] as const)for(const encoding of ['native-type','metadata-only','carrier-only'] as const)for(const mode of ['strict','report'] as const){
+ for(const seed of seeds){
   const doc=avroFacetIdeal(seed.family),identity={module:'m',element:'value'},author=seed.facets?declareCoreFacets(doc,identity,seed.facets):declareCoreElementKind(doc,identity,'field');
+  for(const profile of ['declared-schema','apache-datum-writer','fastavro-schemaless-writer'] as const)for(const encoding of ['native-type','metadata-only','carrier-only'] as const)for(const mode of ['strict','report'] as const){
   rows.push({id:`${seed.id}-${profile}-${encoding}-${mode}`,author,request:{id:'native',recordName:'Record',namespace:'example',fieldName:'value',nativeType:'int',profile,encoding,mode,obligation:'value-domain',...seed.native}});
+ }
  }
  return rows;
 }

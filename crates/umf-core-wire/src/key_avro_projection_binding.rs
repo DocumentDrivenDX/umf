@@ -27,17 +27,21 @@ fn closed(value: &Value, allowed: &[&str], ctx: &mut Context<'_>) -> Result<(), 
     }
     Ok(())
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire, ctx)?;
         if text_field(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(request_error("Key Avro projection profile is required"));
         }
@@ -50,13 +54,13 @@ pub fn execute_wire_with_control(
             "recoverKeysAvroIdeal" => &["profile", "op", "receipt", "current"][..],
             _ => return Err(request_error("Unknown Key Avro projection operation")),
         };
-        closed(&request, allowed, &mut ctx)?;
+        closed(&request, allowed, ctx)?;
         let output = match op {
             "projectKeysToAvro" => umf_core::key_avro_projection::project_keys_to_avro(
                 field(&request, "source").ok_or_else(|| request_error("source is required"))?,
                 field(&request, "authors").ok_or_else(|| request_error("authors are required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             "verifyKeysAvroProjection" => {
                 umf_core::key_avro_projection::verify_keys_avro_projection(
@@ -64,17 +68,18 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverKeysAvroIdeal" => umf_core::key_avro_projection::recover_keys_avro_ideal(
                 field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
                 field(&request, "current").ok_or_else(|| request_error("current is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             _ => return Err(request_error("Unknown Key Avro projection operation")),
         };
-        encode(&output, &mut ctx)
-    })();
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

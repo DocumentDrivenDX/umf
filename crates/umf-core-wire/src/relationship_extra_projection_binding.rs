@@ -40,17 +40,21 @@ fn closed(value: &Value, allowed: &[&str], ctx: &mut Context<'_>) -> Result<(), 
     }
     Ok(())
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire, ctx)?;
         if text_field(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(request_error(
                 "Relationship Extra projection profile is required",
@@ -77,12 +81,12 @@ pub fn execute_wire_with_control(
                 ))
             }
         };
-        closed(&request, allowed, &mut ctx)?;
+        closed(&request, allowed, ctx)?;
         let output = match op {
             "importRelationshipExtraArchive" => {
                 let archive = umf_core::relationship_extra_projection::validate_native_archive(
                     required(&request, "archive")?,
-                    &mut ctx,
+                    ctx,
                 )?;
                 let id = field(&request, "id")
                     .and_then(as_utf16)
@@ -102,13 +106,13 @@ pub fn execute_wire_with_control(
                         let id = id
                             .to_utf8()
                             .map_err(|_| request_error("Archive id must be valid UTF-16"))?;
-                        let mut resources = GraphqlResources::new(&mut ctx)?;
+                        let mut resources = GraphqlResources::new(ctx)?;
                         engine_registry::import_sdl(
                             &mut resources,
                             &source,
                             &id,
                             Some("schema"),
-                            &mut ctx,
+                            ctx,
                         )?
                     }
                     "rdf-nquads" => {
@@ -117,18 +121,18 @@ pub fn execute_wire_with_control(
                             .ok_or_else(|| {
                                 request_error("RDF archive blank-node scope is required")
                             })?;
-                        let runtime = rdf::RdfRuntime::new(&mut ctx)?;
-                        rdf::import_rdf_nquads(&runtime, source.units(), id, Some(scope), &mut ctx)?
+                        let runtime = rdf::RdfRuntime::new(ctx)?;
+                        rdf::import_rdf_nquads(&runtime, source.units(), id, Some(scope), ctx)?
                     }
                     "linkml-json" | "linkml-yaml" => {
-                        let runtime = contracts::ContractRuntime::new(&mut ctx)?;
+                        let runtime = contracts::ContractRuntime::new(ctx)?;
                         let format = if format == "linkml-json" {
                             contracts::ContractFormat::Json
                         } else {
                             contracts::ContractFormat::Yaml
                         };
                         contracts::import_linkml_document(
-                            source, id, format, None, &runtime, &mut ctx,
+                            source, id, format, None, &runtime, ctx,
                         )?
                     }
                     _ => return Err(request_error("Invalid native archive")),
@@ -139,14 +143,14 @@ pub fn execute_wire_with_control(
                     required(&request, "source")?,
                     required(&request, "author")?,
                     required(&request, "request")?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "completeRelationshipToExtra" => {
                 umf_core::relationship_extra_projection::complete_relationship_to_extra(
                     required(&request, "prepared")?,
                     required(&request, "target")?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "classifyRelationshipExtra" => {
@@ -154,7 +158,7 @@ pub fn execute_wire_with_control(
                     required(&request, "source")?,
                     required(&request, "request")?,
                     required(&request, "fresh")?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyRelationshipExtra" => {
@@ -162,7 +166,7 @@ pub fn execute_wire_with_control(
                     required(&request, "receipt")?,
                     required(&request, "fresh")?,
                     field(&request, "current"),
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverRelationshipExtraIdeal" => {
@@ -170,7 +174,7 @@ pub fn execute_wire_with_control(
                     required(&request, "receipt")?,
                     required(&request, "fresh")?,
                     field(&request, "current"),
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverRelationshipExtraNative" => {
@@ -178,12 +182,13 @@ pub fn execute_wire_with_control(
                     required(&request, "receipt")?,
                     required(&request, "fresh")?,
                     field(&request, "current"),
-                    &mut ctx,
+                    ctx,
                 )?
             }
             _ => unreachable!(),
         };
-        encode(&output, &mut ctx)
-    })();
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

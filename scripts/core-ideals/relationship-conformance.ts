@@ -46,11 +46,15 @@ export function verifyRelationshipAuthoredCorpus(){
 }
 // Reexecute the binding tests here: the gate must not merely trust earlier counters.
 export async function verifyRelationshipBindingRoundTrips(){
- const child=Bun.spawn(['bun','test',...relationshipTests],{stdout:'pipe',stderr:'pipe'});
+ // Reuse the project's existing file isolation, concurrency and deadline
+ // policy rather than running the complete inventory serially in one process.
+ const command=[process.execPath,'scripts/run-tests.ts','--jobs','4','--keep-going',...relationshipTests];
+ const child=Bun.spawn(command,{stdout:'pipe',stderr:'pipe',stdin:'ignore'});
  const [out,err,code]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
  assert.equal(code,0,'Relationship binding recovery checks failed:\n'+out+err);
- const text=out+err,match=text.match(/(\d+) pass[\s\S]*?(\d+) fail/);assert(match,'Missing Bun test result');assert.equal(Number(match[2]),0);assert(Number(match[1])>0);
- return {command:['bun','test',...relationshipTests],passed:Number(match[1]),failed:0,logSha256:digest(text)};
+ const text=out+err,pass=text.match(/^\s*(\d+) pass\s*$/m),fail=text.match(/^\s*(\d+) fail\s*$/m);
+ assert(pass&&fail,'Missing Bun test result');assert.equal(Number(fail[1]),0);assert(Number(pass[1])>0);
+ return {command,passed:Number(pass[1]),failed:0,logSha256:digest(text)};
 }
 // @covers US-045-AC9
 export async function verifyRelationshipConformance(){

@@ -460,16 +460,23 @@ fn error(message: &str) -> EngineError {
 
 /// Execute one closed Rust-owned parser-session action. The `ParserSession`
 /// belongs to the binding handle and survives across these synchronous calls.
+pub fn execute_wire_with_session_default(session: &mut ParserSession, wire: &str) -> String {
+    execute_wire_context(session, wire, &mut Context::ordinary(), true)
+}
+
 pub fn execute_wire_with_session(
     session: &mut ParserSession,
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
+    execute_wire_context(session, wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(session: &mut ParserSession, wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let mut run = |ctx: &mut Context<'_>| {
         let request = ctx.with_tagged_transport_limit(|ctx| crate::decode(wire, ctx))?;
-        let output = execute_session_action(session, &request, &mut ctx)?;
-        match crate::encode(&output, &mut ctx) {
+        let output = execute_session_action(session, &request, ctx)?;
+        match crate::encode(&output, ctx) {
             Ok(encoded) => Ok(encoded),
             Err(error) => {
                 // A prepare action or intermediate export response can create
@@ -485,7 +492,8 @@ pub fn execute_wire_with_session(
                 Err(error)
             }
         }
-    })();
+    };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     crate::result_envelope(result)
 }
 

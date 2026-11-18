@@ -26,20 +26,25 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let title = text(field(value, "title"), "title")?;
     lakeview_legacy_projection::project(view, ids, title, ctx)
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
         let request =
             ctx.with_tagged_transport_limit(|ctx| umf_tagged_wire::decode_host_value(wire, ctx))?;
-        let value = execute(&request, &mut ctx)?;
-        umf_tagged_wire::encode_host_value(&value, &mut ctx)
-    })();
+        let value = execute(&request, ctx)?;
+        umf_tagged_wire::encode_host_value(&value, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

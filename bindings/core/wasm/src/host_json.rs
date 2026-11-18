@@ -270,12 +270,10 @@ impl CoreKindNullabilityRuntime {
                 Some(&self.engine),
             )
         } else {
-            let mut hook = |_amount| Ok(());
-            umf_core_wire::execute_request_with_engine_and_control(
+            umf_core_wire::execute_request_with_engine(
                 wire_json,
                 profile,
                 &mut capabilities,
-                &mut hook,
                 Some(&self.engine),
             )
         }
@@ -767,7 +765,7 @@ pub fn execute_core_cardinality_host_json(
         };
         let engine = {
             let mut catalog = Context::catalog();
-            Engine::new(
+            catalog.with_codegen_construction(|catalog| Engine::new(
                 ResourceSet::new(
                     resource("coreSchema")?,
                     resource("referenceSchema")?,
@@ -775,8 +773,8 @@ pub fn execute_core_cardinality_host_json(
                     resource("constraints")?,
                     resource("domainPolicy")?,
                 ),
-                &mut catalog,
-            )?
+                catalog,
+            ))?
         };
         let mut host = WasmHostJson {
             dispatcher: dispatcher.clone(),

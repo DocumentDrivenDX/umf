@@ -941,8 +941,75 @@ pub fn metadata_wire(family: &str) -> String {
 }
 
 pub fn execute_wire(family: &str, wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(family, wire, &mut no_control)
+    // Explicit host controls keep their original call-attributed route.
+    // Uncontrolled projections retain completed admissions for one cold call.
+    match family {
+        "sqlserver" => crate::sqlserver_binding::execute_wire(wire),
+        "tablespec" => crate::tablespec_binding::execute_wire(wire),
+        "postgresql" => crate::postgresql_catalog_binding::execute_wire(wire),
+
+        "avro-classification" => crate::avro_classification_binding::execute_wire(wire),
+        "avro" => crate::avro_binding::execute_wire(wire),
+        "core-ideal-reports" => crate::core_ideal_reports_binding::execute_wire(wire),
+
+        "lakeview-legacy-projection" => crate::lakeview_legacy_projection_binding::execute_wire(wire),
+        "cardinality-sqlserver-projection" => crate::cardinality_sqlserver_projection_binding::execute_wire(wire),
+        "field-record-sqlserver-projection" => crate::sqlserver_field_record_projection_binding::execute_wire(wire),
+        "field-record-avro-projection" => crate::avro_field_record_projection_binding::execute_wire(wire),
+        "avro-cardinality" => crate::avro_cardinality_binding::execute_wire(wire),
+        "record-type" => crate::record_type_binding::execute_wire(wire),
+        "nullability-avro-projection" => crate::nullability_avro_projection_binding::execute_wire(wire),
+        "nullability-sqlserver-projection" => crate::nullability_sqlserver_projection_binding::execute_wire(wire),
+        "facets-avro-projection" => crate::facets_avro_projection_binding::execute_wire(wire),
+        "facets-sqlserver-projection" => crate::facets_sqlserver_projection_binding::execute_wire(wire),
+        "key-avro-projection" => crate::key_avro_projection_binding::execute_wire(wire),
+        "key-sqlserver-projection" => crate::key_sqlserver_projection_binding::execute_wire(wire),
+        "avro-relationship-projection" => crate::avro_relationship_projection_binding::execute_wire(wire),
+        "tablespec-relationship-projection" => crate::relationship_tablespec_projection_binding::execute_wire(wire),
+        "relationship-sqlserver-projection" => crate::relationship_sqlserver_projection_binding::execute_wire(wire),
+        "relationship-postgresql-projection" => crate::relationship_postgresql_projection_binding::execute_wire(wire),
+        "medical-projection" => crate::medical_projection_binding::execute_wire(wire),
+        "relationship-extra-projection" => crate::relationship_extra_projection_binding::execute_wire(wire),
+        "relationship-parquet-projection" => crate::relationship_parquet_projection_binding::execute_wire(wire),
+        "field-record-parquet-projection" => crate::parquet_field_record_projection_binding::execute_wire(wire),
+        "avro-json-schema-projection" => crate::avro_json_schema_projection_binding::execute_wire(wire),
+        "arrow-spark-projection" => crate::arrow_spark_projection_binding::execute_wire(wire),
+        "arrow-flatbuffer-model" => crate::arrow_flatbuffer_model_binding::execute_wire(wire),
+        "openapi" => crate::openapi_binding::execute_wire(wire),
+        "rdf" => crate::rdf_binding::execute_wire(wire),
+        "linkml" => crate::native_contract_binding::execute_linkml_wire(wire),
+        "odcs" => crate::native_contract_binding::execute_odcs_wire(wire),
+        "jsonld" => crate::jsonld_binding::execute_wire(wire),
+        "shacl" => crate::shacl_owl_binding::execute_wire(wire, Some("shacl")),
+        "owl" => crate::shacl_owl_binding::execute_wire(wire, Some("owl")),
+        "delta-schema" | "delta-table" => crate::delta_schema_table::execute_json(wire),
+        "delta-log" => crate::delta_log_binding::execute_json(wire),
+        "iceberg-table" => crate::iceberg_table_binding::execute_wire(wire),
+        "delta-parquet" => crate::parquet_capture_binding::execute_wire(wire),
+        "avro-tablespec-projection" => crate::avro_tablespec_projection_binding::execute_wire(wire),
+        "postgresql-avro-projection" => crate::postgresql_avro_projection_binding::execute_wire(wire),
+        "postgresql-json-schema-projection" => crate::postgresql_json_schema_projection_binding::execute_wire(wire),
+        "json-schema-protobuf-projection" => crate::json_schema_protobuf_projection_binding::execute_wire(wire),
+        "tablespec-via-avro-projection" => crate::tablespec_via_avro_projection_binding::execute_wire(wire),
+        "parquet-avro-projection" => crate::parquet_avro_projection_binding::execute_wire(wire),
+        "sqlserver-avro-projection" => crate::sqlserver_avro_projection_binding::execute_wire(wire),
+        "sqlserver-ddl-projection" => crate::sqlserver_ddl_projection_binding::execute_wire(wire),
+        "binding-sqlserver-planned-index-projection" => crate::binding_sqlserver_planned_indexes_binding::execute_wire(wire),
+        "binding-index-projection" => crate::binding_indexes_binding::execute_wire(wire),
+        "binding-public" => crate::binding_public_binding::execute_wire(wire),
+        "binding-parquet-projection" => crate::binding_parquet_projection_binding::execute_wire(wire),
+        "binding-sqlserver-tables" => crate::binding_sqlserver_tables_binding::execute_wire(wire),
+        "binding-sqlserver-physical" => crate::binding_sqlserver_physical_binding::execute_wire(wire),
+        "binding-delta-projection" => crate::binding_delta_projection_binding::execute_wire(wire),
+        "ddd-json-schema-projection" => crate::ddd_json_schema_projection_binding::execute_wire(wire),
+        "openapi-json-schema-projection" => crate::openapi_json_schema_projection_binding::execute_wire(wire),
+        "typespec-smithy-jsonschema-projection" => crate::typespec_smithy_jsonschema_projection_binding::execute_wire(wire),
+        "binding-iceberg-projection" => crate::binding_iceberg_projection_binding::execute_wire(wire),
+        _ => {
+            let mut no_control = |_: usize| Ok(());
+            execute_wire_with_control(family, wire, &mut no_control)
+        }
+    }
 }
 
 pub fn execute_wire_with_control(

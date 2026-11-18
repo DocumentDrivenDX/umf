@@ -63,10 +63,10 @@ export function createAvroRustDefault(
     }
   };
   const admittedPayload = (document: Document): AvroPayload => {
-    const validation = call<Validation>(() => engine.avro.inspect({document}));
-    if (!validation.valid) {
-      throw new UmfError('AVRO_DOCUMENT', JSON.stringify(validation.diagnostics));
-    }
+    // Archive admission and Avro interpretation are separate Rust operations.
+    // Reading the root checks the UMF envelope and tagged native tree without
+    // turning an unresolved/invalid native schema into a failed archive import.
+    call<NativeJson>(() => engine.avro.getNode({document, path: ''}));
     return avroPayload(document);
   };
 

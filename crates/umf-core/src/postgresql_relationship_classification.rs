@@ -110,7 +110,9 @@ struct Runtime {
     result: CompiledSchema,
     request: CompiledSchema,
 }
-fn runtime(c: &mut Context<'_>) -> Result<Runtime, EngineError> {
+fn runtime(c: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Runtime>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<Runtime>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, c, |c| {
     let core = |s: &str, c: &mut Context<'_>| read(s, c);
     let engine = Engine::new(
         ResourceSet::new(
@@ -182,6 +184,7 @@ fn runtime(c: &mut Context<'_>) -> Result<Runtime, EngineError> {
         registry,
         result,
         request: req,
+    })
     })
 }
 fn validate(

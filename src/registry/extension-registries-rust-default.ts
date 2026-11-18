@@ -2,12 +2,18 @@
 /** Rust-owned semantic callbacks for built-in extension registries. */
 import {UmfError} from '../model/errors';
 import {canonicalSchemaJson} from '../model/canonical-schema-json';
-import type {Diagnostic, ExtensionPackage} from '../model/types';
+import type {Diagnostic, ExtensionPackage, Json} from '../model/types';
 import type {Registry as RegistryInstance, SemanticValidator} from './registry';
 import {composeOwnedSemanticValidator} from './semantic-owner';
-import {securityPackage} from '../extensions/security/policy-package';
-import {semanticTypesPackage} from '../extensions/semantic-types/package';
-import {tableLifecyclePackage} from '../extensions/tables/package';
+import securityManifest from '../../spec/extensions/security/package.json';
+import {copyJson} from '../model/json';
+import semanticTypesManifest from '../../spec/extensions/semantic-types/package.json';
+import tableLifecycleManifest from '../../spec/extensions/tables/package.json';
+
+// Private metadata snapshots never alias the mutable public package exports.
+const securityPackage=copyJson(securityManifest) as unknown as ExtensionPackage;
+const semanticTypesPackage=copyJson(semanticTypesManifest) as unknown as ExtensionPackage;
+const tableLifecyclePackage=copyJson(tableLifecycleManifest) as unknown as ExtensionPackage;
 
 interface PayloadContext {
   document: unknown;
@@ -61,7 +67,7 @@ export function createExtensionRegistriesRustDefault(
       throw new UmfError('DUPLICATE_VERSION', 'Existing extension registration differs from the distributed package');
     }
     const owner = {id: manifest.id, version: manifest.version};
-    return registry.register(manifest, composeOwnedSemanticValidator(owner, meaning), {replaceActions: true});
+    return registry.register(copyJson(manifest as unknown as Json) as unknown as ExtensionPackage, composeOwnedSemanticValidator(owner, meaning), {replaceActions: true});
   }
 
   return Object.freeze({

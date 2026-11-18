@@ -8,16 +8,18 @@ use crate::{decode, encode, fail, field, result_envelope, text_field};
 pub const SECURITY_PARAMETERS_PROFILE: &str = "umf.security-parameters/1";
 
 pub fn execute_security_parameters_wire(wire_json: &str) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_security_parameters_wire_with_control(wire_json, &mut no_control)
+    execute_context(wire_json, Context::ordinary_construction())
 }
 
 pub fn execute_security_parameters_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire_json, Context::ordinary().with_host_control(control))
+}
+
+fn execute_context(wire_json: &str, mut context: Context<'_>) -> String {
     let result = (|| {
-        let mut context = Context::ordinary().with_host_control(control);
         let request = decode(wire_json, &mut context)?;
         if text_field(&request, "profile").as_deref() != Some(SECURITY_PARAMETERS_PROFILE) {
             return Err(fail("REQUEST", "Security parameters profile is required"));

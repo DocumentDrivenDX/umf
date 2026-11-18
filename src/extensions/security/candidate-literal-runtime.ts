@@ -45,6 +45,10 @@ export function inspectCandidateLiteral(
 ):CandidateLiteralReceipt {
   if(!operation)throw new UmfError('PROTECTION_LITERAL_ENGINE','Rust candidate literal operation is not configured');
   const receipt=operation(source,field,value,limits);
+  return checkCandidateLiteralReceipt(receipt,limits);
+}
+
+export function checkCandidateLiteralReceipt(receipt:CandidateLiteralReceipt,limits:CandidateLiteralLimits):CandidateLiteralReceipt {
   if(!receipt||!Number.isSafeInteger(receipt.workUnits)||receipt.workUnits<0||receipt.workUnits>limits.workLimit||
      !Number.isSafeInteger(receipt.textUnits)||receipt.textUnits<0||receipt.textUnits>limits.textLimit||
      (limits.includeIdentity&&typeof receipt.identity!=='string')||(!limits.includeIdentity&&receipt.identity!==null))
@@ -66,4 +70,12 @@ export function inspectCoreCandidateLiteral(
      (includeIdentity&&typeof receipt.identity!=='string')||(!includeIdentity&&receipt.identity!==null))
     throw new UmfError('CORE_LITERAL_RECEIPT','Invalid Rust literal work receipt');
   return receipt;
+}
+
+export type CandidateLiteralPreparation=(source:Document)=>CandidateLiteralOperation;
+let preparation:CandidateLiteralPreparation|undefined;
+export function configureCandidateLiteralPreparation(next:CandidateLiteralPreparation):void { preparation=next; }
+export function prepareCandidateLiteralOperation(source:Document):CandidateLiteralOperation {
+ if(!preparation)throw new UmfError('PROTECTION_LITERAL_ENGINE','Rust prepared literal source is not configured');
+ return preparation(source);
 }

@@ -10,7 +10,7 @@ use crate::{
     context::Context,
     engine::{Capabilities, Engine},
     error::EngineError,
-    parquet_document_capture::capture_parquet_document,
+    parquet_document_capture::capture_parquet_document_retaining,
     parquet_record_classifier::{self, ParquetRecordRequest},
     registry::Registry,
     serialization::{self, Format},
@@ -219,7 +219,7 @@ pub fn recover_parquet_record_bytes(
     }
 
     let captured =
-        capture_parquet_document(source, request.index, engine, registry, capabilities, ctx)?;
+        capture_parquet_document_retaining(source, request.index, engine, registry, capabilities, ctx)?;
     ctx.charge_work(captured.bytes.len(), Utf16::default())?;
     Ok(captured.bytes.clone())
 }

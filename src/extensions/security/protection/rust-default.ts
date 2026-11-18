@@ -2,12 +2,13 @@
 import {UmfError} from '../../../model/errors';
 import type {ProtectionFunctionInspector,ProtectionValueEvaluator} from './functions';
 import type {ProtectionQueryPropertyInspector} from './queries';
-import {configureCandidateLiteralOperation,configureCoreCandidateLiteralOperation,type CandidateLiteralOperation} from '../candidate-literal-runtime';
+import {configureCandidateLiteralPreparation,configureCandidateLiteralOperation,configureCoreCandidateLiteralOperation,type CandidateLiteralOperation} from '../candidate-literal-runtime';
 
 export interface ProtectionNativeEngine {
  inspectProtectionFunction(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):unknown;
  evaluateProtectionValue(policy:unknown,catalog:unknown,closure:unknown,selection:unknown):unknown;
  inspectProtectionQueryProperties(policy:unknown,catalog:unknown,closure:unknown,use:unknown):unknown;
+ prepareCandidateLiteralSource?:(source:Parameters<CandidateLiteralOperation>[0])=>{inspectCandidateLiteral(field:Parameters<CandidateLiteralOperation>[1],value:Parameters<CandidateLiteralOperation>[2],limits:Parameters<CandidateLiteralOperation>[3]):ReturnType<CandidateLiteralOperation>};
  inspectCandidateLiteral?:CandidateLiteralOperation;
  inspectCoreCandidateLiteral?:CandidateLiteralOperation;
 }
@@ -33,6 +34,10 @@ export function createProtectionRustDefault(engine:ProtectionNativeEngine,isNati
   }
  };
  const candidateLiteral=(operation:CandidateLiteralOperation):CandidateLiteralOperation=>(...args)=>call(()=>operation(...args),true);
+ if(engine.prepareCandidateLiteralSource)configureCandidateLiteralPreparation(source=>{
+  const prepared=call(()=>engine.prepareCandidateLiteralSource!(source)) as ReturnType<NonNullable<ProtectionNativeEngine['prepareCandidateLiteralSource']>>;
+  return (current,field,value,limits)=>{if(current!==source)throw new UmfError('PROTECTION_LITERAL_FIELD','Prepared literal source mismatch');return call(()=>prepared.inspectCandidateLiteral(field,value,limits),true);};
+ });
  if(engine.inspectCandidateLiteral)configureCandidateLiteralOperation(candidateLiteral(engine.inspectCandidateLiteral));
  if(engine.inspectCoreCandidateLiteral)configureCoreCandidateLiteralOperation(candidateLiteral(engine.inspectCoreCandidateLiteral));
  return Object.freeze({

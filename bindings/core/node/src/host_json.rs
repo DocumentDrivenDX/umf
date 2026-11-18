@@ -336,12 +336,10 @@ impl CoreKindNullabilityRuntime {
                 Some(&self.engine),
             )
         } else {
-            let mut hook = |_amount| Ok(());
-            umf_core_wire::execute_request_with_engine_and_control(
+            umf_core_wire::execute_request_with_engine(
                 &wire_json,
                 profile,
                 &mut capabilities,
-                &mut hook,
                 Some(&self.engine),
             )
         }
@@ -642,11 +640,11 @@ impl HostJsonReflection for NodeHostJson {
             umf_core::serialization::read_json_value(
                 &output.encode_utf16().collect::<Vec<_>>(),
                 umf_core::serialization::Format::Json,
-                &mut Context::ordinary(),
+                &mut Context::ordinary_construction(),
             )
             .map_err(|_| protocol_error())?
         } else {
-            umf_core_wire::decode(&output, &mut umf_core_wire::transport_context())
+            umf_core_wire::transport_context().with_codegen_construction(|ctx| umf_core_wire::decode(&output, ctx))
                 .map_err(|_| protocol_error())?
         };
         decode_reply(&event, reply, &mut self.string_lengths)
@@ -713,7 +711,7 @@ pub fn execute_copy_json_host_json(
         let mut ctx = Context::ordinary().with_host_control(&mut hook);
         perform(&mut ctx)
     } else {
-        perform(&mut Context::ordinary())
+        perform(&mut Context::ordinary_construction())
     };
     umf_core_wire::result_envelope(result)
 }
@@ -857,7 +855,7 @@ pub fn execute_core_cardinality_host_json(
         };
         let engine = {
             let mut catalog = Context::catalog();
-            Engine::new(
+            catalog.with_codegen_construction(|catalog| Engine::new(
                 ResourceSet::new(
                     resource("coreSchema")?,
                     resource("referenceSchema")?,
@@ -865,8 +863,8 @@ pub fn execute_core_cardinality_host_json(
                     resource("constraints")?,
                     resource("domainPolicy")?,
                 ),
-                &mut catalog,
-            )?
+                catalog,
+            ))?
         };
         let mut ctx = Context::ordinary();
         let value = cardinality_host_json::execute(

@@ -21,5 +21,6 @@ test('collisions, missing identities, non-increasing ordinals and stale receipts
  const altered=JSON.parse(nativeSource);altered.tables.find((t:any)=>t.name==='Types').columns.reverse();const archive=JSON.stringify(altered),reordered=importSqlServerCatalog(archive,{id:'order'});
  for(const mode of ['strict','report'] as const){const result=classifySqlServerRecord(reordered,{...request,mode,nativeSource:archive});expect(result.status).toBe('blocked');expect(result.target).toBeUndefined();}
  const result=classifySqlServerRecord(document,request);result.target!.modules.at(-1)!.elements[0]!.references!.reverse();expect(()=>recoverSqlServerRecordCapture(result,result.target!)).toThrow();
- expect(()=>classifySqlServerRecord(document,{...request,nativeSource:'{}'})).toThrow('archive');
+ let invalidCapture:unknown;try{classifySqlServerRecord(document,{...request,nativeSource:'{}'});}catch(error){invalidCapture=error;}
+ expect(invalidCapture).toMatchObject({code:'SQLSERVER_CAPTURE_STRUCTURE',message:'SQL Server capture does not match the pinned catalog schema'});
 },30000);

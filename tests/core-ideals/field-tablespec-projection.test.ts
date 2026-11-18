@@ -46,7 +46,7 @@ test('diagnostics mirror disclosed loss and legacy receipts still recover withou
  for(const mode of ['strict','report'] as const){const a=declareCoreElementKind(doc(),{module:'sales',element:'id'},'record'),blocked=projectFieldToTableSpec(a,{...request,mode});expect(blocked.diagnostics.every(d=>d.severity==='error')).toBe(true);}
  const report=projectFieldToTableSpec(author({future:'retain'}),{...request,mode:'report'}),native=exportTableSpec(report.target!);
  const legacy:import('../../src/core-ideals/field-tablespec-projection').FieldTableSpecProjection=copyJson(report) as unknown as typeof report;delete legacy.diagnostics;expect(recoverFieldFromTableSpec(legacy,native)).toEqual(report.source);
- legacy.mapping.idealPath='/tampered';expect(()=>recoverFieldFromTableSpec(legacy,native)).toThrow('does not match');
- report.diagnostics[0]!.severity='error';expect(()=>recoverFieldFromTableSpec(report,native)).toThrow('Expected projected receipt');
+ legacy.mapping.idealPath='/tampered';expect(()=>recoverFieldFromTableSpec(legacy,native)).toThrow('Receipt differs from recomputed projection');
+ report.diagnostics[0]!.severity='error';expect(()=>recoverFieldFromTableSpec(report,native)).toThrow('Value does not satisfy the pinned TableSpec projection schema');
 });
 test('empty namespace permits strict projection but discarded namespace receipts cannot claim exactness',()=>{const source=doc();source.modules[0]!.namespace='';const a=declareCoreElementKind(source,{module:'sales',element:'id'},'field');const exact=projectFieldToTableSpec(a,request);expect(exact.status).toBe('projected');expect(exact.residuals).toEqual([]);const reported=projectFieldToTableSpec(author(),{...request,mode:'report'}),text=exportTableSpec(reported.target!);reported.residuals=[];reported.diagnostics=[];reported.mapping.outcome='exact';expect(()=>recoverFieldFromTableSpec(reported,text)).toThrow();});

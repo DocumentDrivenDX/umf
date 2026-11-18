@@ -78,7 +78,7 @@ fn parse(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         ctx,
     )
 }
-fn catalog_schema() -> Result<CompiledSchema, EngineError> {
+fn catalog_schema() -> Result<&'static CompiledSchema, EngineError> {
     static SCHEMA: OnceLock<Result<CompiledSchema, EngineError>> = OnceLock::new();
     SCHEMA
         .get_or_init(|| {
@@ -93,7 +93,7 @@ fn catalog_schema() -> Result<CompiledSchema, EngineError> {
             })?;
             CompiledSchema::compile_consumer(schema, &SchemaResources::default(), false, &mut ctx)
         })
-        .clone()
+        .as_ref().map_err(Clone::clone)
 }
 fn charge_text(
     value: &Value,

@@ -125,7 +125,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
 fn result_schema(
     rt: &Runtime,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let schema = parse(RESULT, ctx)?;
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources.entries.push((
@@ -139,6 +141,7 @@ fn result_schema(
     )
     .ok_or_else(|| err("KEY_POSTGRESQL_RESULT", "Request schema missing", ""))?;
     Ok((result, CompiledSchema::compile(req, &resources, ctx)?))
+    })
 }
 fn valid(
     schema: &CompiledSchema,
@@ -375,7 +378,7 @@ fn key_lookup(
 
 fn set(v: &mut Value, name: &str, value: Value) -> Result<(), EngineError> {
     if let Value::Object(m) = v {
-        if let Some((_, slot)) = m.iter_mut().find(|(key, _)| key == &k(name)) {
+        if let Some((_, slot)) = m.iter_mut().find(|(key, _)| key.equals_str(name)) {
             *slot = value;
             return Ok(());
         }
@@ -418,7 +421,9 @@ fn checked(
 fn schemas(
     rt: &Runtime,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let root = parse(RESULT, ctx)?;
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources.entries.push((
@@ -429,6 +434,7 @@ fn schemas(
     let request = get(get(&root, "properties").unwrap_or(&Value::Null), "request")
         .ok_or_else(|| err("KEY_POSTGRESQL_SCHEMA", "Request schema is missing", ""))?;
     Ok((result, CompiledSchema::compile(request, &resources, ctx)?))
+    })
 }
 fn project(
     source_in: &Value,
@@ -437,7 +443,8 @@ fn project(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let source = copy_json(source_in, ctx)?;
     let authors = copy_json(authors_in, ctx)?;
     let request = copy_json(request_in, ctx)?;
@@ -1236,7 +1243,8 @@ pub fn complete_keys_projection(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     let mut result = copy_json(prepared, ctx)?;
     let status = text(get(&result, "status")).and_then(|v| v.to_utf8().ok());
     if status.as_deref() != Some("projected") && status.as_deref() != Some("blocked") {
@@ -1339,7 +1347,8 @@ pub fn verify_keys_projection(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     checked(&schema, receipt, "KEY_POSTGRESQL_RECEIPT", ctx)?;
     checked(&schema, fresh, "KEY_POSTGRESQL_RECEIPT", ctx)?;
     if !text_is(get(receipt, "status"), "projected")
@@ -1392,7 +1401,8 @@ pub fn recover_keys_projection(
 
 pub fn prepare_keys_recovery(receipt: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     checked(&schema, receipt, "KEY_POSTGRESQL_RECEIPT", ctx)?;
     if !text_is(get(receipt, "status"), "projected") {
         return Err(err(
@@ -1410,7 +1420,8 @@ pub fn recover_keys_with_backend(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = schemas(&rt, ctx)?;
+    let prepared_schemas = schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     checked(&schema, receipt, "KEY_POSTGRESQL_RECEIPT", ctx)?;
     let source = get(receipt, "source")
         .ok_or_else(|| err("KEY_POSTGRESQL_RECEIPT", "Source missing", "/source"))?;

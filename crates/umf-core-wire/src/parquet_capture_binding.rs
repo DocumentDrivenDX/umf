@@ -155,16 +155,17 @@ fn encode_hex(bytes: &[u8]) -> String {
 }
 
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_context(wire, Context::ordinary_construction())
 }
 
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire, Context::ordinary().with_host_control(control))
+}
+fn execute_context(wire: &str, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let operation =
             text_field(&request, "op").ok_or_else(|| request_error("op is required"))?;
@@ -217,8 +218,8 @@ pub fn execute_wire_with_control(
                 field(&request, "parts").ok_or_else(|| request_error("parts is required"))?;
             let commits =
                 field(&request, "commits").ok_or_else(|| request_error("commits is required"))?;
-            let log_resources = DeltaLogResources::new(&mut ctx)?;
-            let action_resources = DeltaActionResources::new(&mut ctx)?;
+            let log_resources = DeltaLogResources::prepared(&mut ctx)?;
+            let action_resources = DeltaActionResources::prepared(&mut ctx)?;
             let recovered = reconcile_delta_multipart_checkpoint(
                 &version,
                 part_count,
@@ -242,8 +243,8 @@ pub fn execute_wire_with_control(
                 text_field(&request, "spec").ok_or_else(|| request_error("spec is required"))?;
             let empty_sidecars = Value::Array(Vec::new());
             let sidecars = field(&request, "sidecars").unwrap_or(&empty_sidecars);
-            let log_resources = DeltaLogResources::new(&mut ctx)?;
-            let action_resources = DeltaActionResources::new(&mut ctx)?;
+            let log_resources = DeltaLogResources::prepared(&mut ctx)?;
+            let action_resources = DeltaActionResources::prepared(&mut ctx)?;
             let recovered = reconcile_delta_parquet_checkpoint(
                 checkpoint,
                 commits,
@@ -360,8 +361,8 @@ pub fn execute_wire_with_control(
                         &mut ctx,
                     )?,
                     "delta.parquet.projectActions" => {
-                        let log_resources = DeltaLogResources::new(&mut ctx)?;
-                        let action_resources = DeltaActionResources::new(&mut ctx)?;
+                        let log_resources = DeltaLogResources::prepared(&mut ctx)?;
+                        let action_resources = DeltaActionResources::prepared(&mut ctx)?;
                         project_delta_parquet_actions(
                             document,
                             &resources.engine,

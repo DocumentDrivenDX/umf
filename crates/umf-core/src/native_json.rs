@@ -11,6 +11,37 @@ use crate::{
     value::{Utf16, Value},
 };
 
+// Validation-only ECMAScript numeric view. The original native tree remains
+// authoritative; this value must never be published as lossless CoreJSON.
+pub(crate) fn schema_projection(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    schema_projection_node(node, 0, &mut 0, ctx, false)
+}
+// Navigation-only view: numeric leaves convey their kind, never their value.
+// This must not be returned as native data or used to evaluate numeric keywords.
+pub(crate) fn structural_projection(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    schema_projection_node(node, 0, &mut 0, ctx, true)
+}
+fn schema_projection_node(node: &NativeJsonNode, depth: usize, count: &mut usize, ctx: &mut Context<'_>, structural: bool) -> Result<Value, EngineError> {
+    admit_node(node, depth, count, ctx)?;
+    Ok(match node {
+        NativeJsonNode::Null => Value::Null,
+        NativeJsonNode::Boolean(value) => Value::Bool(*value),
+        NativeJsonNode::String(value) => { ctx.charge_text(value.len(), Utf16::default())?; Value::String(value.clone()) },
+        NativeJsonNode::Number(token) => { ctx.charge_text(token.len(), Utf16::default())?; Value::Number(if structural { 0.0 } else { token.parse::<f64>().unwrap_or(f64::INFINITY) }) },
+        NativeJsonNode::Array(values) => {
+            ctx.charge_work(values.len(), Utf16::default())?;
+            Value::Array(values.iter().map(|value| schema_projection_node(value, depth + 1, count, ctx, structural)).collect::<Result<_, _>>()?)
+        },
+        NativeJsonNode::Object(fields) => {
+            ctx.charge_work(fields.len(), Utf16::default())?;
+            Value::Object(fields.iter().map(|(key, value)| {
+                ctx.charge_text(key.len(), Utf16::default())?;
+                Ok((key.clone(), schema_projection_node(value, depth + 1, count, ctx, structural)?))
+            }).collect::<Result<_, EngineError>>()?)
+        },
+    })
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct NativeJsonTree {
     root: NativeJsonNode,
@@ -723,6 +754,16 @@ pub(crate) fn finish_parsed_tree(
     })
 }
 
+fn charge_native_path(ctx: &mut Context<'_>, amount: u64, path: &[Utf16]) -> Result<(), EngineError> {
+    // Successful unobserved work never consumes its diagnostic path. Overflow
+    // and every real control retain the exact original path and notification.
+    if ctx.can_batch_work() && ctx.charged_work().checked_add(amount).is_some() {
+        ctx.charge_work_u64(amount, Utf16::default())
+    } else {
+        ctx.charge_work_u64(amount, path_to_utf16(path))
+    }
+}
+
 fn decode_tagged(
     value: &Value,
     path: &mut Vec<Utf16>,
@@ -741,10 +782,14 @@ fn decode_tagged(
     };
     // Admit the full source length before converting it to an allocated ASCII
     // string or rejecting an unknown/non-ASCII kind.
-    ctx.charge_work(kind.len(), path_to_utf16(path))?;
-    let kind_text =
-        ascii_utf16(kind).ok_or_else(|| invalid_tree("Tagged node kind must be ASCII"))?;
-    let known: &[&str] = match kind_text.as_str() {
+    charge_native_path(ctx, (kind.len()) as u64, path)?;
+    if kind.units().iter().any(|unit| *unit > 0x7f) {
+        return Err(invalid_tree("Tagged node kind must be ASCII"));
+    }
+    let kind_text = ["null", "boolean", "string", "number", "array", "object"].into_iter()
+        .find(|candidate| kind.equals_str(candidate))
+        .ok_or_else(|| invalid_tree("Unknown tagged node kind"))?;
+    let known: &[&str] = match kind_text {
         "null" => &["kind"],
         "boolean" | "string" | "number" => &["kind", "value"],
         "array" => &["kind", "items"],
@@ -758,7 +803,7 @@ fn decode_tagged(
     if *values > ctx.limits().max_values || depth.saturating_add(1) > ctx.limits().max_depth {
         return Err(fail("LIMIT", "JSON structural limit exceeded"));
     }
-    ctx.charge_work(representation_values, path_to_utf16(path))?;
+    charge_native_path(ctx, (representation_values) as u64, path)?;
     let unknown = fields.iter().filter(|(key, _)| {
         !known
             .iter()
@@ -766,7 +811,7 @@ fn decode_tagged(
     });
     let mut retained = Vec::new();
     for (key, item) in unknown {
-        ctx.charge_work(key.len(), path_to_utf16(path))?;
+        charge_native_path(ctx, (key.len()) as u64, path)?;
         count_extra_values(item, depth + 1, values, ctx)?;
         retained.push((key.clone(), crate::copy_json(item, ctx)?));
     }
@@ -777,7 +822,7 @@ fn decode_tagged(
             fields: retained,
         });
     }
-    let node = match kind_text.as_str() {
+    let node = match kind_text {
         "null" => NativeJsonNode::Null,
         "boolean" => match field(fields, "value", ctx)? {
             Some(Value::Bool(value)) => NativeJsonNode::Boolean(*value),
@@ -785,7 +830,7 @@ fn decode_tagged(
         },
         "string" => match field(fields, "value", ctx)? {
             Some(Value::String(value)) => {
-                ctx.charge_work(value.len(), path_to_utf16(path))?;
+                charge_native_path(ctx, (value.len()) as u64, path)?;
                 NativeJsonNode::String(value.clone())
             }
             _ => return Err(invalid_tree("String tagged node requires a string value")),
@@ -796,7 +841,7 @@ fn decode_tagged(
             };
             // The UTF-16 token allocation and lexical scan below are both
             // admitted before conversion, including malformed tokens.
-            ctx.charge_work(token.len(), path_to_utf16(path))?;
+            charge_native_path(ctx, (token.len()) as u64, path)?;
             let token =
                 ascii_utf16(token).ok_or_else(|| invalid_tree("Number token must be ASCII"))?;
             if !is_json_number(&token) {
@@ -808,11 +853,11 @@ fn decode_tagged(
             let Some(Value::Array(items)) = field(fields, "items", ctx)? else {
                 return Err(invalid_tree("Array tagged node requires items"));
             };
-            ctx.charge_work(items.len(), path_to_utf16(path))?;
+            charge_native_path(ctx, (items.len()) as u64, path)?;
             let mut children = Vec::with_capacity(items.len());
             for (index, item) in items.iter().enumerate() {
                 let segment = Utf16::from(index.to_string());
-                ctx.charge_work(segment.len(), path_to_utf16(path))?;
+                charge_native_path(ctx, (segment.len()) as u64, path)?;
                 path.push(segment);
                 let child = decode_tagged(item, path, extras, depth + 2, values, ctx);
                 path.pop();
@@ -825,10 +870,10 @@ fn decode_tagged(
                 return Err(invalid_tree("Object tagged node requires members"));
             };
             check_unique_fields(members, ctx)?;
-            ctx.charge_work_u64(order_work(members.len()), path_to_utf16(path))?;
+            charge_native_path(ctx, order_work(members.len()), path)?;
             let mut children = Vec::with_capacity(members.len());
             for (key, item) in members {
-                ctx.charge_work(key.len(), path_to_utf16(path))?;
+                charge_native_path(ctx, (key.len()) as u64, path)?;
                 path.push(key.clone());
                 let child = decode_tagged(item, path, extras, depth + 2, values, ctx);
                 path.pop();
@@ -847,14 +892,14 @@ fn field<'a>(
     name: &str,
     ctx: &mut Context<'_>,
 ) -> Result<Option<&'a Value>, EngineError> {
-    let name = Utf16::from(name);
+    let name_len = name.encode_utf16().count();
     ctx.charge_work_u64(
-        (fields.len() as u64).saturating_mul(name.len().max(1) as u64),
+        (fields.len() as u64).saturating_mul(name_len.max(1) as u64),
         Utf16::default(),
     )?;
     Ok(fields
         .iter()
-        .find(|(key, _)| key == &name)
+        .find(|(key, _)| key.equals_str(name))
         .map(|(_, value)| value))
 }
 
@@ -869,7 +914,7 @@ fn check_unique_fields(
                 .saturating_mul((seen.len().max(1) as u64).ilog2().saturating_add(1) as u64),
             Utf16::default(),
         )?;
-        if !seen.insert(key.units().to_vec()) {
+        if !seen.insert(key.units()) {
             return Err(invalid_tree("Duplicate tagged representation field"));
         }
     }
@@ -1402,4 +1447,173 @@ fn pointer_missing() -> EngineError {
         "JSON_SCHEMA_POINTER",
         "Native JSON Pointer target does not exist",
     )
+}
+
+#[cfg(test)]
+mod native_schema_view_tests {
+    use super::*;
+    use crate::schema::{CompiledSchema, SchemaResources};
+    #[test]
+    fn schema_views_keep_exact_archives_and_enforce_current_limits() {
+        let raw = r#"{"known":1,"future":9007199254740993,"huge":1e400}"#;
+        let tree = NativeJsonTree::parse_json(&raw.encode_utf16().collect::<Vec<_>>(), &mut Context::ordinary()).unwrap();
+        let schema = serialization::read_json_value(&r#"{"type":"object","properties":{"known":{"type":"integer"}}}"#.encode_utf16().collect::<Vec<_>>(), serialization::Format::Json, &mut Context::ordinary()).unwrap();
+        let compiled = CompiledSchema::compile(&schema, &SchemaResources::default(), &mut Context::ordinary()).unwrap();
+        assert!(compiled.validate_native_json_tree_codegen_errors(&tree, &mut Context::ordinary()).unwrap().is_empty());
+        assert_eq!(tree.render_compact(&mut Context::ordinary()).unwrap().to_utf8().unwrap(), raw);
+        let mut limits = crate::Limits::ordinary(); limits.max_values = 1;
+        let error = compiled.validate_native_json_tree_codegen_errors(&tree, &mut Context::with_limits(crate::ResourceProfile::Cooperative, limits).unwrap()).unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        let mut stop = |_: usize| Err(EngineError::new("CANCELLED", Utf16::from("/host"), "stop"));
+        let error = compiled.validate_native_json_tree_codegen_errors(&tree, &mut Context::ordinary().with_host_control(&mut stop)).unwrap_err();
+        assert_eq!(error.code, "CANCELLED"); assert_eq!(error.path, Utf16::from("/host"));
+    }
+}
+
+#[cfg(test)]
+mod tagged_decode_allocation_equivalence_tests {
+    use super::*;
+fn reference_decode_tagged(
+    value: &Value,
+    path: &mut Vec<Utf16>,
+    extras: &mut Vec<RepresentationExtra>,
+    depth: usize,
+    values: &mut usize,
+    ctx: &mut Context<'_>,
+) -> Result<NativeJsonNode, EngineError> {
+    let Value::Object(fields) = value else {
+        return Err(invalid_tree("Tagged node must be an object"));
+    };
+    check_unique_fields(fields, ctx)?;
+    let kind = match field(fields, "kind", ctx)? {
+        Some(Value::String(kind)) => kind,
+        _ => return Err(invalid_tree("Tagged node requires a string kind")),
+    };
+    // Admit the full source length before converting it to an allocated ASCII
+    // string or rejecting an unknown/non-ASCII kind.
+    ctx.charge_work(kind.len(), path_to_utf16(path))?;
+    let kind_text =
+        ascii_utf16(kind).ok_or_else(|| invalid_tree("Tagged node kind must be ASCII"))?;
+    let known: &[&str] = match kind_text.as_str() {
+        "null" => &["kind"],
+        "boolean" | "string" | "number" => &["kind", "value"],
+        "array" => &["kind", "items"],
+        "object" => &["kind", "members"],
+        _ => return Err(invalid_tree("Unknown tagged node kind")),
+    };
+    let representation_values = if kind_text == "null" { 2 } else { 3 };
+    *values = values
+        .checked_add(representation_values)
+        .ok_or_else(|| fail("LIMIT", "Tagged native JSON value count overflow"))?;
+    if *values > ctx.limits().max_values || depth.saturating_add(1) > ctx.limits().max_depth {
+        return Err(fail("LIMIT", "JSON structural limit exceeded"));
+    }
+    ctx.charge_work(representation_values, path_to_utf16(path))?;
+    let unknown = fields.iter().filter(|(key, _)| {
+        !known
+            .iter()
+            .any(|name| key.units().iter().copied().eq(name.encode_utf16()))
+    });
+    let mut retained = Vec::new();
+    for (key, item) in unknown {
+        ctx.charge_work(key.len(), path_to_utf16(path))?;
+        count_extra_values(item, depth + 1, values, ctx)?;
+        retained.push((key.clone(), crate::copy_json(item, ctx)?));
+    }
+    if !retained.is_empty() {
+        ctx.charge_work(path.iter().map(Utf16::len).sum::<usize>(), Utf16::default())?;
+        extras.push(RepresentationExtra {
+            parent: path.clone(),
+            fields: retained,
+        });
+    }
+    let node = match kind_text.as_str() {
+        "null" => NativeJsonNode::Null,
+        "boolean" => match field(fields, "value", ctx)? {
+            Some(Value::Bool(value)) => NativeJsonNode::Boolean(*value),
+            _ => return Err(invalid_tree("Boolean tagged node requires a boolean value")),
+        },
+        "string" => match field(fields, "value", ctx)? {
+            Some(Value::String(value)) => {
+                ctx.charge_work(value.len(), path_to_utf16(path))?;
+                NativeJsonNode::String(value.clone())
+            }
+            _ => return Err(invalid_tree("String tagged node requires a string value")),
+        },
+        "number" => {
+            let Some(Value::String(token)) = field(fields, "value", ctx)? else {
+                return Err(invalid_tree("Number tagged node requires a string token"));
+            };
+            // The UTF-16 token allocation and lexical scan below are both
+            // admitted before conversion, including malformed tokens.
+            ctx.charge_work(token.len(), path_to_utf16(path))?;
+            let token =
+                ascii_utf16(token).ok_or_else(|| invalid_tree("Number token must be ASCII"))?;
+            if !is_json_number(&token) {
+                return Err(invalid_tree("Invalid exact JSON number token"));
+            }
+            NativeJsonNode::Number(token)
+        }
+        "array" => {
+            let Some(Value::Array(items)) = field(fields, "items", ctx)? else {
+                return Err(invalid_tree("Array tagged node requires items"));
+            };
+            ctx.charge_work(items.len(), path_to_utf16(path))?;
+            let mut children = Vec::with_capacity(items.len());
+            for (index, item) in items.iter().enumerate() {
+                let segment = Utf16::from(index.to_string());
+                ctx.charge_work(segment.len(), path_to_utf16(path))?;
+                path.push(segment);
+                let child = reference_decode_tagged(item, path, extras, depth + 2, values, ctx);
+                path.pop();
+                children.push(child?);
+            }
+            NativeJsonNode::Array(children)
+        }
+        "object" => {
+            let Some(Value::Object(members)) = field(fields, "members", ctx)? else {
+                return Err(invalid_tree("Object tagged node requires members"));
+            };
+            check_unique_fields(members, ctx)?;
+            ctx.charge_work_u64(order_work(members.len()), path_to_utf16(path))?;
+            let mut children = Vec::with_capacity(members.len());
+            for (key, item) in members {
+                ctx.charge_work(key.len(), path_to_utf16(path))?;
+                path.push(key.clone());
+                let child = reference_decode_tagged(item, path, extras, depth + 2, values, ctx);
+                path.pop();
+                children.push((key.clone(), child?));
+            }
+            order_members(&mut children);
+            NativeJsonNode::Object(children)
+        }
+        _ => return Err(invalid_tree("Unknown tagged node kind")),
+    };
+    Ok(node)
+}
+
+    #[test]
+    fn native_decode_preserves_limits_paths_controls_and_unknown_representation() {
+        let tag = |kind: &str| Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from(kind)))]);
+        let mut cases=vec![tag("null"),tag("future"),tag("雪"),Value::Object(vec![(Utf16::from("kind"),Value::String(Utf16::from("null"))),(Utf16::from("kind"),Value::Null)])];
+        for raw in [r#"{"a/~雪":[null,true,"😀",9007199254740993,1.2300,-0],"":{}}"#,r#"[1,2,3]"#] {
+            let tree=NativeJsonTree::parse_json(&raw.encode_utf16().collect::<Vec<_>>(),&mut Context::ordinary()).unwrap();
+            let mut tagged=tree.tagged_value_preserving_extras(&mut Context::ordinary()).unwrap();
+            if let Value::Object(fields)=&mut tagged {fields.push((Utf16::new(vec![0xd800]),Value::Array(vec![Value::String(Utf16::from("opaque"))])));}
+            cases.push(tagged);
+        }
+        for value in cases {for bound in [0,1,3,100_000] {for controlled in [false,true] {for stop in [None,Some(0),Some(3),Some(12)] {for seed in [0,u64::MAX-2,u64::MAX-24,u64::MAX-128,u64::MAX-1000] {
+            let run=|reference:bool| {
+                let mut events=Vec::new();let mut hook=|n|{let i=events.len();events.push(n);if stop==Some(i){Err(EngineError::new("CANCELLED",Utf16::from("/host"),"stop"))}else{Ok(())}};
+                let mut limits=crate::Limits::ordinary();limits.max_values=bound;limits.max_depth=bound.min(128);
+                let ctx=Context::with_limits(crate::ResourceProfile::Cooperative,limits).unwrap();
+                let mut ctx=if controlled{ctx.with_host_control(&mut hook)}else{ctx};ctx.carry_transport_usage(seed,0);
+                let mut extras=Vec::new();let mut path=Vec::new();let mut count=0;
+                let result=if reference{reference_decode_tagged(&value,&mut path,&mut extras,0,&mut count,&mut ctx)}else{decode_tagged(&value,&mut path,&mut extras,0,&mut count,&mut ctx)};
+                let result=result.map(|v|format!("{v:?}")).map_err(|e|{let control=e.is_control_failure();(e.code,e.path,e.message,control)});
+                let work=ctx.charged_work();drop(ctx);(result,format!("{extras:?}"),path,count,work,events)
+            };
+            assert_eq!(run(false),run(true));
+        }}}}}
+    }
 }

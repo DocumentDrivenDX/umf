@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host custody of the private logical catalog program's issued handles. */
 import {copyJson} from '../../model/json';
+import {prepareCandidateLiteralOperation,type CandidateLiteralOperation} from './candidate-literal-runtime';
+import {prepareCoreKeyTuples,type PreparedCoreKeyTuples} from '../../model/key-tuple';
 import {resolveCandidateSecurityOntology} from './ontology-checks-candidate';
 import {createCandidateEntityTermScopeSet,resolveCandidateEntityTerm} from './entity-terms-candidate';
 import {normalizeCandidateAssociationExpression,compileCandidateAssociationCondition,requireIssuedCandidateCompactCondition} from './association-expression';
 import {checkProtectionFunctionDefinitions} from './protection/functions';
 import {inspectProtectionObligationsFromCheckedParameters} from './protection/obligations';
-import {planCandidateCatalogProgram,prepareCandidateCatalogProgram} from '#security-candidate-condition';
+import {planCandidateCatalogProgram,prepareCandidateCatalogProgram,prepareCandidateCompactCondition} from '#security-candidate-condition';
 
 interface Expansion {
  targets:number;
@@ -86,4 +88,35 @@ export function compileCandidateCatalogProgram(
 export function readCandidateCatalogProgram(handle:unknown):any {
  if(!handle||typeof handle!=='object'||!programs.has(handle))fail('Original compiled program required');
  return programs.get(handle as object);
+}
+
+// Prepared Rust key encoders belong only to an issued immutable source program.
+// Every supplied key value is still checked and encoded on every invocation.
+const keyPrograms=new WeakMap<object,Map<string,PreparedCoreKeyTuples>>();
+export function readCandidateCatalogKeyTuples(handle:unknown,documentId:string):PreparedCoreKeyTuples {
+ const program=readCandidateCatalogProgram(handle);let documents=keyPrograms.get(program);
+ if(!documents){documents=new Map();keyPrograms.set(program,documents);}
+ let prepared=documents.get(documentId);
+ if(!prepared){const source=program.closure.documents.find((entry:any)=>entry.document.id===documentId)?.document;if(!source)fail('Exact key document missing');prepared=prepareCoreKeyTuples(source);documents.set(documentId,prepared);}
+ return prepared;
+}
+
+const literalPrograms=new WeakMap<object,Map<string,CandidateLiteralOperation>>();
+export function readCandidateCatalogLiteralOperation(handle:unknown,documentId:string):CandidateLiteralOperation {
+ const program=readCandidateCatalogProgram(handle);let documents=literalPrograms.get(program);
+ if(!documents){documents=new Map();literalPrograms.set(program,documents);}
+ let operation=documents.get(documentId);
+ if(!operation){const source=program.closure.documents.find((entry:any)=>entry.document.id===documentId)?.document;if(!source)fail('Exact literal source missing');operation=prepareCandidateLiteralOperation(source);documents.set(documentId,operation);}
+ return operation;
+}
+
+// Only expressions from an issued immutable program reuse detached transport.
+// Current fact cuts, truth, native admission and operation ledgers stay live.
+const conditionOperations=new WeakMap<object,ReturnType<typeof prepareCandidateCompactCondition>>();
+export function readCandidateCatalogConditionOperation(handle:unknown,expression:object){
+ const program=readCandidateCatalogProgram(handle);
+ if(!program.conditions.some((entry:any)=>entry.condition.expression===expression))fail('Condition is not owned by this program');
+ let operation=conditionOperations.get(expression);
+ if(!operation){operation=prepareCandidateCompactCondition(expression);conditionOperations.set(expression,operation);}
+ return operation;
 }
