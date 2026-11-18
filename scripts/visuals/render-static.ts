@@ -52,7 +52,7 @@ try{if(actions){
  const htmlPath=resolve('docs/helix/05-deploy/microsite/dist/index.html');
  const html=await readFile(htmlPath,'utf8');
  const drawing='<div class="fabric" data-renderer="umf.visual/lini"><img src="visuals/fabric.svg" alt="Native schemas and authored models carry common metadata and native details through UMF to generators, forms and AI context" style="width:100%;height:auto;max-height:640px;object-fit:contain"><p class="fabric-caption">Tools read the metadata they need. Support varies by format and operation.</p><a href="visuals/fabric.visual.json" download>Diagram source and rendering limits</a></div>';
- const region=/<div class="fabric"(?: data-renderer="umf.visual\/lini")?>[\s\S]*?<\/div><\/section>/;
+ const region=/<div class="fabric"(?: data-renderer="umf.visual\/lini")?>[\s\S]*?<\/div>\s*<\/section>/;
  if(!region.test(html))throw Error('Home illustration host was not found');
  const next=html.replace(region,drawing+'</section>');
  await emit(htmlPath,next);

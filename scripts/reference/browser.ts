@@ -21,6 +21,21 @@ try{
  }
  await ready('core');await page.locator('#catalog').getByRole('button',{name:/^Field /}).click();await page.locator('#inspector table').first().waitFor();assert((await page.locator('#inspector').innerText()).includes('scalarType'),'Element properties missing');checks.push('Core definition pointer navigation');
  await page.reload();await page.locator('#inspector table').first().waitFor();assert(new URL(page.url()).hash.includes('pointer'),'Pointer deep link lost');await page.goBack();checks.push('Nested base-path refresh/history');await ready('core','#'+new URLSearchParams({entry:JSON.stringify(['schema','spec/core/schema.json','']),pointer:'invalid'}));await page.locator('#inspector').getByText(/invalid schema pointer/).waitFor();checks.push('Malformed schema pointer refuses without selecting the root');
+ // A visitor can find the three declaration models without searching the catalog.
+ await page.goto(origin);
+ await page.getByRole('navigation',{name:'Main navigation'}).getByRole('link',{name:'Actions & workflows'}).click();
+ await page.getByRole('link',{name:'Saga reference'}).click();
+ await page.locator('#inspector').getByRole('heading',{name:'Sagas',exact:true}).waitFor();
+ await page.locator('#behavior-topics').locator('..').getByRole('link',{name:'Workflows',exact:true}).click();
+ const workflowInspector=page.locator('#inspector');
+ await workflowInspector.getByRole('heading',{name:'Workflows',exact:true}).waitFor();
+ assert(await workflowInspector.getByRole('heading',{name:'Workflows',exact:true}).evaluate(node=>node===document.activeElement),'Workflow topic did not focus its definition');
+ await workflowInspector.getByRole('link',{name:'UMF workflow declaration 1',exact:true}).click();
+ await workflowInspector.getByRole('heading',{name:'UMF workflow declaration 1',exact:true}).waitFor();
+ await page.goBack();
+ await workflowInspector.getByRole('link',{name:'umf.workflow · 0.1.0',exact:true}).click();
+ await workflowInspector.getByRole('heading',{name:'umf.workflow · 0.1.0',exact:true}).waitFor();
+ checks.push('Overview to behavior guide, saga and workflow reference, and workflow extension');
  await ready('extensions');await page.locator('#search').fill('umf.ddd');await page.locator('#catalog').getByRole('button',{name:/^umf.ddd · 0.1.0/}).click();await page.locator('#inspector').getByText('explicit',{exact:true}).waitFor();checks.push('Extension registration and semantic reference');
  // @covers US-089-AC4 @covers US-089-AC5
  await ready('integrations');await page.locator('#search').fill('independent exact');await page.locator('#catalog').getByRole('button',{name:/^JSON Schema · independent exact numeric oracle/}).click();await page.locator('#inspector').getByText('mixed',{exact:true}).first().waitFor();assert((await page.locator('#inspector').innerText()).includes('unknown'),'Missing correspondence');checks.push('Native oracle failures and unknown closure remain visible');

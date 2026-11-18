@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Actions, sagas and workflows · UMF</title><meta name="description" content="Use UMF to declare actions, compose sequential sagas, and model workflows with timed and correlated waits."><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%3E%3Ctitle%3EUMF%20interwoven%20schema%20mark%3C%2Ftitle%3E%3Cpath%20d%3D%22M10%208v48M32%208v48M54%208v48%22%20stroke%3D%22%23203c35%22%20stroke-width%3D%2210%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8%2010h48M8%2032h48M8%2054h48%22%20stroke%3D%22%23f4f1e9%22%20stroke-width%3D%2216%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8%2010h48M8%2054h48%22%20stroke%3D%22%23203c35%22%20stroke-width%3D%2210%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8%2032h48%22%20stroke%3D%22%2397ad50%22%20stroke-width%3D%2210%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M10%205v10M54%2027v10M32%2049v10%22%20stroke%3D%22%23f4f1e9%22%20stroke-width%3D%2216%22%2F%3E%3Cpath%20d%3D%22M10%205v10M54%2027v10M32%2049v10%22%20stroke%3D%22%23203c35%22%20stroke-width%3D%2210%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E%0A"><link rel="stylesheet" href="style.css"></head><body><header><a class="brand" href="index.html" aria-label="UMF home"><img class="logo" src="logo.svg" alt="">umf</a><nav aria-label="Main navigation">
+ <a href="index.html">Overview</a>
+ <a href="docs.html">Developers</a>
+ <a href="reference/core.html">Schemas</a>
+ <a href="behavior.html" aria-current="page">Actions &amp; workflows</a>
+ <a href="reference/index.html">Reference</a>
+ <a href="demo.html">Playground</a>
+ <a href="ecosystem.html">Ecosystem</a>
+ <a href="https://github.com/DocumentDrivenDX/umf">GitHub ↗</a>
+</nav></header><main>
+<section class="page-top">
+ <h1>Actions, sagas <em>and workflows.</em></h1>
+ <p class="intro">Declare how records can change. UMF supplies portable declarations and checks. Trusted hosts own authorization, state and execution.</p>
+</section>
+<section class="section">
+ <div class="grid">
+  <article class="card" id="actions">
+   <h2>Actions</h2>
+   <p>Describe a change, its inputs, preconditions and effects. Start with an order approval example and see how a host reports the outcome.</p>
+   <p><a href="actions/index.html">Start the Actions guide →</a></p>
+   <a href="reference/index.html#entry=%5B%22guide%22%2C%22actions%22%5D&amp;focus=definition">Action reference</a>
+  </article>
+  <article class="card" id="sagas">
+   <h2>Sagas</h2>
+   <p>Compose independently committed actions in a finite sequence. Declare how the host recovers outcomes, handles cancellation and compensates completed steps.</p>
+   <p><a href="reference/index.html#entry=%5B%22guide%22%2C%22sagas%22%5D&amp;focus=definition">Saga reference →</a></p>
+   <a href="https://github.com/DocumentDrivenDX/umf/blob/umf-v0.10.13/docs/helix/02-design/contracts/CONTRACT-908-saga-semantics.md">Sequential saga contract</a>
+  </article>
+  <article class="card" id="workflows">
+   <h2>Workflows</h2>
+   <p>Declare a per-record flow with typed state and effect outcomes. Wait for a deadline, or resolve the wait early on an eligible event with the correlated profile.</p>
+   <p><a href="reference/index.html#entry=%5B%22guide%22%2C%22workflows%22%5D&amp;focus=definition">Workflow reference →</a></p>
+   <a href="https://github.com/DocumentDrivenDX/umf/blob/umf-v0.10.13/crates/umf-core/tests/fixtures/workflow/reply.json">Follow-up reply example</a>
+  </article>
+ </div>
+</section>
+<section class="section">
+ <h2>Choose a runtime</h2>
+ <p>The Rust workflow API and browser WASM binding inspect and prepare workflow source. A consumer provides clocks, schedules work and dispatches effects. Use integration evidence to check the scope of a particular host or operation.</p>
+ <div class="actions"><a class="button secondary" href="https://github.com/DocumentDrivenDX/umf/blob/umf-v0.10.13/docs/helix/02-design/contracts/CONTRACT-910-workflow-declarations.md">Workflow contract</a><a class="button secondary" href="reference/integrations.html">Browse integration evidence</a></div>
+</section>
+</main><footer class="footer"><span>UMF / Schema interchange fabric · <a href="logo.svg" download="umf-logo.svg">Logo ↧</a></span><span>Experimental · <a href="https://github.com/DocumentDrivenDX/umf">GitHub ↗</a></span></footer></body></html>
