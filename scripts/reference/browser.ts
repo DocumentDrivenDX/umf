@@ -24,6 +24,11 @@ try{
  // A visitor can find the three declaration models without searching the catalog.
  await page.goto(origin);
  await page.getByRole('navigation',{name:'Main navigation'}).getByRole('link',{name:'Actions & workflows'}).click();
+ await page.getByRole('link',{name:'Start the Actions guide'}).click();
+ await page.getByRole('link',{name:'Run the first example'}).click();
+ await page.getByRole('button',{name:'Inspect the approval declaration'}).click();
+ await page.locator('#action-result').filter({hasText:'"valid": true'}).waitFor();
+ await page.getByRole('link',{name:'Actions & workflows',exact:true}).click();
  await page.getByRole('link',{name:'Saga reference'}).click();
  await page.locator('#inspector').getByRole('heading',{name:'Sagas',exact:true}).waitFor();
  await page.locator('#behavior-topics').locator('..').getByRole('link',{name:'Workflows',exact:true}).click();
