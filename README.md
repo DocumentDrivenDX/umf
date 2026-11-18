@@ -70,7 +70,7 @@ restored_sql = engine.export_sql(sql_document)
 More: [Python distribution](python/README.md), [Rust library and CLI](crates/README.md),
 [native hosts](bindings/core/README.md), [Actions guide](docs/helix/04-build/guides/actions/index.md),
 [documentation map](docs/helix/README.md), [changelog](CHANGELOG.md), [roadmap](ROADMAP.md).
-The microsite is at <https://documentdrivendx.github.io/umf/>.
+[UMF microsite](https://documentdrivendx.github.io/umf/) · [Explore Novirhyza](https://documentdrivendx.github.io/novirhyza/)
 
 ## Develop and test
 
