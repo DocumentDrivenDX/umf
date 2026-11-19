@@ -24,4 +24,4 @@ Run portable inspection, explain why it changes no order, identify an unsupporte
 
 Figure V2. The library lane checks metadata. The consumer lane owns authentication and business transactions. No inspection or compatibility check invokes the consumer. [Text explanation](concepts.md).
 
-Install the bundled SDK from [the current UMF SDK](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.0), then follow the [installation and usage example](getting-started.md). No separate actions package is needed. The TypeScript SDK archive is not published to npm. The SDK includes the current core format; vocabulary declarations remain explicit.
+Install the bundled SDK from [the UMF 0.10.13 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.13), then follow the [installation and usage example](getting-started.md). No separate actions package is needed. The SDK includes the current core format; vocabulary declarations remain explicit.

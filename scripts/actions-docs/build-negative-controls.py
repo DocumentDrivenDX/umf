@@ -5,9 +5,9 @@ import hashlib,json,shutil,subprocess,tempfile
 repo=Path(__file__).resolve().parents[2]
 with tempfile.TemporaryDirectory(prefix='umf-guide-controls-') as temporary:
  root=Path(temporary)
- for name in ['docs/helix','scripts','src','spec','native/tablespec','fixtures/actions','patches']:
+ for name in ['docs/helix','scripts','src','spec','native/tablespec','fixtures/actions','patches','bindings/core/node','bindings/core/wasm']:
   shutil.copytree(repo/name,root/name)
- for name in ['package.json','bun.lock','tsconfig.json','.github/workflows/microsite.yml']:
+ for name in ['README.md','package.json','bun.lock','tsconfig.json','.github/workflows/pages.yml']:
   target=root/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(repo/name,target)
  (root/'node_modules').symlink_to(repo/'node_modules',target_is_directory=True)
  command=['bun','scripts/actions-docs/build.ts','--check']

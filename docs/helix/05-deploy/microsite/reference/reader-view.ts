@@ -18,9 +18,9 @@ function schemaExample(json:string,yaml:string){
 export function schemaReader(parent:HTMLElement,e:Entry,pointer:string,reader:ReaderCatalog,concept:Concept|undefined,exampleYaml:string){
  const core=e.data.profileVersions.length>0;
  const root=e.data.sourceData,original=schemaNode(root,pointer),node=resolveSchema(root,original),s=treeValue(node),name=pointer.split('/').at(-1)??'';
- const breadcrumb=el('nav',undefined,'breadcrumbs');breadcrumb.setAttribute('aria-label','Definition path');breadcrumb.append(anchor('Document',readerRoute(e.id)));
+ const breadcrumb=el('nav',undefined,'breadcrumbs');breadcrumb.setAttribute('aria-label','Definition path');breadcrumb.append(anchor(core?'Document':e.title,readerRoute(e.id)));
  if(pointer.includes('/properties/')){const owner=pointer.slice(0,pointer.lastIndexOf('/properties/'));breadcrumb.append(el('span',' / '),anchor(concept?.title??owner.split('/').at(-1)??'Object',readerRoute(e.id,owner,concept?.key??'')));}if(pointer)breadcrumb.append(el('span',' / '+(concept&&concept.pointer===pointer?concept.title:name)));parent.append(breadcrumb);
- const title=concept&&concept.pointer===pointer?concept.title:pointer?name:'Document';
+ const title=concept&&concept.pointer===pointer?concept.title:pointer?name:core?'Document':e.title;
  parent.append(el('h2',title));const desc=concept&&concept.pointer===pointer?concept.description:(core?reader.propertyText[name]:undefined)||s?.description||'Inspect the value shape and rules for this definition.';parent.append(el('p',desc,'intro'));
  const copy=el('button','Copy exact link','secondary') as HTMLButtonElement;copy.onclick=async()=>{try{await navigator.clipboard.writeText(location.href);copy.textContent='Link copied';}catch{copy.textContent=location.href;}};parent.append(copy);
  if(concept?.role&&concept.pointer===pointer)parent.append(el('p','Use kind: "'+concept.role+'".'+(concept.role==='record'?' The keys below describe this definition. members lists its data Fields; keys declares identity tuples.':''),'callout'));

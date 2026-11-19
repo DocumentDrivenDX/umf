@@ -4,18 +4,17 @@ You will read the actual approve fixture and inspect its declaration. No databas
 
 ## Get the normal SDK
 
-[Download the current UMF SDK](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.0). One SDK contains the browser library, TypeScript declarations and schemas, including action declaration support. There is no separate actions package to install.
+[Download the current UMF SDK](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.10.13). One SDK contains the browser library, TypeScript declarations and schemas, including action declaration support. There is no separate actions package to install.
 
-Use Bun 1.4.2 for this example. In a new project directory, download and install the released SDK:
+Use Bun 1.4.3 for this example. Download the archive for your platform. In a new project directory, initialize a Bun project, install the archive, and download the matching fixture. This example uses macOS arm64.
 
 ```sh
-curl -fL https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.0/umf-sdk.tgz -o umf-sdk.tgz
 bun init -y
-bun add ./umf-sdk.tgz
-curl -fL https://raw.githubusercontent.com/DocumentDrivenDX/umf/umf-v0.5.0/fixtures/actions/approve.json -o approve.json
+bun add ./umf-sdk-0.10.13-macos-aarch64.tgz
+curl -fL https://raw.githubusercontent.com/DocumentDrivenDX/umf/umf-v0.10.13/fixtures/actions/approve.json -o approve.json
 ```
 
-The release includes [SHA256SUMS](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.0/SHA256SUMS) for checking the downloaded archive. The SDK is distributed as this release archive; it is not published to npm.
+The release includes [SHA256SUMS](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.10.13/SHA256SUMS) for verifying your platform archive.
 
 Create `inspect.ts` with the following code:
 
@@ -38,19 +37,15 @@ The SDK includes the current core format and action vocabulary. Vocabulary decla
 
 ## Work from source instead
 
-The repository examples are an alternative for contributors. To build the SDK archive yourself, run `bun run build:sdk`; the archive is written to `.cache/sdk-distribution/umf-sdk.tgz`.
+The repository examples use the locally built native addon. Follow the [source setup instructions](../../../../../README.md#develop-and-test) before running them.
 
 ## Prepare the repository
 
 ```sh
-git clone https://github.com/DocumentDrivenDX/umf.git
-cd umf
-bun install --frozen-lockfile
-bun run build
 bun run docs:example
 ```
 
-Use Bun 1.4.2, as pinned by package.json. The final command runs scripts/actions-docs/inspect-example.ts, which prints the inspection summary. The companion portable verification checks the expected result and source preservation.
+Use Bun 1.4.3, as pinned by package.json. The final command runs scripts/actions-docs/inspect-example.ts, which prints the inspection summary. The companion portable verification checks the expected result and source preservation.
 
 ## Read the code
 
