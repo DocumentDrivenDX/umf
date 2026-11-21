@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "394ded5ee6ffd8ae4465fcedaefb1ccd6eae4da5c259ffddf36b1077a73c11bf",
-    "compilerSha256": "a7142380ea55ee5c432e43550a56779fec978d1a53e5a79944193a57c4ee0ef5"
+    "compilerSha256": "2fe607700acec68132d27c2b3b486ebf2a01848057f3c879cbe3312b93a5b75c"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "394ded5ee6ffd8ae4465fcedaefb1ccd6eae4da5c259ffddf36b1077a73c11bf",
@@ -69,11 +69,11 @@
     "crates/umf-core/src/bit128_binding.rs": "4b0147a719ff7d588128a5514ba20bce12940103027009a07c3653051794327c",
     "crates/umf-core/src/bit128_dataset.rs": "4fc7f58a9ef72fd403721307380a577b6a8da41139b8bce337fcf64bde88e548",
     "crates/umf-core/src/bulk_actions.rs": "85fb79b3a9db85862ddfec5609ddd8b33406d53a2aaa088defeb94325f52f7dc",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "0deea8c7369755d7c7ecb878c03a684ef481098a660f240c80780711fd471be0",
-    "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "811f30bcc91d525a5c0435fe85b377f37eddc713e8895e7f707dc02420784108",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "ace75ab0312258791dd7d305643b02feefad3e6ef9d68ebc15ebbfc7893eb613",
+    "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "2735babda0b6124af7b30ec143870508c7e723ef714cda7a75ce1ad7ce9a8d08",
     "crates/umf-core/src/canonical_codegen_resources.rs": "bfacfdd785bfbc249a0dbc47167f0cc76d316b298653fb1f332506bc58b596e6",
-    "crates/umf-core/src/canonical_static_text_independent_tests.rs": "42eaae076b218bad71f2cfd92e83dd3a326577b75eb4a7162d9b30d8ce8393ad",
-    "crates/umf-core/src/canonical_text_cache_independent_tests.rs": "68d7adb275b05988c86ede653a99812f7bd5772dd05a0f38f25f0d364a281b17",
+    "crates/umf-core/src/canonical_static_text_independent_tests.rs": "d2e48b3a114328c5e1b81be2f274ba5555242be807616cbf3f229042bed7b35d",
+    "crates/umf-core/src/canonical_text_cache_independent_tests.rs": "1494ece4474e7f290405a28ec2b633694a8aabbc39d1b966cab792781fee61b5",
     "crates/umf-core/src/cardinality.rs": "3102e922509b68a31d350c48877e90917bcc282a4bc31f655a8a1f3157734d0e",
     "crates/umf-core/src/cardinality_avro_projection.rs": "74b2ec264a837b32a8db7355050c6f9c0ced0866d8a064bb5ea1e378e3e7e9bf",
     "crates/umf-core/src/cardinality_host_json.rs": "fe9a3ac1486b8a4f8b005b599312b35d431e7201a96ee61833ec3478187005b8",
@@ -1352,7 +1352,7 @@
     "crates/umf-codegen/src/actions/single_set/record_shape.rs": "df491ced5c0c3bc66d5b894179053ef557b15167cd0936f0890c7c90e3ec48d9",
     "crates/umf-codegen/src/actions/single_set/request.rs": "f30527e47692f248f38350ed6971cdbb42071172a835ebadf517e51f77c3303e",
     "crates/umf-codegen/src/canonical.rs": "b566c0ad8b8e61a85393e3cd81b936cc4af731921dc137db2c70d2eed60bdecd",
-    "crates/umf-codegen/src/deployment/mod.rs": "61a67f5a7236f2b578bd5534971cbc752356fa00654e282d8b040a42b7bdf4f7",
+    "crates/umf-codegen/src/deployment/mod.rs": "5a11c705a1ae1c88fd449ad5e2dce4eb68920f1a32baa566849fe3d6b6efaa22",
     "crates/umf-codegen/src/generation/client.rs": "c4bdcf791064bf29bc05756ab834127a06aad09157e8c52d86877a5afacfc0f7",
     "crates/umf-codegen/src/generation/mod.rs": "ea9197ac572caa99bdd254cdd007e708beee7bba32fda24c9d82184402cb3947",
     "crates/umf-codegen/src/generation/python.rs": "e81f048129310c17b0d09cb9ff46cff6cc2dd41642d6dfbe790612cf00f4e528",
@@ -1381,7 +1381,7 @@
     "crates/umf-codegen/src/value.rs": "5f9b9b2f8b238628e5f8464dc925fc68ce4c8b5172ce9b7ab86ca33d0289c994",
     "crates/umf-codegen/tests/access_binding_schema_override.rs": "b2694c35ca58b2d3d0230b93720ed32a53e673a80d371507f24014d5c896e2af",
     "crates/umf-codegen/tests/access_diff_capacity.rs": "6d5676f6c43fb527da14dd70950db0dd81cbb202330a51f1cc08b497d46edc66",
-    "crates/umf-codegen/tests/fireweed_space.rs": "4912633c0fab7db01c61528a0caf9bf08cc5afe2a200a9f7869b01e6be53311f",
+    "crates/umf-codegen/tests/fireweed_space.rs": "c1931ddec63afa434743495c1a6c689e725edfa7f2ad81d6809b4dcf789742c6",
     "crates/umf-codegen/tests/fixtures/array-domains.pg.sql": "2ba0afeb9c44e633c91e1fb04d61c548de3e2fd04fd5325e82a9cd2a82ff3d78",
     "crates/umf-codegen/tests/fixtures/fireweed-space.json": "3bb426a0903234069fc22b4e4fd6a409c85cdf9995db7caa8b57ff7b4314a16b",
     "crates/umf-codegen/tests/fixtures/fireweed-space.package.json": "f9f4580ae52a11238a532b0200c5bb9399651e95b619ea19d0624dbc117a53c3",
@@ -1676,11 +1676,11 @@
     "crates/umf-core/src/bit128_binding.rs": "4b0147a719ff7d588128a5514ba20bce12940103027009a07c3653051794327c",
     "crates/umf-core/src/bit128_dataset.rs": "4fc7f58a9ef72fd403721307380a577b6a8da41139b8bce337fcf64bde88e548",
     "crates/umf-core/src/bulk_actions.rs": "85fb79b3a9db85862ddfec5609ddd8b33406d53a2aaa088defeb94325f52f7dc",
-    "crates/umf-core/src/canonical_codegen_literals.rs": "0deea8c7369755d7c7ecb878c03a684ef481098a660f240c80780711fd471be0",
-    "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "811f30bcc91d525a5c0435fe85b377f37eddc713e8895e7f707dc02420784108",
+    "crates/umf-core/src/canonical_codegen_literals.rs": "ace75ab0312258791dd7d305643b02feefad3e6ef9d68ebc15ebbfc7893eb613",
+    "crates/umf-core/src/canonical_codegen_literals_independent_tests.rs": "2735babda0b6124af7b30ec143870508c7e723ef714cda7a75ce1ad7ce9a8d08",
     "crates/umf-core/src/canonical_codegen_resources.rs": "bfacfdd785bfbc249a0dbc47167f0cc76d316b298653fb1f332506bc58b596e6",
-    "crates/umf-core/src/canonical_static_text_independent_tests.rs": "42eaae076b218bad71f2cfd92e83dd3a326577b75eb4a7162d9b30d8ce8393ad",
-    "crates/umf-core/src/canonical_text_cache_independent_tests.rs": "68d7adb275b05988c86ede653a99812f7bd5772dd05a0f38f25f0d364a281b17",
+    "crates/umf-core/src/canonical_static_text_independent_tests.rs": "d2e48b3a114328c5e1b81be2f274ba5555242be807616cbf3f229042bed7b35d",
+    "crates/umf-core/src/canonical_text_cache_independent_tests.rs": "1494ece4474e7f290405a28ec2b633694a8aabbc39d1b966cab792781fee61b5",
     "crates/umf-core/src/cardinality.rs": "3102e922509b68a31d350c48877e90917bcc282a4bc31f655a8a1f3157734d0e",
     "crates/umf-core/src/cardinality_avro_projection.rs": "74b2ec264a837b32a8db7355050c6f9c0ced0866d8a064bb5ea1e378e3e7e9bf",
     "crates/umf-core/src/cardinality_host_json.rs": "fe9a3ac1486b8a4f8b005b599312b35d431e7201a96ee61833ec3478187005b8",
@@ -2961,7 +2961,7 @@
     "crates/umf-codegen/src/actions/single_set/record_shape.rs": "df491ced5c0c3bc66d5b894179053ef557b15167cd0936f0890c7c90e3ec48d9",
     "crates/umf-codegen/src/actions/single_set/request.rs": "f30527e47692f248f38350ed6971cdbb42071172a835ebadf517e51f77c3303e",
     "crates/umf-codegen/src/canonical.rs": "b566c0ad8b8e61a85393e3cd81b936cc4af731921dc137db2c70d2eed60bdecd",
-    "crates/umf-codegen/src/deployment/mod.rs": "61a67f5a7236f2b578bd5534971cbc752356fa00654e282d8b040a42b7bdf4f7",
+    "crates/umf-codegen/src/deployment/mod.rs": "5a11c705a1ae1c88fd449ad5e2dce4eb68920f1a32baa566849fe3d6b6efaa22",
     "crates/umf-codegen/src/generation/client.rs": "c4bdcf791064bf29bc05756ab834127a06aad09157e8c52d86877a5afacfc0f7",
     "crates/umf-codegen/src/generation/mod.rs": "ea9197ac572caa99bdd254cdd007e708beee7bba32fda24c9d82184402cb3947",
     "crates/umf-codegen/src/generation/python.rs": "e81f048129310c17b0d09cb9ff46cff6cc2dd41642d6dfbe790612cf00f4e528",
@@ -2990,7 +2990,7 @@
     "crates/umf-codegen/src/value.rs": "5f9b9b2f8b238628e5f8464dc925fc68ce4c8b5172ce9b7ab86ca33d0289c994",
     "crates/umf-codegen/tests/access_binding_schema_override.rs": "b2694c35ca58b2d3d0230b93720ed32a53e673a80d371507f24014d5c896e2af",
     "crates/umf-codegen/tests/access_diff_capacity.rs": "6d5676f6c43fb527da14dd70950db0dd81cbb202330a51f1cc08b497d46edc66",
-    "crates/umf-codegen/tests/fireweed_space.rs": "4912633c0fab7db01c61528a0caf9bf08cc5afe2a200a9f7869b01e6be53311f",
+    "crates/umf-codegen/tests/fireweed_space.rs": "c1931ddec63afa434743495c1a6c689e725edfa7f2ad81d6809b4dcf789742c6",
     "crates/umf-codegen/tests/fixtures/array-domains.pg.sql": "2ba0afeb9c44e633c91e1fb04d61c548de3e2fd04fd5325e82a9cd2a82ff3d78",
     "crates/umf-codegen/tests/fixtures/fireweed-space.json": "3bb426a0903234069fc22b4e4fd6a409c85cdf9995db7caa8b57ff7b4314a16b",
     "crates/umf-codegen/tests/fixtures/fireweed-space.package.json": "f9f4580ae52a11238a532b0200c5bb9399651e95b619ea19d0624dbc117a53c3",
@@ -3230,15 +3230,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "ec747c32d650febad830c778b643e2292b7e57b654c1dd5c7e8d6abc83d6c850",
+      "sha256": "8608035772c609076d0312e373c2c7c79b00103f78f63e4835362d4def374815",
       "bytes": 45726
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "a182951b87eb48bef5478a41388e0cf8afa353e837ab35f0c4816f559f587c3e",
+      "sha256": "1b932eb10b7f0f3d1cb312b4dc751f62a03d4f603f2e0fe052501bf5c99110ae",
       "bytes": 45847
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "d1db8549bdc7c9290160c1af47e9cbf38c0c398aa39c323b573b28867fd33d09",
+      "sha256": "30f892779b904f238a5db7967fd191ec4f2574a44d8f8f5412dda6b6a4e4da9b",
       "bytes": 45385
     },
     "spec/metamodel/package.json": {
@@ -3246,23 +3246,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "2a41202087d9ad9dca154bcd4a46e15902d5c77d2c60552e0066804d0f9dd7ff",
+      "sha256": "2b3295f8323297773673a66b5118bdbc81e34e25bdb14d0133b3f37e3adf1f4a",
       "bytes": 196631
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "f570682e1d8931a91fa0bccbec02bc89562afb52c46fdfa310fae5f802b97f25",
+      "sha256": "ef7a13dce158f20cc7a10b573fe7e30a17c53e6fe335f2d2939e74dcb6ac1112",
       "bytes": 15367
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "85c0b2dcc5b5b53009dc22bf578ccea831552a833b7a9ea7dcdeb213529ffb36",
+      "sha256": "38af4ba7ba73072fffcefe88b2d661b59472b8ce99d52c7f2b6579a2c7ad6fe4",
       "bytes": 99558
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "d73e3cb4941570941d7a668944a0d36ca5dfbeb563d3db1d9965b82b0bf7915f",
+      "sha256": "bb3ca1f7c2dfc0b6a262f00698d6e93d4eacff75dd3d0f75b2488abb8e65430f",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "d22ead70dca234fbc87e9947ebaa7a4b1b55a03ea2ca153d928d9459cb360c24",
+      "sha256": "d5104b32af3c02617c01ecaa543daca294a899b03f6c6c54e0321aed08e66d5b",
       "bytes": 6764
     },
     "spec/core/facet-operation-v3.schema.json": {
