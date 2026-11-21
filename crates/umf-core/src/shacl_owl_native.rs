@@ -1236,6 +1236,7 @@ pub fn evaluate_shacl_property_path(
     focus: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Value>, EngineError> {
+    rdf::validate_term_value(focus, ctx)?;
     let path = get_shacl_property_path(rt, shapes, shape, ctx)?;
     let graphs = rdf::get_rdf_named_graphs(rt, data, ctx)?;
     if !values(Some(&graphs)).is_empty() {
@@ -2018,15 +2019,8 @@ fn apply_shacl_report_metadata(
                             "sh:severity must be an IRI",
                         )
                     })?;
-                    if !["Violation", "Warning", "Info"]
-                        .iter()
-                        .any(|name| iri == &u(&format!("{SH}{name}")))
-                    {
-                        return Err(EngineError::new(
-                            "SHACL_ENGINE_UNSUPPORTED",
-                            Utf16::default(),
-                            "Unsupported sh:severity IRI",
-                        ));
+                    if text(member(severity, "kind")) != Some(&u("iri")) {
+                        return Err(path_error("sh:severity must be an IRI"));
                     }
                     violation.severity = Some(copy_json(severity, ctx)?);
                 }
@@ -2146,7 +2140,7 @@ fn shacl_literal_length(
     value: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Option<usize>, EngineError> {
-    if text(member(value, "kind")) != Some(&u("literal")) {
+    if !matches!(text(member(value, "kind")), Some(kind) if kind == &u("literal") || kind == &u("iri")) {
         return Ok(None);
     }
     let lexical = text(member(value, "value")).ok_or_else(|| {
@@ -2164,8 +2158,7 @@ fn shacl_literal_length(
             "Literal lexical form is not well-formed UTF-16",
         )
     })?;
-    let _ = scalar;
-    Ok(Some(lexical.len()))
+    Ok(Some(scalar.chars().count()))
 }
 
 fn shacl_xsd_name(datatype: &Utf16) -> Option<String> {
@@ -2523,19 +2516,6 @@ fn shacl_instance_of(
     if closure.contains(&class_key) {
         return Ok(true);
     }
-    for q in data {
-        ctx.charge_work(1, Utf16::default())?;
-        if member(q, "subject").is_some_and(|subject| term_eq(subject, value))
-            && member(member(q, "predicate").unwrap_or(&Value::Null), "value")
-                == Some(&Value::String(rdf_type.clone()))
-        {
-            if let Some(kind) = member(q, "object") {
-                if closure.contains(&term_key_metered(kind, ctx)?) {
-                    return Ok(true);
-                }
-            }
-        }
-    }
     Ok(false)
 }
 
@@ -2800,13 +2780,20 @@ fn evaluate_nested_path(
 /// nested evaluator consumes the same sequence/alternative/inverse/repetition
 /// path language as the public property-path evaluator.
 fn shacl_nested_shape_conforms(
-    shapes: &[Value],
-    data: &[Value],
-    shape: &Value,
-    focus: &Value,
-    ctx: &mut Context<'_>,
-    depth: usize,
+    shapes: &[Value], data: &[Value], shape: &Value, focus: &Value,
+    ctx: &mut Context<'_>, depth: usize,
 ) -> Result<bool, EngineError> {
+    let mut violations = Vec::new();
+    evaluate_shacl_shape(shapes, data, shape, focus, &mut violations, ctx, depth)?;
+    Ok(violations.is_empty())
+}
+
+// All targeted and nested shapes share this evaluator. Quads are admitted once
+// at the operation boundary; recursion and path work retain their own bounds.
+fn evaluate_shacl_shape(
+    shapes: &[Value], data: &[Value], shape: &Value, focus: &Value,
+    violations: &mut Vec<NativeShaclViolation>, ctx: &mut Context<'_>, depth: usize,
+) -> Result<(), EngineError> {
     if depth > 64 {
         return Err(EngineError::new(
             "SHACL_ENGINE_RECURSION",
@@ -2815,7 +2802,7 @@ fn shacl_nested_shape_conforms(
         ));
     }
     if shacl_shape_deactivated(shapes, shape, ctx)? {
-        return Ok(true);
+        return Ok(());
     }
     let path_predicate = u("http://www.w3.org/ns/shacl#path");
     let mut declared_path = None;
@@ -2850,7 +2837,6 @@ fn shacl_nested_shape_conforms(
     } else {
         None
     };
-    let mut violations = Vec::new();
     evaluate_shacl_constraints(
         shapes,
         data,
@@ -2862,80 +2848,27 @@ fn shacl_nested_shape_conforms(
             .map(|(_, values)| values.as_slice())
             .unwrap_or_else(|| std::slice::from_ref(focus)),
         nested_values.is_some(),
-        &mut violations,
+        violations,
         ctx,
         depth,
     )?;
     let property_predicate = u("http://www.w3.org/ns/shacl#property");
-    let path_predicate = u("http://www.w3.org/ns/shacl#path");
+    ctx.charge_work(shapes.len(), Utf16::default())?;
     for link in shapes.iter().filter(|quad| {
         member(quad, "subject").is_some_and(|subject| term_eq(subject, shape))
             && member(quad, "predicate").and_then(|p| member(p, "value"))
                 == Some(&Value::String(property_predicate.clone()))
     }) {
-        ctx.charge_work(1, Utf16::default())?;
-        let property = member(link, "object").ok_or_else(|| {
-            EngineError::new(
-                "SHACL_ENGINE_UNSUPPORTED",
-                Utf16::default(),
-                "sh:property lacks a shape",
-            )
-        })?;
-        let mut path = None;
-        for candidate in shapes.iter().filter(|quad| {
-            member(quad, "subject").is_some_and(|subject| term_eq(subject, property))
-                && member(quad, "predicate").and_then(|p| member(p, "value"))
-                    == Some(&Value::String(path_predicate.clone()))
-        }) {
-            ctx.charge_work(1, Utf16::default())?;
-            if path.is_some() {
-                return Err(EngineError::new(
-                    "SHACL_ENGINE_UNSUPPORTED",
-                    Utf16::default(),
-                    "Nested property shape requires exactly one path",
-                ));
-            }
-            path = member(candidate, "object");
-        }
-        let path = path.ok_or_else(|| {
-            EngineError::new(
-                "SHACL_ENGINE_UNSUPPORTED",
-                Utf16::default(),
-                "Nested property shape has no path",
-            )
-        })?;
-        let path_ast = compile_nested_path(shapes, path, &mut BTreeSet::new(), ctx, 0)?;
-        let mut work = 0;
-        let nodes = evaluate_nested_path(
-            data,
-            &path_ast,
-            std::slice::from_ref(focus),
-            false,
-            ctx,
-            &mut work,
-            0,
-        )?;
-        let mut nested = Vec::new();
-        evaluate_shacl_constraints(
-            shapes,
-            data,
-            property,
-            focus,
-            Some(path),
-            &nodes,
-            true,
-            &mut nested,
-            ctx,
-            depth + 1,
-        )?;
-        if !nested.is_empty() {
-            // Violation details of a nested shape are evidence too. They remain
-            // attached to its own evaluation only; the outer report identifies
-            // the logical component and focus value.
-            violations.extend(nested);
+        let property = member(link, "object").ok_or_else(|| path_error("sh:property lacks a shape"))?;
+        shacl_declared_path_term(shapes, property, ctx)?;
+        // Property constraints are evaluated for each value node of the parent;
+        // direct node shapes have exactly their focus node as the value set.
+        for value in nested_values.as_ref().map(|(_, values)| values.as_slice())
+            .unwrap_or_else(|| std::slice::from_ref(focus)) {
+            evaluate_shacl_shape(shapes, data, property, value, violations, ctx, depth + 1)?;
         }
     }
-    Ok(violations.is_empty())
+    Ok(())
 }
 
 fn shacl_shape_deactivated(
@@ -2970,7 +2903,7 @@ fn shacl_shape_deactivated(
         }
         match text(member(object, "value")) {
             Some(value) if value == &u("true") => deactivated = true,
-            Some(value) if value == &u("false") => (),
+            Some(value) if value == &u("false") || value == &u("0") || value == &u("1") => (),
             _ => {
                 return Err(EngineError::new(
                     "SHACL_ENGINE_UNSUPPORTED",
@@ -3061,7 +2994,7 @@ fn evaluate_shacl_constraints(
             if lexical == &u("true") {
                 return Ok(());
             }
-            if lexical != &u("false") {
+            if lexical != &u("false") && lexical != &u("0") {
                 return Err(EngineError::new(
                     "SHACL_ENGINE_UNSUPPORTED",
                     Utf16::default(),
@@ -3086,16 +3019,12 @@ fn evaluate_shacl_constraints(
                     "sh:severity has no value",
                 )
             })?;
-            let iri = text(member(severity, "value"));
             if text(member(severity, "kind")) != Some(&u("iri"))
-                || !["Violation", "Warning", "Info"]
-                    .iter()
-                    .any(|name| iri == Some(&u(&format!("{SH}{name}"))))
             {
                 return Err(EngineError::new(
                     "SHACL_ENGINE_UNSUPPORTED",
                     Utf16::default(),
-                    "sh:severity must be sh:Violation, sh:Warning, or sh:Info",
+                    "sh:severity must be an IRI",
                 ));
             }
         }
@@ -3119,15 +3048,8 @@ fn evaluate_shacl_constraints(
         };
         match local.as_str() {
             "qualifiedMinCount" | "qualifiedMaxCount" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "Qualified count constraints require a property shape",
-                    ));
-                }
                 let bound = shacl_count_parameter(parameter, ctx)?;
-                let qualified_shape = qs
+                let Some(qualified_shape) = qs
                     .iter()
                     .find(|row| {
                         member(row, "subject").is_some_and(|subject| term_eq(subject, shape))
@@ -3135,13 +3057,11 @@ fn evaluate_shacl_constraints(
                                 == Some(&u(&format!("{SH}qualifiedValueShape")))
                     })
                     .and_then(|row| member(row, "object"))
-                    .ok_or_else(|| {
-                        EngineError::new(
-                            "SHACL_ENGINE_UNSUPPORTED",
-                            Utf16::default(),
-                            "Qualified count requires exactly one sh:qualifiedValueShape",
-                        )
-                    })?;
+                else {
+                    // Without qualifiedValueShape this shape has no qualified
+                    // value constraint; unrelated constraints still apply.
+                    continue;
+                };
                 if qs
                     .iter()
                     .filter(|row| {
@@ -3321,7 +3241,7 @@ fn evaluate_shacl_constraints(
                         "sh:closed has malformed UTF-16",
                     )
                 })?;
-                if enabled != "true" && enabled != "false" {
+                if !["true", "false", "1", "0"].contains(&enabled.as_str()) {
                     return Err(EngineError::new(
                         "SHACL_ENGINE_UNSUPPORTED",
                         Utf16::default(),
@@ -3440,13 +3360,6 @@ fn evaluate_shacl_constraints(
                 }
             }
             "minInclusive" | "minExclusive" | "maxInclusive" | "maxExclusive" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "Numeric bound constraints require a property shape",
-                    ));
-                }
                 for value in value_nodes {
                     let ordering = shacl_numeric_order(value, parameter, ctx)?;
                     let conforms = match (local.as_str(), ordering) {
@@ -3633,13 +3546,6 @@ fn evaluate_shacl_constraints(
                 }
             }
             "equals" | "disjoint" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "sh:equals and sh:disjoint require a property shape",
-                    ));
-                }
                 let other_path = text(member(parameter, "value"))
                     .filter(|_| text(member(parameter, "kind")) == Some(&u("iri")))
                     .ok_or_else(|| {
@@ -3700,13 +3606,6 @@ fn evaluate_shacl_constraints(
                 }
             }
             "hasValue" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "sh:hasValue requires a property shape",
-                    ));
-                }
                 if !value_nodes.iter().any(|value| term_eq(value, parameter)) {
                     push_shacl_violation(
                         out,
@@ -3789,13 +3688,6 @@ fn evaluate_shacl_constraints(
                 }
             }
             "in" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "sh:in requires a property shape",
-                    ));
-                }
                 let allowed = shacl_list_values(qs, parameter, ctx)?;
                 for value in value_nodes {
                     if !allowed.iter().any(|candidate| term_eq(candidate, value)) {
@@ -3813,13 +3705,6 @@ fn evaluate_shacl_constraints(
                 }
             }
             "minLength" | "maxLength" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "Length constraints require a property shape",
-                    ));
-                }
                 let bound = shacl_count_parameter(parameter, ctx)?;
                 for value in value_nodes {
                     let length = shacl_literal_length(value, ctx)?;
@@ -3849,13 +3734,6 @@ fn evaluate_shacl_constraints(
                 }
             }
             "pattern" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "sh:pattern requires a property shape",
-                    ));
-                }
                 let pattern = text(member(parameter, "value")).ok_or_else(|| {
                     EngineError::new(
                         "SHACL_ENGINE_UNSUPPORTED",
@@ -3954,13 +3832,6 @@ fn evaluate_shacl_constraints(
                 }
             }
             "languageIn" => {
-                if !is_property_shape {
-                    return Err(EngineError::new(
-                        "SHACL_ENGINE_UNSUPPORTED",
-                        Utf16::default(),
-                        "sh:languageIn requires a property shape",
-                    ));
-                }
                 let allowed = shacl_list_values(qs, parameter, ctx)?
                     .into_iter()
                     .map(|value| {
@@ -4056,7 +3927,7 @@ fn evaluate_shacl_constraints(
                         "sh:uniqueLang has malformed UTF-16",
                     )
                 })?;
-                if enabled != "true" && enabled != "false" {
+                if !["true", "false", "1", "0"].contains(&enabled.as_str()) {
                     return Err(EngineError::new(
                         "SHACL_ENGINE_UNSUPPORTED",
                         Utf16::default(),
@@ -4529,11 +4400,8 @@ pub fn propose_shacl_engine_validation_sync(
             }
             for quad in &dq {
                 ctx.charge_work(1, Utf16::default())?;
-                if member(member(quad, "predicate"), "value")
-                    == Some(&Value::String(rdf_type.clone()))
-                    && member(quad, "object").is_some_and(|object| term_eq(object, &shape))
-                {
-                    if let Some(focus) = member(quad, "subject") {
+                if let Some(focus) = member(quad, "subject") {
+                    if shacl_instance_of(focus, &shape, &dq, ctx)? {
                         add_target(&shape, focus, ctx)?;
                     }
                 }
@@ -4541,110 +4409,7 @@ pub fn propose_shacl_engine_validation_sync(
         }
         for (shape, focus) in targets {
             ctx.charge_work(1, Utf16::default())?;
-            if shacl_shape_deactivated(&sq, &shape, ctx)? {
-                continue;
-            }
-            // Evaluate node-shape constraints against the focus node itself.
-            let shape_types: Vec<_> = sq
-                .iter()
-                .filter(|q| {
-                    member(q, "subject").is_some_and(|s| term_eq(s, &shape))
-                        && member(q, "predicate").and_then(|p| member(p, "value"))
-                            == Some(&Value::String(rdf_type.clone()))
-                })
-                .filter_map(|q| member(q, "object"))
-                .collect();
-            let explicit_node_shape = shape_types
-                .iter()
-                .any(|t| text(member(t, "value")) == Some(&u(&format!("{sh}NodeShape"))));
-            let explicit_property_shape = shape_types
-                .iter()
-                .any(|t| text(member(t, "value")) == Some(&u(&format!("{sh}PropertyShape"))));
-            let has_path = sq.iter().any(|quad| {
-                member(quad, "subject").is_some_and(|subject| term_eq(subject, &shape))
-                    && member(quad, "predicate").and_then(|predicate| member(predicate, "value"))
-                        == Some(&Value::String(u(&format!("{sh}path"))))
-            });
-            let node_shape = explicit_node_shape
-                || (!explicit_property_shape && !has_path);
-            if node_shape {
-                evaluate_shacl_constraints(
-                    &sq,
-                    &dq,
-                    &shape,
-                    &focus,
-                    None,
-                    std::slice::from_ref(&focus),
-                    false,
-                    &mut violations,
-                    ctx,
-                    0,
-                )?;
-            }
-            let properties: Vec<Value> = sq
-                .iter()
-                .filter(|q| {
-                    member(q, "subject").is_some_and(|s| term_eq(s, &shape))
-                        && text(member(member(q, "predicate"), "value"))
-                            == Some(&u(&format!("{sh}property")))
-                })
-                .filter_map(|q| member(q, "object"))
-                .map(|v| copy_json(v, ctx))
-                .collect::<Result<_, _>>()?;
-            for property in properties {
-                let path = get_shacl_property_path(rt, &shapes_eval, &property, ctx)?;
-                let found = evaluate_shacl_property_path(
-                    rt,
-                    &shapes_eval,
-                    &property,
-                    &data_eval,
-                    &focus,
-                    ctx,
-                )?;
-                let path_term = shacl_declared_path_term(&sq, &property, ctx)?;
-                evaluate_shacl_constraints(
-                    &sq,
-                    &dq,
-                    &property,
-                    &focus,
-                    Some(&path_term),
-                    &found,
-                    true,
-                    &mut violations,
-                    ctx,
-                    0,
-                )?;
-            }
-            // A property shape may also be targeted directly and have no parent NodeShape.
-            let is_property = sq.iter().any(|q| {
-                member(q, "subject").is_some_and(|s| term_eq(s, &shape))
-                    && text(member(member(q, "predicate"), "value"))
-                        == Some(&u(&format!("{sh}path")))
-            });
-            if is_property {
-                let path = get_shacl_property_path(rt, &shapes_eval, &shape, ctx)?;
-                let found = evaluate_shacl_property_path(
-                    rt,
-                    &shapes_eval,
-                    &shape,
-                    &data_eval,
-                    &focus,
-                    ctx,
-                )?;
-                let path_term = shacl_declared_path_term(&sq, &shape, ctx)?;
-                evaluate_shacl_constraints(
-                    &sq,
-                    &dq,
-                    &shape,
-                    &focus,
-                    Some(&path_term),
-                    &found,
-                    true,
-                    &mut violations,
-                    ctx,
-                    0,
-                )?;
-            }
+            evaluate_shacl_shape(&sq, &dq, &shape, &focus, &mut violations, ctx, 0)?;
         }
         Ok(())
     })();

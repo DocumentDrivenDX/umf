@@ -59,6 +59,28 @@ impl CodegenEngine<'_> {
         input: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
+        self.inspect_table_lifecycle_host(input, None, ctx)
+    }
+
+    /// [`Self::inspect_table_lifecycle`] for documents that also declare
+    /// extensions registered through
+    /// [`crate::CodegenResources::register_host_extension`]. `host` validates
+    /// those extensions' semantics by token; the table semantics stay UMF's.
+    pub fn inspect_table_lifecycle_with_host(
+        &self,
+        input: &Value,
+        host: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        self.inspect_table_lifecycle_host(input, Some(host), ctx)
+    }
+
+    pub(crate) fn inspect_table_lifecycle_host(
+        &self,
+        input: &Value,
+        host: Option<&mut dyn Capabilities>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
         let source = match crate::value::admit_json(input, ctx) {
             Ok(source) => source,
             Err(error)
@@ -119,6 +141,7 @@ impl CodegenEngine<'_> {
         let mut capabilities = TableCapabilities {
             token,
             resources: self.resources(),
+            host,
         };
         // Package schemas use recursive $ref/oneOf scaffolding in addition to
         // data descent. Raw source was already admitted above at the caller's
@@ -237,19 +260,34 @@ impl CodegenEngine<'_> {
     }
 }
 
-struct TableCapabilities<'a> {
+struct TableCapabilities<'a, 'h> {
     token: u64,
     resources: &'a crate::CodegenResources,
+    host: Option<&'h mut dyn Capabilities>,
 }
-impl Capabilities for TableCapabilities<'_> {
+impl TableCapabilities<'_, '_> {
+    /// A registered host extension without host capabilities stays unchecked.
+    fn unchecked(context: &SemanticContext) -> Vec<Diagnostic> {
+        vec![core_diag(
+            "SEMANTICS_UNCHECKED",
+            &context.path,
+            "Structure checked; semantics not validated",
+            Severity::Warning,
+        )]
+    }
+}
+impl Capabilities for TableCapabilities<'_, '_> {
     fn validate_extension(
         &mut self,
         token: u64,
-        _payload: &Value,
+        payload: &Value,
         context: &SemanticContext,
     ) -> Result<Vec<Diagnostic>, Utf16> {
         if token != self.token {
-            return Ok(Vec::new());
+            return match self.host.as_deref_mut() {
+                Some(host) => host.validate_extension(token, payload, context),
+                None => Ok(Self::unchecked(context)),
+            };
         }
         // Core invokes the context-aware override below. This fallback retains
         // the trait's host callback contract without running unmetered semantics.
@@ -265,7 +303,10 @@ impl Capabilities for TableCapabilities<'_> {
         ctx: &mut Context<'_>,
     ) -> Result<Vec<Diagnostic>, CapabilityError> {
         if token != self.token {
-            return Ok(Vec::new());
+            return match self.host.as_deref_mut() {
+                Some(host) => host.validate_extension_with_context(token, payload, context, ctx),
+                None => Ok(Self::unchecked(context)),
+            };
         }
         inspect_module_semantics(payload, context, self.resources, ctx)
             .map_err(CapabilityError::Engine)
@@ -507,28 +548,60 @@ fn inspect_column_literals(
     }
     if member(field, "default").is_some() {
         let logical = member(field, "default").unwrap_or(&Value::Null);
-        let native_identity = if let Some(native) = member(column, "default")
-            .filter(|native| string_member(native, "kind") == Some(&Utf16::from("literal")))
-        {
-            member(native, "value")
-                .map(|v| literal_identity(field, v, policy, ctx))
-                .transpose()?
-                .flatten()
-        } else {
-            None
-        };
-        let logical_identity = member(logical, "value")
-            .map(|v| literal_identity(field, v, policy, ctx))
-            .transpose()?
-            .flatten();
         let matches = member(logical, "on") == Some(&Value::String(Utf16::from("missing")))
-            && native_identity.is_some()
-            && native_identity == logical_identity;
+            && match (member(column, "default").filter(|d| string_member(d, "kind") == Some(&Utf16::from("literal"))).and_then(|d| member(d, "value")), member(logical, "value")) {
+                (Some(a), Some(b)) => stored_defaults_equal(document, field, a, b, policy, ctx)?,
+                _ => false,
+            };
         if !matches {
             out.push_capped(core_diag("TABLES_LOGICAL_DEFAULT", &append_path(path, "default"), "Logical and native defaults require an explicit matching missing-only literal; other default behavior is not qualified", Severity::Warning));
         }
     }
     Ok(())
+}
+
+// Matching defaults use logical item equality, not literal token spelling.
+// Sets disregard order; ordered arrays preserve it. Validation independently
+// rejects duplicate sets, invalid literals and native capacity loss.
+fn stored_defaults_equal(document: &Value, field: &Value, a: &Value, b: &Value,
+    policy: &umf_core::literal_policy::PreparedPolicy, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
+    if a == &Value::Null || b == &Value::Null { return Ok(a == b); }
+    let card = string_member(field, "cardinality").and_then(|s| s.to_utf8().ok()).unwrap_or_default();
+    if matches!(card.as_str(), "array" | "set") {
+        let (Some(a), Some(b), Some(item)) = (member(a, "array").and_then(array_items), member(b, "array").and_then(array_items), member(field, "itemType").and_then(|r| resolve_ref(document, r))) else { return Ok(false); };
+        if a.len() != b.len() { return Ok(false); }
+        for (index, value) in a.iter().enumerate() {
+            if card == "array" {
+                if !stored_defaults_equal(document, item, value, &b[index], policy, ctx)? { return Ok(false); }
+            } else {
+                let mut found = false;
+                for other in b {
+                    if stored_defaults_equal(document, item, value, other, policy, ctx)? { found = true; break; }
+                }
+                if !found { return Ok(false); }
+            }
+        }
+        return Ok(true);
+    }
+    if string_member(field, "scalarType") == Some(&Utf16::from("json")) {
+        return match (member(a, "json"), member(b, "json")) {
+            (Some(a), Some(b)) => Ok(crate::canonical::canonical_json_admitted(a, ctx)? == crate::canonical::canonical_json_admitted(b, ctx)?),
+            _ => Ok(false),
+        };
+    }
+    if string_member(field, "scalarType") == Some(&Utf16::from("timestamp")) {
+        return match (string_member(a, "timestamp").and_then(|s| s.to_utf8().ok()), string_member(b, "timestamp").and_then(|s| s.to_utf8().ok())) {
+            (Some(a), Some(b)) => Ok(crate::deployment::native_instant(&a).ok().zip(crate::deployment::native_instant(&b).ok()).is_some_and(|(a,b)| a == b)),
+            _ => Ok(false),
+        };
+    }
+    if string_member(field, "scalarType") == Some(&Utf16::from("date")) {
+        return Ok(string_member(a, "date").is_some() && string_member(a, "date") == string_member(b, "date"));
+    }
+    let a = literal_identity(field, a, policy, ctx)?;
+    let b = literal_identity(field, b, policy, ctx)?;
+    Ok(a.is_some() && a == b)
 }
 
 fn numeric_capacity_message(
@@ -612,6 +685,28 @@ fn validate_stored_literal(
     let kind = string_member(native, "kind")
         .and_then(|text| text.to_utf8().ok())
         .unwrap_or_default();
+    if kind == "array" {
+        if let (Some(items), Some(item), Some(element)) = (
+            member(literal, "array").and_then(array_items),
+            member(field, "itemType").and_then(|r| resolve_ref(document, r)),
+            member(native, "element"),
+        ) {
+            for (index, value) in items.iter().enumerate() {
+                validate_stored_literal(document, item, value, element,
+                    &Utf16::from(format!("{}/array/{index}", path.to_utf8().unwrap_or_default())), policy, ctx, out)?;
+            }
+        }
+    }
+    if kind == "timestamptz" {
+        if let (Some(value), Some(precision)) = (string_member(literal, "timestamp"), number_member(native, "precision")) {
+            if let Some(value) = value.to_utf8().ok().and_then(|v| crate::deployment::native_instant(&v).ok()) {
+                let fractional = value.split_once('.').map(|(_, f)| f.trim_end_matches('Z')).unwrap_or("");
+                if fractional.bytes().skip(precision as usize).any(|b| b != b'0') {
+                    out.push_capped(core_diag("TABLES_NATIVE_CAPACITY", path, "Instant would round at the declared timestamp precision", Severity::Error));
+                }
+            }
+        }
+    }
     if let Some(token) = string_member(literal, "integerToken") {
         if ["int2", "int4", "int8"].contains(&kind.as_str()) {
             match exact_coefficient(token, 0, None, ctx) {
@@ -925,6 +1020,7 @@ fn literal_kind(value: &Value) -> String {
         return "boolean".into();
     }
     for (key, kind) in [
+        ("json", "json"),
         ("integerToken", "integer"),
         ("decimalToken", "decimal"),
         ("floatToken", "float"),
@@ -952,6 +1048,16 @@ fn compare_expr(
     ctx: &mut Context<'_>,
     out: &mut Vec<Diagnostic>,
 ) -> Result<(), EngineError> {
+    if left.kind == "json" || right.kind == "json" {
+        // CONTRACT-084: core json has no admitted equality or order yet.
+        out.push_capped(core_diag(
+            "TABLES_EXPRESSION_TYPE",
+            path,
+            "JSON values have no core comparison; use isNull only",
+            Severity::Error,
+        ));
+        return Ok(());
+    }
     if left.kind != "null"
         && right.kind != "null"
         && (left.kind != right.kind
@@ -1139,6 +1245,7 @@ struct RowShape {
     integral: usize,
     fractional: usize,
     statically_integral: bool,
+    instant_precision: Option<usize>,
 }
 fn row_native(native: &Value) -> String {
     match string_member(native, "kind")
@@ -1202,6 +1309,7 @@ fn row_literal_text_valid(value: &Value) -> bool {
 fn row_literal_shape(value: &Value) -> Option<RowShape> {
     if value == &Value::Null {
         return Some(RowShape {
+                instant_precision: None,
             scalar: None,
             nullable: true,
             native: "null".into(),
@@ -1235,7 +1343,12 @@ fn row_literal_shape(value: &Value) -> Option<RowShape> {
                 } else {
                     (unsigned, "0")
                 };
-            let exponent = exponent.parse::<i32>().ok()?;
+            // A syntactically valid zero is independent of exponent magnitude.
+            // Literal admission validates the grammar before shape inference.
+            let exponent_digits = exponent.strip_prefix(['+', '-']).unwrap_or(exponent);
+            let is_zero = (mantissa == "0" || mantissa.strip_prefix("0.").is_some_and(|digits| !digits.is_empty() && digits.bytes().all(|b| b == b'0')))
+                && !exponent_digits.is_empty() && exponent_digits.bytes().all(|b| b.is_ascii_digit());
+            let exponent = if is_zero { 0 } else { exponent.parse::<i32>().ok()? };
             let fraction = mantissa.split_once('.').map_or(0, |(_, tail)| tail.len());
             let mut digits = mantissa
                 .chars()
@@ -1261,6 +1374,7 @@ fn row_literal_shape(value: &Value) -> Option<RowShape> {
                 (scale.max(0) as usize).min(1001)
             };
             return Some(RowShape {
+                instant_precision: None,
                 scalar: Some(
                     (if kind == "integerToken" {
                         "integer"
@@ -1284,6 +1398,11 @@ fn row_literal_shape(value: &Value) -> Option<RowShape> {
         _ => return None,
     };
     Some(RowShape {
+        instant_precision: if native == "instant" {
+            string_member(value, "timestamp").and_then(|value| value.to_utf8().ok())
+                .and_then(|value| crate::deployment::native_instant(&value).ok())
+                .map(|value| value.split_once('.').map_or(0, |(_, tail)| tail.trim_end_matches('Z').trim_end_matches('0').len()))
+        } else { None },
         scalar: Some(scalar.into()),
         nullable: false,
         native: native.into(),
@@ -1438,7 +1557,7 @@ fn inspect_row_predicate(
             Severity::Error,
         ));
     }
-    if member(column, "generated") == Some(&Value::Bool(true))
+    if member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false))
         || array_items(member(field, "semanticTypes").unwrap_or(&Value::Null))
             .is_some_and(|a| !a.is_empty())
         || object_members(member(field, "extensions").unwrap_or(&Value::Null))
@@ -1619,7 +1738,7 @@ fn row_expression_infer(
                     Severity::Error,
                 ));
             }
-            if member(column, "generated") == Some(&Value::Bool(true))
+            if member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false))
                 || array_items(member(field, "semanticTypes").unwrap_or(&Value::Null))
                     .is_some_and(|a| !a.is_empty())
                 || object_members(member(field, "extensions").unwrap_or(&Value::Null))
@@ -1659,6 +1778,7 @@ fn row_expression_infer(
             }
             let (integral, fractional) = bounds.unwrap_or((0, 0));
             Ok(Some(RowShape {
+                instant_precision: if scalar.as_deref() == Some("timestamp") && row_native(native_type) == "instant" { Some(number_member(native_type, "precision").unwrap_or(6.0) as usize) } else { None },
                 scalar,
                 nullable: string_member(field, "nullability") != Some(&Utf16::from("required")),
                 native: row_native(member(column, "nativeType").unwrap_or(&Value::Null)),
@@ -1714,8 +1834,13 @@ fn row_expression_infer(
                     && field_scalar == &Utf16::from("integer"))
                 {
                     let literal_field = row_literal_field(target_field, &shape);
-                    let errors =
-                        literal_errors(document, &literal_field, literal, true, policy, ctx)?;
+                    if matches!(shape.scalar.as_deref(), Some("date" | "timestamp")) {
+                        let native = array_items(member(table, "columns").unwrap_or(&Value::Null)).unwrap_or(&[]).iter()
+                            .find(|column| member(column, "field").is_some_and(|field| refs_equal(field, target)))
+                            .and_then(|column| member(column, "nativeType")).unwrap_or(&Value::Null);
+                        validate_stored_literal(document, &literal_field, literal, native, path, policy, ctx, out)?;
+                    } else {
+                    let errors = literal_errors(document, &literal_field, literal, true, policy, ctx)?;
                     if let Some(first) = errors.first() {
                         out.push_capped(core_diag(
                             "TABLES_LITERAL",
@@ -1723,6 +1848,7 @@ fn row_expression_infer(
                             &first.message.to_utf8().unwrap_or_default(),
                             Severity::Error,
                         ));
+                    }
                     }
                 }
             }
@@ -1763,6 +1889,7 @@ fn row_expression_infer(
                     ));
                 }
                 return Ok(Some(RowShape {
+                instant_precision: None,
                     scalar: Some("string".into()),
                     nullable: shapes.iter().any(|s| s.nullable),
                     native: "string".into(),
@@ -1776,6 +1903,7 @@ fn row_expression_infer(
                 .filter(|shape| shape.scalar.is_some())
                 .collect::<Vec<_>>();
             let base = nonnull.first().map(|s| (*s).clone()).unwrap_or(RowShape {
+                instant_precision: None,
                 scalar: None,
                 nullable: true,
                 native: "null".into(),
@@ -1795,6 +1923,7 @@ fn row_expression_infer(
                 .iter()
                 .any(|s| s.scalar.as_deref() == Some("decimal"));
             Ok(Some(RowShape {
+                instant_precision: nonnull.iter().filter_map(|shape| shape.instant_precision).max(),
                 scalar: if decimal {
                     Some("decimal".into())
                 } else {
@@ -1856,6 +1985,7 @@ fn row_expression_infer(
             if left.scalar.is_none() || right.scalar.is_none() {
                 if left.scalar.is_none() && right.scalar.is_none() {
                     return Ok(Some(RowShape {
+                instant_precision: None,
                         scalar: Some("decimal".into()),
                         nullable: true,
                         native: "decimal".into(),
@@ -1889,6 +2019,7 @@ fn row_expression_infer(
             let decimal = left.scalar.as_deref() == Some("decimal")
                 || right.scalar.as_deref() == Some("decimal");
             Ok(Some(RowShape {
+                instant_precision: None,
                 scalar: Some(if decimal { "decimal" } else { "integer" }.into()),
                 nullable: left.nullable || right.nullable,
                 native: "decimal".into(),
@@ -1955,6 +2086,7 @@ fn row_expression_infer(
                 a.clone()
             };
             Ok(Some(RowShape {
+                instant_precision: a.instant_precision.max(b.instant_precision),
                 scalar: if decimal {
                     Some("decimal".into())
                 } else {
@@ -2045,7 +2177,7 @@ fn inspect_row_expression_operation(
             Severity::Error,
         ));
     }
-    if member(column, "generated") == Some(&Value::Bool(true)) {
+    if member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false)) {
         out.push_capped(core_diag(
             "TABLES_OPERATION_SOURCE",
             &target_path,
@@ -2185,7 +2317,7 @@ fn inspect_row_expression_operation(
                 "Identity-sensitive expression carrier must match target native storage exactly",
                 Severity::Error,
             ));
-        } else if !result_is_null
+        } else if !identity && !result_is_null
             && result.scalar.as_deref() != Some(target_native.as_str())
             && !(result.scalar.as_deref() == Some("integer") && target_native == "decimal")
             && !(result.scalar.as_deref() == Some("decimal")
@@ -2198,6 +2330,10 @@ fn inspect_row_expression_operation(
                 "Expression carrier does not match target native storage",
                 Severity::Error,
             ));
+        }
+        if result.native == "instant" && target_native == "instant"
+            && result.instant_precision.unwrap_or(6) > number_member(member(column, "nativeType").unwrap_or(&Value::Null), "precision").unwrap_or(6.0) as usize {
+            out.push_capped(core_diag("TABLES_OPERATION_DOMAIN", &expr_path, "Expression instant precision exceeds target native storage", Severity::Error));
         }
         if result.integral.saturating_add(result.fractional) > 1000 {
             out.push_capped(core_diag(
@@ -2313,7 +2449,7 @@ fn inspect_operation(
     let body_path = append_path(path, "body");
     if kind == "read" {
         if string_member(command, "replay") != Some(&Utf16::from("none"))
-            || member(command, "batch") == Some(&Value::Bool(true))
+            || member(command, "batch").is_some_and(|batch| batch != &Value::Bool(false))
         {
             out.push_capped(core_diag(
                 "TABLES_OPERATION_READ",
@@ -2571,7 +2707,7 @@ fn inspect_operation(
             let field = member(assignment, "field").unwrap_or(&Value::Null);
             let selected = operation_field(table, field, &append_path(&p, "field"), out, ctx)?;
             if selected
-                .is_some_and(|column| member(column, "generated") == Some(&Value::Bool(true)))
+                .is_some_and(|column| member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false)))
             {
                 out.push_capped(core_diag(
                     "TABLES_OPERATION_GENERATED",
@@ -2758,7 +2894,7 @@ fn inspect_unique_refs(
 
 fn operation_mutable(table: &Value, field: &Value, column: &Value, document: &Value) -> bool {
     if member(column, "immutable") == Some(&Value::Bool(true))
-        || member(column, "generated") == Some(&Value::Bool(true))
+        || member(column, "generated").is_some_and(|generated| generated != &Value::Bool(false))
     {
         return false;
     }
@@ -2785,7 +2921,7 @@ fn inspect_query_operation(
 ) -> Result<(), EngineError> {
     let module_id = module_id_for_path(document, path);
     if string_member(command, "replay") != Some(&Utf16::from("none"))
-        || member(command, "batch") == Some(&Value::Bool(true))
+        || member(command, "batch").is_some_and(|batch| batch != &Value::Bool(false))
     {
         out.push_capped(core_diag(
             "TABLES_OPERATION_READ",
@@ -4266,7 +4402,15 @@ fn inspect_table_refs(
             let valid_nullability = nullability.is_some_and(|n| {
                 n == &Utf16::from("required") || n == &Utf16::from("absent-allowed")
             });
-            if card != Some(&Utf16::from("one")) || !valid_nullability {
+            // A native array column carries one whole array/set container value.
+            let native_array = string_member(
+                member(column, "nativeType").unwrap_or(&Value::Null),
+                "kind",
+            ) == Some(&Utf16::from("array"));
+            let shape_ok = card == Some(&Utf16::from("one"))
+                || native_array
+                    && (card == Some(&Utf16::from("array")) || card == Some(&Utf16::from("set")));
+            if !shape_ok || !valid_nullability {
                 out.push_capped(core_diag(
                     "TABLES_FIELD_SHAPE",
                     &append_path(&column_path, "field"),
@@ -4389,29 +4533,53 @@ fn inspect_native_column(
     let scalar = string_member(field, "scalarType")
         .and_then(|v| v.to_utf8().ok())
         .unwrap_or_default();
-    let family_ok = match kind.as_str() {
-        "boolean" => scalar == "boolean",
-        "text" | "varchar" | "char" => scalar == "string",
-        "int2" | "int4" | "int8" => scalar == "integer",
-        "float4" | "float8" => scalar == "float",
-        "numeric" => scalar == "decimal",
-        "date" => scalar == "date",
-        "timestamp" | "timestamptz" => scalar == "timestamp",
-        "uuid" => scalar == "uuid",
-        "bytea" => matches!(scalar.as_str(), "binary" | "bits128"),
-        _ => false,
+    let cardinality = string_member(field, "cardinality")
+        .and_then(|v| v.to_utf8().ok())
+        .unwrap_or_default();
+    let (family_ok, scalar_native) = if kind == "array" {
+        // CONTRACT-081/084: an array column holds one array or set Field;
+        // its element type maps the singleton itemType Field.
+        let element = member(native, "element").unwrap_or(&Value::Null);
+        let element_kind = string_member(element, "kind")
+            .and_then(|v| v.to_utf8().ok())
+            .unwrap_or_default();
+        let item = member(field, "itemType").and_then(|item| resolve_ref(document, item));
+        let item_ok = item.is_some_and(|item| {
+            string_member(item, "kind") == Some(&Utf16::from("field"))
+                && string_member(item, "cardinality") == Some(&Utf16::from("one"))
+                && !array_items(member(item, "references").unwrap_or(&Value::Null))
+                    .unwrap_or(&[])
+                    .iter()
+                    .any(|r| string_member(r, "role") == Some(&Utf16::from("record-type")))
+                && native_family_ok(
+                    &element_kind,
+                    &string_member(item, "scalarType")
+                        .and_then(|v| v.to_utf8().ok())
+                        .unwrap_or_default(),
+                )
+        });
+        (
+            matches!(cardinality.as_str(), "array" | "set") && item_ok,
+            element,
+        )
+    } else {
+        (native_family_ok(&kind, &scalar), native)
     };
     if !family_ok {
         out.push_capped(core_diag(
             "TABLES_NATIVE_TYPE",
             &append_path(path, "nativeType"),
-            "Native type and logical scalar family differ",
+            if kind == "array" {
+                "Native array element and the array/set itemType Field's scalar family differ"
+            } else {
+                "Native type and logical scalar family differ"
+            },
             Severity::Error,
         ));
     }
-    if kind == "numeric" {
-        let precision = number_member(native, "precision").unwrap_or(0.0);
-        let scale = number_member(native, "scale").unwrap_or(0.0);
+    if string_member(scalar_native, "kind") == Some(&Utf16::from("numeric")) {
+        let precision = number_member(scalar_native, "precision").unwrap_or(0.0);
+        let scale = number_member(scalar_native, "scale").unwrap_or(0.0);
         if scale > precision {
             out.push_capped(core_diag(
                 "TABLES_NUMERIC",
@@ -4457,6 +4625,23 @@ fn inspect_native_column(
         }
     }
     Ok(())
+}
+
+/// Logical scalar family admitted by one scalar native kind in postgresql18/0.1.
+fn native_family_ok(kind: &str, scalar: &str) -> bool {
+    match kind {
+        "boolean" => scalar == "boolean",
+        "text" | "varchar" | "char" => scalar == "string",
+        "int2" | "int4" | "int8" => scalar == "integer",
+        "float4" | "float8" => scalar == "float",
+        "numeric" => scalar == "decimal",
+        "date" => scalar == "date",
+        "timestamp" | "timestamptz" => scalar == "timestamp",
+        "uuid" => scalar == "uuid",
+        "bytea" => matches!(scalar, "binary" | "bits128"),
+        "jsonb" => scalar == "json",
+        _ => false,
+    }
 }
 
 fn inspect_indexes_checks_and_foreign_keys(
@@ -4570,6 +4755,10 @@ fn inspect_indexes_checks_and_foreign_keys(
                 Severity::Error,
             ));
         }
+        inspect_index_access(
+            item, columns, &fields, selected, included, document, policy, &location, nodes, out,
+            ctx,
+        )?;
     }
     for (index, item) in array_items(member(table, "checks").unwrap_or(&Value::Null))
         .unwrap_or(&[])
@@ -4628,6 +4817,119 @@ fn inspect_indexes_checks_and_foreign_keys(
     }
     Ok(())
 }
+/// CONTRACT-081 index method, per-field direction and partial predicate rules.
+#[allow(clippy::too_many_arguments)]
+fn inspect_index_access(
+    item: &Value,
+    columns: &[Value],
+    fields: &[&Value],
+    selected: &[Value],
+    included: &[Value],
+    document: &Value,
+    policy: &umf_core::literal_policy::PreparedPolicy,
+    location: &Utf16,
+    nodes: &mut usize,
+    out: &mut Vec<Diagnostic>,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let gin = string_member(item, "method") == Some(&Utf16::from("gin"));
+    if gin {
+        if member(item, "unique") == Some(&Value::Bool(true)) {
+            out.push_capped(core_diag(
+                "TABLES_INDEX_METHOD",
+                &append_path(location, "unique"),
+                "A GIN index cannot be unique",
+                Severity::Error,
+            ));
+        }
+        if !included.is_empty() {
+            out.push_capped(core_diag(
+                "TABLES_INDEX_METHOD",
+                &append_path(location, "include"),
+                "A GIN index has no INCLUDE columns",
+                Severity::Error,
+            ));
+        }
+        if member(item, "directions").is_some() {
+            out.push_capped(core_diag(
+                "TABLES_INDEX_METHOD",
+                &append_path(location, "directions"),
+                "A GIN index has no sort direction",
+                Severity::Error,
+            ));
+        }
+        for (index, reference) in selected.iter().enumerate() {
+            ctx.charge_work(columns.len().saturating_add(1), location.clone())?;
+            let kind = columns
+                .iter()
+                .find(|column| member(column, "field").is_some_and(|f| refs_equal(f, reference)))
+                .and_then(|column| member(column, "nativeType"))
+                .and_then(|native| string_member(native, "kind"));
+            if !kind.is_some_and(|k| k == &Utf16::from("array") || k == &Utf16::from("jsonb")) {
+                out.push_capped(core_diag(
+                    "TABLES_INDEX_METHOD",
+                    &append_path(&append_path(location, "fields"), &index.to_string()),
+                    "A GIN index key requires an array or jsonb column",
+                    Severity::Error,
+                ));
+            }
+        }
+    }
+    if let Some(classes) = member(item, "operatorClasses") {
+        let classes = array_items(classes).unwrap_or(&[]);
+        if !gin || classes.len() != selected.len() {
+            out.push_capped(core_diag("TABLES_INDEX_OPERATOR_CLASSES", &append_path(location, "operatorClasses"), "GIN operator classes must name one compatible class per key field", Severity::Error));
+        }
+        for (index, (class, reference)) in classes.iter().zip(selected).enumerate() {
+            ctx.charge_work(columns.len().saturating_add(1), location.clone())?;
+            let native = columns.iter().find(|column| member(column, "field").is_some_and(|f| refs_equal(f, reference)))
+                .and_then(|column| member(column, "nativeType")).and_then(|n| string_member(n, "kind"));
+            let valid = matches!((native.and_then(|s| s.to_utf8().ok()).as_deref(), class),
+                (Some("array"), Value::String(c)) if c == &Utf16::from("array_ops"))
+                || matches!((native.and_then(|s| s.to_utf8().ok()).as_deref(), class),
+                (Some("jsonb"), Value::String(c)) if c == &Utf16::from("jsonb_ops") || c == &Utf16::from("jsonb_path_ops"));
+            if !valid {
+                out.push_capped(core_diag("TABLES_INDEX_OPERATOR_CLASSES", &append_path(&append_path(location, "operatorClasses"), &index.to_string()), "Operator class does not match the native GIN key type", Severity::Error));
+            }
+        }
+    }
+    if let Some(directions) = member(item, "directions") {
+        if array_items(directions).map_or(true, |d| d.len() != selected.len()) {
+            out.push_capped(core_diag(
+                "TABLES_INDEX_DIRECTIONS",
+                &append_path(location, "directions"),
+                "Index directions must name one direction per key field",
+                Severity::Error,
+            ));
+        }
+    }
+    if let Some(predicate) = member(item, "where") {
+        let predicate_path = append_path(location, "where");
+        if inspect_expression(
+            predicate,
+            fields,
+            document,
+            policy,
+            &predicate_path,
+            0,
+            nodes,
+            ctx,
+            out,
+        )?
+        .kind
+            != "boolean"
+        {
+            out.push_capped(core_diag(
+                "TABLES_INDEX_PREDICATE",
+                &predicate_path,
+                "Partial index predicate must have Boolean type",
+                Severity::Error,
+            ));
+        }
+    }
+    Ok(())
+}
+
 fn inspect_selected_refs(
     refs: &[Value],
     fields: &[&Value],
@@ -4988,6 +5290,15 @@ fn inspect_unknown(
                             .map(|(_, value)| value)
                     });
                 if let Some(child) = child {
+                    // The closed core JSON literal carrier explicitly admits
+                    // arbitrary JSON data. Its member names are values, not
+                    // unrecognized table vocabulary; core/native literal
+                    // validation still checks that data independently.
+                    if key == &Utf16::from("json")
+                        && (*child == Value::Bool(true) || object_members(child).is_some_and(|m| m.is_empty()))
+                        && member(schema, "additionalProperties") == Some(&Value::Bool(false))
+                        && member(schema, "required").and_then(array_items).is_some_and(|r| r == [Value::string_utf8("json")])
+                    { continue; }
                     inspect_unknown(
                         item,
                         root_schemas,

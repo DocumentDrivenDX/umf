@@ -349,7 +349,7 @@
       "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
     },
     "knownScalarType": {
-      "description": "Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1. Native refinements remain attached.",
+      "description": "Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1; json is one arbitrary JSON value (CONTRACT-084). Native refinements remain attached.",
       "enum": [
         "boolean",
         "integer",
@@ -361,7 +361,8 @@
         "time",
         "timestamp",
         "bits128",
-        "uuid"
+        "uuid",
+        "json"
       ]
     },
     "scalarType": {
@@ -456,7 +457,7 @@
           "minLength": 1
         },
         "cardinality": {
-          "description": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, or no assertion. Unknown labels remain uninterpreted.",
+          "description": "One ideal value, finite ordered sequence with duplicates allowed, finite exact string-key mapping with unique keys, finite unordered collection of distinct items, or no assertion. Unknown labels remain uninterpreted.",
           "type": "string",
           "minLength": 1
         },
@@ -613,7 +614,8 @@
               "cardinality": {
                 "enum": [
                   "array",
-                  "map"
+                  "map",
+                  "set"
                 ]
               }
             }
@@ -650,7 +652,8 @@
               "cardinality": {
                 "enum": [
                   "array",
-                  "map"
+                  "map",
+                  "set"
                 ]
               }
             }
@@ -1040,6 +1043,7 @@
         "one",
         "array",
         "map",
+        "set",
         "unspecified"
       ]
     },
@@ -1575,6 +1579,16 @@
               "maxLength": 36,
               "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\s\\S])"
             }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "json"
+          ],
+          "properties": {
+            "json": {}
           },
           "additionalProperties": false
         }

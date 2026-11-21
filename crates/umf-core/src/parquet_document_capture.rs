@@ -11,7 +11,7 @@ use crate::{
     engine::{Capabilities, Engine},
     error::EngineError,
     parquet_record_type_candidate::SchemaElement,
-    parquet_schema_decode::decode_schema,
+    parquet_schema_decode::{decode_schema, decode_schema_retaining},
     registry::Registry,
     value::{copy_json, Utf16, Value},
 };
@@ -45,6 +45,31 @@ pub fn capture_parquet_document(
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<ParquetDocumentCapture, EngineError> {
+    capture_parquet_document_mode(document, schema_index, engine, registry, capabilities, ctx, false)
+}
+
+// Native-aware consumers validate annotations separately and preserve them;
+// record-type candidate consumers retain the original strict entry point.
+pub(crate) fn capture_parquet_document_retaining(
+    document: &Value,
+    schema_index: usize,
+    engine: &Engine,
+    registry: &Registry,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<ParquetDocumentCapture, EngineError> {
+    capture_parquet_document_mode(document, schema_index, engine, registry, capabilities, ctx, true)
+}
+
+fn capture_parquet_document_mode(
+    document: &Value,
+    schema_index: usize,
+    engine: &Engine,
+    registry: &Registry,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+    retaining: bool,
+) -> Result<ParquetDocumentCapture, EngineError> {
     let copied = copy_json(document, ctx)?;
     let validation = engine.validate_document(&copied, registry, capabilities, ctx)?;
     if !validation.valid {
@@ -52,7 +77,7 @@ pub fn capture_parquet_document(
     }
 
     let bytes = source_bytes(&copied, ctx)?;
-    let decoded = decode_schema(&bytes, ctx)?;
+    let decoded = if retaining { decode_schema_retaining(&bytes, ctx)? } else { decode_schema(&bytes, ctx)? };
     let selected = decoded.schema.get(schema_index).ok_or_else(|| {
         err(
             "PARQUET_SCHEMA_INDEX",

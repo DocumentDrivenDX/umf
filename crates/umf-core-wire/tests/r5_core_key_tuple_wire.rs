@@ -121,6 +121,7 @@ fn retained_binding_reads_bytes_above_tagged_array_limit_and_honors_core_ceiling
     let mut context = umf_core::Context::ordinary();
     let receipt = prepared.encode(identity, &values, &mut context).unwrap();
     let bytes_hex = get(&receipt, "bytesHex").unwrap();
+    assert_eq!(prepared.encode_hex(identity, &values, &mut Context::ordinary()).unwrap(), *bytes_hex);
     assert_eq!(match bytes_hex { Value::String(text) => text.len() / 2, _ => 0 }, 100_001);
     let mut context = umf_core::Context::ordinary();
     let staged = runtime.prepare_byte_read(&receipt, &mut context).unwrap();
@@ -142,6 +143,13 @@ fn retained_binding_reads_bytes_above_tagged_array_limit_and_honors_core_ceiling
     let values = make_values(3_999_990);
     let mut context = umf_core::Context::ordinary();
     assert_eq!(prepared.encode(identity, &values, &mut context).unwrap_err().code, "LIMIT");
+    assert_eq!(prepared.encode_hex(identity, &values, &mut Context::ordinary()).unwrap_err().code, "LIMIT");
+    let values = make_values(1);
+    let mut refused = |_: usize| Err(umf_core::EngineError::new("CANCELLED", Utf16::from("/caller"), "stop"));
+    let mut controlled = Context::ordinary().with_host_control(&mut refused);
+    let failure = prepared.encode_hex(identity, &values, &mut controlled).unwrap_err();
+    assert_eq!(failure.code, "CANCELLED"); assert_eq!(failure.path, Utf16::from("/caller"));
+    assert_eq!(prepared.source(), source);
 }
 
 #[test]

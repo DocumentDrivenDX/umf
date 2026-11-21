@@ -11,7 +11,7 @@ import {createCoreIdealReportsRustDefault} from './core-ideals/reports-rust-defa
 import {createSecurityAuthorityGuardRustDefault} from './extensions/security/authority-guard-rust-default';
 import {createPythonClientRustCandidateV4} from './browser-v4';
 import {initializePythonClientRustDefaultV4} from './access/rust-default-v4';
-import {createJsonNumberEngine,initializeCoreModelRootKindNullabilityWasm,initializeCoreBit128FieldWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreKeyTupleEngine,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createSecurityProtectionSourceEngine,createSecurityPolicySourceEngine,createSecurityReadRegistrationEngine,createSecurityAuthorityGuardEngine,createSecurityProtectionParametersEngine,createSecurityProtectionDomainsEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createPreparedJsonSchemaEngine,createCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createTypeSpecSessionEngine,createSmithySessionEngine,createActionPlanSessionEngine,createParquetCaptureEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,isCoreBit128FieldBindingError,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
+import {createJsonNumberEngine,initializeCoreModelRootKindNullabilityWasm,initializeCoreBit128FieldWasm,initializeCoreRecordValuesHostInputWasm,createDefaultSemanticTypeRegistry,createCoreKeyTupleEngine,createCoreCardinalityHostInputEngine,createCoreRecordTypeEngine,createSecurityLogicEngine,createSecurityFunctionsEngine,createSecurityQueryPropertiesEngine,createSecurityProtectionSourceEngine,createSecurityPolicySourceEngine,createSecurityReadRegistrationEngine,createSecurityAuthorityGuardEngine,createSecurityProtectionParametersEngine,createSecurityProtectionDomainsEngine,createJavascriptNumericEngine,createArrowSchemaEngine,createArrowIpcEngine,createDbtEngine,createGraphqlEngine,createRdfEngine,createNativeFamilyDispatcher,createPreparedJsonSchemaEngine,createCodegenEngine,createRetainedCodegenEngine,createIcebergSchemaEngine,createIcebergTableEngine,createDeltaSchemaTableEngine,createDeltaLogEngine,createPostgresqlParserSessionEngine,createTypeSpecSessionEngine,createSmithySessionEngine,createActionPlanSessionEngine,createParquetCaptureEngine,createProtobufSourceImportEngine,createProtobufSourceExportEngine,UmfError as BindingUmfError,initializeProtobufDescriptorDocumentWasm,initializeBit128Wasm,isCoreBit128FieldBindingError,initializeTemporalWasm,createAccessTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError,isHostJsonResponseError,isDbtHostError,ACCESS_TEMPORAL_PROFILE as ACCESS_TEMPORAL_PROFILE_RUST} from '../bindings/core/wasm/index.js';
 import {CORE_MODEL_RESOURCES} from './access/core-model-resources';
 import {bindCoreCardinalityRust} from './access/rust-cardinality-default';
 import {bindCoreKindNullabilityRust} from './access/rust-kind-nullability-default';
@@ -161,8 +161,12 @@ const actionPlan=createActionPlanRustDefault(actionPlanSession,isNativeUmfCoreEr
 const actionManifest=createActionManifestRustDefault(actionPlanSession,actionPlan,isNativeUmfCoreError);
 const {constructActionManifest,inspectActionManifest,assessActionManifest}=actionManifest;
 const {prepareActionPlanModel,inspectActionPlan,assessActionPlan}=actionPlan;
-const actionAuthoring=createActionAuthoringRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error),(document,registrations)=>validateRegistrations(document,registrations));
-const actionRegistry=createActionRegistryRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),isNativeUmfCoreError);
+// The frozen repository catalogs are admitted once; each invocation still
+// admits its own document, request and result through the Rust-owned handle.
+let actionCodegenEngine:ReturnType<typeof createRetainedCodegenEngine>|undefined;
+const actionCodegen=()=>actionCodegenEngine??=createRetainedCodegenEngine(wasmModule,CODEGEN_RESOURCES);
+const actionAuthoring=createActionAuthoringRustDefault(actionCodegen,error=>isNativeUmfCoreError(error)||isWireAdmissionError(error),(document,registrations)=>validateRegistrations(document,registrations));
+const actionRegistry=createActionRegistryRustDefault(actionCodegen,isNativeUmfCoreError);
 const {inspectActions,declareAction,editAction,assessAction}=actionAuthoring;
 const {registerActions}=actionRegistry;
 const saga=createSagaRustDefault(createCodegenEngine(wasmModule,Object.assign({},CODEGEN_RESOURCES,{sagaPackage})),isNativeUmfCoreError);
@@ -195,9 +199,9 @@ const SecurityAuthorityGuard=createSecurityAuthorityGuardRustDefault(createSecur
 const {inspectSecurityPolicyV2Source,upgradeSecurityPolicySource,downgradeSecurityPolicySource,readSecuritySource,writeSecuritySource,evaluateSecurityAccess,evaluateSecurityCollection,evaluateSecurityWrite,evaluateSecurityPolicyV2LegacyAccess}=securityPolicySource;
 class SecurityReadRegistration extends SecurityReadRegistrationBase { constructor() { super(securityReadRegistrationEngine,isNativeUmfCoreError); } }
 const {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties}=protection;
-const evaluateActionRule=createActionRuleRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
-const actionSelectors=createActionSelectorsRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
-const validateBulkOutcome=createBulkOutcomeRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const evaluateActionRule=createActionRuleRustDefault(actionCodegen,error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const actionSelectors=createActionSelectorsRustDefault(actionCodegen,error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
+const validateBulkOutcome=createBulkOutcomeRustDefault(actionCodegen,error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
 const {compileActionRule,compileActionSelector,admitActionInputs,selectActionIdentity,prepareActionIdentities,actionFieldValueKey}=actionSelectors;
 const tableDeployment=createTableDeploymentRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
 const normalizeRowScope=createRowScopeRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
@@ -206,7 +210,7 @@ const reviewedValueDigest=createReviewedValueDigestRustDefault(()=>createCodegen
 const tableMigration=createTableMigrationRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
 const {compileTableMigration,verifyTableMigration}=tableMigration;
 const {compileTableInventoryMigration,discoverTableInventoryMigrationChanges,verifyTableInventoryMigration,serializeTableInventoryMigration,irreversiblePurgeDisclosure}=createTableInventoryRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
-const {compileTableDeployment,verifyTableDeployment}=tableDeployment;
+const {applyJsonPatch,compileTableDeployment,verifyTableDeployment}=tableDeployment;
 const {inspectTableLifecycle}=createTableLifecycleRustDefault(()=>createCodegenEngine(wasmModule,CODEGEN_RESOURCES),error=>isNativeUmfCoreError(error)||isWireAdmissionError(error));
 const deltaDdlOperations=nativeFamilyDispatcher['delta-ddl'];
 const deltaParquetOperations=nativeFamilyDispatcher['delta-parquet'];
@@ -606,7 +610,7 @@ export { deltaLogPackage };
 
 export {deltaRegistry,deltaTableRegistry,deltaLogRegistry,inspectDelta,importDeltaSchema,exportDeltaSchema,getDeltaNode,proposeDeltaNodeEdit,inspectDeltaTable,importDeltaTable,exportDeltaTable,getDeltaTableNode,proposeDeltaTableNodeEdit,renameDeltaMappedField,getDeltaTableSchema,captureDeltaLog,exportDeltaLog,inspectDeltaLog,inspectDeltaActions,reconcileDeltaCommits,reconcileDeltaCheckpoint,reconcileDeltaCheckpointSidecars,defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,projectDeltaParquetActions,reconcileDeltaParquetCheckpoint,reconcileDeltaMultipartCheckpoint};
 
-export {evaluateActionRule,compileTableDeployment,verifyTableDeployment,inspectTableLifecycle,normalizeRowScope,discoverTableMigrationChanges,reviewedValueDigest,compileTableMigration,verifyTableMigration};
+export {applyJsonPatch,evaluateActionRule,compileTableDeployment,verifyTableDeployment,inspectTableLifecycle,normalizeRowScope,discoverTableMigrationChanges,reviewedValueDigest,compileTableMigration,verifyTableMigration};
 export {SPARK_EXTENSION,sparkPackage,sparkRegistry,inspectSpark,importSparkSchema,exportSparkSchema,getSparkNode,proposeSparkNodeEdit,renameSparkField};
 
 export {inspectProtectionFunction,evaluateProtectionValue,inspectProtectionQueryProperties,inspectProtectionCatalog,requireProtectionInterpretation,resolveSecurityProtectionSources,resolveSecurityProtectionDomains,validateProtectionParameters};
@@ -632,3 +636,5 @@ export type {DeltaCommit,DeltaReconciliation} from './adapters/delta/reconcile';
 export type {FacetsParquetProjection,FacetsParquetRequest} from './core-ideals/facets-parquet-projection';
 
 export type {KeyParquetProjection,KeyParquetRequest} from './core-ideals/key-parquet-projection';
+
+export type {JsonPatchOperation,JsonPatchResult} from './table-deployment/types';

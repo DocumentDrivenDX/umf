@@ -363,3 +363,28 @@ fn aggregate_wire_request_and_wire_result_can_exceed_four_million_units() {
     let envelope = umf_core_wire::decode(&wire, &mut umf_core_wire::transport_context()).unwrap();
     assert_eq!(member(&envelope, "ok"), &Value::Bool(true));
 }
+
+#[test]
+fn discovery_selector_reaches_the_real_native_default_change_compiler() {
+    let mut source: serde_json::Value = serde_json::from_str(include_str!("../../../tests/binding/fixtures/table-lifecycle-note.json")).unwrap();
+    let configuration = serde_json::json!({"module":"demo","schema":"plugin_demo","ownerRole":"plugin_owner","personRole":"plugin_person","batchRole":"plugin_batch","groupRoles":{"readers":"plugin_readers"}});
+    let deploy = |source: &serde_json::Value| {
+        let request = serde_json::json!({"text":serde_json::to_string(source).unwrap(),"configuration":configuration});
+        let result = run_json_operation("deployment", &parse_json(&request.to_string()));
+        assert_eq!(member(&result, "status"), &Value::string_utf8("compiled"));
+        member(&result, "bundle").clone()
+    };
+    let previous = deploy(&source);
+    let columns = source["modules"][0]["extensions"]["umf.tables"]["tables"][0]["columns"].as_array_mut().unwrap();
+    let column = columns.iter_mut().find(|c| c["field"]["element"] == "owner").unwrap();
+    column["default"] = serde_json::json!({"kind":"literal","value":{"string":"fresh"}});
+    let next = deploy(&source);
+    let request = Value::Object(vec![
+        (Utf16::from("previous"), previous), (Utf16::from("next"), next),
+        (Utf16::from("selector"), parse_json(r#"{"version":"umf.table-migration-discovery/0.2"}"#)),
+    ]);
+    let result = run_json_operation("discover-changes", &request);
+    let Value::Array(changes) = member(&result, "changes") else { panic!("changes array"); };
+    assert_eq!(changes.len(), 1);
+    assert_eq!(member(&changes[0], "kind"), &Value::string_utf8("change-default"));
+}

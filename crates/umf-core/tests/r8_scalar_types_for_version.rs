@@ -26,7 +26,7 @@ fn current_vocabulary_matches_the_generated_core_schema_in_source_order() {
 #[test]
 fn version_lookup_is_exact_and_preserves_utf16_string_comparison() {
     let current = scalar_type_inspection::scalar_types_for_version(&Utf16::from("0.10.0"));
-    assert_eq!(current.len(), 11);
+    assert_eq!(current.len(), 12);
     for unknown in ["0.9.0", "", "0.10.0 ", "0.10.1"] {
         assert!(
             scalar_type_inspection::scalar_types_for_version(&Utf16::from(unknown)).is_empty(),

@@ -16,7 +16,7 @@ test('current authored receipts verify in place while historical receipts are re
 });
 test('five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes',async()=>{
  const result=await verifyCardinalityRoundTrips();expect(Object.keys(result)).toEqual([...cardinalitySystems]);
- const expected={tablespec:[86,38,336,110],postgresql:[56,26,104,34],sqlserver:[112,40,56,20],avro:[86,30,80,22],parquet:[168,32,120,44]};
+ const expected={tablespec:[86,38,336,110],postgresql:[56,26,104,34],sqlserver:[112,40,56,20],avro:[86,30,80,22],parquet:[180,34,120,44]};
  for(const system of cardinalitySystems){
   const r=result[system];expect([r.authoredCases,r.strictBlocks,r.nativeCases,r.nativeBlocks]).toEqual(expected[system]);expect(r.compositions).toBeGreaterThan(0);expect(r.labels).toEqual(['array','map','one','unspecified']);
   expect(r.strictBlocks).toBeGreaterThan(0);expect(r.reportResiduals).toBeGreaterThan(0);

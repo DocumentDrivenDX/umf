@@ -77,7 +77,7 @@ fn value_field<'a>(node: &'a Value, name: &str) -> Option<&'a Value> {
     };
     fields
         .iter()
-        .find(|(field, _)| field == &key(name))
+        .find(|(field, _)| field.equals_str(name))
         .map(|(_, value)| value)
 }
 fn value_field_mut<'a>(node: &'a mut Value, name: &str) -> Option<&'a mut Value> {
@@ -86,7 +86,7 @@ fn value_field_mut<'a>(node: &'a mut Value, name: &str) -> Option<&'a mut Value>
     };
     fields
         .iter_mut()
-        .find(|(field, _)| field == &key(name))
+        .find(|(field, _)| field.equals_str(name))
         .map(|(_, value)| value)
 }
 fn value_string(node: Option<&Value>) -> Option<&Utf16> {
@@ -225,7 +225,7 @@ fn schema_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     let Value::Object(fields) = value else {
         return None;
     };
-    fields.iter().find(|(k, _)| k == &key(name)).map(|(_, v)| v)
+    fields.iter().find(|(k, _)| k.equals_str(name)).map(|(_, v)| v)
 }
 fn schema_lookup<'a>(schema: &'a Value, rule: &'a Value) -> &'a Value {
     let Some(Value::String(reference)) = schema_field(rule, "$ref") else {
@@ -360,13 +360,18 @@ fn validate_capture_schema(
     root: &NativeJsonTree,
     ctx: &mut CoreContext<'_>,
 ) -> Result<(), EngineError> {
+    static SCHEMA: std::sync::OnceLock<crate::resource_cache::Fixed<Value>> = std::sync::OnceLock::new();
+    let schema = crate::resource_cache::prepare(&SCHEMA, ctx, |ctx| {
     let schema_source = Utf16::from(include_str!(
         "../../../spec/extensions/sqlserver/capture.schema.json"
     ));
     ctx.charge_text(schema_source.len(), Utf16::default())?;
     let schema = serialization::read_json_value(schema_source.units(), Format::Json, ctx)?;
-    let compiled =
-        CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), true, ctx)?;
+    Ok(schema)
+    })?;    static COMPILED: std::sync::OnceLock<crate::resource_cache::Fixed<CompiledSchema>> = std::sync::OnceLock::new();
+    let compiled = crate::resource_cache::prepare(&COMPILED, ctx, |ctx| {
+        CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), true, ctx)
+    })?;
     let instance = schema_project(root.root(), &schema, &schema, ctx)?
         .ok_or_else(|| err("SQLSERVER_CAPTURE_STRUCTURE", "Invalid schema instance"))?;
     if !compiled.validate(&instance, ctx)?.is_empty() {

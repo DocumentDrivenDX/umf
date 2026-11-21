@@ -1450,19 +1450,37 @@ pub fn inspect_bit128_binding(
             slots.push((table_key, column));
         }
     }
-    if subset == "uuid-model1" || subset == "uuid-model2" {
-        for item in logical_validation
-            .diagnostics
-            .into_iter()
-            .filter(|d| d.severity == Severity::Warning)
-        {
-            if !diagnostics
-                .iter()
-                .any(|existing| existing.code == item.code && existing.path == item.path)
-            {
+    let model_subset = subset == "uuid-model1" || subset == "uuid-model2";
+    let mut bound_field_paths = Vec::new();
+    if subset == "carrier-codecs-only" && !logical_validation.diagnostics.is_empty() {
+        for (mi, module) in array(get(logical, "modules")).unwrap_or(&[]).iter().enumerate() {
+            ctx.charge_work(1, Utf16::default())?;
+            for (ei, element) in array(get(module, "elements")).unwrap_or(&[]).iter().enumerate() {
+                ctx.charge_work(1, Utf16::default())?;
+                for row in array(get(payload, "fields")).unwrap_or(&[]) {
+                    ctx.charge_work(1, Utf16::default())?;
+                    if get(row, "module") == get(module, "id") && get(row, "element") == get(element, "id") {
+                        ctx.charge_work(64, Utf16::default())?;
+                        bound_field_paths.push(Utf16::from(format!("/modules/{mi}/elements/{ei}")));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if model_subset || subset == "carrier-codecs-only" {
+        for item in logical_validation.diagnostics.into_iter().filter(|d| {
+            d.severity == Severity::Warning && (model_subset || bound_field_paths.iter().any(|prefix| {
+                d.path.units().starts_with(prefix.units()) &&
+                    (d.path.len() == prefix.len() || d.path.units().get(prefix.len()) == Some(&47))
+            }))
+        }) {
+            if !diagnostics.iter().any(|existing| existing.code == item.code && existing.path == item.path) {
                 diagnostics.push(item);
             }
         }
+    }
+    if model_subset {
         if let Err(error) = validate_model_layout(payload, logical, ctx) {
             if error.is_control_failure() {
                 return Err(error);

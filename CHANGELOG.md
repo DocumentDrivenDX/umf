@@ -4,6 +4,16 @@ Releases are cut by pushing a tag `umf-vX.Y.Z` (see AGENTS.md). Rust, SDK, `umf-
 `umf-access` share one version. The UMF document format version (currently 0.10.0) is separate.
 Earlier detail is in git history and on the GitHub Releases page.
 
+## [Unreleased]
+
+- Core 0.10.0 gains the `json` scalar family (one arbitrary JSON value, literal `{json: ...}`) and the `set`
+  cardinality (distinct items, no order meaning, literal `{array: [...]}`); see CONTRACT-084.
+- `umf.tables` (CONTRACT-081) maps `json` to `jsonb` and array/set Fields to `{kind:"array",element}` columns
+  such as `text[]`, and adds GIN indexes, per-field btree directions and partial indexes (`where`).
+- `umf-codegen` lets a host register its own extension beside `umf.tables`
+  (`CodegenResources::register_host_extension`, `*_with_host` inspection, compile and verify); deployment
+  configuration `independentExtensions` names host extensions that do not change the generated DDL.
+
 ## [0.10.13]
 
 - Add portable workflow declarations with exact elapsed durations, typed run

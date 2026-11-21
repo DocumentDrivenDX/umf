@@ -18,7 +18,7 @@ test('capture formatting, unknown numeric detail and index constraints survive w
 });
 test('stale metadata, archives, author receipts and unsupported versions cannot claim recovery',()=>{
  const document=source(),column=getSqlServerColumnMetadata(document)[0]!,request={column:column.path,nativeSource,mode:'strict' as const};
- expect(()=>classifySqlServerField(document,{...request,nativeSource:'{}'})).toThrow('archive');const stale=copyJson(document) as unknown as typeof document;stale.modules[0]!.elements[0]!.name='changed';expect(()=>classifySqlServerField(stale,request)).toThrow('disagree');
+ expect(()=>classifySqlServerField(document,{...request,nativeSource:'{}'})).toThrow('SQL Server capture does not match the pinned catalog schema');const stale=copyJson(document) as unknown as typeof document;stale.modules[0]!.elements[0]!.name='changed';expect(()=>classifySqlServerField(stale,request)).toThrow('disagree');
  const author=declareCoreElementKind(document,{module:'sqlserver.columns',element:column.path},'field'),changed=copyJson(author.target) as unknown as typeof document;changed.future=true;expect(classifySqlServerField(changed,{...request,author}).status).toBe('blocked');
  const result=classifySqlServerField(document,request);result.target!.future=true;expect(()=>recoverSqlServerFieldCapture(result,result.target!)).toThrow();
  const capture=JSON.parse(nativeSource);capture.serverVersion='17.0.1.0';const future=JSON.stringify(capture);expect(()=>classifySqlServerField(importSqlServerCatalog(future,{id:'future'}),{...request,nativeSource:future})).toThrow('16.0.4295.3');

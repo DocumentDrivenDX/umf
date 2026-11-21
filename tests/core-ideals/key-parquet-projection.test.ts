@@ -6,14 +6,15 @@ import {projectKeysToParquet,verifyKeysParquetProjection,recoverKeysParquetIdeal
 import {exportParquetCapture} from "../../src/index-node-v4";
 import {importParquetSchema,getParquetFieldMetadata} from "../../src/index-node-v4";
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
-for(const c of parquetKeyProjectionCases())test('Parquet authored Key: '+c.name,()=>{
+const projectionCases=parquetKeyProjectionCases();
+for(const c of projectionCases)test('Parquet authored Key: '+c.name,()=>{
  const before=JSON.stringify(c),r=projectKeysToParquet(c.source,c.authors,c.request);expect(JSON.stringify(c)).toBe(before);expect(r.status).toBe(c.expected);expect(r.mappings.length).toBe(c.authors.length);expect(r.residuals.filter(r=>r.path.includes('/keys/')).length).toBe(c.authors.length);expect(r.mappings.every(m=>m.enforcement==='not-expressible')).toBe(true);
  if(r.status==='blocked'){expect(r.target).toBeUndefined();return;}
  const bytes=exportParquetCapture(r.target!),reimported=importParquetSchema(bytes,{id:c.request.id});expect(getParquetFieldMetadata(reimported).fields.length).toBe(c.request.columns.length);
  for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(r,format),format) as unknown as typeof r;expect(recoverKeysParquetIdeal(saved,reimported)).toEqual(c.source);expect(exportParquetCapture(saved.target!)).toEqual(bytes);}
 });
 test('stable IDs and compound field ordering remain distinct from native field IDs',()=>{
- const rows=parquetKeyProjectionCases(),c=rows.find(c=>c.name==='rename-and-reorder')!,r=projectKeysToParquet(c.source,c.authors,c.request);expect(r.mappings.map(m=>m.keyId)).toEqual(['stable-code','stable-id']);expect(r.mappings[1]!.keyName).toBe('Renamed identity');
+ const rows=projectionCases,c=rows.find(c=>c.name==='rename-and-reorder')!,r=projectKeysToParquet(c.source,c.authors,c.request);expect(r.mappings.map(m=>m.keyId)).toEqual(['stable-code','stable-id']);expect(r.mappings[1]!.keyName).toBe('Renamed identity');
  const compound=rows.find(c=>c.name==='compound-ordered')!,p=projectKeysToParquet(compound.source,compound.authors,compound.request);expect(p.mappings[0]!.nativePaths).toEqual(['/schema/2','/schema/1']);expect(p.mappings[0]!.columns).toEqual(['external_code','order_id']);expect((getParquetFieldMetadata(p.target!).fields[0]!.nativeField as any).field_id).toBe('17');
 });
 test('missing or stale authors, changed tuples, ownership conflicts and malformed physical mappings refuse',()=>{
@@ -24,7 +25,7 @@ test('missing or stale authors, changed tuples, ownership conflicts and malforme
  const wrong=structuredClone(c.request);wrong.columns[0]!.field.module='other';expect(()=>projectKeysToParquet(c.source,c.authors,wrong)).toThrow();
  const duplicate=structuredClone(c.request);duplicate.columns[1]!.fieldId=duplicate.columns[0]!.fieldId!;expect(projectKeysToParquet(c.source,c.authors,duplicate).status).toBe('blocked');
  for(const recordName of ['nul\0','\ud800'])expect(projectKeysToParquet(c.source,c.authors,{...c.request,recordName}).status).toBe('blocked');
- const compound=parquetKeyProjectionCases().find(c=>c.name==='compound-ordered')!,reordered=structuredClone(compound.source);(reordered.modules[0]!.elements[0]!.keys as any[])[0].fields.reverse();expect(()=>projectKeysToParquet(reordered,compound.authors,compound.request)).toThrow();
+ const compound=projectionCases.find(c=>c.name==='compound-ordered')!,reordered=structuredClone(compound.source);(reordered.modules[0]!.elements[0]!.keys as any[])[0].fields.reverse();expect(()=>projectKeysToParquet(reordered,compound.authors,compound.request)).toThrow();
 });
 test('forged residuals, edited original bytes and getters cannot recover authorship',()=>{
  const c=parquetKeyAuthors(),r=projectKeysToParquet(c.source,c.authors,c.request),fake=structuredClone(r);fake.residuals=fake.residuals.filter(r=>!r.path.includes('/keys/'));expect(()=>verifyKeysParquetProjection(fake,r.target!)).toThrow();
@@ -41,5 +42,5 @@ test('native generated-schema proof verifies actual types, duplicate writing and
  expect(proof.rows.find((r:any)=>r.name==='fixed-binary').shortFixedRefused).toBeTruthy();
  expect(proof.rows.filter((r:any)=>r.inputTruncation).length).toBe(12);
  
- for(const item of corpus.rows){const c=parquetKeyProjectionCases().find(c=>c.name===item.name)!,r=projectKeysToParquet(c.source,c.authors,c.request);expect(exportParquetCapture(r.target!)).toEqual(new Uint8Array(await Bun.file(item.path).arrayBuffer()));expect(r.mappings).toEqual(item.mappings);}
+ for(const item of corpus.rows){const c=projectionCases.find(c=>c.name===item.name)!,r=projectKeysToParquet(c.source,c.authors,c.request);expect(exportParquetCapture(r.target!)).toEqual(new Uint8Array(await Bun.file(item.path).arrayBuffer()));expect(r.mappings).toEqual(item.mappings);}
 });

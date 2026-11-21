@@ -135,16 +135,24 @@ fn execute(
     }
 }
 
+pub fn execute_wire_with_backend_default(wire: &str, backend: &dyn umf_core::parser_backend_protocol::PostgresqlParserBackend) -> String {
+    execute_backend_context(wire, backend, &mut Context::ordinary(), true)
+}
+
 pub fn execute_wire_with_backend(
     wire: &str,
     backend: &dyn umf_core::parser_backend_protocol::PostgresqlParserBackend,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
+    execute_backend_context(wire, backend, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_backend_context(wire: &str, backend: &dyn umf_core::parser_backend_protocol::PostgresqlParserBackend, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| {
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
-        let output = execute(&request, backend, &mut ctx)?;
-        encode(&output, &mut ctx)
-    })();
+        let output = execute(&request, backend, ctx)?;
+        encode(&output, ctx)
+    };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

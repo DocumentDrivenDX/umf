@@ -13,7 +13,7 @@ fn get<'a>(v: &'a Value, k: &str) -> Option<&'a Value> {
     let Value::Object(items) = v else { return None };
     items
         .iter()
-        .find(|(key, _)| key == &Utf16::from(k))
+        .find(|(key, _)| key.equals_str(k))
         .map(|(_, v)| v)
 }
 fn raw(v: Option<&Value>) -> Option<&Utf16> {
@@ -47,7 +47,7 @@ fn exact(v: &Value, required: &[&str], optional: &[&str]) -> Result<(), EngineEr
             !required
                 .iter()
                 .chain(optional)
-                .any(|allowed| k == &Utf16::from(*allowed))
+                .any(|allowed| k.equals_str(allowed))
         })
     {
         return Err(fail());

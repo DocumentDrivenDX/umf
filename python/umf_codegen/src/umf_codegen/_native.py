@@ -56,6 +56,7 @@ _RESOURCE_NAMES = set(_RESOURCE_FILES.values()) | {"saga.package.json"} | {
 _CLI_OPERATIONS = {
     "generate": "generate",
     "pack_tools": "pack-tools",
+    "json_patch": "json-patch",
     "deployment": "deployment",
     "verify_deployment": "verify-deployment",
     "migration": "migration",

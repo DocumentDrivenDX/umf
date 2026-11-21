@@ -13,6 +13,9 @@ exclude = [
   "crates/umf-core/vendor/hashbrown-0.12.3",
   "crates/umf-core/vendor/hashbrown-0.13.2",
   "crates/umf-core/vendor/json-ld-core-0.21.4",
+  "crates/umf-core/vendor/json-ld-compaction-0.21.4",
+  "crates/umf-core/vendor/json-ld-expansion-0.21.4",
+  "crates/umf-core/vendor/json-ld-context-processing-0.21.4",
   "crates/umf-core/vendor/json-ld-syntax-0.21.4",
   "crates/umf-core/vendor/json-syntax-0.12.5",
 ]
@@ -40,8 +43,12 @@ overflow-checks = true
 # Portable JSON-LD dependencies: these source-preserving upstream copies select
 # deterministic hash builders and gate optional wall-clock convenience APIs.
 [patch.crates-io]
+json-ld-compaction = { path = "crates/umf-core/vendor/json-ld-compaction-0.21.4" }
+json-ld-expansion = { path = "crates/umf-core/vendor/json-ld-expansion-0.21.4" }
 hashbrown-012 = { package = "hashbrown", path = "crates/umf-core/vendor/hashbrown-0.12.3" }
 hashbrown-013 = { package = "hashbrown", path = "crates/umf-core/vendor/hashbrown-0.13.2" }
 json-ld-core = { path = "crates/umf-core/vendor/json-ld-core-0.21.4" }
 json-ld-syntax = { path = "crates/umf-core/vendor/json-ld-syntax-0.21.4" }
 json-syntax = { path = "crates/umf-core/vendor/json-syntax-0.12.5" }
+
+json-ld-context-processing = { path = "crates/umf-core/vendor/json-ld-context-processing-0.21.4" }

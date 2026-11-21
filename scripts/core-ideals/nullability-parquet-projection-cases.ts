@@ -5,7 +5,7 @@ import {declareCoreNullability} from "../../src/index-node-v4";
 import {parquetCarriers} from './parquet-carriers';
 import type {Document, Nullability, ScalarType} from '../../src/model/types';
 import type {NullabilityParquetRequest} from '../../src/core-ideals/nullability-parquet-projection';
-const families:Record<keyof typeof parquetCarriers,ScalarType>={boolean:'boolean',int32:'integer',int64:'integer',float32:'float',float64:'float',binary:'binary',string:'string',date:'date','time-millis':'time','time-micros':'time','timestamp-millis-utc':'timestamp','timestamp-micros-utc':'timestamp'};
+const families:Record<keyof typeof parquetCarriers,ScalarType>={boolean:'boolean',int32:'integer',int64:'integer',float32:'float',float64:'float',binary:'binary',string:'string',json:'json',date:'date','time-millis':'time','time-micros':'time','timestamp-millis-utc':'timestamp','timestamp-micros-utc':'timestamp'};
 export function parquetNullabilityProjectionCases(){
  const rows:Array<{id:string;nativeType:keyof typeof parquetCarriers;label:Nullability;variant:string;author:ReturnType<typeof declareCoreNullability>;request:NullabilityParquetRequest;status:'projected'|'blocked';required:boolean}>=[];
  function add(nativeType:keyof typeof parquetCarriers,label:Nullability,variant:string,mode:'strict'|'report'){

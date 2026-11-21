@@ -22,8 +22,7 @@ pub fn execute_protobuf_document_wire(
         let mut hook = |amount| control.check(amount);
         umf_core_wire::protobuf_document::execute(&wire_json, input_binary.as_ref(), &mut hook)
     } else {
-        let mut no_control = |_amount| Ok(());
-        umf_core_wire::protobuf_document::execute(&wire_json, input_binary.as_ref(), &mut no_control)
+        umf_core_wire::protobuf_document::execute(&wire_json, input_binary.as_ref(), umf_core_wire::protobuf_source::PhaseControl::Uncontrolled)
     };
     ProtobufDocumentResponse {
         wire_envelope: response.wire_envelope,

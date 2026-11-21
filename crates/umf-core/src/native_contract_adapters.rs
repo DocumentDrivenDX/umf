@@ -79,6 +79,11 @@ pub struct ContractRuntime {
 }
 
 impl ContractRuntime {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static RESOURCES: std::sync::OnceLock<crate::resource_cache::Fixed<ContractRuntime>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&RESOURCES, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             let units = source.encode_utf16().collect::<Vec<_>>();
@@ -666,17 +671,19 @@ pub fn inspect_linkml_class_slots(
         ));
     }
     let source = copy_json(document, ctx)?;
-    let payload = match read_payload(&source, ContractKind::Linkml, runtime, ctx) {
-        Ok(payload) => payload,
+    // Admit and inspect this source once. The same validation supplies both
+    // payload admission and the membership report diagnostics.
+    let (payload, validation) = match read_payload_with_validation(&source, ContractKind::Linkml, runtime, ctx) {
+        Ok(result) => result,
         Err(e) if e.is_control_failure() => return Err(e),
         Err(e) => return Ok(class_slots_error(source, class_name, &e.to_string())),
     };
-    let validation = match runtime.inspect(&source, ContractKind::Linkml, ctx) {
-        Ok(validation) => validation,
-        Err(e) if e.is_control_failure() => return Err(e),
-        Err(e) => return Ok(class_slots_error(source, class_name, &e.to_string())),
-    };
+    let unknown_version = validation.diagnostics.iter().any(|d| d.code == Utf16::from("LINKML_VERSION"));
     let mut diagnostics = diagnostics_value(validation, ctx)?;
+    if unknown_version {
+        push_diag(&mut diagnostics, "LINKML_CLASS_SLOTS", "/metamodel_version", "Unrecognized or conflicting metamodel version cannot resolve local class membership", "error");
+        return Ok(class_slots_result(source, class_name, "blocked", vec![Value::String(class_name.clone())], vec![], diagnostics));
+    }
     let root = payload.root.root();
     let Some(NativeJsonNode::Object(classes)) = object_member(root, "classes") else {
         push_diag(
@@ -3528,9 +3535,18 @@ fn read_payload(
     rt: &ContractRuntime,
     ctx: &mut Context<'_>,
 ) -> Result<ContractPayload, EngineError> {
-    let v = rt.inspect(doc, kind, ctx)?;
-    if !v.valid {
-        return Err(validation_error(kind, "DOCUMENT", v));
+    read_payload_with_validation(doc, kind, rt, ctx).map(|(payload, _)| payload)
+}
+
+fn read_payload_with_validation(
+    doc: &Value,
+    kind: ContractKind,
+    rt: &ContractRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<(ContractPayload, Validation), EngineError> {
+    let validation = rt.inspect(doc, kind, ctx)?;
+    if !validation.valid {
+        return Err(validation_error(kind, "DOCUMENT", validation));
     }
     if !text_is(field(doc, "umf"), CORE_VERSION) {
         return Err(error(kind, "DOCUMENT", "Unsupported core document version"));
@@ -3597,14 +3613,14 @@ fn read_payload(
         .filter(|(k, _)| !known_payload_field(kind, k))
         .map(|(k, v)| Ok((k.clone(), copy_json(v, ctx)?)))
         .collect::<Result<Vec<_>, EngineError>>()?;
-    Ok(ContractPayload {
+    Ok((ContractPayload {
         kind,
         root,
         original_source,
         original_format,
         metamodel_version,
         extras,
-    })
+    }, validation))
 }
 fn projection(tree: &NativeJsonTree, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     native_projection(tree.root(), 0, ctx)

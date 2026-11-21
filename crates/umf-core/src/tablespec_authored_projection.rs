@@ -33,7 +33,7 @@ fn obj(v: Vec<(&str, Value)>) -> Value {
 }
 fn get<'a>(v: &'a Value, name: &str) -> Option<&'a Value> {
     match v {
-        Value::Object(m) => m.iter().find(|(key, _)| key == &k(name)).map(|(_, v)| v),
+        Value::Object(m) => m.iter().find(|(key, _)| key.equals_str(name)).map(|(_, v)| v),
         _ => None,
     }
 }
@@ -78,7 +78,9 @@ impl Capabilities for NoCapabilities {
         Ok(vec![])
     }
 }
-fn engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
+fn engine(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<(Engine, Registry)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(Engine, Registry)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let e = Engine::new(
         ResourceSet::new(
             json(CORE_SCHEMA, ctx)?,
@@ -102,11 +104,16 @@ fn engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
         ctx,
     )?;
     Ok((e, Registry::default()))
+    })
 }
+
 fn schemas(
     null: bool,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    static OTHER_CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(if null { &OTHER_CACHE } else { &CACHE }, ctx, |ctx| {
     let root = json(if null { NULL_SCHEMA } else { CARD_SCHEMA }, ctx)?;
     let resources = SchemaResources {
         entries: vec![
@@ -138,6 +145,7 @@ fn schemas(
             )
         })?;
     Ok((result, CompiledSchema::compile(req, &resources, ctx)?))
+    })
 }
 fn ptr(v: &Utf16) -> String {
     let mut s = v.to_utf8().unwrap_or_default();
@@ -208,7 +216,8 @@ fn project(
 ) -> Result<Value, EngineError> {
     let author_input = copy_json(input, ctx)?;
     let request = copy_json(request_input, ctx)?;
-    let (result_schema, request_schema) = schemas(null, ctx)?;
+    let prepared_schemas = schemas(null, ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     if let Some(d) = request_schema.validate(&request, ctx)?.first() {
         return Err(EngineError::new(
             if null {
@@ -220,7 +229,8 @@ fn project(
             d.message.clone(),
         ));
     }
-    let (eng, reg) = engine(ctx)?;
+    let prepared_engine = engine(ctx)?;
+    let (eng, reg) = &*prepared_engine;
     let mut caps = NoCapabilities;
     let target_input = get(&author_input, "target").ok_or_else(|| {
         err(
@@ -603,9 +613,15 @@ fn project(
         if req("profile").as_deref() == Some("unresolved") {
             push_loss(&mut residuals,format!("{path}/cardinality"),&cardinality_value,"No execution profile selected; carrier acceptance does not establish shape enforcement","unknown",ctx)?;
         }
-        if card == "map"
+        let json_encoding = get(&request, "jsonEncoding") == Some(&Value::Bool(true)) && native == "TEXT" && (matches!(card.as_str(), "array" | "set" | "map") || card == "one" && txt(get(element, "scalarType")).as_deref() == Some("json"));
+        if json_encoding {
+            set(&mut mapping, "encoding", s("json-text"));
+            push_loss(&mut residuals, format!("{path}/cardinality"), &cardinality_value,
+                "Explicit JSON text collection encoding; writers enforce shape, item semantics and set uniqueness/canonical order; TableSpec TEXT does not enforce them", "approximated", ctx)?;
+        }
+        if !json_encoding && (card == "map" || card == "set"
             || (card == "array" && native != "EMBEDDING")
-            || (card == "one" && native == "EMBEDDING")
+            || (card == "one" && native == "EMBEDDING"))
         {
             set(&mut mapping, "encoding", s("carrier-only"));
             push_loss(&mut residuals,format!("{path}/cardinality"),&cardinality_value,"Selected native carrier cannot express this shape; no map/text or child-table encoding is implied","not-expressible",ctx)?;
@@ -645,7 +661,7 @@ fn project(
             );
             push_loss(&mut residuals, format!("{path}/itemType"), item_ref,
                 "Item reference and its full definition require retained recovery; no recursive native type is fabricated",
-                if native == "EMBEDDING" { "approximated" } else { "not-expressible" }, ctx)?;
+                if native == "EMBEDDING" || json_encoding { "approximated" } else { "not-expressible" }, ctx)?;
             if native == "EMBEDDING" {
                 let scalar = txt(get(item, "scalarType"));
                 if scalar.as_deref().is_some_and(|v| v != "float") {
@@ -733,7 +749,7 @@ fn project(
     let mut units = compact.units().to_vec();
     units.push(10);
     let serialized = Utf16::new(units);
-    let table_runtime = TableSpecRuntime::new(ctx)?;
+    let table_runtime = TableSpecRuntime::prepared(ctx)?;
     let target = table_runtime.import(&serialized, &Utf16::from(id), TableSpecFormat::Json, ctx)?;
     let target_elements = arr(get(
         arr(get(&target, "modules")).first().unwrap_or(&Value::Null),
@@ -913,7 +929,7 @@ pub fn recover(
             "/receipt/target",
         )
     })?;
-    let serialized = TableSpecRuntime::new(ctx)?.export(target, ctx)?;
+    let serialized = TableSpecRuntime::prepared(ctx)?.export(target, ctx)?;
     if !matches!(native_text,Value::String(text) if text==&serialized) {
         return Err(err(
             if null {

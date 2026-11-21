@@ -11,5 +11,7 @@ export interface PreparedCoreKeyTuples {
  /** Immutable, private-copy source; this is not a current-store assertion. */
  readonly source:Json;
  encode(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):CoreKeyTupleReceipt;
+ /** Exact v1 key bytes as hex, without a source/receipt copy; no current-store assertion. */
+ encodeHex(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):string;
  verify(receipt:CoreKeyTupleReceipt):CoreKeyTupleReceipt;
 }

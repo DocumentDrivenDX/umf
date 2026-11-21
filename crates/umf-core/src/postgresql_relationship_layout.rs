@@ -71,7 +71,7 @@ fn k(x: &str) -> Utf16 {
 }
 fn get<'a>(v: &'a Value, name: &str) -> Option<&'a Value> {
     if let Value::Object(fields) = v {
-        fields.iter().find(|(n, _)| n == &k(name)).map(|(_, v)| v)
+        fields.iter().find(|(n, _)| n.equals_str(name)).map(|(_, v)| v)
     } else {
         None
     }
@@ -1250,6 +1250,9 @@ pub fn validate_postgresql_relationship_layout(
                     add_error(&mut errors,"TYPE",&at,"Referencing SQL type and collation must exactly match the endpoint comparator");
                 }
                 let col = utf8(get(c, "carrierColumn")).unwrap_or_default();
+                if matches!(col.as_str(), "ctid" | "tableoid" | "xmin" | "cmin" | "xmax" | "cmax") {
+                    add_error(&mut errors, "SQL", &at, "Referencing column collides with a PostgreSQL system column");
+                }
                 if !safe_identifier(&col)
                     || family(&utf8(get(c, "sqlType")).unwrap_or_default()).is_none()
                 {

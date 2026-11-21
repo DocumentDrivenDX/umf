@@ -594,8 +594,24 @@ pub fn execute_wire_with_callback(
     callback: &mut dyn FnMut(&Value, &mut Context<'_>) -> Result<Value, EngineError>,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_wire_with_context(wire, callback, Context::ordinary().with_host_control(control))
+}
+
+/// No host-control capability is installed when none was supplied. Condition
+/// callbacks and their current-operation ledger still run normally.
+pub fn execute_wire_with_callback_default(
+    wire: &str,
+    callback: &mut dyn FnMut(&Value, &mut Context<'_>) -> Result<Value, EngineError>,
+) -> String {
+    execute_wire_with_context(wire, callback, Context::ordinary_construction())
+}
+
+fn execute_wire_with_context(
+    wire: &str,
+    callback: &mut dyn FnMut(&Value, &mut Context<'_>) -> Result<Value, EngineError>,
+    mut ctx: Context<'_>,
+) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let profile = text(
             field(&request, "profile")
@@ -814,5 +830,33 @@ impl SourceCompiler<'_, '_> {
             }
             _ => Err(source_error()),
         }
+    }
+}
+
+#[cfg(test)]
+mod invocation_context_tests {
+    use super::*;
+    use std::{cell::Cell,rc::Rc};
+    fn wire(expression:&str)->String {
+        let value=umf_core::serialization::read_json_value(format!(r#"{{"profile":"{PROFILE}","expression":{expression},"resourceIndex":0}}"#).encode_utf16().collect::<Vec<_>>().as_slice(),umf_core::serialization::Format::Json,&mut Context::ordinary()).unwrap();
+        encode(&value,&mut Context::ordinary()).unwrap()
+    }
+    #[test]
+    fn default_and_controlled_conditions_keep_callback_order_and_receipts() {
+        for expression in [r#"{"op":"literal","value":true}"#,r#"{"op":"and","args":[{"op":"literal","value":true},{"op":"literal","value":false}]}"#,r#"{"op":"unknown"}"#] {
+            let input=wire(expression);let mut ordinary=Vec::new();let mut controlled=Vec::new();let mut charges=0;
+            let a=execute_wire_with_callback_default(&input,&mut |event,ctx|{ordinary.push(event.clone());ctx.charge_work(7,Utf16::default())?;Ok(Value::Bool(true))});
+            let b=execute_wire_with_callback(&input,&mut |event,ctx|{controlled.push(event.clone());ctx.charge_work(7,Utf16::default())?;Ok(Value::Bool(true))},&mut |amount|{charges+=amount;Ok(())});
+            assert_eq!(a,b);assert_eq!(ordinary,controlled);assert!(!ordinary.is_empty());assert!(charges>7);
+        }
+    }
+    #[test]
+    fn live_control_cancellation_before_and_after_callback_prevents_publication() {
+        let input=wire(r#"{"op":"literal","value":true}"#);let mut calls=0;
+        let before=execute_wire_with_callback(&input,&mut |_,_|{calls+=1;Ok(Value::Bool(true))},&mut |_|Err(fail("CANCELLED","before callback")));
+        assert!(before.contains("CANCELLED"));assert_eq!(calls,0);
+        let called=Rc::new(Cell::new(false));let cb=Rc::clone(&called);let hook=Rc::clone(&called);
+        let after=execute_wire_with_callback(&input,&mut |_,ctx|{cb.set(true);ctx.charge_work(1,Utf16::default())?;Ok(Value::Bool(true))},&mut |_|if hook.get(){Err(fail("CANCELLED","after callback"))}else{Ok(())});
+        assert!(called.get());assert!(after.contains("CANCELLED"));assert!(!after.contains("\\\"ok\\\":true"));
     }
 }

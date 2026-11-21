@@ -187,6 +187,34 @@ fn tagged_node_number(v: &Value) -> Option<u64> {
     (value <= 9_007_199_254_740_991).then_some(value)
 }
 
+fn field_role_conflict(
+    source: &Value, element: &Value, element_id: &Utf16, author: Option<&Value>,
+    engine: &Engine, registry: &Registry, caps: &mut dyn Capabilities, ctx: &mut Context<'_>,
+) -> Result<Option<String>, EngineError> {
+    let mut reason = None;
+    if let Some(author) = author {
+        match crate::core_kind::verify_core_kind_declaration(
+            author, source, engine, registry, caps, ctx,
+        ) {
+            Ok(v) => {
+                let ident = get(&v, "identity").unwrap_or(&Value::Null);
+                let prov = get(&v, "provenance").unwrap_or(&Value::Null);
+                if text(ident, "module") != Some(&u("sqlserver.columns"))
+                    || text(ident, "element") != Some(element_id)
+                    || text(prov, "kind") != Some(&u("field"))
+                {
+                    reason = Some("Author receipt does not assert this Field role".to_owned());
+                }
+            }
+            Err(e) if e.is_control_failure() || e.code == "LIMIT" => return Err(e),
+            Err(e) => reason = Some(format!("Author provenance is invalid or stale: {}", e.code)),
+        }
+    } else if get(element, "kind").is_some() {
+        reason=Some("Existing kind requires verified author provenance; native-only observation cannot replace it".to_owned());
+    }
+    Ok(reason)
+}
+
 pub fn classify(
     input: &Value,
     request: &Value,
@@ -348,27 +376,7 @@ pub fn classify(
         ("residuals", Value::Array(vec![])),
         ("diagnostics", Value::Array(vec![])),
     ]);
-    let mut reason = None;
-    if let Some(author) = get(&request, "author") {
-        match crate::core_kind::verify_core_kind_declaration(
-            author, &source, engine, registry, caps, ctx,
-        ) {
-            Ok(v) => {
-                let ident = get(&v, "identity").unwrap_or(&Value::Null);
-                let prov = get(&v, "provenance").unwrap_or(&Value::Null);
-                if text(ident, "module") != Some(&u("sqlserver.columns"))
-                    || text(ident, "element") != Some(element_id)
-                    || text(prov, "kind") != Some(&u("field"))
-                {
-                    reason = Some("Author receipt does not assert this Field role".to_owned());
-                }
-            }
-            Err(e) if e.is_control_failure() || e.code == "LIMIT" => return Err(e),
-            Err(e) => reason = Some(format!("Author provenance is invalid or stale: {}", e.code)),
-        }
-    } else if get(element, "kind").is_some() {
-        reason=Some("Existing kind requires verified author provenance; native-only observation cannot replace it".to_owned());
-    }
+    let reason = field_role_conflict(&source, element, element_id, get(&request, "author"), engine, registry, caps, ctx)?;
     if let Some(reason) = reason {
         set(&mut result, "status", t("blocked"))?;
         if let Some(mapping) = get_mut(&mut result, "mapping") {
@@ -844,47 +852,70 @@ pub fn classify_record(
             .iter()
             .find(|(author_id, _)| author_id == id)
             .map(|(_, a)| *a);
-        let field_request = obj(vec![
-            (
-                "column",
-                Value::String(copy_text(
-                    text(row, "path").ok_or_else(|| {
-                        err("SQLSERVER_RECORD_METADATA", "", "Column path missing")
-                    })?,
-                    ctx,
-                )?),
-            ),
-            (
-                "nativeSource",
-                Value::String(copy_text(native_source, ctx)?),
-            ),
-            (
-                "mode",
-                Value::String(copy_text(
-                    text(&request, "mode")
-                        .ok_or_else(|| err("SQLSERVER_RECORD_REQUEST", "/mode", "Mode required"))?,
-                    ctx,
-                )?),
-            ),
-        ]);
-        let mut field_request = field_request;
-        if let Some(author) = author {
-            set(&mut field_request, "author", copy_json(author, ctx)?)?;
-        }
-        let classified = classify(&source, &field_request, engine, registry, caps, ctx)?;
-        if let Some(mapping) = get(&classified, "mapping") {
-            mappings.push(copy_json(mapping, ctx)?);
-        }
-        if let Some(Value::Array(items)) = get(&classified, "residuals") {
-            for item in items {
-                let path = text(item, "path").cloned().unwrap_or_else(|| u(""));
-                let value = get(item, "value").unwrap_or(&Value::Null);
-                let reason = text(item, "reason")
-                    .and_then(|reason| reason.to_utf8().ok())
-                    .unwrap_or_else(|| {
-                        "Field meaning conflicts with captured table membership".to_owned()
-                    });
-                add_block("FIELD_KIND_CONFLICT", &path, value, &reason, ctx)?;
+        if ctx.can_reuse_fixed_resources() {
+            // The record operation has admitted this source and checked its
+            // exact archive once. Reuse that immutable observation, rather than
+            // rebuilding and validating a whole standalone receipt per member.
+            // Caller controls keep the original standalone instruction path.
+            let elements = array(&modules[module_index], "elements").ok_or_else(|| err("SQLSERVER_RECORD_METADATA", "/elements", "Elements required"))?;
+            let ei = elements.iter().position(|element| text(element, "id") == Some(id)).ok_or_else(|| err("SQLSERVER_RECORD_METADATA", "/elements", "Derived column element required"))?;
+            let element = &elements[ei];
+            let ideal = u(&format!("/modules/{module_index}/elements/{ei}/kind"));
+            let reason = field_role_conflict(&source, element, id, author, engine, registry, caps, ctx)?;
+            mappings.push(obj(vec![
+                ("origin", t("classified")), ("kind", t("field")),
+                ("idealPath", Value::String(ideal.clone())),
+                ("nativePath", copy_json(get(row, "path").unwrap(), ctx)?),
+                ("nativeFragment", copy_json(native_column, ctx)?),
+                ("basis", t("checked-catalog-column-membership")),
+                ("outcome", t(if reason.is_some() { "unknown" } else { "exact" })),
+            ]));
+            if let Some(reason) = reason {
+                add_block("FIELD_KIND_CONFLICT", &ideal, get(element, "kind").unwrap_or(&Value::Null), &reason, ctx)?;
+            }
+        } else {
+            let field_request = obj(vec![
+                (
+                    "column",
+                    Value::String(copy_text(
+                        text(row, "path").ok_or_else(|| {
+                            err("SQLSERVER_RECORD_METADATA", "", "Column path missing")
+                        })?,
+                        ctx,
+                    )?),
+                ),
+                (
+                    "nativeSource",
+                    Value::String(copy_text(native_source, ctx)?),
+                ),
+                (
+                    "mode",
+                    Value::String(copy_text(
+                        text(&request, "mode")
+                            .ok_or_else(|| err("SQLSERVER_RECORD_REQUEST", "/mode", "Mode required"))?,
+                        ctx,
+                    )?),
+                ),
+            ]);
+            let mut field_request = field_request;
+            if let Some(author) = author {
+                set(&mut field_request, "author", copy_json(author, ctx)?)?;
+            }
+            let classified = classify(&source, &field_request, engine, registry, caps, ctx)?;
+            if let Some(mapping) = get(&classified, "mapping") {
+                mappings.push(copy_json(mapping, ctx)?);
+            }
+            if let Some(Value::Array(items)) = get(&classified, "residuals") {
+                for item in items {
+                    let path = text(item, "path").cloned().unwrap_or_else(|| u(""));
+                    let value = get(item, "value").unwrap_or(&Value::Null);
+                    let reason = text(item, "reason")
+                        .and_then(|reason| reason.to_utf8().ok())
+                        .unwrap_or_else(|| {
+                            "Field meaning conflicts with captured table membership".to_owned()
+                        });
+                    add_block("FIELD_KIND_CONFLICT", &path, value, &reason, ctx)?;
+                }
             }
         }
         referenced_fields.push((u("sqlserver.columns"), id.clone()));

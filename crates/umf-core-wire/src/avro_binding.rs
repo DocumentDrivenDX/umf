@@ -811,18 +811,21 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
 }
 
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
-        execute(&request, &mut ctx).and_then(|output| encode(&output, &mut ctx))
-    })();
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire, ctx)?;
+        execute(&request, ctx).and_then(|output| encode(&output, ctx))
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

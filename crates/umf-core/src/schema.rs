@@ -308,6 +308,8 @@ pub struct CompiledSchema {
         std::collections::BTreeMap<usize, std::sync::Arc<crate::python_value::PythonConsumerValue>>,
     python_reference_targets: std::collections::BTreeMap<usize, PythonReferenceTarget>,
     python_resource_roots: std::collections::BTreeMap<usize, PythonResourceLocator>,
+    // Locators, never borrowed addresses; clones start with empty caches.
+    dynamic_resource_cache: Mutex<std::collections::BTreeMap<Vec<u16>, (u64, Option<(Option<usize>, Utf16)>)>>,
     dynamic_anchor_cache:
         Mutex<std::collections::BTreeMap<usize, Arc<Vec<(Vec<u16>, Utf16, usize)>>>>,
 }
@@ -336,7 +338,7 @@ impl Clone for CompiledSchema {
             python_exact_values: self.python_exact_values.clone(),
             python_reference_targets: self.python_reference_targets.clone(),
             python_resource_roots: self.python_resource_roots.clone(),
-            dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
+            dynamic_resource_cache: Mutex::new(Default::default()), dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
         }
     }
 }
@@ -462,7 +464,7 @@ impl CompiledSchema {
             python_text_origins: Default::default(), python_member_keys: Default::default(),
             python_source_strings: Default::default(), python_source_keys: Default::default(),
             python_exact_values: Default::default(), python_reference_targets: Default::default(),
-            python_resource_roots: Default::default(), dynamic_anchor_cache: Mutex::new(Default::default()) })
+            python_resource_roots: Default::default(), dynamic_resource_cache: Mutex::new(Default::default()), dynamic_anchor_cache: Mutex::new(Default::default()) })
     }
 }
 
@@ -1684,7 +1686,7 @@ impl CompiledSchema {
             python_exact_values: self.python_exact_values.clone(),
             python_reference_targets: self.python_reference_targets.clone(),
             python_resource_roots: self.python_resource_roots.clone(),
-            dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
+            dynamic_resource_cache: Mutex::new(Default::default()), dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
         })
     }
     fn compile_pattern(
@@ -2134,7 +2136,7 @@ impl CompiledSchema {
             python_exact_values: std::collections::BTreeMap::new(),
             python_reference_targets: std::collections::BTreeMap::new(),
             python_resource_roots: std::collections::BTreeMap::new(),
-            dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
+            dynamic_resource_cache: Mutex::new(Default::default()), dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
         };
         if eligible {
             ctx.charge_work(1,Utf16::default())?;
@@ -2264,6 +2266,12 @@ impl CompiledSchema {
     pub(crate) fn validate_owned_core_snapshot(&self,value:&Value,ctx:&mut Context<'_>) -> Result<Vec<StructuralError>,EngineError> {
         if self.owner_plans.is_none() { return self.validate(value,ctx); }
         ctx.with_work_phase("native-schema-validation",|ctx|self.evaluate_admitted_codegen_value(value,false,ctx))
+    }
+    /// Validate a bounded native tree without coercing its retained numeric
+    /// tokens into CoreJSON. Only this internal numeric view may be inexact.
+    pub(crate) fn validate_native_json_tree_codegen_errors(&self, tree: &crate::native_json::NativeJsonTree, ctx: &mut Context<'_>) -> Result<Vec<StructuralError>, EngineError> {
+        let projected = crate::native_json::schema_projection(tree.root(), ctx)?;
+        self.validate_native_json_codegen_errors(&projected, ctx)
     }
     /// Internal JSON.parse projection of an already admitted NativeJsonTree.
     /// Native JSON tokens may overflow binary64; AJV with strict=false sees
@@ -4304,6 +4312,34 @@ impl CompiledSchema {
         self.dynamic_resource_unindexed(path,ctx)
     }
     fn dynamic_resource_unindexed<'a>(&'a self,path:&Utf16,ctx:&mut Context<'_>)->Result<Option<(&'a Value,Utf16)>,EngineError> {
+        let eligible = ctx.can_optimize_discarded_schema_errors() && ctx.limits() == crate::Limits::ordinary();
+        if !eligible { return self.dynamic_resource_unindexed_uncached(path, ctx); }
+        let cached = self.dynamic_resource_cache.lock().unwrap_or_else(|e|e.into_inner()).get(path.units()).cloned();
+        if let Some((work, locator)) = cached {
+            if ctx.charged_work().checked_add(work).is_some() {
+                ctx.charge_work_u64(work, path.clone())?;
+                return Ok(locator.map(|(index, root_path)| {
+                    let root = match index { None => &*self.schema, Some(index) => self.catalogue_entries().get(index).expect("immutable resource locator").1 };
+                    (root, root_path)
+                }));
+            }
+        }
+        let before = ctx.charged_work();
+        let result = self.dynamic_resource_unindexed_uncached(path, ctx)?;
+        let locator = match &result {
+            None => Some(None),
+            Some((root, root_path)) if std::ptr::eq(*root, &*self.schema) => Some(Some((None, root_path.clone()))),
+            Some((root, root_path)) => self.catalogue_entries().iter().position(|(_,v)|std::ptr::eq(v,*root)).map(|index|Some((Some(index),root_path.clone()))),
+        };
+        // Embedded subschemas retain the original traversal. A successful root
+        // locator is relative to this immutable owner, so moves/clones cannot
+        // leave dangling pointers. No caller data or control is retained.
+        if let Some(locator) = locator {
+            self.dynamic_resource_cache.lock().unwrap_or_else(|e|e.into_inner()).entry(path.units().to_vec()).or_insert((ctx.charged_work()-before,locator));
+        }
+        Ok(result)
+    }
+    fn dynamic_resource_unindexed_uncached<'a>(&'a self,path:&Utf16,ctx:&mut Context<'_>)->Result<Option<(&'a Value,Utf16)>,EngineError> {
         ctx.charge_work_u64(
             (path.len() as u64).saturating_mul(2).saturating_add(1),
             path.clone(),
@@ -6602,6 +6638,8 @@ impl CompiledSchema {
                 if let Value::Array(schemas) = rule {
                     let mut matches = 0;
                     let codegen_one_of = keyword == "oneOf" && evaluated.codegen_errors;
+                    let fast_any_of = keyword == "anyOf" && ctx.can_optimize_discarded_schema_errors();
+                    let fast_one_of = keyword == "oneOf" && ctx.can_optimize_discarded_schema_errors();
                     let mut passing_schemas = Vec::new();
                     let mut successful_annotations = Vec::new();
                     // Ajv's default all-errors core profile includes the errors from
@@ -6610,14 +6648,50 @@ impl CompiledSchema {
                     // its aggregate error, so retain branch diagnostics only for the
                     // ECMAScript profile.
                     let mut failed_branch_errors = Vec::new();
+                    let kind_key = Utf16::from_static_units(&[107, 105, 110, 100]);
+                    let instance_kind = if self.dialect == SchemaDialect::Draft2020_12
+                        && ctx.can_optimize_discarded_schema_errors()
+                    {
+                        data.object_find(InstanceText::Utf16(&kind_key), ctx)?
+                    } else { None };
                     for (i, s) in schemas.iter().enumerate() {
+                        if let Some(actual) = instance_kind {
+                            // A present property contradicting a direct const
+                            // proves this branch false. No matched branch or
+                            // successful annotation is omitted. anyOf restores
+                            // full diagnostics on aggregate failure below.
+                            ctx.charge_work(1, Utf16::default())?;
+                            let kind = get(s, "properties").and_then(|properties| get(properties, "kind"));
+                            if get(s, "$ref").is_none() && get(s, "$dynamicRef").is_none()
+                                && get(s, "$recursiveRef").is_none() && get(s, "$schema").is_none()
+                            {
+                                if let Some(kind) = kind.filter(|kind| get(kind, "$ref").is_none()
+                                    && get(kind, "$dynamicRef").is_none() && get(kind, "$recursiveRef").is_none()
+                                    && get(kind, "$schema").is_none())
+                                {
+                                    if let Some(Value::String(expected)) = get(kind, "const") {
+                                        if !actual.text_value().is_some_and(|actual| actual.equals(InstanceText::Utf16(expected))) {
+                                            continue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         let mut e = Vec::new();
                         let mut branch_annotations = evaluated.child(ctx, ip)?;
                         // jsonschema fully consumes anyOf/oneOf branches
                         // until it finds a success. After the first oneOf
                         // match, later branches are checked with is_valid
                         // (first-error), while anyOf stops immediately.
-                        branch_annotations.mode = if !codegen_one_of
+                        branch_annotations.mode = if fast_any_of || fast_one_of {
+                            // Successful combinators discard failed branch diagnostics. Stop at
+                            // the first failure while still evaluating every
+                            // branch for its match and successful annotations.
+                            // Explicit controls and all-errors presentation
+                            // keep the original notification/diagnostic path.
+                            EvaluationMode::FirstError
+                        } else if !codegen_one_of
                             && matches > 0
                             && (keyword == "oneOf" || evaluated.collect_annotations)
                         {
@@ -6658,6 +6732,31 @@ impl CompiledSchema {
                         {
                             failed_branch_errors.extend(e);
                         }
+                    }
+                    if ((fast_any_of && matches == 0) || (fast_one_of && codegen_one_of && matches != 1)) && mode == EvaluationMode::AllErrors
+                        && matches!(self.regex_profile, RegexProfile::Ecma262Unicode)
+                    {
+                        // Passing combinators discard failed branch errors.
+                        // On aggregate failure, reproduce the complete report.
+                        // Disable this optimization throughout replay so nested
+                        // failures cannot trigger exponential diagnostic work.
+                        failed_branch_errors.clear();
+                        ctx.with_full_branch_diagnostics(|ctx| {
+                            let mut replay_matches = 0;
+                            for (i, schema) in schemas.iter().enumerate() {
+                                let mut errors = Vec::new();
+                                let mut annotations = evaluated.child(ctx, ip)?;
+                                annotations.mode = EvaluationMode::AllErrors;
+                                annotations.selected_cursor = child_cursor(Some(self), evaluated.selected_cursor.as_ref(), i, ctx)?;
+                                self.eval(schema, data, ip, &self.pair_eval_schema_step(&kp, &i.to_string(), ctx)?, depth + 1,
+                                    ctx, &mut errors, &mut annotations)?;
+                                if errors.is_empty() {
+                                    replay_matches += 1;
+                                    if codegen_one_of && replay_matches == 2 { break; }
+                                } else { failed_branch_errors.extend(errors); }
+                            }
+                            Ok(())
+                        })?;
                     }
                     let failed = if keyword == "anyOf" {
                         matches == 0
@@ -8141,7 +8240,7 @@ fn validate_schema_against_metaschema_mode(
         python_exact_values: std::collections::BTreeMap::new(),
         python_reference_targets: std::collections::BTreeMap::new(),
         python_resource_roots: std::collections::BTreeMap::new(),
-        dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
+        dynamic_resource_cache: Mutex::new(Default::default()), dynamic_anchor_cache: Mutex::new(std::collections::BTreeMap::new()),
     };
     if state.is_some() {
         ctx.charge_work(1,Utf16::default())?;
@@ -8746,7 +8845,7 @@ fn schema_json_with_mode(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:
                 Value::Null=>Ok(copy.then_some(Value::Null)),
                 Value::Bool(v)=>Ok(copy.then_some(Value::Bool(*v))),
                 Value::Number(v) if allow_duplicate_keys=>{
-                    let admitted=Value::number(*v,std::mem::take(path))?;Ok(if copy {Some(admitted)} else {None})
+                    let admitted=Value::number(*v,if copy {path.clone()} else {std::mem::take(path)})?;Ok(if copy {Some(admitted)} else {None})
                 },
                 Value::Number(v) if v.is_finite()=>Ok(copy.then_some(Value::Number(*v))),
                 Value::Number(_)=>Err(schema_admission_error("NUMBER",path,"JSON Schema numbers must be finite binary64 values")),
@@ -8758,7 +8857,10 @@ fn schema_json_with_mode(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:
                     let mut copied=if copy {Some(Vec::with_capacity(items.len()))} else {None};
                     for (i,item) in items.iter().enumerate() {
                         if !copy {ctx.charge_work(path.len().saturating_add(81),Utf16::default())?;}
-                        let next=visit(item,&mut append_schema_pointer(path,&Utf16::from(i.to_string())),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        let segment=Utf16::from(i.to_string());
+                        let next=if copy {
+                            crate::value::with_copy_path_segment(path,&segment,true,|path|visit(item,path,depth+1,count,ctx,allow_duplicate_keys,copy))?
+                        } else { visit(item,&mut append_schema_pointer(path,&segment),depth+1,count,ctx,allow_duplicate_keys,copy)? };
                         if let Some(copied)=&mut copied {copied.push(next.expect("copy mode"));}
                     }
                     Ok(copied.map(Value::Array))
@@ -8767,17 +8869,20 @@ fn schema_json_with_mode(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:
                     if copy {ctx.charge_work_with_path(members.len(),path)?;}
                     let mut copied=if copy {Some(Vec::with_capacity(members.len()))} else {None};
                     let mut keys=BTreeSet::new();
+                    let mut copied_keys=BTreeSet::new();
                     for (key,value) in members {
                         if copy {
                             ctx.charge_work_with_path(key.len(),path)?;
-                            if !allow_duplicate_keys && !keys.insert(key.units().to_vec()) {return Err(schema_admission_error("DUPLICATE_KEY",path,"Duplicate object key"));}
+                            if !allow_duplicate_keys && !copied_keys.insert(key.units()) {return Err(schema_admission_error("DUPLICATE_KEY",path,"Duplicate object key"));}
                         } else if !allow_duplicate_keys && !schema_admission_key_with_copy(key,&mut keys,path,ctx,|key|key.units().to_vec())? {
                             return Err(schema_admission_error("DUPLICATE_KEY",path,"Duplicate object key"));
                         }
                         // Preserve the legacy copy's key-before-child effect.
                         let copied_key=if copy {Some(key.clone())} else {None};
                         if !copy {ctx.charge_work(path.len().saturating_add(key.len().saturating_mul(3)).saturating_add(1),Utf16::default())?;}
-                        let next=visit(value,&mut append_schema_pointer(path,key),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        let next=if copy {
+                            crate::value::with_copy_path_segment(path,key,true,|path|visit(value,path,depth+1,count,ctx,allow_duplicate_keys,copy))?
+                        } else { visit(value,&mut append_schema_pointer(path,key),depth+1,count,ctx,allow_duplicate_keys,copy)? };
                         if let Some(copied)=&mut copied {copied.push((copied_key.expect("copy key"),next.expect("copy mode")));}
                     }
                     Ok(copied.map(Value::Object))
@@ -9392,7 +9497,7 @@ fn schema_child_values_mapped<'a,T>(schema:&'a Value,dialect:SchemaDialect,ctx:&
 fn get<'a>(v: &'a Value, key: &str) -> Option<&'a Value> {
     if let Value::Object(m) = v {
         m.iter()
-            .find(|(k, _)| k.to_utf8().ok().as_deref() == Some(key))
+            .find(|(k, _)| k.equals_str(key))
             .map(|(_, v)| v)
     } else {
         None
@@ -9407,15 +9512,37 @@ fn get_metered<'a>(
     let Value::Object(members) = value else {
         return Ok(None);
     };
+    // Unobserved ordinary construction can account for the exact same work
+    // in one charge. Controlled calls retain every original notification and
+    // error boundary below; overflowing totals also keep that path.
+    if ctx.can_batch_work() {
+        let mut work = (members.len() as u64).checked_mul(path.len() as u64);
+        let mut found = None;
+        for (name, member_value) in members {
+            work = work.and_then(|n| n.checked_add(name.len().saturating_add(key.len()) as u64));
+            if name.equals_str(key) {
+                found = Some(member_value);
+                break;
+            }
+        }
+        if let Some(work) = work.filter(|work| ctx.charged_work().checked_add(*work).is_some()) {
+            ctx.charge_work_u64(work, Utf16::default())?;
+            return Ok(found);
+        }
+    }
     // Each lookup iteration clones the diagnostic path for Context. Admit
     // those copies up front, before allocating them in the loop.
     ctx.charge_work_u64(
         (members.len() as u64).saturating_mul(path.len() as u64),
         Utf16::default(),
     )?;
+    if members.is_empty() { return Ok(None); }
+    // Reuse one diagnostic buffer; every original work/control notification
+    // and its path stays in the same order. Only failure transfers ownership.
+    let mut diagnostic_path = path.clone();
     for (name, member_value) in members {
-        ctx.charge_work(name.len().saturating_add(key.len()), path.clone())?;
-        if name.to_utf8().ok().as_deref() == Some(key) {
+        ctx.charge_work_with_path(name.len().saturating_add(key.len()), &mut diagnostic_path)?;
+        if name.equals_str(key) {
             return Ok(Some(member_value));
         }
     }
@@ -9423,7 +9550,7 @@ fn get_metered<'a>(
 }
 fn member<'a>(m: &'a [(Utf16, Value)], key: &str) -> Option<&'a Value> {
     m.iter()
-        .find(|(k, _)| k.to_utf8().ok().as_deref() == Some(key))
+        .find(|(k, _)| k.equals_str(key))
         .map(|(_, v)| v)
 }
 fn find_anchor<'a>(root:&'a Value,name: &str,dialect:SchemaDialect,ctx:&mut Context<'_>,path:&Utf16)->Result<Option<&'a Value>,EngineError>{
@@ -12682,3 +12809,200 @@ mod codegen_catalogue_independent_tests;
 #[cfg(test)]
 #[path = "schema_scoped_preflight_path_independent_tests.rs"]
 mod scoped_preflight_path_independent_tests;
+
+#[cfg(test)]
+mod lookup_control_equivalence_tests {
+    use super::*;
+    fn baseline<'a>(value:&'a Value,key:&str,ctx:&mut Context<'_>,path:&Utf16)->Result<Option<&'a Value>,EngineError>{
+        let Value::Object(members)=value else{return Ok(None)};
+        ctx.charge_work_u64((members.len() as u64).saturating_mul(path.len() as u64),Utf16::default())?;
+        for(name,value)in members{
+            ctx.charge_work(name.len().saturating_add(key.len()),path.clone())?;
+            if name.to_utf8().ok().as_deref()==Some(key){return Ok(Some(value));}
+        }
+        Ok(None)
+    }
+    #[test]
+    fn discarded_oneof_errors_keep_results_and_successful_annotations() {
+        let parse = |text: &str| crate::serialization::read_json_value(&text.encode_utf16().collect::<Vec<_>>(), crate::serialization::Format::Json, &mut Context::ordinary()).unwrap();
+        let schemas = [
+            r#"{"oneOf":[{"type":"object","required":["kind","value"],"properties":{"kind":{"const":"number"},"value":{"type":"number"}}},{"type":"object","required":["kind","value"],"properties":{"kind":{"const":"string"},"value":{"type":"string"}}}],"unevaluatedProperties":false}"#,
+            r#"{"oneOf":[{"type":"number"},{"type":"integer"},{"type":"string","minLength":2}]}"#,
+            r#"{"oneOf":[{"type":"null"},{"type":"number"},{"type":"string"},{"type":"integer"},{"type":"boolean"}]}"#,
+            r#"{"anyOf":[{"type":"object","required":["kind","value"],"properties":{"kind":{"const":"number"},"value":{"type":"number"}}},{"type":"object","required":["kind","value"],"properties":{"kind":{"const":"string"},"value":{"type":"string"}}}],"unevaluatedProperties":false}"#,
+            r#"{"anyOf":[{"type":"object","properties":{"a":true},"required":["a"]},{"type":"object","properties":{"b":true},"required":["b"]}],"unevaluatedProperties":false}"#,
+            r#"{"anyOf":[{"anyOf":[{"type":"number"},{"type":"integer"}]},{"type":"string","minLength":2}]}"#,
+            r#"{"oneOf":[{"type":"object","properties":{"a":true},"required":["a"]},{"type":"object","properties":{"b":true},"required":["b"]}],"unevaluatedProperties":false}"#,
+        ];
+        for schema in schemas {
+            let compiled = CompiledSchema::compile(&parse(schema), &SchemaResources::default(), &mut Context::ordinary()).unwrap();
+            for input in ["null", "true", "1", "1.5", "\"ok\"", "\"x\"", "{}", r#"{"kind":"number","value":1}"#, r#"{"kind":"string","value":"x","extra":true}"#, r#"{"kind":"number","value":"x"}"#, r#"{"a":1}"#, r#"{"a":1,"b":2}"#] {
+                let value = parse(input);
+                for all_errors in [false, true] {
+                    let run = |controlled: bool| {
+                        let mut control = |_: usize| Ok(());
+                        let mut ctx = if controlled { Context::ordinary().with_host_control(&mut control) } else { Context::ordinary() };
+                        ctx.with_codegen_construction(|ctx| if all_errors { compiled.validate_codegen_errors(&value, ctx) } else { compiled.validate(&value, ctx) }).unwrap()
+                    };
+                    assert_eq!(run(false), run(true), "schema={schema} input={input} all_errors={all_errors}");
+                }
+            }
+        }
+    }
+    #[test]
+    fn ordinary_scoped_lookup_preserves_results_work_and_overflow() {
+        let object = Value::Object(vec![(Utf16::from("first"), Value::Null), (Utf16::from("雪😀"), Value::Bool(true)), (Utf16::new(vec![0xd800]), Value::Bool(false))]);
+        for key in ["first", "雪😀", "absent"] {
+            for seed in [0, u64::MAX - 30, u64::MAX - 1] {
+                let run = |optimized: bool| {
+                    let mut ctx = Context::ordinary();
+                    ctx.carry_transport_usage(seed, 0);
+                    let result = ctx.with_codegen_construction(|ctx| {
+                        if optimized { get_metered(&object, key, ctx, &Utf16::from("/schema/雪")) }
+                        else { baseline(&object, key, ctx, &Utf16::from("/schema/雪")) }
+                    }).map(|value| value.cloned()).map_err(|e| (e.code, e.path, e.message));
+                    (result, ctx.charged_work(), ctx.constraint_steps())
+                };
+                assert_eq!(run(true), run(false));
+            }
+        }
+    }
+    #[test]
+    fn borrowed_lookup_preserves_notifications_and_host_error_origin(){
+        let object=Value::Object(vec![(Utf16::from("first"),Value::Null),(Utf16::from("雪😀"),Value::Bool(true)),(Utf16::new(vec![0xd800]),Value::Bool(false))]);
+        for key in ["first","雪😀","absent"]{for stop in [None,Some(0),Some(1),Some(2),Some(3)]{
+            let run=|optimized:bool|{
+                let mut events=Vec::new();
+                let mut control=|n:usize|{let call=events.len();events.push(n);if stop==Some(call){Err(EngineError::new("CANCELLED",Utf16::from("/caller"),"stop"))}else{Ok(())}};
+                let mut ctx=Context::ordinary().with_host_control(&mut control);
+                let path=Utf16::from("/schema/雪");
+                let result=if optimized{get_metered(&object,key,&mut ctx,&path)}else{baseline(&object,key,&mut ctx,&path)};
+                let result=result.map(|value|value.cloned()).map_err(|e|(e.code,e.path,e.message));
+                let charged=ctx.charged_work();drop(ctx);(result,events,charged,path)
+            };
+            assert_eq!(run(true),run(false));
+        }}
+    }
+}
+
+#[cfg(test)]
+mod schema_copy_allocation_equivalence_tests {
+    use super::*;
+fn reference_schema_copy(value:&Value,ctx:&mut Context<'_>,allow_duplicate_keys:bool,copy:bool)->Result<Option<Value>,EngineError> {
+    ctx.with_constructor_site(if copy {"ctor.admission-copy"} else {"ctor.plan-work"},|ctx| {
+        fn visit(value:&Value,path:&mut Utf16,depth:usize,count:&mut usize,ctx:&mut Context<'_>,allow_duplicate_keys:bool,copy:bool)->Result<Option<Value>,EngineError> {
+            schema_admission_node(path,depth,count,ctx)?;
+            match value {
+                Value::Null=>Ok(copy.then_some(Value::Null)),
+                Value::Bool(v)=>Ok(copy.then_some(Value::Bool(*v))),
+                Value::Number(v) if allow_duplicate_keys=>{
+                    let admitted=Value::number(*v,std::mem::take(path))?;Ok(if copy {Some(admitted)} else {None})
+                },
+                Value::Number(v) if v.is_finite()=>Ok(copy.then_some(Value::Number(*v))),
+                Value::Number(_)=>Err(schema_admission_error("NUMBER",path,"JSON Schema numbers must be finite binary64 values")),
+                Value::String(v)=>{
+                    if copy {ctx.charge_work_with_path(v.len(),path)?;Ok(Some(Value::String(v.clone())))} else {Ok(None)}
+                },
+                Value::Array(items)=>{
+                    if copy {ctx.charge_work_with_path(items.len(),path)?;}
+                    let mut copied=if copy {Some(Vec::with_capacity(items.len()))} else {None};
+                    for (i,item) in items.iter().enumerate() {
+                        if !copy {ctx.charge_work(path.len().saturating_add(81),Utf16::default())?;}
+                        let next=visit(item,&mut append_schema_pointer(path,&Utf16::from(i.to_string())),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        if let Some(copied)=&mut copied {copied.push(next.expect("copy mode"));}
+                    }
+                    Ok(copied.map(Value::Array))
+                },
+                Value::Object(members)=>{
+                    if copy {ctx.charge_work_with_path(members.len(),path)?;}
+                    let mut copied=if copy {Some(Vec::with_capacity(members.len()))} else {None};
+                    let mut keys=BTreeSet::new();
+                    for (key,value) in members {
+                        if copy {
+                            ctx.charge_work_with_path(key.len(),path)?;
+                            if !allow_duplicate_keys && !keys.insert(key.units().to_vec()) {return Err(schema_admission_error("DUPLICATE_KEY",path,"Duplicate object key"));}
+                        } else if !allow_duplicate_keys && !schema_admission_key_with_copy(key,&mut keys,path,ctx,|key|key.units().to_vec())? {
+                            return Err(schema_admission_error("DUPLICATE_KEY",path,"Duplicate object key"));
+                        }
+                        // Preserve the legacy copy's key-before-child effect.
+                        let copied_key=if copy {Some(key.clone())} else {None};
+                        if !copy {ctx.charge_work(path.len().saturating_add(key.len().saturating_mul(3)).saturating_add(1),Utf16::default())?;}
+                        let next=visit(value,&mut append_schema_pointer(path,key),depth+1,count,ctx,allow_duplicate_keys,copy)?;
+                        if let Some(copied)=&mut copied {copied.push((copied_key.expect("copy key"),next.expect("copy mode")));}
+                    }
+                    Ok(copied.map(Value::Object))
+                },
+            }
+        }
+        visit(value,&mut Utf16::from("#"),0,&mut 0,ctx,allow_duplicate_keys,copy)
+    })
+}
+
+    #[test]
+    fn schema_copy_matches_reference_admission_and_controls() {
+        let cases = vec![
+            Value::Object(vec![(Utf16::from("a/~雪"),Value::Array(vec![Value::Number(1.0),Value::String(Utf16::new(vec![0xd800]))])),(Utf16::default(),Value::Array(vec![Value::Number(2.0),Value::Number(f64::NAN)]))]),
+            Value::Object(vec![(Utf16::from(""),Value::Object(vec![(Utf16::from(""),Value::Number(1.0)),(Utf16::from("bad"),Value::Number(f64::INFINITY))]))]),
+            Value::Object(vec![(Utf16::from("same"),Value::Null),(Utf16::from("same"),Value::Bool(true))]),
+            Value::Number(-0.0),Value::Number(9007199254740992.0),
+        ];
+        for value in cases { for copy in [false,true] { for duplicates in [false,true] {
+            for bound in [0,1,2,100_000] { for stop in [None,Some(0),Some(1),Some(3),Some(8)] { for seed in [0,u64::MAX-2] {
+                let run=|reference:bool| {
+                    let mut events=Vec::new();
+                    let mut hook=|n| {let i=events.len();events.push(n);if stop==Some(i) {Err(EngineError::new("CANCELLED",Utf16::from("/caller"),"stop"))} else {Ok(())}};
+                    let mut limits=crate::Limits::ordinary();limits.max_values=bound;limits.max_depth=bound.min(128);
+                    let mut ctx=Context::with_limits(crate::ResourceProfile::Cooperative,limits).unwrap().with_host_control(&mut hook);
+                    ctx.carry_transport_usage(seed,0);
+                    let result=if reference {reference_schema_copy(&value,&mut ctx,duplicates,copy)} else {schema_json_with_mode(&value,&mut ctx,duplicates,copy)};
+                    let result=result.map(|v|format!("{v:?}")).map_err(|e|{let control=e.is_control_failure();(e.code,e.path,e.message,control)});
+                    let work=ctx.charged_work();drop(ctx);(result,events,work)
+                };
+                assert_eq!(run(false),run(true),"copy={copy}, duplicates={duplicates}, bound={bound}, stop={stop:?}, seed={seed}");
+            } } }
+        } } }
+    }
+}
+
+#[cfg(test)]
+mod resource_locator_equivalence_tests {
+    use super::*;
+    fn json(raw: &str) -> Value {
+        crate::serialization::read_json_value(&raw.encode_utf16().collect::<Vec<_>>(), crate::serialization::Format::Json, &mut Context::ordinary()).unwrap()
+    }
+    #[test]
+    fn warmed_locators_match_traversal_and_preserve_controls_overflow_and_clone_ownership() {
+        let resources=SchemaResources {entries:vec![
+            (Utf16::from("https://example.test/other"),json(r#"{"$id":"https://example.test/other","type":"integer"}"#)),
+            (Utf16::from("https://example.test/container"),json(r#"{"$id":"https://example.test/container","$defs":{"nested":{"$id":"nested","type":"string"}}}"#)),
+        ]};
+        let schema=CompiledSchema::compile(&json(r#"{"$id":"https://example.test/root","type":"object"}"#),&resources,&mut Context::ordinary()).unwrap();
+        for raw in ["https://example.test/root#/properties/x","https://example.test/other#/type","https://example.test/nested#","https://example.test/missing#"] {
+            let path=Utf16::from(raw);
+            for _ in 0..2 { for seed in [0,u64::MAX-2] {
+                let run=|cached:bool| {
+                    let mut ctx=Context::ordinary();ctx.carry_transport_usage(seed,0);
+                    let result=ctx.with_codegen_construction(|ctx|if cached {schema.dynamic_resource_unindexed(&path,ctx)} else {schema.dynamic_resource_unindexed_uncached(&path,ctx)});
+                    let result=result.map(|v|v.map(|(root,path)|(format!("{root:?}"),path))).map_err(|e|(e.code,e.path,e.message));
+                    (result,ctx.charged_work())
+                };
+                assert_eq!(run(true),run(false));
+            } }
+            for stop in [None,Some(0),Some(3),Some(10)] {
+                let run=|cached:bool| {
+                    let mut events=Vec::new();let mut hook=|n| {assert!(schema.dynamic_resource_cache.try_lock().is_ok());let i=events.len();events.push(n);if stop==Some(i) {Err(EngineError::new("CANCELLED",Utf16::from("/host"),"stop"))} else {Ok(())}};
+                    let mut ctx=Context::ordinary().with_host_control(&mut hook);
+                    let result=ctx.with_codegen_construction(|ctx|if cached {schema.dynamic_resource_unindexed(&path,ctx)} else {schema.dynamic_resource_unindexed_uncached(&path,ctx)});
+                    let result=result.map(|v|v.map(|(root,path)|(format!("{root:?}"),path))).map_err(|e|{let control=e.is_control_failure();(e.code,e.path,e.message,control)});
+                    let work=ctx.charged_work();drop(ctx);(result,work,events)
+                };
+                assert_eq!(run(true),run(false));
+            }
+        }
+        assert!(!schema.dynamic_resource_cache.lock().unwrap().is_empty());
+        let cloned=schema.clone();assert!(cloned.dynamic_resource_cache.lock().unwrap().is_empty());
+        let mut ctx=Context::ordinary();let path=Utf16::from("https://example.test/other#");
+        let root=ctx.with_codegen_construction(|ctx|cloned.dynamic_resource_unindexed(&path,ctx)).unwrap().unwrap().0;
+        assert!(std::ptr::eq(root,cloned.catalogue_entries().get(0).unwrap().1));
+    }
+}

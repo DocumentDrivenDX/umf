@@ -645,6 +645,7 @@ function createNativeKeyTupleOperations(module, resources, controls, setup = {})
       };
       return {source: freeze(retained),
         encode(identity, values) { return invoke(prepared.handle, 'encode', [identity, values]); },
+        encodeHex(identity, values) { return invoke(prepared.handle, 'encodeHex', [identity, values]); },
         verify(receipt) { return invoke(prepared.handle, 'verify', [receipt]); }};
     },
     prepareRead(receipt) {
@@ -2046,7 +2047,13 @@ export function createSecurityCandidateConditionEngine(module) {
 /** Create the opt-in pure protection-function reference engine. */
 export function createSecurityFunctionsEngine(module) {
   if (typeof module?.executeSecurityFunctionsWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
-  return createSecurityFunctionsEngineWithWire(wire => module.executeSecurityFunctionsWire(wire), NativeCoreErrorType);
+  return createSecurityFunctionsEngineWithWire(wire => module.executeSecurityFunctionsWire(wire), NativeCoreErrorType, (source, rawControls) => {
+    const {controls} = codegenOptions({controls: rawControls});
+    const bridge = () => hasControls(controls) ? createControlBridge(controls) : undefined;
+    let prepared;
+    try { prepared = new module.PreparedSecurityLiteralSourceHandle(source, bridge()); } catch (error) { nativeKeyTupleFailure(error); }
+    return {execute(wire) { return prepared.execute(wire, bridge()); }};
+  });
 }
 
 function codegenOptions(options) {
@@ -2154,6 +2161,7 @@ export function createCodegenEngine(module, resources, options = {}) {
     reviewedValueDigest(value) { return result('reviewedValueDigest', {value}).digest; },
     inspectTableLifecycle(source) { return result('inspectTableLifecycle', {source}); },
     inspectTableLifecyclePayload(payload, context) { return result('inspectTableLifecyclePayload', {payload, ...context}); },
+    applyJsonPatch(request) { return result('applyJsonPatch', request); },
     compileTableDeployment(request) { return result('compileTableDeployment', request); },
     verifyTableDeployment(bundle) { return result('verifyTableDeployment', {bundle}); },
     compileTableMigration(request) { return result('compileTableMigration', request); },
@@ -2238,12 +2246,25 @@ export function createRetainedCodegenEngine(module, resources, options = {}) {
   }
   return Object.freeze({
     dispose() { if (!disposed) { disposed = true; runtime.free(); } },
+    inspectActions(source) { return result('inspectActions', {source}); },
+    declareAction(source, module, action) { return result('declareAction', {source, module, action}); },
+    editAction(source, identity, replacement) { return result('editAction', {source, identity, replacement}); },
+    assessAction(source, identity, profile) { return result('assessAction', {source, identity, profile}); },
+    validateBulkOutcome(artifact) { return result('validateBulkOutcome', {artifact}); },
+    compileActionRule(document, action, rule, phase) { return result('compileActionRule', {document, action, rule, phase}); },
+    admitActionDeclaration(document, action) { return result('admitActionDeclaration', {document, action}); },
+    admitActionInputs(document, action, inputs, outputs = false) { return result('admitActionInputs', {document, action, inputs, outputs}); },
+    selectActionIdentity(document, action, frame, inputs) { return result('selectActionIdentity', {document, action, frame, inputs}); },
+    actionFieldValueKey(reference) { return result('actionFieldValueKey', {reference}); },
+    compileActionSelector(document, action, frame) { return result('compileActionSelector', {document, action, frame}); },
+    evaluateActionRule(document, action, rule, phase, state) { return result('evaluateActionRule', {document, action, rule, phase, state}); },
     call,
     generatePythonClient(request) { return result('generatePythonClient', request); },
     generatePythonClientWithHost(readHost, hostReadProfile) { return hostRead(readHost, hostReadProfile); },
     reviewedValueDigest(value) { return result('reviewedValueDigest', {value}).digest; },
     inspectTableLifecycle(source) { return result('inspectTableLifecycle', {source}); },
     inspectTableLifecyclePayload(payload, context) { return result('inspectTableLifecyclePayload', {payload, ...context}); },
+    applyJsonPatch(request) { return result('applyJsonPatch', request); },
     compileTableDeployment(request) { return result('compileTableDeployment', request); },
     verifyTableDeployment(bundle) { return result('verifyTableDeployment', {bundle}); },
     compileTableMigration(request) { return result('compileTableMigration', request); },

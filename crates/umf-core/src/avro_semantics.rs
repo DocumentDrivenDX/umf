@@ -127,6 +127,10 @@ fn inspect_node(
                 )?;
                 path.push(b'/' as u16);
                 path.extend(i.to_string().bytes().map(u16::from));
+                if matches!(branch, N::Array(_)) {
+                    diagnostic(out, "AVRO_NESTED_UNION", path,
+                        "A union branch cannot itself be a union", Severity::Error, ctx)?;
+                }
                 let key = branch_key(branch, namespace);
                 if !seen.insert(key.clone()) {
                     let (severity, message) = if key.first() == Some(&(b'N' as u16)) {

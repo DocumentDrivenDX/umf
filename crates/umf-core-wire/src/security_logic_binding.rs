@@ -65,8 +65,7 @@ fn exact_members(value: &Value, required: &[&str], allowed: &[&str]) -> Result<(
 /// Execute one security truth operation using `umf.core-wire/1` tagged values.
 /// This operation performs no policy selection or host authorization.
 pub fn execute_security_logic_wire(wire_json: &str) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_security_logic_wire_with_control(wire_json, &mut no_control)
+    execute_security_logic_request(wire_json, Context::ordinary_construction(), false)
 }
 
 /// Execute a security truth operation with cumulative invocation work control.
@@ -74,23 +73,26 @@ pub fn execute_security_logic_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    execute_security_logic_request(wire_json, control, false)
+    execute_security_logic_request(wire_json, Context::ordinary().with_host_control(control), false)
 }
 
 pub fn execute_candidate_security_logic_wire(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    execute_security_logic_request(wire_json, control, true)
+    execute_security_logic_request(wire_json, Context::ordinary().with_host_control(control), true)
+}
+
+pub fn execute_candidate_security_logic_wire_default(wire_json: &str) -> String {
+    execute_security_logic_request(wire_json, Context::ordinary_construction(), true)
 }
 
 fn execute_security_logic_request(
     wire_json: &str,
-    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    mut context: Context<'_>,
     candidate: bool,
 ) -> String {
     let result = (|| {
-        let mut context = Context::ordinary().with_host_control(control);
         let request = if candidate {
             // Catalog DTOs combine separately bounded source and fact cuts.
             // Their own limits apply after the aggregate transport is decoded.

@@ -10,7 +10,7 @@ use crate::{
 
 fn get<'a>(v: &'a Value, k: &str) -> Option<&'a Value> {
     let Value::Object(m) = v else { return None };
-    m.iter().find(|(n, _)| n == &Utf16::from(k)).map(|(_, v)| v)
+    m.iter().find(|(n, _)| n.equals_str(k)).map(|(_, v)| v)
 }
 fn text(v: Option<&Value>) -> Option<Utf16> {
     match v {
@@ -31,7 +31,7 @@ fn exact(v: &Value, keys: &[&str]) -> Result<(), EngineError> {
     };
     if m.len() != keys.len()
         || m.iter()
-            .any(|(k, _)| !keys.iter().any(|x| k == &Utf16::from(*x)))
+            .any(|(k, _)| !keys.iter().any(|x| k.equals_str(x)))
     {
         return Err(fail());
     }

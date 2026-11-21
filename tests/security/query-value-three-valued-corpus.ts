@@ -4,9 +4,12 @@ import source from './protection/query-value-route-guards.json';
 import {compileCandidateCatalogProgram} from '../../src/extensions/security/catalog-program-candidate';
 import {evaluateCandidateQueryValueRoutes} from '../../src/extensions/security/query-value-route-evaluation-candidate';
 const ref=(elementId:string)=>({documentId:'domain',moduleId:'m',elementId});
-export function runQueryValueThreeValuedCorpus(){
- const summary={states:0,permutations:2,truthVectors:6561,unknown:0,deny:0,permit:0,selections:{} as Record<string,number>};
+export function runQueryValueThreeValuedCorpus(start=0,end=13122,stride=1){
+ if(!Number.isInteger(start)||!Number.isInteger(end)||start<0||end>13122||start>=end||!Number.isInteger(stride)||stride<1||stride>2)throw Error('Invalid finite corpus interval');
+ const summary={states:0,permutations:2,truthVectors:6561,unknown:0,deny:0,permit:0,selections:{} as Record<string,number>,vectorIndices:[] as number[]};
  for(const reverse of [false,true]){
+  const offset=reverse?6561:0,first=Math.max(0,start-offset),last=Math.min(6561,end-offset);
+  if(first>=last)continue;
   const f:any=structuredClone(source),elements=f.closure.documents[0].document.modules[0].elements;
   const entity=f.ontology.entities.find((e:any)=>e.type.elementId==='Resource'),record=elements.find((e:any)=>e.id==='Resource');
   const resource=f.logicalCut.facts.find((e:any)=>e.type.elementId==='Resource'),coverage=f.logicalCut.coverage.find((e:any)=>e.type.elementId==='Resource');
@@ -16,7 +19,7 @@ export function runQueryValueThreeValuedCorpus(){
   for(const rule of f.policy.rules)if(rule.condition.op==='eq'&&rule.condition.left.kind==='context')rule.condition.left.kind='resource';
   if(reverse)f.policy.rules.reverse();
   const program=compileCandidateCatalogProgram(f.policy,f.catalog,f.closure,f.ontology),base=structuredClone(resource.fields);
-  for(let n=0;n<6561;n++){
+  for(let n=first;n<last;n+=stride){
    let remainder=n;const states=Array.from({length:8},()=>{const t=remainder%3;remainder=Math.floor(remainder/3);return t;});
    resource.fields=structuredClone(base);resource.absent=[];
    for(let i=0;i<8;i++)if(states[i]===2)resource.absent.push(ref('guard'+i));else resource.fields.push({field:ref('guard'+i),value:{boolean:states[i]===1}});
@@ -31,6 +34,7 @@ export function runQueryValueThreeValuedCorpus(){
    const branchLabels=row?.activeBranches.map(i=>{const branch:any=actual.plan!.branches[i];return branch.projection.kind==='transformed'?(branch.representativeDisposition.transform==='salary-label'?'mask-A':'mask-B'):branch.projection.kind==='unresolved-missing-disclosure'?'missing':branch.projection.kind;});
    const expectedBranches=expectedSelection==='selected'?[expectedRoute]:[];
    if(actual.status!=='evaluated'||actual.authority!==false||actual.complete!==false||actual.rows.length!==1||JSON.stringify(row?.resource)!==JSON.stringify({type:resource.type,key:resource.key})||JSON.stringify(row?.rules.map((r:any)=>r.ruleIndex))!==JSON.stringify(f.policy.rules.map((_:any,i:number)=>i))||row?.readDecision!==expectedDecision||row.selection!==expectedSelection||JSON.stringify(row.rules.map((r:any)=>r.truth))!==JSON.stringify(expectedTruth)||JSON.stringify(branchLabels)!==JSON.stringify(expectedBranches))throw Error(JSON.stringify({reverse,n,states,expectedDecision,expectedSelection,expectedBranches,actual}));
+   summary.vectorIndices.push(offset+n);
    summary.states++;summary[expectedDecision==='indeterminate'?'unknown':expectedDecision]++;summary.selections[expectedSelection]=(summary.selections[expectedSelection]??0)+1;
   }
  }

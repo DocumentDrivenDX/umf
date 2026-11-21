@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+// @test-exclusive
 import {expect,test} from 'bun:test';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
@@ -50,9 +51,9 @@ test('public source semantics avoid invented identities, times and missing-value
 });
 test('every public pack exports and checks exact local schemas while row references remain opaque',async()=>{
  const directory=await mkdtemp(join(tmpdir(),'umf-public-packs-'));
- try{for(const id of ids)for(const check of [false,true]){
+ try{const results=await Promise.allSettled(ids.map(async id=>{for(const check of [false,true]){
   const child=Bun.spawn(['bun','scripts/export-domain-pack.ts','--pack',`spec/domain-packs/${id}/pack.json`,'--output',join(directory,id),...(check?['--check']:[])],{stdout:'pipe',stderr:'pipe'});
   const [,error]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text()]);
   expect({code:await child.exited,error}).toEqual({code:0,error:''});
- }}finally{await rm(directory,{recursive:true,force:true});}
+ }}));for(const result of results)if(result.status==='rejected')throw result.reason;}finally{await rm(directory,{recursive:true,force:true});}
 },30000);

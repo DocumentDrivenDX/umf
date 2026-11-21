@@ -30,17 +30,21 @@ fn closed(
     }
     Ok(())
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let req = decode(wire, &mut ctx)?;
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let req = decode(wire, ctx)?;
         if text_field(&req, "profile").as_deref() != Some(PROFILE) {
             return Err(request(
                 "Relationship SQL Server projection profile is required",
@@ -69,15 +73,16 @@ pub fn execute_wire_with_control(
                 ))
             }
         };
-        closed(&req, allowed, &mut ctx)?;
+        closed(&req, allowed, ctx)?;
         let out=match op{
-            "projectRelationshipToSqlServer"=>umf_core::relationship_sqlserver_projection::project_relationship_to_sqlserver(field(&req,"source").ok_or_else(||request("source is required"))?,field(&req,"author").ok_or_else(||request("author is required"))?,field(&req,"bindingSource").ok_or_else(||request("bindingSource is required"))?,field(&req,"request").ok_or_else(||request("request is required"))?,&mut ctx)?,
-            "verifyRelationshipSqlServerProjection"=>umf_core::relationship_sqlserver_projection::verify_relationship_sqlserver_projection(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,&mut ctx)?,
-            "recoverRelationshipSqlServerIdeal"=>umf_core::relationship_sqlserver_projection::recover_relationship_sqlserver_ideal(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,&mut ctx)?,
-            "recoverRelationshipSqlServerBinding"=>umf_core::relationship_sqlserver_projection::recover_relationship_sqlserver_binding(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,&mut ctx)?,
-            "recoverRelationshipSqlServerNative"=>umf_core::relationship_sqlserver_projection::recover_relationship_sqlserver_native(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,&mut ctx)?,
+            "projectRelationshipToSqlServer"=>umf_core::relationship_sqlserver_projection::project_relationship_to_sqlserver(field(&req,"source").ok_or_else(||request("source is required"))?,field(&req,"author").ok_or_else(||request("author is required"))?,field(&req,"bindingSource").ok_or_else(||request("bindingSource is required"))?,field(&req,"request").ok_or_else(||request("request is required"))?,ctx)?,
+            "verifyRelationshipSqlServerProjection"=>umf_core::relationship_sqlserver_projection::verify_relationship_sqlserver_projection(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,ctx)?,
+            "recoverRelationshipSqlServerIdeal"=>umf_core::relationship_sqlserver_projection::recover_relationship_sqlserver_ideal(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,ctx)?,
+            "recoverRelationshipSqlServerBinding"=>umf_core::relationship_sqlserver_projection::recover_relationship_sqlserver_binding(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,ctx)?,
+            "recoverRelationshipSqlServerNative"=>umf_core::relationship_sqlserver_projection::recover_relationship_sqlserver_native(field(&req,"receipt").ok_or_else(||request("receipt is required"))?,field(&req,"current").ok_or_else(||request("current is required"))?,ctx)?,
             _=>return Err(request("Unknown Relationship SQL Server projection operation"))};
-        encode(&out, &mut ctx)
-    })();
+        encode(&out, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

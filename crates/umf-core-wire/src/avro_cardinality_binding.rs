@@ -6,17 +6,21 @@ pub const PROFILE: &str = "umf.avro-cardinality-binding/1.0.0";
 fn request_error(message: &str) -> EngineError {
     EngineError::new("REQUEST", Utf16::default(), message)
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire_json: &str) -> String {
-    let mut none = |_| Ok(());
-    execute_wire_with_control(wire_json, &mut none)
+    execute_wire_context(wire_json, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire_json, &mut ctx)?;
+    execute_wire_context(wire_json, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire_json: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire_json, ctx)?;
         if text_field(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(request_error(
                 "Avro Cardinality binding profile is required",
@@ -50,17 +54,17 @@ pub fn execute_wire_with_control(
             "projectCardinalityToAvro" => umf_core::cardinality_avro_projection::project_cardinality_to_avro(
                 field(&request, "author").ok_or_else(|| request_error("author is required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             "recoverCardinalityFromAvro" => umf_core::cardinality_avro_projection::recover_cardinality_from_avro(
                 field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
                 field(&request, "nativeBundle").ok_or_else(|| request_error("nativeBundle is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             "classifyAvroCardinality" => umf_core::avro_cardinality::classify_avro_cardinality(
                 field(&request, "source").ok_or_else(|| request_error("source is required"))?,
                 field(&request, "request").ok_or_else(|| request_error("request is required"))?,
-                &mut ctx,
+                ctx,
             )?,
             "verifyAvroCardinalityClassification" => {
                 umf_core::avro_cardinality::verify_avro_cardinality_classification(
@@ -68,7 +72,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverAvroCardinalityBundle" => {
@@ -77,12 +81,13 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             _ => unreachable!(),
         };
-        encode(&output, &mut ctx)
-    })();
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

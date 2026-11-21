@@ -393,6 +393,8 @@ fn validate_umf_document(
         serialization::read_json_value(&units, Format::Json, ctx)
     }
 
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(Engine, Registry)>> = std::sync::OnceLock::new();
+    let prepared = crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let engine = Engine::new(
         ResourceSet::new(
             read(include_str!("../../../spec/core/schema.json"), ctx)?,
@@ -422,6 +424,9 @@ fn validate_umf_document(
     let resources = engine.schema_resources_with_context(ctx)?;
     let mut registry = Registry::new();
     registry.register(&package, Some(47), engine.package_schema(), &resources, ctx)?;
+        Ok((engine, registry))
+    })?;
+    let (engine, registry) = &*prepared;
     engine.validate_document(document, &registry, &mut PostgresqlCapabilities, ctx)
 }
 
@@ -473,14 +478,20 @@ pub fn inspect_postgresql_sql_payload(
     Ok(diagnostics)
 }
 
-pub fn validate_postgresql_ast(ast: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+fn native_ast_schema(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<CompiledSchema>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<CompiledSchema>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let source = Utf16::from(include_str!(
         "../../../spec/extensions/postgresql/native-ast.schema.json"
     ));
     ctx.charge_text(source.len(), Utf16::default())?;
     let schema = serialization::read_json_value(source.units(), Format::Json, ctx)?;
-    let compiled =
-        CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), false, ctx)?;
+    CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), false, ctx)
+    })
+}
+
+pub fn validate_postgresql_ast(ast: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    let compiled = native_ast_schema(ctx)?;
     let errors = compiled.validate(ast, ctx)?;
     Ok(object(vec![
         ("valid", Value::Bool(errors.is_empty())),
@@ -719,13 +730,7 @@ pub fn validate_ast(ast: &Value, ctx: &mut Context<'_>) -> Result<(), EngineErro
             "Expected PostgreSQL AST version 170004",
         ));
     }
-    let source = Utf16::from(include_str!(
-        "../../../spec/extensions/postgresql/native-ast.schema.json"
-    ));
-    ctx.charge_text(source.len(), Utf16::default())?;
-    let schema = serialization::read_json_value(source.units(), Format::Json, ctx)?;
-    let compiled =
-        CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), false, ctx)?;
+    let compiled = native_ast_schema(ctx)?;
     if !compiled.validate(ast, ctx)?.is_empty() {
         return Err(fail(
             "POSTGRESQL_AST",

@@ -33,12 +33,14 @@ export function createCoreKeyTupleOperations(invoke, native = undefined) {
         const prepared = native.prepare(source);
         return Object.freeze({profile: 'umf.core.key-tuples.prepared/1', source: freeze(prepared.source),
           encode(identity, values) { return prepared.encode(identity, values); },
+          encodeHex(identity, values) { return prepared.encodeHex(identity, values); },
           verify(receipt) { return prepared.verify(receipt); }});
       }
       const retained = freeze(call('prepareCoreKeyTuples', {source}));
       return Object.freeze({
         profile: 'umf.core.key-tuples.prepared/1',
         source: retained,
+        encodeHex(identity, values) { return call('encodePreparedCoreKeyTuple', {source: retained, identity, values}).bytesHex; },
         encode(identity, values) {
           return call('encodePreparedCoreKeyTuple', {source: retained, identity, values});
         },

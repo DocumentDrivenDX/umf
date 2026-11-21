@@ -95,6 +95,7 @@ export interface UmfSecurityLogicEngine {
 }
 export declare function createSecurityLogicEngine(module: any, options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export interface SecurityCandidateConditionEngine {
+  prepareCandidateCondition(expression: unknown): (resourceIndex: number, dispatch: (event: unknown) => unknown) => 'T'|'F'|'U';
   evaluateCandidateCondition(expression: unknown, resourceIndex: number, dispatch: (event: unknown) => unknown): 'T'|'F'|'U';
   preflightCandidateCondition(expression: unknown, target: unknown, dispatch: (event: unknown) => unknown, associations?:readonly unknown[]): true;
   normalizeCandidateCondition(expression: unknown, dispatch: (event: unknown) => unknown): unknown;
@@ -169,6 +170,7 @@ export interface UmfSecurityFunctionsEngine {
   inspectProtectionFunction(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
   evaluateProtectionValue(policy: unknown, catalog: unknown, closure: unknown, selection: unknown): SecurityProtectionFunctionResult;
   /** Internal candidate support; not re-exported by either UMF SDK root. */
+  prepareCandidateLiteralSource(source: unknown, controls?: UmfCoreControls): {inspectCandidateLiteral(field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number}};
   inspectCandidateLiteral(source: unknown, field: {documentId:string;moduleId:string;elementId:string}, value: unknown, limits: {includeIdentity:boolean;workLimit:number;textLimit:number}): {identity:string|null;identityUnits:number;textUnits:number;workUnits:number};
   catalogRecipe(input: unknown): unknown;
   /** Private actions-reference comparison under ordinary core value limits. */
@@ -409,7 +411,7 @@ export interface CoreDatasetValuesHostInputEngine {
 export declare function initializeCoreDatasetValuesHostInputWasm(resources: UmfCoreResources, loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<CoreDatasetValuesHostInputEngine>;
 export type CoreKeyTupleValue = {boolean: boolean} | {integerToken: string} | {decimalToken: string} | {string: string} | {binaryHex: string} | {bits128Hex: string} | {uuid: string};
 export interface CoreKeyTupleReceipt {operation: 'encode-core-key-tuple'; version: '4.0.0'; profile: 'umf-key-tuple-v1' | 'umf-key-tuple-v2'; source: unknown; identity: CoreKeyIdentity; values: CoreKeyTupleValue[]; keyPath: string; bytesHex: string}
-export interface PreparedCoreKeyTuples {readonly profile: 'umf.core.key-tuples.prepared/1'; readonly source: unknown; encode(identity: CoreKeyIdentity, values: CoreKeyTupleValue[]): CoreKeyTupleReceipt; verify(receipt: CoreKeyTupleReceipt): CoreKeyTupleReceipt}
+export interface PreparedCoreKeyTuples {readonly profile: 'umf.core.key-tuples.prepared/1'; readonly source: unknown; encode(identity: CoreKeyIdentity, values: CoreKeyTupleValue[]): CoreKeyTupleReceipt; encodeHex(identity: CoreKeyIdentity, values: CoreKeyTupleValue[]): string; verify(receipt: CoreKeyTupleReceipt): CoreKeyTupleReceipt}
 export declare function createCoreModelEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreModelEngine;
 /** @internal Default-root facade while Key tuple exports remain on TypeScript. */
 export declare function createCoreModelRootEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine;
@@ -684,7 +686,7 @@ export declare function initializeJsonSchemaWasm(loader?: () => Promise<any>, ho
 export declare function initializeIcebergSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<IcebergSchemaEngine>;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown; sagaPackage?: unknown}
-export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'inspectTableLifecycle' | 'inspectTableLifecyclePayload' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'compileTableInventoryMigration' | 'discoverTableInventoryMigrationChanges' | 'verifyTableInventoryMigration' | 'serializeTableInventoryMigration' | 'irreversiblePurgeDisclosure' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'inspectAccessViews' | 'generateAccessPackage' | 'diffAccessPackages';
+export type UmfCodegenOperation = 'inspectActions' | 'declareAction' | 'editAction' | 'assessAction' | 'validateBulkOutcome' | 'compileActionRule' | 'admitActionDeclaration' | 'admitActionInputs' | 'selectActionIdentity' | 'actionFieldValueKey' | 'compileActionSelector' | 'evaluateActionRule' | 'inspectSagas' | 'declareSaga' | 'editSaga' | 'assessSaga' | 'generatePythonClient' | 'reviewedValueDigest' | 'inspectTableLifecycle' | 'inspectTableLifecyclePayload' | 'applyJsonPatch' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'compileTableInventoryMigration' | 'discoverTableInventoryMigrationChanges' | 'verifyTableInventoryMigration' | 'serializeTableInventoryMigration' | 'irreversiblePurgeDisclosure' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'prepareRowScope' | 'completeRowScope' | 'inspectAccessViews' | 'generateAccessPackage' | 'diffAccessPackages';
 export type UmfCodegenOutcome = {ok: true; result: unknown} | {ok: false; error: {code: string; message: string; path?: string; pointer?: string}};
 export type UmfCodegenHostReadEventV3 = 'InitialPackage' | 'ParseText' | 'ParseFormat' | 'DigestText' | 'SelectRecords' | 'NativeFormat' | 'SelectActions' | 'OutputPackageSuffix' | 'OutputSourceText';
 export interface UmfCodegenEngine {
@@ -711,6 +713,7 @@ export interface UmfCodegenEngine {
   reviewedValueDigest(value: unknown): string;
   inspectTableLifecycle(source: unknown): unknown;
   inspectTableLifecyclePayload(payload: unknown, context: {document: unknown; path: string; scope: string}): unknown;
+  applyJsonPatch(request: unknown): unknown;
   compileTableDeployment(request: unknown): unknown;
   verifyTableDeployment(bundle: unknown): unknown;
   compileTableMigration(request: unknown): unknown;

@@ -31,7 +31,9 @@ fn parse_resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineEr
         ctx,
     )
 }
-fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
+fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<crate::fixed_resources::Prepared<(Engine, Registry)>, EngineError> {
+    static RESOURCES: std::sync::OnceLock<crate::fixed_resources::Fixed<(Engine, Registry)>> = std::sync::OnceLock::new();
+    crate::fixed_resources::prepare(&RESOURCES, ctx, |ctx| {
     let engine = Engine::new(
         ResourceSet::new(
             parse_resource(include_str!("../../../spec/core/schema.json"), ctx)?,
@@ -111,6 +113,7 @@ fn embedded_sqlserver_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry)
         ctx,
     )?;
     Ok((engine, registry))
+    })
 }
 struct NoCapabilities;
 impl Capabilities for NoCapabilities {
@@ -405,7 +408,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             ctx,
         ),
         "sqlserver.classifyField" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::classify(
                 required(request, "source")?,
@@ -417,7 +421,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.verifyFieldClassification" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::verify(
                 required(request, "receipt")?,
@@ -429,7 +434,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.recoverFieldCapture" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::recover(
                 required(request, "receipt")?,
@@ -442,7 +448,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             .map(Value::String)
         }
         "sqlserver.classifyRecord" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::classify_record(
                 required(request, "source")?,
@@ -454,7 +461,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.verifyRecordClassification" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::verify_record(
                 required(request, "receipt")?,
@@ -466,7 +474,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.recoverRecordCapture" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::recover_record(
                 required(request, "receipt")?,
@@ -479,7 +488,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             .map(Value::String)
         }
         "sqlserver.classifyCardinality" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::classify_cardinality(
                 required(request, "source")?,
@@ -491,7 +501,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.verifyCardinalityClassification" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::verify_cardinality(
                 required(request, "receipt")?,
@@ -503,7 +514,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.recoverCardinalitySource" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_field_classification::recover_cardinality_source(
                 required(request, "receipt")?,
@@ -516,7 +528,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             .map(Value::String)
         }
         "sqlserver.classifyNullability" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_nullability_classification::classify(
                 required(request, "source")?,
@@ -528,7 +541,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.verifyNullabilityClassification" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_nullability_classification::verify(
                 required(request, "receipt")?,
@@ -540,7 +554,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.recoverNullabilitySource" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_nullability_classification::recover(
                 required(request, "receipt")?,
@@ -553,7 +568,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             .map(Value::String)
         }
         "sqlserver.classifyKeys" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_key_classification::classify(
                 required(request, "source")?,
@@ -565,7 +581,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.verifyKeyClassification" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_key_classification::verify(
                 required(request, "receipt")?,
@@ -577,7 +594,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.recoverKeySource" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_key_classification::recover(
                 required(request, "receipt")?,
@@ -590,7 +608,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             .map(Value::String)
         }
         "sqlserver.classifyRelationships" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_relationship_classification::classify(
                 required(request, "source")?,
@@ -602,7 +621,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.verifyRelationshipClassification" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_relationship_classification::verify(
                 required(request, "receipt")?,
@@ -614,7 +634,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.recoverRelationshipSource" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_relationship_classification::recover(
                 required(request, "receipt")?,
@@ -627,7 +648,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             .map(Value::String)
         }
         "sqlserver.classifyFacets" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_facets_classification::classify(
                 required(request, "source")?,
@@ -639,7 +661,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.verifyFacetClassification" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_facets_classification::verify(
                 required(request, "receipt")?,
@@ -651,7 +674,8 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
             )
         }
         "sqlserver.recoverFacetSource" => {
-            let (engine, registry) = embedded_sqlserver_engine(ctx)?;
+            let resources = embedded_sqlserver_engine(ctx)?;
+            let (engine, registry) = &*resources;
             let mut caps = NoCapabilities;
             umf_core::sqlserver_facets_classification::recover(
                 required(request, "receipt")?,
@@ -667,18 +691,21 @@ fn execute(request: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError>
     }
 }
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
-        let value = execute(&request, &mut ctx)?;
-        encode(&value, &mut ctx)
-    })();
+        let value = execute(&request, ctx)?;
+        encode(&value, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

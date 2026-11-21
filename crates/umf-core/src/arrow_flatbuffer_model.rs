@@ -55,6 +55,10 @@ pub struct ArrowFlatbufferResources {
     registry: Registry,
 }
 impl ArrowFlatbufferResources {
+    pub(crate) fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<ArrowFlatbufferResources>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&CACHE, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             serialization::read_json_value(
@@ -165,7 +169,7 @@ fn payload_mut(doc: &mut Value) -> Option<&mut Value> {
 }
 fn validate(
     doc: &Value,
-    r: &mut ArrowFlatbufferResources,
+    r: &ArrowFlatbufferResources,
     ctx: &mut Context<'_>,
 ) -> Result<Validation, EngineError> {
     let mut caps = Noop;
@@ -214,8 +218,8 @@ pub fn inspect_arrow_flatbuffer_model(
     doc: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let mut r = ArrowFlatbufferResources::new(ctx)?;
-    Ok(validation_value(validate(doc, &mut r, ctx)?))
+    let r = ArrowFlatbufferResources::prepared(ctx)?;
+    Ok(validation_value(validate(doc, &r, ctx)?))
 }
 pub fn import_arrow_flatbuffer_model(
     source: &Utf16,
@@ -275,8 +279,8 @@ pub fn export_arrow_flatbuffer_model(
     doc: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Utf16, EngineError> {
-    let mut r = ArrowFlatbufferResources::new(ctx)?;
-    let check = validate(doc, &mut r, ctx)?;
+    let r = ArrowFlatbufferResources::prepared(ctx)?;
+    let check = validate(doc, &r, ctx)?;
     if !check.valid {
         return Err(error(
             "ARROW_FLATBUFFER_MODEL",

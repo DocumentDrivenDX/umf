@@ -13,7 +13,7 @@ use crate::{
     value::{copy_completed_json_result, copy_json, Utf16, Value},
 };
 
-const CARDINALITIES: [&str; 4] = ["one", "array", "map", "unspecified"];
+const CARDINALITIES: [&str; 5] = ["one", "array", "map", "set", "unspecified"];
 const CURRENT_CORE: &str = "0.10.0";
 
 fn key(name: &str) -> Utf16 {
@@ -578,7 +578,7 @@ fn parse_request(request: &Value, ctx: &mut Context<'_>) -> Result<Request, Engi
     if !CARDINALITIES.contains(&cardinality.as_str()) {
         return Err(err(
             "CORE_CARDINALITY_REQUEST",
-            "Expected one, array, map or unspecified",
+            "Expected one, array, map, set or unspecified",
             "",
         ));
     }
@@ -600,11 +600,11 @@ fn parse_request(request: &Value, ctx: &mut Context<'_>) -> Result<Request, Engi
         }
     };
     if matches!(item_type, ItemTypeAction::Set(_))
-        && !["array", "map"].contains(&cardinality.as_str())
+        && !["array", "map", "set"].contains(&cardinality.as_str())
     {
         return Err(err(
             "CORE_CARDINALITY_REQUEST",
-            "Item type requires array or map cardinality",
+            "Item type requires array, map or set cardinality",
             "",
         ));
     }

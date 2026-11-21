@@ -113,6 +113,7 @@
           "enum": [
             "one",
             "array",
+            "set",
             "map",
             "unspecified"
           ]
@@ -336,7 +337,8 @@
                 "time-millis",
                 "time-micros",
                 "timestamp-millis-utc",
-                "timestamp-micros-utc"
+                "timestamp-micros-utc",
+                "json"
               ]
             }
           }
@@ -400,7 +402,8 @@
                 "time-millis",
                 "time-micros",
                 "timestamp-millis-utc",
-                "timestamp-micros-utc"
+                "timestamp-micros-utc",
+                "json"
               ]
             },
             "value": {

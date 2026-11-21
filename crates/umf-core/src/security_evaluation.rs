@@ -139,7 +139,7 @@ fn key_fields(binding: &Value, documents: &[Value]) -> Result<Vec<Value>, Engine
         })
         .collect()
 }
-fn core_engine() -> Result<Engine, EngineError> {
+fn core_engine() -> Result<&'static Engine, EngineError> {
     crate::security_parameters::core_engine()
 }
 struct NoExtensions;
@@ -410,7 +410,7 @@ struct EvalState<'ctx, 'control> {
     coverage: HashMap<String, HashSet<String>>,
     complete_coverage: HashSet<String>,
     context: HashMap<String, Value>,
-    engine: Engine,
+    engine: &'static Engine,
     registry: Registry,
     capabilities: NoExtensions,
     ctx: &'ctx mut Context<'control>,

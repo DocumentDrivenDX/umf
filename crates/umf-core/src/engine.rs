@@ -72,6 +72,7 @@ pub struct Engine {
     package: CompiledSchema,
     program: PreparedProgram,
     policy: PreparedPolicy,
+    pub(crate) key_tuple_schema: Arc<std::sync::OnceLock<crate::resource_cache::Fixed<CompiledSchema>>>,
 }
 
 struct SourceCapabilities<'a> {
@@ -151,7 +152,7 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
 }
 fn get<'a>(v: &'a Value, n: &str) -> Option<&'a Value> {
     match v {
-        Value::Object(m) => m.iter().find(|(x, _)| x == &k(n)).map(|(_, v)| v),
+        Value::Object(m) => m.iter().find(|(x, _)| x.equals_str(n)).map(|(_, v)| v),
         _ => None,
     }
 }
@@ -862,6 +863,7 @@ impl Engine {
             package,
             program,
             policy: literal,
+            key_tuple_schema: Arc::new(std::sync::OnceLock::new()),
         })
     }
     pub fn validate_document(

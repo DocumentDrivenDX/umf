@@ -354,12 +354,7 @@ impl RuleRecognizer for TriGRecognizer {
                         self
                     } else {
                         let new = context.generated_blank_node();
-                        results.push(Quad::new(
-                            old,
-                            rdf::REST,
-                            new.clone(),
-                            self.cur_graph.clone(),
-                        ));
+                        let rest = Quad::new(old, rdf::REST, new.clone(), self.cur_graph.clone());
                         self.cur_subject.push(new.into());
                         self.stack.push(if context.umf_blank_labels {
                             TriGState::SubjectCollectionPossibleEnd
@@ -367,11 +362,14 @@ impl RuleRecognizer for TriGRecognizer {
                             TriGState::ObjectCollectionPossibleEnd { nested_list_item: false }
                         });
                         self.stack.push(TriGState::Object);
-                        // Keep the REST quad below any quads emitted by the
-                        // recursively parsed next item. Parser::parse_next
-                        // pops from the end, so the item is returned before
-                        // this REST edge, matching the source traversal order.
-                        self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        if context.umf_blank_labels {
+                            let recognizer = self.recognize_next(TokenOrLineJump::Token(token), context, results, errors);
+                            results.push(rest);
+                            recognizer
+                        } else {
+                            results.push(rest);
+                            self.recognize_next(TokenOrLineJump::Token(token), context, results, errors)
+                        }
                     }
                 }
                 // [5]  wrappedGraph  ::=  '{' triplesBlock? '}'

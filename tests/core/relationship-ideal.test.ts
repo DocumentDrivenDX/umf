@@ -35,6 +35,9 @@ test('candidate retains unknown meanings and rejects accessors and cyclic input 
  let calls=0;const d=relationshipCandidate();Object.defineProperty(d.modules[0],'relationships',{enumerable:true,get(){calls++;return [];}});
  expectAccessorRefusal(()=>validateRelationshipCandidate(d));expect(calls).toBe(0);
  const oversized=relationshipCandidate();oversized.modules[0].relationships[0].targetMultiplicity.max=Number.MAX_SAFE_INTEGER+1;
- expect(validateRelationshipCandidate(oversized).diagnostics[0]!.code).toBe('NUMBER');
- const cyclic=relationshipCandidate();cyclic.unknown=cyclic;expect(validateRelationshipCandidate(cyclic).valid).toBe(false);
+ let numericRefusal:unknown;try{validateRelationshipCandidate(oversized);}catch(error){numericRefusal=error;}
+ expect(numericRefusal).toMatchObject({code:'NUMBER'});
+ const cyclic=relationshipCandidate();cyclic.unknown=cyclic;
+ let cycleRefusal:unknown;try{validateRelationshipCandidate(cyclic);}catch(error){cycleRefusal=error;}
+ expect(cycleRefusal).toMatchObject({code:'RESOURCE_LIMIT',message:'JSON nesting exceeds the admission limit'});
 });

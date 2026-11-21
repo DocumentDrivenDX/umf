@@ -73,7 +73,7 @@ this contract. Existing documents do not acquire these assertions by default.
 | --- | --- | --- |
 | Element.kind | `field`, `record`, or `group` | A field is a named member/value slot; a record defines named members; a group organizes members without asserting a value shape. Missing means unspecified, never inferred solely from scalarType. |
 | Element.nullability | `required`, `absent-allowed`, or `unspecified` | Required means the field supplies a value in the ideal instance; absent-allowed permits no value; unspecified asserts neither. This is ideal value availability, not native syntax or an is_nullable copy. |
-| Element.cardinality | `one`, `array`, `map`, or `unspecified` | One value, ordered finite sequence (duplicates allowed), finite mapping with unique exact string keys, or no assertion. Container emptiness is not absence. |
+| Element.cardinality | `one`, `array`, `map`, `set`, or `unspecified` | One value, ordered finite sequence (duplicates allowed), finite mapping with unique exact string keys, finite unordered collection of distinct items (CONTRACT-084), or no assertion. Container emptiness is not absence. |
 | Element.itemType | `{module, element}` reference to a Field | Optional array-item or map-value definition. Requires explicit array/map cardinality. Does not describe the container, map keys, dimensions or storage encoding. Missing leaves item meaning unasserted in core. |
 | Element.facets.length | `{max: integer >= 0, unit: "unicode-scalar" or "byte"}` | Maximum Unicode scalar count for string, or maximum byte count for binary. No grapheme, collation, padding, normalization or storage-length inference. |
 | Element.facets.precision | positive integer | Decimal coefficient digit bound for fixed-scale decimal. Requires scale. |
@@ -1043,3 +1043,15 @@ existing integerWidth facet. This design extends the family set explicitly;
 prior profiles and `umf-key-tuple-v1` remain unchanged. Admission still requires
 useful two-system projection/up-classification evidence, with all five priority
 bindings and native equivalence tracked separately.
+
+### JSON values and sets
+
+CONTRACT-084 adds the `json` scalar family and the `set` cardinality to core
+0.10.0 as previously unknown labels that now carry meaning. `set` follows the
+`array`/`map` container rules above; its item Field must be a required
+singleton of a family with exact key equality. `json` has no admitted equality,
+so it cannot be a Key component, a set item or an allowed-value domain. The
+current cardinality declaration and inspection operations admit `set`. Admission
+evidence is the PostgreSQL 18 mapping through `umf.tables` (CONTRACT-081) plus
+explicit refusals elsewhere; the two-system projection minimum above is not yet
+met, so neither meaning is an admitted ideal.

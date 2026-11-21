@@ -103,6 +103,10 @@
         "namespace": {
           "type": "string",
           "minLength": 1
+        },
+        "jsonEncoding": {
+          "type": "boolean",
+          "description": "Explicit JSON text encoding; native enforcement limits are retained in projection residuals."
         }
       }
     },
@@ -137,7 +141,8 @@
           "enum": [
             "exact",
             "unknown",
-            "not-expressible"
+            "not-expressible",
+            "approximated"
           ]
         }
       }
@@ -166,7 +171,8 @@
           "outcome": {
             "enum": [
               "unknown",
-              "not-expressible"
+              "not-expressible",
+              "approximated"
             ]
           },
           "recovery": {

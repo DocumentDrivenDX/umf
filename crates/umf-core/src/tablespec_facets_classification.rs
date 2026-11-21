@@ -1147,7 +1147,10 @@ pub(crate) fn classify_table_spec_facets(
                     "decimal",
                     ctx
                 )?
-            } else if precision.is_none() || scale.is_none() || scale > precision {
+            } else if precision.is_none_or(|n| n < 1.0)
+                || scale.is_none_or(|n| n < 0.0)
+                || scale > precision
+            {
                 add_loss!("precision",&obj(vec![("precision",copy_json(p.unwrap_or(&Value::Null),ctx)?),("scale",copy_json(s.unwrap_or(&Value::Null),ctx)?)]),"Both exact uncoerced decimal counts are required, with scale no greater than precision; native defaults and coercions are not substituted","unknown","decimal",ctx)?
             } else if prof == u("declared-metadata")
                 || (prof == u("ingest-cast") && precision.unwrap_or(0.0) <= 38.0)

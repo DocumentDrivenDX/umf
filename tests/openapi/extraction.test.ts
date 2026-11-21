@@ -21,7 +21,7 @@ test('US-011-AC16: dialect provenance and contextual extraction boundaries',()=>
  const a=extractOpenapiSchema(doc,{pointer:'/components/schemas/A'});const b=extractOpenapiSchema(doc,{pointer:'/components/schemas/B'});
  expect(a.nativeSchema).toBe('false');expect(a.dialectOrigin).toBe('document');expect(a.dialect).toBe('https://json-schema.org/draft/2020-12/schema');
  expect(b.dialectOrigin).toBe('schema');expect(b.dialect).toBe('urn:custom:dialect');expect(b.nativeSchema).toContain('custom');
- expect(()=>extractOpenapiSchema(doc,{pointer:'',resourceUri:'https://example.test/shared.json'})).toThrow('owning OpenAPI');
+ expect(()=>extractOpenapiSchema(doc,{pointer:'',resourceUri:'https://example.test/shared.json'})).toThrow('Schema extraction requires OpenAPI 3.1 or 3.2');
  expect(()=>extractOpenapiSchema(doc,{pointer:'/components/schemas/A',unexpected:true} as any)).toThrow('schema pointer');
  const newer=load(owner('{"A":true}').replace('3.1.2','3.2.1'));
  expect(extractOpenapiSchema(newer,{pointer:'/components/schemas/A'}).dialect).toBe('https://spec.openapis.org/oas/3.2/dialect/2026-02-26');

@@ -28,6 +28,10 @@ test('dispatch rejects getters before reading profile and relevant unknown logic
  const hostile:any={get vocabularies(){calls++;return {'umf.binding':{version:'0.3.0'}};}};
  expectAccessorRefusal(()=>u.inspectBinding(hostile,d));expect(calls).toBe(0);
  d.modules[0]!.elements[1]!.facets={unknownRule:1};expect(u.inspectBinding(uuidBinding(),d).complete).toBe(false);expect(()=>u.encodeBit128CarrierValue(uuidBinding(),d,FIELD,{uuid:UUID})).toThrow();
+ delete d.modules[0]!.elements[1]!.facets;
+ d.modules[0]!.elements.push({id:'unbound',kind:'field',scalarType:'string',facets:{unknownRule:1},extensions:{}});
+ expect(u.inspectBinding(uuidBinding(),d).complete).toBe(true);
+ expect(()=>u.encodeBit128CarrierValue(uuidBinding(),d,FIELD,{uuid:UUID})).not.toThrow();
 });
 test('unqualified native index layouts remain serializable but cannot authorize generation or values',()=>{
  const b=uuidBinding(),d=uuidDocument();(b.extensions!['umf.binding'] as any).indexes=[{name:'identity',kind:'unique',on:[{field:FIELD}],unique:true}];

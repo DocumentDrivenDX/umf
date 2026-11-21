@@ -41122,7 +41122,7 @@
                 "path": "",
                 "code": "POSTGRESQL_CATALOG_SCOPE",
                 "classification": "not-enforced",
-                "detail": "Observed metadata is limited to the declared query/profile; server state and reconstruction correspondence are not verified",
+                "detail": "Observed PostgreSQL catalog subset; server correspondence and complete native semantics are unverified",
                 "retainedInSource": true
               },
               {
@@ -41164,14 +41164,14 @@
                 "path": "/snapshot/relations/9/columns/5",
                 "code": "FLOAT_BEHAVIOR",
                 "classification": "not-enforced",
-                "detail": "Native NaN ordering, comparisons and input overflow/underflow behavior are not Avro schema constraints",
+                "detail": "Native NaN ordering and input overflow behavior are not Avro schema constraints",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/6",
                 "code": "FLOAT_BEHAVIOR",
                 "classification": "not-enforced",
-                "detail": "Native NaN ordering, comparisons and input overflow/underflow behavior are not Avro schema constraints",
+                "detail": "Native NaN ordering and input overflow behavior are not Avro schema constraints",
                 "retainedInSource": true
               },
               {
@@ -41199,91 +41199,91 @@
                 "path": "/snapshot/relations/9/columns/11",
                 "code": "TEMPORAL_DOMAIN",
                 "classification": "representation-change",
-                "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+                "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/11",
                 "code": "TEMPORAL_REFINEMENTS",
                 "classification": "not-enforced",
-                "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+                "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/12",
                 "code": "TEMPORAL_DOMAIN",
                 "classification": "representation-change",
-                "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+                "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/12",
                 "code": "TEMPORAL_REFINEMENTS",
                 "classification": "not-enforced",
-                "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+                "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/13",
                 "code": "SQL_TEXT_REPRESENTATION",
                 "classification": "representation-change",
-                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/14",
                 "code": "TEMPORAL_DOMAIN",
                 "classification": "representation-change",
-                "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+                "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/14",
                 "code": "TEMPORAL_REFINEMENTS",
                 "classification": "not-enforced",
-                "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+                "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/15",
                 "code": "TEMPORAL_DOMAIN",
                 "classification": "representation-change",
-                "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+                "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/15",
                 "code": "TEMPORAL_REFINEMENTS",
                 "classification": "not-enforced",
-                "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+                "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/16",
                 "code": "SQL_TEXT_REPRESENTATION",
                 "classification": "representation-change",
-                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/17",
                 "code": "SQL_TEXT_REPRESENTATION",
                 "classification": "representation-change",
-                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/18",
                 "code": "SQL_TEXT_REPRESENTATION",
                 "classification": "representation-change",
-                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
                 "retainedInSource": true
               },
               {
                 "path": "/snapshot/relations/9/columns/19",
                 "code": "SQL_TEXT_REPRESENTATION",
                 "classification": "representation-change",
-                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+                "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
                 "retainedInSource": true
               }
             ],
@@ -41409,7 +41409,6 @@
                 "representation": "sql-text"
               }
             ],
-            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"PgRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": [\n        \"null\",\n        \"boolean\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"large\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 4\n        }\n      ],\n      \"doc\": \"Exact amount with native precision and scale\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bounded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"padded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"data\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"time-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"zoned_clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"domain_value\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "avro-record",
@@ -42080,7 +42079,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"PgRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": [\n        \"null\",\n        \"boolean\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"large\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 4\n        }\n      ],\n      \"doc\": \"Exact amount with native precision and scale\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bounded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"padded\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"data\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"time-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"zoned_clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"domain_value\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n"
           },
           "avroToTableSpec": {
             "status": "projected",
@@ -42844,38 +42844,10 @@
             },
             "issues": [
               {
-                "path": "/root/fields/4/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/modules/0/elements/0/extensions/umf.avro",
+                "code": "SEMANTICS_UNCHECKED",
                 "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/11/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/12/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/14/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/15/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+                "detail": "Structure checked; semantics not validated",
                 "retainedInSource": true
               },
               {
@@ -43259,7 +43231,6 @@
                 "nullable": true
               }
             ],
-            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"flag\",\n      \"nullable\": true,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"ordinary\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"large\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"exact\",\n      \"nullable\": true,\n      \"description\": \"Exact amount with native precision and scale\",\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"single\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"wide\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bounded\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"padded\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"data\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"zoned_clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"items\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"domain_value\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"document\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"identifier\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "postgresql-tablespec",
@@ -43653,128 +43624,129 @@
                     {
                       "id": "column:0",
                       "name": "flag",
-                      "scalarType": "boolean",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "boolean"
                     },
                     {
                       "id": "column:1",
                       "name": "small",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     },
                     {
                       "id": "column:2",
                       "name": "ordinary",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     },
                     {
                       "id": "column:3",
                       "name": "large",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:4",
                       "name": "exact",
+                      "extensions": {},
                       "description": "Exact amount with native precision and scale",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:5",
                       "name": "single",
-                      "scalarType": "float",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "float"
                     },
                     {
                       "id": "column:6",
                       "name": "wide",
-                      "scalarType": "float",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "float"
                     },
                     {
                       "id": "column:7",
                       "name": "words",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:8",
                       "name": "bounded",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:9",
                       "name": "padded",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:10",
                       "name": "data",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:11",
                       "name": "day",
-                      "scalarType": "date",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "date"
                     },
                     {
                       "id": "column:12",
                       "name": "clock",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:13",
                       "name": "zoned_clock",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:14",
                       "name": "local_stamp",
-                      "scalarType": "timestamp",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "timestamp"
                     },
                     {
                       "id": "column:15",
                       "name": "instant",
-                      "scalarType": "timestamp",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "timestamp"
                     },
                     {
                       "id": "column:16",
                       "name": "items",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:17",
                       "name": "domain_value",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:18",
                       "name": "document",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:19",
                       "name": "identifier",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     }
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"flag\",\n      \"nullable\": true,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"ordinary\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"large\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"exact\",\n      \"nullable\": true,\n      \"description\": \"Exact amount with native precision and scale\",\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"single\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"wide\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bounded\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"padded\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"data\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"zoned_clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"items\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"domain_value\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"document\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"identifier\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n"
           }
         },
         "issues": [
@@ -43785,7 +43757,7 @@
               "path": "",
               "code": "POSTGRESQL_CATALOG_SCOPE",
               "classification": "not-enforced",
-              "detail": "Observed metadata is limited to the declared query/profile; server state and reconstruction correspondence are not verified",
+              "detail": "Observed PostgreSQL catalog subset; server correspondence and complete native semantics are unverified",
               "retainedInSource": true
             }
           },
@@ -43851,7 +43823,7 @@
               "path": "/snapshot/relations/9/columns/5",
               "code": "FLOAT_BEHAVIOR",
               "classification": "not-enforced",
-              "detail": "Native NaN ordering, comparisons and input overflow/underflow behavior are not Avro schema constraints",
+              "detail": "Native NaN ordering and input overflow behavior are not Avro schema constraints",
               "retainedInSource": true
             }
           },
@@ -43862,7 +43834,7 @@
               "path": "/snapshot/relations/9/columns/6",
               "code": "FLOAT_BEHAVIOR",
               "classification": "not-enforced",
-              "detail": "Native NaN ordering, comparisons and input overflow/underflow behavior are not Avro schema constraints",
+              "detail": "Native NaN ordering and input overflow behavior are not Avro schema constraints",
               "retainedInSource": true
             }
           },
@@ -43906,7 +43878,7 @@
               "path": "/snapshot/relations/9/columns/11",
               "code": "TEMPORAL_DOMAIN",
               "classification": "representation-change",
-              "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+              "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
               "retainedInSource": true
             }
           },
@@ -43917,7 +43889,7 @@
               "path": "/snapshot/relations/9/columns/11",
               "code": "TEMPORAL_REFINEMENTS",
               "classification": "not-enforced",
-              "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+              "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
               "retainedInSource": true
             }
           },
@@ -43928,7 +43900,7 @@
               "path": "/snapshot/relations/9/columns/12",
               "code": "TEMPORAL_DOMAIN",
               "classification": "representation-change",
-              "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+              "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
               "retainedInSource": true
             }
           },
@@ -43939,7 +43911,7 @@
               "path": "/snapshot/relations/9/columns/12",
               "code": "TEMPORAL_REFINEMENTS",
               "classification": "not-enforced",
-              "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+              "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
               "retainedInSource": true
             }
           },
@@ -43950,7 +43922,7 @@
               "path": "/snapshot/relations/9/columns/13",
               "code": "SQL_TEXT_REPRESENTATION",
               "classification": "representation-change",
-              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
               "retainedInSource": true
             }
           },
@@ -43961,7 +43933,7 @@
               "path": "/snapshot/relations/9/columns/14",
               "code": "TEMPORAL_DOMAIN",
               "classification": "representation-change",
-              "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+              "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
               "retainedInSource": true
             }
           },
@@ -43972,7 +43944,7 @@
               "path": "/snapshot/relations/9/columns/14",
               "code": "TEMPORAL_REFINEMENTS",
               "classification": "not-enforced",
-              "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+              "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
               "retainedInSource": true
             }
           },
@@ -43983,7 +43955,7 @@
               "path": "/snapshot/relations/9/columns/15",
               "code": "TEMPORAL_DOMAIN",
               "classification": "representation-change",
-              "detail": "Explicit Avro temporal subset excludes native infinities, time 24:00 and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
+              "detail": "Explicit temporal subset excludes native infinities and values outside target carrier/library ranges; epoch conversion and rejection require a separate encoder",
               "retainedInSource": true
             }
           },
@@ -43994,7 +43966,7 @@
               "path": "/snapshot/relations/9/columns/15",
               "code": "TEMPORAL_REFINEMENTS",
               "classification": "not-enforced",
-              "detail": "Native precision, input/session timezone behavior and calendar range are not enforced by the target schema",
+              "detail": "Native precision, session timezone behavior and calendar range are not enforced by the target schema",
               "retainedInSource": true
             }
           },
@@ -44005,7 +43977,7 @@
               "path": "/snapshot/relations/9/columns/16",
               "code": "SQL_TEXT_REPRESENTATION",
               "classification": "representation-change",
-              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
               "retainedInSource": true
             }
           },
@@ -44016,7 +43988,7 @@
               "path": "/snapshot/relations/9/columns/17",
               "code": "SQL_TEXT_REPRESENTATION",
               "classification": "representation-change",
-              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
               "retainedInSource": true
             }
           },
@@ -44027,7 +43999,7 @@
               "path": "/snapshot/relations/9/columns/18",
               "code": "SQL_TEXT_REPRESENTATION",
               "classification": "representation-change",
-              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
               "retainedInSource": true
             }
           },
@@ -44038,7 +44010,7 @@
               "path": "/snapshot/relations/9/columns/19",
               "code": "SQL_TEXT_REPRESENTATION",
               "classification": "representation-change",
-              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical, domain, array or type semantics",
+              "detail": "Explicit application text encoding requires native formatting/session choices; Avro string does not enforce native lexical or type semantics",
               "retainedInSource": true
             }
           },
@@ -44046,54 +44018,10 @@
             "stage": "avroToTableSpec",
             "sourceDocumentPath": "/stages/avroToTableSpec/source",
             "issue": {
-              "path": "/root/fields/4/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/modules/0/elements/0/extensions/umf.avro",
+              "code": "SEMANTICS_UNCHECKED",
               "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/11/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/12/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/14/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/15/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+              "detail": "Structure checked; semantics not validated",
               "retainedInSource": true
             }
           },
@@ -44865,123 +44793,123 @@
                 {
                   "id": "column:0",
                   "name": "flag",
-                  "scalarType": "boolean",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "boolean"
                 },
                 {
                   "id": "column:1",
                   "name": "small",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:2",
                   "name": "ordinary",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:3",
                   "name": "large",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:4",
                   "name": "exact",
+                  "extensions": {},
                   "description": "Exact amount with native precision and scale",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:5",
                   "name": "single",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:6",
                   "name": "wide",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:7",
                   "name": "words",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:8",
                   "name": "bounded",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:9",
                   "name": "padded",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:10",
                   "name": "data",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:11",
                   "name": "day",
-                  "scalarType": "date",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "date"
                 },
                 {
                   "id": "column:12",
                   "name": "clock",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:13",
                   "name": "zoned_clock",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:14",
                   "name": "local_stamp",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:15",
                   "name": "instant",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:16",
                   "name": "items",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:17",
                   "name": "domain_value",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:18",
                   "name": "document",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:19",
                   "name": "identifier",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 }
               ]
             }
@@ -54677,7 +54605,7 @@
                 "path": "/tables/1/columns/25",
                 "code": "ALIAS_IDENTITY",
                 "classification": "annotation-only",
-                "detail": "Native alias identity and any bound rules/defaults remain in the source",
+                "detail": "Native alias identity and bound rules/defaults remain in source",
                 "retainedInSource": true
               },
               {
@@ -54891,7 +54819,6 @@
                 "representation": "value"
               }
             ],
-            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"SqlRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"tiny\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 38,\n          \"scale\": 9\n        }\n      ],\n      \"doc\": \"Exact decimal amount\"\n    },\n    {\n      \"name\": \"numeric_value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 19,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"small_cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 10,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"approximate\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unlimited\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"fixed_text\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_fixed\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bytes\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"fixed_bytes\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"SqlRecord_field_17\",\n          \"size\": 8\n        }\n      ]\n    },\n    {\n      \"name\": \"version_stamp\",\n      \"type\": {\n        \"type\": \"fixed\",\n        \"name\": \"SqlRecord_field_18\",\n        \"size\": 8\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"legacy_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"small_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"variant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"computed\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "avro-record",
@@ -55873,7 +55800,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"SqlRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"tiny\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 38,\n          \"scale\": 9\n        }\n      ],\n      \"doc\": \"Exact decimal amount\"\n    },\n    {\n      \"name\": \"numeric_value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 19,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"small_cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 10,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"approximate\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unlimited\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"fixed_text\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_fixed\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bytes\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"fixed_bytes\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"SqlRecord_field_17\",\n          \"size\": 8\n        }\n      ]\n    },\n    {\n      \"name\": \"version_stamp\",\n      \"type\": {\n        \"type\": \"fixed\",\n        \"name\": \"SqlRecord_field_18\",\n        \"size\": 8\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"legacy_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"small_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"variant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"computed\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n"
           },
           "avroToTableSpec": {
             "status": "projected",
@@ -56988,45 +56916,10 @@
             },
             "issues": [
               {
-                "path": "/root/fields/5/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/modules/0/elements/0/extensions/umf.avro",
+                "code": "SEMANTICS_UNCHECKED",
                 "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/6/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/7/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/8/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/19/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/25/type/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+                "detail": "Structure checked; semantics not validated",
                 "retainedInSource": true
               },
               {
@@ -57550,7 +57443,6 @@
                 "nullable": true
               }
             ],
-            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"tiny\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"ordinary\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"exact\",\n      \"nullable\": true,\n      \"description\": \"Exact decimal amount\",\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 38,\n      \"scale\": 9\n    },\n    {\n      \"name\": \"numeric_value\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 3\n    },\n    {\n      \"name\": \"cash\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 19,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"small_cash\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 10,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"approximate\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"single\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unicode_words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unlimited\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"fixed_text\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unicode_fixed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"fixed_bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"version_stamp\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"legacy_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"small_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 18,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"identifier\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"document\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"variant\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"computed\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "sqlserver-tablespec",
@@ -58146,188 +58038,189 @@
                     {
                       "id": "column:0",
                       "name": "id",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:1",
                       "name": "flag",
-                      "scalarType": "boolean",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "boolean"
                     },
                     {
                       "id": "column:2",
                       "name": "tiny",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     },
                     {
                       "id": "column:3",
                       "name": "small",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     },
                     {
                       "id": "column:4",
                       "name": "ordinary",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     },
                     {
                       "id": "column:5",
                       "name": "exact",
+                      "extensions": {},
                       "description": "Exact decimal amount",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:6",
                       "name": "numeric_value",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:7",
                       "name": "cash",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:8",
                       "name": "small_cash",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:9",
                       "name": "approximate",
-                      "scalarType": "float",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "float"
                     },
                     {
                       "id": "column:10",
                       "name": "single",
-                      "scalarType": "float",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "float"
                     },
                     {
                       "id": "column:11",
                       "name": "words",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:12",
                       "name": "unicode_words",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:13",
                       "name": "unlimited",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:14",
                       "name": "fixed_text",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:15",
                       "name": "unicode_fixed",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:16",
                       "name": "bytes",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:17",
                       "name": "fixed_bytes",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:18",
                       "name": "version_stamp",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:19",
                       "name": "day",
-                      "scalarType": "date",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "date"
                     },
                     {
                       "id": "column:20",
                       "name": "clock",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:21",
                       "name": "local_stamp",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:22",
                       "name": "instant",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:23",
                       "name": "legacy_stamp",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:24",
                       "name": "small_stamp",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:25",
                       "name": "amount",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:26",
                       "name": "identifier",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:27",
                       "name": "document",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:28",
                       "name": "variant",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:29",
                       "name": "computed",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     }
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"tiny\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"ordinary\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"exact\",\n      \"nullable\": true,\n      \"description\": \"Exact decimal amount\",\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 38,\n      \"scale\": 9\n    },\n    {\n      \"name\": \"numeric_value\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 3\n    },\n    {\n      \"name\": \"cash\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 19,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"small_cash\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 10,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"approximate\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"single\",\n      \"nullable\": true,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unicode_words\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unlimited\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"fixed_text\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unicode_fixed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"fixed_bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"version_stamp\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"legacy_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"small_stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 18,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"identifier\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"document\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"variant\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"computed\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n"
           }
         },
         "issues": [
@@ -58635,7 +58528,7 @@
               "path": "/tables/1/columns/25",
               "code": "ALIAS_IDENTITY",
               "classification": "annotation-only",
-              "detail": "Native alias identity and any bound rules/defaults remain in the source",
+              "detail": "Native alias identity and bound rules/defaults remain in source",
               "retainedInSource": true
             }
           },
@@ -58687,65 +58580,10 @@
             "stage": "avroToTableSpec",
             "sourceDocumentPath": "/stages/avroToTableSpec/source",
             "issue": {
-              "path": "/root/fields/5/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/modules/0/elements/0/extensions/umf.avro",
+              "code": "SEMANTICS_UNCHECKED",
               "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/6/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/7/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/8/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/19/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/25/type/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+              "detail": "Structure checked; semantics not validated",
               "retainedInSource": true
             }
           },
@@ -59829,183 +59667,183 @@
                 {
                   "id": "column:0",
                   "name": "id",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:1",
                   "name": "flag",
-                  "scalarType": "boolean",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "boolean"
                 },
                 {
                   "id": "column:2",
                   "name": "tiny",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:3",
                   "name": "small",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:4",
                   "name": "ordinary",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:5",
                   "name": "exact",
+                  "extensions": {},
                   "description": "Exact decimal amount",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:6",
                   "name": "numeric_value",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:7",
                   "name": "cash",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:8",
                   "name": "small_cash",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:9",
                   "name": "approximate",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:10",
                   "name": "single",
-                  "scalarType": "float",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "float"
                 },
                 {
                   "id": "column:11",
                   "name": "words",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:12",
                   "name": "unicode_words",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:13",
                   "name": "unlimited",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:14",
                   "name": "fixed_text",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:15",
                   "name": "unicode_fixed",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:16",
                   "name": "bytes",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:17",
                   "name": "fixed_bytes",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:18",
                   "name": "version_stamp",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:19",
                   "name": "day",
-                  "scalarType": "date",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "date"
                 },
                 {
                   "id": "column:20",
                   "name": "clock",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:21",
                   "name": "local_stamp",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:22",
                   "name": "instant",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:23",
                   "name": "legacy_stamp",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:24",
                   "name": "small_stamp",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:25",
                   "name": "amount",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:26",
                   "name": "identifier",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:27",
                   "name": "document",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:28",
                   "name": "variant",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:29",
                   "name": "computed",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 }
               ]
             }
@@ -60762,7 +60600,7 @@
                 "retainedInSource": true
               },
               {
-                "path": "/schema/0",
+                "path": "",
                 "code": "SCHEMA_ONLY",
                 "classification": "representation-change",
                 "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
@@ -60797,14 +60635,14 @@
                 "retainedInSource": true
               },
               {
-                "path": "/schema/16",
+                "path": "/schema/14",
                 "code": "LIST_LAYOUT",
                 "classification": "representation-change",
                 "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
                 "retainedInSource": true
               },
               {
-                "path": "/schema/14",
+                "path": "/schema/16",
                 "code": "LIST_LAYOUT",
                 "classification": "representation-change",
                 "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
@@ -60982,7 +60820,7 @@
                 ]
               }
             ],
-            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"unsigned\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 0\n        }\n      ]\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"profile\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"ParquetRecord_record_4\",\n          \"fields\": [\n            {\n              \"name\": \"label\",\n              \"type\": \"string\"\n            },\n            {\n              \"name\": \"score\",\n              \"type\": [\n                \"null\",\n                \"float\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"lookup\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_entry_10\",\n            \"fields\": [\n              {\n                \"name\": \"key\",\n                \"type\": \"int\"\n              },\n              {\n                \"name\": \"value\",\n                \"type\": [\n                  \"null\",\n                  \"string\"\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"name\": \"matrix\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            {\n              \"type\": \"array\",\n              \"items\": [\n                \"null\",\n                \"long\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"stamp\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-nanos\"\n        }\n      ]\n    },\n    {\n      \"name\": \"local\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"bytes\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"ParquetRecord_fixed_23\",\n          \"size\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
+            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"unsigned\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 0\n        }\n      ]\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"profile\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"record\",\n          \"name\": \"ParquetRecord_record_4\",\n          \"fields\": [\n            {\n              \"name\": \"label\",\n              \"type\": \"string\"\n            },\n            {\n              \"name\": \"score\",\n              \"type\": [\n                \"null\",\n                \"float\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"lookup\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_entry_10\",\n            \"fields\": [\n              {\n                \"name\": \"key\",\n                \"type\": \"int\"\n              },\n              {\n                \"name\": \"value\",\n                \"type\": \"string\"\n              }\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"name\": \"matrix\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            {\n              \"type\": \"array\",\n              \"items\": [\n                \"null\",\n                \"long\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"stamp\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-nanos\"\n        }\n      ]\n    },\n    {\n      \"name\": \"local\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"bytes\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"ParquetRecord_fixed_23\",\n          \"size\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "avro",
@@ -61277,17 +61115,8 @@
                                                             "value": "value"
                                                           },
                                                           "type": {
-                                                            "kind": "array",
-                                                            "items": [
-                                                              {
-                                                                "kind": "string",
-                                                                "value": "null"
-                                                              },
-                                                              {
-                                                                "kind": "string",
-                                                                "value": "string"
-                                                              }
-                                                            ]
+                                                            "kind": "string",
+                                                            "value": "string"
                                                           }
                                                         }
                                                       }
@@ -61943,17 +61772,8 @@
                                                             "value": "value"
                                                           },
                                                           "type": {
-                                                            "kind": "array",
-                                                            "items": [
-                                                              {
-                                                                "kind": "string",
-                                                                "value": "null"
-                                                              },
-                                                              {
-                                                                "kind": "string",
-                                                                "value": "string"
-                                                              }
-                                                            ]
+                                                            "kind": "string",
+                                                            "value": "string"
                                                           }
                                                         }
                                                       }
@@ -62373,38 +62193,10 @@
             },
             "issues": [
               {
-                "path": "/root/fields/1/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
+                "path": "/modules/0/elements/0/extensions/umf.avro",
+                "code": "SEMANTICS_UNCHECKED",
                 "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/2/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/7/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/8/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-                "retainedInSource": true
-              },
-              {
-                "path": "/root/fields/9/type/1/logicalType",
-                "code": "AVRO_LOGICAL_TYPE",
-                "classification": "not-enforced",
-                "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+                "detail": "Structure checked; semantics not validated",
                 "retainedInSource": true
               },
               {
@@ -62690,7 +62482,6 @@
                 "nullable": true
               }
             ],
-            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unsigned\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 0\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"profile\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"items\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"lookup\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"matrix\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"local\",\n      \"nullable\": true,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "parquet-tablespec",
@@ -62969,85 +62760,86 @@
                     {
                       "id": "column:0",
                       "name": "id",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:1",
                       "name": "unsigned",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:2",
                       "name": "amount",
-                      "scalarType": "decimal",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "decimal"
                     },
                     {
                       "id": "column:3",
                       "name": "profile",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:4",
                       "name": "items",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:5",
                       "name": "lookup",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:6",
                       "name": "matrix",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:7",
                       "name": "stamp",
-                      "scalarType": "timestamp",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "timestamp"
                     },
                     {
                       "id": "column:8",
                       "name": "local",
-                      "scalarType": "timestamp",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "timestamp"
                     },
                     {
                       "id": "column:9",
                       "name": "day",
-                      "scalarType": "date",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "date"
                     },
                     {
                       "id": "column:10",
                       "name": "clock",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:11",
                       "name": "bytes",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:12",
                       "name": "small",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     }
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Converted\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"unsigned\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 0\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 20,\n      \"scale\": 4\n    },\n    {\n      \"name\": \"profile\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"items\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"lookup\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"matrix\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"stamp\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"local\",\n      \"nullable\": true,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"day\",\n      \"nullable\": true,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"clock\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"bytes\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"small\",\n      \"nullable\": true,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n"
           }
         },
         "issues": [
@@ -63176,7 +62968,7 @@
             "stage": "sourceToAvro",
             "sourceDocumentPath": "/stages/sourceToAvro/source",
             "issue": {
-              "path": "/schema/0",
+              "path": "",
               "code": "SCHEMA_ONLY",
               "classification": "representation-change",
               "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
@@ -63231,7 +63023,7 @@
             "stage": "sourceToAvro",
             "sourceDocumentPath": "/stages/sourceToAvro/source",
             "issue": {
-              "path": "/schema/16",
+              "path": "/schema/14",
               "code": "LIST_LAYOUT",
               "classification": "representation-change",
               "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
@@ -63242,7 +63034,7 @@
             "stage": "sourceToAvro",
             "sourceDocumentPath": "/stages/sourceToAvro/source",
             "issue": {
-              "path": "/schema/14",
+              "path": "/schema/16",
               "code": "LIST_LAYOUT",
               "classification": "representation-change",
               "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
@@ -63308,54 +63100,10 @@
             "stage": "avroToTableSpec",
             "sourceDocumentPath": "/stages/avroToTableSpec/source",
             "issue": {
-              "path": "/root/fields/1/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/modules/0/elements/0/extensions/umf.avro",
+              "code": "SEMANTICS_UNCHECKED",
               "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/2/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/7/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/8/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
-              "retainedInSource": true
-            }
-          },
-          {
-            "stage": "avroToTableSpec",
-            "sourceDocumentPath": "/stages/avroToTableSpec/source",
-            "issue": {
-              "path": "/root/fields/9/type/1/logicalType",
-              "code": "AVRO_LOGICAL_TYPE",
-              "classification": "not-enforced",
-              "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+              "detail": "Structure checked; semantics not validated",
               "retainedInSource": true
             }
           },
@@ -63935,80 +63683,80 @@
                 {
                   "id": "column:0",
                   "name": "id",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:1",
                   "name": "unsigned",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:2",
                   "name": "amount",
-                  "scalarType": "decimal",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "decimal"
                 },
                 {
                   "id": "column:3",
                   "name": "profile",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:4",
                   "name": "items",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:5",
                   "name": "lookup",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:6",
                   "name": "matrix",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:7",
                   "name": "stamp",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:8",
                   "name": "local",
-                  "scalarType": "timestamp",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "timestamp"
                 },
                 {
                   "id": "column:9",
                   "name": "day",
-                  "scalarType": "date",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "date"
                 },
                 {
                   "id": "column:10",
                   "name": "clock",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:11",
                   "name": "bytes",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:12",
                   "name": "small",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 }
               ]
             }
@@ -72707,7 +72455,7 @@
                 "path": "/tables/4/keys/0",
                 "code": "KEY_NOT_ENFORCED",
                 "classification": "not-enforced",
-                "detail": "Key \"PK_Items\" (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
+                "detail": "Key \"PK_Items\"\n (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
                 "retainedInSource": true
               },
               {
@@ -72772,7 +72520,6 @@
                 "representation": "value"
               }
             ],
-            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Item\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"email\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"active\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"payload\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "index-projection",
@@ -72919,7 +72666,8 @@
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Item\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"email\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"active\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"payload\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n"
           },
           "avroToTableSpec": {
             "status": "projected",
@@ -73095,6 +72843,13 @@
             },
             "issues": [
               {
+                "path": "/modules/0/elements/0/extensions/umf.avro",
+                "code": "SEMANTICS_UNCHECKED",
+                "classification": "not-enforced",
+                "detail": "Structure checked; semantics not validated",
+                "retainedInSource": true
+              },
+              {
                 "path": "",
                 "code": "RECORD_IDENTITY",
                 "classification": "not-enforced",
@@ -73160,7 +72915,6 @@
                 "nullable": true
               }
             ],
-            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Items\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"email\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"active\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"payload\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
             "target": {
               "umf": "0.10.0",
               "id": "sqlserver-indexes-tablespec",
@@ -73270,31 +73024,32 @@
                     {
                       "id": "column:0",
                       "name": "id",
-                      "scalarType": "integer",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "integer"
                     },
                     {
                       "id": "column:1",
                       "name": "email",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     },
                     {
                       "id": "column:2",
                       "name": "active",
-                      "scalarType": "boolean",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "boolean"
                     },
                     {
                       "id": "column:3",
                       "name": "payload",
-                      "scalarType": "string",
-                      "extensions": {}
+                      "extensions": {},
+                      "scalarType": "string"
                     }
                   ]
                 }
               ]
-            }
+            },
+            "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Items\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"email\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"active\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"payload\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n"
           }
         },
         "issues": [
@@ -73338,7 +73093,7 @@
               "path": "/tables/4/keys/0",
               "code": "KEY_NOT_ENFORCED",
               "classification": "not-enforced",
-              "detail": "Key \"PK_Items\" (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
+              "detail": "Key \"PK_Items\"\n (PK) is not enforced across Avro records; column order, index behavior and disabled state remain native",
               "retainedInSource": true
             }
           },
@@ -73394,6 +73149,17 @@
               "code": "TEXT_REFINEMENTS",
               "classification": "not-enforced",
               "detail": "Native byte/character limits, code page, collation and fixed-width padding are not enforced by Avro string",
+              "retainedInSource": true
+            }
+          },
+          {
+            "stage": "avroToTableSpec",
+            "sourceDocumentPath": "/stages/avroToTableSpec/source",
+            "issue": {
+              "path": "/modules/0/elements/0/extensions/umf.avro",
+              "code": "SEMANTICS_UNCHECKED",
+              "classification": "not-enforced",
+              "detail": "Structure checked; semantics not validated",
               "retainedInSource": true
             }
           },
@@ -73562,26 +73328,26 @@
                 {
                   "id": "column:0",
                   "name": "id",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:1",
                   "name": "email",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 },
                 {
                   "id": "column:2",
                   "name": "active",
-                  "scalarType": "boolean",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "boolean"
                 },
                 {
                   "id": "column:3",
                   "name": "payload",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 }
               ]
             }

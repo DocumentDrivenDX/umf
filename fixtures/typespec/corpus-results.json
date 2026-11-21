@@ -1853,7 +1853,7 @@
         "local-typespec/sample-config.yaml"
       ],
       "status": "syntax-rejected",
-      "error": "UmfError: [{\"code\":\"TYPESPEC_token-expected\",\"path\":\"/files/test.tsp\",\"severity\":\"error\",\"message\":\"'{', '=', 'extends', or 'is' expected.\"},{\"code\":\"TYPESPEC_COMPILATION_REQUIRED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Syntax preservation does not establish compiler validity; call compileTypeSpecDocument with supplied imports\"}]"
+      "error": "UmfError: Structure checked; semantics not validated"
     },
     {
       "entry": "multipart/main.tsp",

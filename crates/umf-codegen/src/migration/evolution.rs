@@ -286,7 +286,12 @@ fn has_review(
 }
 fn native_widen(a: &Value, b: &Value) -> bool {
     match (txt(a, "kind").as_str(), txt(b, "kind").as_str()) {
-        ("int2", "int4") | ("int4", "int8") => true,
+        ("int2", "int4") | ("int4", "int8") | ("int2", "int8") => true,
+        ("array", "array") => native_widen(v(a, "element"), v(b, "element")),
+        ("timestamptz", "timestamptz") => {
+            let precision = |v: &Value| match get(v, "precision") { Some(Value::Number(n)) => *n, _ => 6.0 };
+            precision(b) > precision(a)
+        },
         ("numeric", "numeric") => {
             let n = |value: &Value, k: &str| {
                 if let Value::Number(x) = v(value, k) {
@@ -672,7 +677,10 @@ pub(super) fn evolve(
                 })?
                 .into_iter()
                 .collect::<Vec<_>>();
-            let prefix = nm.len().saturating_sub(ne.len().saturating_sub(oe.len()));
+            // Item Fields can be newly declared without being Record members.
+            // Retained member order depends on the retained tuple itself, not
+            // the number of declarations appended to the module.
+            let prefix = retained.len().min(nm.len());
             let retained_order_matches = if g11(options) {
                 let retained_new = nm
                     .iter()
@@ -1611,6 +1619,7 @@ fn emit(
     changes: &[TableChanges],
     ctx: &mut Context<'_>,
 ) -> Result<Evolution, EngineError> {
+    let next_document = source_document(next, ctx)?;
     let ot = items(get(v(previous, "expectedCatalog"), "tables"));
     let nt = items(get(v(next, "expectedCatalog"), "tables"));
     let config = v(next, "configuration");
@@ -1905,7 +1914,7 @@ fn emit(
                 if let Some(default) = get(mapping, "default") {
                     let sql = match txt(default, "kind").as_str() {
                         "literal" => {
-                            crate::deployment::literal_sql_for_migration(v(default, "value"), ctx)?
+                            crate::deployment::stored_literal_sql_for_migration(v(default, "value"), v(mapping, "nativeType"), source_field(&next_document, v(mapping, "field"), ctx)?.unwrap_or(&Value::Null), ctx)?
                         }
                         "randomUuid" => "pg_catalog.gen_random_uuid()".into(),
                         _ => "CURRENT_TIMESTAMP".into(),
@@ -1966,7 +1975,7 @@ fn emit(
                     };
                     let sql = match txt(default, "kind").as_str() {
                         "literal" => {
-                            crate::deployment::literal_sql_for_migration(v(default, "value"), ctx)?
+                            crate::deployment::stored_literal_sql_for_migration(v(default, "value"), v(mapping, "nativeType"), source_field(&next_document, v(mapping, "field"), ctx)?.unwrap_or(&Value::Null), ctx)?
                         }
                         "randomUuid" => "pg_catalog.gen_random_uuid()".into(),
                         _ => "CURRENT_TIMESTAMP".into(),

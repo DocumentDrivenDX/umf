@@ -20,6 +20,11 @@ test('finite decimal checks, exact width bounds, length units and input losses a
  const decimal=await project(selected('decimal-5-2'));expect(decimal.mapping.facets).toEqual({precision:5,scale:2});expect(decimal.nativeSql).toContain('trunc("value", 2)');expect(decimal.nativeSql).toContain("'-999.99'::pg_catalog.numeric");
  const modifier=await project(selected('decimal-5-2','type-modifier'));expect(modifier.nativeSql).toContain('numeric(5,2)');expect(modifier.nativeSql).not.toContain('trunc(');
  const exactInput=await u.projectFacetsToPostgresql(modifier.author,{...modifier.request,obligation:'exact-input'},backend);expect(exactInput.status).toBe('blocked');expect(exactInput.residuals.some(r=>r.reason.includes('round'))).toBe(true);
+ for(const name of ['smallint-16-false','bigint-32-false','bigint-64-false']){
+  const result=await project(selected(name));
+  if(name==='bigint-32-false')expect(result.nativeSql).toContain('4294967295');
+  else {expect(result.status).toBe('blocked');expect(result.residuals.some(r=>r.path.endsWith('/integerWidth'))).toBe(true);}
+ }
  expect((await project(selected('smallint-8-false'))).nativeSql).toContain('"value" OPERATOR(pg_catalog.>=) 0 AND "value" OPERATOR(pg_catalog.<=) 255');
  expect((await project(selected('numeric-integer-128','checked','report'))).nativeSql).toContain('340282366920938463463374607431768211455');
  expect((await project(selected('numeric-integer-128'))).status).toBe('blocked');

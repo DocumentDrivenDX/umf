@@ -26,7 +26,7 @@ fn member<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     match value {
         Value::Object(fields) => fields
             .iter()
-            .find(|(candidate, _)| candidate == &key(name))
+            .find(|(candidate, _)| candidate.equals_str(name))
             .map(|(_, value)| value),
         _ => None,
     }
@@ -72,7 +72,7 @@ fn set(value: &mut Value, name: &str, item: Value) {
     if let Value::Object(fields) = value {
         if let Some((_, existing)) = fields
             .iter_mut()
-            .find(|(candidate, _)| candidate == &key(name))
+            .find(|(candidate, _)| candidate.equals_str(name))
         {
             *existing = item;
         } else {
@@ -170,7 +170,7 @@ pub fn project_to_tablespec_via_avro(
     let Some(avro_target) = member(&first, "target") else {
         return copy_json(&result, ctx);
     };
-    let tablespec = crate::tablespec_adapter::TableSpecRuntime::new(ctx)?;
+    let tablespec = crate::tablespec_adapter::TableSpecRuntime::prepared(ctx)?;
     let second = avro_tablespec_projection::project_avro_to_tablespec(
         avro_target,
         to_tablespec,

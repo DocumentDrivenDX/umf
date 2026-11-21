@@ -13,9 +13,11 @@ export function facetsPostgresqlProjectionCases(){
   ...[{precision:5,scale:2},{precision:5,scale:0},{precision:3,scale:3},{precision:1000,scale:1000},{precision:1001,scale:0}].map(facets=>({name:`decimal-${facets.precision}-${facets.scale}`,family:'decimal',type:'numeric' as const,facets})),
  ];
  const rows:{name:string;author:CoreFacetDeclaration|CoreKindDeclaration;request:FacetsPostgresqlRequest}[]=[];
- for(const seed of seeds)for(const encoding of ['checked','type-modifier','carrier-only'] as const)for(const mode of ['strict','report'] as const){
+ for(const seed of seeds){
   const author=declareCoreFacets(postgresqlFacetIdeal(seed.family),{module:'m',element:'value'},seed.facets);
+  for(const encoding of ['checked','type-modifier','carrier-only'] as const)for(const mode of ['strict','report'] as const){
   rows.push({name:seed.name,author,request:{id:'native',namespace:'facet_projection',tableName:'case_'+rows.length,columnName:'value',nativeType:seed.type,mode,encoding,obligation:'value-domain'}});
+ }
  }
  for(const type of ['real','double precision','numeric','integer'] as const)for(const obligation of ['value-domain','exact-input'] as const)for(const mode of ['strict','report'] as const){
   const author=declareCoreElementKind(postgresqlFacetIdeal(type==='numeric'?'decimal':type==='integer'?'integer':'float'),{module:'m',element:'value'},'field');

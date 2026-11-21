@@ -554,7 +554,7 @@ pub fn decode_arrow_flatbuffer(
     root_type: &str,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let ipc = arrow_ipc_capture::ArrowIpcResources::new(ctx)?;
+    let ipc = arrow_ipc_capture::ArrowIpcResources::prepared(ctx)?;
     let mut source_id_units = id.units().to_vec();
     source_id_units.extend("/source".encode_utf16());
     let source_id = Utf16::new(source_id_units);

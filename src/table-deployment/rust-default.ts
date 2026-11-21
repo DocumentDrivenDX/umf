@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../model/errors';
-import type {TableDeploymentBundle,TableDeploymentRequest,TableDeploymentResult} from './types';
+import type {TableDeploymentBundle,TableDeploymentRequest,TableDeploymentResult,JsonPatchOperation,JsonPatchResult} from './types';
 
 export interface TableDeploymentNativeEngine {
+ applyJsonPatch(request:unknown):unknown;
  compileTableDeployment(request:unknown):unknown;
  verifyTableDeployment(bundle:unknown):unknown;
 }
@@ -25,6 +26,7 @@ export function createTableDeploymentRustDefault(
   }
  };
  return Object.freeze({
+  applyJsonPatch(document:import('../model/types').Json,patch:JsonPatchOperation[]):JsonPatchResult{return call(engine=>engine.applyJsonPatch({document,patch}));},
   compileTableDeployment(request:TableDeploymentRequest):TableDeploymentResult{return call(engine=>engine.compileTableDeployment(request));},
   verifyTableDeployment(bundle:unknown):TableDeploymentBundle{return call(engine=>engine.verifyTableDeployment(bundle));},
  });

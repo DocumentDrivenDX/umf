@@ -369,7 +369,10 @@ pub fn project(
         root,
         ctx,
     )?);
-    for ((module, element), name) in &entity_map {
+    for entity in entities {
+        let (module, element) = ident(entity).expect("entity admitted above");
+        let name = &entity_map[&(module.clone(), element.clone())];
+        let (module, element) = (&module, &element);
         let (mi, ei, record) = module_element(source, module, element).ok_or_else(|| {
             err(
                 "DDD_GRAPHQL_ENTITY_REFERENCE",
@@ -913,6 +916,9 @@ pub fn project(
                     "DDD_GRAPHQL_INVERSE",
                     "Inverse policy must match authored inverse",
                 ));
+            }
+            if !has_only(relationship, &["id", "name", "source", "target", "sourceMultiplicity", "targetMultiplicity", "targetLifecycle", "directed", "inverse", "associationRecord"]) {
+                return Err(err("DDD_GRAPHQL_RELATIONSHIP", "Unknown relationship semantics require an explicit projection policy"));
             }
             let directed = matches!(get(relationship, "directed"), Some(Value::Bool(true)));
             let orientation = txt(get(row, "orientation"));

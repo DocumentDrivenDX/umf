@@ -11,7 +11,8 @@
       "time",
       "timestamp",
       "bits128",
-      "uuid"
+      "uuid",
+      "json"
     ],
     "kind": [
       "field",
@@ -27,6 +28,7 @@
       "one",
       "array",
       "map",
+      "set",
       "unspecified"
     ]
   },
@@ -208,6 +210,10 @@
       "map": {
         "carrier": "map",
         "mechanic": "mapping"
+      },
+      "set": {
+        "carrier": "array",
+        "mechanic": "set"
       }
     },
     "singular": [
@@ -258,6 +264,12 @@
         "mechanic": "uuid",
         "equality": true,
         "refinements": true
+      },
+      "json": {
+        "carrier": "json",
+        "mechanic": "json",
+        "equality": false,
+        "refinements": false
       },
       "float": {
         "carrier": "floatToken",
@@ -413,6 +425,16 @@
       "collection-size": {
         "code": "CORE_SCHEMA_PROPERTIES",
         "message": "Collection size outside bounds",
+        "severity": "error"
+      },
+      "set-duplicate": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Set items must be distinct",
+        "severity": "error"
+      },
+      "json": {
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "message": "Expected an exact JSON value",
         "severity": "error"
       },
       "cardinality": {
@@ -604,7 +626,7 @@
     "default"
   ],
   "provenance": {
-    "modelSha256": "fe838a63f66d5f959468ad0ed0e1ea202be1a89536bfc91bcb4a6c2d54ab383f",
-    "compilerSha256": "03c43d8031e035aad88a66da1581882a16af8871e58171978ba3611ab5145cce"
+    "modelSha256": "394ded5ee6ffd8ae4465fcedaefb1ccd6eae4da5c259ffddf36b1077a73c11bf",
+    "compilerSha256": "a7142380ea55ee5c432e43550a56779fec978d1a53e5a79944193a57c4ee0ef5"
   }
 }

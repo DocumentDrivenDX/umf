@@ -41,7 +41,7 @@ fn obj(fields: Vec<(&str, Value)>) -> Value {
 }
 fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     if let Value::Object(fields) = value {
-        fields.iter().find(|(n, _)| n == &k(name)).map(|(_, v)| v)
+        fields.iter().find(|(n, _)| n.equals_str(name)).map(|(_, v)| v)
     } else {
         None
     }
@@ -130,7 +130,10 @@ fn schemas(
     rt: &Runtime,
     field: bool,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    static FIELD_CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(if field { &FIELD_CACHE } else { &CACHE }, ctx, |ctx| {
     let source = if field { FIELD } else { RECORD };
     let schema = parse(source, ctx)?;
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
@@ -150,6 +153,7 @@ fn schemas(
         )
     })?;
     Ok((result, CompiledSchema::compile(request, &resources, ctx)?))
+    })
 }
 fn canonical(value: &Value, ctx: &mut Context<'_>, depth: usize) -> Result<Value, EngineError> {
     if depth > ctx.limits().max_depth {
@@ -481,7 +485,8 @@ fn field_project(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema) = schemas(&rt, true, ctx)?;
+    let prepared_schemas = schemas(&rt, true, ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
     validate(&request_schema, &request, "FIELD_POSTGRESQL_REQUEST", ctx)?;
@@ -755,7 +760,7 @@ fn set(target: &mut Value, name: &str, value: Value) -> Result<(), EngineError> 
     let Value::Object(fields) = target else {
         return Err(err("INVARIANT", "Expected object", ""));
     };
-    if let Some((_, slot)) = fields.iter_mut().find(|(n, _)| n == &k(name)) {
+    if let Some((_, slot)) = fields.iter_mut().find(|(n, _)| n.equals_str(name)) {
         *slot = value;
     } else {
         fields.push((k(name), value));
@@ -779,7 +784,8 @@ fn record_project(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema) = schemas(&rt, false, ctx)?;
+    let prepared_schemas = schemas(&rt, false, ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
     validate(&request_schema, &request, "RECORD_POSTGRESQL_REQUEST", ctx)?;
@@ -1399,7 +1405,8 @@ fn complete(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, _) = schemas(&rt, field, ctx)?;
+    let prepared_schemas = schemas(&rt, field, ctx)?;
+    let (result_schema, _) = &*prepared_schemas;
     let mut prepared = copy_json(prepared_input, ctx)?;
     let code = if field {
         "FIELD_POSTGRESQL_RESULT"
@@ -1504,7 +1511,8 @@ fn prepare_recovery(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, _) = schemas(&rt, field, ctx)?;
+    let prepared_schemas = schemas(&rt, field, ctx)?;
+    let (result_schema, _) = &*prepared_schemas;
     let receipt = copy_json(receipt_input, ctx)?;
     let code = if field {
         "FIELD_POSTGRESQL_RECEIPT"
@@ -1546,7 +1554,8 @@ fn recover(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, _) = schemas(&rt, field, ctx)?;
+    let prepared_schemas = schemas(&rt, field, ctx)?;
+    let (result_schema, _) = &*prepared_schemas;
     let receipt = copy_json(receipt_input, ctx)?;
     let fresh = copy_json(fresh_input, ctx)?;
     let receipt_code = if field {
@@ -1640,7 +1649,9 @@ pub fn recover_record_projection(
 fn cardinality_schemas(
     rt: &Runtime,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let source = parse(CARDINALITY, ctx)?;
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources.entries.push((
@@ -1660,6 +1671,7 @@ fn cardinality_schemas(
         )
     })?;
     Ok((result, CompiledSchema::compile(request, &resources, ctx)?))
+    })
 }
 
 fn cardinality_native_type(native: &str) -> Option<(&'static str, Option<&'static str>)> {
@@ -1689,7 +1701,8 @@ fn cardinality_project(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema) = cardinality_schemas(&rt, ctx)?;
+    let prepared_schemas = cardinality_schemas(&rt, ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let request = copy_json(request_input, ctx)?;
     validate(
         &request_schema,
@@ -2078,7 +2091,8 @@ fn complete_cardinality(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, _) = cardinality_schemas(&rt, ctx)?;
+    let prepared_schemas = cardinality_schemas(&rt, ctx)?;
+    let (result_schema, _) = &*prepared_schemas;
     let prepared = copy_json(prepared_input, ctx)?;
     let status = text_owned(get(&prepared, "status"));
     if status.as_deref() != Some("projected") && status.as_deref() != Some("blocked") {
@@ -2158,7 +2172,8 @@ fn validate_cardinality_recovery(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = cardinality_schemas(&rt, ctx)?;
+    let prepared_schemas = cardinality_schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     let receipt = copy_json(receipt_input, ctx)?;
     validate(&schema, &receipt, "CARDINALITY_POSTGRESQL_RECEIPT", ctx)?;
     if text_owned(get(&receipt, "status")).as_deref() != Some("projected")
@@ -2179,7 +2194,9 @@ fn validate_cardinality_recovery(
 fn nullability_schemas(
     rt: &Runtime,
     ctx: &mut Context<'_>,
-) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let schema = parse(NULLABILITY, ctx)?;
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources.entries.push((
@@ -2199,6 +2216,7 @@ fn nullability_schemas(
         )
     })?;
     Ok((compiled, CompiledSchema::compile(request, &resources, ctx)?))
+    })
 }
 
 fn nullability_project(
@@ -2207,7 +2225,8 @@ fn nullability_project(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, request_schema) = nullability_schemas(&rt, ctx)?;
+    let prepared_schemas = nullability_schemas(&rt, ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let request = copy_json(request_input, ctx)?;
     validate(
         &request_schema,
@@ -2529,7 +2548,8 @@ fn complete_nullability(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (result_schema, _) = nullability_schemas(&rt, ctx)?;
+    let prepared_schemas = nullability_schemas(&rt, ctx)?;
+    let (result_schema, _) = &*prepared_schemas;
     let prepared = copy_json(prepared_input, ctx)?;
     let target = copy_json(target_input, ctx)?;
     let author = get(&prepared, "author").ok_or_else(|| {
@@ -2602,7 +2622,8 @@ fn validate_nullability_recovery(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = nullability_schemas(&rt, ctx)?;
+    let prepared_schemas = nullability_schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     let receipt = copy_json(receipt_input, ctx)?;
     validate(&schema, &receipt, "NULLABILITY_POSTGRESQL_RECEIPT", ctx)?;
     if text_owned(get(&receipt, "status")).as_deref() != Some("projected")
@@ -2627,7 +2648,8 @@ fn recover_nullability(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = nullability_schemas(&rt, ctx)?;
+    let prepared_schemas = nullability_schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     let receipt = copy_json(receipt_input, ctx)?;
     let fresh = copy_json(fresh_input, ctx)?;
     validate(&schema, &receipt, "NULLABILITY_POSTGRESQL_RECEIPT", ctx)?;
@@ -2709,7 +2731,8 @@ fn recover_cardinality(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let rt = runtime(ctx)?;
-    let (schema, _) = cardinality_schemas(&rt, ctx)?;
+    let prepared_schemas = cardinality_schemas(&rt, ctx)?;
+    let (schema, _) = &*prepared_schemas;
     let receipt = copy_json(receipt_input, ctx)?;
     let fresh = copy_json(fresh_input, ctx)?;
     validate(&schema, &receipt, "CARDINALITY_POSTGRESQL_RECEIPT", ctx)?;

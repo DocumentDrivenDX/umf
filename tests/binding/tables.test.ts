@@ -84,7 +84,7 @@ test('CONTRACT-081: malformed input, unknown revisions and bounded diagnostic ex
  for(const value of [null,1,'text',[],{}, {...source(),umf:'0.9.0'}])expect(inspectTableLifecycle(value).valid).toBe(false);
  const input=source();Object.assign(payload(input),Object.fromEntries(Array.from({length:300},(_,i)=>['future'+i,true])));
  expect(codes(input)).toContain('TABLES_DIAGNOSTIC_LIMIT');expect(inspectTableLifecycle(input).valid).toBe(false);
- const cycle:any={};cycle.self=cycle;expect(inspectTableLifecycle(cycle).valid).toBe(false);
+ const cycle:any={};cycle.self=cycle;expect(()=>inspectTableLifecycle(cycle)).toThrow('admission limit');
 });
 
 test('CONTRACT-081: client generation refuses lifecycle source until its operation interpretation is qualified',()=>{

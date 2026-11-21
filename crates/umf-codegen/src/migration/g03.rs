@@ -431,6 +431,8 @@ pub(super) fn compile(
             "Generated columns and changed table identity are not qualified",
         ));
     }
+    let default_native = copy_value(get(new_column, "nativeType").unwrap_or(&Value::Null), ctx)?;
+    let default_field = copy_value(logical_field(&new_doc, get(new_column, "field").unwrap_or(&Value::Null)).unwrap_or(&Value::Null), ctx)?;
     clear_source_default(&mut old_doc, &path)?;
     clear_source_default(&mut new_doc, &path)?;
     if !eq(&old_doc, &new_doc, ctx)? {
@@ -501,9 +503,8 @@ pub(super) fn compile(
             ));
         }
         match default_kind.as_deref() {
-            Some("literal") => crate::deployment::literal_sql_for_migration(
-                get(default, "value").unwrap_or(&Value::Null),
-                ctx,
+            Some("literal") => crate::deployment::stored_literal_sql_for_migration(
+                get(default, "value").unwrap_or(&Value::Null), &default_native, &default_field, ctx,
             )?,
             Some("currentTimestamp") => "CURRENT_TIMESTAMP".to_owned(),
             Some("randomUuid") => "pg_catalog.gen_random_uuid()".to_owned(),

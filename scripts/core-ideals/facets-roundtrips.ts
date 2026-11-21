@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {assertJsonDataEqual, assertNativeRepresentationEqual} from './json-data-assert';
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import * as u from '../../src/index-node-v4';
 import {backend} from '../../native/postgresql/runtime';
@@ -40,21 +40,26 @@ function resultContract(r: any, mode: 'strict'|'report') {
  * SQL classification uses independently captured native catalogs; it does not
  * infer engine acceptance by parsing our own emitted SQL.
  */
-export async function verifyFacetRoundTrips(progress: (system: FacetSystem, index: number) => void = () => {}) {
+export type FacetTask={system:FacetSystem;start:number;end:number;aggregate?:boolean};
+export type FacetInventory=Record<FacetSystem,number>;
+export async function verifyFacetRoundTripsWorker(next:(inventory:FacetInventory)=>Promise<FacetTask|null>, progress: (system: FacetSystem, index: number) => void = () => {}) {
  const pg = await Bun.file('fixtures/validation/facets-postgresql-projection-native.json').json();
  const sql = await Bun.file('fixtures/validation/facets-sqlserver-projection-native.json').json();
  const sqlCapture = JSON.parse(sql.sourceText);
  const pgNative = JSON.stringify(pg.capture), pgSupplement = JSON.stringify(pg.supplement);
- const pgSource = upgrade(u.importPostgresqlCatalogCapture(pgNative, {id: 'facet-gate'}));
- for (const e of pgSource.modules.find(m => m.id === 'postgresql.columns')!.elements) e.kind = 'field';
- unknown(pgSource);
- const pgColumns = u.getPostgresqlColumnMetadata(pgSource);
+
+ // Native import is fixture preparation, independent of the row's profile,
+ // mode and obligation. Reuse identical prepared documents; each row still
+ // projects, classifies, serializes, recovers and verifies nonmutation.
+ const fixtures=new Map<string,u.Document>();
+ const fixture=(key:string,build:()=>u.Document)=>{let source=fixtures.get(key);if(!source){source=build();fixtures.set(key,source);}return source;};
+ const avroRows=facetsAvroProjectionCases();
  const bindings: Record<FacetSystem, Binding> = {
   tablespec: {
    rows: facetsTableSpecProjectionCases(), project: r => u.projectFacetsToTableSpec(r.author, r.request),
    recover: r => u.recoverFacetsFromTableSpec(r, u.exportTableSpec(r.target)),
    classify: (r, row) => {
-    const text = u.exportTableSpec(r.target), source = unknown(tableSpecFacetSource(text));
+    const text = u.exportTableSpec(r.target), source = fixture(JSON.stringify(["tablespec",text]),()=>unknown(tableSpecFacetSource(text)));
     return {source, native: text, classify: mode => u.classifyTableSpecFacets(source, {column: 0, profile: row.request.profile, input: row.request.input, obligation: row.request.obligation, mode}), recover: c => u.recoverTableSpecFacetSource(c, c.target)};
    },
   },
@@ -89,31 +94,42 @@ export async function verifyFacetRoundTrips(progress: (system: FacetSystem, inde
    },
   },
   avro: {
-   rows: [...facetsAvroProjectionCases(), ...facetsAvroProjectionCases().filter(r => r.request.nativeType === 'float').map(r => ({...r, id: r.id + '-exact-input', request: {...r.request, obligation: 'exact-input' as const}}))], project: r => u.projectFacetsToAvro(r.author, r.request),
+   rows: [...avroRows, ...avroRows.filter(r => r.request.nativeType === 'float').map(r => ({...r, id: r.id + '-exact-input', request: {...r.request, obligation: 'exact-input' as const}}))], project: r => u.projectFacetsToAvro(r.author, r.request),
    recover: r => u.recoverFacetsFromAvro(r, r.nativeSchema),
    classify: (r, row) => {
     const family = row.author.target.modules[0]!.elements[0]!.scalarType as u.ScalarType;
-    const c = avroFacetCase(r.nativeSchema, family, {location: {path: '/fields/0/type'}, profile: row.request.profile, obligation: row.request.obligation});
-    unknown(c.document);
-    return {source: c.document, native: {schema: r.nativeSchema, dependencies: []}, classify: mode => u.classifyAvroFacets(c.document, {...c.request, mode}), recover: c => u.recoverAvroFacetSource(c, c.target)};
+    const source=fixture(JSON.stringify(['avro',family,r.nativeSchema]),()=>unknown(avroFacetCase(r.nativeSchema,family).document));
+    return {source, native: {schema: r.nativeSchema, dependencies: []}, classify: mode => u.classifyAvroFacets(source, {location:{path:'/fields/0/type'},nativeSource:r.nativeSchema,identity:{module:'logical',element:'value'},profile:row.request.profile,obligation:row.request.obligation,mode}), recover: c => u.recoverAvroFacetSource(c, c.target)};
    },
   },
   parquet: {
    rows: parquetFacetProjectionCases(), project: r => u.projectFacetsToParquet(r.author, r.request),
    recover: r => u.recoverFacetsFromParquet(r, u.exportParquetCapture(r.target)),
    classify: (r, row) => {
-    const bytes = u.exportParquetCapture(r.target), source = unknown(upgrade(u.importParquetSchema(bytes, {id: 'facet-gate'})));
+    const bytes = u.exportParquetCapture(r.target);
     const family = row.author.target.modules[0]!.elements[0]!.scalarType as u.ScalarType;
-    source.modules.push({id: 'logical', namespace: '', elements: [{id: 'value', kind: 'field', cardinality: 'one', scalarType: family, extensions: {}}]});
+    const source=fixture(JSON.stringify(['parquet',family,Array.from(bytes)]),()=>{
+     const source=unknown(upgrade(u.importParquetSchema(bytes,{id:'facet-gate'})));
+     source.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',cardinality:'one',scalarType:family,extensions:{}}]});return source;
+    });
     return {source, native: bytes, classify: mode => u.classifyParquetFacets(source, {location: {index: 1, scope: 'present-non-null-leaf'}, identity: {module: 'logical', element: 'value'}, mode, profile: 'declared-schema', obligation: row.request.obligation}), recover: c => u.recoverParquetFacetSource(c, c.target)};
    },
   },
  };
  const coverage = {} as Record<FacetSystem, {authoredCases: number; projected: number; strictBlocks: number; reportBlocks: number; reportResiduals: number; idealRecoveries: number; nativeRecoveries: number; classificationBlocks: number; nonemptyMatches: number; usefulExactMappings: number; residualComparisons: number; facetlessControls: number; floatNarrowing: number; fullCatalogNativeRecoveries: number; aggregateSerializationRefusals: number}>;
  for (const system of facetSystems) {
-  const b = bindings[system], count = {authoredCases: 0, projected: 0, strictBlocks: 0, reportBlocks: 0, reportResiduals: 0, idealRecoveries: 0, nativeRecoveries: 0, classificationBlocks: 0, nonemptyMatches: 0, usefulExactMappings: 0, residualComparisons: 0, facetlessControls: 0, floatNarrowing: 0, fullCatalogNativeRecoveries: 0, aggregateSerializationRefusals: 0};
+  const count = {authoredCases: 0, projected: 0, strictBlocks: 0, reportBlocks: 0, reportResiduals: 0, idealRecoveries: 0, nativeRecoveries: 0, classificationBlocks: 0, nonemptyMatches: 0, usefulExactMappings: 0, residualComparisons: 0, facetlessControls: 0, floatNarrowing: 0, fullCatalogNativeRecoveries: 0, aggregateSerializationRefusals: 0};
   coverage[system] = count;
-  if (system === 'postgresql') {
+ }
+ const inventory=Object.fromEntries(facetSystems.map(system=>[system,bindings[system].rows.length])) as FacetInventory;
+ for(let task=await next(inventory);task;task=await next(inventory)){
+  const {system,start,end}=task,b=bindings[system],count=coverage[system];
+  assert.ok(b && Number.isInteger(start) && Number.isInteger(end) && start>=0 && start<=end && end<=b.rows.length);
+  if(task.aggregate){
+   assert.equal(system,'postgresql');assert.equal(start,end);
+   const pgSource=upgrade(u.importPostgresqlCatalogCapture(pgNative,{id:'facet-gate'}));
+   for(const e of pgSource.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';
+   unknown(pgSource);const pgColumns=u.getPostgresqlColumnMetadata(pgSource);
    const c = await u.classifyPostgresqlFacets(pgSource, {column: pgColumns[0]!.path, nativeSource: pgNative, supplement: pgSupplement, mode: 'report', profile: 'stored-value', datumFormat: 'little-endian-datum64', obligation: 'value-domain'}, backend);
    assert.equal(c.status, 'classified');
    assertJsonDataEqual(await u.recoverPostgresqlFacetSource(c, c.target!, backend), {nativeSource: pgNative, supplement: pgSupplement}); count.fullCatalogNativeRecoveries++;
@@ -121,25 +137,34 @@ export async function verifyFacetRoundTrips(progress: (system: FacetSystem, inde
     try { serialized(c, format); } catch (error) { assert.ok(error instanceof u.UmfError && error.code === 'LIMIT'); count.aggregateSerializationRefusals++; }
    }
    assert.ok(count.aggregateSerializationRefusals, 'oversized aggregate receipt must refuse explicitly');
+   continue;
   }
-  for (const [index, row] of b.rows.entries()) {
-   if (index % 40 === 0) progress(system, index);
-   const before = u.copyJson(row.author), r = await b.project(row); assertJsonDataEqual(row.author, before);
+  progress(system,start);
+  for(let index=start;index<end;index++){
+   const row=b.rows[index]!;
+   const before = u.copyJson(row.author), r = await b.project(row); assert.deepEqual(u.copyJson(row.author), before);
    count.authoredCases++; resultContract(r, row.request.mode); assert.equal(r.mapping.origin, 'authored');
    if (row.request.obligation === 'exact-input' && r.residuals.some((x: any) => x.reason.includes('1.0000000000000002'))) count.floatNarrowing++;
    if (r.status === 'blocked') { count[row.request.mode === 'strict' ? 'strictBlocks' : 'reportBlocks']++; continue; }
    assert.equal(r.status, 'projected'); count.projected++;
    if (r.residuals.length) count.reportResiduals++;
-   for (const format of ['json', 'yaml'] as const) { assertJsonDataEqual(await b.recover(serialized(r, format)), row.author.target); count.idealRecoveries++; }
+   const ideal=u.copyJson(row.author.target);
+   for (const format of ['json', 'yaml'] as const) { assert.deepEqual(u.copyJson(await b.recover(serialized(r, format))), ideal); count.idealRecoveries++; }
    const c = await b.classify(r, row, index), source = u.copyJson(c.source);
+   // Admit/normalize immutable expected fixtures once. Every observed value
+   // still undergoes admission and complete structural/byte comparison.
+   const native=c.native instanceof Uint8Array?new Uint8Array(c.native):u.copyJson(c.native);
    let report: any;
    for (const mode of ['strict', 'report'] as const) {
-    const classified = await c.classify(mode); assertJsonDataEqual(c.source, source); resultContract(classified, mode);
+    const classified = await c.classify(mode); assert.deepEqual(u.copyJson(c.source), source); resultContract(classified, mode);
     assert.equal(classified.mapping.origin, 'classified');
     if (classified.status === 'blocked') { count.classificationBlocks++; assert.equal(mode, 'strict'); continue; }
     assert.equal(classified.status, 'classified');
     assertJsonDataEqual(classified.target.extensions.future, c.source.extensions!.future);
-    for (const format of ['json', 'yaml'] as const) { assertNativeRepresentationEqual(await c.recover(serialized(classified, format)), c.native); count.nativeRecoveries++; }
+    for (const format of ['json', 'yaml'] as const) {
+     const recovered=await c.recover(serialized(classified, format));
+     assert.deepEqual(recovered instanceof Uint8Array?new Uint8Array(recovered):u.copyJson(recovered),native);count.nativeRecoveries++;
+    }
     if (mode === 'report') report = classified;
    }
    assert.ok(report, 'report classification must retain emitted native target');
@@ -151,9 +176,53 @@ export async function verifyFacetRoundTrips(progress: (system: FacetSystem, inde
     if (!r.residuals.length && !report.residuals.length) count.usefulExactMappings++;
    } else { assert.ok(r.residuals.length + report.residuals.length, `${system}: unreported facet difference`); count.residualComparisons++; }
   }
-  assert.ok(count.strictBlocks && count.reportResiduals && count.idealRecoveries && count.nativeRecoveries, `${system}: incomplete strict/report recovery coverage`);
-  assert.ok(count.floatNarrowing, `${system}: missing float narrowing counterexample`);
  }
- assert.ok(facetSystems.filter(s => coverage[s].usefulExactMappings > 0).length >= 2, 'ideal admission needs two useful nonempty qualified mappings');
  return coverage;
+}
+
+/** Independent rows run in isolated processes; the caller's existing file
+ * watchdog bounds the complete matrix, including startup and all workers. */
+export async function verifyFacetRoundTrips(progress: (system: FacetSystem, index: number) => void = () => {}) {
+ const parts=4,queue:FacetTask[]=[];
+ let inventory:FacetInventory|undefined,dispatchError:unknown;
+ const children=Array.from({length:parts},()=>Bun.spawn([process.execPath,'scripts/core-ideals/facets-roundtrips-worker.ts'],{stdin:'ignore',stdout:'pipe',stderr:'pipe',ipc(message,child){
+  try{
+   assert.equal(message.ready,true);
+   if(inventory)assert.deepEqual(message.inventory,inventory);
+   else{
+    inventory=message.inventory;assert.ok(inventory);
+    queue.push({system:'postgresql',start:0,end:0,aggregate:true});
+    for(const system of facetSystems){const size:number=inventory[system];assert.ok(Number.isSafeInteger(size)&&size>0);for(let start=0;start<size;start+=8)queue.push({system,start,end:Math.min(start+8,size)});}
+   }
+   child.send(queue.shift()??null);
+  }catch(error){dispatchError=error;child.kill();}
+ }}));
+ try {
+  const packets=await Promise.all(children.map(async child=>{
+   let packet:Awaited<ReturnType<typeof verifyFacetRoundTripsWorker>>|undefined;
+   const output=(async()=>{
+    const reader=child.stdout.getReader(),decoder=new TextDecoder();let pending='';
+    try{while(true){const {value,done}=await reader.read();pending+=decoder.decode(value,{stream:!done});let newline:number;
+     while((newline=pending.indexOf('\n'))>=0){const line=pending.slice(0,newline);pending=pending.slice(newline+1);if(!line)continue;const message=JSON.parse(line);if(message.progress)progress(message.progress.system,message.progress.index);else packet=message.coverage;}
+     if(done)break;
+    }}finally{reader.releaseLock();}
+    assert.equal(pending,'','Incomplete facet worker output');
+   })();
+   const [,err,code]=await Promise.all([output,new Response(child.stderr).text(),child.exited]);
+   if(dispatchError)throw dispatchError;assert.equal(code,0,'Facet worker failed:\n'+err);assert.ok(packet,'Missing facet coverage');return packet;
+  }));
+  const coverage=packets[0]!;
+  for(const packet of packets.slice(1))for(const system of facetSystems){
+   const counts=coverage[system],incoming=packet[system];
+   for(const key of Object.keys(counts) as (keyof typeof counts)[])counts[key]+=incoming[key];
+  }
+  for(const system of facetSystems){
+   const count=coverage[system];assert.ok(inventory);assert.equal(count.authoredCases,inventory[system],'Every authored row must run exactly once');progress(system,count.authoredCases);
+   assert.ok(count.strictBlocks && count.reportResiduals && count.idealRecoveries && count.nativeRecoveries, `${system}: incomplete strict/report recovery coverage`);
+   assert.ok(count.floatNarrowing, `${system}: missing float narrowing counterexample`);
+  }
+  assert.equal(coverage.postgresql.fullCatalogNativeRecoveries,1);assert.equal(queue.length,0);
+  assert.ok(facetSystems.filter(s => coverage[s].usefulExactMappings > 0).length >= 2, 'ideal admission needs two useful nonempty qualified mappings');
+  return coverage;
+ } finally {for(const child of children)child.kill();}
 }

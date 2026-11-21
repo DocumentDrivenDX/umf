@@ -2,6 +2,55 @@
 //! JSON-LD source-preservation and bounded processor proposal kernel for
 //! CONTRACT-026. Processor proposals are incomplete, report-only candidates;
 //! they do not claim full JSON-LD, RDF, or ontology conformance.
+// JSON-LD compares expanded IRIs lexically. iref's normalized IRI equality
+// folds dot segments, which is appropriate for resolution but not vocabulary
+// interning (e.g. an @vocab concatenation ending in /./).
+mod lexical_vocabulary {
+    use std::collections::BTreeMap;
+    use json_ld::{Iri, IriBuf, rdf_types::{BlankId, BlankIdBuf, Literal, LiteralRef,
+        vocabulary::{IndexVocabulary, IriIndex, BlankIdIndex, LiteralIndex, IriVocabulary, IriVocabularyMut,
+            BlankIdVocabulary, BlankIdVocabularyMut, LiteralVocabulary, LiteralVocabularyMut}}};
+    #[derive(Default)]
+    pub(super) struct LexicalVocabulary {
+        iris: Vec<IriBuf>,
+        keys: BTreeMap<String, IriIndex>,
+        rest: IndexVocabulary,
+    }
+    impl LexicalVocabulary { pub fn new() -> Self { Self::default() } }
+    impl IriVocabulary for LexicalVocabulary {
+        type Iri = IriIndex;
+        fn iri<'a>(&'a self, id: &'a IriIndex) -> Option<&'a Iri> { self.iris.get(usize::from(*id)).map(IriBuf::as_iri) }
+        fn get(&self, iri: &Iri) -> Option<IriIndex> { self.keys.get(iri.as_str()).copied() }
+    }
+    impl IriVocabularyMut for LexicalVocabulary {
+        fn insert(&mut self, iri: &Iri) -> IriIndex {
+            if let Some(id) = self.keys.get(iri.as_str()) { return *id; }
+            let id = IriIndex::from(self.iris.len()); self.keys.insert(iri.as_str().to_owned(), id); self.iris.push(iri.to_owned()); id
+        }
+        fn insert_owned(&mut self, iri: IriBuf) -> IriIndex { self.insert(iri.as_iri()) }
+    }
+    impl BlankIdVocabulary for LexicalVocabulary {
+        type BlankId = BlankIdIndex;
+        fn blank_id<'a>(&'a self, id: &'a BlankIdIndex) -> Option<&'a BlankId> { self.rest.blank_id(id) }
+        fn get_blank_id(&self, id: &BlankId) -> Option<BlankIdIndex> { self.rest.get_blank_id(id) }
+    }
+    impl BlankIdVocabularyMut for LexicalVocabulary {
+        fn insert_blank_id(&mut self, id: &BlankId) -> BlankIdIndex { self.rest.insert_blank_id(id) }
+        fn insert_owned_blank_id(&mut self, id: BlankIdBuf) -> BlankIdIndex { self.rest.insert_owned_blank_id(id) }
+    }
+    impl LiteralVocabulary for LexicalVocabulary {
+        type Literal = LiteralIndex;
+        fn literal<'a>(&'a self, id: &'a LiteralIndex) -> Option<LiteralRef<'a, IriIndex>> { self.rest.literal(id) }
+        fn owned_literal(&self, id: LiteralIndex) -> Result<Literal<IriIndex>, LiteralIndex> { self.rest.owned_literal(id) }
+        fn get_literal(&self, value: LiteralRef<IriIndex>) -> Option<LiteralIndex> { self.rest.get_literal(value) }
+    }
+    impl LiteralVocabularyMut for LexicalVocabulary {
+        fn insert_literal(&mut self, value: LiteralRef<IriIndex>) -> LiteralIndex { self.rest.insert_literal(value) }
+        fn insert_owned_literal(&mut self, value: Literal<IriIndex>) -> LiteralIndex { self.rest.insert_owned_literal(value) }
+    }
+}
+use lexical_vocabulary::LexicalVocabulary;
+
 use std::{
     cell::RefCell,
     collections::{BTreeMap, BTreeSet},
@@ -58,6 +107,11 @@ pub struct JsonLdRuntime {
 }
 
 impl JsonLdRuntime {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static RESOURCES: std::sync::OnceLock<crate::resource_cache::Fixed<JsonLdRuntime>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&RESOURCES, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             let units = source.encode_utf16().collect::<Vec<_>>();
@@ -655,6 +709,13 @@ pub fn propose_jsonld_expansion(
     runtime: &JsonLdRuntime,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    propose_jsonld_expansion_profile(document, loss_policy, runtime, false, ctx)
+}
+
+fn propose_jsonld_expansion_profile(
+    document: &Value, loss_policy: &Utf16, runtime: &JsonLdRuntime,
+    rdf_projection: bool, ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     if loss_policy != &Utf16::from("report") && loss_policy != &Utf16::from("reject") {
         return Err(error(
             "JSONLD_OPTIONS",
@@ -697,6 +758,9 @@ pub fn propose_jsonld_expansion(
         } else {
             payload.root.render_compact(ctx)?
         };
+    let (source_for_processor, invalid_bases, invalid_datatypes) = if rdf_projection {
+        rdf_invalid_base_input(&payload.root, ctx)?
+    } else { (source_for_processor, false, Vec::new()) };
     let source = source_for_processor
         .to_utf8()
         .map_err(|_| error("JSONLD_SOURCE", "JSON source is not well-formed UTF-16"))?;
@@ -754,7 +818,7 @@ pub fn propose_jsonld_expansion(
         _ => json_ld::ProcessingMode::JsonLd1_1,
     };
     if let Some(expand_context) = &payload.expand_context {
-        let json = expand_context.render_compact(ctx)?;
+        let json = processing_context_source(expand_context, ctx)?;
         ctx.charge_text(json.len(), Utf16::default())?;
         let json = json
             .to_utf8()
@@ -775,12 +839,14 @@ pub fn propose_jsonld_expansion(
         used: RefCell::new(Vec::new()),
         missing: RefCell::new(Vec::new()),
     };
-    let input = json_ld::RemoteDocument::new(None, None, document_json);
-    let mut vocabulary: json_ld::rdf_types::vocabulary::IndexVocabulary =
-        json_ld::rdf_types::vocabulary::IndexVocabulary::new();
+    let mut input = json_ld::RemoteDocument::new(None, None, document_json);
+    let mut vocabulary: LexicalVocabulary =
+        LexicalVocabulary::new();
     use json_ld::rdf_types::vocabulary::IriVocabularyMut;
     processor_options.base = Some(vocabulary.insert(base.as_iri()));
+    input.set_url(processor_options.base.clone());
     let mut warnings = ProcessorWarnings::default();
+    if invalid_bases { warnings.messages.push("Invalid @base has no RDF IRI; relative identifiers remain invalid and are omitted from the derived dataset".into()); }
     use json_ld::JsonLdProcessor;
     let expanded = futures::executor::block_on(input.expand_full(
         &mut vocabulary,
@@ -791,19 +857,22 @@ pub fn propose_jsonld_expansion(
 
     let source_copy = copy_json(document, ctx)?;
     let resources_used = used_context_urls(&loader, ctx)?;
-    let has_warnings = !warnings.messages.is_empty();
+    let has_warnings = !warnings.messages.is_empty() || !invalid_datatypes.is_empty();
     let mut diagnostics = warnings
         .messages
         .into_iter()
         .map(|message| {
             diagnostic(
-                "JSONLD_EVENT",
+                if rdf_projection && (message.contains("malformed IRI") || message.contains("invalid language tag")) { "JSONLD_RDF_TERM" } else { "JSONLD_EVENT" },
                 &Utf16::default(),
                 message,
                 Severity::Warning,
             )
         })
         .collect::<Vec<_>>();
+    for path in invalid_datatypes {
+        diagnostics.push(diagnostic("JSONLD_RDF_TERM", &path, "Malformed RDF datatype omitted from derived dataset; original source retained".to_owned(), Severity::Warning));
+    }
     let reject_warning = loss_policy == &Utf16::from("reject") && has_warnings;
     let mut fields = vec![
         (Utf16::from("source"), source_copy),
@@ -982,26 +1051,44 @@ pub fn propose_jsonld_compaction(
         );
     }
     let payload = payload_from_valid_document(document, ctx)?;
-    let (input, loader, base, mut options) = processor_input(&payload, ctx)?;
+    let (mut input, loader, base, mut options) = processor_input(&payload, ctx)?;
     ctx.charge_text(context_json.len(), Utf16::default())?;
     let context_tree = NativeJsonTree::parse_json(context_json.units(), ctx)?;
-    let context_text = context_json
-        .to_utf8()
+    // The API accepts either a context value or a context document. The
+    // original tree stays in the report; only processing selects @context.
+    let effective = if matches!(context_tree.root(), NativeJsonNode::Object(fields) if fields.iter().any(|(key,_)| key == &Utf16::from("@context"))) {
+        context_tree.subtree_clone(&Utf16::from("/@context"), ctx)?
+    } else { context_tree.clone_tree(ctx)? };
+    if matches!(effective.root(), NativeJsonNode::Null) {
+        return blocked_transform_report(document,loss_policy,
+            vec![(Utf16::from("context"),context_tree.tagged_value_preserving_extras(ctx)?),
+                 (Utf16::from("compactArrays"),Value::Bool(compact_arrays)),
+                 (Utf16::from("compactToRelative"),Value::Bool(compact_to_relative))],
+            "JSONLD_COMPACTION_BLOCKED","Target context must not be null",ctx);
+    }
+    let context_text = effective.render_compact(ctx)?.to_utf8()
         .map_err(|_| error("JSONLD_CONTEXT", "Target context is not well-formed UTF-16"))?;
     let context_value = json_ld::syntax::Value::parse_str(&context_text)
-        .map_err(|e| error_owned("JSONLD_CONTEXT", e.to_string()))?
-        .0;
+        .map_err(|e| error_owned("JSONLD_CONTEXT", e.to_string()))?.0;
     use json_ld::syntax::TryFromJson;
-    let context = json_ld::syntax::Context::try_from_json(context_value)
-        .map_err(|e| error_owned("JSONLD_CONTEXT", e.to_string()))?;
+    let context = match json_ld::syntax::Context::try_from_json(context_value) {
+        Ok(context) => context,
+        Err(failure) => return blocked_transform_report(document, loss_policy,
+            vec![(Utf16::from("context"), context_tree.tagged_value_preserving_extras(ctx)?),
+                 (Utf16::from("compactArrays"), Value::Bool(compact_arrays)),
+                 (Utf16::from("compactToRelative"), Value::Bool(compact_to_relative))],
+            "JSONLD_COMPACTION_BLOCKED", &failure.to_string(), ctx),
+    };
     options.compact_arrays = compact_arrays;
     options.compact_to_relative = compact_to_relative;
     let target =
         json_ld::RemoteDocumentReference::Loaded(json_ld::RemoteDocument::new(None, None, context));
-    let mut vocabulary: json_ld::rdf_types::vocabulary::IndexVocabulary =
-        json_ld::rdf_types::vocabulary::IndexVocabulary::new();
+    let mut vocabulary: LexicalVocabulary =
+        LexicalVocabulary::new();
     use json_ld::rdf_types::vocabulary::IriVocabularyMut;
     options.base = Some(vocabulary.insert(base.as_iri()));
+    input.set_url(options.base.clone());
+    options.base = None;
     let mut warnings = ProcessorWarnings::default();
     use json_ld::JsonLdProcessor;
     let compacted = futures::executor::block_on(input.compact_full(
@@ -1036,6 +1123,9 @@ pub fn propose_jsonld_compaction(
         ],
         ctx,
     )?;
+    for missing in loader.missing.borrow().iter() {
+        push_transform_diagnostic(&mut fields,"JSONLD_CONTEXT_MISSING",&format!("Context URL was not supplied: {}", missing.to_utf8().unwrap_or_default()),"error");
+    }
     match compacted {
         Err(failure) => {
             fields.push((Utf16::from("status"), Value::string_utf8("blocked")));
@@ -1126,7 +1216,7 @@ pub fn propose_jsonld_flatten(
         );
     }
     let payload = payload_from_valid_document(document, ctx)?;
-    let (input, loader, base, mut options) = processor_input(&payload, ctx)?;
+    let (mut input, loader, base, mut options) = processor_input(&payload, ctx)?;
     options.compact_arrays = compact_arrays;
     let (context_tree, target) = match context_json {
         None => (Value::Null, None),
@@ -1150,10 +1240,11 @@ pub fn propose_jsonld_flatten(
             )
         }
     };
-    let mut vocabulary: json_ld::rdf_types::vocabulary::IndexVocabulary =
-        json_ld::rdf_types::vocabulary::IndexVocabulary::new();
+    let mut vocabulary: LexicalVocabulary =
+        LexicalVocabulary::new();
     use json_ld::rdf_types::vocabulary::IriVocabularyMut;
     options.base = Some(vocabulary.insert(base.as_iri()));
+    input.set_url(options.base.clone());
     let mut generator = json_ld::rdf_types::generator::Blank::new();
     let mut warnings = ProcessorWarnings::default();
     use json_ld::JsonLdProcessor;
@@ -1403,7 +1494,7 @@ fn processor_input(
         _ => json_ld::ProcessingMode::JsonLd1_1,
     };
     if let Some(expand_context) = &payload.expand_context {
-        let source = expand_context.render_compact(ctx)?;
+        let source = processing_context_source(expand_context, ctx)?;
         ctx.charge_text(source.len(), Utf16::default())?;
         let source = source
             .to_utf8()
@@ -1435,6 +1526,58 @@ fn source_copy_for_candidate(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     copy_json(document, ctx)
+}
+
+// RDF cannot represent an invalid base or any relative identifier resolved
+// through it. A null processing base keeps those identifiers invalid, while
+// preserving absolute IRIs and list structure. This policy is confined to the
+// derived RDF operation; expansion and all archived sources remain untouched.
+fn rdf_invalid_base_input(tree: &NativeJsonTree, ctx: &mut Context<'_>) -> Result<(Utf16, bool, Vec<Utf16>), EngineError> {
+    fn scan(node: &NativeJsonNode, path: &str, context: bool, paths: &mut Vec<Utf16>, invalid: &mut Vec<Utf16>, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        match node {
+            NativeJsonNode::Array(items) => for (index, item) in items.iter().enumerate() { scan(item, &format!("{path}/{index}"), context, paths, invalid, ctx)?; },
+            NativeJsonNode::Object(fields) => {
+                if fields.iter().any(|(key,value)| key == &Utf16::from("@type") && matches!(value, NativeJsonNode::String(value) if value == &Utf16::from("@json"))) { return Ok(()); }
+                // A malformed absolute datatype has no RDF term. Omit its
+                // value object only in the derived RDF processing copy.
+                if !context && fields.iter().any(|(key,_)| key == &Utf16::from("@value")) {
+                    if let Some(NativeJsonNode::String(datatype))=fields.iter().find(|(key,_)| key == &Utf16::from("@type")).map(|(_,value)|value) {
+                        let datatype=datatype.to_utf8().map_err(|_| error("JSONLD_IRI", "Invalid UTF-16 datatype"))?;
+                        if json_ld::Iri::new(&datatype).is_err() && json_ld::Iri::new(&datatype.replace('%', "%25")).is_ok() {
+                            invalid.push(Utf16::from(path)); return Ok(());
+                        }
+                    }
+                }
+                for (key, value) in fields {
+                    let name = key.to_utf8().map_err(|_| error("JSONLD_SOURCE", "Invalid UTF-16 context key"))?;
+                    let child = format!("{path}/{}", name.replace('~', "~0").replace('/', "~1"));
+                    if context && name == "@base" {
+                        if let NativeJsonNode::String(base) = value {
+                            let base = base.to_utf8().map_err(|_| error("JSONLD_IRI", "Invalid UTF-16 base"))?;
+                            if json_ld::IriRef::new(&base).is_err() { paths.push(Utf16::from(child.clone())); }
+                        }
+                    }
+                    scan(value, &child, name == "@context", paths, invalid, ctx)?;
+                }
+            },
+            _ => {},
+        }
+        Ok(())
+    }
+    let mut paths = Vec::new(); let mut invalid = Vec::new(); scan(tree.root(), "", false, &mut paths, &mut invalid, ctx)?;
+    if paths.is_empty() && invalid.is_empty() { return Ok((tree.render_compact(ctx)?, false, invalid)); }
+    let null = NativeJsonTree::parse_json(Utf16::from("null").units(), ctx)?;
+    let mut input = tree.clone_tree(ctx)?;
+    let invalid_base = !paths.is_empty();
+    for path in paths.iter().chain(invalid.iter()) { input = input.replace_node(path, &null, ctx)?; }
+    Ok((input.render_compact(ctx)?, invalid_base, invalid))
+}
+
+fn processing_context_source(tree: &NativeJsonTree, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+    if matches!(tree.root(), NativeJsonNode::Object(fields) if fields.iter().any(|(key,_)| key == &Utf16::from("@context"))) {
+        tree.subtree_clone(&Utf16::from("/@context"), ctx)?.render_compact(ctx)
+    } else { tree.render_compact(ctx) }
 }
 
 #[derive(Default)]
@@ -3297,7 +3440,8 @@ pub fn propose_jsonld_to_rdf(
         (Utf16::from("resourcesUsed"), Value::Array(Vec::new())),
         (Utf16::from("diagnostics"), Value::Array(Vec::new())),
     ]);
-    let expansion = propose_jsonld_expansion(document, loss_policy, runtime, ctx)?;
+    let expansion = propose_jsonld_expansion_profile(document, loss_policy, runtime, true, ctx)?;
+    if let Some(used) = field(&expansion, "resourcesUsed") { set_field(&mut report, "resourcesUsed", copy_json(used, ctx)?)?; }
     let Some(expanded_doc) = field(&expansion, "candidate") else {
         let diagnostics = match field(&expansion, "diagnostics") {
             Some(Value::Array(ds)) => {
@@ -3326,26 +3470,69 @@ pub fn propose_jsonld_to_rdf(
         )?;
         return Ok(report);
     }
-    fn has_inexact_number(node: &crate::native_json::NativeJsonNode) -> bool {
-        use crate::native_json::NativeJsonNode as N;
+    fn projection_losses(node: &NativeJsonNode, path: &str, direction_set: bool, out: &mut Vec<Value>, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
         match node {
-            N::Number(token) => token
-                .parse::<f64>()
-                .ok()
-                .filter(|n| n.is_finite())
-                .is_none_or(|n| {
-                    (n.fract() == 0.0 && n.abs() > 9_007_199_254_740_991.0)
-                        || crate::serialization::decimal_canonical(token)
-                            != crate::serialization::decimal_canonical(
-                                &crate::ecma_number_to_string(n),
-                            )
-                }),
-            N::Array(items) => items.iter().any(has_inexact_number),
-            N::Object(members) => members.iter().any(|(_, value)| has_inexact_number(value)),
-            _ => false,
+            NativeJsonNode::Array(items) => for (index,item) in items.iter().enumerate() { projection_losses(item, &format!("{path}/{index}"), direction_set, out, ctx)?; },
+            NativeJsonNode::Object(fields) => {
+                if fields.iter().any(|(key,value)| key == &Utf16::from("@type") && matches!(value, NativeJsonNode::String(value) if value == &Utf16::from("@json"))) { return Ok(()); }
+                let named=fields.iter().any(|(key,_)| key == &Utf16::from("@id"));
+                for (key,value) in fields {
+                    let name=key.to_utf8().map_err(|_| error("JSONLD_SOURCE", "Invalid UTF-16 member"))?;
+                    let child=format!("{path}/{}", name.replace('~',"~0").replace('/',"~1"));
+                    let loss = if name == "@index" { Some(("JSONLD_RDF_INDEX", "RDF conversion omits JSON-LD @index annotations; full source retained")) }
+                        else if name == "@graph" && named && matches!(value, NativeJsonNode::Array(items) if items.is_empty()) { Some(("JSONLD_RDF_EMPTY_GRAPH", "RDF conversion omits empty named graph inventory; full source retained")) }
+                        else if name == "@direction" && !direction_set { Some(("JSONLD_RDF_EVENT", "rdfDirection is not set for @direction; full source retained")) } else { None };
+                    if let Some((code,message))=loss {
+                        let mut diagnostic=report_diagnostic(code,message,"warning"); set_field(&mut diagnostic,"path",Value::String(Utf16::from(child.clone())))?; out.push(diagnostic);
+                    }
+                    projection_losses(value,&child,direction_set,out,ctx)?;
+                }
+            },
+            _ => {},
         }
+        Ok(())
     }
-    let inexact_numbers = has_inexact_number(payload.root.root());
+    let mut projection_diagnostics=Vec::new();
+    projection_losses(payload.root.root(), "", rdf_direction.is_some(), &mut projection_diagnostics, ctx)?;
+    if !projection_diagnostics.is_empty() && loss_policy == &Utf16::from("reject") {
+        projection_diagnostics.push(report_diagnostic("JSONLD_TO_RDF_BLOCKED", "RDF conversion would discard JSON-LD annotations or graph inventory; full source retained", "error"));
+        set_field(&mut report, "diagnostics", Value::Array(projection_diagnostics))?;
+        return Ok(report);
+    }
+    fn number_losses(node: &NativeJsonNode, path: &str, opaque: bool, losses: &mut Vec<String>, overflow: &mut bool, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        match node {
+            NativeJsonNode::Number(token) => {
+                let value = token.parse::<f64>().ok().filter(|value| value.is_finite());
+                let Some(value) = value else { *overflow = true; return Ok(()); };
+                let lexical = if opaque || (value.fract() == 0.0 && value.abs() <= 9_007_199_254_740_991.0) {
+                    crate::ecma_number_to_string(value)
+                } else { json_ld::rdf::canonical_double(value) };
+                if (value == 0.0 && token.starts_with('-')) || (value.fract() == 0.0 && value.abs() > 9_007_199_254_740_991.0)
+                    || crate::serialization::decimal_canonical(token) != crate::serialization::decimal_canonical(&lexical) {
+                    losses.push(path.to_owned());
+                }
+            },
+            NativeJsonNode::Array(items) => for (index,item) in items.iter().enumerate() { number_losses(item, &format!("{path}/{index}"), opaque, losses, overflow, ctx)?; },
+            NativeJsonNode::Object(fields) => {
+                let opaque = opaque || fields.iter().any(|(key,value)| key == &Utf16::from("@type") && matches!(value, NativeJsonNode::String(value) if value == &Utf16::from("@json")));
+                for (key,value) in fields {
+                    let name=key.to_utf8().map_err(|_| error("JSONLD_SOURCE", "Invalid UTF-16 member"))?;
+                    number_losses(value, &format!("{path}/{}", name.replace('~',"~0").replace('/',"~1")), opaque, losses, overflow, ctx)?;
+                }
+            },
+            _ => {},
+        }
+        Ok(())
+    }
+    let mut number_loss_paths=Vec::new(); let mut numeric_overflow=false;
+    number_losses(payload.root.root(), "", false, &mut number_loss_paths, &mut numeric_overflow, ctx)?;
+    if numeric_overflow {
+        set_field(&mut report, "diagnostics", Value::Array(vec![report_diagnostic("JSONLD_RDF_NUMBER", "Numeric overflow cannot be represented as a finite JSON number; source retained", "error")]))?;
+        return Ok(report);
+    }
+    let inexact_numbers = !number_loss_paths.is_empty();
     if inexact_numbers && numeric_policy == &Utf16::from("strict") {
         set_field(&mut report, "diagnostics", Value::Array(vec![report_diagnostic(
                 "JSONLD_RDF_NUMBER",
@@ -3355,11 +3542,12 @@ pub fn propose_jsonld_to_rdf(
         return Ok(report);
     }
     if inexact_numbers && loss_policy == &Utf16::from("reject") {
-        set_field(&mut report, "diagnostics", Value::Array(vec![report_diagnostic(
-            "JSONLD_RDF_NUMBER_LOSS",
-            "At least one exact JSON number would be converted through binary64 for RDF; original JSON-LD source is retained.",
-            "warning",
-        )]))?;
+        let mut losses=Vec::with_capacity(number_loss_paths.len());
+        for path in &number_loss_paths {
+            let mut loss=report_diagnostic("JSONLD_RDF_NUMBER_LOSS","Exact JSON number would change during native RDF conversion; original source retained","warning");
+            set_field(&mut loss,"path",Value::String(Utf16::from(path.as_str())))?; losses.push(loss);
+        }
+        set_field(&mut report,"diagnostics",Value::Array(losses))?;
         return Ok(report);
     }
     let json = payload.root.render_compact(ctx)?;
@@ -3367,7 +3555,7 @@ pub fn propose_jsonld_to_rdf(
     let json = json
         .to_utf8()
         .map_err(|_| error("JSONLD_SOURCE", "Expanded JSON is not well-formed UTF-16"))?;
-    let parsed = json_ld::syntax::Value::parse_str(&json)
+    let mut parsed = json_ld::syntax::Value::parse_str(&json)
         .map_err(|e| error_owned("JSONLD_SOURCE", e.to_string()))?
         .0;
     let base_text = payload
@@ -3390,12 +3578,48 @@ pub fn propose_jsonld_to_rdf(
         }
     });
     options.produce_generalized_rdf = produce_generalized_rdf;
-    let input = json_ld::RemoteDocument::new(None, None, parsed);
+    fn rdf_null_ids(value: &mut json_ld::syntax::Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        match value {
+            json_ld::syntax::Value::Array(items) => for item in items { rdf_null_ids(item, ctx)?; },
+            json_ld::syntax::Value::Object(object) => {
+                let opaque = object.get_unique("@type").ok().flatten().is_some_and(|value| value.as_str() == Some("@json"));
+                if opaque { return Ok(()); }
+                if object.get_unique("@id").ok().flatten().is_some_and(|value| value.is_null()) {
+                    if object.len() == 1 { *value = json_ld::syntax::Value::Null; return Ok(()); }
+                    object.remove_unique("@id").map_err(|_| error("JSONLD_SOURCE", "Duplicate expanded identifier"))?;
+                }
+                for (_, value) in object.iter_mut() { rdf_null_ids(value, ctx)?; }
+            },
+            _ => {},
+        }
+        Ok(())
+    }
+    fn native_numbers(value: &mut json_ld::syntax::Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        match value {
+            json_ld::syntax::Value::Number(number) => {
+                let value=number.as_f64_lossy();
+                if !value.is_finite() { return Err(error("JSONLD_RDF_NUMBER", "Numeric overflow")); }
+                *number=crate::ecma_number_to_string(value).parse().map_err(|_| error("JSONLD_RDF_NUMBER", "Invalid finite native number"))?;
+            },
+            json_ld::syntax::Value::Array(items) => for item in items { native_numbers(item,ctx)?; },
+            json_ld::syntax::Value::Object(object) => for (_,value) in object.iter_mut() { native_numbers(value,ctx)?; },
+            _ => {},
+        }
+        Ok(())
+    }
+    native_numbers(&mut parsed,ctx)?;
+    rdf_null_ids(&mut parsed, ctx)?;
+    let mut input = json_ld::RemoteDocument::new(None, None, parsed);
     use json_ld::JsonLdProcessor;
-    let mut vocabulary: json_ld::rdf_types::vocabulary::IndexVocabulary =
-        json_ld::rdf_types::vocabulary::IndexVocabulary::new();
+    let mut vocabulary: LexicalVocabulary =
+        LexicalVocabulary::new();
     use json_ld::rdf_types::vocabulary::IriVocabularyMut;
-    options.base = Some(vocabulary.insert(base.as_iri()));
+    // This input is already expanded. A second base resolution would invent
+    // absolute identities for relative terms intentionally left unresolved.
+    options.base = None;
+    let _ = base;
     let mut warnings = ProcessorWarnings::default();
     let rdf_result = futures::executor::block_on(input.to_rdf_full(
         &mut vocabulary,
@@ -3409,7 +3633,7 @@ pub fn propose_jsonld_to_rdf(
         let messages = warnings
             .messages
             .iter()
-            .map(|message| report_diagnostic("JSONLD_RDF_EVENT", message, "warning"))
+            .map(|message| report_diagnostic(if (message.contains("malformed IRI") || message.contains("invalid language tag")) { "JSONLD_RDF_TERM" } else { "JSONLD_RDF_EVENT" }, message, "warning"))
             .collect();
         set_field(&mut report, "diagnostics", Value::Array(messages))?;
         return Ok(report);
@@ -3436,6 +3660,25 @@ pub fn propose_jsonld_to_rdf(
             return Ok(report);
         }
     };
+    let mut checked_quads=Vec::with_capacity(rendered_quads.len());
+    for quad in rendered_quads {
+        ctx.charge_work(1,Utf16::default())?;
+        use json_ld::rdf_types::vocabulary::LiteralVocabulary;
+        if let json_ld::rdf_types::Term::Literal(index)=&quad.2 {
+            let literal=vocabulary.literal(index).ok_or_else(|| error("JSONLD_RDF_TERM", "Missing literal"))?;
+            if let json_ld::rdf_types::LiteralTypeRef::LangString(language)=literal.type_ {
+                if !crate::rdf::valid_language(&Utf16::from(language.as_str()),ctx)? {
+                    projection_diagnostics.push(report_diagnostic("JSONLD_RDF_TERM", "Malformed RDF language tag omitted; full source retained", "warning"));
+                    continue;
+                }
+            }
+        }
+        checked_quads.push(quad);
+    }
+    if !projection_diagnostics.is_empty() && loss_policy == &Utf16::from("reject") {
+        set_field(&mut report,"diagnostics",Value::Array(projection_diagnostics))?; return Ok(report);
+    }
+    let rendered_quads=checked_quads;
     let candidate = if produce_generalized_rdf {
         let mut quads = Vec::with_capacity(rendered_quads.len());
         let mut seen_quads = BTreeSet::new();
@@ -3487,14 +3730,15 @@ pub fn propose_jsonld_to_rdf(
     }
     for message in &warnings.messages {
         ctx.charge_text(message.encode_utf16().count(), Utf16::default())?;
-        diagnostics.push(report_diagnostic("JSONLD_RDF_EVENT", message, "warning"));
+        diagnostics.push(report_diagnostic(if (message.contains("malformed IRI") || message.contains("invalid language tag")) { "JSONLD_RDF_TERM" } else { "JSONLD_RDF_EVENT" }, message, "warning"));
     }
+    diagnostics.extend(projection_diagnostics);
     if inexact_numbers {
-        diagnostics.push(report_diagnostic(
-            "JSONLD_RDF_NUMBER_LOSS",
-            "At least one exact JSON number was converted through binary64 for RDF; original JSON-LD source is retained.",
-            "warning",
-        ));
+        for path in number_loss_paths {
+            let mut loss = report_diagnostic("JSONLD_RDF_NUMBER_LOSS", "Exact JSON number changed during native RDF conversion; original JSON-LD source retained", "warning");
+            set_field(&mut loss, "path", Value::String(Utf16::from(path)))?;
+            diagnostics.push(loss);
+        }
     }
     diagnostics.push(report_diagnostic(
         "JSONLD_TO_RDF",
@@ -3517,7 +3761,7 @@ fn generalized_id_value(
         json_ld::rdf_types::vocabulary::IriIndex,
         json_ld::rdf_types::vocabulary::BlankIdIndex,
     >,
-    vocabulary: &json_ld::rdf_types::vocabulary::IndexVocabulary,
+    vocabulary: &LexicalVocabulary,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     use json_ld::rdf_types::vocabulary::{BlankIdVocabulary, IriVocabulary};
@@ -3568,7 +3812,7 @@ fn generalized_quad_value(
             json_ld::rdf_types::vocabulary::BlankIdIndex,
         >,
     >,
-    vocabulary: &json_ld::rdf_types::vocabulary::IndexVocabulary,
+    vocabulary: &LexicalVocabulary,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     use json_ld::rdf_types::vocabulary::{IriVocabulary, LiteralVocabulary};
@@ -4095,7 +4339,7 @@ fn collapse_rdf_lists(
 
 fn iri_resource(
     value: &Value,
-    vocabulary: &mut json_ld::rdf_types::vocabulary::IndexVocabulary,
+    vocabulary: &mut LexicalVocabulary,
     ctx: &mut Context<'_>,
 ) -> Result<RdfResource, EngineError> {
     use json_ld::rdf_types::vocabulary::{BlankIdVocabularyMut, IriVocabularyMut};
@@ -4124,7 +4368,7 @@ fn iri_resource(
 
 fn rdf_resource(
     value: &Value,
-    vocabulary: &mut json_ld::rdf_types::vocabulary::IndexVocabulary,
+    vocabulary: &mut LexicalVocabulary,
     ctx: &mut Context<'_>,
 ) -> Result<RdfResource, EngineError> {
     use json_ld::rdf_types::vocabulary::{IriVocabularyMut, LiteralVocabularyMut};

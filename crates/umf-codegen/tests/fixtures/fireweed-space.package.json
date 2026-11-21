@@ -1,0 +1,23 @@
+{
+  "id": "fireweed.space",
+  "version": "0.1.0",
+  "coreVersion": "0.10.0",
+  "description": "Test stand-in for a host-owned queue vocabulary registered beside umf.tables",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:test:fireweed-space:0.1.0",
+    "type": "object"
+  },
+  "semantics": "Host-owned; validated by the host's Capabilities",
+  "scopes": [
+    "module",
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [],
+    "evidence": [
+      "crates/umf-codegen/tests/fireweed_space.rs"
+    ]
+  }
+}

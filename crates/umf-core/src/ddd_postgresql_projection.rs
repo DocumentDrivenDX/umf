@@ -947,6 +947,7 @@ pub fn prepare(
     // Relationship DDL is driven only by the exact admitted relationship layout.
     let layouts = arr(get(layout_policy, "relationshipLayouts")).unwrap_or(&[]);
     let key_layouts = arr(get(layout_policy, "keyLayouts")).unwrap_or(&[]);
+    let mut generated_carriers = HashMap::<String, usize>::new();
     for (i, l) in layouts.iter().enumerate() {
         let storage = txt(get(l, "storage"))?;
         let carrier = txt(get(l, "carrierTable"))?;
@@ -962,6 +963,15 @@ pub fn prepare(
             )?);
         }
         if (storage == "junction" || storage == "edge") && get(l, "associationRecord").is_none() {
+            if storage == "edge" {
+                if let Some(statement) = generated_carriers.get(&carrier) {
+                    mapping("policy", &format!("/layoutPolicy/relationshipLayouts/{i}"), *statement, "table", &carrier, &mut mappings);
+                    continue;
+                }
+            }
+            if !relations.insert(carrier.clone()) {
+                return Ok(blocked(source, bind, pol, &format!("/layoutPolicy/relationshipLayouts/{i}/carrierTable"), "Relationship carrier collides with another relation", ctx)?);
+            }
             let mut cols = Vec::new();
             if storage == "edge" {
                 let d = get(l, "discriminator").ok_or_else(|| {
@@ -1021,6 +1031,7 @@ pub fn prepare(
                 carrier_sql,
                 cols.join(",\n  ")
             ));
+            generated_carriers.insert(carrier.clone(), statements.len() - 1);
             mapping(
                 "policy",
                 &format!("/layoutPolicy/relationshipLayouts/{i}"),
@@ -1034,6 +1045,10 @@ pub fn prepare(
     for (i, key) in key_layouts.iter().enumerate() {
         let table = txt(get(key, "table"))?;
         let constraint = txt(get(key, "constraint"))?;
+        let (schema, _) = table.split_once('.').ok_or_else(|| fail("DDD_POSTGRESQL_IDENTIFIER", "Key table must be schema.table"))?;
+        if !relations.insert(format!("{schema}.{constraint}")) {
+            return Ok(blocked(source, bind, pol, &format!("/layoutPolicy/keyLayouts/{i}/constraint"), "Key index collides with another relation", ctx)?);
+        }
         let comps = arr(get(key, "components")).unwrap_or(&[]);
         let cols = comps
             .iter()
@@ -1357,7 +1372,7 @@ pub fn prepare(
                 terms.push(format!(
                     "({} #>> ARRAY[{}]::text[])",
                     quote(&column)?,
-                    path_terms.join(", ")
+                    path_terms.join(",")
                 ));
             }
         }

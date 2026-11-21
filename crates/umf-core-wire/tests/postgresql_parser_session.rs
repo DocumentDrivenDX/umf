@@ -35,6 +35,7 @@ fn json_to_value(value: serde_json::Value) -> Value {
 
 fn call(
     session: &mut ParserSession,
+    ordinary: bool,
     op: &str,
     fields: impl IntoIterator<Item = (&'static str, Value)>,
 ) -> Result<Value, Json> {
@@ -56,11 +57,11 @@ fn call(
     let wire = umf_core_wire::encode(&Value::Object(members), &mut Context::ordinary()).unwrap();
     let mut control = |_amount| Ok(());
     let envelope: Json = serde_json::from_str(
-        &umf_core_wire::postgresql_parser_binding::execute_wire_with_session(
-            session,
-            &wire,
-            &mut control,
-        ),
+        &if ordinary {
+            umf_core_wire::postgresql_parser_binding::execute_wire_with_session_default(session, &wire)
+        } else {
+            umf_core_wire::postgresql_parser_binding::execute_wire_with_session(session, &wire, &mut control)
+        },
     )
     .unwrap();
     if envelope["status"] != "ok" {
@@ -74,9 +75,11 @@ fn call(
 
 #[test]
 fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
+    for ordinary in [false, true] {
     let mut session = ParserSession::default();
     let prepared = call(
         &mut session,
+        ordinary,
         "prepareImport",
         [
             ("source", Value::string_utf8("SELECT 1")),
@@ -91,6 +94,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     .unwrap();
     let imported = call(
         &mut session,
+        ordinary,
         "completeImport",
         [
             ("token", member(&prepared, "token").clone()),
@@ -106,6 +110,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     .unwrap();
     let edited = call(
         &mut session,
+        ordinary,
         "editNode",
         [
             ("document", member(&imported, "document").clone()),
@@ -125,6 +130,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     );
     let prepared_export = call(
         &mut session,
+        ordinary,
         "prepareExport",
         [("document", member(&edited, "document").clone())],
     )
@@ -142,6 +148,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
         ["ival"]["ival"] = serde_json::json!(2);
     let completion = call(
         &mut session,
+        ordinary,
         "completeExport",
         [
             ("token", member(&prepared_export, "token").clone()),
@@ -159,6 +166,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     let deparse = member(&completion, "request").clone();
     let completion = call(
         &mut session,
+        ordinary,
         "completeExport",
         [
             ("token", member(&deparse, "token").clone()),
@@ -176,6 +184,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     let reparse = member(&completion, "request").clone();
     let completion = call(
         &mut session,
+        ordinary,
         "completeExport",
         [
             ("token", member(&reparse, "token").clone()),
@@ -194,6 +203,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
 
     let pending = call(
         &mut session,
+        ordinary,
         "prepareImport",
         [
             ("source", Value::string_utf8("SELECT 3")),
@@ -203,6 +213,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     .unwrap();
     let cancelled = call(
         &mut session,
+        ordinary,
         "cancel",
         [("token", member(&pending, "token").clone())],
     )
@@ -211,6 +222,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     let wrong_version = serde_json::json!({"version":160004,"stmts":[]});
     let prepared = call(
         &mut session,
+        ordinary,
         "prepareImport",
         [
             ("source", Value::string_utf8("SELECT 1")),
@@ -220,6 +232,7 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     .unwrap();
     let error = call(
         &mut session,
+        ordinary,
         "completeImport",
         [
             ("token", member(&prepared, "token").clone()),
@@ -234,4 +247,5 @@ fn parser_session_wire_import_edit_export_and_cancel_are_rust_owned() {
     )
     .unwrap_err();
     assert_eq!(error["code"], "POSTGRESQL_AST_VERSION");
+    }
 }

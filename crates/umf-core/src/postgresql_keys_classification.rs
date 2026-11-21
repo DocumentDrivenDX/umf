@@ -118,7 +118,9 @@ struct Runtime {
     correlation: CompiledSchema,
     native_schema: Value,
 }
-fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
+fn runtime(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Runtime>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<Runtime>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let core = |s: &str, c: &mut Context<'_>| read(s, c);
     let engine = Engine::new(
         ResourceSet::new(
@@ -204,6 +206,7 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
         request,
         correlation,
         native_schema: native,
+    })
     })
 }
 trait ObjectValue {
@@ -1366,6 +1369,13 @@ fn correlate_keys(
                             "Column type identity disagrees",
                         ));
                     }
+                }
+                if text(col, "type") != text(c, "type") {
+                    return Err(err(
+                        "POSTGRESQL_KEY_CORRELATION",
+                        "/indexes/components/type",
+                        "Formatted column type, including modifiers, disagrees",
+                    ));
                 }
                 if get(col, "notNull") != get(c, "notNull") {
                     return Err(err(

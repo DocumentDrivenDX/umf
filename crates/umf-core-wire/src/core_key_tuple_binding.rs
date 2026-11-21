@@ -324,6 +324,9 @@ impl PreparedCoreKeyTupleBinding {
         context.with_tagged_transport_limit(|transport| crate::encode(self.source(), transport))
     }
 
+    pub fn encode_hex(&self, identity: &Value, values: &Value, context: &mut Context<'_>) -> Result<Value, EngineError> {
+        context.with_aggregate_text_limit(KEY_TUPLE_TEXT_SCOPE, |context| self.prepared.encode_hex(identity, values, &self.runtime.engine, &self.runtime.registry, &mut NoExtensionCapabilities, context))
+    }
     pub fn encode(
         &self,
         identity: &Value,

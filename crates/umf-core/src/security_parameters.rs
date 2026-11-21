@@ -21,7 +21,7 @@ fn member<'a>(v: &'a Value, name: &str) -> Option<&'a Value> {
     match v {
         Value::Object(fields) => fields
             .iter()
-            .find(|(k, _)| k == &Utf16::from(name))
+            .find(|(k, _)| k.equals_str(name))
             .map(|(_, v)| v),
         _ => None,
     }
@@ -55,8 +55,8 @@ fn parse_resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineEr
         ctx,
     )
 }
-pub(crate) fn core_engine() -> Result<Engine, EngineError> {
-    core_engine_ref().cloned()
+pub(crate) fn core_engine() -> Result<&'static Engine, EngineError> {
+    core_engine_ref()
 }
 
 pub(crate) fn core_engine_ref() -> Result<&'static Engine, EngineError> {

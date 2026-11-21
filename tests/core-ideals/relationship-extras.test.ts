@@ -46,9 +46,9 @@ test('CONTRACT-041 extras stale authors, receipts, targets and accessors refuse'
  for(const system of ['graphql','rdf','linkml'] as const){
   const c=structuredClone(cases.find(c=>c.request.system===system&&c.expected==='projected')!);
   const r=projectRelationshipToExtra(c.source,c.author,c.request);
-  const forged=structuredClone(r);forged.residuals.pop();expect(()=>verifyRelationshipExtra(forged)).toThrow('Forged or stale');
-  const target=structuredClone(r.target!);target.extensions={future:{forged:true}};expect(()=>recoverRelationshipExtraIdeal(r,target)).toThrow('Forged or stale');
-  const stale=structuredClone(c.source);stale.modules[0]!.elements.find(e=>e.kind==='record')!.name='changed';expect(()=>projectRelationshipToExtra(stale,c.author,c.request)).toThrow('Stale endpoint');
+  const forged=structuredClone(r);forged.residuals.pop();expect(()=>verifyRelationshipExtra(forged)).toThrow('Receipt differs from retained source, author and freshly imported target');
+  const target=structuredClone(r.target!);target.extensions={future:{forged:true}};expect(()=>recoverRelationshipExtraIdeal(r,target)).toThrow('Current target changed');
+  const stale=structuredClone(c.source);stale.modules[0]!.elements.find(e=>e.kind==='record')!.name='changed';expect(()=>projectRelationshipToExtra(stale,c.author,c.request)).toThrow('Authored endpoint Record or Key changed');
   let reads=0;const policy={...c.request};Object.defineProperty(policy,'records',{enumerable:true,get(){reads++;return c.request.records;}});expect(()=>projectRelationshipToExtra(c.source,c.author,policy)).toThrow('accessors');expect(reads).toBe(0);
  }
 });
@@ -73,7 +73,7 @@ test('CONTRACT-041 extras complete result schema rejects incomplete policy, sour
 
 test('CONTRACT-041 extras native identifiers reject scalar collisions and RDF injection while retaining Unicode IRIs',()=>{
  for(const name of ['String','Boolean','Int','Float','ID']){
-  const c=structuredClone(cases.find(c=>c.request.system==='graphql'&&c.expected==='projected')!);c.request.records[0]!.name=name;expect(()=>projectRelationshipToExtra(c.source,c.author,c.request)).toThrow('built-in scalar');
+  const c=structuredClone(cases.find(c=>c.request.system==='graphql'&&c.expected==='projected')!);c.request.records[0]!.name=name;expect(()=>projectRelationshipToExtra(c.source,c.author,c.request)).toThrow('Invalid or colliding GraphQL name');
  }
  for(const suffix of ['> <https://evil.test/p> <https://evil.test/o> .','\\x','\n','\r','\u2028','\u2029','\ud800','\u0000','\u007f']){
   const c=structuredClone(cases.find(c=>c.request.system==='rdf'&&c.expected==='projected')!);c.request.records[0]!.name+=suffix;expect(()=>projectRelationshipToExtra(c.source,c.author,c.request)).toThrow('native Record name');

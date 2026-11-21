@@ -94,6 +94,7 @@ fn version_lookup_uses_exact_resources_and_keeps_vocabulary_order() {
                 "timestamp",
                 "bits128",
                 "uuid",
+                "json",
             ]
             .into_iter()
             .map(Value::string_utf8)

@@ -136,17 +136,18 @@ fn decode_hex(source: &Utf16) -> Result<Vec<u8>, EngineError> {
 }
 
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary_construction())
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control))
+}
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
-        execute(&request, &mut ctx).and_then(|out| encode(&out, &mut ctx))
+        let request = decode(wire, ctx)?;
+        execute(&request, ctx).and_then(|out| encode(&out, ctx))
     })();
     result_envelope(result)
 }

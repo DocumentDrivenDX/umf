@@ -55,6 +55,8 @@ test('@covers US-047-AC9: invalid index kind combinations and paths fail',()=>{
   expect(inspectBinding(bad,logical).diagnostics.some(d=>d.code==='BINDING_INDEX')).toBe(true);
   p.indexes[1].on[0].documentPath.path=['details'];
   p.indexes[2].predicate=undefined;
+  expect(()=>inspectBinding(bad,logical)).toThrow('undefined');
+  delete p.indexes[2].predicate;
   expect(inspectBinding(bad,logical).valid).toBe(false);
 });
 

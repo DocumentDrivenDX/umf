@@ -268,22 +268,23 @@ fn validate_operation_input(
     Ok(())
 }
 pub fn execute_wire(wire: &str) -> String {
-    let mut control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut control)
+    execute_context(wire, Context::ordinary_construction())
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire, Context::ordinary().with_host_control(control))
+}
+fn execute_context(wire: &str, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let req = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let op = text(field(&req, "op"), "op")?;
         let op_str = op
             .to_utf8()
             .map_err(|_| request("op must be well-formed UTF-16"))?;
         validate_operation_input(&req, &op_str, &mut ctx)?;
-        let resources = IcebergTableResources::new(&mut ctx)?;
+        let resources = IcebergTableResources::prepared(&mut ctx)?;
         let output = match op_str.as_str() {
             "iceberg.table.import" => {
                 let id = text(field(&req, "id"), "id")?;

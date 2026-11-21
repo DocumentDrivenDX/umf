@@ -46,7 +46,7 @@ fn parse(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         ctx,
     )
 }
-fn policy_schema() -> Result<CompiledSchema, EngineError> {
+fn policy_schema() -> Result<&'static CompiledSchema, EngineError> {
     static SCHEMA: OnceLock<Result<CompiledSchema, EngineError>> = OnceLock::new();
     SCHEMA
         .get_or_init(|| {
@@ -60,9 +60,9 @@ fn policy_schema() -> Result<CompiledSchema, EngineError> {
             })?;
             CompiledSchema::compile_consumer(schema, &SchemaResources::default(), false, &mut ctx)
         })
-        .clone()
+        .as_ref().map_err(Clone::clone)
 }
-fn ontology_schema() -> Result<CompiledSchema, EngineError> {
+fn ontology_schema() -> Result<&'static CompiledSchema, EngineError> {
     static SCHEMA: OnceLock<Result<CompiledSchema, EngineError>> = OnceLock::new();
     SCHEMA
         .get_or_init(|| {
@@ -73,7 +73,7 @@ fn ontology_schema() -> Result<CompiledSchema, EngineError> {
             )?;
             CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), false, &mut ctx)
         })
-        .clone()
+        .as_ref().map_err(Clone::clone)
 }
 fn diag(code: &str, path: &str, message: &str, severity: &str) -> Value {
     object(vec![
@@ -1514,7 +1514,7 @@ pub fn inspect_security_policy(
             ));
         }
     };
-    let mut ds = schema_diagnostics(&policy_schema()?, &source, "", "SECURITY_STRUCTURE", ctx)?;
+    let mut ds = schema_diagnostics(policy_schema()?, &source, "", "SECURITY_STRUCTURE", ctx)?;
     if !ds.is_empty() {
         return Ok(result(source, None, ds));
     }

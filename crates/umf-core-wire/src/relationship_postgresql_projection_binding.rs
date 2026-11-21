@@ -30,17 +30,21 @@ fn closed(
     }
     Ok(())
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let req = decode(wire, &mut ctx)?;
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let req = decode(wire, ctx)?;
         if text_field(&req, "profile").as_deref() != Some(PROFILE) {
             return Err(request(
                 "PostgreSQL relationship projection profile is required",
@@ -85,15 +89,16 @@ pub fn execute_wire_with_control(
                 ))
             }
         };
-        closed(&req, allowed, &mut ctx)?;
+        closed(&req, allowed, ctx)?;
         let out=match op{
- "prepareProjectRelationshipsToPostgresql"=>umf_core::relationship_postgresql_projection::prepare_project_relationships_to_postgresql(field(&req,"source").ok_or_else(||request("source required"))?,field(&req,"binding").ok_or_else(||request("binding required"))?,field(&req,"authors").ok_or_else(||request("authors required"))?,field(&req,"request").ok_or_else(||request("request required"))?,&mut ctx)?,
- "completeProjectRelationshipsToPostgresql"=>umf_core::relationship_postgresql_projection::complete_project_relationships_to_postgresql(field(&req,"source").ok_or_else(||request("source required"))?,field(&req,"binding").ok_or_else(||request("binding required"))?,field(&req,"authors").ok_or_else(||request("authors required"))?,field(&req,"request").ok_or_else(||request("request required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,field(&req,"nativeSource").ok_or_else(||request("nativeSource required"))?,field(&req,"targetArchive").ok_or_else(||request("targetArchive required"))?,&mut ctx)?,
- "blockProjectRelationshipsToPostgresql"=>umf_core::relationship_postgresql_projection::block_project_relationships_to_postgresql(field(&req,"source").ok_or_else(||request("source required"))?,field(&req,"binding").ok_or_else(||request("binding required"))?,field(&req,"authors").ok_or_else(||request("authors required"))?,field(&req,"request").ok_or_else(||request("request required"))?,field(&req,"path").ok_or_else(||request("path required"))?,field(&req,"message").ok_or_else(||request("message required"))?,&mut ctx)?,
- "verifyRelationshipsPostgresqlProjection"=>umf_core::relationship_postgresql_projection::verify_relationships_postgresql_projection(field(&req,"receipt").ok_or_else(||request("receipt required"))?,field(&req,"current").ok_or_else(||request("current required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,&mut ctx)?,
- "recoverRelationshipsPostgresqlIdeal"=>umf_core::relationship_postgresql_projection::recover_relationships_postgresql_ideal(field(&req,"receipt").ok_or_else(||request("receipt required"))?,field(&req,"current").ok_or_else(||request("current required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,&mut ctx)?,
- _=>umf_core::relationship_postgresql_projection::recover_relationships_postgresql_native(field(&req,"receipt").ok_or_else(||request("receipt required"))?,field(&req,"current").ok_or_else(||request("current required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,&mut ctx)?};
-        encode(&out, &mut ctx)
-    })();
+ "prepareProjectRelationshipsToPostgresql"=>umf_core::relationship_postgresql_projection::prepare_project_relationships_to_postgresql(field(&req,"source").ok_or_else(||request("source required"))?,field(&req,"binding").ok_or_else(||request("binding required"))?,field(&req,"authors").ok_or_else(||request("authors required"))?,field(&req,"request").ok_or_else(||request("request required"))?,ctx)?,
+ "completeProjectRelationshipsToPostgresql"=>umf_core::relationship_postgresql_projection::complete_project_relationships_to_postgresql(field(&req,"source").ok_or_else(||request("source required"))?,field(&req,"binding").ok_or_else(||request("binding required"))?,field(&req,"authors").ok_or_else(||request("authors required"))?,field(&req,"request").ok_or_else(||request("request required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,field(&req,"nativeSource").ok_or_else(||request("nativeSource required"))?,field(&req,"targetArchive").ok_or_else(||request("targetArchive required"))?,ctx)?,
+ "blockProjectRelationshipsToPostgresql"=>umf_core::relationship_postgresql_projection::block_project_relationships_to_postgresql(field(&req,"source").ok_or_else(||request("source required"))?,field(&req,"binding").ok_or_else(||request("binding required"))?,field(&req,"authors").ok_or_else(||request("authors required"))?,field(&req,"request").ok_or_else(||request("request required"))?,field(&req,"path").ok_or_else(||request("path required"))?,field(&req,"message").ok_or_else(||request("message required"))?,ctx)?,
+ "verifyRelationshipsPostgresqlProjection"=>umf_core::relationship_postgresql_projection::verify_relationships_postgresql_projection(field(&req,"receipt").ok_or_else(||request("receipt required"))?,field(&req,"current").ok_or_else(||request("current required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,ctx)?,
+ "recoverRelationshipsPostgresqlIdeal"=>umf_core::relationship_postgresql_projection::recover_relationships_postgresql_ideal(field(&req,"receipt").ok_or_else(||request("receipt required"))?,field(&req,"current").ok_or_else(||request("current required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,ctx)?,
+ _=>umf_core::relationship_postgresql_projection::recover_relationships_postgresql_native(field(&req,"receipt").ok_or_else(||request("receipt required"))?,field(&req,"current").ok_or_else(||request("current required"))?,field(&req,"candidateSource").ok_or_else(||request("candidateSource required"))?,field(&req,"candidateArchive").ok_or_else(||request("candidateArchive required"))?,ctx)?};
+        encode(&out, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

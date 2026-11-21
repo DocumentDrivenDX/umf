@@ -41,7 +41,7 @@ extensions:
         externalResourceIds: ["urn:umf:core:0.10.0"]
         definitions:
           - name: "cardinality"
-            shape: {"tag":"choice","options":[{"tag":"constant","value":"one"},{"tag":"constant","value":"array"},{"tag":"constant","value":"map"},{"tag":"constant","value":"unspecified"}]}
+            shape: {"tag":"choice","options":[{"tag":"constant","value":"one"},{"tag":"constant","value":"array"},{"tag":"constant","value":"map"},{"tag":"constant","value":"set"},{"tag":"constant","value":"unspecified"}]}
           - name: "identity"
             shape: {"tag":"object","fields":{"module":{"tag":"text","min":1},"element":{"tag":"text","min":1}},"open":false,"mandatory":["module","element"]}
           - name: "source"
@@ -51,7 +51,7 @@ extensions:
           - name: "itemType"
             shape: {"tag":"object","fields":{"module":{"tag":"text","min":1},"element":{"tag":"text","min":1}},"mandatory":["module","element"]}
           - name: "request"
-            shape: {"tag":"object","fields":{"cardinality":{"tag":"link","target":"cardinality"},"itemType":{"tag":"exclusive-choice","options":[{"tag":"link","target":"itemType"},{"tag":"null"}]}},"open":false,"mandatory":["cardinality"],"conditions":[{"tag":"conditional","condition":{"tag":"object-fragment","required":["itemType"],"properties":{"itemType":{"tag":"object"}}},"yes":{"tag":"object-fragment","properties":{"cardinality":{"tag":"choice","options":[{"tag":"constant","value":"array"},{"tag":"constant","value":"map"}]}}}}]}
+            shape: {"tag":"object","fields":{"cardinality":{"tag":"link","target":"cardinality"},"itemType":{"tag":"exclusive-choice","options":[{"tag":"link","target":"itemType"},{"tag":"null"}]}},"open":false,"mandatory":["cardinality"],"conditions":[{"tag":"conditional","condition":{"tag":"object-fragment","required":["itemType"],"properties":{"itemType":{"tag":"object"}}},"yes":{"tag":"object-fragment","properties":{"cardinality":{"tag":"choice","options":[{"tag":"constant","value":"array"},{"tag":"constant","value":"map"},{"tag":"constant","value":"set"}]}}}}]}
         root: {"tag":"exclusive-choice","options":[{"tag":"link","target":"declaration"}]}
       - path: "spec/core/kind-operation-v6.schema.json"
         id: "urn:umf:core:kind-operation:6.0.0"
@@ -935,6 +935,82 @@ extensions:
                             - var: ep
                             - /itemType
                         message: Item/value definition must be an explicit Field
+                        severity: error
+                    - op: emit
+                      when:
+                        op: and
+                        args:
+                          - op: eq
+                            args:
+                              - op: get
+                                args:
+                                  - var: e
+                                  - - cardinality
+                              - set
+                          - op: eq
+                            args:
+                              - op: get
+                                args:
+                                  - var: item
+                                  - - node
+                                    - kind
+                              - field
+                          - op: or
+                            args:
+                              - op: ne
+                                args:
+                                  - op: get
+                                    args:
+                                      - var: item
+                                      - - node
+                                        - cardinality
+                                  - one
+                              - op: ne
+                                args:
+                                  - op: get
+                                    args:
+                                      - var: item
+                                      - - node
+                                        - nullability
+                                  - required
+                              - op: not
+                                args:
+                                  - op: in
+                                    args:
+                                      - op: get
+                                        args:
+                                          - var: item
+                                          - - node
+                                            - scalarType
+                                      - op: get
+                                        args:
+                                          - var: policy
+                                          - - keys
+                                            - equalityFamilies
+                              - op: some
+                                args:
+                                  - op: get
+                                    args:
+                                      - var: item
+                                      - - node
+                                        - references
+                                as: itemReference
+                                value:
+                                  op: eq
+                                  args:
+                                    - op: get
+                                      args:
+                                        - var: itemReference
+                                        - - role
+                                    - record-type
+                      diagnostic:
+                        code: SET_ITEM_EQUALITY
+                        path:
+                          op: concat
+                          args:
+                            - var: ep
+                            - /itemType
+                        message: Set items require a required singleton Field with exact core equality
                         severity: error
               else: []
         - op: let
@@ -2522,6 +2598,7 @@ extensions:
                                   - - cardinality
                               - - array
                                 - map
+                                - set
                   diagnostic:
                     code: CORE_SCHEMA_PROPERTIES
                     path:
@@ -2529,7 +2606,7 @@ extensions:
                       args:
                         - var: ep
                         - /facets/collectionSize
-                    message: Collection bounds require array/map Field
+                    message: Collection bounds require array/map/set Field
                     severity: error
               else: []
             - op: if
@@ -3159,6 +3236,9 @@ extensions:
           map:
             carrier: map
             mechanic: mapping
+          set:
+            carrier: array
+            mechanic: set
         singular:
           - one
           - unspecified
@@ -3200,6 +3280,11 @@ extensions:
             mechanic: uuid
             equality: true
             refinements: true
+          json:
+            carrier: json
+            mechanic: json
+            equality: false
+            refinements: false
           float:
             carrier: floatToken
             mechanic: text
@@ -3324,6 +3409,14 @@ extensions:
           collection-size:
             code: CORE_SCHEMA_PROPERTIES
             message: Collection size outside bounds
+            severity: error
+          set-duplicate:
+            code: CORE_SCHEMA_PROPERTIES
+            message: Set items must be distinct
+            severity: error
+          json:
+            code: CORE_SCHEMA_PROPERTIES
+            message: Expected an exact JSON value
             severity: error
           cardinality:
             code: CORE_SCHEMA_PROPERTIES
@@ -3610,14 +3703,14 @@ modules:
       - id: knownScalarType
         name: knownScalarType
         kind: field
-        description: Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1. Native
-          refinements remain attached.
+        description: Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1; json is
+          one arbitrary JSON value (CONTRACT-084). Native refinements remain attached.
         extensions:
           umf.metamodel:
             definition: knownScalarType
             shape:
-              description: Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1. Native
-                refinements remain attached.
+              description: Value families; bits128 and uuid have intrinsic16-byte domains under umf-128/1; json is
+                one arbitrary JSON value (CONTRACT-084). Native refinements remain attached.
               tag: choice
               options:
                 - tag: constant
@@ -3642,6 +3735,8 @@ modules:
                   value: bits128
                 - tag: constant
                   value: uuid
+                - tag: constant
+                  value: json
       - id: scalarType
         name: scalarType
         kind: field
@@ -3817,8 +3912,8 @@ modules:
             presence: optional
             shape:
               description: One ideal value, finite ordered sequence with duplicates allowed, finite exact
-                string-key mapping with unique keys, or no assertion. Unknown labels remain
-                uninterpreted.
+                string-key mapping with unique keys, finite unordered collection of distinct items, or no
+                assertion. Unknown labels remain uninterpreted.
               tag: text
               min: 1
       - id: element.itemType
@@ -4029,6 +4124,8 @@ modules:
                             value: array
                           - tag: constant
                             value: map
+                          - tag: constant
+                            value: set
                   yes:
                     tag: not
                     value:
@@ -4059,6 +4156,8 @@ modules:
                             value: array
                           - tag: constant
                             value: map
+                          - tag: constant
+                            value: set
                 - tag: conditional
                   condition:
                     tag: object
@@ -4470,6 +4569,8 @@ modules:
                   value: array
                 - tag: constant
                   value: map
+                - tag: constant
+                  value: set
                 - tag: constant
                   value: unspecified
       - id: itemType.module
@@ -5163,6 +5264,13 @@ modules:
                       pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\s\S])
                   mandatory:
                     - uuid
+                  open: false
+                - tag: object
+                  fields:
+                    json:
+                      tag: any
+                  mandatory:
+                    - json
                   open: false
       - id: semanticType.vocabulary
         name: vocabulary

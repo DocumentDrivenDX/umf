@@ -173,6 +173,12 @@ fn validate_schema(
     ctx: &mut Context<'_>,
     code: &str,
 ) -> Result<(), EngineError> {
+    static REQUEST: OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = OnceLock::new();
+    static RESULT: OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = OnceLock::new();
+    // Both roots are private, fixed embedded schemas; caller schemas never
+    // select or populate these cells. Validation of caller values stays per-call.
+    let cell = if code.ends_with("_REQUEST") { &REQUEST } else { &RESULT };
+    let compiled = crate::resource_cache::prepare(cell, ctx, |ctx| {
     let mut resources = rt.engine.schema_resources_with_context(ctx)?;
     resources
         .entries
@@ -180,7 +186,8 @@ fn validate_schema(
     resources
         .entries
         .push((k("urn:umf:native-json:0.1.0"), parse(NATIVE_JSON, ctx)?));
-    let compiled = crate::schema::CompiledSchema::compile(schema, &resources, ctx)?;
+    crate::schema::CompiledSchema::compile(schema, &resources, ctx)
+    })?;
     if compiled.validate_codegen_errors(v, ctx)?.is_empty() {
         Ok(())
     } else {
@@ -743,6 +750,9 @@ fn project_inner(
                 "not-expressible",
                 ctx,
             )?);
+            // Retain the explicitly requested column identity in a blocked
+            // plan; this does not publish SQL or claim a usable carrier.
+            physical.push((field.clone(), vec![name.clone()], 0));
             continue;
         }
         let facets = get(&element, "facets");
@@ -1054,7 +1064,7 @@ fn project_inner(
                 }
             }
         }
-        let unknown_equality = validation.diagnostics.iter().any(|diagnostic| {
+        let unknown_equality = impossible || validation.diagnostics.iter().any(|diagnostic| {
             let code = diagnostic.code.to_utf8().ok();
             let path = diagnostic.path.to_utf8().ok();
             matches!(

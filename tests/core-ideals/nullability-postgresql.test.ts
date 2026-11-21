@@ -6,13 +6,14 @@ import type {PostgresqlNullabilityRequest} from '../../src/index-node-v4';
 const fixture=await Bun.file('fixtures/validation/nullability-postgresql-native.json').json(),text:string=fixture.nativeSource;
 const base={scope:'stored-relation',carrier:'sql-null',mode:'strict'} as const;
 test('native catalog availability matrix retains source and scope through both serializations',()=>{
+ const registry=new Registry().register(postgresqlNullabilityPackage);
  for(const c of postgresqlNullabilityCases(text)){
   const before=structuredClone(c.source),r=classifyPostgresqlNullability(c.source,c.request);
   expect(r.status).toBe(c.status);expect(r.mapping.nullability).toBe(c.expected);expect(c.source).toEqual(before);
   if(r.status==='blocked'){expect(r.target).toBeUndefined();expect(r.residuals.length).toBeGreaterThan(0);continue;}
   const member=r.target!.modules.find(m=>m.id==='postgresql.columns')!.elements.find(e=>e.id===c.request.column)!;
   expect(member.nullability).toBe(c.expected);expect(member.extensions[POSTGRESQL_NULLABILITY_EXTENSION]).toMatchObject({scope:c.request.scope,carrier:c.request.carrier});
-  expect(validateDocument(r.target!,new Registry().register(postgresqlNullabilityPackage)).valid).toBe(true);
+  expect(validateDocument(r.target!,registry).valid).toBe(true);
   for(const format of ['json','yaml'] as const){const back=readJsonValue(writeJsonValue(copyJson(r),format),format) as unknown as typeof r;expect(recoverPostgresqlNullabilitySource(back,back.target!)).toBe(text);}
  }
 },120000);

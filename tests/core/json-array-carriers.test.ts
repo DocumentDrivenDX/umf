@@ -36,3 +36,15 @@ test('JSON conformance ignores builtin prototype choice but detects every repres
     expect(()=>assert.deepEqual(copyJson(altered),copyJson(ordinary))).toThrow();
   }
 });
+
+test('copying arrays defines own data properties without invoking inherited setters',()=>{
+  const source=[{items:[1]}];let calls=0;let result:unknown;let failure:unknown;
+  const previous=Object.getOwnPropertyDescriptor(Array.prototype,'0');
+  try {
+    Object.defineProperty(Array.prototype,'0',{configurable:true,set(value){calls++;Object.defineProperty(this,'0',{value,enumerable:true,writable:true,configurable:true});}});
+    result=copyJson(source);
+  } catch(error){failure=error;}
+  finally {if(previous)Object.defineProperty(Array.prototype,'0',previous);else delete (Array.prototype as any)[0];}
+  expect(failure).toBeUndefined();expect(calls).toBe(0);
+  expect(JSON.stringify(result)).toBe(JSON.stringify(source));expect(Object.hasOwn(result as object,'0')).toBe(true);
+});

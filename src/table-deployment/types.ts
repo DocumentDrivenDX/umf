@@ -4,6 +4,8 @@ import type {TableDeclaration,TableLifecyclePayload,TableRef} from '../extension
 export interface TableDeploymentConfiguration {
  module:string;schema:string;ownerRole:string;personRole:string;batchRole:string;
  groupRoles:Record<string,string>;
+ /** Host-asserted extensions whose payloads do not change the generated DDL (CONTRACT-081). */
+ independentExtensions?:{id:string;version:string}[];
 }
 export interface TableDeploymentStep {
  id:string;kind:'table'|'foreignKey'|'index'|'policy'|'grant'|'comment';sourcePath:string;
@@ -29,3 +31,6 @@ export interface TableDeploymentBundle {
 }
 export type TableDeploymentResult={status:'compiled';bundle:TableDeploymentBundle;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
 export interface TableDeploymentRequest {text:string;format?:'json'|'yaml';configuration:unknown}
+
+export type JsonPatchOperation={op:'add'|'replace'|'test';path:string;value:import('../model/types').Json}|{op:'remove';path:string}|{op:'move'|'copy';from:string;path:string};
+export type JsonPatchResult={present:true;value:import('../model/types').Json}|{present:false};

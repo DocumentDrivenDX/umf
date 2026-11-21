@@ -60,11 +60,10 @@ impl ProtobufSourceSession {
                     .prepare_import_host(request_handle as u64, &mut host, &mut hook),
             )
         } else {
-            let mut no_control = |_amount| Ok(());
             response(self.inner.prepare_import_host(
                 request_handle as u64,
                 &mut host,
-                &mut no_control,
+                umf_core_wire::protobuf_source::PhaseControl::Uncontrolled,
             ))
         }
     }
@@ -85,12 +84,11 @@ impl ProtobufSourceSession {
                     .finish_import_with_id(compiler, &descriptor_set, id, &mut hook),
             )
         } else {
-            let mut no_control = |_amount| Ok(());
             response(self.inner.finish_import_with_id(
                 compiler,
                 &descriptor_set,
                 id,
-                &mut no_control,
+                umf_core_wire::protobuf_source::PhaseControl::Uncontrolled,
             ))
         }
     }
@@ -110,10 +108,9 @@ impl ProtobufSourceSession {
                     .begin_import_descriptor(&descriptor_set, id, &mut hook),
             )
         } else {
-            let mut no_control = |_amount| Ok(());
             response(
                 self.inner
-                    .begin_import_descriptor(&descriptor_set, id, &mut no_control),
+                    .begin_import_descriptor(&descriptor_set, id, umf_core_wire::protobuf_source::PhaseControl::Uncontrolled),
             )
         }
     }
@@ -130,10 +127,9 @@ impl ProtobufSourceSession {
             let mut hook = |amount| control.check(amount);
             response(self.inner.finish_import_archive_value(compiler, &mut hook))
         } else {
-            let mut no_control = |_amount| Ok(());
             response(
                 self.inner
-                    .finish_import_archive_value(compiler, &mut no_control),
+                    .finish_import_archive_value(compiler, umf_core_wire::protobuf_source::PhaseControl::Uncontrolled),
             )
         }
     }
@@ -150,8 +146,7 @@ impl ProtobufSourceSession {
             let mut hook = |amount| control.check(amount);
             response(self.inner.prepare_import(request_wire, id, &mut hook))
         } else {
-            let mut no_control = |_amount| Ok(());
-            response(self.inner.prepare_import(request_wire, id, &mut no_control))
+            response(self.inner.prepare_import(request_wire, id, umf_core_wire::protobuf_source::PhaseControl::Uncontrolled))
         }
     }
 
@@ -170,10 +165,9 @@ impl ProtobufSourceSession {
                     .finish_import(compiler, &descriptor_set, &mut hook),
             )
         } else {
-            let mut no_control = |_amount| Ok(());
             response(
                 self.inner
-                    .finish_import(compiler, &descriptor_set, &mut no_control),
+                    .finish_import(compiler, &descriptor_set, umf_core_wire::protobuf_source::PhaseControl::Uncontrolled),
             )
         }
     }
@@ -189,8 +183,7 @@ impl ProtobufSourceSession {
             let mut hook = |amount| control.check(amount);
             response(self.inner.prepare_export(document_wire, &mut hook))
         } else {
-            let mut no_control = |_amount| Ok(());
-            response(self.inner.prepare_export(document_wire, &mut no_control))
+            response(self.inner.prepare_export(document_wire, umf_core_wire::protobuf_source::PhaseControl::Uncontrolled))
         }
     }
 
@@ -210,11 +203,10 @@ impl ProtobufSourceSession {
                     .prepare_export_host(document_handle as u64, &mut host, &mut hook),
             )
         } else {
-            let mut no_control = |_amount| Ok(());
             response(self.inner.prepare_export_host(
                 document_handle as u64,
                 &mut host,
-                &mut no_control,
+                umf_core_wire::protobuf_source::PhaseControl::Uncontrolled,
             ))
         }
     }
@@ -230,10 +222,9 @@ impl ProtobufSourceSession {
             let mut hook = |amount| control.check(amount);
             response(self.inner.admit_emitter_result(result_wire, &mut hook))
         } else {
-            let mut no_control = |_amount| Ok(());
             response(
                 self.inner
-                    .admit_emitter_result(result_wire, &mut no_control),
+                    .admit_emitter_result(result_wire, umf_core_wire::protobuf_source::PhaseControl::Uncontrolled),
             )
         }
     }
@@ -255,11 +246,10 @@ impl ProtobufSourceSession {
                 &mut hook,
             ))
         } else {
-            let mut no_control = |_amount| Ok(());
             response(self.inner.admit_emitter_result_host(
                 result_handle as u64,
                 &mut host,
-                &mut no_control,
+                umf_core_wire::protobuf_source::PhaseControl::Uncontrolled,
             ))
         }
     }
@@ -275,8 +265,7 @@ impl ProtobufSourceSession {
             let mut hook = |amount| control.check(amount);
             response(self.inner.finish_export(document_wire, &mut hook))
         } else {
-            let mut no_control = |_amount| Ok(());
-            response(self.inner.finish_export(document_wire, &mut no_control))
+            response(self.inner.finish_export(document_wire, umf_core_wire::protobuf_source::PhaseControl::Uncontrolled))
         }
     }
 
@@ -296,11 +285,10 @@ impl ProtobufSourceSession {
                     .finish_export_host(document_handle as u64, &mut host, &mut hook),
             )
         } else {
-            let mut no_control = |_amount| Ok(());
             response(self.inner.finish_export_host(
                 document_handle as u64,
                 &mut host,
-                &mut no_control,
+                umf_core_wire::protobuf_source::PhaseControl::Uncontrolled,
             ))
         }
     }

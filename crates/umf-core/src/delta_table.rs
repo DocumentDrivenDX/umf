@@ -28,6 +28,11 @@ pub struct DeltaTableResources {
 }
 
 impl DeltaTableResources {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static RESOURCES: std::sync::OnceLock<crate::resource_cache::Fixed<DeltaTableResources>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&RESOURCES, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         fn read(text: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
             serialization::read_json_value(

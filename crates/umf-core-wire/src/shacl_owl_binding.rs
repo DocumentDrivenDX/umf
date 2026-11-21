@@ -205,7 +205,7 @@ fn execute(
     preflight(operation, request_value)?;
     // No RDF runtime/schema resource is touched until the complete closed
     // request and all required operation arguments have passed admission.
-    let runtime = RdfRuntime::new(ctx)?;
+    let runtime = RdfRuntime::prepared(ctx)?;
     let result = match operation {
         "shacl.import" | "owl.import" => {
             let source = text(request_value, "source")?;
@@ -336,8 +336,7 @@ fn execute(
     Ok(result)
 }
 pub fn execute_wire(wire: &str, family: Option<&str>) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, family, &mut no_control)
+    execute_context(wire, family, Context::ordinary_construction())
 }
 pub fn execute_shacl_wire_with_control(
     wire: &str,
@@ -356,8 +355,10 @@ pub fn execute_wire_with_control(
     family: Option<&str>,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire, family, Context::ordinary().with_host_control(control))
+}
+fn execute_context(wire: &str, family: Option<&str>, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let req = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let value = execute(&req, &mut ctx, family)?;
         encode(&value, &mut ctx)

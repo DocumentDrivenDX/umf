@@ -29,9 +29,9 @@ fn run<T>(
     if let Some(dispatcher) = dispatcher {
         let mut control = super::NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        f(&mut Context::ordinary().with_host_control(&mut hook))
+        f(&mut Context::ordinary_construction().with_host_control(&mut hook))
     } else {
-        f(&mut Context::ordinary())
+        f(&mut Context::ordinary_construction())
     }
 }
 
@@ -44,13 +44,13 @@ fn run_with_usage<T>(
     let result = if let Some(dispatcher) = dispatcher {
         let mut control = super::NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        let mut context = Context::ordinary().with_host_control(&mut hook);
+        let mut context = Context::ordinary_construction().with_host_control(&mut hook);
         usage.seed(&mut context);
         let result = f(&mut context);
         usage.capture(&context);
         result
     } else {
-        let mut context = Context::ordinary();
+        let mut context = Context::ordinary_construction();
         usage.seed(&mut context);
         let result = f(&mut context);
         usage.capture(&context);
@@ -94,6 +94,23 @@ impl PreparedCoreKeyTupleHandle {
             let identity = decode(&identity_wire, context)?;
             let values = decode(&values_wire, context)?;
             let result = self.inner.encode(&identity, &values, context);
+            Ok(result_wire(result, context))
+        })
+        .map_err(|error| Error::from_reason(umf_core_wire::error_envelope(error)))
+    }
+
+    #[napi]
+    pub fn encode_hex(
+        &self,
+        env: Env,
+        identity_wire: String,
+        values_wire: String,
+        dispatcher: Option<JsFunction>,
+    ) -> Result<String> {
+        run(env, dispatcher, |context| {
+            let identity = decode(&identity_wire, context)?;
+            let values = decode(&values_wire, context)?;
+            let result = self.inner.encode_hex(&identity, &values, context);
             Ok(result_wire(result, context))
         })
         .map_err(|error| Error::from_reason(umf_core_wire::error_envelope(error)))
@@ -384,7 +401,7 @@ mod tests {
                 "admission stopped",
             ))
         };
-        let mut context = Context::ordinary().with_host_control(&mut hook);
+        let mut context = Context::ordinary_construction().with_host_control(&mut hook);
         let result = decode(&wire, &mut context);
         assert_eq!(result.unwrap_err().code, "RESOURCE_LIMIT");
         assert!(calls > 0);
@@ -401,7 +418,7 @@ mod tests {
                 "output stopped",
             ))
         };
-        let mut context = Context::ordinary().with_host_control(&mut hook);
+        let mut context = Context::ordinary_construction().with_host_control(&mut hook);
         let result = result_wire(Ok(Value::Array(vec![Value::Number(1.0)])), &mut context);
         assert!(result.contains("RESOURCE_LIMIT"));
         assert!(calls > 0);

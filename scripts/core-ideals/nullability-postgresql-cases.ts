@@ -16,8 +16,12 @@ export function postgresqlNullabilityCases(nativeSource:string){
  const declared:Record<string,Nullability>={plain:'absent-allowed',required:'required',identity_value:'required'};
  const relations=['plain','required','domain_required','domain_default','column_default','positive','checked_required','unvalidated','identity_value','generated_value','outer_null'];
  const cases=[];
+ const fields=importPostgresqlCatalogCapture(nativeSource,{id:'nullability-classification'});
+ const metadata=getPostgresqlColumnMetadata(fields);
  for(const relation of relations){
-  const {source,column}=postgresqlAvailabilitySource(nativeSource,relation);
+  const member=metadata.find(c=>c.relation.schema==='availability'&&c.relation.name===relation&&c.element.name==='value');
+  if(!member)throw Error('Missing column: '+relation+'.value');
+  const column=member.path,source=classifyPostgresqlField(fields,{nativeSource,column,mode:'strict'}).target!;
   for(const scope of ['stored-relation','query-result','write-input','unresolved'] as const)for(const carrier of ['sql-null','unresolved'] as const)for(const mode of ['strict','report'] as const){
    const expected=scope==='stored-relation'&&carrier==='sql-null'?declared[relation]??'unspecified':'unspecified';
    const request:PostgresqlNullabilityRequest={column,nativeSource,scope,carrier,mode};

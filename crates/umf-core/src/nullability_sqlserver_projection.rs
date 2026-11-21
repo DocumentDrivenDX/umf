@@ -38,7 +38,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     if let Value::Object(members) = value {
         members
             .iter()
-            .find(|(key, _)| key == &k(name))
+            .find(|(key, _)| key.equals_str(name))
             .map(|(_, value)| value)
     } else {
         None
@@ -128,7 +128,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
     }
     Ok(value)
 }
-fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+fn schemas(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let operation = json_resource(RESULT_SCHEMA, ctx)?;
     let resources = SchemaResources {
         entries: vec![
@@ -153,6 +155,7 @@ fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), En
     )
     .ok_or_else(|| err("NULLABILITY_SQLSERVER_RESULT", "Missing request schema", ""))?;
     Ok((result, CompiledSchema::compile(request, &resources, ctx)?))
+    })
 }
 fn validate(
     value: &Value,
@@ -358,7 +361,8 @@ fn project_inner(
 ) -> Result<Value, EngineError> {
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
-    let (result_schema, request_schema) = schemas(ctx)?;
+    let prepared_schemas = schemas(ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     let rt = runtime(ctx)?;
     let current = get(&author_input, "target").ok_or_else(|| {
         err(
@@ -723,7 +727,7 @@ fn project_inner(
 }
 fn set(value: &mut Value, name: &str, replacement: Value) -> Result<(), EngineError> {
     if let Value::Object(members) = value {
-        if let Some((_, old)) = members.iter_mut().find(|(key, _)| key == &k(name)) {
+        if let Some((_, old)) = members.iter_mut().find(|(key, _)| key.equals_str(name)) {
             *old = replacement;
         } else {
             members.push((k(name), replacement));
@@ -746,7 +750,8 @@ pub fn recover_nullability_from_sqlserver(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let receipt = copy_json(receipt, ctx)?;
-    let (result_schema, _) = schemas(ctx)?;
+    let prepared_schemas = schemas(ctx)?;
+    let (result_schema, _) = &*prepared_schemas;
     validate(
         &receipt,
         &result_schema,

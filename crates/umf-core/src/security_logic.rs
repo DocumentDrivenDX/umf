@@ -96,7 +96,7 @@ fn protection_diagnostic_utf16(code: &str, path: Utf16, message: Utf16, severity
     ])
 }
 
-fn source_schema(package: &'static str) -> Result<CompiledSchema, EngineError> {
+fn source_schema(package: &'static str) -> Result<&'static CompiledSchema, EngineError> {
     static POLICY: OnceLock<Result<CompiledSchema, EngineError>> = OnceLock::new();
     static CATALOG: OnceLock<Result<CompiledSchema, EngineError>> = OnceLock::new();
     let slot = if package == "policy" {
@@ -129,7 +129,7 @@ fn source_schema(package: &'static str) -> Result<CompiledSchema, EngineError> {
             &mut Context::ordinary(),
         )
     })
-    .clone()
+    .as_ref().map_err(Clone::clone)
 }
 
 fn source_text_bound(value: &Value, context: &mut Context<'_>) -> Result<bool, EngineError> {
@@ -484,7 +484,7 @@ pub fn resolve_security_protection_sources_candidate(
         ));
     } else {
         diagnostics.extend(schema_diagnostics(
-            &source_schema("policy")?,
+            source_schema("policy")?,
             &policy,
             "SECURITY_V2_STRUCTURE",
             context,
@@ -518,7 +518,7 @@ pub fn resolve_security_protection_sources_candidate(
         ));
     } else {
         let catalog_schema_diagnostics = schema_diagnostics(
-            &source_schema("catalog")?,
+            source_schema("catalog")?,
             &catalog,
             "PROTECTION_STRUCTURE",
             context,

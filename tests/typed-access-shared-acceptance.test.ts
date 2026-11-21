@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+// @test-exclusive
+import {dataset} from './typed-access-shared-dataset';
 import {expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {readDocument,validateDocument,inspectBinding,validateCoreFieldValue} from '../src/index-node-v4';
@@ -36,33 +38,29 @@ function predicate(row:Row,p:string,params:any):Truth {
  if(a==null||b==null)return 'U';const c=scalar(m[1]!,a,b);return ({'=':c===0,'<>':c!==0,'<':c<0,'<=':c<=0,'>':c>0,'>=':c>=0}[m[2]!]!)?'T':'F';
 }
 function ordering(keys:any[]){return (a:Row,b:Row)=>{for(const k of keys){const x=a[k.field],y=b[k.field];if(x==null||y==null){if(x==null&&y==null)continue;return (x==null?-1:1)*(k.nulls==='FIRST'?1:-1);}const c=scalar(k.field,x,y);if(c)return c*(k.direction==='DESC'?-1:1);}return 0;};}
-function dataset(model:any,rows:Row[]){const fields=model.modules[0].elements.filter((e:any)=>e.kind==='field');const carriers:any={string:'string',integer:'integerToken',decimal:'decimalToken',boolean:'boolean',date:'date',timestamp:'timestamp'};return {scope:{id:'typed-access-fixed',closure:'supplied-dataset-only' as const},records:rows.map(row=>({instanceId:row.id,identity:{module:'fixture',element:'Item'},values:fields.map((f:any)=>({field:{module:'fixture',element:f.id},...(!Object.hasOwn(row,f.id)?{state:'absent'}:{state:'present',value:row[f.id]===null?null:{[carriers[f.scalarType]]:row[f.id]}})}))})),relationships:[]};}
+
 
 test('source documents and physical binding pass public admission with explicit unknown access status',()=>{
  for(const name of ['propertyStore','relational']){const doc=readDocument(JSON.stringify(models[name]),'json');const result=validateDocument(doc);expect(result.valid).toBe(true);expect(result.complete).toBe(false);expect(result.diagnostics.some(d=>d.code.includes('UNKNOWN'))).toBe(true);expect(doc).toEqual(models[name]);}
  expect(inspectBinding(models.binding,models.relational).valid).toBe(true);
 });
 
-test('public dataset admission exposes temporal refusal; other field carriers are checked independently',()=>{
- for(const [name,rows] of Object.entries(corpus.datasets)){
-  const model=models[name==='truth'||name==='missing'?'propertyStore':'relational'];
-  const receipt=validateCoreDatasetValues(model,dataset(model,rows as Row[]) as any);
-  const hasTemporal=(rows as Row[]).some(r=>['day','instant','local'].some(f=>r[f]!=null));
-  expect(receipt.datasetValidation.valid).toBe(!hasTemporal);
-  const errors=receipt.datasetValidation.diagnostics.filter(d=>d.severity==='error');
-  expect(errors.every(d=>d.code==='CORE_SCHEMA_PROPERTIES'&&d.message.includes('temporal'))).toBe(true);
-  for(const r of dataset(model,rows as Row[]).records)for(const v of r.values)if(v.state==='present'){
-   const result=validateCoreFieldValue(model,v.field,(v as any).value);
-   const temporal=['day','instant','local'].includes(v.field.element)&&(v as any).value!==null;
-   expect(result.valid).toBe(!temporal);
+test('public dataset admission exposes temporal refusal; other field carriers are checked independently',async()=>{
+ const names=Object.keys(corpus.datasets);expect(names).toHaveLength(4);
+ const children=names.map(name=>Bun.spawn([process.execPath,'tests/typed-access-shared-admission-worker.ts',name],{stdout:'pipe',stderr:'pipe'}));
+ try {
+  const results=await Promise.all(children.map(async(child,index)=>{
+   const [stdout,stderr,exit]=await Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
+   if(exit!==0)throw Error('Dataset admission worker '+names[index]+' failed: '+stderr+'\n'+stdout);
+   return JSON.parse(stdout) as {name:string;records:number;fields:number;assertions:number};
+  }));
+  expect(results.map(result=>result.name)).toEqual(names);
+  for(const result of results){
+   const rows=corpus.datasets[result.name],model=models[result.name==='truth'||result.name==='missing'?'propertyStore':'relational'];
+   const expectedFields=dataset(model,rows).records.reduce((count:number,row:any)=>count+row.values.filter((value:any)=>value.state==='present').length,0);
+   expect(result.records).toBe(rows.length);expect(result.fields).toBe(expectedFields);expect(result.assertions).toBe(expectedFields+5);
   }
-  expect(receipt.datasetValidation.complete).toBe(false);
-  // A false carrier and duplicate key are rejected by actual public admission.
-  const bad=dataset(model,rows as Row[]) as any;bad.records[0].values.find((v:any)=>v.field.element==='id').value={integerToken:'1'};
-  expect(validateCoreDatasetValues(model,bad).datasetValidation.valid).toBe(false);
-  const duplicate=dataset(model,rows as Row[]) as any;duplicate.records.push({...structuredClone(duplicate.records[0]),instanceId:'duplicate-key'});
-  expect(validateCoreDatasetValues(model,duplicate).datasetValidation.diagnostics.some(d=>d.code.includes('KEY'))).toBe(true);
- }
+ } finally {for(const child of children)if(child.exitCode===null)child.kill();}
 });
 
 for(const c of corpus.cases){test(c.id+' fixed semantic witness (backend UNTESTED)',()=>{

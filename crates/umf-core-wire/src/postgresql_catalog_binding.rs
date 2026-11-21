@@ -1437,35 +1437,46 @@ fn execute_validated(
     }
 }
 pub fn execute_wire(wire: &str) -> String {
-    let mut control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
-        let output = execute(&request, &mut ctx)?;
-        encode(&output, &mut ctx)
-    })();
+        let output = execute(&request, ctx)?;
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }
 
 /// Parser-enabled wire entrypoint used by runtimes that have explicitly
 /// admitted a PostgreSQL parser backend. The backend itself is never chosen
 /// from request data and receives the same controlled operation context.
+pub fn execute_wire_with_parser_backend_default(wire: &str, backend: &dyn umf_core::parser_backend_protocol::PostgresqlParserBackend) -> String {
+    execute_backend_context(wire, backend, &mut Context::ordinary(), true)
+}
+
 pub fn execute_wire_with_parser_backend(
     wire: &str,
     backend: &dyn umf_core::parser_backend_protocol::PostgresqlParserBackend,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
+    execute_backend_context(wire, backend, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_backend_context(wire: &str, backend: &dyn umf_core::parser_backend_protocol::PostgresqlParserBackend, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| {
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
-        let output = execute_with_parser_backend(&request, backend, &mut ctx)?;
-        encode(&output, &mut ctx)
-    })();
+        let output = execute_with_parser_backend(&request, backend, ctx)?;
+        encode(&output, ctx)
+    };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

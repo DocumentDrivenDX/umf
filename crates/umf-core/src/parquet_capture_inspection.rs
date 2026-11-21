@@ -224,6 +224,7 @@ fn field_scalar_type(element: &Json) -> Option<&'static str> {
     let name = logical.or(legacy);
     match name {
         Some("STRING" | "ENUM") if physical == "6" => Some("string"),
+        Some("JSON") if physical == "6" => Some("json"),
         Some("DECIMAL") if ["1", "2", "6", "7"].contains(&physical) => Some("decimal"),
         Some("DATE") if physical == "1" => Some("date"),
         Some("TIME" | "TIME_MILLIS" | "TIME_MICROS") if ["1", "2"].contains(&physical) => {
@@ -2247,6 +2248,7 @@ pub fn get_parquet_field_metadata(
                             if validation == "checked" {
                                 scalar = match name.as_str() {
                                     "STRING" | "ENUM" => Some("string"),
+                                    "JSON" => Some("json"),
                                     "DECIMAL" => Some("decimal"),
                                     "DATE" => Some("date"),
                                     "TIME" => Some("time"),

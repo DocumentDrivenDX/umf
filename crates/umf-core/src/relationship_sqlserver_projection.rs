@@ -183,12 +183,18 @@ fn validate_schema(
     c: &mut Context<'_>,
     code: &str,
 ) -> Result<(), EngineError> {
+    // Private callers supply only pinned subschemas; input validation runs below.
+    static REQUEST: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    static RESULT: std::sync::OnceLock<crate::resource_cache::Fixed<crate::schema::CompiledSchema>> = std::sync::OnceLock::new();
+    let cache = if code.ends_with("_REQUEST") { &REQUEST } else { &RESULT };
+    let compiled = crate::resource_cache::prepare(cache, c, |c| {
     let mut resources = rt.engine.schema_resources_with_context(c)?;
     resources.entries.push((
         k("urn:umf:core:relationship-operation:1.0.0"),
         parse(REL_OP, c)?,
     ));
-    let compiled = crate::schema::CompiledSchema::compile(schema, &resources, c)?;
+crate::schema::CompiledSchema::compile(schema, &resources, c)
+    })?;
     if compiled.validate_codegen_errors(v, c)?.is_empty() {
         Ok(())
     } else {

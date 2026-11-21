@@ -11,6 +11,7 @@ const securityFunctions=createSecurityFunctionsEngine();
 const policySource=createSecurityPolicySourceEngine();
 const protectionDomains=createSecurityProtectionDomainsEngine();
 export function catalogRecipe(input:unknown):unknown{return securityFunctions.catalogRecipe(input);}
+export function prepareCandidateCompactCondition(expression:unknown){return conditionEngine.prepareCandidateCondition(expression);}
 export function evaluateCandidateCompactCondition(expression:unknown,resourceIndex:number,dispatch:(event:unknown)=>unknown):'T'|'F'|'U'{return conditionEngine.evaluateCandidateCondition(expression,resourceIndex,dispatch);}
 export function preflightCandidateCompactCondition(expression:unknown,target:unknown,dispatch:(event:unknown)=>unknown,associations:readonly unknown[]):true{return conditionEngine.preflightCandidateCondition(expression,target,dispatch,associations) as true;}
 export function compileCandidateCompactCondition(condition:unknown,associationCount:number):unknown{

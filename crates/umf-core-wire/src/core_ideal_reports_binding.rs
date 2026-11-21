@@ -8,16 +8,18 @@ fn request_error(message: &'static str) -> EngineError {
     EngineError::new("REQUEST", Utf16::default(), message)
 }
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire, ctx)?;
         if text_field(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(request_error("Core Ideal reports profile is required"));
         }
@@ -54,31 +56,31 @@ pub fn execute_wire_with_control(
                 umf_core::core_ideal_reports::inspect_field_classification(
                     field(&request, "receipt")
                         .ok_or_else(|| request_error("receipt is required"))?,
-                    &mut ctx,
+                    ctx,
                 )
             }
             "inspectFieldProjection" => umf_core::core_ideal_reports::inspect_field_projection(
                 field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
                 field(&request, "fresh"),
-                &mut ctx,
+                ctx,
             ),
             "verifyFieldProjectionInspection" => {
                 umf_core::core_ideal_reports::verify_field_projection_inspection(
                     field(&request, "report").ok_or_else(|| request_error("report is required"))?,
                     field(&request, "fresh"),
-                    &mut ctx,
+                    ctx,
                 )
             }
             "inspectRecordProjection" => umf_core::core_ideal_reports::inspect_record_projection(
                 field(&request, "receipt").ok_or_else(|| request_error("receipt is required"))?,
                 field(&request, "fresh"),
-                &mut ctx,
+                ctx,
             ),
             "verifyRecordProjectionInspection" => {
                 umf_core::core_ideal_reports::verify_record_projection_inspection(
                     field(&request, "report").ok_or_else(|| request_error("report is required"))?,
                     field(&request, "fresh"),
-                    &mut ctx,
+                    ctx,
                 )
             }
             "inspectStructuredClassification" => {
@@ -86,25 +88,26 @@ pub fn execute_wire_with_control(
                     field(&request, "receipt")
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "fresh"),
-                    &mut ctx,
+                    ctx,
                 )
             }
             "verifyStructuredClassificationInspection" => {
                 umf_core::core_ideal_reports::verify_structured_classification_inspection(
                     field(&request, "report").ok_or_else(|| request_error("report is required"))?,
                     field(&request, "fresh"),
-                    &mut ctx,
+                    ctx,
                 )
             }
             "verifyFieldClassificationInspection" => {
                 umf_core::core_ideal_reports::verify_field_classification_inspection(
                     field(&request, "report").ok_or_else(|| request_error("report is required"))?,
-                    &mut ctx,
+                    ctx,
                 )
             }
             _ => return Err(request_error("Unknown Core Ideal report operation")),
         }?;
-        encode(&output, &mut ctx)
-    })();
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

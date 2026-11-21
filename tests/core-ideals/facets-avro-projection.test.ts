@@ -46,3 +46,14 @@ test('receipt integrity, unknown metadata, invalid names and exact-input counter
  for(const fieldName of ['bad\n','9bad','a.b',''])expect(()=>project(a,{...request,fieldName})).toThrow();
  let calls=0;expect(()=>project({get operation(){calls++;return 'declare-core-facets';}} as never,request)).toThrow();expect(calls).toBe(0);
 });
+
+test('fastavro boolean coercion blocks every strict encoding and remains disclosed in report mode',()=>{
+ const a=u.declareCoreElementKind(ideal('boolean'),identity,'field');
+ for(const encoding of ['native-type','metadata-only','carrier-only'] as const){
+  const selected={...request,nativeType:'boolean' as const,profile:'fastavro-schemaless-writer' as const,encoding};
+  const strict=project(a,selected);expect(strict.status).toBe('blocked');expect(strict.target).toBeUndefined();
+  const report=project(a,{...selected,mode:'report'});expect(report.status).toBe('projected');
+  expect(report.residuals.some(r=>r.reason.includes('coerce null input to false'))).toBe(true);
+  expect(recover(report,report.nativeSchema!)).toEqual(a.target);
+ }
+});

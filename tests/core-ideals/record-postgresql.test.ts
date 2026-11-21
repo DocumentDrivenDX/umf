@@ -27,7 +27,7 @@ test('one member conflict blocks the whole record in both policies',()=>{
  for(const mode of ['strict','report'] as const){const result=classifyPostgresqlRecord(author.target,{...request,mode,authors:[author]});expect(result.status).toBe('blocked');expect(Object.hasOwn(result,'target')).toBe(false);expect(result.diagnostics.some(d=>d.code==='FIELD_KIND_CONFLICT')).toBe(true);}
 });
 test('ambiguous relations, unsupported kinds, collisions and stale receipts cannot imply record equivalence',()=>{
- const ambiguous=sample('r',true);expect(()=>classifyPostgresqlRecord(ambiguous.source,ambiguous.request)).toThrow();
+ expect(()=>sample('r',true)).toThrow('Duplicate qualified relation');
  const unsupported=sample('v');for(const mode of ['strict','report'] as const){const result=classifyPostgresqlRecord(unsupported.source,{...unsupported.request,mode});expect(result.status).toBe('blocked');expect(result.diagnostics.some(d=>d.code==='POSTGRESQL_RELATION_UNSUPPORTED')).toBe(true);}
  const {source,request}=sample();expect(classifyPostgresqlRecord(source,{...request,recordModule:'catalog'}).status).toBe('blocked');
  const result=classifyPostgresqlRecord(source,request);result.target!.modules.at(-1)!.elements[0]!.references!.reverse();expect(()=>recoverPostgresqlRecordCapture(result,result.target!)).toThrow();
@@ -36,7 +36,9 @@ test('ambiguous relations, unsupported kinds, collisions and stale receipts cann
 test('duplicate native member names and inconsistent ordinal order block whole-record publication',()=>{
  for(const change of ['name','position']){
   const original=sample(),capture=JSON.parse(original.request.nativeSource),columns=capture.snapshot.relations[0].columns;
-  columns[1][change]=columns[0][change];const nativeSource=JSON.stringify(capture),source=importPostgresqlCatalogCapture(nativeSource,{id:'bad-members'});
+  columns[1][change]=columns[0][change];const nativeSource=JSON.stringify(capture);
+  if(change==='name'){expect(()=>importPostgresqlCatalogCapture(nativeSource,{id:'bad-members'})).toThrow('Duplicate column name');continue;}
+  const source=importPostgresqlCatalogCapture(nativeSource,{id:'bad-members'});
   for(const mode of ['strict','report'] as const){const result=classifyPostgresqlRecord(source,{...original.request,nativeSource,mode});expect(result.status).toBe('blocked');expect(Object.hasOwn(result,'target')).toBe(false);expect(result.diagnostics.some(d=>d.code===(change==='name'?'POSTGRESQL_MEMBER_IDENTITY':'POSTGRESQL_MEMBER_ORDER'))).toBe(true);}
  }
 });

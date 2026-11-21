@@ -114,14 +114,14 @@
                 {
                   "id": "column:0",
                   "name": "id",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:1",
                   "name": "context",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 }
               ]
             }
@@ -222,7 +222,6 @@
             "nullable": false
           }
         ],
-        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "target",
@@ -294,7 +293,8 @@
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n"
       }
     },
     {
@@ -417,14 +417,14 @@
                 {
                   "id": "column:0",
                   "name": "id",
-                  "scalarType": "integer",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "integer"
                 },
                 {
                   "id": "column:1",
                   "name": "context",
-                  "scalarType": "string",
-                  "extensions": {}
+                  "extensions": {},
+                  "scalarType": "string"
                 }
               ]
             }
@@ -525,7 +525,6 @@
             "nullable": false
           }
         ],
-        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n",
         "target": {
           "umf": "0.10.0",
           "id": "target",
@@ -597,7 +596,8 @@
               ]
             }
           ]
-        }
+        },
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n"
       }
     }
   ]

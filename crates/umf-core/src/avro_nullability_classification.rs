@@ -889,8 +889,10 @@ pub fn classify_avro_nullability(
     let mut diagnostics = Vec::new();
     let mut conflict: Option<String> = None;
     let mut allows = None;
-    let mut reason = None;
-    let mut interpretation = "unknown";
+    let dependencies = deps_native.iter().map(|(id, tree)| crate::avro_semantics::Dependency { id, tree }).collect::<Vec<_>>();
+    let inspection = crate::avro_semantics::inspect_schema(&root, &dependencies, ctx)?;
+    let mut reason = if inspection.valid { None } else { Some("Native structural inspection failed; underlying nullability remains unspecified".to_owned()) };
+    let mut interpretation = if reason.is_some() { "unsupported" } else { "unknown" };
     if text(&request, "scope") != Some(&u("underlying-field-value")) {
         reason=Some("Explicit underlying-field-value scope required; writer omission, reader resolution and ancestor availability remain separate".to_owned());
     } else if text(&request, "carrier") != Some(&u("avro-null")) {

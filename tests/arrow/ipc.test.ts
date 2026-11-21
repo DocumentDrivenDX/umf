@@ -23,3 +23,11 @@ test('US-016-AC4: unknown content, unsafe IDs and backend semantic drift cannot 
  const drift={...backend,encode(schema:unknown){const result=backend.encode(schema);result.after.fields[0].name='drift';return result;}};
  expect(()=>exportArrowSchemaIpc(doc,drift)).toThrow('re-read changed');
 });
+
+test('canonical dictionary longs and unzoned nested timestamps survive both native encoders',()=>{
+ const inputs=[{fields:[{name:'dict',nullable:true,type:{name:'utf8'},dictionary:{id:9007199254740991,indexType:{name:'int',bitWidth:32,isSigned:true},isOrdered:true}}]},{fields:[{name:'outer',nullable:true,type:{name:'struct'},children:[{name:'local',nullable:true,type:{name:'timestamp',unit:'SECOND'}}]}]}];
+ for(const input of inputs){const doc=importArrowSchema(JSON.stringify(input),{id:'canonical-ipc'}),before=exportArrowSchema(doc);
+  for(const encoder of [backend,undefined])expect(RecordBatchReader.from(exportArrowSchemaIpc(doc,encoder)).open().schema.fields).toHaveLength(1);
+  expect(exportArrowSchema(doc)).toBe(before);
+ }
+});

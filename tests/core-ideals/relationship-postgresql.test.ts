@@ -59,5 +59,5 @@ test('unqualified native target remains explicitly unresolved, never missing',as
 
 test('anonymous junction system-column names refuse before native emission',async()=>{
  const c=postgresqlRelationshipCases().find(c=>c.id==='anonymous-junction')!;c.request.policy.relationshipLayouts[1]!.sourceComponents![0]!.carrierColumn='xmin';
- const r=await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend);expect(r.status).toBe('blocked');expect(r.nativeSql).toBeUndefined();expect(r.residuals.some(x=>x.reason.includes('system column'))).toBe(true);
+ const r=await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend);expect(r.status).toBe('blocked');expect(r.nativeSql).toBeUndefined();expect(r.diagnostics.some(x=>x.code==='POSTGRESQL_LAYOUT_SQL'&&x.severity==='error'&&x.message.includes('system column'))).toBe(true);
 });

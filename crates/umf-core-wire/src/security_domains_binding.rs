@@ -8,16 +8,18 @@ use crate::{decode, encode, fail, field, result_envelope, text_field};
 pub const SECURITY_DOMAINS_PROFILE: &str = "umf.security-domains/1";
 
 pub fn execute_security_domains_wire(wire_json: &str) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_security_domains_wire_with_control(wire_json, &mut no_control)
+    execute_context(wire_json, Context::ordinary_construction())
 }
 
 pub fn execute_security_domains_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire_json, Context::ordinary().with_host_control(control))
+}
+
+fn execute_context(wire_json: &str, mut context: Context<'_>) -> String {
     let result = (|| {
-        let mut context = Context::ordinary().with_host_control(control);
         let request = decode(wire_json, &mut context)?;
         if text_field(&request, "profile").as_deref() != Some(SECURITY_DOMAINS_PROFILE) {
             return Err(fail("REQUEST", "Security domains profile is required"));

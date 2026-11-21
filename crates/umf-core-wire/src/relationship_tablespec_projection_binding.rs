@@ -31,17 +31,21 @@ fn closed(
     }
     Ok(())
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire, ctx)?;
         if text_field(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(request_error(
                 "Relationship TableSpec projection profile is required",
@@ -73,7 +77,7 @@ pub fn execute_wire_with_control(
                 ))
             }
         };
-        closed(&request, allowed, &mut ctx)?;
+        closed(&request, allowed, ctx)?;
         let output = match op {
             "projectRelationshipToTableSpec" => {
                 umf_core::relationship_tablespec_projection::project_relationship_to_tablespec(
@@ -82,7 +86,7 @@ pub fn execute_wire_with_control(
                     field(&request, "nativeSource").ok_or_else(|| request_error("nativeSource is required"))?,
                     field(&request, "nativeTarget").ok_or_else(|| request_error("nativeTarget is required"))?,
                     field(&request, "request").ok_or_else(|| request_error("request is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyRelationshipTableSpecProjection" => {
@@ -91,7 +95,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverRelationshipTableSpecIdeal" => {
@@ -100,7 +104,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverRelationshipTableSpecNativeSources" => {
@@ -109,7 +113,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             _ => {
@@ -118,7 +122,8 @@ pub fn execute_wire_with_control(
                 ))
             }
         };
-        encode(&output, &mut ctx)
-    })();
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

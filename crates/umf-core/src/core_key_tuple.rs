@@ -193,13 +193,19 @@ fn scalar_count(text: &Utf16, path: &str, ctx: &mut Context<'_>) -> Result<usize
     Ok(count)
 }
 fn schema_valid(v: &Value, e: &Engine, x: &mut Context<'_>) -> Result<bool, EngineError> {
+    let build = |x: &mut Context<'_>| {
     let schema = crate::serialization::read_json_value(
         &V4.encode_utf16().collect::<Vec<_>>(),
         crate::serialization::Format::Json,
         x,
     )?;
     let resources = e.schema_resources_with_context(x)?;
-    let compiled = crate::schema::CompiledSchema::compile(&schema, &resources, x)?;
+    crate::schema::CompiledSchema::compile(&schema, &resources, x)
+    };
+    // The binding's existing aggregate receipt profile has its own cache;
+    // ordinary or caller-customized profiles still compile under their exact limits.
+    let receipt_limits = crate::context::Limits { max_text_units: 32 * 1024 * 1024, ..crate::context::Limits::ordinary() };
+    let compiled = crate::resource_cache::prepare_profile(&e.key_tuple_schema, x, receipt_limits, build)?;
     Ok(compiled.validate(v, x)?.is_empty())
 }
 fn source_validate(
@@ -1205,6 +1211,18 @@ impl PreparedCoreKeyTuples {
             return Err(err("KEY_TUPLE_RESULT", "Malformed encoding receipt", ""));
         }
         Ok(receipt)
+    }
+    /// Encode the same v1 tuple as `encode`, without constructing a receipt.
+    /// The retained source admission and all identity/value/byte bounds apply;
+    /// the returned hex is a local identity, never a current-store assertion.
+    pub fn encode_hex(
+        &self, identity: &Value, values: &Value, e: &Engine, r: &Registry,
+        c: &mut dyn Capabilities, x: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let identity = copy_json(identity, x)?;
+        let values = copy_json(values, x)?;
+        let (_, _, bytes) = encode_bytes(&self.source, &identity, &values, V1, e, r, c, x, Some(&self.diagnostics))?;
+        Ok(s(&hex(&bytes)))
     }
     pub fn encode(
         &self,

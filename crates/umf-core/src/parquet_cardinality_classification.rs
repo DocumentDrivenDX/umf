@@ -516,6 +516,7 @@ fn classify_shape_impl(
                             | "decimal"
                             | "float"
                             | "string"
+                            | "json"
                             | "binary"
                             | "date"
                             | "time"

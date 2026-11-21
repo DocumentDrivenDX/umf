@@ -24,6 +24,7 @@ mod read_json_value_host;
 mod record_members_inspection;
 mod sec_projection;
 mod security_candidate_condition;
+mod security_literal;
 mod workflow;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
@@ -89,11 +90,9 @@ impl PostgresqlParserSession {
                 &mut inner, &wire_json, &mut hook,
             )
         } else {
-            let mut no_control = |_amount| Ok(());
-            umf_core_wire::postgresql_parser_binding::execute_wire_with_session(
+            umf_core_wire::postgresql_parser_binding::execute_wire_with_session_default(
                 &mut inner,
                 &wire_json,
-                &mut no_control,
             )
         }
     }
@@ -1222,6 +1221,9 @@ pub fn execute_security_logic_wire(
     candidate: Option<bool>,
 ) -> NapiResult<String> {
     if candidate == Some(true) {
+        if control_dispatcher.is_none() {
+            return Ok(umf_core_wire::security_logic_binding::execute_candidate_security_logic_wire_default(&wire_json));
+        }
         let mut control = control_dispatcher.map(|dispatcher| NodeControl { env, dispatcher });
         return Ok(umf_core_wire::security_logic_binding::execute_candidate_security_logic_wire(
             &wire_json,

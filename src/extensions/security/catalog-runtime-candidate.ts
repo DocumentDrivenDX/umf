@@ -1,19 +1,21 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Private canonical action/disposition kernel. Host attestations are not native credentials. */
 import {copyJson} from '../../model/json';
-import {encodeCoreKeyTuple,type CoreKeyTupleValue} from '../../model/key-tuple';
+import type {Json} from '../../model/types';
+import {inspectCandidateQueryValueRoutes,type CandidateQueryValueRouteInspection} from './query-value-routes-candidate';
+import {type CoreKeyTupleValue} from '../../model/key-tuple';
 import {canonicalSchemaJson,type CoreLiteral} from '../../model/schema-literals';
 import {CandidateSecurityOperationBudget} from './operation-budget-candidate';
 import {GREGORIAN_DATE_PROFILE} from '../../adapters/gregorian-date';
 import {composeSecurityRules,parseGregorianDate} from '../../index';
-import {evaluateCandidateCompactCondition,preflightCandidateCompactCondition,admitCandidateCatalogCut,planCandidateCatalogRequest,admitCandidateCatalogDateProfiles,planCandidateEmptyDisclosures,admitCandidateCatalogInventory,selectCandidateCatalogDisclosures,renderCandidateCatalogCells,checkCandidateDisclosureIdentities,assembleCandidateDisclosureBatch,admitCandidateCatalogScanBatch,composeCandidateCatalogScanBatch} from '#security-candidate-condition';
+import {preflightCandidateCompactCondition,admitCandidateCatalogCut,planCandidateCatalogRequest,admitCandidateCatalogDateProfiles,planCandidateEmptyDisclosures,admitCandidateCatalogInventory,selectCandidateCatalogDisclosures,renderCandidateCatalogCells,checkCandidateDisclosureIdentities,assembleCandidateDisclosureBatch,admitCandidateCatalogScanBatch,composeCandidateCatalogScanBatch} from '#security-candidate-condition';
 import type {EvaluatedSecurityRule,SecurityTruth,SecurityDecision} from './logic';
 import {evaluateIssuedProtectionDefinition} from './protection/functions';
 import {checkProtectionParametersWithinBudget} from './protection/parameters';
 import type {SecurityOutput} from './evaluate';
 import type {SecurityDisclosureBatchV2} from './protection/disclosure';
 import {validateCandidateCatalogStorage} from './catalog-storage-candidate';
-import {readCandidateCatalogProgram} from './catalog-program-candidate';
+import {readCandidateCatalogProgram,readCandidateCatalogConditionOperation,readCandidateCatalogKeyTuples,readCandidateCatalogLiteralOperation} from './catalog-program-candidate';
 const fail=(message:string):never=>{throw Error('SECURITY_CATALOG_RUNTIME: '+message);};
 const id=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.elementId]);
 const relationId=(r:any)=>JSON.stringify([r.documentId,r.moduleId,r.relationshipId]);
@@ -107,7 +109,16 @@ export function evaluateCandidateCatalogAction(handle:unknown,ownerInput:unknown
  try{return run(handle,ownerInput,cutInput,requestInput,false) as CandidateCatalogActionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[]});}
 }
 function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unknown,render:boolean,operation?:CandidateSecurityOperationBudget,scanPopulation=false,ruleTrace=false,disclosureTrace=false,disclosureBatch=false):CandidateCatalogActionResult|CandidateCatalogCollectionResult|CandidateCatalogRuleScanResult|CandidateCatalogDisclosureScanResult|CandidateCatalogDisclosureBatchResult{
- const program=readCandidateCatalogProgram(handle),packet:any=copyJson({owner:ownerInput,cut:cutInput,request:requestInput}),{owner,cut}=packet;
+ // Preserve the original handle check before touching caller inputs.
+ const program=readCandidateCatalogProgram(handle),packet=copyJson({owner:ownerInput,cut:cutInput,request:requestInput});
+ return runOwnedPacket(handle,program,packet,{render,operation,scanPopulation,ruleTrace,disclosureTrace,disclosureBatch});
+}
+type RuntimeOptions={render:boolean;operation?:CandidateSecurityOperationBudget|undefined;scanPopulation?:boolean;ruleTrace?:boolean;disclosureTrace?:boolean;disclosureBatch?:boolean};
+/** Private invocation-owned JSON only. All native admission, dependency checks,
+ * work/text accounting, literal validation and original truth evaluation follow. */
+function runOwnedPacket(handle:unknown,program:any,packet:any,options:RuntimeOptions):CandidateCatalogActionResult|CandidateCatalogCollectionResult|CandidateCatalogRuleScanResult|CandidateCatalogDisclosureScanResult|CandidateCatalogDisclosureBatchResult {
+ const {render,operation,scanPopulation=false,ruleTrace=false,disclosureTrace=false,disclosureBatch=false}=options;
+ const {owner,cut}=packet;
  if(disclosureBatch&&!program.catalog)fail('Atomic V2 batch requires original protection catalog');
  const policy=program.policy,sourceOntology=program.ontology.ontology;
  const source={
@@ -138,6 +149,7 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
   for(const declaration of declarations)profiles.set(declaration.key,declaration.profile);
  }
  const budget=ledger.literal;
+ for(const document of documents.values())budget.usePreparedSource(document,readCandidateCatalogLiteralOperation(handle,document.id));
  if(disclosureBatch&&checkProtectionParametersWithinBudget(program.policy,program.catalog,program.closure,budget).status==='refused')fail('V2 catalog parameter budget refused');
  const literal=(r:any,v:any):string=>{step();const selected=field(r),f=selected.field;if(f.cardinality!=='one'||f.itemType!==undefined||f.references?.some((r:any)=>r.role==='record-type'))fail('Unsupported logical literal');
   if(f.scalarType==='date'){
@@ -149,8 +161,8 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  const keys=new Map<string,any>();for(const e of entities.values()){const record=records.get(id(e.type)),key=record.keys.find((k:any)=>k.id===e.keyId);keys.set(id(e.type),key);}
  const tuple=(type:any,values:any):string=>{step();const e=entity(type),key=keys.get(id(type));list(values,64);if(values.length!==key.fields.length)fail('Key arity');
   for(const [i,k] of key.fields.entries()){const r={documentId:type.documentId,moduleId:k.module,elementId:k.element},f=field(r);budget.check(f.document,f.field,values[i]);}
-  const result=encodeCoreKeyTuple(documents.get(type.documentId),{module:type.moduleId,element:type.elementId,key:e.keyId},values as CoreKeyTupleValue[]);
-  return budget.retain(canonicalSchemaJson([id(type),e.keyId,result.bytesHex]));
+  const bytesHex=readCandidateCatalogKeyTuples(handle,type.documentId).encodeHex({module:type.moduleId,element:type.elementId,key:e.keyId},values as CoreKeyTupleValue[]);
+  return budget.retain(canonicalSchemaJson([id(type),e.keyId,bytesHex]));
  };
  const selectors=new WeakMap<object,string>();const selector=(s:any)=>{shape(s,['type','key']);let key=selectors.get(s);if(!key){key=tuple(s.type,s.key);selectors.set(s,key);}return key;};
  const projections=new WeakMap<object,Map<string,any>>(),absences=new WeakMap<object,Set<string>>();
@@ -291,7 +303,7 @@ function run(handle:unknown,ownerInput:unknown,cutInput:unknown,requestInput:unk
  // Dependencies are preflighted above over the complete typed populations,
  // including branches whose truth will not be needed. Only pure truth work may
  // stop early: F absorbs AND, T absorbs OR/exists in strong Kleene logic.
- const evaluate=(expr:any,resourceIndex:number):SecurityTruth=>evaluateCandidateCompactCondition(expr,resourceIndex,(event:any)=>{
+ const evaluate=(expr:any,resourceIndex:number):SecurityTruth=>readCandidateCatalogConditionOperation(handle,expr)(resourceIndex,(event:any)=>{
   if(event?.kind==='step'){step();return true;}
   if(event?.kind==='rows'){
    const checks=associations[event.association]??fail('Unknown association index');return sourceRows(checks).length;
@@ -442,4 +454,46 @@ export function evaluateCandidateCatalogActionWithinOperation(handle:unknown,own
 /** Private composition leaf; callers must provide one shared operation ledger. */
 export function evaluateCandidateCatalogScanWithinOperation(handle:unknown,owner:unknown,cut:unknown,selection:unknown,operation:CandidateSecurityOperationBudget):CandidateCatalogCollectionResult {
  try{return run(handle,owner,cut,selection,true,operation,true) as CandidateCatalogCollectionResult;}catch{return freeze({status:'refused',complete:false,authority:false,rows:[],valueProfiles:[]});}
+}
+
+/** Called only after route orchestration copies {owner,cut,use}. Its required
+ * use contains strictly more JSON structure than the type/empty-fields request.
+ * Every caller-owned cut still crosses the unconditional outer copy; this
+ * private transfer accepts no caller ownership claim or control bypass flag. */
+function readOwnedRouteRules(handle:unknown,packet:any):CandidateCatalogRuleScanResult {
+ const selection={type:packet.use.type};shape(selection,['type']);
+ if(!packet.owner?.disclosure)fail('Original owner read action required');
+ const program=readCandidateCatalogProgram(handle);
+ return runOwnedPacket(handle,program,{owner:packet.owner,cut:packet.cut,request:{type:selection.type,fields:[]}},{render:false,scanPopulation:true,ruleTrace:true}) as CandidateCatalogRuleScanResult;
+}
+export interface CandidateQueryValueRouteEvaluation {
+ status:'evaluated'|'refused';complete:false;authority:false;
+ plan:CandidateQueryValueRouteInspection|null;
+ rows:readonly {resource:Json;readDecision:string;rules:readonly Json[];activeBranches:readonly number[];selection:'read-denied'|'read-indeterminate'|'disclosure-conflict'|'selected'|'unresolved'}[];
+}
+/** Reconstruct original source plan; never accepts caller-provided guards or truth. */
+export function evaluateCandidateQueryValueRoutes(handle:unknown,ownerInput:unknown,cutInput:unknown,useInput:unknown):CandidateQueryValueRouteEvaluation {
+ const refused=():CandidateQueryValueRouteEvaluation=>freeze({status:'refused',complete:false,authority:false,plan:null,rows:[]});
+ try{
+  const packet:any=copyJson({owner:ownerInput,cut:cutInput,use:useInput});
+  const plan=inspectCandidateQueryValueRoutes(handle,packet.owner,packet.use);if(plan.status!=='inspected')return refused();
+  let retained=JSON.stringify({status:'evaluated',complete:false,authority:false,plan,rows:[]}).length;
+  if(retained>4000000)throw Error('Retained route result bound');
+  const actual=readOwnedRouteRules(handle,packet);if(actual.status!=='evaluated')return refused();
+  const branches=plan.branches as any[],rows:CandidateQueryValueRouteEvaluation['rows'][number][]=[];
+  for(const row of actual.rows){
+   const truth=new Map(row.rules.map(r=>[r.ruleIndex,r.truth]));
+   // Every retained scoped source condition must have actual original-kernel evidence.
+   for(const condition of (plan.composition as any).readConditions)if(!truth.has(condition.ruleIndex))throw Error('Missing original scoped rule');
+   const groups=branches.map(branch=>branch.sourceOccurrences.some((s:any)=>truth.get(s.ruleIndex)==='T'));
+   const active=row.decision==='permit'?branches.filter(b=>groups[b.guard.anyActiveContributorGroup]&&b.guard.noActiveGroups.every((i:number)=>!groups[i])).map(b=>b.index):[];
+   if(active.length>1)throw Error('Ambiguous generated routes');
+   const activeTransforms=branches.filter((b,i)=>groups[i]&&b.representativeDisposition?.kind==='transformed').length;
+   const withheld=branches.some((b,i)=>groups[i]&&b.representativeDisposition?.kind==='withheld');
+   const selection=row.decision==='deny'?'read-denied':row.decision!=='permit'?'read-indeterminate':active.length===1?'selected':!withheld&&activeTransforms>1?'disclosure-conflict':'unresolved';
+   const result:CandidateQueryValueRouteEvaluation['rows'][number]={resource:row.resource as Json,readDecision:row.decision,rules:row.rules as unknown as Json[],activeBranches:active,selection};
+   retained+=JSON.stringify(result).length+(rows.length?1:0);if(retained>4000000)throw Error('Retained route result bound');rows.push(result);
+  }
+  return freeze({status:'evaluated',complete:false,authority:false,plan,rows});
+ }catch{return refused();}
 }

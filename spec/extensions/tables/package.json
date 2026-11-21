@@ -252,6 +252,16 @@
               }
             },
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "json"
+            ],
+            "properties": {
+              "json": true
+            },
+            "additionalProperties": false
           }
         ]
       },
@@ -279,7 +289,7 @@
           "direction"
         ]
       },
-      "nativeType": {
+      "scalarNativeType": {
         "oneOf": [
           {
             "type": "object",
@@ -294,10 +304,9 @@
                   "float4",
                   "float8",
                   "date",
-                  "timestamp",
-                  "timestamptz",
                   "uuid",
-                  "bytea"
+                  "bytea",
+                  "jsonb"
                 ]
               }
             },
@@ -346,6 +355,47 @@
               "kind",
               "precision",
               "scale"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "timestamp",
+                  "timestamptz"
+                ]
+              },
+              "precision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 6
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        ]
+      },
+      "nativeType": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/scalarNativeType"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "element": {
+                "$ref": "#/$defs/scalarNativeType"
+              }
+            },
+            "required": [
+              "kind",
+              "element"
             ]
           }
         ]
@@ -776,6 +826,38 @@
               "$ref": "#/$defs/ref"
             },
             "minItems": 0,
+            "maxItems": 32
+          },
+          "method": {
+            "enum": [
+              "btree",
+              "gin"
+            ]
+          },
+          "directions": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 32
+          },
+          "where": {
+            "$ref": "#/$defs/expression"
+          },
+          "operatorClasses": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "array_ops",
+                "jsonb_ops",
+                "jsonb_path_ops"
+              ]
+            },
+            "minItems": 1,
             "maxItems": 32
           }
         },

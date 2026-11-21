@@ -559,7 +559,7 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
         ));
     }
 
-    let runtime = JsonLdRuntime::new(ctx)?;
+    let runtime = JsonLdRuntime::prepared(ctx)?;
     match op {
         "jsonld.import" => {
             let id = text(field(request_value, "id"), "id")?;
@@ -655,7 +655,7 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
             ctx,
         ),
         "jsonld.toRdf" => {
-            let rdf_runtime = umf_core::rdf::RdfRuntime::new(ctx)?;
+            let rdf_runtime = umf_core::rdf::RdfRuntime::prepared(ctx)?;
             let default_numeric_policy = Utf16::from("strict");
             jsonld::propose_jsonld_to_rdf(
                 field(request_value, "document").unwrap(),
@@ -679,7 +679,7 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
             )
         }
         "jsonld.fromRdf" => {
-            let rdf_runtime = umf_core::rdf::RdfRuntime::new(ctx)?;
+            let rdf_runtime = umf_core::rdf::RdfRuntime::prepared(ctx)?;
             let default_processing_mode = Utf16::from("json-ld-1.1");
             let processing_mode = match field(request_value, "processingMode") {
                 Some(Value::String(value)) => value,
@@ -706,7 +706,7 @@ fn execute(request_value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engine
             )
         }
         "jsonld.fromGeneralizedRdf" => {
-            let rdf_runtime = umf_core::rdf::RdfRuntime::new(ctx)?;
+            let rdf_runtime = umf_core::rdf::RdfRuntime::prepared(ctx)?;
             let processing_mode = text(field(request_value, "processingMode"), "processingMode")?;
             jsonld::propose_generalized_rdf_to_jsonld(
                 field(request_value, "document").unwrap(),
@@ -788,16 +788,17 @@ fn optional_bool(value: &Value, name: &str) -> Option<bool> {
 }
 
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_context(wire, Context::ordinary_construction())
 }
 
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire, Context::ordinary().with_host_control(control))
+}
+fn execute_context(wire: &str, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request_value = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let result = execute(&request_value, &mut ctx)?;
         encode(&result, &mut ctx)

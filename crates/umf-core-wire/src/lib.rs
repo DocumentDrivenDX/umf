@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
 use std::{collections::{BTreeSet, HashMap}, sync::{Arc, Mutex}};
+mod fixed_resources;
 pub mod access_rrf_binding;
 pub mod access_temporal_binding;
 #[cfg(feature = "embedded-adapters")]
@@ -185,19 +186,20 @@ pub mod arrow_ipc_capture_binding {
     }
 
     pub fn execute_wire(wire: &str) -> String {
-        let mut no_control = |_: usize| Ok(());
-        execute_wire_with_control(wire, &mut no_control)
+        execute_wire_context(wire, &mut Context::ordinary_construction())
     }
 
     pub fn execute_wire_with_control(
         wire: &str,
         control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
     ) -> String {
+        execute_wire_context(wire, &mut Context::ordinary().with_host_control(control))
+    }
+    fn execute_wire_context(wire: &str, ctx: &mut Context<'_>) -> String {
         let result = (|| {
-            let mut ctx = Context::ordinary().with_host_control(control);
             let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
             let operation = text_field(&request, "op").ok_or_else(|| err("op is required"))?;
-            let resources = ArrowIpcResources::new(&mut ctx)?;
+            let resources = ArrowIpcResources::prepared(ctx)?;
             let result = match operation.as_str() {
                 "arrow.ipc.capture" => {
                     let bytes = unhex(
@@ -207,25 +209,25 @@ pub mod arrow_ipc_capture_binding {
                         Some(Value::String(value)) => value.clone(),
                         _ => return Err(err("id is required")),
                     };
-                    capture_arrow_ipc(&bytes, &id, &resources, &mut ctx)?
+                    capture_arrow_ipc(&bytes, &id, &resources, ctx)?
                 }
                 "arrow.ipc.export" => {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     Value::string_utf8(hex(&export_arrow_ipc_capture(
-                        document, &resources, &mut ctx,
+                        document, &resources, ctx,
                     )?))
                 }
                 "arrow.ipc.inspect" => {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    inspect_arrow_ipc_capture(document, &resources, &mut ctx)?
+                    inspect_arrow_ipc_capture(document, &resources, ctx)?
                 }
                 "arrow.ipc.prepareObserve" => {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     umf_core::arrow_ipc_capture::prepare_arrow_ipc_observation(
-                        document, &resources, &mut ctx,
+                        document, &resources, ctx,
                     )?
                 }
                 "arrow.ipc.completeObserve" => {
@@ -234,7 +236,7 @@ pub mod arrow_ipc_capture_binding {
                     let outcome =
                         field(&request, "outcome").ok_or_else(|| err("outcome is required"))?;
                     umf_core::arrow_ipc_capture::complete_arrow_ipc_observation(
-                        prepared, outcome, &resources, &mut ctx,
+                        prepared, outcome, &resources, ctx,
                     )?
                 }
                 #[cfg(feature = "embedded-adapters")]
@@ -242,7 +244,7 @@ pub mod arrow_ipc_capture_binding {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     umf_core::arrow_ipc_inspection::inspect_arrow_ipc_layout(
-                        document, &resources, &mut ctx,
+                        document, &resources, ctx,
                     )?
                 }
                 #[cfg(feature = "embedded-adapters")]
@@ -250,14 +252,14 @@ pub mod arrow_ipc_capture_binding {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     umf_core::arrow_ipc_inspection::inspect_arrow_ipc_consistency(
-                        document, &resources, &mut ctx,
+                        document, &resources, ctx,
                     )?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.prepareSchemaExport" => {
                     let document =
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
-                    umf_core::arrow_ipc_inspection::prepare_arrow_schema_ipc(document, &mut ctx)?
+                    umf_core::arrow_ipc_inspection::prepare_arrow_schema_ipc(document, ctx)?
                 }
                 #[cfg(feature = "embedded-adapters")]
                 "arrow.ipc.completeSchemaExport" => {
@@ -276,7 +278,7 @@ pub mod arrow_ipc_capture_binding {
                         _ => return Err(err("bytesHex is required")),
                     };
                     umf_core::arrow_ipc_inspection::complete_arrow_schema_ipc(
-                        document, before, after, bytes, &mut ctx,
+                        document, before, after, bytes, ctx,
                     )?
                 }
                 #[cfg(feature = "embedded-adapters")]
@@ -285,7 +287,7 @@ pub mod arrow_ipc_capture_binding {
                         field(&request, "document").ok_or_else(|| err("document is required"))?;
                     Value::string_utf8(hex(
                         &umf_core::arrow_ipc_inspection::encode_arrow_schema_ipc_native(
-                            document, &resources, &mut ctx,
+                            document, &resources, ctx,
                         )?,
                     ))
                 }
@@ -296,7 +298,7 @@ pub mod arrow_ipc_capture_binding {
                     let policy =
                         field(&request, "request").ok_or_else(|| err("request is required"))?;
                     umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename(
-                        document, policy, &resources, &mut ctx,
+                        document, policy, &resources, ctx,
                     )?
                 }
                 #[cfg(feature = "embedded-adapters")]
@@ -310,7 +312,7 @@ pub mod arrow_ipc_capture_binding {
                         _ => return Err(err("schemaHex is required")),
                     };
                     umf_core::arrow_ipc_inspection::prepare_arrow_ipc_rename_footer(
-                        document, policy, schema_hex, &resources, &mut ctx,
+                        document, policy, schema_hex, &resources, ctx,
                     )?
                 }
                 #[cfg(feature = "embedded-adapters")]
@@ -326,7 +328,7 @@ pub mod arrow_ipc_capture_binding {
                     let footer_hex =
                         field(&request, "footerHex").ok_or_else(|| err("footerHex is required"))?;
                     umf_core::arrow_ipc_inspection::complete_arrow_ipc_rename(
-                        document, policy, schema_hex, footer_hex, &resources, &mut ctx,
+                        document, policy, schema_hex, footer_hex, &resources, ctx,
                     )?
                 }
                 #[cfg(feature = "embedded-adapters")]
@@ -336,12 +338,12 @@ pub mod arrow_ipc_capture_binding {
                     let policy =
                         field(&request, "request").ok_or_else(|| err("request is required"))?;
                     umf_core::arrow_ipc_inspection::rename_arrow_ipc_field_native(
-                        document, policy, &resources, &mut ctx,
+                        document, policy, &resources, ctx,
                     )?
                 }
                 _ => return Err(err("Unknown Arrow IPC capture operation")),
             };
-            encode(&result, &mut ctx)
+            encode(&result, ctx)
         })();
         result_envelope(result)
     }
@@ -793,22 +795,23 @@ pub use controlled_envelope::result_envelope_with_context;
 /// Serialize a closed host-independent result envelope. Error path/message are
 /// UTF-16 code units so lone surrogates survive every binding boundary.
 pub fn result_envelope(result: Result<String, EngineError>) -> String {
-    match result {
+    let envelope = match result {
         Ok(wire) => serde_json::json!({
             "profile": "umf.core-wire/1",
             "status": "ok",
             "wire": wire,
-        })
-        .to_string(),
+        }),
         Err(error) => serde_json::json!({
             "profile": "umf.core-wire/1",
             "status": "error",
             "code": error.code,
             "pathUnits": error.path.units(),
             "messageUnits": error.message.units(),
-        })
-        .to_string(),
-    }
+        }),
+    };
+    // Serialize directly into serde_json's byte buffer. Display routes every
+    // escaped fragment through a formatting adapter for large nested wires.
+    serde_json::to_string(&envelope).expect("JSON value serialization is infallible")
 }
 
 pub fn copy_wire_envelope(wire_json: &str) -> String {
@@ -2513,8 +2516,7 @@ pub fn execute_request(
     profile: ResourceProfile,
     capabilities: &mut dyn Capabilities,
 ) -> String {
-    let mut no_control = |_amount: usize| Ok(());
-    execute_request_with_control(wire_json, profile, capabilities, &mut no_control)
+    execute_request_with_engine(wire_json, profile, capabilities, None)
 }
 
 /// Execute using an explicit binding-owned cooperative work hook. The hook is
@@ -2702,6 +2704,21 @@ pub fn execute_csv_boolean_lexical_request_with_control(
 
 pub const CSV_BOOLEAN_LEXICAL_BINDING_PROFILE: &str = "umf-csv-boolean-lexical/0.1.0";
 
+/// Default request route with retained resource identity admission and no
+/// synthetic control capability. Explicit hooks keep their original route.
+pub fn execute_request_with_engine(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    retained_engine: Option<&Engine>,
+) -> String {
+    if profile == ResourceProfile::HardIsolated {
+        return error_envelope(EngineError::new("RESOURCE_PROFILE_UNAVAILABLE", Utf16::default(), "HardIsolated resource profile is unavailable"));
+    }
+    let mut no_control = |_amount: usize| Ok(());
+    result_envelope(execute_request_inner(wire_json, capabilities, &mut no_control, retained_engine, None, false))
+}
+
 /// Private opt-in variant that reuses a caller-owned Engine while preserving
 /// the ordinary request decoder, registry admission, callbacks, and contexts.
 /// The request still carries its five resources as an exact identity witness;
@@ -2720,7 +2737,7 @@ pub fn execute_request_with_engine_and_control(
             "HardIsolated resource profile is unavailable",
         ));
     }
-    let result = execute_request_inner(wire_json, capabilities, control, retained_engine, None);
+    let result = execute_request_inner(wire_json, capabilities, control, retained_engine, None, true);
     result_envelope(result)
 }
 
@@ -2752,6 +2769,7 @@ pub fn execute_request_with_engine_editor_and_control(
         control,
         retained_engine,
         Some(editor),
+        true,
     ))
 }
 
@@ -2861,11 +2879,12 @@ fn execute_request_inner(
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
     retained_engine: Option<&Engine>,
     mut editor: Option<&mut dyn ModelExtensionEditor>,
+    controlled: bool,
 ) -> Result<String, EngineError> {
     // The outer request/result envelope adds transport tags and wrapper
     // members around independently bounded catalog resources and an ordinary
     // document. Its limits must not narrow either semantic admission profile.
-    let mut operation_context = Context::ordinary().with_host_control(control);
+    let mut operation_context = if controlled { Context::ordinary().with_host_control(control) } else { Context::ordinary_construction() };
     let mut request =
         operation_context.with_tagged_transport_limit(|ctx| decode(wire_json, ctx))?;
     let op = field(&request, "op")
@@ -3031,7 +3050,7 @@ fn execute_request_inner(
     let prior_work = operation_context.charged_work();
     let prior_constraint_steps = operation_context.constraint_steps();
     drop(operation_context);
-    let mut operation = Context::ordinary().with_host_control(control);
+    let mut operation = if controlled { Context::ordinary().with_host_control(control) } else { Context::ordinary_construction() };
     operation.carry_transport_usage(prior_work, prior_constraint_steps);
     let mut owned_engine: Option<Engine> = None;
     let registry = operation.with_catalog_value_limit(|catalog| {
@@ -3408,7 +3427,7 @@ fn execute_request_inner(
             _ => return Err(fail("REQUEST", "Unknown core operation")),
         }
     };
-    let mut transport = transport_context().with_host_control(control);
+    let mut transport = if controlled { transport_context().with_host_control(control) } else { transport_context() };
     encode(&value, &mut transport)
 }
 
@@ -4224,12 +4243,21 @@ fn key_tuple_profile(options: Option<&Value>) -> Option<String> {
     })
 }
 
+// Exact UTF-16 equality with a valid UTF-8 search name, without allocating
+// temporary lookup text. Malformed surrogate keys cannot match a valid name.
+fn field_name_equals(key: &Utf16, name: &str) -> bool {
+    if name.is_ascii() {
+        key.units().len() == name.len()
+            && key.units().iter().zip(name.as_bytes()).all(|(unit, byte)| *unit == u16::from(*byte))
+    } else {
+        key.units().iter().copied().eq(name.encode_utf16())
+    }
+}
 fn field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
-    let key = Utf16::from(name);
     match value {
         Value::Object(members) => members
             .iter()
-            .find(|(k, _)| *k == key)
+            .find(|(k, _)| field_name_equals(k, name))
             .map(|(_, value)| value),
         _ => None,
     }
@@ -4241,7 +4269,7 @@ fn has_exact_members(value: &Value, expected: &[&str]) -> bool {
     members.len() == expected.len()
         && expected
             .iter()
-            .all(|name| members.iter().any(|(key, _)| key == &Utf16::from(*name)))
+            .all(|name| members.iter().any(|(key, _)| field_name_equals(key, name)))
 }
 fn as_utf16(value: &Value) -> Option<&Utf16> {
     match value {
@@ -4253,10 +4281,9 @@ fn take_field(value: &mut Value, name: &str) -> Option<Value> {
     let Value::Object(fields) = value else {
         return None;
     };
-    let key = Utf16::from(name);
     fields
         .iter()
-        .position(|(candidate, _)| candidate == &key)
+        .position(|(candidate, _)| field_name_equals(candidate, name))
         .map(|index| fields.remove(index).1)
 }
 fn format_field(value: &Value) -> Result<Format, EngineError> {
@@ -4359,6 +4386,20 @@ fn fail(code: &str, message: impl Into<String>) -> EngineError {
 /// The scanner deliberately accepts no syntax; serde remains the parser authority.
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn wire_lookup_preserves_exact_unicode_and_first_duplicate() {
+        use super::*;
+        let names = ["", "id", "é", "e\u{301}", "𝄞", "\u{fffd}", "a\0b"];
+        let mut keys: Vec<Utf16> = names.iter().map(|name| Utf16::from(*name)).collect();
+        keys.extend([Utf16::new(vec![0xd800]), Utf16::new(vec![0xdc00])]);
+        for key in keys {
+            for name in names { assert_eq!(field_name_equals(&key, name), key == Utf16::from(name)); }
+        }
+        let mut value = Value::Object(vec![(Utf16::from("é"), Value::Bool(true)), (Utf16::from("é"), Value::Bool(false))]);
+        assert_eq!(field(&value, "é"), Some(&Value::Bool(true)));
+        assert_eq!(take_field(&mut value, "é"), Some(Value::Bool(true)));
+        assert_eq!(field(&value, "é"), Some(&Value::Bool(false)));
+    }
     use super::*;
 
     #[test]
@@ -4708,6 +4749,18 @@ mod tests {
     }
 
     #[test]
+    fn buffered_result_envelopes_match_original_bytes() {
+        for wire in [String::new(), "\"\\\n\r\t\0雪😀".repeat(10_000)] {
+            let expected=serde_json::json!({"profile":"umf.core-wire/1","status":"ok","wire":wire.clone()}).to_string();
+            assert_eq!(result_envelope(Ok(wire)),expected);
+        }
+        let path=Utf16::new(vec![47,0xd800,0x7e,0x96ea]);
+        let message=Utf16::new(vec![0,10,0xdc00,0x22]);
+        let expected=serde_json::json!({"profile":"umf.core-wire/1","status":"error","code":"CANCELLED","pathUnits":path.units(),"messageUnits":message.units()}).to_string();
+        assert_eq!(result_envelope(Err(EngineError::new("CANCELLED",path,message))),expected);
+    }
+
+    #[test]
     fn retained_engine_dispatch_rejects_resource_substitution() {
         let mut catalog = Context::catalog();
         let resources = object(vec![
@@ -4788,6 +4841,9 @@ mod tests {
             &mut |_| Ok(()),
             Some(&engine),
         );
+        assert_eq!(response, execute_request_with_engine(
+            &request, ResourceProfile::Cooperative, &mut NumericNoCapabilities, Some(&engine),
+        ));
         let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
         assert_eq!(envelope["status"], "error");
         assert_eq!(envelope["code"], "REQUEST");
@@ -4865,6 +4921,9 @@ mod tests {
             &mut |_| Ok(()),
             Some(&engine),
         );
+        assert_eq!(response, execute_request_with_engine(
+            &request, ResourceProfile::Cooperative, &mut NumericNoCapabilities, Some(&engine),
+        ));
         let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
         assert_ne!(
             envelope["code"], "REQUEST",
@@ -4897,6 +4956,9 @@ mod tests {
             &mut meter,
             Some(&engine),
         );
+        let default = execute_request_with_engine(&witnessed_request, ResourceProfile::Cooperative, &mut NumericNoCapabilities, Some(&engine));
+        let controlled = execute_request_with_engine_and_control(&witnessed_request, ResourceProfile::Cooperative, &mut NumericNoCapabilities, &mut |_|Ok(()), Some(&engine));
+        assert_eq!(default, controlled);
         let threshold = charged.saturating_sub(1);
         let mut charged_again = 0usize;
         let mut refusing_meter = |amount| {

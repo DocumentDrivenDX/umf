@@ -449,7 +449,10 @@ pub fn project_field(
         .get(0)
         .and_then(|e| get(e, "scalarType")),
     ) {
-        if source_scalar != target_scalar {
+        if source_scalar == &t("json") && target_scalar == &t("string") && get(&request, "jsonEncoding") == Some(&Value::Bool(true)) {
+            push_loss(&mut losses, &mut diagnostics, format!("{path}/scalarType"), source_scalar,
+                "Explicit JSON text encoding; TableSpec text does not enforce valid JSON, unique keys, Unicode scalars or finite numbers", "approximated", "FIELD_MEANING_NOT_PROJECTED", severity, ctx)?;
+        } else if source_scalar != target_scalar {
             push_loss(
                 &mut losses,
                 &mut diagnostics,

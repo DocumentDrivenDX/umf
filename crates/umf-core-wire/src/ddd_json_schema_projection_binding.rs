@@ -650,9 +650,9 @@ fn attach_graphql_target(
                     "Candidate SDL is missing",
                 )
             })?;
-        let mut resources = umf_graphql::engine_registry::GraphqlResources::new(ctx)?;
+        let mut resources = umf_graphql::engine_registry::GraphqlResources::prepared(ctx)?;
         let target = umf_graphql::engine_registry::import_sdl(
-            &mut resources,
+            &resources,
             &candidate,
             if full {
                 "ddd-graphql-target"
@@ -669,7 +669,7 @@ fn attach_graphql_target(
                 "Generated SDL failed native schema-mode import",
             )
         })?;
-        let emitted = umf_graphql::engine_registry::export_sdl(&mut resources, &target, ctx)?;
+        let emitted = umf_graphql::engine_registry::export_sdl(&resources, &target, ctx)?;
         if emitted.to_utf8().ok().as_deref() != Some(candidate.as_str()) {
             return Err(EngineError::new(
                 "DDD_GRAPHQL_TARGET",
@@ -772,18 +772,23 @@ fn diagnostics_value(
             .collect(),
     ))
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let input = decode(wire, &mut ctx)?;
-        execute(&input, &mut ctx).and_then(|out| encode(&out, &mut ctx))
-    })();
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let input = decode(wire, ctx)?;
+        execute(&input, ctx).and_then(|out| encode(&out, ctx))
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

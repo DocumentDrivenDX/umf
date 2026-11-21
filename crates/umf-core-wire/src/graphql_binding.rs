@@ -208,7 +208,7 @@ fn execute(
             ctx,
         );
     }
-    let mut resources = GraphqlResources::new(ctx)?;
+    let mut resources = GraphqlResources::prepared(ctx)?;
     let result = match op {
         "graphql.import" => {
             let source = required_string(request, "source")?
@@ -225,12 +225,12 @@ fn execute(
                 ),
                 _ => return Err(request_error("mode must be a string or null")),
             };
-            engine_registry::import_sdl(&mut resources, &source, &id, mode.as_deref(), ctx)?
+            engine_registry::import_sdl(&resources, &source, &id, mode.as_deref(), ctx)?
         }
         "graphql.validate" => {
             let document =
                 field(request, "document").ok_or_else(|| request_error("document is required"))?;
-            let report = engine_registry::validate_document(&mut resources, document, ctx)?;
+            let report = engine_registry::validate_document(&resources, document, ctx)?;
             ctx.charge_work(report.diagnostics.len(), Utf16::default())?;
             Value::Object(vec![
                 (Utf16::from("valid"), Value::Bool(report.valid)),
@@ -248,18 +248,18 @@ fn execute(
             ])
         }
         "graphql.export" => Value::String(engine_registry::export_sdl(
-            &mut resources,
+            &resources,
             field(request, "document").ok_or_else(|| request_error("document is required"))?,
             ctx,
         )?),
         "graphql.getAst" => engine_registry::get_graphql_ast(
-            &mut resources,
+            &resources,
             field(request, "document").ok_or_else(|| request_error("document is required"))?,
             ctx,
         )?,
         "graphql.exportBundle" => {
             let bundle = engine_registry::export_graphql_bundle(
-                &mut resources,
+                &resources,
                 field(request, "document").ok_or_else(|| request_error("document is required"))?,
                 ctx,
             )?;
@@ -288,7 +288,7 @@ fn execute(
                 ctx,
             )?;
             engine_registry::edit_ast(
-                &mut resources,
+                &resources,
                 document,
                 |ast| {
                     *ast = candidate;
@@ -302,7 +302,7 @@ fn execute(
                 .as_deref_mut()
                 .ok_or_else(|| request_error("GraphQL host AST editor is required"))?;
             engine_registry::edit_ast_with_context(
-                &mut resources,
+                &resources,
                 field(request, "document").ok_or_else(|| request_error("document is required"))?,
                 |ast, ctx| editor(ast, ctx),
                 ctx,
@@ -314,16 +314,17 @@ fn execute(
 }
 
 pub fn execute_wire(wire: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire, &mut no_control)
+    execute_context(wire, Context::ordinary_construction())
 }
 
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_context(wire, Context::ordinary().with_host_control(control))
+}
+fn execute_context(wire: &str, mut ctx: Context<'_>) -> String {
     let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
         let request = ctx.with_tagged_transport_limit(|ctx| decode(wire, ctx))?;
         let value = execute(&request, &mut ctx, None)?;
         encode(&value, &mut ctx)

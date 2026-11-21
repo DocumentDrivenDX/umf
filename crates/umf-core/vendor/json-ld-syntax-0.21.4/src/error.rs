@@ -4,6 +4,8 @@ use std::fmt;
 /// Error code.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Debug)]
 pub enum ErrorCode {
+    RecursiveContextInclusion,
+    ListOfLists,
 	/// Two properties which expand to the same keyword have been detected.
 	/// This might occur if a keyword and an alias thereof are used at the same time.
 	CollidingKeywords,
@@ -198,6 +200,8 @@ impl ErrorCode {
 			InvalidContainerMapping => "invalid container mapping",
 			InvalidContextEntry => "invalid context entry",
 			InvalidContextNullification => "invalid context nullification",
+            RecursiveContextInclusion => "recursive context inclusion",
+            ListOfLists => "list of lists",
 			InvalidDefaultLanguage => "invalid default language",
 			InvalidIriMapping => "invalid IRI mapping",
 			InvalidJsonLiteral => "invalid JSON literal",
@@ -259,6 +263,8 @@ impl<'a> TryFrom<&'a str> for ErrorCode {
 			"invalid container mapping" => Ok(InvalidContainerMapping),
 			"invalid context entry" => Ok(InvalidContextEntry),
 			"invalid context nullification" => Ok(InvalidContextNullification),
+            "recursive context inclusion" => Ok(RecursiveContextInclusion),
+            "list of lists" => Ok(ListOfLists),
 			"invalid default language" => Ok(InvalidDefaultLanguage),
 			"invalid IRI mapping" => Ok(InvalidIriMapping),
 			"invalid JSON literal" => Ok(InvalidJsonLiteral),

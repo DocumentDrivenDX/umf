@@ -515,6 +515,8 @@ export type { JsonLdFramingReport } from './adapters/jsonld/index';
 export { jsonldPackage } from './adapters/jsonld/package';
 export type { JsonLdToRdfReport } from './adapters/jsonld/index';
 export type { JsonObject } from './model/types';
+export type { JsonPatchOperation } from './table-deployment/types';
+export type { JsonPatchResult } from './table-deployment/types';
 export { jsonSchemaPackage } from './adapters/json-schema/package';
 export type { JsonSchemaPayload } from './adapters/json-schema/index';
 export { default as jsonSchemaProtobufProjectionSchema } from '../spec/projections/json-schema-protobuf.schema.json';

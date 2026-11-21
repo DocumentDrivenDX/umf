@@ -15,6 +15,9 @@ use umf_core::{
 /// application; no implicit host or process-global resource lookup occurs.
 /// The operation declaration schema is a fixed compiler asset, included
 /// separately and resolved against the supplied table schema.
+/// First token a host may use with [`CodegenResources::register_host_extension`].
+pub const HOST_EXTENSION_TOKEN_MIN: u64 = 1024;
+
 #[derive(Clone, Debug)]
 pub struct CodegenResources {
     engine: Engine,
@@ -305,6 +308,48 @@ impl CodegenResources {
     }
     pub fn schema_resources(&self) -> &SchemaResources {
         &self.schema_resources
+    }
+
+    /// Register a host-owned extension package with the table lifecycle
+    /// registry, so lifecycle inspection, deployment compilation and
+    /// verification admit documents that declare it (for example Fireweed's
+    /// queue vocabulary beside `umf.tables`).
+    ///
+    /// `token` identifies the extension to the host [`umf_core::Capabilities`]
+    /// passed to the `*_with_host` operations; tokens 0 through
+    /// [`HOST_EXTENSION_TOKEN_MIN`]` - 1` are reserved for UMF's own packages.
+    /// Without host capabilities the extension's semantics are reported as
+    /// unchecked, so inspection is incomplete and deployment refuses.
+    pub fn register_host_extension(
+        &mut self,
+        package: &Value,
+        token: u64,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        if token < HOST_EXTENSION_TOKEN_MIN {
+            return Err(EngineError::new(
+                "CODEGEN_RESOURCE_INVALID",
+                Utf16::default(),
+                "Host extension tokens below 1024 are reserved",
+            ));
+        }
+        let package = umf_core::copy_json(package, ctx)?;
+        let id = crate::value::string_member(&package, "id").ok_or_else(invalid_package)?;
+        if crate::value::string_member(self.tables_package(), "id") == Some(id) {
+            return Err(invalid_package());
+        }
+        let schema = crate::value::member(&package, "schema")
+            .cloned()
+            .ok_or_else(invalid_package)?;
+        register_package(
+            &mut self.tables_registry,
+            &self.engine,
+            &self.schema_resources,
+            &package,
+            &schema,
+            token,
+            ctx,
+        )
     }
 
     /// Install the explicitly trusted saga declaration package. Saga support

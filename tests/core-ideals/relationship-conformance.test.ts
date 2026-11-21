@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+// @test-exclusive
 import {test,expect} from 'bun:test';
-import {verifyRelationshipAuthoredCorpus,verifyRelationshipConformance} from '../../scripts/core-ideals/relationship-conformance';
+import {verifyRelationshipAuthoredCorpus,verifyRelationshipBindingRoundTrips} from '../../scripts/core-ideals/relationship-conformance';
 // @covers US-045-AC1 @covers US-045-AC2 @covers US-045-AC3 @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 test('independently authored current relationship shapes preserve unknown content and keyed association',()=>{
  const result=verifyRelationshipAuthoredCorpus();expect(result.cases.length).toBeGreaterThanOrEqual(9);
@@ -11,5 +12,5 @@ test('independently authored current relationship shapes preserve unknown conten
 },300000);
 // @covers US-045-AC9
 test('relationship binding round trips pass',async()=>{
- const result=await verifyRelationshipConformance();expect(result.roundTrips.failed).toBe(0);expect(result.roundTrips.passed).toBeGreaterThan(0);
+ const result=await verifyRelationshipBindingRoundTrips();expect(result.failed).toBe(0);expect(result.passed).toBeGreaterThan(0);
 },300000);

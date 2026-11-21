@@ -773,6 +773,11 @@ pub fn classify(
                     add_loss(&native_path,native_fragment,"Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet","not-expressible",&mut residuals,&mut observations,ctx)?;
                 }
             }
+            "float" => add_loss(
+                &native_path, native_fragment,
+                "Native floating storage width remains a retained refinement; no portable integer or decimal facet is inferred",
+                "approximated", &mut residuals, &mut observations, ctx,
+            )?,
             _ => add_loss(
                 &native_path,
                 native_fragment,

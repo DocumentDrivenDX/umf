@@ -25,7 +25,7 @@ test('rejects missing, duplicate, forged, mismatched and stale authors',()=>{
  const fake=structuredClone(c.authors);fake[0]!.request.id='stable-code';expect(()=>projectKeysToTableSpec(c.source,fake,c.request)).toThrow();
  const stale=structuredClone(c.source);stale.modules[0]!.elements[1]!.description='changed';expect(()=>projectKeysToTableSpec(stale,c.authors,c.request)).toThrow('component changed');
  const renamed=declareCoreKey(c.source,keyRecord,{id:'stable-id',name:'New name',fields:[keyId]});expect(()=>projectKeysToTableSpec(renamed.target,c.authors,c.request)).toThrow('meaning changed');
- const foreign=structuredClone(c.source);foreign.id='another';expect(()=>projectKeysToTableSpec(foreign,c.authors,c.request)).toThrow('author identity');
+ const foreign=structuredClone(c.source);foreign.id='another';expect(()=>projectKeysToTableSpec(foreign,c.authors,c.request)).toThrow('Declaration identity does not match selected Record');
  const rekey=structuredClone(c.source);(rekey.modules[0]!.elements[0]!.keys as any[])[0].fields=[keyId,keyCode];expect(()=>projectKeysToTableSpec(rekey,c.authors,c.request)).toThrow('meaning changed');
 });
 test('rejects incomplete column bindings, unknown ownership, native family mismatch and getters',()=>{

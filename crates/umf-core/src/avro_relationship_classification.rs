@@ -35,7 +35,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
     if let Value::Object(fields) = value {
         fields
             .iter()
-            .find(|(key, _)| key == &k(name))
+            .find(|(key, _)| key.equals_str(name))
             .map(|(_, value)| value)
     } else {
         None
@@ -43,7 +43,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
 }
 fn set(value: &mut Value, name: &str, replacement: Value) {
     if let Value::Object(fields) = value {
-        if let Some((_, old)) = fields.iter_mut().find(|(key, _)| key == &k(name)) {
+        if let Some((_, old)) = fields.iter_mut().find(|(key, _)| key.equals_str(name)) {
             *old = replacement;
         } else {
             fields.push((k(name), replacement));
@@ -100,7 +100,7 @@ fn member<'a>(node: &'a NativeJsonNode, name: &str) -> Option<&'a NativeJsonNode
     if let NativeJsonNode::Object(fields) = node {
         fields
             .iter()
-            .find(|(key, _)| key == &k(name))
+            .find(|(key, _)| key.equals_str(name))
             .map(|(_, value)| value)
     } else {
         None
@@ -429,6 +429,7 @@ fn classify_inner(
             )?;
         }
     }
+    let binding = obj(vec![("id",s(EXTENSION)),("version",s("1.0.0")),("nativeVersion",s("1.12.0")),("subset",s("Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence"))]);
     let mut target = copy_json(&source, ctx)?;
     let conflict = get(
         get(&target, "extensions").unwrap_or(&Value::Null),
@@ -487,7 +488,7 @@ fn classify_inner(
                 ("origin", s("classified")),
                 (
                     "binding",
-                    obj(vec![("id", s(EXTENSION)), ("version", s("1.0.0"))]),
+                    copy_json(&binding, ctx)?,
                 ),
                 (
                     "nativeSource",
@@ -498,7 +499,7 @@ fn classify_inner(
         );
         set(&mut target, "extensions", extensions);
     }
-    let binding = obj(vec![("id",s(EXTENSION)),("version",s("1.0.0")),("nativeVersion",s("1.12.0")),("subset",s("Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence"))]);
+
     let diagnostics = residuals
         .iter()
         .map(|residual| {

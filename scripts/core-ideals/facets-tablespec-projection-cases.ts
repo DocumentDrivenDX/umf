@@ -11,9 +11,11 @@ export function facetsTableSpecProjectionCases(){
   ...[{precision:5,scale:0},{precision:10,scale:0},{precision:5,scale:2},{precision:38,scale:2},{precision:39,scale:2}].map(facets=>({name:'decimal-'+facets.precision+'-'+facets.scale,family:'decimal',type:'DECIMAL' as const,facets})),
  ];
  const rows:{name:string;author:CoreFacetDeclaration|CoreKindDeclaration;request:FacetsTableSpecRequest}[]=[];
- for(const seed of seeds)for(const profile of ['declared-metadata','json-schema','pyspark-schema','gx-spark','gx-suite-spark','ingest-cast','unresolved'] as const)for(const input of ['raw','model-normalized'] as const)for(const mode of ['strict','report'] as const){
+ for(const seed of seeds){
   const author=declareCoreFacets(facetProjectionSource(seed.family),{module:'m',element:'value'},seed.facets);
+  for(const profile of ['declared-metadata','json-schema','pyspark-schema','gx-spark','gx-suite-spark','ingest-cast','unresolved'] as const)for(const input of ['raw','model-normalized'] as const)for(const mode of ['strict','report'] as const){
   rows.push({name:seed.name,author,request:{id:'native',tableName:'Facets',columnName:'value',nativeType:seed.type,mode,profile,input,obligation:'value-domain'}});
+ }
  }
  for(const family of ['float','decimal','integer'])for(const profile of ['pyspark-schema','gx-suite-spark','ingest-cast'] as const)for(const obligation of ['value-domain','exact-input'] as const)for(const mode of ['strict','report'] as const){
   const author=declareCoreElementKind(facetProjectionSource(family),{module:'m',element:'value'},'field');

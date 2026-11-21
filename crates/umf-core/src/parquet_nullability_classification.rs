@@ -7,7 +7,7 @@ use crate::{
     parquet_capture_inspection::{
         get_parquet_field_metadata, inspect_parquet_containers, inspect_parquet_schema,
     },
-    parquet_document_capture::capture_parquet_document,
+    parquet_document_capture::capture_parquet_document_retaining,
     parquet_record_type_candidate::SchemaElement,
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
@@ -355,7 +355,7 @@ pub fn classify_parquet_nullability(
         )
     })?;
     let capture =
-        capture_parquet_document(&source, request_index, engine, registry, capabilities, ctx)?;
+        capture_parquet_document_retaining(&source, request_index, engine, registry, capabilities, ctx)?;
     let physical = inspect_parquet_schema(&source, engine, registry, capabilities, ctx)?;
     let fields = get_parquet_field_metadata(&source, engine, registry, capabilities, ctx)?;
     let containers = inspect_parquet_containers(&source, engine, registry, capabilities, ctx)?;
@@ -508,7 +508,7 @@ pub fn classify_parquet_nullability(
         };
         for (index, rep, _, _) in ancestry_indices.iter().skip(start) {
             if rep == &u("optional") {
-                absence_paths.push(path_string("/schema/", *index));
+                absence_paths.push(t(&format!("/schema/{index}/repetition_type")));
             }
         }
         nullability = if absence_paths.is_empty() {
@@ -834,7 +834,7 @@ pub fn recover_parquet_nullability_bytes(
             "Index invalid",
         )
     })?;
-    Ok(capture_parquet_document(
+    Ok(capture_parquet_document_retaining(
         get(&verified, "source").unwrap_or(&Value::Null),
         index,
         engine,

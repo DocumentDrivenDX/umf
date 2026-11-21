@@ -98,7 +98,9 @@ fn parse_resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineEr
     )
 }
 
-fn embedded_parquet_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), EngineError> {
+fn embedded_parquet_engine(ctx: &mut Context<'_>) -> Result<crate::fixed_resources::Prepared<(Engine, Registry)>, EngineError> {
+    static RESOURCES: std::sync::OnceLock<crate::fixed_resources::Fixed<(Engine, Registry)>> = std::sync::OnceLock::new();
+    crate::fixed_resources::prepare(&RESOURCES, ctx, |ctx| {
     let engine = Engine::new(
         ResourceSet::new(
             parse_resource(include_str!("../../../spec/core/schema.json"), ctx)?,
@@ -141,6 +143,8 @@ fn embedded_parquet_engine(ctx: &mut Context<'_>) -> Result<(Engine, Registry), 
         )?;
     }
     Ok((engine, registry))
+
+    })
 }
 
 struct NoCapabilities;
@@ -305,9 +309,10 @@ fn hex(bytes: &[u8], ctx: &mut Context<'_>) -> Result<String, EngineError> {
 
 /// Execute one tagged Record Type request. Inputs and results are full tagged
 /// UMF `Value`s; the operation is selected explicitly by `op`.
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire_json: &str) -> String {
-    let mut no_control = |_: usize| Ok(());
-    execute_wire_with_control(wire_json, &mut no_control)
+    execute_wire_context(wire_json, &mut Context::ordinary(), true)
 }
 
 /// Execute with caller-owned work control applied to transport, embedded
@@ -316,15 +321,18 @@ pub fn execute_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire_json, &mut ctx)?;
+    execute_wire_context(wire_json, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire_json: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire_json, ctx)?;
         if text_field(&request, "profile").as_deref() != Some(PROFILE) {
             return Err(request_error("Record Type binding profile is required"));
         }
         let op =
             text_field(&request, "op").ok_or_else(|| request_error("Operation is required"))?;
-        validate_envelope(&request, &op, &mut ctx)?;
+        validate_envelope(&request, &op, ctx)?;
         let output = match op.as_str() {
             "classifyAvroRecordType" => {
                 let source =
@@ -334,7 +342,7 @@ pub fn execute_wire_with_control(
                 umf_core::avro_record_type_classifier::classify_avro_record_type(
                     source,
                     operation_request,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverAvroRecordTypeBundle" => {
@@ -343,7 +351,7 @@ pub fn execute_wire_with_control(
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
                 umf_core::avro_record_type_recovery::recover_avro_record_type_bundle(
-                    receipt, current, &mut ctx,
+                    receipt, current, ctx,
                 )?
             }
             "classifyParquetRecordType" => {
@@ -351,8 +359,9 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let operation_request = parquet_request(operation_request, &mut ctx)?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let operation_request = parquet_request(operation_request, ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_record_type_operation::classify_parquet_record_type(
                     source,
@@ -360,7 +369,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "classifyParquetRecord" => {
@@ -368,8 +377,9 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let operation_request = parquet_record_request(operation_request, &mut ctx)?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let operation_request = parquet_record_request(operation_request, ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_record_classifier::classify_parquet_record(
                     source,
@@ -377,7 +387,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverParquetRecordBytes" => {
@@ -385,7 +395,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let bytes = umf_core::parquet_record_recovery::recover_parquet_record_bytes(
                     receipt,
@@ -393,9 +404,9 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?;
-                let bytes_hex = hex(&bytes, &mut ctx)?;
+                let bytes_hex = hex(&bytes, ctx)?;
                 ctx.charge_work(bytes_hex.len(), Utf16::default())?;
                 Value::Object(vec![(
                     Utf16::from("bytesHex"),
@@ -407,7 +418,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let bytes =
                     umf_core::parquet_record_type_recovery::recover_parquet_record_type_bytes(
@@ -416,9 +428,9 @@ pub fn execute_wire_with_control(
                         &engine,
                         &registry,
                         &mut capabilities,
-                        &mut ctx,
+                        ctx,
                     )?;
-                let bytes_hex = hex(&bytes, &mut ctx)?;
+                let bytes_hex = hex(&bytes, ctx)?;
                 ctx.charge_work(bytes_hex.len(), Utf16::default())?;
                 Value::Object(vec![(
                     Utf16::from("bytesHex"),
@@ -430,7 +442,8 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_relationship_classifier::classify(
                     source,
@@ -438,7 +451,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyParquetRelationshipClassification" => {
@@ -446,7 +459,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_relationship_classifier::verify(
                     receipt,
@@ -454,7 +468,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverParquetRelationshipSource" => {
@@ -462,7 +476,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let recovered = umf_core::parquet_relationship_classifier::recover_source(
                     receipt,
@@ -470,7 +485,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?;
                 recovered
             }
@@ -479,7 +494,8 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_nullability_classification::classify_parquet_nullability(
                     source,
@@ -487,7 +503,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyParquetNullabilityClassification" => {
@@ -495,10 +511,11 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_nullability_classification::verify_parquet_nullability_classification(
-                    receipt, current, &engine, &registry, &mut capabilities, &mut ctx,
+                    receipt, current, &engine, &registry, &mut capabilities, ctx,
                 )?
             }
             "recoverParquetNullabilityBytes" => {
@@ -506,12 +523,13 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let bytes = umf_core::parquet_nullability_classification::recover_parquet_nullability_bytes(
-                    receipt, current, &engine, &registry, &mut capabilities, &mut ctx,
+                    receipt, current, &engine, &registry, &mut capabilities, ctx,
                 )?;
-                let bytes_hex = hex(&bytes, &mut ctx)?;
+                let bytes_hex = hex(&bytes, ctx)?;
                 Value::Object(vec![(
                     Utf16::from("bytesHex"),
                     Value::string_utf8(bytes_hex),
@@ -522,7 +540,8 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_field_classification::classify_parquet_field(
                     source,
@@ -530,7 +549,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyParquetFieldClassification" => {
@@ -538,7 +557,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_field_classification::verify_parquet_field_classification(
                     receipt,
@@ -546,7 +566,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverParquetFieldBytes" => {
@@ -554,7 +574,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let bytes = umf_core::parquet_field_classification::recover_parquet_field_bytes(
                     receipt,
@@ -562,9 +583,9 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?;
-                let bytes_hex = hex(&bytes, &mut ctx)?;
+                let bytes_hex = hex(&bytes, ctx)?;
                 Value::Object(vec![(
                     Utf16::from("bytesHex"),
                     Value::string_utf8(bytes_hex),
@@ -575,7 +596,8 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_key_classification::classify_parquet_keys(
                     source,
@@ -583,7 +605,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyParquetKeyClassification" => {
@@ -591,7 +613,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_key_classification::verify_parquet_key_classification(
                     receipt,
@@ -599,7 +622,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverParquetKeySource" => {
@@ -607,7 +630,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let bytes = umf_core::parquet_key_classification::recover_parquet_key_source(
                     receipt,
@@ -615,9 +639,9 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?;
-                let bytes_hex = hex(&bytes, &mut ctx)?;
+                let bytes_hex = hex(&bytes, ctx)?;
                 ctx.charge_work(bytes_hex.len(), Utf16::default())?;
                 Value::Object(vec![(
                     Utf16::from("bytesHex"),
@@ -629,7 +653,8 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_facets_classification::classify(
                     source,
@@ -637,7 +662,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyParquetFacetClassification" => {
@@ -645,7 +670,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_facets_classification::verify(
                     receipt,
@@ -653,7 +679,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverParquetFacetSource" => {
@@ -661,7 +687,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let bytes = umf_core::parquet_facets_classification::recover_source(
                     receipt,
@@ -669,9 +696,9 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?;
-                let bytes_hex = hex(&bytes, &mut ctx)?;
+                let bytes_hex = hex(&bytes, ctx)?;
                 ctx.charge_work(bytes_hex.len(), Utf16::default())?;
                 Value::Object(vec![(
                     Utf16::from("bytesHex"),
@@ -683,7 +710,7 @@ pub fn execute_wire_with_control(
                     field(&request, "author").ok_or_else(|| request_error("author is required"))?,
                     field(&request, "request")
                         .ok_or_else(|| request_error("request is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverFacetsFromParquet" => {
@@ -692,7 +719,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "nativeHex")
                         .ok_or_else(|| request_error("nativeHex is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "projectKeysToParquet" => {
@@ -702,7 +729,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("authors is required"))?,
                     field(&request, "request")
                         .ok_or_else(|| request_error("request is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyKeysParquetProjection" => {
@@ -711,7 +738,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverKeysParquetIdeal" => {
@@ -720,7 +747,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "current")
                         .ok_or_else(|| request_error("current is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "projectNullabilityToParquet" => {
@@ -728,7 +755,7 @@ pub fn execute_wire_with_control(
                     field(&request, "author").ok_or_else(|| request_error("author is required"))?,
                     field(&request, "request")
                         .ok_or_else(|| request_error("request is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverNullabilityFromParquet" => {
@@ -737,7 +764,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "nativeHex")
                         .ok_or_else(|| request_error("nativeHex is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "projectCardinalityToParquet" => {
@@ -745,7 +772,7 @@ pub fn execute_wire_with_control(
                     field(&request, "author").ok_or_else(|| request_error("author is required"))?,
                     field(&request, "request")
                         .ok_or_else(|| request_error("request is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverCardinalityFromParquet" => {
@@ -754,7 +781,7 @@ pub fn execute_wire_with_control(
                         .ok_or_else(|| request_error("receipt is required"))?,
                     field(&request, "nativeHex")
                         .ok_or_else(|| request_error("nativeHex is required"))?,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "classifyParquetCardinality" => {
@@ -762,7 +789,8 @@ pub fn execute_wire_with_control(
                     field(&request, "source").ok_or_else(|| request_error("source is required"))?;
                 let operation_request = field(&request, "request")
                     .ok_or_else(|| request_error("request is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_cardinality_classification::classify(
                     source,
@@ -770,7 +798,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "verifyParquetCardinalityClassification" => {
@@ -778,7 +806,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 umf_core::parquet_cardinality_classification::verify_classification(
                     receipt,
@@ -786,7 +815,7 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?
             }
             "recoverParquetCardinalityBytes" => {
@@ -794,7 +823,8 @@ pub fn execute_wire_with_control(
                     .ok_or_else(|| request_error("receipt is required"))?;
                 let current = field(&request, "current")
                     .ok_or_else(|| request_error("current is required"))?;
-                let (engine, registry) = embedded_parquet_engine(&mut ctx)?;
+                let prepared = embedded_parquet_engine(ctx)?;
+            let (engine, registry) = &*prepared;
                 let mut capabilities = NoCapabilities;
                 let bytes = umf_core::parquet_cardinality_classification::recover_bytes(
                     receipt,
@@ -802,9 +832,9 @@ pub fn execute_wire_with_control(
                     &engine,
                     &registry,
                     &mut capabilities,
-                    &mut ctx,
+                    ctx,
                 )?;
-                let bytes_hex = hex(&bytes, &mut ctx)?;
+                let bytes_hex = hex(&bytes, ctx)?;
                 ctx.charge_work(bytes_hex.len(), Utf16::default())?;
                 Value::Object(vec![(
                     Utf16::from("bytesHex"),
@@ -813,8 +843,9 @@ pub fn execute_wire_with_control(
             }
             _ => return Err(request_error("Unknown Record Type binding operation")),
         };
-        encode(&output, &mut ctx)
-    })();
+        encode(&output, ctx)
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }
 
@@ -857,7 +888,8 @@ mod tests {
 
     fn parquet_source(bytes: &[u8]) -> Value {
         let mut ctx = Context::ordinary();
-        let (engine, registry) = embedded_parquet_engine(&mut ctx).unwrap();
+        let prepared = embedded_parquet_engine(&mut ctx).unwrap();
+        let (engine, registry) = &*prepared;
         let mut capabilities = NoCapabilities;
         umf_core::parquet_capture_inspection::import_parquet_schema(
             bytes,

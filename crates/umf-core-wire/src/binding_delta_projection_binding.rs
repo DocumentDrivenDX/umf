@@ -32,7 +32,7 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         .to_utf8()
         .map_err(|_| err("lossPolicy must be UTF-8"))?;
     let binding_resources = BindingIndexProjectionResources::new(ctx)?;
-    let delta_resources = DeltaLogResources::new(ctx)?;
+    let delta_resources = DeltaLogResources::prepared(ctx)?;
     binding_delta_projection::project_binding_to_delta(
         &binding_resources,
         &delta_resources,
@@ -43,18 +43,23 @@ fn execute(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         ctx,
     )
 }
+// Fixed schemas are prepared in one admitted cold lifetime. Caller data,
+// counters and limits stay on this Context; no cross-call input cache exists.
 pub fn execute_wire(wire: &str) -> String {
-    let mut control = |_| Ok(());
-    execute_wire_with_control(wire, &mut control)
+    execute_wire_context(wire, &mut Context::ordinary(), true)
 }
 pub fn execute_wire_with_control(
     wire: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
-    let result = (|| {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        let request = decode(wire, &mut ctx)?;
-        execute(&request, &mut ctx).and_then(|value| encode(&value, &mut ctx))
-    })();
+    execute_wire_context(wire, &mut Context::ordinary().with_host_control(control), false)
+}
+
+fn execute_wire_context(wire: &str, ctx: &mut Context<'_>, owned: bool) -> String {
+    let run = |ctx: &mut Context<'_>| -> Result<_, EngineError> {
+        let request = decode(wire, ctx)?;
+        execute(&request, ctx).and_then(|value| encode(&value, ctx))
+        };
+    let result = if owned { ctx.with_codegen_construction(run) } else { run(ctx) };
     result_envelope(result)
 }

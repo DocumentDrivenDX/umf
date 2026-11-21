@@ -28,8 +28,10 @@ test('US-019-AC23 coordinated renames retain data, metadata and reversible field
 },120000);
 test('US-019-AC23 missing correspondence and invalid policies cannot produce partial files',async()=>{
  const bytes=new Uint8Array(await Bun.file(base+'none.parquet').arrayBuffer()),source=captureParquet(bytes,{id:'guards'}),policy={parquetIndex:1,arrowFieldPath:[0],name:'new',uninterpretedMetadata:'preserve-and-report' as const};
- for(const changes of [{arrowFieldPath:[9]},{arrowFieldPath:[1]},{name:'events'},{name:''},{name:'\ud800'},{name:'detail'}]){const result=renameParquetFieldWithArrowSchema(source,{...policy,...changes},flatbufferBackend);expect(result.status).toBe('blocked');expect(result.output).toBeUndefined();expect(check(result)).toBe(true);expect(result.source).toEqual(source);}
+ for(const changes of [{arrowFieldPath:[9]},{arrowFieldPath:[1]},{name:'events'},{name:'detail'}]){const result=renameParquetFieldWithArrowSchema(source,{...policy,...changes},flatbufferBackend);expect(result.status).toBe('blocked');expect(result.output).toBeUndefined();expect(check(result)).toBe(true);expect(result.source).toEqual(source);}
  const absent=captureParquet(new Uint8Array(await Bun.file('fixtures/parquet/arrow-schema/physical-only.parquet').arrayBuffer()),{id:'absent'});expect(renameParquetFieldWithArrowSchema(absent,policy,flatbufferBackend).status).toBe('blocked');
+ expect(()=>renameParquetFieldWithArrowSchema(source,{...policy,name:'\ud800'},flatbufferBackend)).toThrow('Metadata contains non-UTF-8 text');
+ expect(()=>renameParquetFieldWithArrowSchema(source,{...policy,name:''},flatbufferBackend)).toThrow('Explicit schema indexes');
  expect(()=>renameParquetFieldWithArrowSchema(source,{...policy,uninterpretedMetadata:'discard'} as any,flatbufferBackend)).toThrow();
  expect(()=>renameParquetFieldWithArrowSchema(source,{...policy,arrowFieldPath:[]} as any,flatbufferBackend)).toThrow();
  expect(exportParquetCapture(source)).toEqual(bytes);

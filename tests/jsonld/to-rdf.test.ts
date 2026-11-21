@@ -5,16 +5,20 @@ import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/to-rdf-schema.json';
 import {importJsonLdDocument,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeJsonLdNodeEdit,exportJsonLdDocument,exportRdfNQuads,getRdfQuads,readDocument,writeDocument} from '../../src/index-node-v4';
+import {assertDiagnosticContract,assertRdfDatasets,type RdfComparison} from './native-report-assertions';
 import {equalJsonLdText} from '../../scripts/jsonld-compare';
 const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC13: complete toRDF corpus retains sources, candidates and every gap',async()=>{
+ const comparisons:RdfComparison[]=[];
  const cases=(await Bun.file('fixtures/jsonld/to-rdf/results.json').json()).cases,manifest=await Bun.file('native/jsonld/sources/toRdf-manifest.jsonld').json();expect(cases.map((c:any)=>c.id)).toEqual(manifest.sequence.map((c:any)=>c['@id'].slice(1)));expect(cases).toHaveLength(467);
  expect(cases.filter((c:any)=>c.positive&&c.status==='blocked').map((c:any)=>c.id)).toEqual([]);expect(cases.filter((c:any)=>!c.positive&&c.status==='candidate')).toHaveLength(0);
- for(const c of cases){const raw=await Bun.file(c.path).text(),d=importJsonLdDocument(raw,c.inputs),r=await proposeJsonLdToRdf(d,c.options);expect(check(r)).toBe(true);expect(r.status).toBe(c.status);expect(r.diagnostics).toEqual(c.diagnostics);expect(r.resourcesUsed).toEqual(c.resourcesUsed);expect(r.source).toEqual(d);for(const format of ['json','yaml'] as const){expect(exportJsonLdDocument(readDocument(writeDocument(r.source,format),format))).toBe(raw);if(r.candidate)expect(exportRdfNQuads(readDocument(writeDocument(r.candidate,format),format))).toBe(await Bun.file(c.exports.find((e:any)=>e.format===format).path).text());}}
+ for(const c of cases){const raw=await Bun.file(c.path).text(),d=importJsonLdDocument(raw,c.inputs),r=await proposeJsonLdToRdf(d,c.options);expect(check(r)).toBe(true);expect(r.status).toBe(c.status);assertDiagnosticContract(r,c.diagnostics,'JSONLD_TO_RDF');expect(r.diagnostics).toEqual((await proposeJsonLdToRdf(d,c.options)).diagnostics);expect(r.resourcesUsed).toEqual(c.resourcesUsed);expect(r.source).toEqual(d);for(const format of ['json','yaml'] as const){expect(exportJsonLdDocument(readDocument(writeDocument(r.source,format),format))).toBe(raw);if(r.candidate){const actual=exportRdfNQuads(r.candidate);expect(exportRdfNQuads(readDocument(writeDocument(r.candidate,format),format))).toBe(actual);comparisons.push({id:c.id+'/'+format,actual,expected:await Bun.file(c.exports.find((e:any)=>e.format===format).path).text()});}}}
+ await assertRdfDatasets(comparisons);
 },180000);
 test('US-026-AC13: loss guards, opaque JSON, known literal/list terms and copied edits',async()=>{
+ const comparisons:RdfComparison[]=[];
  const cases=(await Bun.file('fixtures/jsonld/to-rdf/authored/results.json').json()).results;expect(cases).toHaveLength(48);
- for(const c of cases){const d=importJsonLdDocument(c.source,c.inputs),r=await proposeJsonLdToRdf(d,c.options);expect(check(r)).toBe(true);expect(r.status).toBe(c.status);expect(r.source).toEqual(d);expect(r.diagnostics).toEqual(c.diagnostics);if(c.blocked)expect(r.candidate).toBeUndefined();for(const format of ['json','yaml'] as const){expect(exportJsonLdDocument(readDocument(writeDocument(r.source,format),format))).toBe(c.source);if(r.candidate)expect(exportRdfNQuads(readDocument(writeDocument(r.candidate,format),format))).toBe(await Bun.file(c.exports.find((e:any)=>e.format===format).path).text());}
+ for(const c of cases){const d=importJsonLdDocument(c.source,c.inputs),r=await proposeJsonLdToRdf(d,c.options);expect(check(r)).toBe(true);expect(r.status).toBe(c.status);expect(r.source).toEqual(d);assertDiagnosticContract(r,c.diagnostics,'JSONLD_TO_RDF');expect(r.diagnostics).toEqual((await proposeJsonLdToRdf(d,c.options)).diagnostics);if(c.blocked)expect(r.candidate).toBeUndefined();for(const format of ['json','yaml'] as const){expect(exportJsonLdDocument(readDocument(writeDocument(r.source,format),format))).toBe(c.source);if(r.candidate){const actual=exportRdfNQuads(r.candidate);expect(exportRdfNQuads(readDocument(writeDocument(r.candidate,format),format))).toBe(actual);comparisons.push({id:c.id+'/'+format,actual,expected:await Bun.file(c.exports.find((e:any)=>e.format===format).path).text()});}}
  if(c.id==='basic'){expect(exportRdfNQuads(r.candidate!)).toBe('<urn:s> <urn:p> "hello" .\n');const e=await proposeJsonLdToRdf(proposeJsonLdNodeEdit(d,'/p','"changed"').document,c.options);expect(exportRdfNQuads(e.candidate!)).toBe('<urn:s> <urn:p> "changed" .\n');expect(exportJsonLdDocument(d)).toBe(c.source);}
  expect(r.numericPolicy).toBe(c.options.numericPolicy??'strict');
  if(c.numberLoss)expect(r.diagnostics.some(d=>d.code==='JSONLD_RDF_NUMBER_LOSS'&&d.path.startsWith('/'))).toBe(true);
@@ -26,6 +30,7 @@ test('US-026-AC13: loss guards, opaque JSON, known literal/list terms and copied
  if(c.id==='direction-i18n')expect(exportRdfNQuads(r.candidate!)).toBe('<urn:s> <urn:p> "v"^^<https://www.w3.org/ns/i18n#en_rtl> .\n');
  if(c.id==='opaque-json'){expect(r.diagnostics.some(d=>['JSONLD_RDF_INDEX','JSONLD_RDF_EMPTY_GRAPH'].includes(d.code))).toBe(false);const q=getRdfQuads(r.candidate!)[0]!;expect(JSON.parse((q.object as any).value)).toEqual({'@index':'data','@graph':[],a:[2,1]});}
  }
+ await assertRdfDatasets(comparisons);
  const d=importJsonLdDocument('{"@id":"urn:s","urn:p":"v"}',{id:'guard',baseIRI:'https://example.org/'});(d.modules[0]!.elements[0]!.extensions['umf.jsonld'] as any).future={meaning:'kept'};const r=await proposeJsonLdToRdf(d,{id:'out',lossPolicy:'report'});expect(r.status).toBe('blocked');expect(r.source).toEqual(d);await expect(proposeJsonLdToRdf(d,{id:'out',lossPolicy:'guess'} as any)).rejects.toThrow();await expect(proposeJsonLdToRdf(d,{id:'out',lossPolicy:'report',numericPolicy:'guess'} as any)).rejects.toThrow();
 },30000);
 test('US-026-AC13: native comparisons retain mismatches and non-comparable generalized datasets',async()=>{

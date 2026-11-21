@@ -17,6 +17,11 @@ pub struct DeltaActionResources {
     schema: Value,
 }
 impl DeltaActionResources {
+    #[doc(hidden)]
+    pub fn prepared(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<Self>, EngineError> {
+        static RESOURCES: std::sync::OnceLock<crate::resource_cache::Fixed<DeltaActionResources>> = std::sync::OnceLock::new();
+        crate::resource_cache::prepare(&RESOURCES, ctx, Self::new)
+    }
     pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         let schema = serialization::read_json_value(
             &include_str!("../../../spec/extensions/delta-log/action-schema.json")

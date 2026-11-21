@@ -57,6 +57,10 @@ if(onlyFile){
 }
 if(shard)files=files.filter((_,index)=>index%shard![1]===shard![0]-1);
 if(!files.length)throw Error('No test files selected');
+// A file that owns a bounded subprocess pool reserves the packet while active.
+// Its existing file/test deadlines still apply; other files start afterward.
+const exclusiveFiles=new Set<string>();
+for(const file of files)if(/^\/\/ @test-exclusive\s*$/m.test(await readFile(file,'utf8')))exclusiveFiles.add(file);
 
 let passed=0,failed=0,skipped=0,assertions=0,completed=0,next=0,stop=false;
 const failures:string[]=[],started=performance.now();
@@ -68,8 +72,10 @@ async function runOne(file:string){
  const limit=Number(process.env.UMF_FILE_TIMEOUT_MS??'600000');
  const timer=setTimeout(()=>child.kill(9),limit);
  const finished=Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
- const gaveUp=Symbol(),result=await Promise.race([finished,new Promise<typeof gaveUp>(resolve=>setTimeout(()=>resolve(gaveUp),limit+5000))]);
- clearTimeout(timer);
+ const gaveUp=Symbol();
+ let drainTimer:ReturnType<typeof setTimeout>|undefined;
+ const result=await Promise.race([finished,new Promise<typeof gaveUp>(resolve=>{drainTimer=setTimeout(()=>resolve(gaveUp),limit+5000);})])
+  .finally(()=>{clearTimeout(timer);if(drainTimer!==undefined)clearTimeout(drainTimer);});
  if(result===gaveUp){child.kill(9);failed++;completed++;failures.push(file);console.log(`FAIL ${file} (exit -1, hung: killed after ${limit/1000}s)\n`);if(!keepGoing)stop=true;return;}
  const [stdout,stderr,exitCode]=result;
  const text=stdout+'\n'+stderr,summary=text.match(/Ran (\d+) tests? across (\d+) files?\./);
@@ -78,11 +84,21 @@ async function runOne(file:string){
  const valid=!!summary&&Number(summary[1])===pass+fail+skip+todo&&Number(summary[2])===1;
  passed+=pass;failed+=fail;skipped+=skip;assertions+=checks;completed++;
  const bad=exitCode!==0||!valid||fail>0;
+ // A killed/invalid file may have no Bun assertion summary. Count its
+ // synthetic failure just as the drain watchdog does.
+ if(bad&&fail===0)failed++;
  if(bad){failures.push(file);console.log(`FAIL ${file} (exit ${exitCode}, ${pass} pass, ${fail} fail)\n${text.trim().split('\n').slice(-60).join('\n')}\n`);if(!keepGoing)stop=true;}
  else console.log(`ok   ${file} (${pass} pass${skip?`, ${skip} skip`:''}) [${((performance.now()-fileStart)/1000).toFixed(1)}s]`);
 }
+let active=0,exclusiveActive=false;
+const waiting:Array<()=>void>=[];
 await Promise.all(Array.from({length:Math.min(jobs,files.length)},async()=>{
- while(!stop&&next<files.length)await runOne(files[next++]!);
+ while(!stop&&next<files.length){
+  const file=files[next]!,exclusive=exclusiveFiles.has(file);
+  if(exclusiveActive||(exclusive&&active>0)){await new Promise<void>(resolve=>waiting.push(resolve));continue;}
+  next++;active++;if(exclusive)exclusiveActive=true;
+  try{await runOne(file);}finally{active--;if(exclusive)exclusiveActive=false;for(const resume of waiting.splice(0))resume();}
+ }
 }));
 console.log(`\n ${passed} pass\n ${skipped} skip\n ${failed} fail\n ${assertions} expect() calls\nRan ${passed+skipped+failed} tests across ${completed} of ${files.length} files. [${((performance.now()-started)/1000).toFixed(2)}s]`);
 if(failures.length){console.log('\nFailed files:\n'+failures.sort().map(f=>'  '+f).join('\n'));process.exitCode=1;}

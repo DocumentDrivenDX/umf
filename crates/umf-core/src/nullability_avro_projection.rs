@@ -122,7 +122,9 @@ fn runtime(ctx: &mut Context<'_>) -> Result<Arc<Runtime>, EngineError> {
     }
     Ok(value)
 }
-fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), EngineError> {
+fn schemas(ctx: &mut Context<'_>) -> Result<crate::resource_cache::Prepared<(CompiledSchema, CompiledSchema)>, EngineError> {
+    static CACHE: std::sync::OnceLock<crate::resource_cache::Fixed<(CompiledSchema, CompiledSchema)>> = std::sync::OnceLock::new();
+    crate::resource_cache::prepare(&CACHE, ctx, |ctx| {
     let operation = json_resource(RESULT_SCHEMA, ctx)?;
     let resources = SchemaResources {
         entries: vec![
@@ -145,6 +147,7 @@ fn schemas(ctx: &mut Context<'_>) -> Result<(CompiledSchema, CompiledSchema), En
     .ok_or_else(|| err("NULLABILITY_AVRO_RESULT", "Missing request schema", ""))?;
     let request = CompiledSchema::compile(request, &resources, ctx)?;
     Ok((result, request))
+    })
 }
 fn native_type(name: &str) -> Result<Value, EngineError> {
     let primitive = match name {
@@ -313,7 +316,8 @@ fn project_inner(
 ) -> Result<Value, EngineError> {
     let author_input = copy_json(author_input, ctx)?;
     let request = copy_json(request_input, ctx)?;
-    let (result_schema, request_schema) = schemas(ctx)?;
+    let prepared_schemas = schemas(ctx)?;
+    let (result_schema, request_schema) = &*prepared_schemas;
     if let Some(d) = request_schema.validate(&request, ctx)?.first() {
         return Err(EngineError::new(
             "NULLABILITY_AVRO_REQUEST",

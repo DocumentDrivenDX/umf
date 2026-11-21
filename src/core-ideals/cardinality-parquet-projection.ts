@@ -9,6 +9,6 @@ export interface CardinalityParquetRequest {id:string;recordName:string;fieldNam
 const binding=schema.properties.binding.const;
 export interface CardinalityParquetProjection {
  operation:'project-cardinality-parquet';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreCardinalityDeclaration;request:CardinalityParquetRequest;target?:Document;binding:typeof binding;
- mapping:{origin:'authored';idealPath:string;cardinality:'one'|'array'|'map'|'unspecified';outcome:'exact'|'approximated'|'unknown'|'not-expressible';items:{idealPath:string;nativeIndex:number}[]};
+ mapping:{origin:'authored';idealPath:string;cardinality:'one'|'array'|'set'|'map'|'unspecified';outcome:'exact'|'approximated'|'unknown'|'not-expressible';items:{idealPath:string;nativeIndex:number}[]};
  residuals:{path:string;value:Json;reason:string;outcome:'approximated'|'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];diagnostics:Diagnostic[];
 }

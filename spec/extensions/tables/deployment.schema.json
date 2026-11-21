@@ -73,6 +73,29 @@
             "maxLength": 63
           },
           "maxProperties": 256
+        },
+        "independentExtensions": {
+          "description": "CONTRACT-081 host-asserted extensions whose payloads do not change the generated tables, columns, constraints, indexes, policies or grants",
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
@@ -239,7 +262,24 @@
                   "timestamp",
                   "timestamptz",
                   "uuid",
-                  "bytea"
+                  "bytea",
+                  "jsonb",
+                  "_bool",
+                  "_text",
+                  "_varchar",
+                  "_bpchar",
+                  "_int2",
+                  "_int4",
+                  "_int8",
+                  "_float4",
+                  "_float8",
+                  "_numeric",
+                  "_date",
+                  "_timestamp",
+                  "_timestamptz",
+                  "_uuid",
+                  "_bytea",
+                  "_jsonb"
                 ]
               },
               "typeMod": {

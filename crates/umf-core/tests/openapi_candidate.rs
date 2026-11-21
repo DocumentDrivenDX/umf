@@ -394,3 +394,19 @@ fn schema_position_pointers_preserve_unpaired_utf16_code_units() {
     let schema=extract_openapi_schema(&document,&Utf16::new(pointer),None,&runtime,&mut ctx).unwrap();
     assert_eq!(schema.schema.render_compact(&mut ctx).unwrap(),Utf16::from(r#"{"type":"string"}"#));
 }
+
+#[test]
+fn extraction_preserves_out_of_profile_numbers_without_interpreting_them() {
+    let (runtime, mut ctx) = runtime();
+    for token in ["9007199254740993", "1.0000000000000001", "1e10000"] {
+        let text = format!(r#"{{"openapi":"3.1.2","info":{{"title":"Exact","version":"1"}},"components":{{"schemas":{{"A":{{"minimum":{token},"$schema":"urn:exact"}}}}}}}}"#);
+        let document = import_openapi_document(&Utf16::from(text.as_str()), &Utf16::from("exact"), OpenapiFormat::Json, None, &[], &runtime, &mut ctx).unwrap();
+        let result = extract_openapi_schema(&document, &Utf16::from("/components/schemas/A"), None, &runtime, &mut ctx).unwrap();
+        assert!(result.native_schema.to_utf8().unwrap().contains(token));
+        assert_eq!(result.source, document);
+        assert_eq!(result.dialect_origin, "schema");
+        assert_eq!(result.dialect, Utf16::from("urn:exact"));
+        assert!(!result.complete);
+        assert_eq!(export_openapi_document(&document, None, &runtime, &mut ctx).unwrap(), Utf16::from(text));
+    }
+}

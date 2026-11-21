@@ -51,6 +51,9 @@ pub fn execute(
             umf_core_wire::decode_host_callback_value(output, ctx)
         })
     };
+    if control_dispatcher.is_none() {
+        return Ok(umf_core_wire::security_candidate_condition_binding::execute_wire_with_callback_default(wire, &mut callback));
+    }
     let mut control =
         control_dispatcher.map(|dispatcher| super::GraphqlNodeControl { env, dispatcher });
     let mut hook = |amount| match control.as_mut() {

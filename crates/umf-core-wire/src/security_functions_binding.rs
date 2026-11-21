@@ -45,76 +45,9 @@ pub fn execute_security_functions_wire_with_control(
             }
             let source = field(&request, "source")
                 .ok_or_else(|| fail("REQUEST", "Source document is required"))?;
-            let field_ref = field(&request, "field")
-                .ok_or_else(|| fail("REQUEST", "Qualified Field is required"))?;
-            let value = field(&request, "value")
-                .ok_or_else(|| fail("REQUEST", "Literal value is required"))?;
-            let include_identity = match field(&request, "includeIdentity") {
-                Some(Value::Bool(value)) => *value,
-                _ => return Err(fail("REQUEST", "includeIdentity must be a boolean")),
-            };
-            let limit = |name: &str| -> Result<usize, EngineError> {
-                match field(&request, name) {
-                    Some(Value::Number(value))
-                        if value.is_finite()
-                            && value.fract() == 0.0
-                            && *value >= 0.0
-                            && *value
-                                <= if core_limits {
-                                    if name == "workLimit" {
-                                        5_000_000.0
-                                    } else {
-                                        8_000_000.0
-                                    }
-                                } else {
-                                    100_000.0
-                                } =>
-                    {
-                        Ok(*value as usize)
-                    }
-                    _ => Err(fail(
-                        "REQUEST",
-                        "Candidate literal limits must be bounded nonnegative integers",
-                    )),
-                }
-            };
-            let work_limit = limit("workLimit")?;
-            let text_limit = limit("textLimit")?;
             drop(context);
-            let mut work_used = 0usize;
-            let mut limited_control = |amount: usize| {
-                work_used = work_used.saturating_add(amount);
-                if work_used > work_limit {
-                    return Err(EngineError::new(
-                        "PROTECTION_LITERAL_BOUND",
-                        Default::default(),
-                        "resource-exhausted: literal work budget exceeded",
-                    ));
-                }
-                control(amount)
-            };
-            let mut operation_context = Context::ordinary().with_host_control(&mut limited_control);
-            let mut output = umf_core::security_functions::inspect_candidate_literal(
-                source,
-                field_ref,
-                value,
-                include_identity,
-                text_limit,
-                &mut operation_context,
-            )?;
-            if operation_context.charged_work() > work_limit as u64 {
-                return Err(fail(
-                    "PROTECTION_LITERAL_BOUND",
-                    "resource-exhausted: literal work budget exceeded",
-                ));
-            }
-            if let Value::Object(fields) = &mut output {
-                fields.push((
-                    "workUnits".into(),
-                    Value::Number(operation_context.charged_work() as f64),
-                ));
-            }
-            drop(operation_context);
+            let profile = if core_limits { LiteralBudgetProfile::Core } else { LiteralBudgetProfile::Protection };
+            let output = inspect_literal_request(&request, source, profile, Some(&mut *control))?;
             let mut output_context = Context::ordinary().with_host_control(control);
             return encode(&output, &mut output_context);
         }
@@ -296,7 +229,7 @@ fn closed_object(value: &Value, expected: &[&str]) -> bool {
         && expected.iter().all(|name| {
             members
                 .iter()
-                .any(|(key, _)| key.to_utf8().ok().as_deref() == Some(*name))
+                .any(|(key, _)| crate::field_name_equals(key, name))
         })
 }
 
@@ -506,5 +439,113 @@ mod tests {
         .unwrap();
         assert_eq!(response["status"], "error");
         assert_eq!(calls, 1);
+    }
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum LiteralBudgetProfile { Protection, Core }
+fn inspect_literal_request(request: &Value, source: &Value, profile: LiteralBudgetProfile,
+    mut control: Option<&mut dyn FnMut(usize) -> Result<(), EngineError>>,
+) -> Result<Value, EngineError> {
+    let field_ref = field(&request, "field")
+        .ok_or_else(|| fail("REQUEST", "Qualified Field is required"))?;
+    let value = field(&request, "value")
+        .ok_or_else(|| fail("REQUEST", "Literal value is required"))?;
+    let include_identity = match field(&request, "includeIdentity") {
+        Some(Value::Bool(value)) => *value,
+        _ => return Err(fail("REQUEST", "includeIdentity must be a boolean")),
+    };
+    let limit = |name: &str| -> Result<usize, EngineError> {
+        match field(&request, name) {
+            Some(Value::Number(value))
+        if value.is_finite()
+            && value.fract() == 0.0
+            && *value >= 0.0
+            && *value
+                <= if profile == LiteralBudgetProfile::Core {
+            if name == "workLimit" {
+                5_000_000.0
+            } else {
+                8_000_000.0
+            }
+                } else {
+            100_000.0
+                } =>
+            {
+        Ok(*value as usize)
+            }
+            _ => Err(fail(
+        "REQUEST",
+        "Candidate literal limits must be bounded nonnegative integers",
+            )),
+        }
+    };
+    let work_limit = limit("workLimit")?;
+    let text_limit = limit("textLimit")?;
+    let mut work_used = 0usize;
+    let mut limited_control = |amount: usize| {
+        work_used = work_used.saturating_add(amount);
+        if work_used > work_limit {
+            return Err(EngineError::new(
+        "PROTECTION_LITERAL_BOUND",
+        Default::default(),
+        "resource-exhausted: literal work budget exceeded",
+            ));
+        }
+        if let Some(control) = control.as_mut() { (**control)(amount)?; }
+        Ok(())
+    };
+    let mut operation_context = Context::ordinary().with_host_control(&mut limited_control);
+    let mut output = umf_core::security_functions::inspect_candidate_literal(
+        source,
+        field_ref,
+        value,
+        include_identity,
+        text_limit,
+        &mut operation_context,
+    )?;
+    if operation_context.charged_work() > work_limit as u64 {
+        return Err(fail(
+            "PROTECTION_LITERAL_BOUND",
+            "resource-exhausted: literal work budget exceeded",
+        ));
+    }
+    if let Value::Object(fields) = &mut output {
+        fields.push((
+            "workUnits".into(),
+            Value::Number(operation_context.charged_work() as f64),
+        ));
+    }
+    drop(operation_context);
+    Ok(output)
+}
+
+/// Immutable source only: every current Field/value request receives the same
+/// Protection 100,000-work/text ceilings and original literal work receipt.
+/// Controls are invocation capabilities, never retained in the source owner.
+pub struct PreparedSecurityLiteralSource { source: Value }
+impl PreparedSecurityLiteralSource {
+    pub fn new(source_wire: &str, control: Option<&mut dyn FnMut(usize) -> Result<(), EngineError>>) -> Result<Self, EngineError> {
+        let mut context = match control { Some(control) => Context::ordinary().with_host_control(control), None => Context::ordinary() };
+        Ok(Self { source: decode(source_wire, &mut context)? })
+    }
+    pub fn execute(&self, wire: &str, mut control: Option<&mut dyn FnMut(usize) -> Result<(), EngineError>>) -> String {
+        let result = (|| {
+            let mut context = match control.as_mut() { Some(control) => Context::ordinary().with_host_control(&mut **control), None => Context::ordinary() };
+            let request = decode(wire, &mut context)?;
+            drop(context);
+            if !closed_object(&request, &["profile", "op", "field", "value", "includeIdentity", "workLimit", "textLimit"])
+                || text_field(&request, "profile").as_deref() != Some(SECURITY_FUNCTIONS_PROFILE)
+                || text_field(&request, "op").as_deref() != Some("inspectCandidateLiteral") {
+                return Err(fail("REQUEST", "Closed prepared candidate literal request required"));
+            }
+            let output = match control.as_mut() {
+                Some(control) => inspect_literal_request(&request, &self.source, LiteralBudgetProfile::Protection, Some(&mut **control))?,
+                None => inspect_literal_request(&request, &self.source, LiteralBudgetProfile::Protection, None)?,
+            };
+            let mut context = match control.as_mut() { Some(control) => Context::ordinary().with_host_control(&mut **control), None => Context::ordinary() };
+            encode(&output, &mut context)
+        })();
+        result_envelope(result)
     }
 }

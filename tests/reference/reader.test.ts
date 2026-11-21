@@ -33,7 +33,7 @@ test('latest uses numeric core versions and preserves conditional, open and recu
  const doc=await Bun.file('docs/helix/05-deploy/microsite/dist/reference/'+constant.href).json();
  expect(doc.value).toBe('"umf.avro.keys"');expect(doc.purpose).toContain('identifier');expect(doc.example).toContain('AVRO_KEYS_EXTENSION');
  const fn=reader.api.find((a:any)=>a.title==='readDocument');const f=await Bun.file('docs/helix/05-deploy/microsite/dist/reference/'+fn.href).json();
- expect(f.parameters.some((p:any)=>p.name==='text')).toBe(true);expect(f.returns.length).toBeGreaterThan(0);
+ expect(f.parameters.find((p:any)=>p.name==='source')).toMatchObject({type:'string',optional:false});expect(f.returns.length).toBeGreaterThan(0);
  const registry=reader.api.find((a:any)=>a.title==='Registry');const cls=await Bun.file('docs/helix/05-deploy/microsite/dist/reference/'+registry.href).json();expect(cls.members.some((p:any)=>p.name.startsWith('#'))).toBe(false);expect(cls.members.some((p:any)=>p.name==='register')).toBe(true);
  const i=reader.api.find((a:any)=>a.title==='AvroKeyRequest');const type=await Bun.file('docs/helix/05-deploy/microsite/dist/reference/'+i.href).json();expect(type.members.some((p:any)=>p.name==='nativeSource')).toBe(true);
 });
@@ -51,7 +51,7 @@ test('latest uses numeric core versions and preserves conditional, open and recu
 test('the generated YAML example preserves all JSON example values',async()=>{
  const base='docs/helix/05-deploy/microsite/dist/reference/';
  const reader=await Bun.file(base+'reader.json').json(),yaml=await Bun.file(base+'example.yaml').text();
- expect(yaml.trimStart().startsWith('umf:')).toBe(true);
+ expect(readDocument(yaml,'yaml').umf).toBe(reader.examples[0].umf);
  expect(readDocument(yaml,'yaml')).toEqual(reader.examples[0]);
 });
 

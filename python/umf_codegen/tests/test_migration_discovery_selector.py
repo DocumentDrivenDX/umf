@@ -35,7 +35,7 @@ class DiscoverySelector(unittest.TestCase):
                 self.previous, self.next, options=selector,
             ), [self.candidate])
         execute.assert_called_once_with(
-            {"previous": self.previous, "next": self.next, "options": selector}, 30,
+            {"previous": self.previous, "next": self.next, "selector": selector}, 30,
             operation="discover_changes",
         )
 
