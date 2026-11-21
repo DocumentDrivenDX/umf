@@ -501,3 +501,67 @@ fn millisecond_timestamp_uses_native_precision_without_silent_default_rounding()
     assert!(steps_sql(bundle).join("\n").contains(r#""due_at" pg_catalog."timestamptz"(3)"#));
     assert_eq!(engine.verify_table_deployment_with_host(bundle, &mut host, &mut Context::ordinary()).unwrap(), *bundle);
 }
+
+fn replace_once(text: &str, from: &str, to: &str) -> String {
+    assert_eq!(text.matches(from).count(), 1, "fixture drift: {from}");
+    text.replacen(from, to, 1)
+}
+
+/// A float Field stored as float8, and a table fill factor, as Fireweed's
+/// queue tables use (CONTRACT-081).
+fn float_and_fillfactor_space() -> String {
+    let text = compact_space();
+    let text = replace_once(
+        &text,
+        r#"{"id":"await_key","kind":"field""#,
+        r#"{"id":"weight","kind":"field","scalarType":"float","cardinality":"one","nullability":"absent-allowed","extensions":{}},{"id":"await_key","kind":"field""#,
+    );
+    let text = replace_once(
+        &text,
+        r#"{"module":"space","element":"body"},{"module":"space","element":"await_keys"}]"#,
+        r#"{"module":"space","element":"body"},{"module":"space","element":"weight"},{"module":"space","element":"await_keys"}]"#,
+    );
+    let text = replace_once(
+        &text,
+        r#""nativeType":{"kind":"jsonb"},"default":{"kind":"literal","value":{"json":{}}}},"#,
+        r#""nativeType":{"kind":"jsonb"},"default":{"kind":"literal","value":{"json":{}}}},{"field":{"module":"space","element":"weight"},"name":"weight","nativeType":{"kind":"float8"}},"#,
+    );
+    replace_once(
+        &text,
+        r#""name":"queue_items","columns":"#,
+        r#""name":"queue_items","fillfactor":80,"columns":"#,
+    )
+}
+
+#[test]
+fn float8_columns_and_fill_factor_compile_and_verify() {
+    let resources = resources();
+    let engine = CodegenEngine::new(&resources);
+    let text = float_and_fillfactor_space();
+    let mut host = FireweedHost { calls: 0 };
+    let result = engine
+        .compile_table_deployment_with_host(&request(&text, true), &mut host, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(member(&result, "status"), Some(&s("compiled")), "{result:?}");
+    let bundle = member(&result, "bundle").unwrap();
+    let sql = steps_sql(bundle).join("\n");
+    assert!(sql.contains(r#""weight" pg_catalog."float8","#), "{sql}");
+    assert!(sql.contains("\n) WITH (fillfactor = 80)"), "{sql}");
+    assert_eq!(
+        engine.verify_table_deployment_with_host(bundle, &mut host, &mut Context::ordinary()).unwrap(),
+        *bundle
+    );
+
+    // Out-of-range fill factors are invalid declarations.
+    let low = text.replace(r#""fillfactor":80"#, r#""fillfactor":5"#);
+    assert!(inspect_codes(&engine, &low).contains(&"EXTENSION_STRUCTURE".to_string()));
+    // Float defaults stay refused: no float literal codec is qualified.
+    let float_default = text.replace(
+        r#""nativeType":{"kind":"float8"}"#,
+        r#""nativeType":{"kind":"float8"},"default":{"kind":"literal","value":{"floatToken":"1.5"}}"#,
+    );
+    let result = engine
+        .compile_table_deployment_with_host(&request(&float_default, true), &mut host, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(member(&result, "status"), Some(&s("blocked")), "{result:?}");
+}

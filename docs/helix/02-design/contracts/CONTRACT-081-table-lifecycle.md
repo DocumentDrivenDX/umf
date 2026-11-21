@@ -99,7 +99,7 @@ writes. Forged wire requests MUST receive the same check as generated methods.
 
 | Member | Shape | Rules |
 | --- | --- | --- |
-| Table | `{id,record,name,columns,indexes,checks,foreignKeys,policy}` | Stable unique `id`; exact core Record; explicit native table name; complete mappings of its stored singleton members |
+| Table | `{id,record,name,columns,fillfactor?,indexes,checks,foreignKeys,policy}` | Stable unique `id`; exact core Record; explicit native table name; complete mappings of its stored singleton members; optional `fillfactor` from 10 through 100 emits `WITH (fillfactor = N)` |
 | Column | `{field:Ref,name,nativeType,default?,generated?,immutable?}` | Exact member Field; explicit native column name; required/nullable comes from core; no hidden copy of logical identity |
 | NativeType | tagged object, below | Explicit PostgreSQL capacity; typed inspection and client/runtime checks retain its bounds |
 | Index | `{id,name,fields:Ref[],unique:boolean,include:Ref[],method?,directions?,where?}` | Nonempty ordered fields, no duplicates; include cannot overlap; nonconcurrent unless a separately declared migration step selects concurrency; method, direction and predicate rules below |
@@ -390,13 +390,23 @@ canonical `[table.id,key.id]`; collisions with authored relation/constraint name
 refuse. Install role/schema creation and role memberships are host preconditions,
 not generated source permissions. Every statement executes as the configured
 install owner in an already allocated private schema with pg_catalog-first
-resolution. No guessed identity-sequence name is granted. Ordinary UPDATE grants
+resolution. No guessed identity-sequence name is granted, and none is needed:
+PostgreSQL 18 draws an identity column's default for any role with INSERT on the
+table and no privilege on its sequence (checked on 18.7), so an insert-allowed
+audience receives only its table grant. Ordinary UPDATE grants
 exclude Key, immutable and generated columns. Per-row group membership is bounded
 to native groups declared in trusted configuration. Related-table SELECT denial
 refuses via compilation rather than adding a broader policy.
 
+A scalar `float8` column stores the core `float` family as IEEE 754 binary64.
+PostgreSQL also admits NaN and infinities, which core float does not promise to
+exclude; writers that need finite values check them. No float literal codec is
+qualified, so float defaults, checks and float arrays refuse compilation.
+`fillfactor` is fixed at creation: a migration that changes it is refused by the
+existing-table exactness rule.
+
 The initial executable compiler subset refuses unqualified char padding,
-float/time codecs, identity sequence privileges, semantic-type/extension
+float4/timestamp codecs, semantic-type/extension
 composition, unsupported logical facets and implicit logical allowedValues.
 Numeric native precision/scale must equal the original logical declaration.
 Seeds outside the separately versioned administrative execution profile remain

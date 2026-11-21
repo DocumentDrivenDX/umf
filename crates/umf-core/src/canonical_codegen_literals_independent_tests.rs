@@ -124,7 +124,7 @@ fn literal01_all_nine_actual_owned_roots_match_raw_core_reader_bits_units_and_or
     };
     assert_eq!(fields.len(), 9);
     assert_eq!(data::SOURCES.len(), 9);
-    assert_eq!(RAW.iter().map(|s| s.len()).sum::<usize>(), 403853);
+    assert_eq!(RAW.iter().map(|s| s.len()).sum::<usize>(), 404059);
     for (i, ((name, value), source)) in fields.into_iter().zip(data::SOURCES.iter()).enumerate() {
         assert_eq!(name, Utf16::from(NAMES[i]));
         assert_eq!(source.name, NAMES[i]);
