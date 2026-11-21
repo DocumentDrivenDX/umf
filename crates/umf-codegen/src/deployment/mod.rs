@@ -2508,18 +2508,9 @@ fn emit_table_policies(
                 )?;
             }
         }
-        if array_items(member(table, "columns").unwrap_or(&Value::Null))
-            .unwrap_or(&[])
-            .iter()
-            .any(|c| member(c, "generated").is_some())
-            && string_member(member(rules, "insert").unwrap_or(&Value::Null), "kind")
-                != Some(&Utf16::from("deny"))
-        {
-            return Err(Refusal::unsupported(
-                path,
-                "Identity sequence privilege qualification is pending",
-            ));
-        }
+        // An identity column's sequence needs no grant: PostgreSQL 18 draws
+        // its default for any role allowed to INSERT into the table, so an
+        // insert-allowed audience gets the table grant alone (CONTRACT-081).
     }
     Ok(())
 }

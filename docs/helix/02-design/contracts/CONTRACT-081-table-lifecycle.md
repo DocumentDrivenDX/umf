@@ -390,7 +390,10 @@ canonical `[table.id,key.id]`; collisions with authored relation/constraint name
 refuse. Install role/schema creation and role memberships are host preconditions,
 not generated source permissions. Every statement executes as the configured
 install owner in an already allocated private schema with pg_catalog-first
-resolution. No guessed identity-sequence name is granted. Ordinary UPDATE grants
+resolution. No guessed identity-sequence name is granted, and none is needed:
+PostgreSQL 18 draws an identity column's default for any role with INSERT on the
+table and no privilege on its sequence (checked on 18.7), so an insert-allowed
+audience receives only its table grant. Ordinary UPDATE grants
 exclude Key, immutable and generated columns. Per-row group membership is bounded
 to native groups declared in trusted configuration. Related-table SELECT denial
 refuses via compilation rather than adding a broader policy.
@@ -403,7 +406,7 @@ qualified, so float defaults, checks and float arrays refuse compilation.
 existing-table exactness rule.
 
 The initial executable compiler subset refuses unqualified char padding,
-float4/timestamp codecs, identity sequence privileges, semantic-type/extension
+float4/timestamp codecs, semantic-type/extension
 composition, unsupported logical facets and implicit logical allowedValues.
 Numeric native precision/scale must equal the original logical declaration.
 Seeds outside the separately versioned administrative execution profile remain
