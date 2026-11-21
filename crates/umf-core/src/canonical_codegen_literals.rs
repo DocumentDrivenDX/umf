@@ -268,7 +268,7 @@ pub(super) static TEXTS: &[&[u16]] = &[
     &[35, 47, 36, 100, 101, 102, 115, 47, 101, 120, 116, 101, 110, 115, 105, 111, 110, 75, 105, 110, 100, 69, 110, 116, 114, 121],
     &[35, 47, 36, 100, 101, 102, 115, 47, 101, 120, 116, 101, 110, 115, 105, 111, 110, 75, 105, 110, 100, 67, 111, 118, 101, 114, 97, 103, 101],
     &[36, 99, 111, 109, 109, 101, 110, 116],
-    &[71, 101, 110, 101, 114, 97, 116, 101, 100, 32, 102, 114, 111, 109, 32, 115, 112, 101, 99, 47, 109, 101, 116, 97, 109, 111, 100, 101, 108, 47, 117, 109, 102, 46, 121, 97, 109, 108, 59, 32, 109, 111, 100, 101, 108, 32, 51, 57, 52, 100, 101, 100, 53, 101, 101, 54, 102, 102, 100, 56, 97, 101, 52, 52, 54, 53, 102, 99, 101, 100, 97, 101, 102, 98, 49, 99, 99, 100, 54, 101, 97, 101, 52, 100, 97, 53, 99, 50, 53, 57, 102, 102, 100, 100, 102, 51, 54, 98, 49, 48, 55, 55, 97, 55, 51, 99, 49, 49, 98, 102, 59, 32, 99, 111, 109, 112, 105, 108, 101, 114, 32, 50, 102, 101, 54, 48, 55, 55, 48, 48, 97, 99, 101, 99, 54, 56, 49, 51, 50, 100, 50, 55, 99, 50, 98, 51, 98, 52, 56, 54, 101, 98, 102, 50, 97, 48, 49, 56, 52, 56, 48, 53, 55, 102, 51, 99, 56, 55, 57, 99, 98, 101, 51, 51, 49, 50, 98, 57, 51, 97, 53, 98, 55, 53, 99],
+    &[71, 101, 110, 101, 114, 97, 116, 101, 100, 32, 102, 114, 111, 109, 32, 115, 112, 101, 99, 47, 109, 101, 116, 97, 109, 111, 100, 101, 108, 47, 117, 109, 102, 46, 121, 97, 109, 108, 59, 32, 109, 111, 100, 101, 108, 32, 51, 57, 52, 100, 101, 100, 53, 101, 101, 54, 102, 102, 100, 56, 97, 101, 52, 52, 54, 53, 102, 99, 101, 100, 97, 101, 102, 98, 49, 99, 99, 100, 54, 101, 97, 101, 52, 100, 97, 53, 99, 50, 53, 57, 102, 102, 100, 100, 102, 51, 54, 98, 49, 48, 55, 55, 97, 55, 51, 99, 49, 49, 98, 102, 59, 32, 99, 111, 109, 112, 105, 108, 101, 114, 32, 98, 99, 53, 102, 50, 56, 54, 49, 57, 99, 54, 52, 51, 99, 100, 48, 57, 55, 99, 53, 97, 55, 50, 56, 51, 53, 57, 54, 101, 52, 97, 57, 52, 101, 48, 49, 50, 52, 101, 52, 51, 100, 52, 51, 53, 52, 52, 101, 49, 51, 97, 100, 49, 98, 101, 49, 100, 99, 50, 54, 53, 51, 49, 100],
     &[117, 114, 110, 58, 117, 109, 102, 58, 101, 120, 116, 101, 110, 115, 105, 111, 110, 45, 112, 97, 99, 107, 97, 103, 101, 58, 48, 46, 49, 48, 46, 48],
     &[117, 109, 102, 46, 99, 111, 110, 115, 116, 114, 97, 105, 110, 116, 115, 47, 49],
     &[115, 116, 101, 112, 115],
@@ -539,7 +539,7 @@ pub(super) static TEXTS: &[&[u16]] = &[
     &[109, 111, 100, 101, 108, 83, 104, 97, 50, 53, 54],
     &[51, 57, 52, 100, 101, 100, 53, 101, 101, 54, 102, 102, 100, 56, 97, 101, 52, 52, 54, 53, 102, 99, 101, 100, 97, 101, 102, 98, 49, 99, 99, 100, 54, 101, 97, 101, 52, 100, 97, 53, 99, 50, 53, 57, 102, 102, 100, 100, 102, 51, 54, 98, 49, 48, 55, 55, 97, 55, 51, 99, 49, 49, 98, 102],
     &[99, 111, 109, 112, 105, 108, 101, 114, 83, 104, 97, 50, 53, 54],
-    &[50, 102, 101, 54, 48, 55, 55, 48, 48, 97, 99, 101, 99, 54, 56, 49, 51, 50, 100, 50, 55, 99, 50, 98, 51, 98, 52, 56, 54, 101, 98, 102, 50, 97, 48, 49, 56, 52, 56, 48, 53, 55, 102, 51, 99, 56, 55, 57, 99, 98, 101, 51, 51, 49, 50, 98, 57, 51, 97, 53, 98, 55, 53, 99],
+    &[98, 99, 53, 102, 50, 56, 54, 49, 57, 99, 54, 52, 51, 99, 100, 48, 57, 55, 99, 53, 97, 55, 50, 56, 51, 53, 57, 54, 101, 52, 97, 57, 52, 101, 48, 49, 50, 52, 101, 52, 51, 100, 52, 51, 53, 52, 52, 101, 49, 51, 97, 100, 49, 98, 101, 49, 100, 99, 50, 54, 53, 51, 49, 100],
     &[117, 110, 100, 101, 99, 108, 97, 114, 101, 100],
     &[85, 78, 68, 69, 67, 76, 65, 82, 69, 68, 95, 69, 88, 84, 69, 78, 83, 73, 79, 78],
     &[69, 120, 116, 101, 110, 115, 105, 111, 110, 32, 104, 97, 115, 32, 110, 111, 32, 118, 101, 114, 115, 105, 111, 110, 32, 100, 101, 99, 108, 97, 114, 97, 116, 105, 111, 110],
@@ -915,7 +915,7 @@ pub(super) static TEXTS: &[&[u16]] = &[
 ];
 #[rustfmt::skip]
 pub(super) static SOURCES: &[SourceLiteral] = &[
-    SourceLiteral { name: "coreSchema", path: "spec/core/schema.json", bytes: 45726, sha256: "8608035772c609076d0312e373c2c7c79b00103f78f63e4835362d4def374815", value: Literal::Object(&[
+    SourceLiteral { name: "coreSchema", path: "spec/core/schema.json", bytes: 45726, sha256: "58b7db7f14271b455c4f8ecd1c4413ab14ec7abec9ba084a7c184b59c0c1c8e0", value: Literal::Object(&[
         Member { key: 0, value: Literal::Text(1) },
         Member { key: 2, value: Literal::Text(3) },
         Member { key: 4, value: Literal::Text(5) },
@@ -2889,7 +2889,7 @@ pub(super) static SOURCES: &[SourceLiteral] = &[
         ]) },
         Member { key: 263, value: Literal::Text(264) },
     ]) },
-    SourceLiteral { name: "referenceSchema", path: "spec/core/semantic-type-reference.schema.json", bytes: 45847, sha256: "1b932eb10b7f0f3d1cb312b4dc751f62a03d4f603f2e0fe052501bf5c99110ae", value: Literal::Object(&[
+    SourceLiteral { name: "referenceSchema", path: "spec/core/semantic-type-reference.schema.json", bytes: 45847, sha256: "067a597eae9b0841e3e7fd54a1098594bb243176a843de4bfaa4407535ecb39a", value: Literal::Object(&[
         Member { key: 0, value: Literal::Text(1) },
         Member { key: 2, value: Literal::Text(100) },
         Member { key: 6, value: Literal::Text(186) },
@@ -4862,7 +4862,7 @@ pub(super) static SOURCES: &[SourceLiteral] = &[
         ]) },
         Member { key: 263, value: Literal::Text(264) },
     ]) },
-    SourceLiteral { name: "packageSchema", path: "spec/core/extension-package.schema.json", bytes: 45385, sha256: "30f892779b904f238a5db7967fd191ec4f2574a44d8f8f5412dda6b6a4e4da9b", value: Literal::Object(&[
+    SourceLiteral { name: "packageSchema", path: "spec/core/extension-package.schema.json", bytes: 45385, sha256: "15e1f04bcd0483b0ba0f6b15636a75ed32835ea0dc423872cf094153c8edda49", value: Literal::Object(&[
         Member { key: 0, value: Literal::Text(1) },
         Member { key: 2, value: Literal::Text(265) },
         Member { key: 6, value: Literal::Text(190) },
@@ -6835,7 +6835,7 @@ pub(super) static SOURCES: &[SourceLiteral] = &[
         ]) },
         Member { key: 263, value: Literal::Text(264) },
     ]) },
-    SourceLiteral { name: "constraints", path: "spec/metamodel/generated/core-constraints.json", bytes: 196631, sha256: "2b3295f8323297773673a66b5118bdbc81e34e25bdb14d0133b3f37e3adf1f4a", value: Literal::Object(&[
+    SourceLiteral { name: "constraints", path: "spec/metamodel/generated/core-constraints.json", bytes: 196631, sha256: "0900d67b1af4691492f93196bb83fabd2a954062cd488f3fcc5d036cc6821adc", value: Literal::Object(&[
         Member { key: 212, value: Literal::Text(266) },
         Member { key: 267, value: Literal::Array(&[
             Literal::Object(&[
@@ -13187,7 +13187,7 @@ pub(super) static SOURCES: &[SourceLiteral] = &[
             Member { key: 534, value: Literal::Text(535) },
         ]) },
     ]) },
-    SourceLiteral { name: "domainPolicy", path: "spec/metamodel/generated/domain-policy.json", bytes: 15367, sha256: "ef7a13dce158f20cc7a10b573fe7e30a17c53e6fe335f2d2939e74dcb6ac1112", value: Literal::Object(&[
+    SourceLiteral { name: "domainPolicy", path: "spec/metamodel/generated/domain-policy.json", bytes: 15367, sha256: "ddb82e482b17abe28c780111cc177c669b336c1f3ef9a65e2db4738816873dd2", value: Literal::Object(&[
         Member { key: 187, value: Literal::Object(&[
             Member { key: 52, value: Literal::Array(&[
                 Literal::Text(41),
