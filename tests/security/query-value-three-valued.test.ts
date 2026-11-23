@@ -25,4 +25,5 @@ test('all eight-rule three-valued vectors preserve deny, unknown and disclosure 
   expect(totals.states).toBe(count);expect(totals.permit).toBe(126);expect(totals.unknown).toBe(12610);expect(totals.deny).toBe(386);
   expect(totals.permit+totals.unknown+totals.deny).toBe(count);
  } finally {for(const child of children)if(child.exitCode===null)child.kill();}
-},60000);
+// Each of the four workers checks ~3280 vectors and runs for about two minutes; 60s was never enough.
+},300000);

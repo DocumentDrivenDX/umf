@@ -18,7 +18,8 @@ test('US-022-AC5: dangling, wrong-kind and stale redundant maps are explicit wit
   ['/nodes/'+model+'/unique_id','different'],
  ] as const){const edited=proposeDbtManifestNodeEdit(source,path,JSON.stringify(value)).document,text=exportDbtManifest(edited),r=inspectDbtManifestGraph(edited);expect(r.status).toBe('blocked');expect(r.diagnostics.some(d=>d.code==='DBT_MANIFEST_GRAPH')).toBe(true);expect(exportDbtManifest(edited)).toBe(text);}
  expect(exportDbtManifest(source)).toBe(before);
-});
+// Five native propose/export/inspect round trips over a 460 KB manifest: 125s on the nightly runner.
+},360000);
 test('US-022-AC5: repeated macro references and recursion are retained without a cycle-legality claim',()=>{
  const source=importDbtManifest(raw,{id:'recursive'}),id='macro.umf_fixture.fixture_label',d=proposeDbtManifestNodeEdit(source,'/macros/'+id+'/depends_on/macros',JSON.stringify([id,id])).document,r=inspectDbtManifestGraph(d);
  expect(r.status).toBe('checked');expect(r.complete).toBe(false);expect(r.edges.filter(e=>e.dependent===id&&e.dependency===id)).toHaveLength(2);

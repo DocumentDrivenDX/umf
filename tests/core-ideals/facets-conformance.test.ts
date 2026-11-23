@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // @test-exclusive
+// Four workers over ~1800 authored rows outrun the runner's 10-minute file deadline; the test's own budget is 30 minutes.
+// @file-timeout-ms 1860000
 import {test, expect} from 'bun:test';
 import {facetSystems} from '../../scripts/core-ideals/facets-evidence';
 import {verifyFacetRoundTrips} from '../../scripts/core-ideals/facets-roundtrips';

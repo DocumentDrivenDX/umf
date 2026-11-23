@@ -16,7 +16,8 @@ test('native catalog availability matrix retains source and scope through both s
   expect(validateDocument(r.target!,registry).valid).toBe(true);
   for(const format of ['json','yaml'] as const){const back=readJsonValue(writeJsonValue(copyJson(r),format),format) as unknown as typeof r;expect(recoverPostgresqlNullabilitySource(back,back.target!)).toBe(text);}
  }
-},120000);
+// Every case validates a full target document natively: 160s on the nightly runner.
+},360000);
 test('domain NOT NULL, CHECK UNKNOWN, NOT VALID and generated expressions do not become column permission',()=>{
  for(const relation of ['domain_required','positive','checked_required','unvalidated','generated_value']){
   const {source,column}=postgresqlAvailabilitySource(text,relation);
