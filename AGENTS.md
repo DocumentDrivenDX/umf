@@ -9,8 +9,9 @@ registry semantics and adapters; `bindings/` expose it to Python (PyO3), Node/Bu
 - Tests: `cargo test --locked`; `python -m pytest python/tests`; Bun tests need the native addon, so build it first
   (`cargo build -p umf-core-node --features native-postgresql`, copy the library to
   `bindings/core/node/umf_core_node.node`) and run `bun scripts/run-tests.ts --exclude-file scripts/slow-tests.txt`.
-- CI is `.github/workflows/ci.yml` (Linux only; slow suites run nightly). Keep it green; do not skip tests to make
-  it green without a one-line reason in `scripts/known-failures.txt`.
+- CI is `.github/workflows/ci.yml` (Linux only): one job of at most 20 minutes per run, which runs a budgeted,
+  rotating share of the tests (`scripts/ci/plan.ts`); slow suites run in the nightly lane. Keep it within that
+  budget and green; do not skip tests to make it green without a one-line reason in `scripts/known-failures.txt`.
 - Do not commit run output, receipts, evidence, screenshots-as-proof or built artifacts; CI keeps run output as
   workflow artifacts. A size guard fails the build for large tracked files.
 - Versions: `python scripts/set-version.py X.Y.Z` edits every manifest and regenerates derived files; then

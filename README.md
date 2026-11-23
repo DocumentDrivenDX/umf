@@ -85,8 +85,11 @@ cp target/debug/libumf_core_node.* bindings/core/node/umf_core_node.node
 bun scripts/run-tests.ts --keep-going --exclude-file scripts/slow-tests.txt --exclude-file scripts/known-failures.txt
 ```
 
-CI (`.github/workflows/ci.yml`, Linux) runs all of this on every pull request; slow suites (WASM, SDK packaging,
-browsers) run nightly. `scripts/known-failures.txt` lists the Bun tests that currently fail, with reasons.
+CI (`.github/workflows/ci.yml`, Linux) is one job of at most 20 minutes per run. It builds once, then runs the
+tests that failed last time, the tests the change touches and the least recently run ones, until the time is
+spent; repeated runs cover the whole fast inventory, and the run summary lists what did not run. The nightly run
+does the same for the slow suites (`scripts/slow-tests.txt`, `scripts/ci/nightly-commands.tsv`).
+`scripts/known-failures.txt` lists the Bun tests that currently fail, with reasons; CI does not run them.
 Releases are tag-driven (`.github/workflows/release.yml`).
 
 ## License
