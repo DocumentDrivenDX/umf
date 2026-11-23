@@ -548,7 +548,7 @@ function createNativeKeyTupleOperations(addon, resources, controls, setup = {}) 
     try {
       const resourcesWire = encodeWire(resources, {maxDepth: 128, maxValues: 1_000_000, work: setup.work});
       setup.work?.(resourcesWire.length);
-      runtime = new addon.CoreKeyTupleRuntime(resourcesWire, setup.bridge);
+      runtime = deferredRuntime(setup.bridge, addon.CoreKeyTupleRuntime, resourcesWire, setup.bridge);
     } catch (error) { nativeKeyTupleFailure(error); }
   }
   return {
@@ -633,6 +633,26 @@ function createNativeKeyTupleOperations(addon, resources, controls, setup = {}) 
   };
 }
 
+// These native runtimes compile UMF's core resources when constructed, about a second each. One created
+// without resource controls is built on first use instead, so importing the package does not pay for
+// engines a caller never uses. With controls, construction stays eager: its work and limits are charged to
+// the factory call, as before.
+function deferredRuntime(bridge, Runtime, ...args) {
+  if (bridge !== undefined) return new Runtime(...args);
+  let instance;
+  const real = () => (instance ??= new Runtime(...args));
+  return new Proxy(Object.create(null), {
+    get(_, key) {
+      // Reading a method (to check the binding exposes it, or to call it later) does not build the runtime.
+      if (instance === undefined && typeof Runtime.prototype[key] === 'function') return (...callArgs) => real()[key](...callArgs);
+      const target = real();
+      const value = target[key];
+      return typeof value === 'function' ? value.bind(target) : value;
+    },
+    has(_, key) { return key in real(); },
+  });
+}
+
 function createNativeCoreKeyVerificationOperations(addon, resources, controls, setup = {}) {
   const sharedRuntime = setup.runtime;
   if (sharedRuntime
@@ -648,7 +668,7 @@ function createNativeCoreKeyVerificationOperations(addon, resources, controls, s
   try {
     const resourcesWire = setup.resourcesWire ?? encodeWire(resources, {maxDepth: 128, maxValues: 1_000_000, work: setup.work});
     if (setup.resourcesWire === undefined) setup.work?.(resourcesWire.length);
-    runtime = sharedRuntime ?? new addon.CoreKeyVerificationRuntime(resourcesWire, setup.bridge);
+    runtime = sharedRuntime ?? deferredRuntime(setup.bridge, addon.CoreKeyVerificationRuntime, resourcesWire, setup.bridge);
   } catch (error) { nativeKeyTupleFailure(error); }
   return {
     prepare(receipt) {
@@ -688,7 +708,7 @@ function createNativeCoreRecordTypeVerificationOperations(addon, resources, cont
   try {
     const resourcesWire = encodeWire(resources, {maxDepth:128, maxValues:1_000_000, work:setup.work});
     setup.work?.(resourcesWire.length);
-    runtime = new addon.CoreRecordTypeVerificationRuntime(resourcesWire, setup.bridge);
+    runtime = deferredRuntime(setup.bridge, addon.CoreRecordTypeVerificationRuntime, resourcesWire, setup.bridge);
   } catch (error) { nativeKeyTupleFailure(error); }
   return {
     prepare(receipt) {
@@ -951,7 +971,7 @@ export function createCoreKindNullabilityHostInputEngine(resources, options = {}
   const resourcesWire = encodeWire(fixedResources, {maxDepth:128, maxValues:1_000_000, work:initializeWork});
   initializeWork?.(resourcesWire.length);
   let runtime;
-  try { runtime = new addon.CoreKindNullabilityRuntime(resourcesWire, initializeBridge); }
+  try { runtime = deferredRuntime(initializeBridge, addon.CoreKindNullabilityRuntime, resourcesWire, initializeBridge); }
   catch (error) { nativeKeyTupleFailure(error); }
   const call = (operation, inputs) => {
     const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
@@ -1124,7 +1144,8 @@ export function createArrowSchemaEngine(options = {}) {
   setupWork?.(1);
   let runtime;
   try {
-    runtime = new addon.ArrowSchemaResourcesRuntime(encodeRequestWire({op: 'arrow.schema.createResources'}, setupWork), setupBridge);
+    const request = encodeRequestWire({op: 'arrow.schema.createResources'}, setupWork);
+    runtime = deferredRuntime(setupBridge, addon.ArrowSchemaResourcesRuntime, request, setupBridge);
   } catch (error) {
     let failure;
     try { failure = resultError(JSON.parse(error?.message)); } catch {}
@@ -1705,7 +1726,7 @@ export function createPreparedJsonSchemaEngine(options = {}) {
   const resourceBridge = hasControls(resourceControls) ? createControlBridge(resourceControls) : undefined;
   let runtime;
   try {
-    runtime = new addon.PreparedJsonSchemaRuntimeHandle(resourceBridge);
+    runtime = deferredRuntime(resourceBridge, addon.PreparedJsonSchemaRuntimeHandle, resourceBridge);
   } catch (error) {
     let envelope;
     try { envelope = JSON.parse(error?.message); } catch { throw error; }

@@ -1,5 +1,5 @@
-# Bun test files that fail on Linux after the Rust port (#143) and are skipped by the PR job. They run
-# informationally in the nightly job. Each entry is a possible regression of public behaviour, not a stale or
+# Bun test files that fail on Linux after the Rust port (#143). CI does not run them (scripts/ci/plan.ts skips
+# them in every lane); run one with `bun scripts/run-tests.ts <file>`. Each entry is a possible regression of public behaviour, not a stale or
 # environment-bound test (those were fixed, deleted or moved to scripts/slow-tests.txt): the reason is the a
 # failing assertion or error, tagged with the likely shared cause. Fix the behaviour (or, where the new behaviour is
 # intended, the test) and remove the line.

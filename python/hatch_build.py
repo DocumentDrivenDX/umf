@@ -539,16 +539,23 @@ class CustomBuildHook(BuildHookInterface):
                 if flag not in flags:
                     flags = f"{flags} {flag}".strip()
             build_env["RUSTFLAGS"] = flags
-        subprocess.run(
-            cargo_command,
-            cwd=repository,
-            env=build_env,
-            check=True,
-        )
-        target = Path(os.environ.get("CARGO_TARGET_DIR", repository / "target"))
-        if native_target is not None:
-            target = target / native_target
-        target = target / "release"
+        # CI builds the extension and CLI once, in the same cargo invocation as the
+        # Rust tests and the Node addon, and points UMF_NATIVE_PREBUILT_DIR at that
+        # profile's output directory. Release builds never set it.
+        prebuilt = os.environ.get("UMF_NATIVE_PREBUILT_DIR")
+        if prebuilt:
+            target = Path(prebuilt)
+        else:
+            subprocess.run(
+                cargo_command,
+                cwd=repository,
+                env=build_env,
+                check=True,
+            )
+            target = Path(os.environ.get("CARGO_TARGET_DIR", repository / "target"))
+            if native_target is not None:
+                target = target / native_target
+            target = target / "release"
         candidates = (
             target / "lib_rust_core.dylib",
             target / "lib_rust_core.so",

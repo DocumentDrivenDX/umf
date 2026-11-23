@@ -1,4 +1,5 @@
-# Test files that the fast CI job (bun run test:fast) skips. The nightly job runs every file.
+# Test files that pushes and pull requests skip (bun run test:fast skips them too); the nightly CI lane runs them,
+# a budgeted share each night (scripts/ci/plan.ts).
 # A file belongs here when it needs build output beyond the Node addon (WASM, the SDK in dist/,
 # the built reference site, PostgreSQL WASM, smithy, action prerequisites) or takes minutes.
 # One glob per line, relative to the repository root.

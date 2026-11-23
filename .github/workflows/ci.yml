@@ -1,8 +1,14 @@
 name: ci
 
-# Tests the software, nothing else. Fast jobs run on every push to main and every
-# pull request; the slow suites run in the nightly job (schedule or manual dispatch).
-# Run output is uploaded as workflow artifacts, never committed.
+# Tests the software, nothing else. Every run is one job capped at 20 minutes, so a run never uses more
+# than 20 job-minutes:
+#   - one cargo invocation builds the Rust test binaries, the Node addon, the Python extension and the CLI
+#     with one profile and one feature set, so each crate compiles once;
+#   - scripts/ci/plan.ts fills the time the build leaves with test units: the ones that failed last time,
+#     the ones this change touches, then the least recently run. Repeated runs cover the whole inventory.
+#     The run summary lists every unit not run and the age of its last run.
+# Pushes and pull requests take the fast inventory (Rust, Python, Bun files not in scripts/slow-tests.txt);
+# the nightly lane takes the slow Bun files. Run output is uploaded as workflow artifacts, never committed.
 on:
   push:
     branches: [main]
@@ -10,6 +16,12 @@ on:
   schedule:
     - cron: '17 5 * * *'
   workflow_dispatch:
+    inputs:
+      lane:
+        description: 'push (fast inventory) or nightly (slow Bun files)'
+        type: choice
+        options: [push, nightly]
+        default: push
   workflow_call:
 
 concurrency:
@@ -23,300 +35,184 @@ permissions:
 env:
   CARGO_TERM_COLOR: never
   CARGO_INCREMENTAL: '0'
+  CARGO_PROFILE_TEST_DEBUG: '0'
+  # Every Rust consumer is built by this one command; scripts that build again must use the same packages
+  # and features, or cargo recompiles the shared crates.
+  RUST_PACKAGES: >-
+    -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli
+    -p umf-cli -p umf-graphql -p umf-core-node -p umf-core-python
+  RUST_FEATURES: umf-core/native-postgresql,umf-core-wire/native-postgresql,umf-cli/native-postgresql,umf-core-node/native-postgresql,umf-core-python/native-postgresql
+  LANE: ${{ github.event_name == 'schedule' && 'nightly' || inputs.lane || 'push' }}
 
 jobs:
-  size-guard:
+  test:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 20
     steps:
+      # Tests stop starting at CI_DEADLINE. The margin covers job setup before this step and the post steps;
+      # on main the Rust cache is saved, which takes longer.
+      - name: Start the clock
+        run: |
+          margin=90
+          if [ "$GITHUB_REF" = refs/heads/main ] && [ "$LANE" = push ]; then margin=240; fi
+          echo "CI_DEADLINE=$(( $(date +%s) + 20*60 - margin ))" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 2
       - run: python3 scripts/check-repo-size.py
 
-  # The Node addon is handed to the ts shards through the Actions cache (keyed on the sources that
-  # produce it), not as an artifact: 16 shards downloading one artifact were flaky, and an unchanged
-  # addon is not rebuilt.
-  native-addon:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - id: addon
-        uses: actions/cache@v4
-        with:
-          path: bindings/core/node/umf_core_node.node
-          key: umf-core-node-addon-${{ runner.os }}-${{ hashFiles('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'crates/**/*.rs', 'crates/**/Cargo.toml', 'bindings/core/node/Cargo.toml', 'bindings/core/node/build.rs', 'bindings/core/node/src/**/*.rs', 'spec/extensions/workflow/*.schema.json') }}
-      - if: steps.addon.outputs.cache-hit != 'true'
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: 1.90.0
-      - if: steps.addon.outputs.cache-hit != 'true'
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: native-addon
-      # opt-level 2 without debug info: unoptimized addon builds time out the native tests,
-      # full release builds take twice as long to compile.
-      - if: steps.addon.outputs.cache-hit != 'true'
-        run: |
-          cargo build --locked -p umf-core-node --features native-postgresql
-          cp target/debug/libumf_core_node.so bindings/core/node/umf_core_node.node
-        env:
-          CARGO_PROFILE_DEV_OPT_LEVEL: '2'
-          CARGO_PROFILE_DEV_DEBUG: '0'
-
-  # Build every Rust test binary once; the partitions below only run them.
-  rust-build:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 40
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: 1.90.0
+      # Workspace crates are cached too: a change that touches no Rust source rebuilds nothing.
+      # Only main saves, so pull requests cannot evict it.
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: rust-test
+          shared-key: ci-test
+          cache-workspace-crates: true
+          save-if: ${{ github.ref == 'refs/heads/main' && env.LANE == 'push' }}
       - uses: taiki-e/install-action@v2
         with:
           tool: nextest
-      - run: >-
-          cargo nextest archive --locked --archive-file rust-tests.tar.zst
-          -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen
-          -p umf-metamodel -p umf-metamodel-cli -p umf-cli -p umf-graphql
-        env:
-          CARGO_PROFILE_DEV_DEBUG: '0'
-          CARGO_PROFILE_TEST_DEBUG: '0'
-      - run: cargo check --locked -p umf-core --no-default-features
-        env:
-          CARGO_PROFILE_DEV_DEBUG: '0'
-      - uses: actions/upload-artifact@v4
-        with:
-          name: rust-test-archive
-          path: rust-tests.tar.zst
-          compression-level: 0
-          retention-days: 1
-
-  rust:
-    needs: rust-build
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        partition: [1, 2, 3, 4, 5, 6, 7, 8]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: 1.90.0
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: nextest
-      - uses: actions/download-artifact@v4
-        with:
-          name: rust-test-archive
-      # nextest runs each test in its own process and spreads them over the cores.
-      # umf-cli's tests bake the path of target/debug/umf in at compile time, so the archive is
-      # extracted into ./target of the same checkout path the build job used (--extract-to .).
-      - run: >-
-          cargo nextest run --archive-file rust-tests.tar.zst --extract-to . --extract-overwrite
-          --workspace-remap .
-          --no-fail-fast --partition count:${{ matrix.partition }}/8
-
-  ts:
-    needs: native-addon
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
-      # Some tests spawn `python3.11` and `protoc` and drive Chromium through Playwright.
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Pinned Protobuf compiler and behavioral oracle
-        run: |
-          curl -fsSL -o "$RUNNER_TEMP/protoc.zip" https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-x86_64.zip
-          sudo unzip -o "$RUNNER_TEMP/protoc.zip" -d /usr/local bin/protoc 'include/*'
-          protoc --version
-          python3 -m venv .venv
-          .venv/bin/python -m pip install protobuf==7.36.2 jsonschema==4.26.0 -r native/rdf/oracle-requirements.txt
-      - run: bun install --frozen-lockfile
-      - run: bunx playwright install --with-deps chromium
-      - uses: actions/cache/restore@v4
+          cache: pip
+          cache-dependency-path: |
+            native/rdf/oracle-requirements.txt
+            python/pyproject.toml
+      - name: Python 3.14 (nightly)
+        if: env.LANE == 'nightly'
+        uses: actions/setup-python@v5
         with:
-          path: bindings/core/node/umf_core_node.node
-          key: umf-core-node-addon-${{ runner.os }}-${{ hashFiles('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'crates/**/*.rs', 'crates/**/Cargo.toml', 'bindings/core/node/Cargo.toml', 'bindings/core/node/build.rs', 'bindings/core/node/src/**/*.rs', 'spec/extensions/workflow/*.schema.json') }}
-          fail-on-cache-miss: true
+          python-version: '3.14'
+      - uses: actions/setup-python@v5
+        if: env.LANE == 'nightly'
+        with:
+          python-version: '3.11'
+      - name: Restore the test ledger
+        uses: actions/cache/restore@v4
+        with:
+          path: .ci-ledger
+          key: ci-ledger-${{ env.LANE }}-${{ github.run_id }}
+          restore-keys: ci-ledger-${{ env.LANE }}-
+
+      - name: Build (Rust tests, Node addon, Python extension, CLI)
+        run: |
+          cargo build --locked --profile test --lib --bins --tests $RUST_PACKAGES --features $RUST_FEATURES
+          cp target/debug/libumf_core_node.so bindings/core/node/umf_core_node.node
+          cargo nextest list --locked $RUST_PACKAGES --features $RUST_FEATURES --message-format json > nextest-list.json
+          python3 - <<'EOF'
+          import json, os
+          data = json.load(open('nextest-list.json'))
+          root = os.getcwd() + '/'
+          with open('rust-binaries.txt', 'w') as out:
+              for b in data['rust-suites'].values():
+                  if b['testcases']:
+                      out.write(f"{b['binary-id']}\t{b['cwd'].removeprefix(root)}\n")
+          EOF
+      - run: bun install --frozen-lockfile
+
+      # The slow Bun files and typecheck import the browser WASM package. It is rebuilt only when its inputs
+      # change, and saved straight away so a failing run still keeps it.
+      - name: Restore the browser WASM package
+        if: env.LANE == 'nightly'
+        id: wasm
+        uses: actions/cache/restore@v4
+        with:
+          path: bindings/core/wasm/pkg
+          key: umf-core-wasm-pkg-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml', 'crates/**', 'bindings/core/wasm/Cargo.toml', 'bindings/core/wasm/src/**', 'spec/**') }}
+      - if: env.LANE == 'nightly' && steps.wasm.outputs.cache-hit != 'true'
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-bindgen@0.2.100
+      - name: Build the browser WASM package
+        if: env.LANE == 'nightly' && steps.wasm.outputs.cache-hit != 'true'
+        run: |
+          rustup target add wasm32-unknown-unknown
+          bun scripts/build-reference-wasm.ts
+      - if: env.LANE == 'nightly' && steps.wasm.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: bindings/core/wasm/pkg
+          key: ${{ steps.wasm.outputs.cache-primary-key }}
       - name: Coupled release versions
-        if: matrix.shard == 1
+        if: env.LANE == 'push'
         run: |
           python3 scripts/check-release-versions.py
-          python3 -m unittest discover -s tests/release -v
-      # scripts/slow-tests.txt lists the files that only the nightly job runs; scripts/known-failures.txt
-      # the ones that currently fail and are quarantined (see the PR description).
-      - name: Tests (shard ${{ matrix.shard }} of 24)
-        run: bun scripts/run-tests.ts --jobs 2 --keep-going --exclude-file scripts/slow-tests.txt --exclude-file scripts/known-failures.txt --shard ${{ matrix.shard }}/24
-
-  python:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 45
-    strategy:
-      fail-fast: false
-      matrix:
-        python: ['3.11', '3.14']
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python }}
-      - uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: 1.90.0
-      - uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: python-${{ matrix.python }}
-      - name: Install the three Python packages from source
+          python3 -m unittest discover -s tests/release
+      - name: Choose the tests for this run
         run: |
-          python -m pip install --upgrade pip
+          git diff --name-only HEAD^1 HEAD > changed.txt || true
+          python3 scripts/ci/pytest-ignored.py python/tests python/umf_codegen/tests python/umf_access/tests tools/tests > py-ignored.txt
+          bun scripts/ci/plan.ts --lane "$LANE" --budget-seconds $(( CI_DEADLINE - $(date +%s) - 120 )) \
+            --ledger .ci-ledger/ledger.json --changed changed.txt --rust-binaries rust-binaries.txt \
+            --py-ignored py-ignored.txt --out plan
+          cat plan/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Rust tests
+        if: ${{ !cancelled() }}
+        run: |
+          [ -s plan/rust.txt ] || exit 0
+          filter=$(sed 's/.*/binary_id(=&)/' plan/rust.txt | paste -sd'|')
+          timeout --signal=INT $(( CI_DEADLINE - $(date +%s) )) \
+            cargo nextest run --locked --profile ci $RUST_PACKAGES --features $RUST_FEATURES -E "$filter"
+
+      - name: Python tests
+        if: ${{ !cancelled() }}
+        run: |
+          [ -s plan/py.txt ] || exit 0
           python -m pip install pytest pytest-xdist 'ruff==0.17.1' packaging 'hatchling>=1.27,<2' 'psycopg[binary]' 'cryptography==50.0.2'
-          python -m pip install ./python ./python/umf_codegen ./python/umf_access
-          python -m pip install --no-deps ./python/umf_access_generated_executor
-      # The README quickstart, exactly as the release workflow runs it against the built wheels.
-      - name: README quickstart
-        run: cd "$RUNNER_TEMP" && python "$GITHUB_WORKSPACE/scripts/smoke_quickstart.py"
-      - run: ruff check --select E9,F63,F7,F82 python  # real errors only (syntax, undefined names); style rules are not gated
-      # xdist, one worker per file: the serial run took 13-15 minutes.
-      - run: python -m pytest -q -p no:cacheprovider -n 4 --dist loadfile python/tests python/umf_codegen/tests python/umf_access/tests tools/tests
-      # The generated-access executor package (formerly its own workflow); stdlib only.
-      - working-directory: python/umf_access_generated_executor
-        run: PYTHONPATH=src python -m unittest discover -s tests
+          UMF_NATIVE_PREBUILT_DIR="$PWD/target/debug" python -m pip install --no-build-isolation ./python ./python/umf_codegen ./python/umf_access
+          python -m pip install --no-deps --no-build-isolation ./python/umf_access_generated_executor
+          ruff check --select E9,F63,F7,F82 python  # real errors only (syntax, undefined names); style rules are not gated
+          (cd "$RUNNER_TEMP" && python "$GITHUB_WORKSPACE/scripts/smoke_quickstart.py")
+          (cd python/umf_access_generated_executor && PYTHONPATH=src python -m unittest discover -s tests)
+          timeout --signal=INT $(( CI_DEADLINE - $(date +%s) )) \
+            python -m pytest -q -p no:cacheprovider -n 4 --dist loadfile -o junit_family=xunit1 --junitxml=py-junit.xml $(cat plan/py.txt)
 
-  # The quarantined files, informationally (they are expected to fail; see scripts/known-failures.txt).
-  quarantine:
-    if: github.workflow == 'ci' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
-    needs: native-addon
-    runs-on: ubuntu-24.04
-    timeout-minutes: 120
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2, 3, 4]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.4.3
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
-      - run: bun install --frozen-lockfile
-      - uses: actions/cache/restore@v4
-        with:
-          path: bindings/core/node/umf_core_node.node
-          key: umf-core-node-addon-${{ runner.os }}-${{ hashFiles('Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'crates/**/*.rs', 'crates/**/Cargo.toml', 'bindings/core/node/Cargo.toml', 'bindings/core/node/build.rs', 'bindings/core/node/src/**/*.rs', 'spec/extensions/workflow/*.schema.json') }}
-          fail-on-cache-miss: true
-      - name: Quarantined Bun test files (shard ${{ matrix.shard }} of 4)
-        continue-on-error: true
-        run: bun scripts/run-tests.ts --jobs 2 --keep-going --only-file scripts/known-failures.txt --shard ${{ matrix.shard }}/4
-
-  # Slow suites: the full Bun inventory, browsers, WASM/SDK packaging, every Rust test.
-  nightly:
-    # Not when release.yml calls this workflow (github.workflow is then the caller's name).
-    if: github.workflow == 'ci' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
-    runs-on: ubuntu-24.04
-    # The full Bun inventory (every file, including the slow ones) takes several hours on one 4-vCPU runner.
-    timeout-minutes: 360
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.4.3
-      # Unified-client probes explicitly execute python3.11. Keep it on PATH
-      # alongside the existing Python 3.12 build/oracle environment.
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      # The reference build compiles the pinned protobuf compiler to WASM.
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.27.1'
-      - uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: 1.90.0
-          targets: wasm32-unknown-unknown
-      - uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: nightly
-      - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
-      # The SDK packaging script builds a source snapshot with `cargo --offline`.
-      - run: cargo fetch --locked
-      - name: protoc 36.2 (pinned by the protobuf tests)
+      - name: Nightly commands
+        if: ${{ !cancelled() && env.LANE == 'nightly' }}
         run: |
+          status=0
+          while IFS= read -r id; do
+            [ -n "$id" ] || continue
+            if [ "$(date +%s)" -ge "$CI_DEADLINE" ]; then echo "Deadline passed; $id not started"; continue; fi
+            command=$(awk -F'\t' -v id="$id" '$1 == id {print $3}' scripts/ci/nightly-commands.tsv)
+            echo "::group::$id: $command"
+            start=$(date +%s)
+            if timeout --signal=INT $(( CI_DEADLINE - start )) bash -c "$command"; then result=ok; else result=fail; status=1; fi
+            echo "::endgroup::"
+            echo "$id: $result in $(( $(date +%s) - start ))s"
+            printf '%s\t%s\t%s\n' "$id" "$(( $(date +%s) - start ))" "$result" >> cmd-results.tsv
+          done < plan/cmd.txt
+          exit $status
+
+      - name: Bun tests
+        if: ${{ !cancelled() }}
+        run: |
+          [ -s plan/bun.txt ] || exit 0
+          if grep -q '^tests/actions-reference/' plan/bun.txt; then bun scripts/prepare-action-tests.ts; fi
+          # Some tests spawn python3.11 with the pinned oracles, or protoc.
           curl -fsSL -o "$RUNNER_TEMP/protoc.zip" https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-x86_64.zip
-          sudo unzip -o "$RUNNER_TEMP/protoc.zip" -d /usr/local bin/protoc 'include/*'
-          protoc --version
-      - name: Pinned Protobuf behavioral oracle
-        run: |
+          sudo unzip -qo "$RUNNER_TEMP/protoc.zip" -d /usr/local bin/protoc 'include/*'
           python3 -m venv .venv
-          .venv/bin/python -m pip install protobuf==7.36.2 jsonschema==4.26.0 -r native/rdf/oracle-requirements.txt
-      - run: bun install --frozen-lockfile
-      # The browser WASM package (bindings/core/wasm/pkg) is imported by src/index-browser-v4.ts, which
-      # test:prepare, typecheck and the reference build load; Chromium is needed by the visuals and docs builds.
-      - name: Browser WASM package
-        run: bun scripts/build-reference-wasm.ts
-      - run: bunx playwright install --with-deps chromium
-      - name: Build everything the slow tests need (WASM, SDK, PostgreSQL WASM, smithy, action prerequisites)
-        run: bun run test:prepare
-      - run: bun run typecheck
-      - name: Reference site (the reference tests read the built site)
-        run: |
-          bun scripts/site/build.ts --only static,visuals,demo,explorer,schema-browser,stamp
-          bun run build:reference && bun run build:docs
-      - name: Every Bun test file except the quarantined ones
-        if: ${{ !cancelled() }}
-        run: bun scripts/run-tests.ts --jobs 4 --keep-going --exclude-file scripts/known-failures.txt
-      - name: Browser suites
-        if: ${{ !cancelled() }}
-        run: |
-          bun run test:browser
-          bun run test:reference:browser
-          bun run test:visuals:browser
-          bun scripts/workflow-browser.ts
-          python3 scripts/workflow-reference.py
-      - run: bun run test:sdk
-        if: ${{ !cancelled() }}
-      - run: cargo test --locked --workspace
-        if: ${{ !cancelled() }}
-      - uses: actions/upload-artifact@v4
+          .venv/bin/python -m pip install -q protobuf==7.36.2 jsonschema==4.26.0 -r native/rdf/oracle-requirements.txt
+          bun scripts/run-tests.ts --jobs 4 --keep-going --list plan/bun.txt \
+            --deadline $(( (CI_DEADLINE - 15) * 1000 )) --results bun-results.tsv
+
+      - name: Record results in the ledger
         if: always()
+        run: |
+          bun scripts/ci/ledger.ts --ledger .ci-ledger/ledger.json --bun bun-results.tsv --cmd cmd-results.tsv \
+            --py py-junit.xml --py-list plan/py.txt --rust target/nextest/ci/junit.xml
+      - name: Save the test ledger
+        if: always()
+        uses: actions/cache/save@v4
         with:
-          name: nightly-output
-          path: out/
-          if-no-files-found: ignore
-          retention-days: 7
+          path: .ci-ledger
+          key: ci-ledger-${{ env.LANE }}-${{ github.run_id }}

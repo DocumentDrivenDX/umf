@@ -23,7 +23,7 @@ on:
         type: string
         default: ''
       run_ci:
-        description: 'Also run the full ci.yml test suite'
+        description: 'Also run ci.yml (its budgeted push-lane selection)'
         type: boolean
         default: false
 

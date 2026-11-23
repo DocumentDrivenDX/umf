@@ -1,0 +1,9 @@
+# Nightly command units: id, estimated seconds (used until the ledger has a timing), command.
+# scripts/ci/plan.ts schedules them with the slow Bun files under the same budget; one estimated over the
+# budget never runs and is listed as not run in every nightly summary until it is split or made faster.
+typecheck	180	bun run typecheck
+python-3.14	480	bash scripts/ci/python-suite.sh python3.14
+rust-no-default-features	240	cargo check --locked -p umf-core --no-default-features
+rust-wasm-crates	480	cargo test --locked -p umf-core-wasm -p umf-pack-tools-wasm
+prepared-suites	2700	bun run test:prepare && bun scripts/site/build.ts --only static,visuals,demo,explorer,schema-browser,stamp && bun run build:reference && bun run build:docs && bunx playwright install --with-deps chromium && bun scripts/run-tests.ts --jobs 4 --keep-going --only-file scripts/ci/prepared-tests.txt && bun run test:browser && bun run test:reference:browser && bun run test:visuals:browser && bun scripts/workflow-browser.ts && python3 scripts/workflow-reference.py
+sdk-package	1500	bun run test:sdk
