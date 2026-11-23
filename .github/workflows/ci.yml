@@ -41,7 +41,7 @@ env:
   RUST_PACKAGES: >-
     -p umf-core -p umf-core-wire -p umf-tagged-wire -p umf-codegen -p umf-metamodel -p umf-metamodel-cli
     -p umf-cli -p umf-graphql -p umf-core-node -p umf-core-python
-  RUST_FEATURES: umf-core/native-postgresql,umf-core-wire/native-postgresql,umf-cli/native-postgresql
+  RUST_FEATURES: umf-core/native-postgresql,umf-core-wire/native-postgresql,umf-cli/native-postgresql,umf-core-node/native-postgresql,umf-core-python/native-postgresql
   LANE: ${{ github.event_name == 'schedule' && 'nightly' || inputs.lane || 'push' }}
 
 jobs:
