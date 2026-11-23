@@ -1,0 +1,7 @@
+# Bun test files that need the fully prepared environment (bun run test:prepare and the built reference site).
+# scripts/ci/plan.ts leaves them out of the Bun inventory; the `prepared-suites` unit in
+# scripts/ci/nightly-commands.tsv runs them after preparing.
+tests/reference/**
+tests/domain-packs/ontology-browser.test.ts
+tests/adapters/smithy-native-public-root.test.ts
+tests/access-unified-browser.test.ts

@@ -46,9 +46,9 @@ const SUITE_OVERHEAD:Record<Suite,number>={bun:5,py:15,rust:10,cmd:0};
 
 const scan=async(pattern:string)=>{const found:string[]=[];for await(const f of new Bun.Glob(pattern).scan({cwd:'.',onlyFiles:true}))found.push(f);return found.sort();};
 const units:Unit[]=[];
-const quarantined=await globs('scripts/known-failures.txt'),slow=await globs('scripts/slow-tests.txt');
+const quarantined=await globs('scripts/known-failures.txt'),slow=await globs('scripts/slow-tests.txt'),prepared=await globs('scripts/ci/prepared-tests.txt');
 for(const file of await scan('tests/**/*.test.ts')){
- if(quarantined.some(g=>g.match(file)))continue;
+ if(quarantined.some(g=>g.match(file))||prepared.some(g=>g.match(file)))continue;
  if(slow.some(g=>g.match(file))!==(lane==='nightly'))continue;
  const parts=file.split('/');units.push({suite:'bun',id:file,area:parts.length>2?parts[1]!:parts[1]!.replace(/[-.].*$/,'')});
 }
@@ -99,8 +99,9 @@ for(const u of ordered){
  if(total+extra<=budget){chosen.push(u);total+=extra;used.add(u.suite);}else skipped.push(u);
 }
 await mkdir(out,{recursive:true});
+// An empty selection is an empty file, so `[ -s FILE ]` tells the workflow to skip the suite.
 for(const suite of ['bun','py','rust','cmd'] as Suite[])
- await writeFile(`${out}/${suite}.txt`,chosen.filter(u=>u.suite===suite).map(u=>u.id).join('\n')+'\n');
+ await writeFile(`${out}/${suite}.txt`,chosen.filter(u=>u.suite===suite).map(u=>u.id+'\n').join(''));
 const age=(u:Unit)=>{const l=ledger[key(u)]?.last;return l?Math.round((Date.now()-Date.parse(l))/3600000)+'h':'never';};
 const summary=[`### Test selection (${lane} lane, ${Math.round(budget/60)} min test budget)`,'',
  `Running ${chosen.length} of ${units.length} units (estimated ${Math.round(total/60*10)/10} min).`,

@@ -116,6 +116,30 @@ jobs:
                       out.write(f"{b['binary-id']}\t{b['cwd'].removeprefix(root)}\n")
           EOF
       - run: bun install --frozen-lockfile
+
+      # The slow Bun files and typecheck import the browser WASM package. It is rebuilt only when its inputs
+      # change, and saved straight away so a failing run still keeps it.
+      - name: Restore the browser WASM package
+        if: env.LANE == 'nightly'
+        id: wasm
+        uses: actions/cache/restore@v4
+        with:
+          path: bindings/core/wasm/pkg
+          key: umf-core-wasm-pkg-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml', 'crates/**', 'bindings/core/wasm/Cargo.toml', 'bindings/core/wasm/src/**', 'spec/**') }}
+      - if: env.LANE == 'nightly' && steps.wasm.outputs.cache-hit != 'true'
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-bindgen@0.2.100
+      - name: Build the browser WASM package
+        if: env.LANE == 'nightly' && steps.wasm.outputs.cache-hit != 'true'
+        run: |
+          rustup target add wasm32-unknown-unknown
+          bun scripts/build-reference-wasm.ts
+      - if: env.LANE == 'nightly' && steps.wasm.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: bindings/core/wasm/pkg
+          key: ${{ steps.wasm.outputs.cache-primary-key }}
       - name: Coupled release versions
         if: env.LANE == 'push'
         run: |
@@ -172,16 +196,12 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           [ -s plan/bun.txt ] || exit 0
-          if [ "$LANE" = nightly ]; then
-            bun scripts/build-test-prerequisites.ts
-            if grep -q '^tests/actions-reference/' plan/bun.txt; then bun scripts/prepare-action-tests.ts; fi
-          fi
+          if grep -q '^tests/actions-reference/' plan/bun.txt; then bun scripts/prepare-action-tests.ts; fi
           # Some tests spawn python3.11 with the pinned oracles, or protoc.
           curl -fsSL -o "$RUNNER_TEMP/protoc.zip" https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-x86_64.zip
           sudo unzip -qo "$RUNNER_TEMP/protoc.zip" -d /usr/local bin/protoc 'include/*'
           python3 -m venv .venv
           .venv/bin/python -m pip install -q protobuf==7.36.2 jsonschema==4.26.0 -r native/rdf/oracle-requirements.txt
-          if grep -q 'browser' plan/bun.txt; then bunx playwright install --with-deps chromium; fi
           bun scripts/run-tests.ts --jobs 4 --keep-going --list plan/bun.txt \
             --deadline $(( (CI_DEADLINE - 15) * 1000 )) --results bun-results.tsv
 
