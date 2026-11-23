@@ -124,8 +124,10 @@ jobs:
       - name: Choose the tests for this run
         run: |
           git diff --name-only HEAD^1 HEAD > changed.txt || true
+          python3 scripts/ci/pytest-ignored.py python/tests python/umf_codegen/tests python/umf_access/tests tools/tests > py-ignored.txt
           bun scripts/ci/plan.ts --lane "$LANE" --budget-seconds $(( CI_DEADLINE - $(date +%s) - 120 )) \
-            --ledger .ci-ledger/ledger.json --changed changed.txt --rust-binaries rust-binaries.txt --out plan
+            --ledger .ci-ledger/ledger.json --changed changed.txt --rust-binaries rust-binaries.txt \
+            --py-ignored py-ignored.txt --out plan
           cat plan/summary.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Rust tests

@@ -2,7 +2,7 @@
 // Chooses which test units one CI run executes so the whole run fits its job-minute budget.
 //
 //   bun scripts/ci/plan.ts --lane push|nightly --budget-seconds N --ledger PATH --changed PATH
-//                          --rust-binaries PATH --out DIR
+//                          --rust-binaries PATH --py-ignored PATH --out DIR
 //
 // A unit is one Bun test file, one Python test file or one Rust test binary. The ledger (kept between
 // runs in the Actions cache) records when each unit last ran, how long it took and whether it passed.
@@ -58,9 +58,13 @@ if(lane==='nightly')for(const line of await lines('scripts/ci/nightly-commands.t
  const [id,seconds]=line.split('\t');units.push({suite:'cmd',id:id!,area:''});estimate.set(id!,Number(seconds));
 }
 if(lane==='push'){
+ // Files a conftest.py collect_ignore excludes (scripts/ci/pytest-ignored.py): pytest honours those lists only
+ // when it collects a directory, and it is given explicit files here.
+ const pyIgnored=await lines(args.get('py-ignored')??'');
  // Each Python test root and the source it tests.
  for(const [root,source] of [['python/tests','python/src/'],['python/umf_codegen/tests','python/umf_codegen/'],['python/umf_access/tests','python/umf_access/'],['tools/tests','tools/']])
-  for(const file of await scan(root+'/**/test_*.py'))units.push({suite:'py',id:file,area:source!});
+  for(const file of await scan(root+'/**/test_*.py'))
+   if(!pyIgnored.some(i=>file===i||file.startsWith(i+'/')))units.push({suite:'py',id:file,area:source!});
  // `cargo nextest list --message-format json` output, reduced to "<binary-id>\t<crate source dir>" lines.
  for(const line of await lines(need('rust-binaries'))){const [id,dir]=line.split('\t');units.push({suite:'rust',id:id!,area:dir!});}
 }
