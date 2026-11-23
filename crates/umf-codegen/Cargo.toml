@@ -10,6 +10,13 @@ name = "umf_codegen"
 path = "src/lib.rs"
 
 [dependencies]
-umf-core = { path = "../umf-core" }
+umf-core = { path = "../umf-core", default-features = false, features = ["full-core"] }
 sha2 = "=0.10.9"
 num-bigint = "=0.4.8"
+
+[features]
+# Builds umf-core with its embedded adapters (JSON-LD, RDF, regex), as before.
+# Table lifecycle, deployment and migration need none of them; hosts such as
+# Fireweed disable default features to avoid those dependencies.
+default = ["embedded-adapters"]
+embedded-adapters = ["umf-core/embedded-adapters"]

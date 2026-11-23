@@ -10,7 +10,8 @@ pub mod access_search_rrf;
 pub mod access_stream;
 pub mod access_temporal;
 pub mod access_values;
-#[cfg(feature = "embedded-adapters")]
+// Action plans need no embedded adapter: umf-codegen uses them without
+// JSON-LD, RDF or regex dependencies.
 pub mod action_plan_adapter;
 #[cfg(feature = "embedded-adapters")]
 pub mod arrow_flatbuffer_model;

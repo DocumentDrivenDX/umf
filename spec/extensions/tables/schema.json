@@ -989,6 +989,12 @@
           "minItems": 1,
           "maxItems": 1600
         },
+        "fillfactor": {
+          "description": "PostgreSQL table storage fill factor (CONTRACT-081)",
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 100
+        },
         "indexes": {
           "type": "array",
           "items": {

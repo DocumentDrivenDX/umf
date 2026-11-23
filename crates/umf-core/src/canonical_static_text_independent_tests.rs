@@ -798,8 +798,8 @@ fn static10_nested_host_reentry_fresh_dictionary_and_production_raw_sources() {
     assert_eq!(value, Value::string_utf8("A"));
     assert!(nested_events.contains(&MaterializeEvent::StaticSourceReady));
     assert!(!nested_events.contains(&MaterializeEvent::CacheSlotsInit));
-    assert_eq!(data::TEXTS.len(), 906);
-    assert_eq!(data::TEXTS.iter().map(|s| s.len()).sum::<usize>(), 16494);
+    assert_eq!(data::TEXTS.len(), 908);
+    assert_eq!(data::TEXTS.iter().map(|s| s.len()).sum::<usize>(), 16555);
     // One whole DATA materialization, not a repeated denial campaign or native factory.
     let mut ctx = Context::catalog();
     let roots = materialize_installed_codegen_resources(&mut ctx).unwrap();

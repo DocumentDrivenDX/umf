@@ -19,7 +19,7 @@ export interface TablePolicy {mode:'native-rls';person:TableCommandRules;batch:T
 export interface TableIndex {id:string;name:string;fields:TableRef[];unique:boolean;include:TableRef[];method?:'btree'|'gin';operatorClasses?:('array_ops'|'jsonb_ops'|'jsonb_path_ops')[];directions?:('asc'|'desc')[];where?:TableExpression}
 export interface TableCheck {id:string;name:string;expression:TableExpression}
 export interface TableForeignKey {id:string;name:string;fields:TableRef[];target:TableKeyRef;onUpdate:'restrict'|'noAction'|'cascade'|'setNull';onDelete:'restrict'|'noAction'|'cascade'|'setNull';deferrable:false|'immediate'|'deferred';relationship?:TableRelationshipRef}
-export interface TableDeclaration {id:string;record:TableRef;name:string;columns:TableColumn[];indexes:TableIndex[];checks:TableCheck[];foreignKeys:TableForeignKey[];policy:TablePolicy}
+export interface TableDeclaration {id:string;record:TableRef;name:string;columns:TableColumn[];fillfactor?:number;indexes:TableIndex[];checks:TableCheck[];foreignKeys:TableForeignKey[];policy:TablePolicy}
 export interface TableFieldValue {field:TableRef;value:CoreLiteral}
 export interface TableSeedRow {table:string;values:TableFieldValue[]}
 export interface TableSeedSet {id:string;rows:TableSeedRow[];conflict:'error'|'ignore'}

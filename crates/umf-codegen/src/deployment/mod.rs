@@ -852,7 +852,12 @@ fn build_deployment_bundle(
                 .then(|| u8ext(member(native, "element").unwrap_or(&Value::Null), "kind"))
                 .flatten();
             let scalar_kind = element_kind.clone().unwrap_or_else(|| kind.clone());
-            if ["char", "float4", "float8", "timestamp"].contains(&scalar_kind.as_str()) {
+            // A scalar float8 column stores the core float family as IEEE 754
+            // binary64 (CONTRACT-081). Float literals, arrays and float4 stay
+            // unqualified, so no default or check can carry a rounded value.
+            if ["char", "float4", "timestamp"].contains(&scalar_kind.as_str())
+                || scalar_kind == "float8" && kind == "array"
+            {
                 return Err(Refusal::unsupported(
                     &col_path,
                     "Native padding/float/time codec is not yet qualified",
@@ -1063,7 +1068,22 @@ fn build_deployment_bundle(
             let _ = check_path;
         }
         let relation = format!("{}.{}", quote_ident(&schema), quote_ident(&table_name));
-        let create = format!("CREATE TABLE {relation} (\n  {}\n)", col_sql.join(",\n  "));
+        let storage = match member(table, "fillfactor") {
+            None => String::new(),
+            Some(Value::Number(n)) if n.fract() == 0.0 && (10.0..=100.0).contains(n) => {
+                format!(" WITH (fillfactor = {})", *n as u32)
+            }
+            Some(_) => {
+                return Err(Refusal::unsupported(
+                    append_path(&table_path, "fillfactor"),
+                    "Fill factor is an integer from 10 through 100",
+                ))
+            }
+        };
+        let create = format!(
+            "CREATE TABLE {relation} (\n  {}\n){storage}",
+            col_sql.join(",\n  ")
+        );
         add_step(&mut steps, "table", &table_path, &create, ctx)?;
         add_step(
             &mut steps,
@@ -2488,18 +2508,9 @@ fn emit_table_policies(
                 )?;
             }
         }
-        if array_items(member(table, "columns").unwrap_or(&Value::Null))
-            .unwrap_or(&[])
-            .iter()
-            .any(|c| member(c, "generated").is_some())
-            && string_member(member(rules, "insert").unwrap_or(&Value::Null), "kind")
-                != Some(&Utf16::from("deny"))
-        {
-            return Err(Refusal::unsupported(
-                path,
-                "Identity sequence privilege qualification is pending",
-            ));
-        }
+        // An identity column's sequence needs no grant: PostgreSQL 18 draws
+        // its default for any role allowed to INSERT into the table, so an
+        // insert-allowed audience gets the table grant alone (CONTRACT-081).
     }
     Ok(())
 }
