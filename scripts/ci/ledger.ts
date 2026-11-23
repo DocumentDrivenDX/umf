@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Records this run's test results in the CI ledger that scripts/ci/plan.ts reads.
 //
-//   bun scripts/ci/ledger.ts --ledger PATH [--bun TSV] [--py JUNIT --py-list PATH] [--rust JUNIT]
+//   bun scripts/ci/ledger.ts --ledger PATH [--bun TSV] [--cmd TSV] [--py JUNIT --py-list PATH] [--rust JUNIT]
 //
-// --bun is the --results file of scripts/run-tests.ts. --py is pytest's JUnit XML written with
+// --bun is the --results file of scripts/run-tests.ts; --cmd has the same form for nightly command units. --py is pytest's JUnit XML written with
 // `-o junit_family=xunit1` (each testcase carries its file), and --py-list the planned files. --rust is nextest's JUnit XML (one testsuite per
 // test binary). A unit's seconds are the summed durations of its tests; a unit that did not run keeps its
 // previous entry.
@@ -22,8 +22,10 @@ const add=(key:string,seconds:number,ok:boolean)=>{const r=results.get(key)??{se
 const read=async(name:string)=>{const p=args.get(name);return p&&existsSync(p)?readFile(p,'utf8'):undefined;};
 const attr=(tag:string,name:string)=>tag.match(new RegExp(`\\s${name}="([^"]*)"`))?.[1];
 
-const bun=await read('bun');
-for(const line of bun?.split('\n').filter(Boolean)??[]){const [file,s,status]=line.split('\t');add('bun:'+file,Number(s),status==='ok');}
+for(const suite of ['bun','cmd']){
+ const tsv=await read(suite);
+ for(const line of tsv?.split('\n').filter(Boolean)??[]){const [id,s,status]=line.split('\t');add(suite+':'+id,Number(s),status==='ok');}
+}
 
 // Each <testcase ...>...</testcase> or <testcase .../>; a failure or error child marks it failed.
 const cases=(xml:string)=>[...xml.matchAll(/<testcase\b([^>]*?)(\/>|>([\s\S]*?)<\/testcase>)/g)].map(m=>({tag:m[1]!,body:m[3]??''}));

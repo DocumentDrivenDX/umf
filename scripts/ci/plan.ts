@@ -16,11 +16,12 @@
 //
 // Lanes: `push` (pushes and pull requests) takes the fast inventory: Bun files not in
 // scripts/slow-tests.txt, Python on 3.11 and every Rust test binary. `nightly` takes the Bun files in
-// scripts/slow-tests.txt. Files in scripts/known-failures.txt never run here.
+// scripts/slow-tests.txt and the commands in scripts/ci/nightly-commands.tsv. Files in
+// scripts/known-failures.txt never run here.
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {existsSync} from 'node:fs';
 
-type Suite='bun'|'py'|'rust';
+type Suite='bun'|'py'|'rust'|'cmd';
 type Unit={suite:Suite;id:string;area:string};
 type Entry={last:string;seconds:number;ok:boolean};
 export type Ledger=Record<string,Entry>;
@@ -38,10 +39,10 @@ const ledger:Ledger=existsSync(need('ledger'))?JSON.parse(await readFile(need('l
 const changed=await lines(args.get('changed')??'');
 
 // Parallel width of each suite's runner on a 4-vCPU runner, and the cost assumed for a unit never timed.
-const WIDTH:Record<Suite,number>={bun:4,py:4,rust:4};
-const DEFAULT_SECONDS:Record<Suite,number>={bun:20,py:10,rust:15};
+const WIDTH:Record<Suite,number>={bun:4,py:4,rust:4,cmd:1};
+const DEFAULT_SECONDS:Record<Suite,number>={bun:20,py:10,rust:15,cmd:300};
 // Fixed start-up cost of running a suite at all (process start, collection).
-const SUITE_OVERHEAD:Record<Suite,number>={bun:5,py:15,rust:10};
+const SUITE_OVERHEAD:Record<Suite,number>={bun:5,py:15,rust:10,cmd:0};
 
 const scan=async(pattern:string)=>{const found:string[]=[];for await(const f of new Bun.Glob(pattern).scan({cwd:'.',onlyFiles:true}))found.push(f);return found.sort();};
 const units:Unit[]=[];
@@ -50,6 +51,11 @@ for(const file of await scan('tests/**/*.test.ts')){
  if(quarantined.some(g=>g.match(file)))continue;
  if(slow.some(g=>g.match(file))!==(lane==='nightly'))continue;
  const parts=file.split('/');units.push({suite:'bun',id:file,area:parts.length>2?parts[1]!:parts[1]!.replace(/[-.].*$/,'')});
+}
+// Nightly command units (scripts/ci/nightly-commands.tsv): their estimate stands until the ledger has a timing.
+const estimate=new Map<string,number>();
+if(lane==='nightly')for(const line of await lines('scripts/ci/nightly-commands.tsv')){
+ const [id,seconds]=line.split('\t');units.push({suite:'cmd',id:id!,area:''});estimate.set(id!,Number(seconds));
 }
 if(lane==='push'){
  // Each Python test root and the source it tests.
@@ -66,11 +72,12 @@ const touched=(u:Unit)=>changed.some(path=>{
  if(path===u.id)return true;
  if(u.suite==='bun')return path.startsWith('src/')&&path.split('/').slice(1,-1).concat(path.split('/').pop()!.replace(/[-.].*$/,'')).includes(u.area);
  if(u.suite==='py')return path.startsWith(u.area);
+ if(u.suite==='cmd')return false;
  return path.startsWith(u.area+'/');
 });
 const key=(u:Unit)=>u.suite+':'+u.id;
 const share=new Map<string,number>();
-for(const suite of ['bun','py','rust'] as Suite[]){const of=units.filter(u=>u.suite===suite);of.forEach((u,i)=>share.set(key(u),i/of.length));}
+for(const suite of ['bun','py','rust','cmd'] as Suite[]){const of=units.filter(u=>u.suite===suite);of.forEach((u,i)=>share.set(key(u),i/of.length));}
 const tier=(u:Unit)=>{const e=ledger[key(u)];return !e?2:!e.ok?0:touched(u)?1:3;};
 // Within a tier: touched-and-failed before failed, then oldest run first, then a stable order.
 const ordered=[...units].sort((a,b)=>{
@@ -81,21 +88,21 @@ const ordered=[...units].sort((a,b)=>{
  const fa=share.get(key(a))!,fb=share.get(key(b))!;if(fa!==fb)return fa-fb;
  return key(a)<key(b)?-1:1;
 });
-const cost=(u:Unit)=>(ledger[key(u)]?.seconds??DEFAULT_SECONDS[u.suite])/WIDTH[u.suite];
+const cost=(u:Unit)=>(ledger[key(u)]?.seconds??estimate.get(u.id)??DEFAULT_SECONDS[u.suite])/WIDTH[u.suite];
 const chosen:Unit[]=[],skipped:Unit[]=[];let total=0;const used=new Set<Suite>();
 for(const u of ordered){
  const extra=cost(u)+(used.has(u.suite)?0:SUITE_OVERHEAD[u.suite]);
  if(total+extra<=budget){chosen.push(u);total+=extra;used.add(u.suite);}else skipped.push(u);
 }
 await mkdir(out,{recursive:true});
-for(const suite of ['bun','py','rust'] as Suite[])
+for(const suite of ['bun','py','rust','cmd'] as Suite[])
  await writeFile(`${out}/${suite}.txt`,chosen.filter(u=>u.suite===suite).map(u=>u.id).join('\n')+'\n');
 const age=(u:Unit)=>{const l=ledger[key(u)]?.last;return l?Math.round((Date.now()-Date.parse(l))/3600000)+'h':'never';};
 const summary=[`### Test selection (${lane} lane, ${Math.round(budget/60)} min test budget)`,'',
  `Running ${chosen.length} of ${units.length} units (estimated ${Math.round(total/60*10)/10} min).`,
- ...(['bun','py','rust'] as Suite[]).map(s=>`- ${s}: ${chosen.filter(u=>u.suite===s).length} of ${units.filter(u=>u.suite===s).length}`),
+ ...(['bun','py','rust','cmd'] as Suite[]).filter(s=>units.some(u=>u.suite===s)).map(s=>`- ${s}: ${chosen.filter(u=>u.suite===s).length} of ${units.filter(u=>u.suite===s).length}`),
  `- failed last time: ${chosen.filter(u=>tier(u)===0).length}; touched by this change: ${chosen.filter(touched).length} of ${units.filter(touched).length}`,
  '',`<details><summary>${skipped.length} units not run this time (age of their last run)</summary>`,'',
- ...skipped.map(u=>`- ${key(u)} (${age(u)})`),'','</details>',''].join('\n');
+ ...skipped.map(u=>`- ${key(u)} (${age(u)}${cost(u)>budget?', estimated over the whole budget':''})`),'','</details>',''].join('\n');
 await writeFile(`${out}/summary.md`,summary);
 console.log(summary.split('<details>')[0]);

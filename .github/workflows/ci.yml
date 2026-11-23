@@ -85,6 +85,15 @@ jobs:
           cache-dependency-path: |
             native/rdf/oracle-requirements.txt
             python/pyproject.toml
+      - name: Python 3.14 (nightly)
+        if: env.LANE == 'nightly'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - uses: actions/setup-python@v5
+        if: env.LANE == 'nightly'
+        with:
+          python-version: '3.11'
       - name: Restore the test ledger
         uses: actions/cache/restore@v4
         with:
@@ -140,10 +149,31 @@ jobs:
           timeout --signal=INT $(( CI_DEADLINE - $(date +%s) )) \
             python -m pytest -q -p no:cacheprovider -n 4 --dist loadfile -o junit_family=xunit1 --junitxml=py-junit.xml $(cat plan/py.txt)
 
+      - name: Nightly commands
+        if: ${{ !cancelled() && env.LANE == 'nightly' }}
+        run: |
+          status=0
+          while IFS= read -r id; do
+            [ -n "$id" ] || continue
+            if [ "$(date +%s)" -ge "$CI_DEADLINE" ]; then echo "Deadline passed; $id not started"; continue; fi
+            command=$(awk -F'\t' -v id="$id" '$1 == id {print $3}' scripts/ci/nightly-commands.tsv)
+            echo "::group::$id: $command"
+            start=$(date +%s)
+            if timeout --signal=INT $(( CI_DEADLINE - start )) bash -c "$command"; then result=ok; else result=fail; status=1; fi
+            echo "::endgroup::"
+            echo "$id: $result in $(( $(date +%s) - start ))s"
+            printf '%s\t%s\t%s\n' "$id" "$(( $(date +%s) - start ))" "$result" >> cmd-results.tsv
+          done < plan/cmd.txt
+          exit $status
+
       - name: Bun tests
         if: ${{ !cancelled() }}
         run: |
           [ -s plan/bun.txt ] || exit 0
+          if [ "$LANE" = nightly ]; then
+            bun scripts/build-test-prerequisites.ts
+            if grep -q '^tests/actions-reference/' plan/bun.txt; then bun scripts/prepare-action-tests.ts; fi
+          fi
           # Some tests spawn python3.11 with the pinned oracles, or protoc.
           curl -fsSL -o "$RUNNER_TEMP/protoc.zip" https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-linux-x86_64.zip
           sudo unzip -qo "$RUNNER_TEMP/protoc.zip" -d /usr/local bin/protoc 'include/*'
@@ -156,7 +186,7 @@ jobs:
       - name: Record results in the ledger
         if: always()
         run: |
-          bun scripts/ci/ledger.ts --ledger .ci-ledger/ledger.json --bun bun-results.tsv \
+          bun scripts/ci/ledger.ts --ledger .ci-ledger/ledger.json --bun bun-results.tsv --cmd cmd-results.tsv \
             --py py-junit.xml --py-list plan/py.txt --rust target/nextest/ci/junit.xml
       - name: Save the test ledger
         if: always()
