@@ -85,7 +85,8 @@ net changes, constraints and postconditions before persisting. Handlers use the 
 gateway through an authenticated bounded stdin/stdout protocol in a separate container.
 The container has no network, DB secrets/socket, writable host files or broad mount.
 Malformed/unauthorized/outside-frame requests abort even if the handler later restores
-the data. Enforce operation/time/memory bounds and output admission. Existing entity outputs use only exact admitted input/READ identities,
+the data. A handler that returns while a gateway call is still outstanding, or closes
+its channel before the host answers, fails with FRAME_ACCESS. Enforce operation/time/memory bounds and output admission. Existing entity outputs use only exact admitted input/READ identities,
 or READ-selected alternate Keys whose component Fields are all readable; created
 candidates may return their verified Keys. Do not query arbitrary handler-returned
 Keys to validate existence: this would expose hidden business state through

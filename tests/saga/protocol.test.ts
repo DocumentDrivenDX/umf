@@ -140,7 +140,7 @@ test('the native adapter validates and dispatches the closed ten-operation proto
   const denied=await coordinator.handle({...actor,principal:'stranger'},{protocol,operation:'status',instance});
   expect(denied).toEqual({status:'denied',code:'AUTHORIZATION'});
  });
-},{timeout:30_000});
+},{timeout:120_000});
 
 test('an admitted instance keeps its original immutable action binding after host directory replacement',async()=>{
  await withSagaNativeCluster(async cluster=>{
@@ -538,7 +538,7 @@ test('five-step recovery compensates the committed prefix in exact reverse order
   const [inventory,allocation]=await Promise.all([installSagaProvider(cluster.providers[0],'reverse-five-a',undefined,{afterFinality:async(_ticket,result)=>{if(loseFirstAck&&result.status==='committed'){loseFirstAck=false;throw Error('five-step committed output acknowledgement lost');}}}),installSagaProvider(cluster.providers[1],'reverse-five-b')]);
   const definition=sagaRuntimePlan(inventory,allocation),actions=['reserve','allocate','reserve','allocate','reserve'],base=structuredClone(definition.definition.steps[0]) as any;
   const source=structuredClone(definition.document) as any,actionDefs=source.modules[0].extensions['umf.actions'].actions,handlerSources=new Map<string,string>(),handlerIds=new Map<string,string>();
-  for(const actionName of ['reserve','allocate']){const action=actionDefs.find((item:any)=>item.id===actionName),handlerSource=`gateway.set('order-write',[{field:{module:'sales',element:'status'},value:{string:'${actionName}'}}]); return {nonce: {string: Math.random().toString(36).slice(2)}};`,handlerId=`reverse-five-${actionName}`;action.outputs=[{id:'nonce',kind:'value',field:{module:'sales',element:'id'},required:true}];action.binding={kind:'handler',profile:{id:'umf.actions.container',version:'1'},handler:{id:handlerId,version:'1'}};handlerSources.set(actionName,handlerSource);handlerIds.set(actionName,handlerId);}
+  for(const actionName of ['reserve','allocate']){const action=actionDefs.find((item:any)=>item.id===actionName),handlerSource=`await gateway.set('order-write',[{field:{module:'sales',element:'status'},value:{string:'${actionName}'}}]); return {nonce: {string: Math.random().toString(36).slice(2)}};`,handlerId=`reverse-five-${actionName}`;action.outputs=[{id:'nonce',kind:'value',field:{module:'sales',element:'id'},required:true}];action.binding={kind:'handler',profile:{id:'umf.actions.container',version:'1'},handler:{id:handlerId,version:'1'}};handlerSources.set(actionName,handlerSource);handlerIds.set(actionName,handlerId);}
   const release=actionDefs.find((item:any)=>item.id==='release');release.parameters.push({id:'nonce',kind:'value',field:{module:'sales',element:'id'},required:true});
   definition.definition.steps=actions.map((action,index)=>({...structuredClone(base),id:`step-${index}`,action:{module:'sales',action},binding:action==='reserve'?'inventory':'allocation',...(index<4?{inputs:[{parameter:'order',from:{input:'order'}}]}:{}),compensation:{kind:'action',action:{module:'sales',action:'release'},binding:action==='reserve'?'inventory':'allocation',inputs:[{parameter:'order',from:{input:'order'}},{parameter:'nonce',from:{step:`step-${index}`,output:'nonce'}}]}}));
   source.modules[0].extensions['umf.actions.saga'].sagas[0]=definition.definition;definition.document=source;

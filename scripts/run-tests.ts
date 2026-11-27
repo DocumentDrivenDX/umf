@@ -13,7 +13,8 @@ import {availableParallelism} from 'node:os';
 //   --exclude-file PATH  skip test files matching any glob listed in PATH (one per line, # comments); repeatable
 //   --only-file PATH     run only the test files matching a glob listed in PATH
 //   --shard I/N          run only the I-th of N deterministic shards of the selected files
-// A test file that runs longer than UMF_FILE_TIMEOUT_MS (default 600000) is killed and reported as failed.
+// A test file that runs longer than UMF_FILE_TIMEOUT_MS (default 600000), or than its own `// @file-timeout-ms N`
+// when that is larger, is killed and reported as failed.
 // Per-test default timeout: UMF_TEST_TIMEOUT_MS (default 120000); tests that set their own timeout keep it.
 const args=Bun.argv.slice(2),selections:string[]=[];
 let jobs=availableParallelism(),keepGoing=false,excludeFiles:string[]=[],onlyFile:string|undefined,shard:[number,number]|undefined;
@@ -60,7 +61,13 @@ if(!files.length)throw Error('No test files selected');
 // A file that owns a bounded subprocess pool reserves the packet while active.
 // Its existing file/test deadlines still apply; other files start afterward.
 const exclusiveFiles=new Set<string>();
-for(const file of files)if(/^\/\/ @test-exclusive\s*$/m.test(await readFile(file,'utf8')))exclusiveFiles.add(file);
+// A file whose own test budget exceeds the file deadline declares `// @file-timeout-ms N` to raise it for itself only.
+const fileTimeouts=new Map<string,number>();
+for(const file of files){
+ const text=await readFile(file,'utf8');
+ if(/^\/\/ @test-exclusive\s*$/m.test(text))exclusiveFiles.add(file);
+ const declared=text.match(/^\/\/ @file-timeout-ms (\d+)\s*$/m);if(declared)fileTimeouts.set(file,Number(declared[1]));
+}
 
 let passed=0,failed=0,skipped=0,assertions=0,completed=0,next=0,stop=false;
 const failures:string[]=[],started=performance.now();
@@ -69,7 +76,7 @@ async function runOne(file:string){
  const child=Bun.spawn([process.execPath,'test','--timeout',process.env.UMF_TEST_TIMEOUT_MS??'120000','./'+file],{stdout:'pipe',stderr:'pipe',stdin:'ignore',env:{...process.env}});
  // A file that hangs (a stuck fixture or a child process that keeps the pipes open) is killed after
  // UMF_FILE_TIMEOUT_MS (default 10 minutes) and counted as a failure instead of stalling the whole run.
- const limit=Number(process.env.UMF_FILE_TIMEOUT_MS??'600000');
+ const limit=Math.max(Number(process.env.UMF_FILE_TIMEOUT_MS??'600000'),fileTimeouts.get(file)??0);
  const timer=setTimeout(()=>child.kill(9),limit);
  const finished=Promise.all([new Response(child.stdout).text(),new Response(child.stderr).text(),child.exited]);
  const gaveUp=Symbol();

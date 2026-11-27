@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+// @test-exclusive
+// The drift check hashes the working tree, including evidence records such as fixtures/protobuf/*-results.json
+// that other test files rewrite; running beside them, it can read a half-written record and report drift.
 import {test,expect,afterAll} from 'bun:test';
 import {resolve,join} from 'node:path';
 import {unlink} from 'node:fs/promises';

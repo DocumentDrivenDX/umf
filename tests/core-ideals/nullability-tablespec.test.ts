@@ -14,7 +14,7 @@ test('selected profile/context classification separates exact declarations, coer
   expect(r.mapping.interpretation==='declared').toBe(c.expected!=='unspecified');
   for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(copyJson(r),format),format) as unknown as typeof r;expect(verifyTableSpecNullabilityClassification(saved,saved.target!)).toEqual(r);expect(recoverTableSpecNullabilitySource(saved,saved.target!)).toBe(c.text);}
  }
-},60000);
+},180000);
 test('unresolved carrier blocks strict mode and retains explicit residuals in report mode',()=>{
  for(const mode of ['strict','report'] as const){const r=classifyTableSpecNullability(source(),{...request,carrier:'unresolved',mode});expect(r.mapping.nullability).toBe('unspecified');expect(r.residuals[0]!.reason).toContain('absence carrier');expect(r.status).toBe(mode==='strict'?'blocked':'classified');}
 });

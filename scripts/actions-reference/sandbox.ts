@@ -27,7 +27,7 @@ lines.on('line',async line=>{
   const response=await new Promise(resolve=>{pending=resolve;emit({kind:'call',id:++sequence,operation,args});});
   if(!response.ok)throw Error('Gateway refused');return response.value;
  }]));
- try{const execute=new (Object.getPrototypeOf(async function(){}).constructor)('inputs','gateway',configuration.source);const outputs=await execute(configuration.inputs,gateway);emit({kind:'result',id:sequence+1,outputs});lines.close();process.stdin.destroy();}
+ try{const execute=new (Object.getPrototypeOf(async function(){}).constructor)('inputs','gateway',configuration.source);const outputs=await execute(configuration.inputs,gateway);if(pending)throw Error('Handler returned with an outstanding gateway call');emit({kind:'result',id:sequence+1,outputs});lines.close();process.stdin.destroy();}
  catch(error){emit({kind:'failure',id:sequence+1});process.exitCode=1;lines.close();process.stdin.destroy();}
 });`;
 export function referenceHandlerBuild(source:string):string{
@@ -52,7 +52,8 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
  const reportElapsedDeadline=()=>{if(!timeoutReported&&performance.now()>=deadline){timeoutReported=true;timing('execution-timeout');}};
  const withinDeadline=()=>{if(!active||performance.now()>=deadline){reportElapsedDeadline();active=false;abort('LIMIT','Handler absolute time bound exceeded');}};
  const timeout=new Promise<never>((_,reject)=>{timer=setTimeout(()=>{reportElapsedDeadline();active=false;creator.kill();child?.kill();reject(new UmfError('LIMIT','Handler time bound exceeded'));},timeoutMs);});
- const write=(value:unknown)=>{const line=JSON.stringify(value)+'\n';if(line.length>131072)abort('LIMIT','Supervisor message exceeds bound');child!.stdin!.write(line);child!.stdin!.flush();};
+ const write=(value:unknown)=>{const line=JSON.stringify(value)+'\n';if(line.length>131072)abort('LIMIT','Supervisor message exceeds bound');// A handler that closed its stdin (or exited) can no longer receive the response: a protocol failure, not a host crash.
+ try{child!.stdin!.write(line);const flushed=child!.stdin!.flush();if(flushed instanceof Promise)flushed.catch(()=>{});}catch{abort('FRAME_ACCESS','Handler closed its protocol channel');}};
  // Drain stderr with a hard bound; do not retain or expose handler-controlled diagnostics.
  const execute=(async()=>{
   const [created,_diagnostics,creationExit]=await Promise.all([new Response(creator.stdout).text(),new Response(creator.stderr).text(),creator.exited]);if(creationExit!==0||!/^[0-9a-f]{64}\n?$/.test(created))abort('LIMIT','Handler creation acknowledgement unavailable');timing('container-create-acknowledged');const cid=created.trim();withinDeadline();await owner.acknowledge(cid);containerId=cid;withinDeadline();
@@ -60,7 +61,7 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
   stderr=(async()=>{let size=0;for await(const chunk of child!.stderr as ReadableStream<Uint8Array>){size+=chunk.byteLength;if(size>65536)abort('LIMIT','Handler stderr exceeds bound');}})();
   const consume=(async()=>{
   try{observe?.(Object.freeze({stage:'started' as const,container:name}));}catch{/* Instrumentation must not change execution. */}withinDeadline();
-  const decoder=new TextDecoder('utf-8',{fatal:true});const decode=(chunk?:Uint8Array,stream=false)=>{try{return decoder.decode(chunk,{stream});}catch{return abort('FRAME_ACCESS','Malformed UTF-8 handler protocol');}};let buffered='',total=0,sequence=0,result:unknown,finished=false,ready=false;
+  const decoder=new TextDecoder('utf-8',{fatal:true});const decode=(chunk?:Uint8Array,stream=false)=>{try{return decoder.decode(chunk,{stream});}catch{return abort('FRAME_ACCESS','Malformed UTF-8 handler protocol');}};let buffered='',total=0,sequence=0,result:unknown,finished=false,ready=false,reportedFailure=false;
   for await(const chunk of child!.stdout as ReadableStream<Uint8Array>){withinDeadline();total+=chunk.byteLength;if(total>1048576)abort('LIMIT','Handler channel exceeds bound');buffered+=decode(chunk,true);if(buffered.length>131072)abort('LIMIT','Handler message exceeds bound');
    let newline:number;while((newline=buffered.indexOf('\n'))>=0){withinDeadline();const line=buffered.slice(0,newline);buffered=buffered.slice(newline+1);let message:any;try{message=JSON.parse(line);}catch{abort('FRAME_ACCESS','Malformed handler protocol');}
     if(!ready){if(!message||JSON.stringify(message)!==line||Object.keys(message).sort().join(',')!=='id,kind,token'||message.kind!=='ready'||message.id!==0||message.token!==token)abort('FRAME_ACCESS','Authenticated bootstrap readiness required');ready=true;timing('protocol-ready');withinDeadline();write({source:program.source,inputs:copiedInputs,token});continue;}
@@ -71,12 +72,16 @@ export async function runReferenceHandler(program:ReferenceHandlerProgram,inputs
      const value=dispatch(message.operation,protocolCopy(message.args) as unknown[]);if(value&&typeof (value as {then?:unknown}).then==='function')abort('FRAME_ACCESS','Only synchronous bounded candidate gateway dispatch is qualified');withinDeadline();write({id:sequence,token,ok:true,...(value===undefined?{}:{value:copyJson(value)})});
     }else if(message.kind==='result'){
      if(Object.keys(message).some(key=>!['kind','id','token','outputs'].includes(key))||!Object.hasOwn(message,'outputs'))abort('FRAME_ACCESS','Exact handler result required');
-     result=protocolCopy(message.outputs);finished=true;timing('handler-result-received');child!.stdin!.end();
+     result=protocolCopy(message.outputs);finished=true;timing('handler-result-received');try{child!.stdin!.end();}catch{/* The handler may already have closed its side. */}
+    }else if(message.kind==='failure'&&Object.keys(message).sort().join(',')==='id,kind,token'){
+     // The bootstrap exits right after reporting failure. Drain to EOF like a result so cleanup inspects a settled
+     // container: inspecting mid-exit can outlast the inspection budget and misreport the failure as LIMIT.
+     reportedFailure=true;finished=true;try{child!.stdin!.end();}catch{/* The handler may already have closed its side. */}
     }else abort('FRAME_ACCESS','Handler failed or sent unknown protocol');
    }
   }
   naturalEof=true;buffered+=decode();if(buffered||!finished)abort('FRAME_ACCESS','Incomplete handler protocol');
-  const exit=await child!.exited;withinDeadline();if(exit!==0)abort('FRAME_ACCESS','Handler exited unsuccessfully');return result;
+  const exit=await child!.exited;withinDeadline();if(reportedFailure)abort('FRAME_ACCESS','Handler failed or sent unknown protocol');if(exit!==0)abort('FRAME_ACCESS','Handler exited unsuccessfully');return result;
   })();return (await Promise.all([consume,stderr]))[0];
  })();
  let result:unknown,failure:unknown,failed=false,observation:Extract<ReferenceHandlerObservation,{stage:'finished'}>|undefined;

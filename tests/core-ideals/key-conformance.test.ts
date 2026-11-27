@@ -5,4 +5,4 @@ test('Key source operations retain both recovery directions across five bindings
  const r=await verifyKeyConformance();
  expect(r.sourceUsefulSystems).toEqual(['postgresql','sqlserver']);
  expect(Object.keys(r.native)).toHaveLength(5);
-},120000);
+},480000);

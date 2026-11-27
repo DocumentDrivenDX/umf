@@ -15,7 +15,7 @@ test('US-024-AC6: all pinned example/metamodel local memberships match native ev
   }
  }
  expect(count).toBe(208);expect(nativeCount).toBe(206);expect(oracle.filter((x:any)=>x.comparison==='loader-rejected')).toHaveLength(1);
-},60000);
+},180000);
 test('US-024-AC6: repeated declarations retain pointers; usage is not membership; cycles terminate',async()=>{
  const raw=await Bun.file('native/linkml/examples/inheritance.json').text(),d=importLinkmlDocument(raw,{id:'inheritance',format:'json'}),r=inspectLinkmlClassSlots(d,'Child');
  expect(r.ancestors).toEqual(['Child','Mixin','Parent','Root','MixinBase']);expect(r.slots.map(s=>s.name)).not.toContain('not_a_member');

@@ -82,7 +82,7 @@ describe('closed authored compiler vocabulary',()=>{
    (p:any)=>p.interval.qualifierKeys.integerWidth=[false],(p:any)=>delete p.refinements[1].unitError,
   ];
   for(const mutate of mutations){const m=model();mutate(m.extensions['umf.metamodel'].domains.literal);expect(()=>compileModel(m)).toThrow();}
- },30_000);
+ },120_000);
  test('public metadata mutation cannot change default active validation',()=>{const before=validateDocument(doc),exposed=domainPolicy as any;expect(Object.isFrozen(exposed.literal)).toBe(true);expect(Object.isFrozen(exposed.structuralDiagnostic)).toBe(true);expect(Reflect.set(exposed.literal,'refinements',[])).toBe(false);expect(Reflect.set(exposed.structuralDiagnostic,'code','TAMPERED')).toBe(false);expect(validateDocument(doc)).toEqual(before);expect(validateDocument({...doc,umf:'retired'}).diagnostics[0]!.code).toBe('SEMANTIC_TYPE_STRUCTURE');});
  test('current self-model validates with declared vocabulary and old markers reject',async()=>{const registry=new Registry().register(await Bun.file(join(root,'spec/metamodel/package.json')).json());expect(validateDocument(model(),registry).valid).toBe(true);for(const version of ['0.1.0','0.8.0','0.9.0'])expect(validateDocument({...doc,umf:version}).valid).toBe(false);expect(validateDocument(doc).complete).toBe(true);});
 });

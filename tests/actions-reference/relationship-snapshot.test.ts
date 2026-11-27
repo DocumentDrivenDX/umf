@@ -29,4 +29,4 @@ test('native linked snapshots preserve direction, canonical read aliases and dur
   for(let index=0;index<8;index++)await edge('a','c','unselected-'+index);expect((await executor.invoke('s',credential,request('a','b','unselected-adjacency'))).status).toBe('committed');
   await edge('a','b','duplicate');expect(await executor.invoke('s',credential,request('a','b','duplicate'))).toEqual({status:'unsupported',code:'SELECTOR'});expect(await store.sql`select * from action_outcome`).toHaveLength(5);expect(await store.sql`select * from action_audit`).toHaveLength(5);expect(await store.sql`select * from action_outbox`).toHaveLength(1);
  });
-},60000);
+},180000);

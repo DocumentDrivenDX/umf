@@ -5,8 +5,11 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"sort"
+	"sync"
 
 	"github.com/bufbuild/protocompile"
+	"github.com/bufbuild/protocompile/reporter"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -48,9 +51,30 @@ func compile(input string) (output string) {
 	} else if len(req.Roots) == 0 {
 		result.Error = "At least one root is required"
 	} else {
-		compiler := protocompile.Compiler{Resolver: &protocompile.SourceResolver{Accessor: protocompile.SourceAccessorFromMap(req.Files)}, SourceInfoMode: protocompile.SourceInfoStandard, MaxParallelism: 1}
+		// protocompile compiles each file in its own goroutine, so the first error it
+		// reports depends on scheduling when several files are invalid. Collect every
+		// error and report the earliest by file and position, so the same sources
+		// always produce the same message.
+		var mutex sync.Mutex
+		var reported []reporter.ErrorWithPos
+		collect := reporter.NewReporter(func(err reporter.ErrorWithPos) error {
+			mutex.Lock()
+			defer mutex.Unlock()
+			reported = append(reported, err)
+			return nil
+		}, nil)
+		compiler := protocompile.Compiler{Resolver: &protocompile.SourceResolver{Accessor: protocompile.SourceAccessorFromMap(req.Files)}, SourceInfoMode: protocompile.SourceInfoStandard, MaxParallelism: 1, Reporter: collect}
 		files, err := compiler.Compile(context.Background(), req.Roots...)
-		if err != nil {
+		if len(reported) > 0 {
+			sort.SliceStable(reported, func(i, j int) bool {
+				a, b := reported[i].GetPosition(), reported[j].GetPosition()
+				if a.Filename != b.Filename {
+					return a.Filename < b.Filename
+				}
+				return a.Offset < b.Offset
+			})
+			result.Error = reported[0].Error()
+		} else if err != nil {
 			result.Error = err.Error()
 		} else {
 			set := &descriptorpb.FileDescriptorSet{}
