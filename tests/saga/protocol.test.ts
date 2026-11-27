@@ -140,7 +140,7 @@ test('the native adapter validates and dispatches the closed ten-operation proto
   const denied=await coordinator.handle({...actor,principal:'stranger'},{protocol,operation:'status',instance});
   expect(denied).toEqual({status:'denied',code:'AUTHORIZATION'});
  });
-},{timeout:30_000});
+},{timeout:120_000});
 
 test('an admitted instance keeps its original immutable action binding after host directory replacement',async()=>{
  await withSagaNativeCluster(async cluster=>{

@@ -10,7 +10,7 @@ test('US-023-AC1/3: all upstream contracts preserve original bytes and native ca
   expect(exportOdcsDocument(d)).toBe(raw);
  }
  const p=await Bun.file('native/odcs/sources/manifest.json').json();for(const f of p.files)expect(sha(await Bun.file(f.path).bytes())).toBe(f.sha256);
-},30000);
+},90000);
 test('US-023-AC2: exact future values, invalid native shapes and representation boundaries remain explicit',()=>{
  const text='# Original comment\napiVersion: v99.0.0\nnumber: 9007199254740993\nnested: {unknown: null}\n';const d=importOdcsDocument(text,{id:'future',format:'yaml'});expect(exportOdcsDocument(d)).toBe(text);expect(exportOdcsDocument(d,'json')).toContain('9007199254740993');expect(inspectOdcsDocument(d).complete).toBe(false);expect(inspectOdcsDocument(d).diagnostics.some(x=>x.code==='ODCS_VERSION')).toBe(true);
  const node=getOdcsDocumentNode(d,'/nested');if(node.kind==='object')node.members={};expect(exportOdcsDocument(d)).toBe(text);

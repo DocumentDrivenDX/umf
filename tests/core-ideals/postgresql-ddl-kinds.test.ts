@@ -22,7 +22,7 @@ test('declared records retain source SQL and distinguish unresolved namespace fr
  for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;expect(await recoverPostgresqlDdlKinds(receipt,receipt.target!,backend)).toBe(c.sql);}
  }
  }
-},30000);
+},120000);
 test('collisions, edited AST archives and stale receipts cannot silently publish new roles',async()=>{
  const c=ddlKindCases[0]!,source=await importPostgresqlSql(c.sql,backend,{id:'guard'}),options={module:'declared',recordId:'record',declaration:'/stmts/0/stmt/CreateStmt',mode:'strict' as const};
  expect((await classifyPostgresqlDdlRecord(source,{...options,module:'schema'},backend)).status).toBe('blocked');

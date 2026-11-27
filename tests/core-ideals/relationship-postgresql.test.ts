@@ -19,7 +19,7 @@ test('qualified PostgreSQL FK/junction projection matrix retains authored meanin
    expect(classified.target!.modules.some(m=>Object.hasOwn(m,'relationships'))).toBe(false);expect(await recoverPostgresqlRelationshipSource(classified,classified.target!,backend)).toBe(r.nativeSql!);
   }else expect(r.target).toBeUndefined();
  }
-},120000);
+},420000);
 // @covers US-045-AC3 @covers US-045-AC7
 test('raw native NOT VALID, MATCH and actions stay observations with exact unknown/context recovery',async()=>{
  const text=(await Bun.file('fixtures/relationship/postgresql-native/constraints.sql').text())+'\n-- unknown application comment retained\n';

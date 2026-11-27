@@ -12,7 +12,7 @@ test('Key shared authored contract preserves plural identity and rejects forged 
   expect(result.forgedRefusals).toBe(result.recoveries);
   expect(result.strictBlocks).toBe(result.projected);
  }
-}, 120000);
+}, 360000);
 
 test('all Key bindings reject conflicting tuples, changed stable IDs and missing or cross-record ownership',async()=>{
  expect(await verifyKeyIdentityConflicts()).toEqual({tablespec:4,postgresql:4,sqlserver:4,avro:4,parquet:4});

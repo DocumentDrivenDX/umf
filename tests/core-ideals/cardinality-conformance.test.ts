@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+// About 480 s on an AWS-hosted runner and 1.6x that on an Azure-hosted one, past the default 10-minute file deadline.
+// @file-timeout-ms 1560000
 import {test,expect} from 'bun:test';
 import {cardinalitySystems,replayCurrentCardinalityAuthor,verifyCardinalityRoundTrips} from '../../scripts/core-ideals/cardinality-conformance';
 import {CURRENT_CORE_VERSION} from '../../src';
@@ -28,4 +30,4 @@ test('five Cardinality bindings preserve ideals, native refinements and qualifie
    expect(r.historicalReplayCases).toBe(historical);expect(r.historicalReplayInputsEqual).toBe(historical);
   }
  }
-},600000);
+},1500000);

@@ -15,7 +15,7 @@ test('catalog fields include native domains, arrays and unknown scalar refinemen
   const element=result.target!.modules.find(m=>m.id==='postgresql.columns')!.elements.find(e=>e.id===column.element.id)!;
   expect(element.kind).toBe('field');expect(element.scalarType).toBe(column.element.scalarType);expect(recoverPostgresqlFieldCapture(result,result.target!)).toBe(nativeSource);
  }
-},30000);
+},120000);
 test('native text formatting and unknown numeric metadata survive both receipt formats',()=>{
  const text=nativeSource.replace('{','{"future":9007199254740993,');
  const doc=importPostgresqlCatalogCapture(text,{id:'opaque'}),column=getPostgresqlColumnMetadata(doc)[0]!;

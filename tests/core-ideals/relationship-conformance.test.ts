@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // @test-exclusive
+// About 380 s on an AWS-hosted runner and 1.6x that on an Azure-hosted one, near the default 10-minute file deadline.
+// @file-timeout-ms 1500000
 import {test,expect} from 'bun:test';
 import {verifyRelationshipAuthoredCorpus,verifyRelationshipBindingRoundTrips} from '../../scripts/core-ideals/relationship-conformance';
 // @covers US-045-AC1 @covers US-045-AC2 @covers US-045-AC3 @covers US-045-AC4 @covers US-045-AC5 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
@@ -13,4 +15,4 @@ test('independently authored current relationship shapes preserve unknown conten
 // @covers US-045-AC9
 test('relationship binding round trips pass',async()=>{
  const result=await verifyRelationshipBindingRoundTrips();expect(result.failed).toBe(0);expect(result.passed).toBeGreaterThan(0);
-},300000);
+},1200000);

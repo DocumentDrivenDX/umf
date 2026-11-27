@@ -15,7 +15,7 @@ test('authored facet matrix preserves every ideal and reports unsupported native
   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(r),format),format) as unknown as u.FacetsPostgresqlProjection;expect(u.copyJson(await u.recoverFacetsFromPostgresql(receipt,receipt.nativeSql!,backend))).toEqual(u.copyJson(r.source));}
  }
  expect(projected).toBeGreaterThan(0);expect(blocked).toBeGreaterThan(0);
-},120000);
+},360000);
 test('finite decimal checks, exact width bounds, length units and input losses are explicit',async()=>{
  const decimal=await project(selected('decimal-5-2'));expect(decimal.mapping.facets).toEqual({precision:5,scale:2});expect(decimal.nativeSql).toContain('trunc("value", 2)');expect(decimal.nativeSql).toContain("'-999.99'::pg_catalog.numeric");
  const modifier=await project(selected('decimal-5-2','type-modifier'));expect(modifier.nativeSql).toContain('numeric(5,2)');expect(modifier.nativeSql).not.toContain('trunc(');

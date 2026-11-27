@@ -15,7 +15,7 @@ test('native catalog availability matrix retains source and scope through both s
   expect(validateDocument(r.target!,new Registry().register(sqlserverNullabilityPackage)).valid).toBe(true);
   for(const format of ['json','yaml'] as const){const back=readJsonValue(writeJsonValue(copyJson(r),format),format) as unknown as typeof r;expect(recoverSqlServerNullabilitySource(back,back.target!)).toBe(text);}
  }
-},240000);
+},540000);
 test('CHECK UNKNOWN and untrusted constraints do not become unconditional permission',()=>{
  for(const relation of ['positive','checked_required','untrusted']){
   const {source,column}=sqlserverAvailabilitySource(text,relation);

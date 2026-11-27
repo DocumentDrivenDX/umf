@@ -248,6 +248,13 @@ jobs:
     # The full Bun inventory (every file, including the slow ones) takes several hours on one 4-vCPU runner.
     timeout-minutes: 360
     steps:
+      # Azure-hosted ubuntu-24.04 runners have less free disk than AWS-hosted ones, and the final
+      # `cargo test --workspace` link failed there with "No space left on device". Nothing here uses these toolchains.
+      - name: Free disk space
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          df -h /
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -311,7 +318,9 @@ jobs:
           python3 scripts/workflow-reference.py
       - run: bun run test:sdk
         if: ${{ !cancelled() }}
-      - run: cargo test --locked --workspace
+      - run: |
+          df -h /
+          cargo test --locked --workspace
         if: ${{ !cancelled() }}
       - uses: actions/upload-artifact@v4
         if: always()

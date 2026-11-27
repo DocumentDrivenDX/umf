@@ -77,7 +77,7 @@ test('native composite Keys preserve ordered components through preparation, fre
   expect((await store.sql`select business_sequence::text from action_store`)[0]!.business_sequence).toBe('2');
   console.log(JSON.stringify({nativeCompositeKey:{nativeVersion,bun:Bun.version,components:2,family:'string',swappedIdentitiesDistinct:true,commits:2,restartedReplay:'exact',scope:'One two-component primary Key, two reversed tuples, explicit resource versions and recipe typed identities; no universal Key-domain claim'}}));
  });
-},30000);
+},120000);
 
 /** @covers US-901-AC1 @covers US-901-AC2 @covers US-901-AC8 */
 test('native owned and association-Record declarations refuse before business access or any transactional write',async()=>{

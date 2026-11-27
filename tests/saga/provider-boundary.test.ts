@@ -43,7 +43,7 @@ test('oversized retained result rolls back business/outcome before gateway nonco
   }finally{await observer.close();}
   expect(await provider.gateway.deliver(ticket,provider.credential,request)).toEqual(result);
  }finally{await provider.gateway.close();}
-}),{timeout:120000});
+}),{timeout:360000});
 
 test('original subject denial fences late admission while outsider refusal cannot close it',async()=>withSagaNativeCluster(async cluster=>{
  const provider=await installSagaProvider(cluster.providers[0],'subject-finality');
